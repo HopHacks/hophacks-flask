@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 app.secret_key = 's3cr3t'
 app.debug = True
-app._static_folder = os.path.abspath("templates/static/")
 
 app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 mongo = PyMongo(app)
