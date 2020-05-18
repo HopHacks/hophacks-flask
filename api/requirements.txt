@@ -1,5 +1,6 @@
 flask
 Flask-PyMongo
 Flask-JWT
+flask_jwt_extended
 
 bcrypt
