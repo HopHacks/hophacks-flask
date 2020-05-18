@@ -11,6 +11,8 @@ import Home from "./Home"
 import Profile from "./Profile"
 import Admin from "./admin/Admin"
 
+import {getToken, logout} from "../utils/auth"
+
 export default function App() {
   return (
     <Router>
@@ -20,9 +22,11 @@ export default function App() {
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
+            {getToken() && <li> <Link to="/profile">Profile</Link></li>}
+            {getToken()
+                ? <li><button onClick={logout}>Logout</button></li>
+                : <li> <Link to="/login">Login</Link></li>
+            }
           </ul>
         </nav>
 
