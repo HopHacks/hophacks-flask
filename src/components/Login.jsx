@@ -1,37 +1,31 @@
 import React, { useState } from "react";
-import axios from "axios";
+
+import {login} from "../utils/auth";
+
+import {
+    useHistory
+} from "react-router-dom";
 
 export default function Login() {
-    /** can you update these three states when the user is loggedin/logged out? */
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    let history = useHistory();
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
+        try {
+            await login(email, password);
 
-        axios.post('/auth', {
-        	"username": email,
-        	"password": password
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          }
-        );
+            if (email !== "admin") {
+                history.push("/profile")
+            } else {
+                history.push("/admin")
+            }
+        } catch(error) {
+            console.log(error)
+        }
     }
 
-    function checkUsername(event) {
-        axios.get('/protected')
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          }
-        );
-    }
 
     return (
       <div className="Hophacks">
@@ -40,10 +34,9 @@ export default function Login() {
             Email:
             <input
                 autoFocus
-                type="email"
+                type="text"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                type="text"
             />
           </label>
           <label>
@@ -58,7 +51,6 @@ export default function Login() {
         </form>
 
 
-        <button onClick={checkUsername}>check login</button>
       </div>
     );
 
