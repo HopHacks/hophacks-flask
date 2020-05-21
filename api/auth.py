@@ -1,4 +1,4 @@
-from app import mongo, app, api
+from app import app, api
 
 from flask import Flask, jsonify, request, Blueprint
 from flask_jwt_extended import (
@@ -61,7 +61,7 @@ def login():
     return resp, 200
 
 
-@auth.route('/session/refresh', methods=['GET'])
+@api.route('/session/refresh', methods=['GET'])
 @jwt_refresh_token_required
 def refresh():
     current_user = get_jwt_identity()

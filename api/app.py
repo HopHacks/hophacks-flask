@@ -15,4 +15,9 @@ app.config['JWT_COOKIE_CSRF_PROTECT '] = False
 app.config['JWT_CSRF_IN_COOKIES'] = False
 
 api = Blueprint('api', __name__)
+
+# Add endpoints from these files
+import api as api_file
+import auth
+
 app.register_blueprint(api, url_prefix='/api')

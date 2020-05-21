@@ -1,4 +1,4 @@
-from app import mongo, app, api
+from app import app, api
 
 from auth import jwt, User
 
@@ -8,8 +8,6 @@ import bcrypt
 
 # TODO Replace
 from auth import users
-
-api = Blueprint('api', __name__)
 
 @api.route('/register', methods = ['POST'])
 def register():
