@@ -1,5 +1,5 @@
 flask
-Flask-PyMongo
+pymongo
 Flask-JWT
 flask_jwt_extended
 

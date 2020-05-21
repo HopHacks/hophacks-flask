@@ -51,14 +51,14 @@ function withAuth(WrappedComponent) {
 
 // Assuming we have a refresh token, ask the server for a new access token
 async function refreshToken() {
-    const url = '/auth/session/refresh';
+    const url = '/api/session/refresh';
     const response = await axios.get(url);
     authToken = response.data["access_token"];
 }
 
 // Login to page
 async function login(email, password) {
-    let response = await axios.post('/auth/login', {
+    let response = await axios.post('/api/login', {
         "username": email,
         "password": password
     });
@@ -72,7 +72,7 @@ async function login(email, password) {
 async function logout() {
     authToken = null;
 
-    const url = '/auth/session/logout';
+    const url = '/api/session/logout';
     try {
         await axios.get(url);
     } catch(error) {

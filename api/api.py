@@ -1,4 +1,4 @@
-from app import mongo, app
+from app import mongo, app, api
 
 from auth import jwt, User
 

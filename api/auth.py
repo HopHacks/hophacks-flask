@@ -1,4 +1,4 @@
-from app import mongo, app
+from app import mongo, app, api
 
 from flask import Flask, jsonify, request, Blueprint
 from flask_jwt_extended import (
@@ -10,7 +10,6 @@ from flask_jwt_extended import (
 import bcrypt
 
 jwt = JWTManager(app)
-auth = Blueprint('auth', __name__)
 
 # TODO replace with db
 users = {}
@@ -34,7 +33,7 @@ def authenticate(username, password):
 
     return None
 
-@auth.route('/login', methods=['POST'])
+@api.route('/login', methods=['POST'])
 def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
@@ -79,7 +78,7 @@ def refresh():
 
     return jsonify(ret), 200
 
-@auth.route('/session/logout', methods=['GET'])
+@api.route('/session/logout', methods=['GET'])
 @jwt_refresh_token_required
 def logout():
     # TODO DB
