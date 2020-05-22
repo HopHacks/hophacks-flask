@@ -1,11 +1,13 @@
-from app import api, db
-from auth import jwt
+from db import db
 
 from flask import Blueprint, request, Response
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import bcrypt
 
-@api.route('/register', methods = ['POST'])
+
+users_api = Blueprint('users', __name__)
+
+@users_api.route('/register', methods = ['POST'])
 def register():
     if (request.json is None):
         return Response('Data not in json format', status=400)
@@ -13,7 +15,6 @@ def register():
     username = request.json['username']
     password = request.json['password'].encode()
 
-    # TODO replace with db
     if (db.users.find_one({'username': username})):
         return Response('User already exists!', status=409)
 
@@ -30,7 +31,7 @@ def register():
     return('User added')
 
 
-@api.route('/protected', methods = ['GET'])
+@users_api.route('/protected', methods = ['GET'])
 @jwt_required
 def protected():
     return('logged in')

@@ -1,8 +1,8 @@
-from app import app, api, db
+from db import db
 
 from flask import Flask, jsonify, request, Blueprint
 from flask_jwt_extended import (
-    JWTManager, jwt_required, create_access_token,
+    jwt_required, create_access_token,
     jwt_refresh_token_required, create_refresh_token,
     get_jwt_identity, set_refresh_cookies, unset_refresh_cookies,
     get_raw_jwt, get_jti
@@ -10,18 +10,16 @@ from flask_jwt_extended import (
 import bcrypt
 from bson.objectid import ObjectId
 
-
-jwt = JWTManager(app)
+auth_api = Blueprint('auth', __name__)
 
 MAX_TOKENS = 10
 
-@api.route('/login', methods=['POST'])
+@auth_api.route('/login', methods=['POST'])
 def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
 
     user = db.users.find_one({'username': username})
-    print(user)
     if (user is None):
         return jsonify({'msg': 'Bad username or password'}), 401
 
@@ -46,7 +44,6 @@ def login():
         }}
     )
 
-    print(res)
     resp = jsonify(ret)
 
     # secure = true?, max_age?
@@ -55,7 +52,7 @@ def login():
     return resp, 200
 
 
-@api.route('/session/refresh', methods=['GET'])
+@auth_api.route('/session/refresh', methods=['GET'])
 @jwt_refresh_token_required
 def refresh():
     id = get_jwt_identity()
@@ -66,8 +63,6 @@ def refresh():
     if (user is None):
         return jsonify({'msg': 'User not found'}), 404
 
-    print(user)
-
     if (jti not in user['refresh_tokens']):
         return jsonify({'msg': 'Expired login'}), 401
 
@@ -77,10 +72,9 @@ def refresh():
 
     return jsonify(ret), 200
 
-@api.route('/session/logout', methods=['GET'])
+@auth_api.route('/session/logout', methods=['GET'])
 @jwt_refresh_token_required
 def logout():
-    # TODO DB
     id = get_jwt_identity()
     jti = get_raw_jwt()['jti']
 
