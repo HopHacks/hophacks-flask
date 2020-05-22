@@ -5,8 +5,14 @@ python -m venv hophacks-env
 pip install -r requirements.txt
 ```
 
-Running
+Running Dev
 ```
 ./hophacks-env/scripts/activate
 flask run
+```
+
+Running Server on port 8000(need gunicorn)
+```
+pip install -r requirements.txt
+gunicorn app:app
 ```
