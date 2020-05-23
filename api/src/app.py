@@ -1,12 +1,15 @@
 from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
 
+import json
+
 def create_app():
     app = Flask(__name__)
 
     # TODO Configurations that need to be different for prod
-    app.config['SECRET_KEY'] = 'super-secret'
-    app.debug = True
+    config = json.load(open('config/settings.json'))
+    app.config['SECRET_KEY'] = config['SECRET_KEY']
+    app.debug = config['debug']
 
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers']

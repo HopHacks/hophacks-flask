@@ -3,7 +3,7 @@ from db import db
 from flask import Blueprint, request, Response
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import bcrypt
-
+import json
 
 users_api = Blueprint('users', __name__)
 
@@ -26,6 +26,7 @@ def register():
         'hashed': hashed,
         'refresh_tokens': [],
         'profile': {},
+        'is_admin': False
     })
 
     return('User added')

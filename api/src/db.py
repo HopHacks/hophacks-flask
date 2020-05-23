@@ -1,8 +1,10 @@
 from pymongo import MongoClient
-
+import json
 # TODO this is a bit ugly
 # TODO configure
-client = MongoClient('mongodb://localhost:27017')
+config = json.load(open('config/settings.json'))
+
+client = MongoClient(config['MONGO_URI'])
 db = client['hophacks']
 
 def close_db(e=None):

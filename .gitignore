@@ -1,3 +1,7 @@
 __pycache__
+*.pyc
+
 hophacks-env
 node_modules
+
+settings.json
