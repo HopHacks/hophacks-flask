@@ -1,14 +1,17 @@
 from pymongo import MongoClient
-import json
-# TODO this is a bit ugly
-# TODO configure
-config = json.load(open('config/settings.json'))
 
-client = MongoClient(config['MONGO_URI'])
-db = client['hophacks']
+# TODO this is a bit ugly, maybe use a class instead?
+mongo_client = None
+db = None
 
-def close_db(e=None):
-    client.close()
+# needed for pytest
+def get_db():
+    return db
 
-def init_app(app):
-    app.teardown_appcontext(close_db)
+def get_mongo_client():
+    return mongo_client
+
+def init_db(config):
+    global mongo_client, db
+    mongo_client = MongoClient(config['MONGO_URI'])
+    db = mongo_client[config['MONGO_DB_NAME']]

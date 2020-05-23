@@ -30,9 +30,3 @@ def register():
     })
 
     return('User added')
-
-
-@users_api.route('/protected', methods = ['GET'])
-@jwt_required
-def protected():
-    return('logged in')

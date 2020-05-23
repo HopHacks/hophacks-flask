@@ -1,29 +1,25 @@
 from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
-
 import json
 
-def create_app():
+def create_app(config_file='config/settings.json'):
     app = Flask(__name__)
 
     # TODO Configurations that need to be different for prod
-    config = json.load(open('config/settings.json'))
+    config = json.load(open(config_file))
     app.config['SECRET_KEY'] = config['SECRET_KEY']
     app.debug = config['debug']
 
     # Configurations that are always the same
-    app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers']
+    app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers', 'json']
     app.config['JWT_REFRESH_COOKIE_PATH'] = '/api/session'
     app.config['JWT_COOKIE_CSRF_PROTECT '] = False
     app.config['JWT_CSRF_IN_COOKIES'] = False
 
-
-    # Setup db
-    import db
-    with app.app_context():
-        db.init_app(app)
-
     jwt = JWTManager(app)
+
+    from db import init_db
+    init_db(config)
 
     # Add endpoints from these files
     # Note order is important here

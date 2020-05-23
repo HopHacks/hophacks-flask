@@ -15,9 +15,13 @@ if (len(sys.argv) != 2 or sys.argv[1] not in ['prod', 'dev']):
 
 settings = {}
 
+
+
 # TODO mongo username and password?
 settings['debug'] = True
 settings['MONGO_URI'] = 'mongodb://localhost:27017'
+settings['MONGO_DB_NAME'] = 'hophacks'
+
 settings['SECRET_KEY'] = 'pineapple pizza'
 
 if (sys.argv[1] == 'prod'):
@@ -37,35 +41,38 @@ username = input("Admin account username (leave blank for 'admin'): " )
 if not username:
     username = 'admin'
 
-password = getpass("Admin account password: ")
-if (len(password) < 4):
-    print("Please enter a password at least 4 characters long")
-    exit(1)
-if (password != getpass("Reenter passowrd: ")):
-    print("Passwords do not match!")
-    exit(1)
 
+
+def setup_admin():
+    password = getpass("Admin account password: ")
+    if (len(password) < 4):
+        print("Please enter a password at least 4 characters long")
+        exit(1)
+    if (password != getpass("Reenter passowrd: ")):
+        print("Passwords do not match!")
+        exit(1)
+
+    with MongoClient(settings['MONGO_URI']) as client:
+        db = client['hophacks']
+
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password.encode(), salt)
+
+        if (db.users.find_one({'username': username})):
+            print('User {} already exists! Skipping account creation'.format(username))
+            return
+
+        db.users.insert_one({
+            'username': username,
+            'hashed': hashed,
+            'refresh_tokens': [],
+            'profile': {},
+            'is_admin' : True
+        })
 
 print("Adding admin account to database located at {} with username '{}'"
     .format(settings['MONGO_URI'], username))
-
-with MongoClient(settings['MONGO_URI']) as client:
-    db = client['hophacks']
-
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(password.encode(), salt)
-
-    if (db.users.find_one({'username': username})):
-        print('User {} already exists! Aborting..'.format(username))
-        exit(1)
-
-    db.users.insert_one({
-        'username': username,
-        'hashed': hashed,
-        'refresh_tokens': [],
-        'profile': {},
-        'is_admin' : True
-    })
+setup_admin()
 
 with open('settings.json', 'w') as file:
     json.dump(settings, file, indent=4)

@@ -51,7 +51,6 @@ def login():
 
     return resp, 200
 
-
 @auth_api.route('/session/refresh', methods=['GET'])
 @jwt_refresh_token_required
 def refresh():
@@ -72,6 +71,7 @@ def refresh():
 
     return jsonify(ret), 200
 
+
 @auth_api.route('/session/logout', methods=['GET'])
 @jwt_refresh_token_required
 def logout():
@@ -86,3 +86,9 @@ def logout():
     resp = jsonify({'logout': True})
     unset_refresh_cookies(resp)
     return resp, 200
+
+
+@auth_api.route('/test_protected', methods = ['GET'])
+@jwt_required
+def protected():
+    return('logged in')
