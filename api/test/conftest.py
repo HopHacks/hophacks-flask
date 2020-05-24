@@ -9,7 +9,7 @@ from db import get_db, get_mongo_client
 
 @pytest.fixture
 def client():
-    app = create_app('test_settings.json')
+    app = create_app('test.json')
 
     db = get_db()
     mongo_client = get_mongo_client()

@@ -25,8 +25,10 @@ def create_app(config_file='config/settings.json'):
     # Note order is important here
     from auth import auth_api
     from users import users_api
+    from admin import admin_api
 
-    app.register_blueprint(auth_api, url_prefix='/api')
-    app.register_blueprint(users_api, url_prefix='/api')
+    app.register_blueprint(auth_api, url_prefix='/api/auth')
+    app.register_blueprint(users_api, url_prefix='/api/users')
+    app.register_blueprint(admin_api, url_prefix='/api/admin')
 
     return app
