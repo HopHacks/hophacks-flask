@@ -11,7 +11,7 @@ import Home from "./Home"
 import Profile from "./Profile"
 import Admin from "./admin/Admin"
 
-import {getToken, logout} from "../utils/auth"
+import {getToken, logout} from "../util/auth"
 
 export default function App() {
   return (

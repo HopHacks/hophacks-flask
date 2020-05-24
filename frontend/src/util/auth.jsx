@@ -3,8 +3,11 @@ import axios from "axios";
 import { useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 
+
+
 // Token to call apis with
 let authToken;
+
 
 function getToken() {
     return authToken;
@@ -16,15 +19,27 @@ function getToken() {
 // Usage is as follows:
 //
 // export default AuthWrapper(component);
-function withAuth(WrappedComponent) {
+function withAuth(WrappedComponent, admin=false) {
     return function(...props) {
         let history = useHistory();
+
+        let checkAdmin = async () => {
+            try {
+                await axios.get('/api/admin/');
+            }
+            catch(error) {
+                console.log("Attempting to access admin page without admin access...")
+                history.push("/");
+            }
+        };
 
         let refreshOrRedirect = async () => {
             try {
                 const token = await refreshToken();
-                authToken = token;
-                console.log("Refreshed Token");
+                if (admin) {
+                    await checkAdmin();
+                }
+
             } catch(error) {
                 console.log("Unable to refresh token, logging out...")
                 logout();
@@ -42,8 +57,6 @@ function withAuth(WrappedComponent) {
             };
         }, [refreshOrRedirect]);
 
-
-
         return <WrappedComponent {...props}/>;
     };
 }
@@ -54,6 +67,7 @@ async function refreshToken() {
     const url = '/api/auth/session/refresh';
     const response = await axios.get(url);
     authToken = response.data["access_token"];
+    axios.defaults.headers.common = {'Authorization': `Bearer ${authToken}`}
 }
 
 // Login to page
@@ -64,6 +78,7 @@ async function login(email, password) {
     });
 
     authToken = response.data["access_token"];
+    console.log(response)
 }
 
 
@@ -71,6 +86,7 @@ async function login(email, password) {
 // refresh token fro, DB and cookies. Redirect to Home
 async function logout() {
     authToken = null;
+    delete axios.defaults.headers.common["Authorization"];
 
     const url = '/api/auth/session/logout';
     try {

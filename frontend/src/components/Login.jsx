@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import {login} from "../utils/auth";
+import {login} from "../util/auth";
 
 import {
     useHistory

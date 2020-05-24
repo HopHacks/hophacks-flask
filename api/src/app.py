@@ -12,7 +12,7 @@ def create_app(config_file='config/settings.json'):
 
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers', 'json']
-    app.config['JWT_REFRESH_COOKIE_PATH'] = '/api/session'
+    app.config['JWT_REFRESH_COOKIE_PATH'] = '/api/auth/session'
     app.config['JWT_COOKIE_CSRF_PROTECT '] = False
     app.config['JWT_CSRF_IN_COOKIES'] = False
 
