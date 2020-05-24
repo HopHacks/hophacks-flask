@@ -33,7 +33,7 @@ if (sys.argv[1] == 'prod'):
         settings['MONGO_URI'] = url
 
     # Generate a secret key for JWT
-    printf("Generating secret key for JWT Tokens")
+    print("Generating secret key for JWT Tokens")
     settings['SECRET_KEY'] = secrets.token_urlsafe()
 
 
