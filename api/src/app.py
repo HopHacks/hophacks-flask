@@ -16,6 +16,8 @@ def create_app(config_file='config/settings.json'):
     app.config['JWT_COOKIE_CSRF_PROTECT '] = False
     app.config['JWT_CSRF_IN_COOKIES'] = False
 
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
     jwt = JWTManager(app)
 
     from db import init_db
@@ -26,9 +28,11 @@ def create_app(config_file='config/settings.json'):
     from auth import auth_api
     from users import users_api
     from admin import admin_api
+    from resumes import resume_api
 
     app.register_blueprint(auth_api, url_prefix='/api/auth')
-    app.register_blueprint(users_api, url_prefix='/api/users')
     app.register_blueprint(admin_api, url_prefix='/api/admin')
+    app.register_blueprint(users_api, url_prefix='/api/users')
+    app.register_blueprint(resume_api, url_prefix='/api/resumes')
 
     return app
