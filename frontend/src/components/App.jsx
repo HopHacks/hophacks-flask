@@ -10,25 +10,13 @@ import Login from "./Login"
 import Home from "./Home"
 import Profile from "./Profile"
 import Admin from "./admin/Admin"
-
-import {getToken, logout} from "../util/auth"
+import Nav from "./Nav"
 
 export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            {getToken() && <li> <Link to="/profile">Profile</Link></li>}
-            {getToken()
-                ? <li><button onClick={logout}>Logout</button></li>
-                : <li> <Link to="/login">Login</Link></li>
-            }
-          </ul>
-        </nav>
+        <Nav />
 
         <Switch>
           <Route path="/admin">
