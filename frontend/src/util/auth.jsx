@@ -3,64 +3,29 @@ import axios from "axios";
 import { useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 
-
-
 // Token to call apis with
 let authToken;
+let refreshInterval;
+let refreshCounter = 0;
 
-
-function getToken() {
-    return authToken;
+async function setupAuth() {
+    if (!authToken) {
+        await refreshToken();
+    }
+    
+    if (refreshCounter == 0) {
+        // refresh every minute
+        refreshInterval = setInterval(refreshToken, 60000);
+    }
+    refreshCounter += 1;
 }
 
-
-// Given a component that should be protected by authentication, makes it so that
-// we check for authentication, and also refresh before the token expires
-// Usage is as follows:
-//
-// export default AuthWrapper(component);
-function withAuth(WrappedComponent, admin=false) {
-    return function(...props) {
-        let history = useHistory();
-
-        let checkAdmin = async () => {
-            try {
-                await axios.get('/api/admin/');
-            }
-            catch(error) {
-                console.log("Attempting to access admin page without admin access...")
-                history.push("/");
-            }
-        };
-
-        let refreshOrRedirect = async () => {
-            try {
-                const token = await refreshToken();
-                if (admin) {
-                    await checkAdmin();
-                }
-
-            } catch(error) {
-                console.log("Unable to refresh token, logging out...")
-                logout();
-                history.push("/");
-            }
-        };
-
-        useEffect(() => {
-            refreshOrRedirect();
-            // Refresh every minute
-            let interval = setInterval(refreshOrRedirect, 60000);
-
-            return function cleanup() {
-                clearInterval(interval);
-            };
-        }, [refreshOrRedirect]);
-
-        return <WrappedComponent {...props}/>;
-    };
+async function cleanupAuth() {
+    refreshCounter -= 1;
+    if (refreshCounter == 0) {
+        if (refreshInterval) clearInterval(refreshInterval);
+    }
 }
-
 
 // Assuming we have a refresh token, ask the server for a new access token
 async function refreshToken() {
@@ -68,6 +33,7 @@ async function refreshToken() {
     const response = await axios.get(url);
     authToken = response.data["access_token"];
     axios.defaults.headers.common = {'Authorization': `Bearer ${authToken}`}
+    return authToken;
 }
 
 // Login to page
@@ -78,6 +44,7 @@ async function login(email, password) {
     });
 
     authToken = response.data["access_token"];
+    axios.defaults.headers.common = {'Authorization': `Bearer ${authToken}`}
     console.log(response)
 }
 
@@ -87,6 +54,10 @@ async function login(email, password) {
 async function logout() {
     authToken = null;
     delete axios.defaults.headers.common["Authorization"];
+    if (refreshInterval) {
+        refreshCounter = 0;
+        clearInterval(refreshInterval);
+    }
 
     const url = '/api/auth/session/logout';
     try {
@@ -96,4 +67,4 @@ async function logout() {
     }
 }
 
-export {login, logout, getToken, withAuth}
+export {setupAuth, cleanupAuth, login, logout};

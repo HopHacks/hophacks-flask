@@ -61,11 +61,10 @@ def filename():
     id = get_jwt_identity()
     user = db.users.find_one({'_id': ObjectId(id)})
 
-    # remove old resume
     if ('resume' not in user):
-        return jsonify({'filename': ''}, 200)
+        return jsonify({'filename': ''}), 200
 
-    return jsonify({'filename': user['resume']}, 200)
+    return jsonify({'filename': user['resume']}), 200
 
 
 @resume_api.route('/', methods = ['GET'])

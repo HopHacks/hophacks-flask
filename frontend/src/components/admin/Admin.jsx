@@ -1,8 +1,7 @@
 import React from "react";
-import {withAuth} from "../../util/auth.jsx"
 
-const admin =  function() {
+const Admin =  function() {
     return (<div> Admin Page </div>);
 };
 
-export default withAuth(admin, true);
+export default Admin;

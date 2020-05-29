@@ -1,18 +1,22 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-import {withAuth} from "../util/auth.jsx";
+import {setupAuth, cleanupAuth} from "../util/auth.jsx";
 
-const Profile = function Profile() {
+const Profile = function Profile(...props) {
     const [file, setFile] = useState("");
     const [oldName, setOldName] = useState("");
 
-    // TODO this doesn't work because it fires before auth.
-    useEffect(async () => {
-        const response = await axios.get("/api/resumes/filename");
-        setOldName(response.data["filename"]);
-    }, [setOldName]);
-
+    async function setup() {
+        try {
+            // Note this will setup axios to use auth header.
+            await setupAuth();
+            const response = await axios.get("/api/resumes/filename");
+            setOldName(response.data["filename"]);
+        } catch (error) {
+            console.log("No resume found");
+        }
+    }
 
     function handleFileChange(e) {
         setFile(e.target.files[0])
@@ -35,6 +39,11 @@ const Profile = function Profile() {
         window.open(url, "_blank");
     }
 
+    useEffect(() => {
+        setup();
+        return cleanupAuth;
+    }, [setup]);
+
     return (
         <div>
           <form onSubmit={handleSubmit}>
@@ -51,4 +60,4 @@ const Profile = function Profile() {
     );
 }
 
-export default withAuth(Profile);
+export default Profile;
