@@ -1,20 +1,18 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-import {setupAuth, cleanupAuth} from "../util/auth.jsx";
+import {withAuth} from "../util/auth.jsx";
 
 const Profile = function Profile(...props) {
     const [file, setFile] = useState("");
     const [oldName, setOldName] = useState("");
 
-    async function setup() {
+    async function getFileName() {
         try {
-            // Note this will setup axios to use auth header.
-            await setupAuth();
             const response = await axios.get("/api/resumes/filename");
-            setOldName(response.data["filename"]);
-        } catch (error) {
-            console.log("No resume found");
+            setOldName(response.data["filename"])
+        } catch(e) {
+            setOldName("");
         }
     }
 
@@ -28,7 +26,7 @@ const Profile = function Profile(...props) {
         data.append("file", file);
 
         const response = await axios.post("/api/resumes/", data);
-
+        // TODO handle error!
     }
 
     async function handleDownload(e) {
@@ -40,9 +38,8 @@ const Profile = function Profile(...props) {
     }
 
     useEffect(() => {
-        setup();
-        return cleanupAuth;
-    }, [setup]);
+        getFileName();
+    }, [props.isLoggedIn]);
 
     return (
         <div>
@@ -60,4 +57,4 @@ const Profile = function Profile(...props) {
     );
 }
 
-export default Profile;
+export default withAuth(Profile);

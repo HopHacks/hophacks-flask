@@ -6,15 +6,16 @@ import {
     useHistory
 } from "react-router-dom";
 
-export default function Login() {
+export default function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     let history = useHistory();
 
     async function handleSubmit(event) {
         event.preventDefault();
+        // TODO alert?
         try {
-            await login(email, password);
+            await props.login(email, password);
 
             if (email !== "admin") {
                 history.push("/profile")

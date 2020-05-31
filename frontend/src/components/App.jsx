@@ -3,89 +3,102 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
+import axios from "axios";
+
 
 import Login from "./Login"
 import Home from "./Home"
 import Profile from "./Profile"
 import Admin from "./admin/Admin"
 import Nav from "./Nav"
-import { useEffect } from "react";
 
 export default function App() {
 
-  const [token, setToken] = useState('');
-  const [isLoggedIn, setLoggedIn] = useState(true);
-  let refreshInterval;
+    const [token, setToken] = useState('');
+    // Can be null (haven't tried logging in with refreshToken yet)
+    const [isLoggedIn, setLoggedIn] = useState();
+    let refreshInterval;
 
-  async function refreshToken() {
-    if(!isLoggedIn)
-      return;
-    const url = '/api/auth/session/refresh';
-    const response = await axios.get(url);
-    authToken = response.data["access_token"];
-    axios.defaults.headers.common = {'Authorization': `Bearer ${authToken}`}
-    setToken(authToken);
-  }
+    async function refreshToken() {
+        if (isLoggedIn === false) { // false rather than null
+            return;
+        }
 
-  // Login to page
-  async function login(email, password) {
-    let response = await axios.post('/api/auth/login', {
-        "username": email,
-        "password": password
-    });
-
-    setToken(response.data["access_token"]);
-    axios.defaults.headers.common = {'Authorization': `Bearer ${authToken}`}
-  
-    setInterval(refreshToken, 60000)
-    setLoggedIn(true);
-  }
-
-
-  // Logout by destroying our access token and telling server to remove our
-  // refresh token fro, DB and cookies. Redirect to Home
-  async function logout() {
-      setToken('');
-      delete axios.defaults.headers.common["Authorization"];
-      if (refreshInterval) {
-          clearInterval(refreshInterval);
-      }
-
-      const url = '/api/auth/session/logout';
-      try {
-          await axios.get(url);
-      } catch(error) {
-          console.log("Error logging out, perhaps already logged out?");
-      }
-  }
-
-
-  useEffect(()=>{ 
-    try{
-      await refreshToken();
-      refreshInterval = setInterval(refreshToken, 60000)
-      setLoggedIn(true);
+        try {
+            const response = await axios.get('/api/auth/session/refresh');
+            const tok = response.data["access_token"];
+            axios.defaults.headers.common = {'Authorization': `Bearer ${tok}`}
+            setToken(tok);
+            setLoggedIn(true);
+        } catch {
+            console.log("Refresh failed");
+            setLoggedIn(false);
+        }
     }
-    catch{
-      setLoggedIn(false);
-    }}, []);
+
+    // Login to page
+    async function login(email, password) {
+        const response = await axios.post('/api/auth/login', {
+            "username": email,
+            "password": password
+        });
+
+        const tok = response.data["access_token"];
+        axios.defaults.headers.common = {'Authorization': `Bearer ${tok}`}
+        setToken(tok);
+        setLoggedIn(true);
+        setInterval(refreshToken, 60000);
+    }
+
+
+    // Logout by destroying our access token and telling server to remove our
+    // refresh token fro, DB and cookies. Redirect to Home
+    async function logout() {
+        setToken('');
+        setLoggedIn(false);
+        delete axios.defaults.headers.common["Authorization"];
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
+
+        const url = '/api/auth/session/logout';
+        try {
+            await axios.get(url);
+        } catch(error) {
+            console.log("Error logging out, perhaps already logged out?");
+        }
+    }
+
+
+    async function attemptRefresh() {
+        try {
+            await refreshToken();
+            refreshInterval = setInterval(refreshToken, 60000);
+        }
+        catch{
+            setLoggedIn(false);
+        }
+    }
+
+    useEffect(() => {
+        attemptRefresh();
+    });
 
   return (
     <Router>
       <div>
-        <Nav/>
+        <Nav isLoggedIn={isLoggedIn} logout={logout}/>
 
         <Switch>
           <Route path="/admin">
             <Admin />
           </Route>
           <Route path="/profile">
-            <Profile />
+            <Profile isLoggedIn={isLoggedIn}/>
           </Route>
           <Route path="/login">
-            <Login />
+            <Login login={login}/>
           </Route>
           <Route path="/">
             <Home />
