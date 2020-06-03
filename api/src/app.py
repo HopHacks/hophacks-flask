@@ -10,6 +10,12 @@ def create_app(config_file='config/settings.json'):
     app.config['SECRET_KEY'] = config['SECRET_KEY']
     app.debug = config['debug']
 
+    app.config['MAIL_SERVER'] = config['MAIL_SERVER']
+    app.config['MAIL_PORT'] = config['MAIL_PORT']
+    app.config['MAIL_USERNAME'] = config['MAIL_USERNAME']
+    app.config['MAIL_PASSWORD'] = config['MAIL_PASSWORD']
+    app.config['MAIL_DEFAULT_SENDER'] = config['MAIL_DEFAULT_SENDER']
+
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers', 'json']
     app.config['JWT_REFRESH_COOKIE_PATH'] = '/api/auth/session'
@@ -22,6 +28,9 @@ def create_app(config_file='config/settings.json'):
 
     from db import init_db
     init_db(config)
+
+    from mail import mail
+    mail.init_app(app)
 
     # Add endpoints from these files
     # Note order is important here

@@ -1,11 +1,25 @@
 from db import db
+from mail import mail
 
 from flask import Blueprint, request, Response
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_mail import Message
 import bcrypt
 import json
 
 users_api = Blueprint('users', __name__)
+
+
+@users_api.route('/test', methods = ['GET'])
+def test():
+    msg = Message("Hello",
+                  sender="from@example.com",
+                  recipients=["daniel.j.qian@gmail.com"])
+    msg.body = "testing from mailgun!"
+    mail.send(msg)
+
+    return Response('Test succeeded')
+
 
 @users_api.route('/register', methods = ['POST'])
 def register():
