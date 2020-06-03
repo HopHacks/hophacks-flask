@@ -1,4 +1,4 @@
-from util.user_utils import check_admin
+from util.decorators import check_admin
 from db import db
 
 from flask import Blueprint, request, Response, jsonify

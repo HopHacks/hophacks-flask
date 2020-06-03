@@ -14,7 +14,7 @@ def create_app(config_file='config/settings.json'):
     app.config['MAIL_PORT'] = config['MAIL_PORT']
     app.config['MAIL_USERNAME'] = config['MAIL_USERNAME']
     app.config['MAIL_PASSWORD'] = config['MAIL_PASSWORD']
-    app.config['MAIL_DEFAULT_SENDER'] = config['MAIL_DEFAULT_SENDER']
+    app.config['BASE_URL'] = config['BASE_URL']
 
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers', 'json']

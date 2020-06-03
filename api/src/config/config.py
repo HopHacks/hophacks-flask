@@ -17,11 +17,13 @@ settings = {}
 settings['debug'] = True
 settings['MONGO_URI'] = 'mongodb://localhost:27017'
 settings['MONGO_DB_NAME'] = 'hophacks'
-
 settings['SECRET_KEY'] = 'pineapple pizza'
+
+settings['BASE_URL'] = 'http://localhost:3000/'
 
 if (sys.argv[1] == 'prod'):
     settings['debug'] = False
+    settings['BASE_URL'] = input('URL of website (for emails): ')
 
     # Generate a secret key for JWT
     print("Generating secret key for JWT Tokens")
