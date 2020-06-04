@@ -1,8 +1,21 @@
 import pytest
 from flask_jwt_extended import get_jti
 
+
+
+register_json = {
+    "username": "a",
+    "password": "a",
+    "confirm_url": "test.com/confirm"
+}
+
+login_json = {
+    "username": "a",
+    "password": "a"
+}
+
 def test_bad_login(client):
-    response = client.post("/api/accounts/register", json={"username": "a", "password": "a"})
+    response = client.post("/api/accounts/register", json=register_json)
     assert response.status_code == 200
     response = client.post("/api/auth/login", json={"username": "a", "password": "b"})
     assert response.status_code == 401
@@ -15,9 +28,9 @@ def test_login(client, test_db):
     response = client.get("/api/auth/test_protected")
     assert response.status_code == 401
 
-    response = client.post("/api/accounts/register", json={"username": "a", "password": "a"})
+    response = client.post("/api/accounts/register", json=register_json)
     assert response.status_code == 200
-    response = client.post("/api/auth/login", json={"username": "a", "password": "a"})
+    response = client.post("/api/auth/login", json=login_json)
     assert response.status_code == 200
 
     # Make sure refresh token is in db and is returned

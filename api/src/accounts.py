@@ -17,10 +17,10 @@ accounts_api = Blueprint('accounts', __name__)
 # Sends confirmation email with JWT-Token in URL for verification, returns secret key used
 # Note this secret key is based of the current user's hashed password, this way when the Password
 # is changed the link becomes invalid!
-def send_reset_email(email, hashed):
+def send_reset_email(email, hashed, base_url):
     secret = hashed.decode('utf-8') + '-' + str(datetime.datetime.utcnow().timestamp())
     token = create_reset_token(email, secret)
-    link = current_app.config['BASE_URL'] + "reset/" + token.decode('utf-8')
+    link = base_url + "/" + token.decode('utf-8')
 
     msg = Message("Reset Your Password - HopHacks.com",
       sender="team@hophacks.com",
@@ -35,10 +35,10 @@ def send_reset_email(email, hashed):
     return secret
 
 # Sends confirmation email with JWT-Token in URL for verification, returns the secret key used
-def send_confirmation_email(email, hashed):
+def send_confirmation_email(email, hashed, base_url):
     confirm_secret = hashed.decode('utf-8') + '-' + str(datetime.datetime.utcnow().timestamp())
     token = create_confirm_token(email, confirm_secret)
-    link = current_app.config['BASE_URL'] + "confirm/" + token.decode('utf-8')
+    link = base_url + "/" + token.decode('utf-8')
 
     msg = Message("Confirm your Email - HopHacks.com",
       sender="team@hophacks.com",
@@ -57,6 +57,7 @@ def register():
 
     username = request.json['username']
     password = request.json['password'].encode()
+    confirm_url = request.json['confirm_url']
 
     if (db.users.find_one({'username': username})):
         return Response('User already exists!', status=409)
@@ -64,7 +65,7 @@ def register():
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password, salt)
 
-    confirm_secret = send_confirmation_email(username, hashed)
+    confirm_secret = send_confirmation_email(username, hashed, confirm_url)
 
     db.users.insert_one({
         'username': username,
@@ -82,12 +83,14 @@ def register():
 @jwt_required
 def confirm_email_req():
     id = get_jwt_identity()
+    confirm_url = request.json['confirm_url']
+
     user = db.users.find_one({'_id': ObjectId(id)})
 
     if (user["email_confirmed"]):
         return jsonify({"msg": "Email already confirmed" }), 400
 
-    confirm_secret = send_confirmation_email(user['username'], user['hashed'])
+    confirm_secret = send_confirmation_email(user['username'], user['hashed'], confirm_url)
 
     db.users.update(
         {'_id': ObjectId(id)},
@@ -98,13 +101,15 @@ def confirm_email_req():
 @accounts_api.route('/reset_password/request', methods = ['POST'])
 def reset_password_req():
     email = request.json['username']
+    reset_url = request.json['reset_url']
+
     user = db.users.find_one({'username': email})
 
     # Note we don't want to reveal if user exists
     if (user is None):
         return jsonify({"msg": "email sent"}), 200
 
-    reset_secret = send_reset_email(user['username'], user['hashed'])
+    reset_secret = send_reset_email(user['username'], user['hashed'], reset_url)
     db.users.update(
         {'_id': ObjectId(user['_id'])},
         {'$set': {'reset_secret': reset_secret}}
