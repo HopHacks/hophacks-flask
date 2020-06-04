@@ -35,13 +35,13 @@ def create_app(config_file='config/settings.json'):
     # Add endpoints from these files
     # Note order is important here
     from auth import auth_api
-    from users import users_api
+    from accounts import accounts_api
     from admin import admin_api
     from resumes import resume_api
 
     app.register_blueprint(auth_api, url_prefix='/api/auth')
     app.register_blueprint(admin_api, url_prefix='/api/admin')
-    app.register_blueprint(users_api, url_prefix='/api/users')
+    app.register_blueprint(accounts_api, url_prefix='/api/accounts')
     app.register_blueprint(resume_api, url_prefix='/api/resumes')
 
     return app

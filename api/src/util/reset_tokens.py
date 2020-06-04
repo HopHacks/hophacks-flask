@@ -1,11 +1,11 @@
 import jwt
-import datetime
+import time
 
 def create_reset_token(id, secret):
     return create_token(id, secret, 'reset')
 
 def create_confirm_token(id, secret):
-    return create_token(id, secret, 'confirm')
+    return create_token(id, secret, 'confirm', 86400)
 
 def read_reset_token(token, secret):
     return read_token(token, secret, 'reset')
@@ -14,13 +14,13 @@ def read_confim_token(token, secret):
     return read_token(token, secret, 'confirm')
 
 
-def create_token(id, secret, token_type):
+def create_token(id, secret, token_type, expire_seconds=300):
     payload = {
         'id' : id,
         'type' : token_type,
-        'iat' : int(datetime.datetime.utcnow().timestamp()),
-        'nbf' : int(datetime.datetime.utcnow().timestamp()),
-        'exp ': int((datetime.datetime.utcnow() + datetime.timedelta(seconds=300)).timestamp())
+        'iat' : int(time.time()),
+        'nbf' : int(time.time()),
+        'exp ': int(time.time() + expire_seconds)
     }
 
     return jwt.encode(payload, secret, algorithm='HS256')
