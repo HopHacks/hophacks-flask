@@ -2,7 +2,7 @@ import pytest
 from flask_jwt_extended import get_jti
 
 def test_bad_login(client):
-    response = client.post("/api/users/register", json={"username": "a", "password": "a"})
+    response = client.post("/api/accounts/register", json={"username": "a", "password": "a"})
     assert response.status_code == 200
     response = client.post("/api/auth/login", json={"username": "a", "password": "b"})
     assert response.status_code == 401
@@ -15,7 +15,7 @@ def test_login(client, test_db):
     response = client.get("/api/auth/test_protected")
     assert response.status_code == 401
 
-    response = client.post("/api/users/register", json={"username": "a", "password": "a"})
+    response = client.post("/api/accounts/register", json={"username": "a", "password": "a"})
     assert response.status_code == 200
     response = client.post("/api/auth/login", json={"username": "a", "password": "a"})
     assert response.status_code == 200

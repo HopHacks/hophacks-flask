@@ -17,7 +17,7 @@ def add_admin_account(client, db):
 
 def test_admin(client, test_db):
     # login and try to access admin with normal account
-    response = client.post("/api/users/register", json={"username": "a", "password": "a"})
+    response = client.post("/api/accounts/register", json={"username": "a", "password": "a"})
     assert response.status_code == 200
     response = client.post("/api/auth/login", json={"username": "a", "password": "a"})
     assert response.status_code == 200

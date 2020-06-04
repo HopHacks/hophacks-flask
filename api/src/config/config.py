@@ -15,6 +15,7 @@ settings = {}
 
 # TODO mongo username and password?
 settings['debug'] = True
+settings['TESTING'] = False
 settings['MONGO_URI'] = 'mongodb://localhost:27017'
 settings['MONGO_DB_NAME'] = 'hophacks'
 settings['SECRET_KEY'] = 'pineapple pizza'
