@@ -12,6 +12,8 @@ import Home from "./Home"
 import Profile from "./Profile"
 import Admin from "./admin/Admin"
 import Nav from "./Nav"
+import EmailConfirmation from "./EmailConfirmation"
+import PasswordReset from "./PasswordReset"
 
 export default function App() {
 
@@ -100,6 +102,9 @@ export default function App() {
           <Route path="/login">
             <Login login={login}/>
           </Route>
+          <Route path="/reset_password/:token" component={PasswordReset}/>
+          <Route path="/confirm_email/:token" component={EmailConfirmation}/>
+
           <Route path="/">
             <Home />
           </Route>
