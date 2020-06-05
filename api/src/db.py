@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-# TODO this is a bit ugly, maybe use a class instead?
+# TODO this is a bit ugly, maybe use a class/request context instead?
 mongo_client = None
 db = None
 

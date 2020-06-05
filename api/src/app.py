@@ -9,6 +9,14 @@ def create_app(config_file='config/settings.json'):
     config = json.load(open(config_file))
     app.config['SECRET_KEY'] = config['SECRET_KEY']
     app.debug = config['debug']
+    app.config['TESTING'] = config['TESTING']
+
+    app.config['BASE_URL'] = config['BASE_URL']
+    if (not app.config['TESTING']):
+        app.config['MAIL_SERVER'] = config['MAIL_SERVER']
+        app.config['MAIL_PORT'] = config['MAIL_PORT']
+        app.config['MAIL_USERNAME'] = config['MAIL_USERNAME']
+        app.config['MAIL_PASSWORD'] = config['MAIL_PASSWORD']
 
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers', 'json']
@@ -23,16 +31,19 @@ def create_app(config_file='config/settings.json'):
     from db import init_db
     init_db(config)
 
+    from mail import mail
+    mail.init_app(app)
+
     # Add endpoints from these files
     # Note order is important here
     from auth import auth_api
-    from users import users_api
+    from accounts import accounts_api
     from admin import admin_api
     from resumes import resume_api
 
     app.register_blueprint(auth_api, url_prefix='/api/auth')
     app.register_blueprint(admin_api, url_prefix='/api/admin')
-    app.register_blueprint(users_api, url_prefix='/api/users')
+    app.register_blueprint(accounts_api, url_prefix='/api/accounts')
     app.register_blueprint(resume_api, url_prefix='/api/resumes')
 
     return app

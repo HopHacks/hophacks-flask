@@ -1,5 +1,7 @@
 {
     "debug": true,
+    "TESTING": true,
+    "BASE_URL": "localhost:3000",
     "MONGO_URI": "mongodb://localhost:27017",
     "MONGO_DB_NAME": "hophacks-test",
     "SECRET_KEY": "malone hall"
