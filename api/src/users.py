@@ -1,3 +1,6 @@
+'''
+Endpoints to do with routes
+'''
 from db import db
 
 from flask import Blueprint, request, Response

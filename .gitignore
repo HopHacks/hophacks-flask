@@ -4,4 +4,6 @@ __pycache__
 hophacks-env
 node_modules
 
+build
+
 settings.json
