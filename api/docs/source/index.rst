@@ -11,22 +11,7 @@ Welcome to Hophacks Website API's documentation!
    :caption: Contents:
 
 
-Accounts
-=====================
-.. automodule:: users
-  :members:
-
-Auth
-=================
-.. automodule:: auth
-  :members:
-
-Resumes
-===================
-.. automodule:: resumes
-  :members:
-
-Admin
-===================
-.. automodule:: admin
-  :members:
+.. autoflask:: app:create_app('../src/config/settings.json')
+    :include-empty-docstring:
+    :blueprints: accounts
+    :undoc-static:

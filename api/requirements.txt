@@ -9,10 +9,8 @@ boto3>=1.13.18
 bcrypt>=3.1.7
 
 pytest>=5.4.2
-<<<<<<< HEAD
 
 boto3>=1.13.18
 
 sphinx
-=======
->>>>>>> master
+sphinxcontrib-httpdomain
