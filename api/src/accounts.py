@@ -72,7 +72,7 @@ def register():
     .. sourcecode:: json
 
         {
-            "username": "jaythebluejay@jhu.edu",
+            "username": "awong@jhu.edu",
             "password": "gohop",
             "confirm_url": "http://hophacks.com/confirm_email"
         }
@@ -122,7 +122,7 @@ def confirm_email_req():
     see ``/auth/login``) to make this request. See ``/accounts/register`` for example
     ``confirm_url`` and the resulting email link.
 
-    :reqheader Authorization: Should be in the form of ``Bearer: JWT``
+    :reqheader Authorization: Should be in the form of ``Bearer: <JWT>``
 
     :reqjson confirm_url: URL that the confirmation link should start with.
 
@@ -159,7 +159,7 @@ def reset_password_req():
     .. sourcecode:: json
 
         {
-            "username": "jaythebluejay@jhu.edu",
+            "username": "awong@jhu.edu",
             "confirm_url": "http://hophacks.com/confirm_email"
         }
 
@@ -174,6 +174,7 @@ def reset_password_req():
     to keep the fact that a user exists secret from inquisitive folk.
 
     :status 200: (unless server error occurs)
+
     """
 
     email = request.json['username']

@@ -5,13 +5,10 @@
 
 Welcome to Hophacks Website API's documentation!
 ================================================
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
-.. autoflask:: app:create_app('../src/config/settings.json')
-    :include-empty-docstring:
-    :blueprints: accounts
-    :undoc-static:
+   accounts
+   auth
+   resumes
