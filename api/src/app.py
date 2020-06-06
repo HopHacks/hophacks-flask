@@ -5,7 +5,6 @@ import json
 def create_app(config_file='config/settings.json'):
     app = Flask(__name__)
 
-    # TODO Configurations that need to be different for prod
     config = json.load(open(config_file))
     app.config['SECRET_KEY'] = config['SECRET_KEY']
     app.debug = config['debug']
