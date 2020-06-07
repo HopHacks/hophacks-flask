@@ -2,6 +2,11 @@ from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
 import json
 
+def set_if_present(app, config, key):
+    if (key in config):
+        app.config[key] = config[key]
+
+
 def create_app(config_file='config/settings.json'):
     app = Flask(__name__)
 
@@ -9,14 +14,14 @@ def create_app(config_file='config/settings.json'):
     config = json.load(open(config_file))
     app.config['SECRET_KEY'] = config['SECRET_KEY']
     app.debug = config['debug']
-    app.config['TESTING'] = config['TESTING']
 
-    app.config['BASE_URL'] = config['BASE_URL']
-    if (not app.config['TESTING']):
-        app.config['MAIL_SERVER'] = config['MAIL_SERVER']
-        app.config['MAIL_PORT'] = config['MAIL_PORT']
-        app.config['MAIL_USERNAME'] = config['MAIL_USERNAME']
-        app.config['MAIL_PASSWORD'] = config['MAIL_PASSWORD']
+    set_if_present(app, config, 'TESTING')
+
+    set_if_present(app, config, 'BASE_URL')
+    set_if_present(app, config, 'MAIL_SERVER')
+    set_if_present(app, config, 'MAIL_PORT')
+    set_if_present(app, config, 'MAIL_USERNAME')
+    set_if_present(app, config, 'MAIL_PASSWORD')
 
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers', 'json']
