@@ -212,7 +212,7 @@ def confirm_email():
     if (not read_confim_token(token, user['confirm_secret'])):
         return jsonify({"msg": "Bad request"}), 400
 
-    db.users.update(
+    db.users.update_one(
         {'_id': ObjectId(user['_id'])},
         {'$set': {'confirm_secret': '', 'email_confirmed': True}}
     )
@@ -244,7 +244,7 @@ def reset_password():
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password, salt)
 
-    db.users.update(
+    db.users.update_one(
         {'_id': ObjectId(user['_id'])},
         {'$set': {'reset_secret': '', 'hashed': hashed}}
     )

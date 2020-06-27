@@ -6,21 +6,25 @@ import json
 sys.path.append('../src')
 from app import create_app
 from db import get_db, get_mongo_client
+from mail import mail
 
 @pytest.fixture
 def client():
     app = create_app('test.json')
     app.config['TESTING'] = True;
-    
+
     db = get_db()
     mongo_client = get_mongo_client()
-
     db.users.delete_many({}) # clear database
+    
     with app.test_client() as client:
         yield client
 
     mongo_client.close()
 
+@pytest.fixture
+def test_mail():
+    yield mail
 
 @pytest.fixture
 def test_db():

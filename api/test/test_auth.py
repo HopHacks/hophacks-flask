@@ -1,8 +1,6 @@
 import pytest
 from flask_jwt_extended import get_jti
 
-
-
 register_json = {
     "username": "a",
     "password": "a",
