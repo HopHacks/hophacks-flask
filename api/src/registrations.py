@@ -12,7 +12,7 @@ registrations_api = Blueprint('registrations', __name__)
 def apply():
     """As a user, apply to an event
 
-    :reqheader Authorization: ``Bearer: <JWT Token>``
+    :reqheader Authorization: ``Bearer <JWT Token>``
 
     :reqjson event: Semester and year, for example 'Spring_2020'
     :reqjson TODO: other information (ie. shirt size and stuff)
@@ -29,7 +29,7 @@ def apply():
 def accept():
     """Accepts a list of users to the event, and sends an email to notify them.
 
-    :reqheader Authorization: ``Bearer: <JWT Token>``, needs to be admin account
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
 
     :reqjson users: List of user ids to mark as accepted
     :reqjson event: Semester and year, for exmaple ``Spring_2020``
@@ -55,7 +55,7 @@ def accept():
 def check_in():
     """As an admin user, check another user in to an event
 
-    :reqheader Authorization: ``Bearer: <JWT Token>``, needs to be admin account
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
 
     :reqjson user: User id to be accepted
     :reqjson event: Semester and year, for exmaple ``Spring_2020``

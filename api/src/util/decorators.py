@@ -18,5 +18,5 @@ def check_admin(endpoint_func):
             return jsonify({'msg': 'This endpoint requires admin access'}), 401
 
         return endpoint_func(*args, **kwargs)
-
+    wrapper.__name__ = endpoint_func.__name__
     return wrapper

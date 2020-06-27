@@ -1,16 +1,6 @@
 import pytest
 from flask_jwt_extended import get_jti
-
-register_json = {
-    "username": "a",
-    "password": "a",
-    "confirm_url": "test.com/confirm"
-}
-
-login_json = {
-    "username": "a",
-    "password": "a"
-}
+from requests import register_json, login_json
 
 def test_bad_login(client):
     response = client.post("/api/accounts/register", json=register_json)
