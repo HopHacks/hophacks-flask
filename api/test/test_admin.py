@@ -32,6 +32,6 @@ def test_admin(client, test_db):
     response = client.post("/api/auth/login", json={"username": "admin", "password": "admin"})
     assert response.status_code == 200
 
-    token_json = response.json
-    response = client.get("/api/admin/", json=token_json)
+    token = response.json["access_token"]
+    response = client.get("/api/admin/", headers={'Authorization': 'Bearer ' + token})
     assert response.status_code == 200

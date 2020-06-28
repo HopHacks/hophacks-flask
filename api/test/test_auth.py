@@ -28,15 +28,15 @@ def test_login(client, test_db):
     assert (get_jti(refresh_token) in test_db.users.find_one({'username' : "a"})["refresh_tokens"])
 
     # Make sure access token is valid
-    token_json = response.json
-    response = client.get("/api/auth/test_protected", json = token_json)
+    token = response.json["access_token"]
+    response = client.get("/api/auth/test_protected", headers={'Authorization': 'Bearer ' + token})
     assert response.status_code == 200
 
     # Refresh token and try agian
     response = client.get("/api/auth/session/refresh")
     assert response.status_code == 200
-    token_json = response.json
-    response = client.get("/api/auth/test_protected", json = token_json)
+    token = response.json["access_token"]
+    response = client.get("/api/auth/test_protected", headers={'Authorization': 'Bearer ' + token})
     assert response.status_code == 200
 
     response = client.get("/api/auth/session/logout")
