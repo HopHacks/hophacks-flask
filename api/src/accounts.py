@@ -71,8 +71,8 @@ def validate_profile(request):
 
     return True
 
-@accounts_api.route('/register', methods = ['POST'])
-def register():
+@accounts_api.route('/create', methods = ['POST'])
+def create():
     """Create an account with a username (email) and password
 
     :reqjson username: email of the new account
@@ -308,7 +308,7 @@ def search_profile():
 @jwt_required
 def confirm_email_req():
     """Request a new confirmation email. Must be logged in (ie. have an auth JWT token,
-    see ``/auth/login``) to make this request. See ``/accounts/register`` for example
+    see ``/auth/login``) to make this request. See ``/accounts/create`` for example
     ``confirm_url`` and the resulting email link.
 
     :reqheader Authorization: Should be in the form of ``Bearer <JWT>``
@@ -384,7 +384,7 @@ def reset_password_req():
 
 @accounts_api.route('/confirm_email', methods = ['POST'])
 def confirm_email():
-    """Confirm email using the token from the email sent by ``/api/accounts/register``
+    """Confirm email using the token from the email sent by ``/api/accounts/create``
     and ``/api/accounts/confirm_email/request``
 
     :reqjson confirm_token: Token from confirmation email link.

@@ -1,7 +1,4 @@
-from utils import register_json, login_json, add_admin_account, admin_login_json
-
-import bcrypt
-
+from utils import create_json, login_json, add_admin_account, admin_login_json
 
 def extract_token(msg, url):
     token_begin = msg.body.index(url) + len(url) + 1
@@ -20,16 +17,16 @@ def extract_token(msg, url):
 def test_register(client, test_db, test_mail):
     # test that successful registration gives good response
     with test_mail.record_messages() as outbox:
-        response = client.post("/api/accounts/register", json=register_json)
+        response = client.post("/api/accounts/create", json=create_json)
         assert response.status_code == 200
 
         # check email is sent with confirm url
         assert len(outbox) == 1
-        assert register_json["confirm_url"] in outbox[0].body
-        assert register_json["confirm_url"] in outbox[0].html
+        assert create_json["confirm_url"] in outbox[0].body
+        assert create_json["confirm_url"] in outbox[0].html
 
         # test that you can't register the same username
-        response = client.post("/api/accounts/register", json=register_json)
+        response = client.post("/api/accounts/create", json=create_json)
         assert response.status_code == 409
 
         # test user exists in db
@@ -39,7 +36,7 @@ def test_register(client, test_db, test_mail):
         # test email confirm
         assert not user['email_confirmed']
 
-        token = extract_token(outbox[0], register_json['confirm_url'])
+        token = extract_token(outbox[0], create_json['confirm_url'])
         confirm_json = {"confirm_token": token}
         response = client.post("/api/accounts/confirm_email", json=confirm_json)
         assert response.status_code == 200
@@ -49,7 +46,7 @@ def test_register(client, test_db, test_mail):
 
 def test_get_profile(client, test_db):
     # register account
-    response = client.post("/api/accounts/register", json=register_json)
+    response = client.post("/api/accounts/create", json=create_json)
     assert response.status_code == 200
 
     # login and get own info
@@ -60,15 +57,15 @@ def test_get_profile(client, test_db):
     response = client.get("/api/accounts/profile/get", headers={'Authorization': 'Bearer ' + token})
     assert response.status_code == 200
 
-    assert response.json["profile"] == register_json["profile"]
+    assert response.json["profile"] == create_json["profile"]
 
 def test_update_profile(client, test_db):
     # register account
-    response = client.post("/api/accounts/register", json=register_json)
+    response = client.post("/api/accounts/create", json=create_json)
     assert response.status_code == 200
 
     update_json = {
-        "profile": register_json["profile"]
+        "profile": create_json["profile"]
     }
     update_json["profile"]["school"] = "Jooby Hooby"
 
@@ -86,7 +83,7 @@ def test_delete_account(client, test_db):
     add_admin_account(client, test_db)
 
     # register account
-    response = client.post("/api/accounts/register", json=register_json)
+    response = client.post("/api/accounts/create", json=create_json)
     assert response.status_code == 200
 
     user = test_db.users.find_one({'username' : login_json['username']})

@@ -2,11 +2,11 @@ import pytest
 
 from flask_jwt_extended import get_jti
 
-from utils import register_json, login_json, add_admin_account, admin_login_json
+from utils import create_json, login_json, add_admin_account, admin_login_json
 
 def test_admin(client, test_db):
     # login and try to access admin with normal account
-    response = client.post("/api/accounts/register", json=register_json)
+    response = client.post("/api/accounts/create", json=create_json)
     assert response.status_code == 200
     response = client.post("/api/auth/login", json=login_json)
     assert response.status_code == 200

@@ -1,5 +1,6 @@
 import bcrypt
 
+
 def add_admin_account(client, db):
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw("admin".encode(), salt)
@@ -17,7 +18,7 @@ admin_login_json = {
     "password": "admin"
 }
 
-register_json = {
+create_json = {
     "username": "a",
     "password": "a",
     "confirm_url": "test.com/confirm",
@@ -42,7 +43,7 @@ login_json = {
     "password": "a"
 }
 
-register_json2 = {
+create_json2 = {
     "username": "b",
     "password": "b",
     "confirm_url": "test.com/confirm",
@@ -65,4 +66,29 @@ register_json2 = {
 login_json2 = {
     "username": "b",
     "password": "b"
+}
+
+create_json3 = {
+    "username": "c",
+    "password": "c",
+    "confirm_url": "test.com/confirm",
+    "profile": {
+        "first_name": "Jason",
+        "last_name": "Zhang",
+        "gender": "female",
+        "major": "Computer Science",
+        "phone_number": "8888888888",
+        "school": "Jooby Hooby University",
+        "exp": "no",
+        "ethnicity": "Asian/Pacific Islander",
+        "grad": "ugrad",
+        "is_jhu": True,
+        "grad_month": "05",
+        "grad_year": "2022"
+    }
+}
+
+login_json3 = {
+    "username": "c",
+    "password": "c"
 }
