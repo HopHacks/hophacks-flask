@@ -1,6 +1,7 @@
 import pytest
 from flask_jwt_extended import get_jti
-from requests import register_json, login_json
+
+from utils import register_json, login_json, login_json2
 
 def test_bad_login(client):
     response = client.post("/api/accounts/register", json=register_json)
@@ -25,7 +26,7 @@ def test_login(client, test_db):
     cookie = response.headers.get('Set-Cookie')
     prefix = 'refresh_token_cookie='
     refresh_token = cookie[len(prefix):cookie.index(';')]
-    assert (get_jti(refresh_token) in test_db.users.find_one({'username' : "a"})["refresh_tokens"])
+    assert (get_jti(refresh_token) in test_db.users.find_one({'username' : login_json['username']})["refresh_tokens"])
 
     # Make sure access token is valid
     token = response.json["access_token"]
@@ -41,4 +42,4 @@ def test_login(client, test_db):
 
     response = client.get("/api/auth/session/logout")
     assert response.status_code == 200
-    assert (get_jti(refresh_token) not in test_db.users.find_one({'username' : "a"})["refresh_tokens"])
+    assert (get_jti(refresh_token) not in test_db.users.find_one({'username' : login_json['username']})["refresh_tokens"])

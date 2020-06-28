@@ -1,17 +1,7 @@
-from requests import register_json, login_json
+from utils import register_json, login_json, add_admin_account, admin_login_json
+
 import bcrypt
 
-def add_admin_account(client, db):
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw("admin".encode(), salt)
-
-    db.users.insert_one({
-        'username': "admin",
-        'hashed': hashed,
-        'refresh_tokens': [],
-        'profile': {},
-        'is_admin' : True
-    })
 
 def extract_token(msg, url):
     token_begin = msg.body.index(url) + len(url) + 1
@@ -43,7 +33,7 @@ def test_register(client, test_db, test_mail):
         assert response.status_code == 409
 
         # test user exists in db
-        user = test_db.users.find_one({"username" : "a"})
+        user = test_db.users.find_one({'username' : login_json['username']})
         assert user is not None
 
         # test email confirm
@@ -54,7 +44,7 @@ def test_register(client, test_db, test_mail):
         response = client.post("/api/accounts/confirm_email", json=confirm_json)
         assert response.status_code == 200
 
-        user = test_db.users.find_one({"username" : "a"})
+        user = test_db.users.find_one({'username' : login_json['username']})
         assert user['email_confirmed']
 
 def test_get_profile(client, test_db):
@@ -89,7 +79,7 @@ def test_update_profile(client, test_db):
     response = client.post("/api/accounts/profile/update", json=update_json, headers={'Authorization': 'Bearer ' + token})
     assert response.status_code == 200
 
-    user = test_db.users.find_one({"username" : "a"})
+    user = test_db.users.find_one({'username' : login_json['username']})
     assert user["profile"]["school"] == "Jooby Hooby"
 
 def test_delete_account(client, test_db):
@@ -99,7 +89,7 @@ def test_delete_account(client, test_db):
     response = client.post("/api/accounts/register", json=register_json)
     assert response.status_code == 200
 
-    user = test_db.users.find_one({"username" : "a"})
+    user = test_db.users.find_one({'username' : login_json['username']})
     id = user['_id']
 
     # try logging in and attempting to delete as normal user
@@ -116,4 +106,4 @@ def test_delete_account(client, test_db):
     response = client.post("/api/accounts/delete", json={"user": str(id)}, headers={'Authorization': 'Bearer ' + token})
     assert response.status_code == 200
 
-    assert test_db.users.find_one({"username" : "a"}) is None
+    assert test_db.users.find_one({'username' : login_json['username']}) is None
