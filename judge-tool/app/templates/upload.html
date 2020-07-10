@@ -1,0 +1,24 @@
+<!doctype html>
+<title>Upload</title>
+<p>
+  {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</p>
+<form action = "/display" method = "post" name="form" enctype="multipart/form-data">
+  <h2>Upload submissions file (.csv)</h2>
+  <input type="file" name="sfile" />
+  <h2>Upload judges file (.txt)</h2>
+  <input type="file" name="jfile">
+  <h2>Input judges per team (int)</h2>
+  <input type="text" name="ifile">
+  <br>
+  <br>
+  <input type = "submit" name="submit" value="Upload">
+</form>

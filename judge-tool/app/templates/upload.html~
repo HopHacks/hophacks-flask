@@ -1,0 +1,43 @@
+<!doctype html>
+<title>Upload</title>
+<h2>Upload submissions file (.csv)</h2>
+<p>
+  {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</p>
+<form name="sform" enctype="mulitpart/form-data">
+  <dl>
+    <p>
+      <input type="file" name="sfile" autocomplete="off" required/>
+    </p>
+  </dl>
+</form>
+<h2>Upload judges file (.txt)</h2>
+<form name="jform" enctype="multipart/form-data">
+  <dl>
+    <p>
+      <input type="file" name="jfile" autocomplete="off" required/>
+    </p>
+  </dl>
+</form>
+<h2>Input judges per team (int)</h2>
+<form name="iform" enctype="multipart/form-data">
+  <dl>
+    <p>
+      <input type="text" name="ifile" autocomplete="off" required/>
+    </p>
+  </dl>
+</form>
+<br>
+<form method="post" name="button" action="/display" enctype="multipart/form-data">
+  <p>
+    <input type="submit" name="submit" value="Submit">
+  </p>
+</form>
