@@ -23,20 +23,3 @@ def assign_judges(judges, submissions, judges_per_team):
         i += 1
 
     return assignments
-
-
-def process_submissions(sub_file):
-    sub_string = sub_file.read().decode('utf-8').splitlines()
-    sub_dicts = [{k: v for k, v in row.items()} for row \
-                 in csv.DictReader(sub_string)]
-    submissions = []
-    for x in sub_dicts:
-        submissions.append(x['Submission Title'])
-    random.Random(0).shuffle(submissions)
-    return submissions
-
-
-def process_judges(judge_file):
-    judge_string = judge_file.read().decode('utf-8')
-    judges = list(judge_string.split("\n"))
-    return judges

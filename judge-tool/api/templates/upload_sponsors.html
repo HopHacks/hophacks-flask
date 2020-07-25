@@ -1,6 +1,5 @@
 <!doctype html>
 <title>Upload</title>
-<h2>Upload submissions file (.csv)</h2>
 <p>
   {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -12,9 +11,10 @@
       {% endif %}
     {% endwith %}
 </p>
-<form method="post" name="sform" action="/display" enctype="mulitpart/form-data">
-  <dl>
-    <p>
-      <input type="file" name="sfile" autocomplete="off" required>
-    </p>
-  </dl>
+<form action = "/display-sponsors" method = "post" name="form" enctype="multipart/form-data">
+  <h2>Upload sponsor prizes file (.csv)</h2>
+  <input type="file" name="sponsors_file" />
+  <br>
+  <br>
+  <input type = "submit" name="submit" value="Upload">
+</form>

@@ -10,7 +10,7 @@ def create_app():
 
     db.init_db(app.config)
 
-    from app.assign import bp
+    from api.assign import bp
     app.register_blueprint(bp)
-    
+
     return app
