@@ -1,28 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
-import { Assignments } from './components/Assignments';
-import { Table } from './components/Assignments';
+import React from 'react';
+import Assignments from './components/Assignments';
+import Upload from './components/Upload';
+import TableAssignments from './components/TableAssignments';
+import UploadSponsors from './components/UploadSponsors';
+import SponsorPrizes from './components/SponsorPrizes';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [assignments, setAssignments] = useState([]);
-
-  useEffect(() => {
-    fetch('/display').then(response =>
-      response.json().then(data => {
-        setAssignments(data);
-        console.log(data);
-        console.log(Object.keys(data));
-      })
-    );
-  }, []);
 
   return (
-    /*<div className="App">
-      <Assignments assignments={assignments} />
-    </div>*/
-    Table t = new Table();
-    <Table data={this.state.data}/>
-  );
+    <div style={{width : '70%', margin: 40}}>
+      <Router>
+        <Switch>
+          <Route path="/assignments" exact component={Assignments}/>
+          <Route path="/upload" exact component={Upload}/>
+          <Route path="/table-assignments" exact component={TableAssignments}/>
+          <Route path="/upload-sponsors" exact component={UploadSponsors}/>
+          <Route path="/sponsor-prizes" exact component={SponsorPrizes}/>
+        </Switch>
+      </Router>
+    </div>)
 
 }
 

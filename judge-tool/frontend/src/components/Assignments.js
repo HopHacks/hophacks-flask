@@ -1,58 +1,60 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import Table from 'react-bootstrap/Table'
 
-class Table extends React.Component {
-  constructor(props){
-    super(props);
-    this.getHeader = this.getHeader.bind(this);
-    this.getRowsData = this.getRowsData.bind(this);
-    this.getKeys = this.getKeys.bind(this);
-  }
+function Assignments() {
+  const [assignments, setAssignments] = useState([]);
+  const [tables, setTables] = useState([]);
 
-  getKeys = function() {
-    return ["Judge", "Submission"]
-  }
+  useEffect(() => {
+    fetch('/assignments').then(response =>
+      response.json().then(data => {
+        setAssignments(data);
+      })
+    );
+  }, []);
 
-  getHeader = function() {
-    let keys = this.getKeys();
-    return keys.map((key, index)=>{
-      return <th key={key}>{key}</th>
-    })
-  }
+  useEffect(() => {
+    fetch('/table-assignments').then(tables =>
+      tables.json().then(data => {
+        setTables(data);
+      })
+    );
+  }, []);
 
-  getRowsData = function(){
-    var items = this.props.data;
-    var keys = this.getKeys();
-    return items.map((row, index)=>{
-      return <tr key={index}><RenderRow key={index} data={row} keys={keys}/></tr>
-    })
-  }
+  const judges = Object.keys(assignments);
+  const submissions = Object.values(assignments);
 
-  render() {
-    return (
-      <div>
-        <table>
-          <thead>
-            <tr>{this.getHeader()}</tr>
-          </thead>
-          <tbody>
-            {this.getRowsData()}
-          </tbody>
-        </table>
-      </div>
-    );}
-}
-
-const RenderRow = (props) =>{
-  return props.keys.map((key, index)=>{
-    return <td key={props.data[key]}>{props.data[key]}</td>
-  })
-}
-
-const t = new Table({assignments});
-export default t;
-
-/*export const Assignments = ({assignments}) => {
   return (
-    <div>assignments</div>
+      <div>
+        <Table bordered hover>
+        <thead>
+            <tr>
+                <th>Judge</th>
+                <th>Submissions and table numbers</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {judges.map(judge => {
+                return (
+                    <tr key={judge}>
+                        <td>{judge}</td>
+                        <td>
+                            <ul style={{listStyleType:"none", padding:"3px"}}>
+                                {submissions[judges.indexOf(judge)].map(sub => {
+                                    return (
+                                        <li style={{marginBottom:"2px"}} key={sub}>{tables[sub]}. {sub}</li>
+                                    )
+                                })}
+                            </ul>
+                        </td>
+                    </tr>
+                )
+            })}
+        </tbody>
+        </Table>
+      </div>
   )
-}*/
+}
+
+export default Assignments;

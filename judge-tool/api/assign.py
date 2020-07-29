@@ -9,11 +9,11 @@ import pymongo
 
 bp = Blueprint('assign', __name__)
 
-ALLOWED_EXTENSIONS = {"csv", "txt"}
-
 #col: judge assignments
 #col2: sponsor prizes
 #col3: table assignments
+
+ALLOWED_EXTENSIONS = {"csv", "txt"}
 
 
 def allowed_file(filename):
@@ -23,14 +23,12 @@ def allowed_file(filename):
 
 def get_assignments():
     result = db.db.col.find_one({}, {'_id': 0})
-    return render_template('display.html', result=result)
-    #return jsonify(result)
+    return jsonify(result)
 
 
 def get_sponsor_prizes():
     result = db.db.col2.find_one({}, {'_id': 0})
-    return render_template('display_sponsors.html', result=result)
-    #return jsonify(result)
+    return jsonify(result)
 
 
 def assign_tables(submissions):
@@ -60,19 +58,12 @@ def time_constraints(assignments, submissions):
                         assignments[i][indices[i]], assignments[i][0] = assignments[i][0], assignments[i][indices[i]]
 
 
-
-@bp.route('/upload', methods=["GET", "POST"])
-def upload():
-    return render_template("upload.html")
-
-
-@bp.route('/display', methods=["GET", "POST"])
-def display():
+@bp.route('/assignments', methods=["GET", "POST"])
+def assignments():
     if request.method == 'POST':
         if 'sfile' not in request.files \
            or 'jfile' not in request.files:
-                flash('No file attached')
-                return redirect(url_for("assign.upload"))
+                return jsonify({"msg : error"}), 500
 
         sub_file = request.files['sfile']
         judge_file = request.files['jfile']
@@ -80,13 +71,11 @@ def display():
         try:
             per_team = int(request.form['ifile'])
         except ValueError as e:
-            flash('Enter an integer')
-            return redirect(url_for("assign.upload"))
+            return jsonify({"msg : error"}), 500
 
         if not (sub_file and allowed_file(sub_file.filename)) \
            or not (judge_file and allowed_file(judge_file.filename)):
-            flash('Incorrect file type')
-            return redirect(url_for("assign.upload"))
+            return jsonify({"msg : error"}), 500
 
         sub_string = sub_file.read().decode('utf-8').splitlines()
         sub_dicts = [{k: v for k, v in row.items()} for row \
@@ -110,23 +99,16 @@ def display():
         return get_assignments()
 
 
-@bp.route('/upload-sponsors', methods=["GET", "POST"])
-def upload_sponsor_prizes():
-    return render_template("upload_sponsors.html")
-
-
-@bp.route('/display-sponsors', methods=["GET", "POST"])
-def display_sponsor_prizes():
+@bp.route('/sponsor-prizes', methods=["GET", "POST"])
+def sponsor_prizes():
     if request.method == 'POST':
         if 'sponsors_file' not in request.files:
-            flash('No file attached')
-            return redirect(url_for("assign.upload-sponsors"))
+            return jsonify({"msg : error"}), 500
 
         sponsors_file = request.files['sponsors_file']
 
         if not (sponsors_file and allowed_file(sponsors_file.filename)):
-            flash('Incorrect file type')
-            return redirect(url_for("assign.upload-sponsors"))
+            return jsonify({"msg : error"}), 500
 
         file_string = sponsors_file.read().decode('utf-8').splitlines()
         dicts = [{k: v for k, v in row.items()} for row \
@@ -148,4 +130,4 @@ def display_sponsor_prizes():
 @bp.route('/table-assignments', methods=["GET"])
 def table_assignments():
     result = db.db.col3.find_one({}, {'_id': 0})
-    return render_template('table_assignments.html', result=result)
+    return jsonify(result);
