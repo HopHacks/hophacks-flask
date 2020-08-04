@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table'
 function Assignments() {
   const [assignments, setAssignments] = useState([]);
   const [tables, setTables] = useState([]);
+  const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
     fetch('/assignments').then(response =>
@@ -21,8 +22,26 @@ function Assignments() {
     );
   }, []);
 
+  useEffect(() => {
+    fetch('/room-assignments').then(response =>
+      response.json().then(data => {
+        setRooms(data);
+      })
+    );
+  }, []);
+
   const judges = Object.keys(assignments);
   const submissions = Object.values(assignments);
+  let dict = {};
+  const teams = Object.values(rooms);
+  for (let i = 0; i < teams.length; i++) {
+      for (let j = 0; j < teams[i].length; j++) {
+          let list = teams[i];
+          if (!(list[j] in dict)) {
+              dict[list[j]] = Object.keys(rooms)[i];
+          }
+      }
+  }
 
   return (
       <div>
@@ -30,7 +49,7 @@ function Assignments() {
         <thead>
             <tr>
                 <th>Judge</th>
-                <th>Submissions and table numbers</th>
+                <th>Submissions</th>
             </tr>
         </thead>
 
@@ -43,7 +62,7 @@ function Assignments() {
                             <ul style={{listStyleType:"none", padding:"3px"}}>
                                 {submissions[judges.indexOf(judge)].map(sub => {
                                     return (
-                                        <li style={{marginBottom:"2px"}} key={sub}>{tables[sub]}. {sub}</li>
+                                        <li style={{marginBottom:"2px"}} key={sub}>{tables[sub]}. {sub} ({dict[sub]})</li>
                                     )
                                 })}
                             </ul>
