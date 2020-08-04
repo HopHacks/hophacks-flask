@@ -12,6 +12,7 @@ bp = Blueprint('assign', __name__)
 #col: judge assignments
 #col2: sponsor prizes
 #col3: table assignments
+#col4: room assignments
 
 ALLOWED_EXTENSIONS = {"csv", "txt"}
 
@@ -31,6 +32,11 @@ def get_sponsor_prizes():
     return jsonify(result)
 
 
+def get_rooms():
+    result = db.db.col4.find_one({}, {'_id': 0})
+    return jsonify(result)
+
+
 def assign_tables(submissions):
     tables = {}
     i = 1
@@ -41,21 +47,30 @@ def assign_tables(submissions):
 
 
 def time_constraints(assignments, submissions):
-    for x in submissions:
-        indices = {} #key = list, value = index
-        for y in assignments:
-            if x in assignments[y]:
-                indices[y] = assignments[y].index(x)
-        for z in indices:
-            for i in indices:
-                if z == i:
+    positions = {}
+    for sub in submissions:
+        positions[sub] = {}
+        for a in assignments:
+            for item in assignments[a]:
+                if item == sub:
+                    positions[sub][a] = assignments[a].index(item)
+
+    for pos in positions:
+        for key_a in positions[pos]:
+            for key_b in positions[pos]:
+                if key_a == key_b:
                     break
-                if indices[z] == indices[i]:
-                    if indices[i] < assignments[i].len():
-                        assignments[i][indices[i]], assignments[i][indices[i] + 1] = \
-                        assignments[i][indices[i] + 1], assignments[i][indices[i]]
-                    else:
-                        assignments[i][indices[i]], assignments[i][0] = assignments[i][0], assignments[i][indices[i]]
+                    if positions[pos][key_a] == positions[pos][key_b]:
+                        if positions[pos][key_a] < len(assignments[key_a]) - 1:
+                            assignments[key_a][positions[pos][key_a]], \
+                            assignments[key_a][positions[pos][key_a] + 1] = \
+                            assignments[key_a][positions[pos][key_a] + 1], \
+                            assignments[key_a][positions[pos][key_a]]
+                        else:
+                            assignments[key_a][positions[pos][key_a]], \
+                            assignments[key_a][0] = \
+                            assignments[key_a][0], \
+                            assignments[key_a][positions[pos][key_a]]
 
 
 @bp.route('/assignments', methods=["GET", "POST"])
@@ -85,6 +100,7 @@ def assignments():
             submissions.append(x['Submission Title'])
         random.Random(0).shuffle(submissions)
         assign_tables(submissions)
+        assign_rooms(submissions)
 
         judge_string = judge_file.read().decode('utf-8')
         judges = list(judge_string.split("\n"))
@@ -131,3 +147,58 @@ def sponsor_prizes():
 def table_assignments():
     result = db.db.col3.find_one({}, {'_id': 0})
     return jsonify(result);
+
+
+@bp.route('/room-assignments', methods=["GET", "POST"])
+def room_assignments():
+    if request.method == 'POST':
+        if 'room_file' not in request.files:
+            return jsonify({"msg : error"}), 500
+
+        file = request.files['room_file']
+
+        if not (file and allowed_file(file.filename)):
+            return jsonify({"msg : error"}), 500
+
+        file_string = file.read().decode('utf-8').splitlines()
+        dicts = [{k: v for k, v in row.items()} for row \
+                     in csv.DictReader(file_string)]
+        rooms = {}
+        for i in dicts:
+            rooms[i['Room']] = i['Capacity']
+
+        temp_tables = db.db.col3.find_one({}, {'_id': 0})
+        tables = {v: k for k, v in temp_tables.items()}
+        assignments = {}
+
+        total = 0
+        for room in rooms:
+            total += int(rooms[room])
+
+        if (total <= len(tables)):
+            return jsonify({"msg : error"}), 500
+
+        assignments = {}
+        counter = 1
+        end = False
+        for room in rooms:
+            cap = int(rooms[room])
+            teams = int(cap/4)
+            i = 0
+            assignments[room] = []
+            while i < int(teams*.8):
+                if counter == len(tables) + 1:
+                    end = True
+                    break
+                assignments[room].append(tables[counter])
+                i += 1
+                counter += 1
+            if end:
+                break
+
+        db.db.col4.replace_one({}, assignments, upsert=True)
+
+        return get_rooms()
+
+    if request.method == 'GET':
+        return get_rooms()
