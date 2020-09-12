@@ -8,6 +8,7 @@ class Upload extends Component {
     state = {
         judgesFile : null,
         submissionsFile : null,
+        roomsFile : null,
         number : 0
     };
 
@@ -23,6 +24,10 @@ class Upload extends Component {
         this.setState({ submissionsFile: event.target.files[0] });
     };
 
+    onRoomsFileChange = event => {
+        this.setState({ roomsFile: event.target.files[0] });
+    };
+
     onNumberChange = event => {
         this.setState({ number: event.target.value})
     };
@@ -32,13 +37,14 @@ class Upload extends Component {
         const formData = new FormData();
         formData.append("jfile", this.state.judgesFile);
         formData.append("sfile", this.state.submissionsFile);
+        formData.append("room_file", this.state.roomsFile);
         formData.append("ifile", this.state.number);
 
         try {
             await axios.post("/assignments", formData);
             this.props.history.push('/assignments');
         } catch(error) {
-            if (!this.state.judgesFile || !this.state.submissionsFile || this.state.number === 0){
+            if (!this.state.judgesFile || !this.state.submissionsFile || !this.state.roomsFile || this.state.number === 0){
                 alert("Please fill all fields.");
             } else if (this.state.judgesFile.name.split('.').pop() !== "txt") {
                 alert("Judges file must be .txt");
@@ -93,6 +99,17 @@ class Upload extends Component {
                 <Form.Text className="text-muted">
                     Must be less than or equal to the total number of judges.
                 </Form.Text>
+
+                <h2>List of rooms</h2>
+                <Form.File
+                    name="room_file"
+                    onChange={this.onRoomsFileChange}
+                    id="custom-file"
+                    label="Choose file"
+                    accept=".csv"
+                    style={{width : '60%'}}
+                    custom
+                />
 
                 <br/> <br/>
                 <Button variant="primary" type="submit">

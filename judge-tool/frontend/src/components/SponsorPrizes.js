@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/Table'
 
 function SponsorPrizes() {
   const [prizes, setPrizes] = useState([]);
+  const [tables, setTables] = useState([]);
+  const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
     fetch('/sponsor-prizes').then(response =>
@@ -12,8 +14,34 @@ function SponsorPrizes() {
     );
   }, []);
 
+  useEffect(() => {
+    fetch('/table-assignments').then(tables =>
+      tables.json().then(data => {
+        setTables(data);
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    fetch('/room-assignments').then(response =>
+      response.json().then(data => {
+        setRooms(data);
+      })
+    );
+  }, []);
+
   let sponsors = Object.keys(prizes);
   let teams = Object.values(prizes);
+  let dict = {};
+  const tempTeams = Object.values(rooms);
+  for (let i = 0; i < tempTeams.length; i++) {
+      for (let j = 0; j < tempTeams[i].length; j++) {
+          let list = tempTeams[i];
+          if (!(list[j] in dict)) {
+              dict[list[j]] = Object.keys(rooms)[i];
+          }
+      }
+  }
 
   return (
       <div>
@@ -34,7 +62,7 @@ function SponsorPrizes() {
                             <ul style={{listStyleType:"none", padding:"3px"}}>
                                 {teams[sponsors.indexOf(sponsor)].map(team => {
                                     return (
-                                        <li style={{margin:"2px"}} key={team}>{team}</li>
+                                        <li style={{margin:"2px"}} key={team}>{tables[team]}. {team} ({dict[team]})</li>
                                     )
                                 })}
                             </ul>

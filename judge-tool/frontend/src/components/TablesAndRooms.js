@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table'
 
-function RoomAssignments() {
+function TablesAndRooms() {
   const [roomAssignment, setRoomAssignment] = useState([]);
   const [tables, setTables] = useState([]);
 
@@ -58,4 +58,4 @@ function RoomAssignments() {
 
 }
 
-export default RoomAssignments;
+export default TablesAndRooms;

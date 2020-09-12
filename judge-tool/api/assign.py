@@ -32,6 +32,11 @@ def get_sponsor_prizes():
     return jsonify(result)
 
 
+def get_tables():
+    result = db.db.col3.find_one({}, {'_id': 0})
+    return jsonify(result);
+
+
 def get_rooms():
     result = db.db.col4.find_one({}, {'_id': 0})
     return jsonify(result)
@@ -44,6 +49,46 @@ def assign_tables(submissions):
         tables[x] = i
         i += 1
     db.db.col3.replace_one({}, tables, upsert=True)
+
+
+def assign_rooms(room_file):
+    file_string = room_file.read().decode('utf-8').splitlines()
+    dicts = [{k: v for k, v in row.items()} for row \
+                 in csv.DictReader(file_string)]
+    rooms = {}
+    for i in dicts:
+        rooms[i['Room']] = i['Capacity']
+
+    temp_tables = db.db.col3.find_one({}, {'_id': 0})
+    tables = {v: k for k, v in temp_tables.items()}
+    assignments = {}
+
+    total = 0
+    for room in rooms:
+        total += int(rooms[room])
+
+    if (total <= len(tables)):
+        return jsonify({"msg : error"}), 500
+
+    assignments = {}
+    counter = 1
+    end = False
+    for room in rooms:
+        cap = int(rooms[room])
+        teams = int(cap/4)
+        i = 0
+        assignments[room] = []
+        while i < int(teams*.8):
+            if counter == len(tables) + 1:
+                end = True
+                break
+            assignments[room].append(tables[counter])
+            i += 1
+            counter += 1
+        if end:
+            break
+
+    db.db.col4.replace_one({}, assignments, upsert=True)
 
 
 def time_constraints(assignments, submissions):
@@ -77,11 +122,13 @@ def time_constraints(assignments, submissions):
 def assignments():
     if request.method == 'POST':
         if 'sfile' not in request.files \
-           or 'jfile' not in request.files:
+           or 'jfile' not in request.files \
+           or 'room_file' not in request.files:
                 return jsonify({"msg : error"}), 500
 
         sub_file = request.files['sfile']
         judge_file = request.files['jfile']
+        room_file = request.files['room_file']
 
         try:
             per_team = int(request.form['ifile'])
@@ -89,7 +136,8 @@ def assignments():
             return jsonify({"msg : error"}), 500
 
         if not (sub_file and allowed_file(sub_file.filename)) \
-           or not (judge_file and allowed_file(judge_file.filename)):
+           or not (judge_file and allowed_file(judge_file.filename)) \
+           or not (room_file and allowed_file(room_file.filename)):
             return jsonify({"msg : error"}), 500
 
         sub_string = sub_file.read().decode('utf-8').splitlines()
@@ -99,8 +147,9 @@ def assignments():
         for x in sub_dicts:
             submissions.append(x['Submission Title'])
         random.Random(0).shuffle(submissions)
+
         assign_tables(submissions)
-        assign_rooms(submissions)
+        assign_rooms(room_file)
 
         judge_string = judge_file.read().decode('utf-8')
         judges = list(judge_string.split("\n"))
@@ -145,60 +194,9 @@ def sponsor_prizes():
 
 @bp.route('/table-assignments', methods=["GET"])
 def table_assignments():
-    result = db.db.col3.find_one({}, {'_id': 0})
-    return jsonify(result);
+    return get_tables()
 
 
 @bp.route('/room-assignments', methods=["GET", "POST"])
 def room_assignments():
-    if request.method == 'POST':
-        if 'room_file' not in request.files:
-            return jsonify({"msg : error"}), 500
-
-        file = request.files['room_file']
-
-        if not (file and allowed_file(file.filename)):
-            return jsonify({"msg : error"}), 500
-
-        file_string = file.read().decode('utf-8').splitlines()
-        dicts = [{k: v for k, v in row.items()} for row \
-                     in csv.DictReader(file_string)]
-        rooms = {}
-        for i in dicts:
-            rooms[i['Room']] = i['Capacity']
-
-        temp_tables = db.db.col3.find_one({}, {'_id': 0})
-        tables = {v: k for k, v in temp_tables.items()}
-        assignments = {}
-
-        total = 0
-        for room in rooms:
-            total += int(rooms[room])
-
-        if (total <= len(tables)):
-            return jsonify({"msg : error"}), 500
-
-        assignments = {}
-        counter = 1
-        end = False
-        for room in rooms:
-            cap = int(rooms[room])
-            teams = int(cap/4)
-            i = 0
-            assignments[room] = []
-            while i < int(teams*.8):
-                if counter == len(tables) + 1:
-                    end = True
-                    break
-                assignments[room].append(tables[counter])
-                i += 1
-                counter += 1
-            if end:
-                break
-
-        db.db.col4.replace_one({}, assignments, upsert=True)
-
-        return get_rooms()
-
-    if request.method == 'GET':
-        return get_rooms()
+    return get_rooms()
