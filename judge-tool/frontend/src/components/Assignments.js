@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table'
+import axios from 'axios';
+
 
 function Assignments() {
   const [assignments, setAssignments] = useState([]);
@@ -7,7 +9,7 @@ function Assignments() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    fetch('/assignments').then(response =>
+    axios.get('/assignments').then(response =>
       response.json().then(data => {
         setAssignments(data);
       })
@@ -15,7 +17,7 @@ function Assignments() {
   }, []);
 
   useEffect(() => {
-    fetch('/table-assignments').then(tables =>
+    axios.get('/table-assignments').then(tables =>
       tables.json().then(data => {
         setTables(data);
       })
@@ -23,7 +25,7 @@ function Assignments() {
   }, []);
 
   useEffect(() => {
-    fetch('/room-assignments').then(response =>
+    axios.get('/room-assignments').then(response =>
       response.json().then(data => {
         setRooms(data);
       })
