@@ -7,20 +7,16 @@ function TablesAndRooms() {
   const [tables, setTables] = useState([]);
 
   useEffect(() => {
-    axios.get('/room-assignments').then(response =>
-      response.json().then(data => {
-        setRoomAssignment(data);
-      })
-    );
-}, []);
+    axios.get('/room-assignments').then(response => {
+  		setRoomAssignment(response.data);
+		});
+	}, []);
 
-    useEffect(() => {
-      axios.get('/table-assignments').then(response =>
-        response.json().then(data => {
-          setTables(data);
-        })
-      );
-    }, []);
+	useEffect(() => {
+		axios.get('/table-assignments').then(response =>{
+			setTables(response.data);
+		});
+	}, []);
 
   let rooms = Object.keys(roomAssignment);
   let teams = Object.values(roomAssignment);

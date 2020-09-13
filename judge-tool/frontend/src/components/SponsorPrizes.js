@@ -8,27 +8,21 @@ function SponsorPrizes() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    axios.get('/sponsor-prizes').then(response =>
-      response.json().then(data => {
-        setPrizes(data);
-      })
-    );
+    axios.get('/sponsor-prizes').then(response => {
+			setPrizes(response.data);
+		});
   }, []);
 
   useEffect(() => {
-    axios.get('/table-assignments').then(tables =>
-      tables.json().then(data => {
-        setTables(data);
-      })
-    );
+    axios.get('/table-assignments').then(response => {
+			setTables(response.data);
+		});
   }, []);
 
   useEffect(() => {
-    axios.get('/room-assignments').then(response =>
-      response.json().then(data => {
-        setRooms(data);
-      })
-    );
+    axios.get('/room-assignments').then(response => {
+			setRooms(response.data);
+		});
   }, []);
 
   let sponsors = Object.keys(prizes);

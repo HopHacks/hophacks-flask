@@ -9,27 +9,21 @@ function Assignments() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    axios.get('/assignments').then(response =>
-      response.json().then(data => {
-        setAssignments(data);
-      })
-    );
+    axios.get('/assignments').then(response => {
+        setAssignments(response.data);
+    });
   }, []);
 
   useEffect(() => {
-    axios.get('/table-assignments').then(tables =>
-      tables.json().then(data => {
-        setTables(data);
-      })
-    );
+    axios.get('/table-assignments').then(response => {
+			setTables(response.data);
+		});
   }, []);
 
   useEffect(() => {
-    axios.get('/room-assignments').then(response =>
-      response.json().then(data => {
-        setRooms(data);
-      })
-    );
+    axios.get('/room-assignments').then(response => {
+			setRooms(response.data);
+		});
   }, []);
 
   const judges = Object.keys(assignments);
