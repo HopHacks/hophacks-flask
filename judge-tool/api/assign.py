@@ -69,9 +69,6 @@ def assign_rooms(room_file):
     for room in rooms:
         total += int(rooms[room])
 
-    if (total <= len(tables)):
-        return jsonify({"msg : error"}), 500
-
     assignments = {}
     counter = 1
     end = False
