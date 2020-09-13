@@ -53,7 +53,6 @@ def assign_tables(submissions):
 
 def assign_rooms(room_file):
     file_string = room_file.read().decode('utf-8-sig').splitlines()
-<<<<<<< HEAD >> f0b9d79825ab53a55e2e2fdfa344dc1d82be61ba
     dicts = [{k: v for k, v in row.items()} for row \
                  in csv.DictReader(file_string)]
     rooms = {}
@@ -140,10 +139,7 @@ def assignments():
             return jsonify({"msg : error"}), 500
 
         sub_string = sub_file.read().decode('utf-8-sig').splitlines()
-<<<<<<< HEAD
         print(sub_string)
-=======
->>>>>>> f0b9d79825ab53a55e2e2fdfa344dc1d82be61ba
         sub_dicts = [{k: v for k, v in row.items()} for row \
                      in csv.DictReader(sub_string)]
         submissions = []
