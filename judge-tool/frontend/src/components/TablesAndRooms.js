@@ -1,25 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table'
+import axios from 'axios'
 
 function TablesAndRooms() {
   const [roomAssignment, setRoomAssignment] = useState([]);
   const [tables, setTables] = useState([]);
 
   useEffect(() => {
-    fetch('/room-assignments').then(response =>
-      response.json().then(data => {
-        setRoomAssignment(data);
-      })
-    );
-}, []);
+    axios.get('/room-assignments').then(response => {
+  		setRoomAssignment(response.data);
+		});
+	}, []);
 
-    useEffect(() => {
-      fetch('/table-assignments').then(response =>
-        response.json().then(data => {
-          setTables(data);
-        })
-      );
-    }, []);
+	useEffect(() => {
+		axios.get('/table-assignments').then(response =>{
+			setTables(response.data);
+		});
+	}, []);
 
   let rooms = Object.keys(roomAssignment);
   let teams = Object.values(roomAssignment);

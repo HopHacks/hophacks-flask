@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table'
+import axios from 'axios';
 
 function SponsorPrizes() {
   const [prizes, setPrizes] = useState([]);
@@ -7,27 +8,21 @@ function SponsorPrizes() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    fetch('/sponsor-prizes').then(response =>
-      response.json().then(data => {
-        setPrizes(data);
-      })
-    );
+    axios.get('/sponsor-prizes').then(response => {
+			setPrizes(response.data);
+		});
   }, []);
 
   useEffect(() => {
-    fetch('/table-assignments').then(tables =>
-      tables.json().then(data => {
-        setTables(data);
-      })
-    );
+    axios.get('/table-assignments').then(response => {
+			setTables(response.data);
+		});
   }, []);
 
   useEffect(() => {
-    fetch('/room-assignments').then(response =>
-      response.json().then(data => {
-        setRooms(data);
-      })
-    );
+    axios.get('/room-assignments').then(response => {
+			setRooms(response.data);
+		});
   }, []);
 
   let sponsors = Object.keys(prizes);

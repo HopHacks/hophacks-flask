@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import bsCustomFileInput from 'bs-custom-file-input' //plugin for displaying selected file
-import Form from 'react-bootstrap/form';
-import Button from 'react-bootstrap/button'
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button'
 
 class Upload extends Component {
     state = {

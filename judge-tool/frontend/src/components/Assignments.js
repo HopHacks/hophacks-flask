@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table'
+import axios from 'axios';
+
 
 function Assignments() {
   const [assignments, setAssignments] = useState([]);
@@ -7,27 +9,21 @@ function Assignments() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    fetch('/assignments').then(response =>
-      response.json().then(data => {
-        setAssignments(data);
-      })
-    );
+    axios.get('/assignments').then(response => {
+        setAssignments(response.data);
+    });
   }, []);
 
   useEffect(() => {
-    fetch('/table-assignments').then(tables =>
-      tables.json().then(data => {
-        setTables(data);
-      })
-    );
+    axios.get('/table-assignments').then(response => {
+			setTables(response.data);
+		});
   }, []);
 
   useEffect(() => {
-    fetch('/room-assignments').then(response =>
-      response.json().then(data => {
-        setRooms(data);
-      })
-    );
+    axios.get('/room-assignments').then(response => {
+			setRooms(response.data);
+		});
   }, []);
 
   const judges = Object.keys(assignments);
