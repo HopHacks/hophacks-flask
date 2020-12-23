@@ -19,7 +19,7 @@ from bson import ObjectId
 
 accounts_api = Blueprint('accounts', __name__)
 
-profile_keys = ["first_name", "last_name", "gender", "major", "phone_number", "exp",
+profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
 "ethnicity", "grad", "is_jhu", "grad_month", "grad_year"]
 
 # Sends confirmation email with JWT-Token in URL for verification, returns secret key used
@@ -78,11 +78,12 @@ def create():
     :reqjson username: email of the new account
     :reqjson password: password of the new accont
     :reqjson confirm_url: URL that the confirmation link should start with.
-    The confirm token is appended to it, so it can be intepreted as a URL
-    param by react. (this should be filled in by the frontend code, and
-    not the client)
-    :reqjson profile: Profile/personal infomration. See following example for
-    fields.
+    :reqjson profile: Profile/personal infomration. See following example
+
+
+    The confirm token is appended to `confirm_url`, so it can be intepreted 
+    as a URL param by react. (this should be filled in by the frontend 
+    code, and not the client)
 
     Example input:
 
@@ -99,7 +100,6 @@ def create():
                 "major": "Computer Science",
                 "phone_number": "8888888888",
                 "school": "Cornell University",
-                "exp": "no",
                 "ethnicity": "Asian/Pacific Islander",
                 "grad": "ugrad",
                 "is_jhu": false,
@@ -174,7 +174,6 @@ def get_profile():
                 "major": "Computer Science",
                 "phone_number": "8888888888",
                 "school": "Cornell University",
-                "exp": "no",
                 "ethnicity": "Asian/Pacific Islander",
                 "grad": "ugrad",
                 "is_jhu": false,
@@ -201,8 +200,7 @@ def update_profile():
 
     :reqheader Authorization: ``Bearer <JWT Token>``
 
-    :reqjson profile: Profile/personal information. See following example for
-    fields.
+    :reqjson profile: Profile/personal information. See following example.
 
     Example request json:
 
@@ -216,7 +214,6 @@ def update_profile():
                 "major": "Computer Science",
                 "phone_number": "8888888888",
                 "school": "Cornell University",
-                "exp": "no",
                 "ethnicity": "Asian/Pacific Islander",
                 "grad": "ugrad",
                 "is_jhu": false,
@@ -349,7 +346,7 @@ def reset_password_req():
 
         {
             "username": "awong@jhu.edu",
-            "confirm_url": "http://hophacks.com/confirm_email"
+            "reset_url": "http://hophacks.com/reset_password"
         }
 
     Given the request from above, the user will get an email with a link in the following format:
