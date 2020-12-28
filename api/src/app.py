@@ -17,10 +17,16 @@ def create_app(config_file='config/settings.json'):
     set_if_present(app, config, 'TESTING')
 
     set_if_present(app, config, 'BASE_URL')
+
     set_if_present(app, config, 'MAIL_SERVER')
     set_if_present(app, config, 'MAIL_PORT')
     set_if_present(app, config, 'MAIL_USERNAME')
     set_if_present(app, config, 'MAIL_PASSWORD')
+
+    # Supress mail sending if not specified, i.e. in dev
+    if ('MAIL_SERVER' not in config):
+        app.config['MAIL_SUPPRESS_SEND'] = True 
+
 
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers']

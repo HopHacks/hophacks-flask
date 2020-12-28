@@ -11,7 +11,7 @@ from mail import mail
 @pytest.fixture
 def client():
     app = create_app('test.json')
-    app.config['TESTING'] = True;
+    app.config['TESTING'] = True
 
     db = get_db()
     mongo_client = get_mongo_client()
