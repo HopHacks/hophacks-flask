@@ -35,10 +35,10 @@ def create_app(config_file='config/config.json'):
     get_req_config(app, config, 'TESTING')
     get_req_config(app, config, 'BASE_URL')
 
-    get_optional_config(app, config, 'MAIL_SERVER')
-    get_optional_config(app, config, 'MAIL_PORT')
-    get_optional_config(app, config, 'MAIL_USERNAME')
-    get_optional_config(app, config, 'MAIL_PASSWORD')
+    get_opt_config(app, config, 'MAIL_SERVER')
+    get_opt_config(app, config, 'MAIL_PORT')
+    get_opt_config(app, config, 'MAIL_USERNAME')
+    get_opt_config(app, config, 'MAIL_PASSWORD')
 
     # Supress mail sending if not specified, i.e. in dev
     if ('MAIL_SERVER' not in config):
