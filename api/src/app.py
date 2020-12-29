@@ -1,5 +1,8 @@
 from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
+from mail import mail
+from db import db
+
 import json
 
 def set_if_present(app, config, key):
@@ -13,6 +16,9 @@ def create_app(config_file='config/settings.json'):
     config = json.load(open(config_file))
     app.config['SECRET_KEY'] = config['SECRET_KEY']
     app.debug = config['debug']
+
+    app.config['MONGO_URI'] = config['MONGO_URI']
+    app.config['MONGO_DB_NAME'] = config['MONGO_DB_NAME']
 
     set_if_present(app, config, 'TESTING')
 
@@ -36,12 +42,9 @@ def create_app(config_file='config/settings.json'):
 
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
+    # Pass configurations to extensions
     jwt = JWTManager(app)
-
-    from db import init_db
-    init_db(config)
-
-    from mail import mail
+    db.init_app(app)
     mail.init_app(app)
 
     # Add endpoints from these files
