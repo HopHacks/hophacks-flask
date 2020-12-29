@@ -8,6 +8,6 @@ Login, Logout, and Session related endpoints
 <https://hasura.io/blog/best-practices-of-using-jwt-with-graphql>`_.
 
 
-.. autoflask:: app:create_app('../src/config/settings.json')
+.. autoflask:: app:create_app('../src/config/config.json')
     :blueprints: auth
     :undoc-static:

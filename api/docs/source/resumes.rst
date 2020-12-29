@@ -8,6 +8,6 @@ See the Authentication API for details.
 Any reference to a 'current user' is referring to the user associated with the
 given access token.
 
-.. autoflask:: app:create_app('../src/config/settings.json')
+.. autoflask:: app:create_app('../src/config/config.json')
     :blueprints: resumes
     :undoc-static:

@@ -8,7 +8,7 @@ python -m venv hophacks-env
 pip install -r requirements.txt
 ```
 
-You also need to create a `settings.json` file for the server. We provide a python
+You also need to create a `config.json` file for the server. We provide a python
 script to generate one, (along with an admin account to the users database).
 To run this, go to the `src/config` directory and do
 ```

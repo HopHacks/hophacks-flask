@@ -5,29 +5,40 @@ from db import db
 
 import json
 
-def set_if_present(app, config, key):
+class ConfigurationError(Exception):
+    """Exception raised for errors in app config
+    """
+
+    def __init__(self, key):
+        super().__init__("\"{}\" not found in application config".format(key))
+
+def get_opt_config(app, config, key):
     if (key in config):
         app.config[key] = config[key]
 
+def get_req_config(app, config, key):
+    if (key not in config): raise ConfigurationError(key)
+    app.config[key] = config[key]
 
-def create_app(config_file='config/settings.json'):
+
+def create_app(config_file='config/config.json'):
     app = Flask(__name__)
 
     config = json.load(open(config_file))
-    app.config['SECRET_KEY'] = config['SECRET_KEY']
-    app.debug = config['debug']
 
-    app.config['MONGO_URI'] = config['MONGO_URI']
-    app.config['MONGO_DB_NAME'] = config['MONGO_DB_NAME']
+    get_req_config(app, config, 'DEBUG')
+    app.debug = app.config['DEBUG']
 
-    set_if_present(app, config, 'TESTING')
+    get_req_config(app, config, 'SECRET_KEY')
+    get_req_config(app, config, 'MONGO_URI')
+    get_req_config(app, config, 'MONGO_DB_NAME')
+    get_req_config(app, config, 'TESTING')
+    get_req_config(app, config, 'BASE_URL')
 
-    set_if_present(app, config, 'BASE_URL')
-
-    set_if_present(app, config, 'MAIL_SERVER')
-    set_if_present(app, config, 'MAIL_PORT')
-    set_if_present(app, config, 'MAIL_USERNAME')
-    set_if_present(app, config, 'MAIL_PASSWORD')
+    get_optional_config(app, config, 'MAIL_SERVER')
+    get_optional_config(app, config, 'MAIL_PORT')
+    get_optional_config(app, config, 'MAIL_USERNAME')
+    get_optional_config(app, config, 'MAIL_PASSWORD')
 
     # Supress mail sending if not specified, i.e. in dev
     if ('MAIL_SERVER' not in config):
@@ -39,7 +50,6 @@ def create_app(config_file='config/settings.json'):
     app.config['JWT_REFRESH_COOKIE_PATH'] = '/api/auth/session'
     app.config['JWT_COOKIE_CSRF_PROTECT '] = False
     app.config['JWT_CSRF_IN_COOKIES'] = False
-
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
     # Pass configurations to extensions
