@@ -1,9 +1,11 @@
+# api
 __pycache__
 *.pyc
 
 hophacks-env
-node_modules
-
 build
-
 settings.json
+
+# frontend
+node_modules
+.eslintcache
