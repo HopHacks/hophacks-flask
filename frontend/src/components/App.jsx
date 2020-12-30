@@ -85,7 +85,7 @@ export default function App() {
 
     useEffect(() => {
         attemptRefresh();
-    });
+    }, []);
 
   return (
     <Router>
