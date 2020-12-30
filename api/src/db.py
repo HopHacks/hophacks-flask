@@ -11,7 +11,7 @@ class MongoDriver():
 
     # Forward any accesses to a collection to the db object
     def __getattr__(self, key):
-        return self.db.key
+        return self.db.__getattr__(key)
 
 
 # Global driver object
