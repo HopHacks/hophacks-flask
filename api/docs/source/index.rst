@@ -12,3 +12,4 @@ Welcome to Hophacks Website API's documentation!
    accounts
    auth
    resumes
+   registrations

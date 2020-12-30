@@ -43,13 +43,14 @@ def login():
 
     :resjson access_token: actual token used for other endpoints
 
-    :resheader SetCookie: sets the refresh token in the browser. Note this cookie is
-    HttpOnly, meaning it cannot be accesed from javascript (so that a malicious script
-    cannot gain access to the account).
-
+    :resheader SetCookie: sets the refresh token in the browser. 
+ 
     :status 200: Success
     :status 401: Bad username or password
 
+    Note the cookie is HttpOnly, meaning it cannot be accesed from
+    javascript (so that a malicious script cannot gain access to 
+    the account).
     '''
 
 

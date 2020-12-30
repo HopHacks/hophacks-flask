@@ -19,4 +19,5 @@ def check_admin(endpoint_func):
 
         return endpoint_func(*args, **kwargs)
     wrapper.__name__ = endpoint_func.__name__
+    wrapper.__doc__ = endpoint_func.__doc__
     return wrapper

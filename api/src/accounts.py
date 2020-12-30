@@ -288,8 +288,8 @@ def search_profile():
         {
             "event": "Spring_2020"
             "filters": {
-                "first_name": ...
-                "last_name": ...
+                "first_name": "..."
+                "last_name": "..."
             }
         }
 
