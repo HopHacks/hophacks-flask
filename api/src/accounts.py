@@ -28,7 +28,7 @@ profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
 def send_reset_email(email, hashed, base_url):
     secret = hashed.decode('utf-8') + '-' + str(datetime.datetime.utcnow().timestamp())
     token = create_reset_token(email, secret)
-    link = base_url + "/" + token.decode('utf-8')
+    link = base_url + "/" + token
 
     msg = Message("Reset Your Password - HopHacks.com",
       sender="team@hophacks.com",
@@ -46,7 +46,7 @@ def send_reset_email(email, hashed, base_url):
 def send_confirmation_email(email, hashed, base_url):
     confirm_secret = hashed.decode('utf-8') + '-' + str(datetime.datetime.utcnow().timestamp())
     token = create_confirm_token(email, confirm_secret)
-    link = base_url + "/" + token.decode('utf-8')
+    link = base_url + "/" + token
 
     msg = Message("Confirm your Email - HopHacks.com",
       sender="team@hophacks.com",
