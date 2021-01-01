@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Home() {
-    return (<div> Hello </div>);
+    return (<div> This was deployed automatically! </div>);
 }
