@@ -4,5 +4,10 @@
     "MONGO_URI": "mongodb://localhost:27017",
     "MONGO_DB_NAME": "hophacks",
     "SECRET_KEY": "pineapple pizza",
-    "BASE_URL": "http://localhost:3000/"
+    "BASE_URL": "http://localhost:3000/",
+    "MAIL_SERVER": "smtp.mailgun.org",
+    "MAIL_PORT": "587",
+    "MAIL_USERNAME": "postmaster@mg.hophacks.com",
+    "MAIL_PASSWORD": "HopHacks!7",
+    "MAIL_DEFAULT_SENDER": "team@hophacks.com"
 }

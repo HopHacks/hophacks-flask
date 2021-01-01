@@ -14,6 +14,7 @@ import Admin from "./admin/Admin"
 import Nav from "./Nav"
 import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
+import Blacklist from "./Blacklist"
 
 export default function App() {
 
@@ -100,7 +101,12 @@ export default function App() {
             <Profile isLoggedIn={isLoggedIn}/>
           </Route>
           <Route path="/login">
+
             <Login login={login}/>
+          </Route>
+          <Route path="/blacklist">
+            
+            <Blacklist />
           </Route>
           <Route path="/reset_password/:token" component={PasswordReset}/>
           <Route path="/confirm_email/:token" component={EmailConfirmation}/>
