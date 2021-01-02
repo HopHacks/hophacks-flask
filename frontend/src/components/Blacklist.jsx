@@ -1,45 +1,56 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 
-// problem (?): when looking at HTTP requests in browser, it says POST requests for add/remove get cancelled
-
-export default function Blacklist(){
+export default function Blacklist(props){
 
     const [usersList, setUsersList] = useState([]);
     const [email, setEmail] = useState("");
-    async function getBlackList() {
-        const response = await axios.get('/api/admin/blacklist');
-        setUsersList(response.data.usernames);
 
+    async function getBlackList() {
+
+        if(props.isLoggedIn == true){
+            const response = await axios.get('/api/admin/blacklist');
+            setUsersList(response.data.usernames);
+        }
 
     }
 
     async function addBlackList(){
-
-        const response = await axios.post('/api/admin/blacklist/add', {
-            "username": email});
+        
+        try{
+            await axios.post('/api/admin/blacklist/add', {
+                "username": email});
+        }
+        catch(e){
+            alert("Failed");
+        }
 
     }
 
     async function removeBlackList(){
-        
-
-        const response = await axios.post('/api/admin/blacklist/remove', {
-            "username": email});
+        try{
+            await axios.post('/api/admin/blacklist/remove', {
+                "username": email});
+        }
+        catch(e){
+            alert("Failed");
+        }
 
     }
 
     // prevents infinite looping?
     useEffect(() => {
         getBlackList();
-    }, []);
+    }, [props.isLoggedIn]);
 
     // needs unique key, so just make it the username
     const listItems = usersList.map((user) => <li key = {user}>{user}</li>);
 
     var state = ""
 
-    async function submit() {
+    async function submit(event) {
+
+        event.preventDefault();
         
         if(state == "add"){
             addBlackList();
@@ -48,15 +59,15 @@ export default function Blacklist(){
             removeBlackList();
         }
         
-       getBlackList();
+        setEmail(""); // clear input
+        getBlackList();
+        
+
+        
         
     }
 
-    
     return (<div> 
-        
-        
-        
         
         <form onSubmit={submit}>
           <label>

@@ -49,6 +49,7 @@ export default function App() {
 
         const tok = response.data["access_token"];
         axios.defaults.headers.common = {'Authorization': `Bearer ${tok}`}
+
         setToken(tok);
         setLoggedIn(true);
         setInterval(refreshToken, 60000);
@@ -106,7 +107,7 @@ export default function App() {
           </Route>
           <Route path="/blacklist">
             
-            <Blacklist />
+            <Blacklist isLoggedIn={isLoggedIn}/>
           </Route>
           <Route path="/reset_password/:token" component={PasswordReset}/>
           <Route path="/confirm_email/:token" component={EmailConfirmation}/>

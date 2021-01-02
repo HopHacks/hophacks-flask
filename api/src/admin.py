@@ -15,7 +15,8 @@ def test_admin():
 
 
 @admin_api.route('/blacklist', methods=['GET'])
-#NEED DECORATORS
+@jwt_required
+@check_admin
 def blacklist_view():
     users = db.users.find( { "blacklisted": True } )
 
@@ -28,7 +29,8 @@ def blacklist_view():
 
 
 @admin_api.route('/blacklist/add', methods=['POST'])
-#NEED DECORATORS
+@jwt_required
+@check_admin
 def blacklist_add():
     user = request.json["username"]
 
@@ -45,13 +47,13 @@ def blacklist_add():
 
 
 @admin_api.route('/blacklist/remove', methods=['POST'])
-#NEED DECORATORS
+@jwt_required
+@check_admin
 def blacklist_remove():
 
     user = request.json["username"]
 
     ret = db.users.update_one({"username":user},{'$set': {"blacklisted":False}})
-
 
     if (ret.matched_count == 1 and ret.modified_count == 1):
         return jsonify({"msg": "removed from blacklist successfully"}), 200
