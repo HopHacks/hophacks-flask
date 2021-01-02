@@ -19,7 +19,7 @@ export default function App() {
 
     const [token, setToken] = useState('');
     // Can be null (haven't tried logging in with refreshToken yet)
-    const [isLoggedIn, setLoggedIn] = useState();
+    const [isLoggedIn, setLoggedIn] = useState(null);
     let refreshInterval;
 
     async function refreshToken() {
