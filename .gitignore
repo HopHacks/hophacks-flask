@@ -8,4 +8,4 @@ config.json
 
 # frontend
 node_modules
-.eslintcache
+.eslintcache.DS_Store
