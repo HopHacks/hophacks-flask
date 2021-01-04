@@ -1,6 +1,7 @@
 # api
 __pycache__
 *.pyc
+.DS_Store
 
 hophacks-env
 build
@@ -8,4 +9,5 @@ config.json
 
 # frontend
 node_modules
-.eslintcache.DS_Store
+.DS_Store
+
