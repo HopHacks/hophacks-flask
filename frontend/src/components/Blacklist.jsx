@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 
-export default function Blacklist(props){
+import { withAdminAuth } from "../util/auth";
+
+const Blacklist = function Blacklist(props){
 
     const [usersList, setUsersList] = useState([]);
     const [email, setEmail] = useState("");
@@ -11,6 +13,10 @@ export default function Blacklist(props){
         if(props.isLoggedIn == true){
             const response = await axios.get('/api/admin/blacklist');
             setUsersList(response.data.usernames);
+        }
+        else{
+            return;
+            alert("Not logged")
         }
 
     }
@@ -87,4 +93,6 @@ export default function Blacklist(props){
         </form>
         {listItems} 
         </div>);
-};
+}
+
+export default withAdminAuth(Blacklist);
