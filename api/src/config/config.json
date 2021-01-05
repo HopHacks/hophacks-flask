@@ -1,8 +1,0 @@
-{
-    "DEBUG": true,
-    "TESTING": false,
-    "MONGO_URI": "mongodb://localhost:27017",
-    "MONGO_DB_NAME": "hophacks",
-    "SECRET_KEY": "pineapple pizza",
-    "BASE_URL": "http://localhost:3000/"
-}

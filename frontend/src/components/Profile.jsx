@@ -3,11 +3,14 @@ import axios from "axios";
 
 import {withAuth} from "../util/auth.jsx";
 
-const Profile = function Profile(...props) {
+const Profile = function Profile(props) {
     const [file, setFile] = useState("");
     const [oldName, setOldName] = useState("");
 
     async function getFileName() {
+        /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
+        if (!props.isLoggedIn) return;
+
         try {
             const response = await axios.get("/api/resumes/filename");
             setOldName(response.data["filename"])
