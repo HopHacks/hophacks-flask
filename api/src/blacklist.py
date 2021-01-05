@@ -14,6 +14,8 @@ blacklist_api = Blueprint('blacklist', __name__)
 @jwt_required
 @check_admin
 def addUser():
+    if (request.json is None):
+        return Response('Data not in json format', status=400)
     username = request.json['username']
     if (db.users.find_one({'username': username})):
         db.users.update_one({'username': username}, {'$set': {'blacklist' : true}})
@@ -26,6 +28,8 @@ def addUser():
 @jwt_required
 @check_admin
 def removeUser():
+    if (request.json is None):
+        return Response('Data not in json format', status=400)
     username = request.json['username']
     if (db.users.find_one({'username': username})):
         db.users.update_one({'username': username}, {'$unset': {'blacklist' : true}})
