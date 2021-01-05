@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 import jwt
 from bson import ObjectId
+from bson.json_util import dumps
 
 blacklist_api = Blueprint('blacklist', __name__)
 
@@ -18,7 +19,7 @@ def addUser():
         return Response('Data not in json format', status=400)
     username = request.json['username']
     if (db.users.find_one({'username': username})):
-        db.users.update_one({'username': username}, {'$set': {'blacklist' : true}})
+        db.users.update_one({'username': username}, {'$set': {'blacklist' : True}})
         return jsonify({"msg": "blacklisted user!"}), 200
     # Can only get here if user not in database
     return Response('User does not exist!', status=409)
@@ -32,7 +33,7 @@ def removeUser():
         return Response('Data not in json format', status=400)
     username = request.json['username']
     if (db.users.find_one({'username': username})):
-        db.users.update_one({'username': username}, {'$unset': {'blacklist' : true}})
+        db.users.update_one({'username': username}, {'$unset': {'blacklist' : True}})
         return jsonify({"msg": "removed user from blacklist!"}), 200
     # Can only get here if user not in database
     return Response('User does not exist!', status=409)
@@ -42,4 +43,4 @@ def removeUser():
 @jwt_required
 @check_admin
 def getList():
-    return db.users.find({blacklist: true}), 200
+    return dumps(db.users.find({'blacklist': True})), 200
