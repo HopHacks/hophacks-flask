@@ -59,10 +59,10 @@ const Blacklist = function Blacklist(props){
         event.preventDefault();
         
         if(state == "add"){
-            addBlackList();
+            await addBlackList();
         }
         else{
-            removeBlackList();
+            await removeBlackList();
         }
         
         setEmail(""); // clear input
