@@ -2,10 +2,26 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 
 import {withAuth} from "../util/auth.jsx";
+import { Link } from "react-router-dom";
 
 const Profile = function Profile(props) {
+    const [status, setStatus] = useState("not applied");
     const [file, setFile] = useState("");
     const [oldName, setOldName] = useState("");
+    const [profile, setProfile] = useState([]);
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
+    const [gender, setGender] = useState("");
+    const [major, setMajor] = useState("");
+    const [phone_number, setPhone_number] = useState("");
+    const [school, setSchool] = useState("");
+    const [ethnicity, setEthnicity] = useState("");
+    const [grad, setGrad] = useState("");
+    const [grad_month, setGrad_month] = useState("");
+    const [grad_year, setGrad_year] = useState("");
+    const [msg, setMsg] = useState("");
+
+    const currentEvent = "spring_2021"
 
     async function getFileName() {
         /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
@@ -40,12 +56,84 @@ const Profile = function Profile(props) {
         window.open(url, "_blank");
     }
 
+    async function getProfile(){
+        const response = await axios.get('/api/accounts/profile/get');
+
+        setProfile(response.data.profile);
+        setFirst_name(response.data.profile.first_name)
+        setLast_name(response.data.profile.last_name)
+        setGender(response.data.profile.gender)
+        setMajor(response.data.profile.major)
+        setPhone_number(response.data.profile.phone_number)
+        setSchool(response.data.profile.school)
+        setEthnicity(response.data.profile.ethnicity)
+        setGrad(response.data.profile.grad)
+        setGrad_month(response.data.profile.grad_month)
+        setGrad_year(response.data.profile.grad_year)
+    }
+
+    async function getStatus(){
+        await axios.get('/api/registrations/get').then((response)=>{
+            response.data.registrations.forEach(registration =>{
+                if(registration.event === currentEvent){
+                    if(registration.accept){
+                        setStatus("accepted")
+                    }
+                    else{
+                        setStatus("applied")
+                    }
+                }
+            });
+        }).catch((e)=>{
+            setStatus("not applied")
+        });
+
+    }
+
+    async function handleProfileSave(){
+        if(props.isLoggedIn){
+            await axios.post('/api/accounts/profile/update', {
+                "profile": profile}).catch((e) =>{
+                    alert("fail to update")
+                });  
+        }
+        else{
+            alert("please log in")
+        }
+    }
+
+    async function applyToCurrentEvent(){
+        if(status === "not applied"){
+            if(props.isLoggedIn){
+                await axios.post('/api/registrations/apply', {
+                    "event": currentEvent, "details": "none"}).then((res)=>{
+                        setMsg(res.data.msg);
+                    }).catch((e) =>{
+                        setMsg(e.message);
+                    });  
+                getStatus();
+            }
+            else{
+                alert("please log in")
+            }
+        } else{
+            alert("You have applied to this current event")
+        }
+
+    }
+
+
     useEffect(() => {
+        getStatus();
+        getProfile();
         getFileName();
     }, [props.isLoggedIn]);
 
     return (
         <div>
+            <div>
+                Status for {currentEvent} Event: {status}
+            </div>
           <form onSubmit={handleSubmit}>
             <div>
               <input type="file" name="file" onChange={handleFileChange}/>
@@ -56,8 +144,117 @@ const Profile = function Profile(props) {
           <hr/>
           <p>{oldName}</p>
           <button onClick={handleDownload}>Download</button>
+          <div>
+            <p>Profile</p>
+
+            <p>First Name:{profile.first_name}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                        <input type="text" value = {first_name} name = "first_name" onChange={e => setFirst_name(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.first_name = first_name}}/>
+                </form>
+            </div>
+            <p>Last Name:{profile.last_name}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                    <input type="text" value = {last_name} name = "last_name" onChange={e => setLast_name(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.last_name = last_name}}/>
+                </form>
+            </div>
+            <p>Gender:{profile.gender}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                    <input type="text" value = {gender} name = "gender" onChange={e => setGender(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.gender = gender}}/>
+                </form>
+            </div>
+            <p>Major:{profile.major}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                    <input type="text" value = {major} name = "major" onChange={e => setMajor(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.major = major}}/>
+                </form>
+            </div>
+            <p>Phone Number:{profile.phone_number}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                        <input type="text" value = {phone_number} name = "phone_number" onChange={e => setPhone_number(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.phone_number = phone_number}}/>
+                </form>
+            </div>
+            <p>School:{profile.school}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                    <input type="text" value = {school} name = "school" onChange={e => setSchool(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{
+                    profile.school = school
+                    if (school === "Johns Hopkins University"){
+                        profile.is_jhu = true;
+                    }
+                    else{
+                        profile.is_jhu = false;
+                    }
+                    }}/>
+                </form>
+            </div>
+            <p>Ethnicity:{profile.ethnicity}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                    <input type="text" value = {ethnicity} name = "ethnicity" onChange={e => setEthnicity(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.ethnicity = ethnicity}}/>
+                </form>
+            </div>
+            <p>Grad:{profile.grad}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                    <input type="text" value = {grad} name = "grad" onChange={e => setGrad(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.grad = grad}}/>
+                </form>
+            </div>
+            <p>Grad_month:{profile.grad_month}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                        <input type="text" value = {grad_month} name = "grad_month" onChange={e => setGrad_month(e.target.value)}/>
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.grad_month = grad_month}}/>
+                </form>
+            </div>
+            <p>Grad_year:{profile.grad_year}</p>
+            <div>
+                <form onSubmit = {handleProfileSave}>
+                    <label>
+                    <input type="text" value = {grad_year} name = "grad_year" onChange={e => setGrad_year(e.target.value)}/>    
+                    </label>
+                <input type="submit"  value="SAVE" onClick={()=>{profile.grad_year = grad_year}}/>
+                </form>
+            </div>
+        </div>
+
+        <div>
+        <button onClick={applyToCurrentEvent}>Apply For Current Hackathon</button>
+        <p>{msg}</p>
+        </div>
+
         </div>
     );
 }
+
 
 export default withAuth(Profile);
