@@ -33,6 +33,39 @@ def send_apply_confirm(email, name):
     msg.html = render_template('email_apply_confirm.html', first_name=name)
     mail.send(msg)
 
+@registrations_api.route('/get', methods = ['GET'])
+@jwt_required
+def get_registrations():
+    """ Get own registrations information
+
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :resjson profile: registrations information
+
+    Example reponse:
+
+    .. sourcecode:: json
+
+        [
+            {
+                accept: false
+                apply_at: "Sun, 10 Jan 2021 08:31:39 GMT"
+                checkin: false
+                details: "none"
+                event: "spring_2021"
+            }
+        ]
+
+    :status 200: Profile retrieved successfully
+    :status 422: Not logged in
+
+    """
+    id = get_jwt_identity()
+    user = db.users.find_one({'_id': ObjectId(id)})
+    if (user is None or user['registrations'] is None):
+        return jsonify({"msg": "user not found?"}), 404
+
+    return jsonify({'registrations': user['registrations']}), 200
 
 @registrations_api.route('/apply', methods = ['POST'])
 @jwt_required
@@ -171,3 +204,4 @@ def check_in():
     )
 
     return jsonify({"num_changed": result.modified_count}), 200
+
