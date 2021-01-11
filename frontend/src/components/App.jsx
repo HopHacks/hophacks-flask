@@ -33,6 +33,7 @@ export default function App() {
             axios.defaults.headers.common = {'Authorization': `Bearer ${tok}`}
             setToken(tok);
             setLoggedIn(true);
+            setTimeout(refreshToken, 60000);
         } catch {
             console.log("Refresh failed");
             setLoggedIn(false);
@@ -50,7 +51,8 @@ export default function App() {
         axios.defaults.headers.common = {'Authorization': `Bearer ${tok}`}
         setToken(tok);
         setLoggedIn(true);
-        setInterval(refreshToken, 60000);
+        setTimeout(refreshToken, 60000);
+
     }
 
 
@@ -72,44 +74,33 @@ export default function App() {
         }
     }
 
-
-    async function attemptRefresh() {
-        try {
-            await refreshToken();
-            refreshInterval = setInterval(refreshToken, 60000);
-        }
-        catch{
-            setLoggedIn(false);
-        }
-    }
-
     useEffect(() => {
-        attemptRefresh();
+      refreshToken();
     }, []);
 
-  return (
-    <Router>
-      <div>
-        <Nav isLoggedIn={isLoggedIn} logout={logout}/>
+    return (
+      <Router>
+        <div>
+          <Nav isLoggedIn={isLoggedIn} logout={logout}/>
 
-        <Switch>
-          <Route path="/admin">
-            <Admin />
-          </Route>
-          <Route path="/profile">
-            <Profile isLoggedIn={isLoggedIn}/>
-          </Route>
-          <Route path="/login">
-            <Login login={login}/>
-          </Route>
-          <Route path="/reset_password/:token" component={PasswordReset}/>
-          <Route path="/confirm_email/:token" component={EmailConfirmation}/>
+          <Switch>
+            <Route path="/admin">
+              <Admin />
+            </Route>
+            <Route path="/profile">
+              <Profile isLoggedIn={isLoggedIn}/>
+            </Route>
+            <Route path="/login">
+              <Login login={login}/>
+            </Route>
+            <Route path="/reset_password/:token" component={PasswordReset}/>
+            <Route path="/confirm_email/:token" component={EmailConfirmation}/>
 
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
 }
