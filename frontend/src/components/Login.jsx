@@ -9,6 +9,8 @@ import {
 export default function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [attempted, setAttempted] = useState(false);
+
     let history = useHistory();
 
     async function handleSubmit(event) {
@@ -23,7 +25,7 @@ export default function Login(props) {
                 history.push("/admin")
             }
         } catch(error) {
-            console.log(error)
+            setAttempted(true);
         }
     }
 
@@ -50,6 +52,7 @@ export default function Login(props) {
           </label>
           <input type="submit" value="Submit" />
         </form>
+        <p>{attempted ? "Incorrect Username or Password" : ""}</p>
 
 
       </div>
