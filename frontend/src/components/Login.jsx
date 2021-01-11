@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
+import TextField from '@material-ui/core/TextField';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 
 import {
     useHistory
@@ -15,7 +21,7 @@ export default function Login(props) {
     const [attempted, setAttempted] = useState(false);
 
     /* State for handling reset password modal */
-    const [resetModalOpen, setResetModalOpen] = useState(false);
+    const [resetDialogOpen, setResetDialogOpen] = useState(false);
     const [resetEmail, setResetEmail] = useState("");
 
     let history = useHistory();
@@ -77,30 +83,42 @@ export default function Login(props) {
 
     function handleResetClose() {
       setResetEmail("");
-      setResetModalOpen(false);
+      setResetDialogOpen(false);
     }
 
 
-    const ResetModal = (        
-      <Modal
-        open={resetModalOpen}
+    const ResetDialog = (        
+      <Dialog 
+        open={resetDialogOpen}
         onClose={handleResetClose}
       >
-        <div>          
-          <form onSubmit={handleReset}>
-            <label>
-              Email:
-              <input
-                  autoFocus
-                  type="text"
-                  value={resetEmail}
-                  onChange={e => setResetEmail(e.target.value)}
-              />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
-      </Modal>
+        <DialogTitle id="form-dialog-title">Reset Password</DialogTitle>
+        
+        <DialogContent>
+          <DialogContentText>
+            Reset your password here
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            onChange={e => setPassword(e.target.value)}
+          />
+        </DialogContent>
+        
+        <DialogActions>
+          <Button onClick={handleResetClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleReset} color="primary">
+            Reset
+          </Button>
+        </DialogActions>
+
+      </Dialog >
     )
 
     return (
@@ -109,11 +127,11 @@ export default function Login(props) {
 
         <p>{attempted ? "Incorrect Username or Password" : ""}</p>
         
-        <button type="button" onClick={() => setResetModalOpen(true)}>
+        <button type="button" onClick={() => setResetDialogOpen(true)}>
           Reset Password
         </button>
 
-        {ResetModal}
+        {ResetDialog}
 
       </div>
     );
