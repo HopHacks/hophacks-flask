@@ -36,6 +36,30 @@ export default function Login(props) {
         }
     }
 
+    const LoginForm = (
+      <form onSubmit={handleLogin}>
+        <label>
+          Email:
+          <input
+              autoFocus
+              type="text"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              type="password"
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    )
+
+
     async function handleReset(event) {
       event.preventDefault();
       // TODO alert?
@@ -44,19 +68,23 @@ export default function Login(props) {
           "username": resetEmail,
           "reset_url": window.location.protocol + '//' + window.location.host + '/reset_password'
         });
-        alert("An email has been sent!");
+        alert("An email has been sent (if the account exists)!");
+        handleResetClose()
       } catch {
         alert("Error requesting password reset");
       }
-
     }
 
+    function handleResetClose() {
+      setResetEmail("");
+      setResetModalOpen(false);
+    }
 
 
     const ResetModal = (        
       <Modal
         open={resetModalOpen}
-        onClose={() => setResetModalOpen(false)}
+        onClose={handleResetClose}
       >
         <div>          
           <form onSubmit={handleReset}>
@@ -76,28 +104,11 @@ export default function Login(props) {
     )
 
     return (
-      <div className="Hophacks">
-        <form onSubmit={handleLogin}>
-          <label>
-            Email:
-            <input
-                autoFocus
-                type="text"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            Password:
-            <input
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                type="password"
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+      <div>
+        {LoginForm}
+
         <p>{attempted ? "Incorrect Username or Password" : ""}</p>
+        
         <button type="button" onClick={() => setResetModalOpen(true)}>
           Reset Password
         </button>
