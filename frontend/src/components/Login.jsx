@@ -24,6 +24,10 @@ export default function Login(props) {
     const [resetDialogOpen, setResetDialogOpen] = useState(false);
     const [resetEmail, setResetEmail] = useState("");
 
+    /* State for handling login modal */
+    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+
+
     let history = useHistory();
 
     async function handleLogin(event) {
@@ -41,30 +45,6 @@ export default function Login(props) {
             setAttempted(true);
         }
     }
-
-    const LoginForm = (
-      <form onSubmit={handleLogin}>
-        <label>
-          Email:
-          <input
-              autoFocus
-              type="text"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-          />
-        </label>
-        <label>
-          Password:
-          <input
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              type="password"
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    )
-
 
     async function handleReset(event) {
       event.preventDefault();
@@ -84,6 +64,10 @@ export default function Login(props) {
     function handleResetClose() {
       setResetEmail("");
       setResetDialogOpen(false);
+    }
+
+    function handleLoginClose() {
+      setLoginDialogOpen(false);
     }
 
 
@@ -121,16 +105,67 @@ export default function Login(props) {
       </Dialog >
     )
 
+    const LoginDialog = (
+      <Dialog 
+        open={loginDialogOpen}
+        onClose={handleLoginClose}
+      > 
+        <DialogTitle id="form-dialog-title">Login</DialogTitle>
+        <DialogContent>
+
+          <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Email Address"
+              type="email"
+              fullWidth
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            id="password"
+            label="Password"
+            type="password"
+            fullWidth
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+
+
+        </DialogContent>
+          <Button onClick={handleLoginClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleLogin} color="primary">
+            Login
+          </Button>
+        <DialogActions>
+
+        </DialogActions>
+
+      </Dialog>  
+
+    )
+
+    
     return (
       <div>
-        {LoginForm}
 
         <p>{attempted ? "Incorrect Username or Password" : ""}</p>
         
-        <button type="button" onClick={() => setResetDialogOpen(true)}>
+        <Button onClick={ ()=> setLoginDialogOpen(true)}>
+          Login
+        </Button>
+        
+        <Button  type="button" onClick={() => setResetDialogOpen(true)}>
           Reset Password
-        </button>
+        </Button >
 
+        {LoginDialog}
         {ResetDialog}
 
       </div>

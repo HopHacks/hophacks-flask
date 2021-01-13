@@ -99,9 +99,6 @@ export default function App() {
           <Route path="/profile">
             <Profile isLoggedIn={isLoggedIn}/>
           </Route>
-          <Route path="/login">
-            <Login login={login}/>
-          </Route>
           <Route path="/reset_password/:token" component={PasswordReset}/>
           <Route path="/confirm_email/:token" component={EmailConfirmation}/>
 
@@ -109,6 +106,8 @@ export default function App() {
             <Home />
           </Route>
         </Switch>
+
+        <Login login={login}/>
       </div>
     </Router>
   );
