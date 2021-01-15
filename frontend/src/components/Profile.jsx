@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import RSVP from "./RSVP";
+import { Link } from "react-router-dom";
 
 import {withAuth} from "../util/auth.jsx";
 
@@ -56,6 +58,7 @@ const Profile = function Profile(props) {
           <hr/>
           <p>{oldName}</p>
           <button onClick={handleDownload}>Download</button>
+          <Link to="/rsvp">RSVP</Link>
         </div>
     );
 }
