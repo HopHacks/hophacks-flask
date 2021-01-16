@@ -38,9 +38,12 @@ def send_apply_confirm(email, name):
 @jwt_required
 def apply():
     """As a user, apply to an event
+
     :reqheader Authorization: ``Bearer <JWT Token>``
+
     :reqjson event: Semester and year, for example 'Spring_2020'
     :reqjson details: other event specific information that can change (ie. shirt size and stuff)
+
     :status 200: Sucessfully registered
     :status 400: Missing field in request or already registered
     :status 422: Not logged in
@@ -77,18 +80,25 @@ def apply():
 @check_admin
 def accept():
     """Accepts a list of users to the event, and sends an email to notify them.
+
     :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
     :reqjson users: List of user ids to mark as accepted
     :reqjson event: Semester and year, for exmaple ``Spring_2020``
+
     .. sourcecode:: json
+
         {
             "users": ["XuiJJ8rJRrbNJZ3Nb", "GF42GBb238BGO"],
             "event": "Spring_2020"
         }
+
+
     :status 200: Successful
     :status 400: Invalid request
     :status 401: Not logged in as admin
     :status 422: Not logged in
+
     """
     if ('event' not in request.json and 'users' not in request.json):
         return Response('Invalid request', status=400)
@@ -126,17 +136,23 @@ def accept():
 @check_admin
 def check_in():
     """As an admin user, check another user in to an event
+
     :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
     :reqjson user: User id to be accepted
     :reqjson event: Semester and year, for exmaple ``Spring_2020``
+
     .. sourcecode:: json
+
         {
             "user": "XuiJJ8rJRrbNJZ3Nb",
             "event": "Spring_2020"
         }
+
     :status 200: Successful
     :status 401: Not logged in as admin
     :status 422: Not logged in
+
     """
     event = request.json["event"]
     user = request.json["user"]
@@ -156,13 +172,15 @@ def check_in():
 
     return jsonify({"num_changed": result.modified_count}), 200
 
+
 @registrations_api.route('/rsvp/view', methods = ['GET'])
 @jwt_required
 def rsvp_view():
 
-    """For a user, generate a list of all the events he/she was accepted to 
-    and a list of events the user has RSVPed to.
+    """For a user, generate a list of all the events he/she was accepted to and a list of events the user has RSVPed to.
+
     :reqheader Authorization: ``Bearer <JWT Token>``
+
     :status 200: Successful
     """
 
@@ -189,12 +207,16 @@ def rsvp_view():
 @jwt_required
 def rsvp_rsvp():
     """As a user, RSVP for an event he/she was accepted to
+
     :reqheader Authorization: ``Bearer <JWT Token>``
     :reqjson event: name of event
+
     .. sourcecode:: json
+    
         {
             "event": "Spring_2021"
         }
+
     :status 200: Successful
     :status 400: No such event
     :status 409: User has already RSVPed
@@ -229,12 +251,17 @@ def rsvp_rsvp():
 @jwt_required
 def rsvp_cancel():
     """As a user, cancel RSVP for an event he/she was accepted to
+
     :reqheader Authorization: ``Bearer <JWT Token>``
+
     :reqjson event: name of event
+
     .. sourcecode:: json
+
         {
             "event": "Spring_2021"
         }
+
     :status 200: Successful
     :status 400: No such event
     :status 409: User has already not RSVPed
