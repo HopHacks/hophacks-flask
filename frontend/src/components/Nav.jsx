@@ -15,7 +15,6 @@ const Nav = function Nav(props) {
           <ul>
             <li><Link to="/">Home</Link></li>
             {props.isLoggedIn && <li><Link to="/profile">Profile</Link></li>}
-            {props.isLoggedIn || <li><Link to="/login">Login</Link></li>}
             {props.isLoggedIn && <li><a href="/" onClick={handleLogout}>Logout</a></li>}
           </ul>
         </nav>);
