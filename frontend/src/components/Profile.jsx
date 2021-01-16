@@ -45,6 +45,8 @@ const Profile = function Profile(props) {
     const [msg, setMsg] = useState("");
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
+    const [confirmed, setConfirmed] = React.useState(false);
+
     const loading = open && options.length === 0;
   
 
@@ -127,21 +129,15 @@ const Profile = function Profile(props) {
     }
 
     async function getStatus(){
-        await axios.get('/api/registrations/get').then((response)=>{
-            response.data.registrations.forEach(registration =>{
-                if(registration.event === currentEvent){
-                    if(registration.accept){
-                        setStatus("accepted")
-                    }
-                    else{
-                        setStatus("applied")
-                    }
-                }
-            });
+        await axios.get('/api/accounts/profile/email_confirmed').then((response)=>{
+            if (response.data.email_confirmed){
+                setConfirmed(true);
+            } else {
+                setConfirmed(false);
+            }
         }).catch((e)=>{
-            setStatus("not applied")
+            alert("can't get email_confirmed status")
         });
-
     }
 
     async function handleProfileSave(){
@@ -177,11 +173,36 @@ const Profile = function Profile(props) {
 
     }
 
+    async function getEmailConfirmStatus(){
+        await axios.get('/api/registrations/get').then((response)=>{
+            response.data.registrations.forEach(registration =>{
+                if(registration.event === currentEvent){
+                    if(registration.accept){
+                        setStatus("accepted")
+                    }
+                    else{
+                        setStatus("applied")
+                    }
+                }
+            });
+        }).catch((e)=>{
+            setStatus("not applied")
+        });
+
+    }
+
+    async function sendConfirmationEmail(){
+        await axios.post('/api/accounts/confirm_email/request', {
+            "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email'
+          })
+    }
+
 
     useEffect(() => {
         getStatus();
         getProfile();
         getFileName();
+        getEmailConfirmStatus();
     }, [props.isLoggedIn]);
 
     return (
@@ -278,7 +299,7 @@ const Profile = function Profile(props) {
       options={options}
       loading={loading}
       onChange={(event, newValue) => {
-        setSchool(newValue);
+        setSchool(newValue.name);
       }}
       renderInput={(params) => (
         <TextField
@@ -413,10 +434,13 @@ const Profile = function Profile(props) {
             </div>
         </div>
 
-        <div>
+        {!confirmed && 
+        <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
+        }
+        {confirmed && 
         <button onClick={applyToCurrentEvent}>Apply For Current Hackathon</button>
+        }
         <p>{msg}</p>
-        </div>
 
         </div>
     );
