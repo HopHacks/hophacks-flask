@@ -160,6 +160,12 @@ def check_in():
 @jwt_required
 def rsvp_view():
 
+    """For a user, generate a list of all the events he/she was accepted to 
+    and a list of events the user has RSVPed to.
+    :reqheader Authorization: ``Bearer <JWT Token>``
+    :status 200: Successful
+    """
+
     id = get_jwt_identity()
     user = db.users.find_one({'_id' : ObjectId(id)})
 
@@ -167,14 +173,14 @@ def rsvp_view():
     rsvpList = [] # list of the events that the user has RSVPed to 
 
 
-    for i in user["registrations"]:
+    for eventInfo in user["registrations"]:
     
-        if("rsvp" in i and i["accept"] == True and i["rsvp"] == True ):
-            rsvpList.append(i["event"]) # record name of RSVPed event
+        if("rsvp" in eventInfo and eventInfo["accept"] == True and eventInfo["rsvp"] == True ):
+            rsvpList.append(eventInfo["event"]) # record name of RSVPed event
 
         # should only show the user accepted events
-        if(i["accept"] == True):
-            allList.append(i["event"])
+        if(eventInfo["accept"] == True):
+            allList.append(eventInfo["event"])
         
 
     return jsonify({"rsvpList":rsvpList, "allList": allList}),200
@@ -182,11 +188,24 @@ def rsvp_view():
 @registrations_api.route('/rsvp/rsvp', methods = ['POST'])
 @jwt_required
 def rsvp_rsvp():
+    """As a user, RSVP for an event he/she was accepted to
+    :reqheader Authorization: ``Bearer <JWT Token>``
+    :reqjson event: name of event
+    .. sourcecode:: json
+        {
+            "event": "Spring_2021"
+        }
+    :status 200: Successful
+    :status 400: No such event
+    :status 409: User has already RSVPed
+    :status 500: Another unknown error
+    """
 
-    event = request.json["event"]
+    event = request.json["event"] # name of event
     id = get_jwt_identity()
     
     # only allow RSVPs to accepted events
+    # update RSVP status to true in database
     ret = db.users.update_one({
         
         '_id' : ObjectId(id),
@@ -209,6 +228,18 @@ def rsvp_rsvp():
 @registrations_api.route('/rsvp/cancel', methods = ['POST'])
 @jwt_required
 def rsvp_cancel():
+    """As a user, cancel RSVP for an event he/she was accepted to
+    :reqheader Authorization: ``Bearer <JWT Token>``
+    :reqjson event: name of event
+    .. sourcecode:: json
+        {
+            "event": "Spring_2021"
+        }
+    :status 200: Successful
+    :status 400: No such event
+    :status 409: User has already not RSVPed
+    :status 500: Another unknown error
+    """
 
     event = request.json["event"]
     id = get_jwt_identity()

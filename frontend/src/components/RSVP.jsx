@@ -17,7 +17,7 @@ const RSVP = function RSVP(props){
             setRsvpList(response.data.rsvpList)
         }
         else{
-            alert("Not logged in");
+            alert("Not logged in"); 
             return;
         }
 
@@ -29,7 +29,7 @@ const RSVP = function RSVP(props){
             await axios.post("/api/registrations/rsvp/rsvp", {"event":event});
         }
         catch(e){
-            // TODO: more descriptive error messages depending on error code
+            // maybe TODO: more descriptive error messages depending on error code?
             alert("Failed");
         }
 
@@ -49,8 +49,8 @@ const RSVP = function RSVP(props){
 
     }
 
-    // display asterik next to event if user has already RSVPed to it
-    // someone better at frontend/design should make a checkbox or highlight in green if user has RSVPed, instead of asterik
+    // display asterisk next to event if user has already RSVPed to it
+    // someone better at frontend/design should make a checkbox or highlight in green if user has RSVPed, instead of asterisk
     const events = allList.map((renderEvent) => {
         // check if user has RSVPed to event
         if(rsvpList.includes(renderEvent)){

@@ -58,7 +58,9 @@ const Profile = function Profile(props) {
           <hr/>
           <p>{oldName}</p>
           <button onClick={handleDownload}>Download</button>
+          <p>
           <Link to="/rsvp">RSVP</Link>
+          </p>
         </div>
     );
 }
