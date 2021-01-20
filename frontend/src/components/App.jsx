@@ -79,32 +79,6 @@ export default function App() {
       refreshToken();
     }, []);
 
-<<<<<<< HEAD
-  return (
-    <Router>
-      <div>
-        <Nav isLoggedIn={isLoggedIn} logout={logout}/>
-
-        <Switch>
-          <Route path="/admin">
-            <Admin />
-          </Route>
-          <Route path="/profile">
-            <Profile isLoggedIn={isLoggedIn}/>
-          </Route>
-          <Route path="/reset_password/:token" component={PasswordReset}/>
-          <Route path="/confirm_email/:token" component={EmailConfirmation}/>
-
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-
-        <Login login={login}/>
-      </div>
-    </Router>
-  );
-=======
     return (
       <Router>
         <div>
@@ -134,5 +108,4 @@ export default function App() {
         </div>
       </Router>
     );
->>>>>>> master
 }
