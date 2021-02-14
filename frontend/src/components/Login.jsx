@@ -33,7 +33,6 @@ function Login(props) {
     let history = useHistory();
 
     async function handleLogin(event) {
-        console.log(props)
         event.preventDefault();
         // TODO alert?
         try {

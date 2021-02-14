@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 
 const AuthContext = React.createContext();
 
+/* Provider for Auth functionality, should wrap top level app */
 function AuthProvider (props) {
     const { children } = props;
 
@@ -81,6 +82,7 @@ function AuthProvider (props) {
 
 /* Higher Order Components */
 
+/* Inserts functions/state related to auth into props of wrapped components */
 function withAuthProps(WrappedComponent) {
     return function(props) {
         return (
@@ -101,8 +103,10 @@ function withAuthProps(WrappedComponent) {
     }
 }
 
-function withAuth(WrappedComponent) {
-    function CheckAdmin (props) {
+/* Checks that user is logged in, and redirects to login if not
+ * While waiting displays temporary message */
+function withAuthCheck(WrappedComponent) {
+    function CheckAuth (props) {
         return (
             <div>
                 {props.isLoggedIn === null ? <p>Checking login...</p>
@@ -112,11 +116,13 @@ function withAuth(WrappedComponent) {
         );
     };
 
-    return CheckAdmin;
+    return withAuthProps(CheckAuth);
 };
 
-function withAdminAuth(WrappedComponent) {
-    function HandleAdmin(props) {
+/* Checks that user is admin, and redirects to home if not
+ * While waiting displays blank page instead of content */
+function withAdminAuthCheck(WrappedComponent) {
+    function CheckAdminAuth(props) {
         const [isAdmin, setIsAdmin] = useState();
 
         async function checkAdmin() {
@@ -141,7 +147,7 @@ function withAdminAuth(WrappedComponent) {
         );
     };
 
-    return HandleAdmin;
+    return withAuthCheck(CheckAdminAuth);
 }
 
-export {AuthProvider, withAuthProps, withAuth, withAdminAuth};
+export {AuthProvider, withAuthProps, withAuthCheck, withAdminAuthCheck};
