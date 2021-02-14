@@ -3,7 +3,7 @@ import axios from "axios";
 import RSVP from "./RSVP";
 import { Link } from "react-router-dom";
 
-import {withAuth} from "../util/auth.jsx";
+import {withAuthCheck} from "../util/auth.jsx";
 
 const Profile = function Profile(props) {
     const [file, setFile] = useState("");
@@ -65,4 +65,4 @@ const Profile = function Profile(props) {
     );
 }
 
-export default withAuth(Profile);
+export default withAuthCheck(Profile);

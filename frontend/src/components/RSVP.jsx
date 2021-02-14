@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import {withAuth} from "../util/auth.jsx";
+import {withAuthCheck} from "../util/auth.jsx";
 import { Link } from "react-router-dom";
 
 const RSVP = function RSVP(props){
@@ -75,4 +75,4 @@ const RSVP = function RSVP(props){
 
 }
 
-export default withAuth(RSVP);
+export default withAuthCheck(RSVP);

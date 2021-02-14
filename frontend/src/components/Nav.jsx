@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { Typography } from "@material-ui/core";
 
+import { withAuthProps } from '../util/auth';
 
 const Nav = function Nav(props) {
     let history = useHistory();
@@ -38,4 +39,4 @@ const Nav = function Nav(props) {
         </AppBar>);
 }
 
-export default Nav;
+export default withAuthProps(Nav);
