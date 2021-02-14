@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 
+import { ParallaxProvider } from 'react-scroll-parallax'
 
 import Login from "./Login"
 import Home from "./Home"
@@ -15,6 +16,7 @@ import Nav from "./Nav"
 import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
 import RSVP from "./RSVP"
+
 
 export default function App() {
 
@@ -80,32 +82,36 @@ export default function App() {
     }, []);
 
     return (
-      <Router>
-        <div>
-          <Nav isLoggedIn={isLoggedIn} logout={logout}/>
+      <>
+        <ParallaxProvider>
+          <Router>
+            <div>
+              <Nav isLoggedIn={isLoggedIn} logout={logout}/>
 
-          <Switch>
-            <Route path="/admin">
-              <Admin />
-            </Route>
-            <Route path="/profile">
-              <Profile isLoggedIn={isLoggedIn}/>
-            </Route>
-            <Route path="/login">
-              <Login login={login}/>
-            </Route>
-            <Route path="/rsvp">
-            
-            <RSVP isLoggedIn={isLoggedIn}/>
-          </Route>
-            <Route path="/reset_password/:token" component={PasswordReset}/>
-            <Route path="/confirm_email/:token" component={EmailConfirmation}/>
+              <Switch>
+                <Route path="/admin">
+                  <Admin />
+                </Route>
+                <Route path="/profile">
+                  <Profile isLoggedIn={isLoggedIn}/>
+                </Route>
+                <Route path="/login">
+                  <Login login={login}/>
+                </Route>
+                <Route path="/rsvp">
+                
+                <RSVP isLoggedIn={isLoggedIn}/>
+              </Route>
+                <Route path="/reset_password/:token" component={PasswordReset}/>
+                <Route path="/confirm_email/:token" component={EmailConfirmation}/>
 
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        </ParallaxProvider>
+      </>
     );
 }
