@@ -7,6 +7,9 @@ import {
 import axios from "axios";
 
 import { ParallaxProvider } from 'react-scroll-parallax'
+import { ThemeProvider } from '@material-ui/styles';
+
+import { theme } from "../util/theme"
 
 import Login from "./Login"
 import Home from "./Home"
@@ -84,33 +87,35 @@ export default function App() {
     return (
       <>
         <ParallaxProvider>
-          <Router>
-            <div>
-              <Nav isLoggedIn={isLoggedIn} logout={logout}/>
+          <ThemeProvider theme={theme}>
+            <Router>
+              <div>
+                <Nav isLoggedIn={isLoggedIn} logout={logout}/>
 
-              <Switch>
-                <Route path="/admin">
-                  <Admin />
+                <Switch>
+                  <Route path="/admin">
+                    <Admin />
+                  </Route>
+                  <Route path="/profile">
+                    <Profile isLoggedIn={isLoggedIn}/>
+                  </Route>
+                  <Route path="/login">
+                    <Login login={login}/>
+                  </Route>
+                  <Route path="/rsvp">
+                  
+                  <RSVP isLoggedIn={isLoggedIn}/>
                 </Route>
-                <Route path="/profile">
-                  <Profile isLoggedIn={isLoggedIn}/>
-                </Route>
-                <Route path="/login">
-                  <Login login={login}/>
-                </Route>
-                <Route path="/rsvp">
-                
-                <RSVP isLoggedIn={isLoggedIn}/>
-              </Route>
-                <Route path="/reset_password/:token" component={PasswordReset}/>
-                <Route path="/confirm_email/:token" component={EmailConfirmation}/>
+                  <Route path="/reset_password/:token" component={PasswordReset}/>
+                  <Route path="/confirm_email/:token" component={EmailConfirmation}/>
 
-                <Route path="/">
-                  <Home />
-                </Route>
-              </Switch>
-            </div>
-          </Router>
+                  <Route path="/">
+                    <Home />
+                  </Route>
+                </Switch>
+              </div>
+            </Router>
+          </ThemeProvider>
         </ParallaxProvider>
       </>
     );
