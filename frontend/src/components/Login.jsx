@@ -9,11 +9,13 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
+import { withAuthProps } from '../util/auth';
+
 import {
     useHistory
 } from "react-router-dom";
 
-export default function Login(props) {
+function Login(props) {
     
     /* State for handling login */
     const [email, setEmail] = useState("");
@@ -31,6 +33,7 @@ export default function Login(props) {
     let history = useHistory();
 
     async function handleLogin(event) {
+        console.log(props)
         event.preventDefault();
         // TODO alert?
         try {
@@ -172,3 +175,5 @@ export default function Login(props) {
     );
 
 }
+
+export default withAuthProps(Login);
