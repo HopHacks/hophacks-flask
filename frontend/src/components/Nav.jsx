@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+import { Typography } from "@material-ui/core";
 
 
 const Nav = function Nav(props) {
@@ -17,14 +18,21 @@ const Nav = function Nav(props) {
     return (
         <AppBar position="static">
           <Toolbar>
-            <Button component={Link} to={'/'} color="inherit">Home</Button>
+            <Button component={Link} to={'/'} color="inherit">
+              <Typography> Home </Typography>
+
+            </Button>
             
             {props.isLoggedIn && 
-              <Button component={Link} to={'/'} color="inherit">Profile</Button>
+              <Button component={Link} to={'/profile'} color="inherit">
+                <Typography> Profile </Typography>
+              </Button>
             }
             
             {props.isLoggedIn && 
-              <Button onClick={handleLogout} color="inherit">Logout</Button>
+              <Button onClick={handleLogout} color="inherit">
+                <Typography>Logout</Typography>
+              </Button>
             }
           </Toolbar>
         </AppBar>);
