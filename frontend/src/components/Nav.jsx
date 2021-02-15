@@ -17,7 +17,7 @@ const Nav = function Nav(props) {
     }
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" >
           <Toolbar>
             <Button component={Link} to={'/'} color="inherit">
               <Typography> Home </Typography>
@@ -35,7 +35,7 @@ const Nav = function Nav(props) {
                 <Typography>Logout</Typography>
               </Button>
             }
-          </Toolbar>
+            </Toolbar>
         </AppBar>);
 }
 
