@@ -31,7 +31,9 @@ const Profile = function Profile(props) {
     const [status, setStatus] = useState("not applied");
     const [file, setFile] = useState("");
     const [oldName, setOldName] = useState("");
+    //display database
     const [profile, setProfile] = useState([]);
+    //edit 
     const [first_name, setFirst_name] = useState("");
     const [last_name, setLast_name] = useState("");
     const [gender, setGender] = useState("");
