@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import {withAuth} from "../util/auth.jsx";
+import {withAuthCheck} from "../util/auth.jsx";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -444,9 +444,11 @@ const Profile = function Profile(props) {
         }
         <p>{msg}</p>
 
+          <p>
+          <Link to="/rsvp">RSVP</Link>
+          </p>
         </div>
     );
 }
 
-
-export default withAuth(Profile);
+export default withAuthCheck(Profile);
