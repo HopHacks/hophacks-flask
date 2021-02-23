@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -8,24 +7,10 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import { makeStyles } from '@material-ui/core/styles';
 import {withAuthCheck} from "../util/auth.jsx";
+import { Link } from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  }));
-
-  function sleep(delay = 0) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, delay);
-    });
-  }
 
 const Profile = function Profile(props) {
     const [status, setStatus] = useState("not applied");
@@ -45,41 +30,25 @@ const Profile = function Profile(props) {
     const [grad_month, setGrad_month] = useState("");
     const [grad_year, setGrad_year] = useState("");
     const [msg, setMsg] = useState("");
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState([]);
-    const [confirmed, setConfirmed] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [options, setOptions] = useState([]);
+    const [confirmed, setConfirmed] = useState(false);
+    const [sendConfimationMsg, setSendConfimationMsg] = useState("");
 
-    const loading = open && options.length === 0;
-  
+
 
     const currentEvent = "spring_2021"
+    const useStyles = makeStyles((theme) => ({
+        formControl: {
+          margin: theme.spacing(1),
+          minWidth: 120,
+        },
+        selectEmpty: {
+          marginTop: theme.spacing(2),
+        },
+      }));
     const classes = useStyles();
 
-    React.useEffect(() => {
-        let active = true;
-    
-        if (!loading) {
-          return undefined;
-        }
-    
-        (async () => {
-          const response = await axios.get('http://universities.hipolabs.com/search');
-          const colleges = await response.data;
-          if (active) {
-            setOptions(Object.keys(colleges).map((key) => colleges[key]));
-          }
-        })();
-    
-        return () => {
-          active = false;
-        };
-      }, [loading]);
-    
-      React.useEffect(() => {
-        if (!open) {
-          setOptions([]);
-        }
-      }, [open]);
 
     async function getFileName() {
         /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
@@ -115,6 +84,7 @@ const Profile = function Profile(props) {
     }
 
     async function getProfile(){
+        if(!props.isLoggedIn) return;
         const response = await axios.get('/api/accounts/profile/get');
 
         setProfile(response.data.profile);
@@ -131,72 +101,62 @@ const Profile = function Profile(props) {
     }
 
     async function getStatus(){
-        await axios.get('/api/accounts/profile/email_confirmed').then((response)=>{
-            if (response.data.email_confirmed){
-                setConfirmed(true);
-            } else {
-                setConfirmed(false);
-            }
-        }).catch((e)=>{
-            alert("can't get email_confirmed status")
-        });
+        if(!props.isLoggedIn) return;
+        const response = await axios.get('/api/accounts/profile/email_confirmed');
+
+        if (response.data.email_confirmed){
+            setConfirmed(true);
+        } else {
+            setConfirmed(false);
+        }
     }
 
     async function handleProfileSave(){
-        if(props.isLoggedIn){
+        if(!props.isLoggedIn) return;
+        try{
             await axios.post('/api/accounts/profile/update', {
-                "profile": profile}).catch((e) =>{
-                    alert("fail to update")
-                });  
+                "profile": profile})
         }
-        else{
-            alert("please log in")
+        catch(e){
+            console.log("fail to update")
         }
     }
 
     async function applyToCurrentEvent(){
+        if(!props.isLoggedIn) return;
         if(status === "not applied"){
-            if(props.isLoggedIn){
-                
-                await axios.post('/api/registrations/apply', {
-                    "event": currentEvent, "details": "none"}).then((res)=>{
-                        setMsg(res.data.msg);
-                    }).catch((e) =>{
-                        setMsg(e.message);
-                    });  
-                getStatus();
-            }
-            else{
-                alert("please log in")
-            }
-        } else{
-            alert("You have applied to this current event")
+            const res = await axios.post('/api/registrations/apply', {
+                "event": currentEvent, "details": "none"})
+            setMsg(res.data.msg);
+            getStatus();
         }
-
     }
 
     async function getEmailConfirmStatus(){
-        await axios.get('/api/registrations/get').then((response)=>{
-            response.data.registrations.forEach(registration =>{
-                if(registration.event === currentEvent){
-                    if(registration.accept){
-                        setStatus("accepted")
-                    }
-                    else{
-                        setStatus("applied")
-                    }
+        if(!props.isLoggedIn) return;
+        const response = await axios.get('/api/registrations/get')
+        response.data.registrations.forEach(registration =>{
+            if(registration.event === currentEvent){
+                if(registration.accept){
+                    setStatus("accepted")
                 }
-            });
-        }).catch((e)=>{
-            setStatus("not applied")
+                else{
+                    setStatus("applied")
+                }
+            }
         });
-
     }
 
     async function sendConfirmationEmail(){
-        await axios.post('/api/accounts/confirm_email/request', {
-            "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email'
-          })
+        try {
+            const response = await axios.post('/api/accounts/confirm_email/request', {
+                "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email'
+            })
+            setSendConfimationMsg("Send confirmation email successfully!")
+        }
+        catch(e) {
+            setSendConfimationMsg("Unable to send confirmation email")
+        }
     }
 
 
@@ -207,23 +167,37 @@ const Profile = function Profile(props) {
         getEmailConfirmStatus();
     }, [props.isLoggedIn]);
 
-    return (
-        <div>
-            <div>
-                Status for {currentEvent} Event: {status}
-            </div>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <input type="file" name="file" onChange={handleFileChange}/>
-            </div>
-            <input type="submit" value="Submit" />
-          </form>
+    const loading = open && options.length === 0;
+  
+    useEffect(() => {
+        let active = true;
+    
+        if (!loading) {
+          return undefined;
+        }
+    
+        (async () => {
+          const response = await axios.get('http://universities.hipolabs.com/search');
+          const colleges = await response.data;
+          if (active) {
+            setOptions(Object.keys(colleges).map((key) => colleges[key]));
+          }
+        })();
+    
+        return () => {
+          active = false;
+        };
+      }, [loading]);
+    
+      
+    useEffect(() => {
+        if (!open) {
+          setOptions([]);
+        }
+    }, [open]);
 
-          <hr/>
-          <p>{oldName}</p>
-          <button onClick={handleDownload}>Download</button>
-          <div>
-            <p>Profile</p>
+    function firstNameForm() {
+        return (<div>
 
             <p>First Name:{profile.first_name}</p>
             <div>
@@ -234,6 +208,13 @@ const Profile = function Profile(props) {
                 <input type="submit"  value="SAVE" onClick={()=>{profile.first_name = first_name}}/>
                 </form>
             </div>
+            </div>
+            );
+    }
+
+    function lastNameForm(){
+        return (
+            <div>
             <p>Last Name:{profile.last_name}</p>
             <div>
                 <form onSubmit = {handleProfileSave}>
@@ -243,7 +224,14 @@ const Profile = function Profile(props) {
                 <input type="submit"  value="SAVE" onClick={()=>{profile.last_name = last_name}}/>
                 </form>
             </div>
-            <p>Gender:{profile.gender}</p>
+            </div>
+            );
+    }
+
+    function genderForm(){
+        return (
+        <div>
+        <p>Gender:{profile.gender}</p>
             <div>
                 <form onSubmit = {handleProfileSave}>
                 <FormControl className={classes.formControl}>
@@ -258,14 +246,21 @@ const Profile = function Profile(props) {
                 >
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>
-                <MenuItem value="Genderqueer/Non-Binary">Genderqueer/Non-Binary</MenuItem>
+                <MenuItem value="Non-Binary">Non-Binary</MenuItem>
                 <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
                 </Select>
             </FormControl>
                 <input type="submit"  value="SAVE" onClick={()=>{profile.gender = gender}}/>
                 </form>
             </div>
-            <p>Major:{profile.major}</p>
+            </div>
+            );
+    }
+
+    function majorForm(){
+        return (
+        <div>
+        <p>Major:{profile.major}</p>
             <div>
                 <form onSubmit = {handleProfileSave}>
                     <label>
@@ -274,7 +269,14 @@ const Profile = function Profile(props) {
                 <input type="submit"  value="SAVE" onClick={()=>{profile.major = major}}/>
                 </form>
             </div>
-            <p>Phone Number:{profile.phone_number}</p>
+            </div>
+        );
+    }
+
+    function phoneNumberForm(){
+        return (      
+            <div>     
+        <p>Phone Number:{profile.phone_number}</p>
             <div>
                 <form onSubmit = {handleProfileSave}>
                     <label>
@@ -283,8 +285,15 @@ const Profile = function Profile(props) {
                 <input type="submit"  value="SAVE" onClick={()=>{profile.phone_number = phone_number}}/>
                 </form>
             </div>
-            <p>School:{profile.school}</p>
-            <div>
+            </div>
+            );
+    }
+
+    function schoolForm(){
+        return (   
+            <div>       
+              <p>School:{profile.school}</p>
+              <div>
                 <form onSubmit = {handleProfileSave}>
                 <Autocomplete
       id="schools"
@@ -330,9 +339,14 @@ const Profile = function Profile(props) {
                     }
                     }}/>
                 </form>
+                </div>
+</div>
+);
+    }
 
-
-            </div>
+    function ethnicityForm(){
+        return (
+            <div>
             <p>Ethnicity:{profile.ethnicity}</p>
             <div>
                 <form onSubmit = {handleProfileSave}>
@@ -346,17 +360,28 @@ const Profile = function Profile(props) {
                     setEthnicity(e.target.value);
                 }}
                 >
-                <MenuItem value="White">White</MenuItem>
-                <MenuItem value="Black or African American">Black or African American</MenuItem>
                 <MenuItem value="American Indian or Alaska Native">American Indian or Alaska Native</MenuItem>
                 <MenuItem value="Asian">Asian</MenuItem>
+                <MenuItem value="Black or African American">Black or African American</MenuItem>
+                <MenuItem value="Hispanic, Latino or Spanish Origin">Hispanic, Latino or Spanish Origin</MenuItem>
+                <MenuItem value="Middle Eastern or North African">Middle Eastern or North African</MenuItem>
                 <MenuItem value="Native Hawaiian or Other Pacific Islander">Native Hawaiian or Other Pacific Islander</MenuItem>
+                <MenuItem value="White">White</MenuItem>
+                <MenuItem value="Multiethnic">Multiethnic</MenuItem>
+                <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
                 </Select>
             </FormControl>
                 <input type="submit"  value="SAVE" onClick={()=>{profile.ethnicity = ethnicity}}/>
                 </form>
             </div>
-            <p>Grad:{profile.grad}</p>
+            </div>
+);
+    }
+
+    function gradForm(){
+        return (    
+            <div>        
+        <p>Grad:{profile.grad}</p>
             <div>
                 <form onSubmit = {handleProfileSave}>
                 <FormControl className={classes.formControl}>
@@ -377,7 +402,13 @@ const Profile = function Profile(props) {
                 <input type="submit"  value="SAVE" onClick={()=>{profile.grad = grad}}/>
                 </form>
             </div>
-            
+            </div>
+);
+    }
+
+    function graduationDateForm(){
+        return (    
+            <div>        
             <p>Graduation Date: {profile.grad_month} {profile.grad_year}</p>
             <div>
                 <form onSubmit = {handleProfileSave}>
@@ -421,10 +452,6 @@ const Profile = function Profile(props) {
                 <MenuItem value="2023">2023</MenuItem>
                 <MenuItem value="2024">2024</MenuItem>
                 <MenuItem value="2025">2025</MenuItem>
-                <MenuItem value="2026">2026</MenuItem>
-                <MenuItem value="2027">2027</MenuItem>
-                <MenuItem value="2028">2028</MenuItem>
-                <MenuItem value="2029">2029</MenuItem>
                 </Select>
             </FormControl>
             
@@ -434,12 +461,39 @@ const Profile = function Profile(props) {
                 }}/>
                 </form>
             </div>
-        </div>
+        </div>);
+    }
 
+    function uploadDocument(){
+        return (
+        <div>
+            <div>
+            Status for {currentEvent} Event: {status}
+            </div>
+        <form onSubmit={handleSubmit}>
+            <div>
+            <input type="file" name="file" onChange={handleFileChange}/>
+            </div>
+            <input type="submit" value="Submit" />
+        </form>
+
+        <hr/>
+        <p>{oldName}</p>
+        <button onClick={handleDownload}>Download</button>
+      </div>
+        );
+    }
+
+    function applyEvent(){
+        return(
+            <div>
+                {!confirmed && 
+            <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
+            }
         {!confirmed && 
-        <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
+        <p>{sendConfimationMsg}</p>
         }
-        {confirmed && 
+        {confirmed && status === "not applied" &&
         <button onClick={applyToCurrentEvent}>Apply For Current Hackathon</button>
         }
         <p>{msg}</p>
@@ -447,6 +501,30 @@ const Profile = function Profile(props) {
           <p>
           <Link to="/rsvp">RSVP</Link>
           </p>
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <div>
+                {uploadDocument()}
+            </div>
+            <div>
+            <p>Profile</p>
+                {firstNameForm()}
+                {lastNameForm()}
+                {genderForm()}
+                {majorForm()}
+                {schoolForm()}
+                {phoneNumberForm()}
+                {ethnicityForm()}
+                {gradForm()}
+                {graduationDateForm()}
+            </div>
+            <div>
+                {applyEvent()}
+            </div>
         </div>
     );
 }

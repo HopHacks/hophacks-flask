@@ -441,7 +441,16 @@ def reset_password():
 @accounts_api.route('/profile/email_confirmed', methods = ['GET'])
 @jwt_required
 def get_email_confirmed():
+    """Get if a specific user have his/her email confirmed. Return a boolean
 
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :resjson email_confirmed: email_confirmed information
+    
+    :status 200: Get email_confirmed successfully
+    :status 404: User not found
+
+    """
     id = get_jwt_identity()
     user = db.users.find_one({'_id': ObjectId(id)})
     if (user is None):

@@ -205,8 +205,6 @@ def check_in():
 
     return jsonify({"num_changed": result.modified_count}), 200
 
-<<<<<<< HEAD
-=======
 
 @registrations_api.route('/rsvp/view', methods = ['GET'])
 @jwt_required
@@ -325,4 +323,3 @@ def rsvp_cancel():
         return jsonify({"msg": "unknown error"}), 500 
         
 
->>>>>>> 38e0588178069e992d208a5e752e90131c4fb1fd
