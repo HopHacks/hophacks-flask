@@ -1,0 +1,31 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.parallax-inner > * {
+    top: 0% !important;
+    bottom: 0% !important;  
+}
+.parallax-banner-layer-0{
+    animation: fogMovementRev 250s linear infinite;
+}
+
+.parallax-banner-layer-6 {
+    animation: fogMovement 60s linear infinite;
+}
+
+.parallax-banner-layer-10 {
+    animation: fogMovementRev 90s linear infinite;
+}
+
+@keyframes fogMovement{
+    0%{background-position: 0 0;}
+    100%{background-position: 100vw 0;}
+}
+  
+@keyframes fogMovementRev{
+    0%{background-position: 0 0;}
+    100%{background-position: -100vw 0;}
+}

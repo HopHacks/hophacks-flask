@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import {ParallaxBanner, ParallaxProvider} from 'react-scroll-parallax'
 
-import '../stylesheets/base.css'
+import '../stylesheets/home.css'
 
 const useStyles = makeStyles({
     logo: {
@@ -19,6 +19,8 @@ const useStyles = makeStyles({
         position: 'absolute',
         textAlign: 'center', 
     },
+
+
 });
 
 export default function Home() {
@@ -28,7 +30,8 @@ export default function Home() {
         return process.env.PUBLIC_URL + '/images/' + url;
     }
 
-    const Banner = (            
+    const Banner = (          
+        <div style={{width:"100%", height:"100%"}}>
         <ParallaxBanner
             layers={[
                 {
@@ -89,6 +92,8 @@ export default function Home() {
                 height: '100vh',
             }}
         />
+
+        </div>  
     )
 
     /* Logo on top of Parallax Banner */
