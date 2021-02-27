@@ -13,6 +13,60 @@ import { Link } from "react-router-dom";
 
 
 const Profile = function Profile(props) {
+
+    const majors = [
+        "Africana Studies",
+        "Anthropology",
+        "Applied Mathematics & Statistics",
+        "Archaeology",
+        "Behavioral Biology",
+        "Biology",
+        "Biomedical Engineering",
+        "Biophysics",
+        "Chemical & Biomolecular Engineering",
+        "Chemistry",
+        "Civil Engineering",
+        "Classics",
+        "Cognitive Science",
+        "Computer Engineering",
+        "Computer Science",
+        "Earth & Planetary Sciences",
+        "East Asian Studies",
+        "Economics",
+        "Electrical Engineering",
+        "Engineering Mechanics",
+        "English",
+        "Environmental Engineering",
+        "Environmental Science",
+        "Environmental Studies",
+        "Film & Media Studies",
+        "French",
+        "General Engineering",
+        "German",
+        "History",
+        "History of Art",
+        "History of Science, Medicine & Technology",
+        "Interdisciplinary Studies",
+        "International Studies",
+        "Italian",
+        "Materials Science & Engineering",
+        "Mathematics",
+        "Mechanical Engineering",
+        "Medicine, Science & the Humanities",
+        "Molecular & Cellular Biology",
+        "Natural Sciences",
+        "Near Eastern Studies",
+        "Neuroscience",
+        "Philosophy",
+        "Physics",
+        "Political Science",
+        "Psychology",
+        "Public Health Studies",
+        "Romance Languages",
+        "Sociology",
+        "Spanish",
+        "Writing Seminars"]
+
     const [status, setStatus] = useState("not applied");
     const [file, setFile] = useState("");
     const [oldName, setOldName] = useState("");
@@ -35,7 +89,7 @@ const Profile = function Profile(props) {
     const [confirmed, setConfirmed] = useState(false);
     const [sendConfimationMsg, setSendConfimationMsg] = useState("");
 
-
+    
 
     const currentEvent = "spring_2021"
     const useStyles = makeStyles((theme) => ({
@@ -196,8 +250,8 @@ const Profile = function Profile(props) {
         }
     }, [open]);
 
-    function firstNameForm() {
-        return (<div>
+    const firstNameForm = 
+    (<div>
 
             <p>First Name:{profile.first_name}</p>
             <div>
@@ -209,11 +263,11 @@ const Profile = function Profile(props) {
                 </form>
             </div>
             </div>
-            );
-    }
+    );
+    
 
-    function lastNameForm(){
-        return (
+    const lastNameForm = 
+    (
             <div>
             <p>Last Name:{profile.last_name}</p>
             <div>
@@ -225,11 +279,10 @@ const Profile = function Profile(props) {
                 </form>
             </div>
             </div>
-            );
-    }
+    )
 
-    function genderForm(){
-        return (
+    const genderForm =
+    (
         <div>
         <p>Gender:{profile.gender}</p>
             <div>
@@ -254,27 +307,31 @@ const Profile = function Profile(props) {
                 </form>
             </div>
             </div>
-            );
-    }
+    )
 
-    function majorForm(){
-        return (
-        <div>
-        <p>Major:{profile.major}</p>
-            <div>
+    const majorForm= 
+        (
+        <div>       
+              <p>Major:{profile.major}</p>
+              <div>
                 <form onSubmit = {handleProfileSave}>
-                    <label>
-                    <input type="text" value = {major} name = "major" onChange={e => setMajor(e.target.value)}/>
-                    </label>
+                <Autocomplete
+                    id="majors"
+                    options={majors}
+                    style={{ width: 300 }}
+                    onChange={(event, newValue) => {
+                    setMajor(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} label="Major" variant="outlined" />}
+                />
                 <input type="submit"  value="SAVE" onClick={()=>{profile.major = major}}/>
                 </form>
-            </div>
-            </div>
-        );
-    }
+                </div>
+        </div>
+        )
 
-    function phoneNumberForm(){
-        return (      
+    const phoneNumberForm =
+    (      
             <div>     
         <p>Phone Number:{profile.phone_number}</p>
             <div>
@@ -286,11 +343,10 @@ const Profile = function Profile(props) {
                 </form>
             </div>
             </div>
-            );
-    }
+            )
 
-    function schoolForm(){
-        return (   
+    const schoolForm = 
+        (   
             <div>       
               <p>School:{profile.school}</p>
               <div>
@@ -341,11 +397,10 @@ const Profile = function Profile(props) {
                 </form>
                 </div>
 </div>
-);
-    }
+)
 
-    function ethnicityForm(){
-        return (
+    const ethnicityForm =
+        (
             <div>
             <p>Ethnicity:{profile.ethnicity}</p>
             <div>
@@ -375,11 +430,10 @@ const Profile = function Profile(props) {
                 </form>
             </div>
             </div>
-);
-    }
+        );
 
-    function gradForm(){
-        return (    
+    const gradForm = 
+        (    
             <div>        
         <p>Grad:{profile.grad}</p>
             <div>
@@ -403,11 +457,10 @@ const Profile = function Profile(props) {
                 </form>
             </div>
             </div>
-);
-    }
+        );
 
-    function graduationDateForm(){
-        return (    
+    const graduationDateForm =
+    (    
             <div>        
             <p>Graduation Date: {profile.grad_month} {profile.grad_year}</p>
             <div>
@@ -461,11 +514,10 @@ const Profile = function Profile(props) {
                 }}/>
                 </form>
             </div>
-        </div>);
-    }
+        </div>)
 
-    function uploadDocument(){
-        return (
+    const uploadDocument =
+    (
         <div>
             <div>
             Status for {currentEvent} Event: {status}
@@ -481,8 +533,7 @@ const Profile = function Profile(props) {
         <p>{oldName}</p>
         <button onClick={handleDownload}>Download</button>
       </div>
-        );
-    }
+    )
 
     function applyEvent(){
         return(
@@ -508,19 +559,19 @@ const Profile = function Profile(props) {
     return (
         <div>
             <div>
-                {uploadDocument()}
+                {uploadDocument}
             </div>
             <div>
             <p>Profile</p>
-                {firstNameForm()}
-                {lastNameForm()}
-                {genderForm()}
-                {majorForm()}
-                {schoolForm()}
-                {phoneNumberForm()}
-                {ethnicityForm()}
-                {gradForm()}
-                {graduationDateForm()}
+                {firstNameForm}
+                {lastNameForm}
+                {genderForm}
+                {majorForm}
+                {schoolForm}
+                {phoneNumberForm}
+                {ethnicityForm}
+                {gradForm}
+                {graduationDateForm}
             </div>
             <div>
                 {applyEvent()}
