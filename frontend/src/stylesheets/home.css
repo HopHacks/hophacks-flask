@@ -29,3 +29,51 @@ html, body {
     0%{background-position: 0 0;}
     100%{background-position: -100vw 0;}
 }
+
+
+/* TODO: These are leftoever from old site */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 10px;
+} 
+
+.grid-item {
+    display: inline;
+    text-align: center;
+    width: 100%;
+
+    font-family: 'Seravek', sans-serif;
+    font-size: 1.17em;
+    line-height: 1.5;
+
+}
+
+.grid-item h3 {
+    margin:0;
+    
+    margin-left: auto;
+    margin-right: auto;
+    display:block;
+    font-weight: normal;
+    text-align: center;
+
+    font-size: 1em;
+
+}
+
+.grid-item img {
+    width: 80%;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 5px;
+    border-radius: 100%;
+}
+  
+.social-icon {
+    width: 20px !important;
+    height: 20px  !important;
+    box-shadow: none !important;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
