@@ -4,6 +4,9 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
+import Grid from '@material-ui/core/Grid';
+
+
 function img(url) {
     return process.env.PUBLIC_URL + '/images/' + url;
 }
@@ -27,9 +30,10 @@ function MemberItem (props) {
         personal = <a href={`${props.personal}`}><img className="social-icon" src={img("social/personal.png")}  alt="personal" /></a>;
     }
 
-    console.log(props)
     return (
-        <div className="grid-item">
+        <Grid item xs={6} sm={4} md={2}>
+            
+            <div class="grid-item">
             <picture>
                 <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
                 <img src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
@@ -39,7 +43,8 @@ function MemberItem (props) {
             {linkedin}
             {github}
             {personal}
-        </div>
+            </div>
+        </Grid>
     );
     
 }
@@ -64,8 +69,8 @@ export default function Team() {
 
                     <br />
 
-                    {/*TODO make this a grid with Material UI */}
-                    <div className="grid-container">
+                    {/*TODO make this grid better (spaced with 8?) */}
+                    <Grid container spacing={1}>
                         <MemberItem imgURL="amber" memberName="Amber Zhou" memberTitle="Co-Director" />
                         <MemberItem imgURL="bwong" memberName="Brandon Wong" memberTitle="Co-Director" />
                         <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Head of Website" />
@@ -90,12 +95,12 @@ export default function Team() {
 
                         <MemberItem imgURL="joanne" memberName="Joanne Selinski" memberTitle="Faculty Advisor" />
                         <MemberItem imgURL="kelly" memberName="Kelly Culotta" memberTitle="Admin Coordinator" />
-                    </div>
+                    </Grid>
                     <br />
                     <br />
 
                     <h2> Alumni </h2>
-                    <div className="grid-container">
+                    <Grid container spacing={1}>
                         <MemberItem imgURL="kristin" memberName="Kristin Yim" memberTitle="Google" />
                         <MemberItem imgURL="jessie" memberName="Jessie Bai" memberTitle="Goldman Sachs" />
                         <MemberItem imgURL="jz" memberName="Jason Zhang" memberTitle="MongoDB" />
@@ -105,8 +110,7 @@ export default function Team() {
                         <MemberItem imgURL="elaine" memberName="Elaine Wong" memberTitle="Facebook" />
                         <MemberItem imgURL="awong" memberName="Andrew Wong" memberTitle="Atlassian" />
                         <MemberItem imgURL="ryan" memberName="Ryan Demo" memberTitle="Lyft" />
-                    </div>
-
+                    </Grid>
                 </CardContent>
             </Card>
         </Box>
