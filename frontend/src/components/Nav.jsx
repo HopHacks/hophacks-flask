@@ -17,7 +17,7 @@ const Nav = function Nav(props) {
     }
 
     return (
-        <AppBar position="sticky" >
+        <AppBar position="sticky">
           <Toolbar>
             <Button component={Link} to={'/'} color="inherit">
               <Typography> Home </Typography>

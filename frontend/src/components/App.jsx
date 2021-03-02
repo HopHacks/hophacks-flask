@@ -7,7 +7,9 @@ import {
 import axios from "axios";
 
 import { ParallaxProvider } from 'react-scroll-parallax'
-import { ThemeProvider } from '@material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from "@material-ui/core/CssBaseline";
+
 
 import { theme } from "../util/theme"
 import { AuthProvider } from "../util/auth"
@@ -26,8 +28,9 @@ export default function App() {
     return (
       <>
         <ParallaxProvider>
-        <ThemeProvider theme={theme}>
+        <MuiThemeProvider theme={theme}>
         <AuthProvider>
+          <CssBaseline/>
 
           <Router>
             <div>
@@ -57,7 +60,7 @@ export default function App() {
             </div>
           </Router>
         </AuthProvider>
-        </ThemeProvider>
+        </MuiThemeProvider>
         </ParallaxProvider>
       </>
     );

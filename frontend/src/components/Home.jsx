@@ -1,6 +1,7 @@
 import React from "react";
 
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card';
 import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,7 +11,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import {ParallaxBanner} from 'react-scroll-parallax';
 
 import Team from './home/Team';
-
 import '../stylesheets/home.css'
 
 const useStyles = makeStyles({
@@ -117,25 +117,25 @@ export default function Home() {
 
 
     return (
-        <div>
 
+        <div>
             {Banner}
             {Logo}
             
-            <Container fixed color="secondary">
+            <Container fixed>
 
                 <Box py={2}>
                     <Card>
-                    <CardContent>
-                        <Typography color="textSecondary" gutterBottom>
-                            About
-                        </Typography>
-                        <Typography color="textSecondary">
-                            HopHacks is a 36-hour biannual Hackathon held at Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes up to $1024!
+                        <CardContent>
+                            <Typography color="textSecondary" gutterBottom>
+                                About
+                            </Typography>
+                            <Typography color="textSecondary">
+                                HopHacks is a 36-hour biannual Hackathon held at Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes up to $1024!
 
-                            Note: Due to the COVID-19 pandemic, we will be hosting HopHacks virtually via Discord and Zoom.
-                        </Typography>
-                    </CardContent>
+                                Note: Due to the COVID-19 pandemic, we will be hosting HopHacks virtually via Discord and Zoom.
+                            </Typography>
+                        </CardContent>
                     </Card>
                 </Box>
 
