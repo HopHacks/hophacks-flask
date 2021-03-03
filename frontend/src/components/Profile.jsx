@@ -10,7 +10,29 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import {withAuthCheck} from "../util/auth.jsx";
 import { Link } from "react-router-dom";
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import '../stylesheets/profile.css';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { Divider } from '@material-ui/core';
 
 const Profile = function Profile(props) {
 
@@ -88,7 +110,7 @@ const Profile = function Profile(props) {
     const [options, setOptions] = useState([]);
     const [confirmed, setConfirmed] = useState(false);
     const [sendConfimationMsg, setSendConfimationMsg] = useState("");
-
+    
     
 
     const currentEvent = "spring_2021"
@@ -96,9 +118,6 @@ const Profile = function Profile(props) {
         formControl: {
           margin: theme.spacing(1),
           minWidth: 120,
-        },
-        selectEmpty: {
-          marginTop: theme.spacing(2),
         },
       }));
     const classes = useStyles();
@@ -250,43 +269,187 @@ const Profile = function Profile(props) {
         }
     }, [open]);
 
-    const firstNameForm = 
-    (<div>
 
-            <p>First Name:{profile.first_name}</p>
-            <div>
-                <form onSubmit = {handleProfileSave}>
-                    <label>
-                        <input type="text" value = {first_name} name = "first_name" onChange={e => setFirst_name(e.target.value)}/>
-                    </label>
-                <input type="submit"  value="SAVE" onClick={()=>{profile.first_name = first_name}}/>
-                </form>
-            </div>
-            </div>
-    );
-    
-
-    const lastNameForm = 
-    (
-            <div>
-            <p>Last Name:{profile.last_name}</p>
-            <div>
-                <form onSubmit = {handleProfileSave}>
-                    <label>
-                    <input type="text" value = {last_name} name = "last_name" onChange={e => setLast_name(e.target.value)}/>
-                    </label>
-                <input type="submit"  value="SAVE" onClick={()=>{profile.last_name = last_name}}/>
-                </form>
-            </div>
-            </div>
-    )
-
-    const genderForm =
+    const uploadDocument =
     (
         <div>
-        <p>Gender:{profile.gender}</p>
             <div>
-                <form onSubmit = {handleProfileSave}>
+            Status for {currentEvent} Event: {status}
+            </div>
+        <form onSubmit={handleSubmit}>
+            <div>
+            <input type="file" name="file" onChange={handleFileChange}/>
+            </div>
+            <input type="submit" value="Submit" />
+        </form>
+
+        <hr/>
+        <p>{oldName}</p>
+        <button onClick={handleDownload}>Download</button>
+      </div>
+    )
+
+
+    const appStatus = (
+        <Card className='root' variant="outlined">
+            <CardContent>
+              <Typography className='title' gutterBottom style={{fontSize:'30px'}}>
+                Application
+              </Typography>
+              <Typography color="textSecondary" style={{fontSize:'15px'}} >
+              You need to confirm your email before applying to the current event. Once you are accepted to the event, you can RSVP to the event.
+              </Typography>
+            <Table>
+                <TableHead>
+                    <TableCell>
+                        Current Event
+                    </TableCell>
+                    <TableCell>
+                        Application Status
+                    </TableCell>
+                    <TableCell>
+                        Action Items
+                    </TableCell>
+                </TableHead>
+                <TableRow>
+                    <TableCell>
+                    {currentEvent}
+                    </TableCell>
+                    <TableCell>
+                        {status}
+                    </TableCell>
+                    <TableCell>
+                    <div>
+                {!confirmed && 
+            <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
+            }
+        {!confirmed && 
+        <p>{sendConfimationMsg}</p>
+        }
+        {confirmed && status === "not applied" &&
+        <button onClick={applyToCurrentEvent}>Apply For Current Hackathon</button>
+        }
+                {confirmed && status === "applied" &&
+        <p>You have applied to the current event</p>
+        }
+        <p>{msg}</p>
+        {status === "accepted" &&
+          <Link to="/rsvp">RSVP</Link>}
+            </div>
+                    </TableCell>
+                </TableRow>
+            </Table>
+            </CardContent>
+
+          </Card>
+    )
+
+    const resume = (
+<Card className='root' variant="outlined">
+            <CardContent>
+              <Typography className='title' gutterBottom style={{fontSize:'30px'}}>
+                Resume
+              </Typography>
+              <Typography color="textSecondary" style={{fontSize:'15px'}} >
+              You can replace your resume by clicking on “Choose File” above and selecting a new file. You can have only one resume attached to your profile.
+                </Typography>
+            <Table>
+                <TableHead>
+                    <TableCell>
+                        File Name
+                    </TableCell>
+                    <TableCell>
+                        Action
+                    </TableCell>
+                    <TableCell>
+                        Upload Resume
+                    </TableCell>
+                </TableHead>
+                <TableRow>
+                    <TableCell>
+                        {oldName}
+                    </TableCell>
+                    <TableCell>
+                        
+                        <Link onClick = {handleDownload} style={{fontSize:'15px', color: 'blue'}}>
+                            Download
+                        </Link>
+                    </TableCell>
+                    <TableCell>
+                            <form onSubmit={handleSubmit}>
+            <div>
+            <input type="file" name="file" onChange={handleFileChange}/>
+            </div>
+            <input type="submit" value="Submit" />
+        </form>
+                    </TableCell>
+                </TableRow>
+            </Table>
+            </CardContent>
+
+          </Card>
+        );
+
+    function NameFormDialog() {
+        const [open, setOpen] = React.useState(false);
+      
+        const handleClickOpen = () => {
+          setOpen(true);
+        };
+      
+        const handleClose = () => {
+          setOpen(false);
+        };
+      
+        return (
+          <div>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen}/>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Edit Name</DialogTitle>
+              <DialogContent>
+              <form>
+              <TextField id="standard-basic" variant="outlined" label="First Name" defaultValue= {profile.first_name} onChange={e => setFirst_name(e.target.value)}/>
+              <TextField id="standard-basic" variant="outlined" label="Last Name" defaultValue= {profile.last_name} onChange={e => setLast_name(e.target.value)}/>
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={()=>{
+                    profile.first_name = first_name;
+                    profile.last_name = last_name;
+                    handleProfileSave();
+                    handleClose();
+
+                }}
+                 color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        );
+      }
+
+      function GenderFormDialog() {
+        const [open, setOpen] = React.useState(false);
+      
+        const handleClickOpen = () => {
+          setOpen(true);
+        };
+      
+        const handleClose = () => {
+          setOpen(false);
+        };
+      
+        return (
+          <div>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen}/>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Edit Gender</DialogTitle>
+              <DialogContent>
+              <form>
                 <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                 <Select
@@ -303,54 +466,105 @@ const Profile = function Profile(props) {
                 <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
                 </Select>
             </FormControl>
-                <input type="submit"  value="SAVE" onClick={()=>{profile.gender = gender}}/>
                 </form>
-            </div>
-            </div>
-    )
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={()=>{
+                    profile.gender = gender
+                    handleProfileSave();
+                    handleClose();
 
-    const majorForm= 
-        (
-        <div>       
-              <p>Major:{profile.major}</p>
-              <div>
-                <form onSubmit = {handleProfileSave}>
-                <Autocomplete
-                    id="majors"
-                    options={majors}
-                    style={{ width: 300 }}
-                    onChange={(event, newValue) => {
-                    setMajor(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} label="Major" variant="outlined" />}
-                />
-                <input type="submit"  value="SAVE" onClick={()=>{profile.major = major}}/>
+                }}
+                 color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        );
+      }
+      
+      function EthnicityFormDialog() {
+        const [open, setOpen] = React.useState(false);
+      
+        const handleClickOpen = () => {
+          setOpen(true);
+        };
+      
+        const handleClose = () => {
+          setOpen(false);
+        };
+      
+        return (
+          <div>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen}/>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Edit Ethnicity</DialogTitle>
+              <DialogContent>
+              <form>
+                <FormControl className={classes.formControl}>
+                <InputLabel id="demo-simple-select-label">Ethnicity</InputLabel>
+                <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={ethnicity}
+                onChange={(e)=>{
+                    setEthnicity(e.target.value);
+                }}
+                >
+                                <MenuItem value="American Indian or Alaska Native">American Indian or Alaska Native</MenuItem>
+                <MenuItem value="Asian">Asian</MenuItem>
+                <MenuItem value="Black or African American">Black or African American</MenuItem>
+                <MenuItem value="Hispanic, Latino or Spanish Origin">Hispanic, Latino or Spanish Origin</MenuItem>
+                <MenuItem value="Middle Eastern or North African">Middle Eastern or North African</MenuItem>
+                <MenuItem value="Native Hawaiian or Other Pacific Islander">Native Hawaiian or Other Pacific Islander</MenuItem>
+                <MenuItem value="White">White</MenuItem>
+                <MenuItem value="Multiethnic">Multiethnic</MenuItem>
+                <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
+                </Select>
+            </FormControl>
                 </form>
-                </div>
-        </div>
-        )
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={()=>{
+                    profile.ethnicity = ethnicity
+                    handleProfileSave();
+                    handleClose();
 
-    const phoneNumberForm =
-    (      
-            <div>     
-        <p>Phone Number:{profile.phone_number}</p>
-            <div>
-                <form onSubmit = {handleProfileSave}>
-                    <label>
-                        <input type="text" value = {phone_number} name = "phone_number" onChange={e => setPhone_number(e.target.value)}/>
-                    </label>
-                <input type="submit"  value="SAVE" onClick={()=>{profile.phone_number = phone_number}}/>
-                </form>
-            </div>
-            </div>
-            )
+                }}
+                 color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        );
+      }
 
-    const schoolForm = 
-        (   
-            <div>       
-              <p>School:{profile.school}</p>
-              <div>
-                <form onSubmit = {handleProfileSave}>
+      function SchoolFormDialog() {
+        const [dialogopen, setdialogOpen] = React.useState(false);
+      
+        const handleClickOpen = () => {
+            setdialogOpen(true);
+        };
+      
+        const handleClose = () => {
+            setdialogOpen(false);
+        };
+      
+        return (
+          <div>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen}/>
+            <Dialog open={dialogopen} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Edit School</DialogTitle>
+              <DialogContent>
+              <form>
                 <Autocomplete
       id="schools"
       style={{ width: 300 }}
@@ -373,6 +587,7 @@ const Profile = function Profile(props) {
           {...params}
           label="School"
           variant="outlined"
+          value = {school}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
@@ -385,7 +600,13 @@ const Profile = function Profile(props) {
         />
       )}
     />
-                <input type="submit"  value="SAVE" onClick={()=>{
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={()=>{
                     profile.school = school
                     if (school === "Johns Hopkins University"){
                         profile.is_jhu = true;
@@ -393,53 +614,86 @@ const Profile = function Profile(props) {
                     else{
                         profile.is_jhu = false;
                     }
-                    }}/>
-                </form>
-                </div>
-</div>
-)
+                    handleProfileSave();
+                    handleClose();
 
-    const ethnicityForm =
-        (
-            <div>
-            <p>Ethnicity:{profile.ethnicity}</p>
-            <div>
-                <form onSubmit = {handleProfileSave}>
-                <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Ethnicity</InputLabel>
-                <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={ethnicity}
-                onChange={(e)=>{
-                    setEthnicity(e.target.value);
                 }}
-                >
-                <MenuItem value="American Indian or Alaska Native">American Indian or Alaska Native</MenuItem>
-                <MenuItem value="Asian">Asian</MenuItem>
-                <MenuItem value="Black or African American">Black or African American</MenuItem>
-                <MenuItem value="Hispanic, Latino or Spanish Origin">Hispanic, Latino or Spanish Origin</MenuItem>
-                <MenuItem value="Middle Eastern or North African">Middle Eastern or North African</MenuItem>
-                <MenuItem value="Native Hawaiian or Other Pacific Islander">Native Hawaiian or Other Pacific Islander</MenuItem>
-                <MenuItem value="White">White</MenuItem>
-                <MenuItem value="Multiethnic">Multiethnic</MenuItem>
-                <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-                </Select>
-            </FormControl>
-                <input type="submit"  value="SAVE" onClick={()=>{profile.ethnicity = ethnicity}}/>
-                </form>
-            </div>
-            </div>
+                 color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
         );
+      }
 
-    const gradForm = 
-        (    
-            <div>        
-        <p>Grad:{profile.grad}</p>
-            <div>
-                <form onSubmit = {handleProfileSave}>
+      function MajorFormDialog() {
+        const [dialogopen, setdialogOpen] = React.useState(false);
+      
+        const handleClickOpen = () => {
+            setdialogOpen(true);
+        };
+      
+        const handleClose = () => {
+            setdialogOpen(false);
+        };
+      
+        return (
+          <div>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen}/>
+            <Dialog open={dialogopen} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Edit Major</DialogTitle>
+              <DialogContent>
+              <form>
+                <Autocomplete
+                    id="majors"
+                    options={majors}
+                    style={{ width: 300 }}
+                    onChange={(event, newValue) => {
+                    setMajor(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} label="Major" variant="outlined" />}
+                />
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={()=>{
+                    profile.major = major;
+                    handleProfileSave();
+                    handleClose();
+                    }}
+                 color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        );
+      }
+
+      function ProgramFormDialog() {
+        const [open, setOpen] = React.useState(false);
+      
+        const handleClickOpen = () => {
+          setOpen(true);
+        };
+      
+        const handleClose = () => {
+          setOpen(false);
+        };
+      
+        return (
+          <div>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen}/>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Edit Program</DialogTitle>
+              <DialogContent>
+              <form>
                 <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Grad</InputLabel>
+                <InputLabel id="demo-simple-select-label">Program</InputLabel>
                 <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -448,25 +702,92 @@ const Profile = function Profile(props) {
                     setGrad(e.target.value);
                 }}
                 >
-                <MenuItem value="Undergraduate">undergraduate</MenuItem>
+                <MenuItem value="Undergraduate">Undergraduate</MenuItem>
                 <MenuItem value="Graduate">Graduate</MenuItem>
                 <MenuItem value="Postgraduate">Postgraduate</MenuItem>
                 </Select>
             </FormControl>
-                <input type="submit"  value="SAVE" onClick={()=>{profile.grad = grad}}/>
                 </form>
-            </div>
-            </div>
-        );
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={()=>{
+                    profile.grad = grad
+                    handleProfileSave();
+                    handleClose();
 
-    const graduationDateForm =
-    (    
-            <div>        
-            <p>Graduation Date: {profile.grad_month} {profile.grad_year}</p>
-            <div>
-                <form onSubmit = {handleProfileSave}>
+                }}
+                 color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        );
+      }
+
+      function PhoneNumberFormDialog() {
+        const [open, setOpen] = React.useState(false);
+      
+        const handleClickOpen = () => {
+          setOpen(true);
+        };
+      
+        const handleClose = () => {
+          setOpen(false);
+        };
+      
+        return (
+          <div>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen}/>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Edit Phone Number</DialogTitle>
+              <DialogContent>
+              <form>
+              <TextField id="standard-basic" variant="outlined" label="Phone Number" defaultValue= {profile.phone_number} onChange={e => setPhone_number(e.target.value)}/>
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={()=>{
+                    profile.phone_number = phone_number;
+                    handleProfileSave();
+                    handleClose();
+
+                }}
+                 color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        );
+      }
+
+      function GraduationFormDialog() {
+        const [open, setOpen] = React.useState(false);
+      
+        const handleClickOpen = () => {
+          setOpen(true);
+        };
+      
+        const handleClose = () => {
+          setOpen(false);
+        };
+      
+        return (
+          <div>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen}/>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Edit Graduation Date</DialogTitle>
+              <DialogContent>
+              <form>
                 <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Grad Month</InputLabel>
+                <InputLabel id="demo-simple-select-label">Month</InputLabel>
                 <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -489,8 +810,11 @@ const Profile = function Profile(props) {
                 <MenuItem value="12">12</MenuItem>
                 </Select>
             </FormControl>
+                </form>
+
+                <form>
                 <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Grad Year</InputLabel>
+                <InputLabel id="demo-simple-select-label">Year</InputLabel>
                 <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -507,74 +831,135 @@ const Profile = function Profile(props) {
                 <MenuItem value="2025">2025</MenuItem>
                 </Select>
             </FormControl>
-            
-                <input type="submit"  value="SAVE" onClick={()=>{
-                    profile.grad_year = grad_year;
-                    profile.grad_month = grad_month;
-                }}/>
                 </form>
-            </div>
-        </div>)
 
-    const uploadDocument =
-    (
-        <div>
-            <div>
-            Status for {currentEvent} Event: {status}
-            </div>
-        <form onSubmit={handleSubmit}>
-            <div>
-            <input type="file" name="file" onChange={handleFileChange}/>
-            </div>
-            <input type="submit" value="Submit" />
-        </form>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={()=>{
+                    profile.grad_month = grad_month
+                    profile.grad_year = grad_year
+                    handleProfileSave();
+                    handleClose();
 
-        <hr/>
-        <p>{oldName}</p>
-        <button onClick={handleDownload}>Download</button>
-      </div>
-    )
-
-    function applyEvent(){
-        return(
-            <div>
-                {!confirmed && 
-            <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
-            }
-        {!confirmed && 
-        <p>{sendConfimationMsg}</p>
-        }
-        {confirmed && status === "not applied" &&
-        <button onClick={applyToCurrentEvent}>Apply For Current Hackathon</button>
-        }
-        <p>{msg}</p>
-
-          <p>
-          <Link to="/rsvp">RSVP</Link>
-          </p>
-            </div>
+                }}
+                 color="primary">
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
         );
-    }
+      }
+
+    const ProfileCard = 
+    (
+          <Card className='root' variant="outlined">
+            <CardContent>
+              <Typography className='title' gutterBottom style={{fontSize:'30px'}}>
+                Profile
+              </Typography>
+              
+              <List className='list'>
+              <Divider variant="inset" component="li" />
+      <ListItem button>
+
+        <ListItemText primary="Name" secondary={profile.first_name+" "+profile.last_name}  />
+        <CardActions>
+        <IconButton>
+          {NameFormDialog()}
+        </IconButton>
+        </CardActions>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+
+      <ListItem button>
+
+        <ListItemText primary="Gender" secondary={profile.gender} />
+        <CardActions>
+        <IconButton>
+        {GenderFormDialog()}
+        </IconButton>
+        </CardActions>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem button>
+
+        <ListItemText primary="Ethnicity" secondary={profile.ethnicity} />
+        <CardActions>
+        <IconButton>
+        {EthnicityFormDialog()}
+        </IconButton>
+        </CardActions>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem button>
+
+        <ListItemText primary="School" secondary={profile.school} />
+        <CardActions>
+        <IconButton>
+          {SchoolFormDialog()}
+        </IconButton>
+        </CardActions>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem button>
+
+        <ListItemText primary="Major" secondary={profile.major} />
+        <CardActions>
+        <IconButton>
+          {MajorFormDialog()}
+        </IconButton>
+        </CardActions>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem button>
+
+        <ListItemText primary="Program" secondary={profile.grad} />
+        <CardActions>
+        <IconButton>
+          {ProgramFormDialog()}
+        </IconButton>
+        </CardActions>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem button>
+
+        <ListItemText primary="Expected Graduation Date" secondary= {profile.grad_month+"/"+profile.grad_year} />
+        <CardActions>
+        <IconButton>
+          {GraduationFormDialog()}
+        </IconButton>
+        </CardActions>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem button>
+
+        <ListItemText primary="Phone Number" secondary={profile.phone_number} />
+        <CardActions>
+        <IconButton>
+          {PhoneNumberFormDialog()}
+        </IconButton>
+        </CardActions>
+      </ListItem>
+    </List>
+            </CardContent>
+
+          </Card>
+        );
 
     return (
         <div>
             <div>
-                {uploadDocument}
+                {appStatus}
             </div>
             <div>
-            <p>Profile</p>
-                {firstNameForm}
-                {lastNameForm}
-                {genderForm}
-                {majorForm}
-                {schoolForm}
-                {phoneNumberForm}
-                {ethnicityForm}
-                {gradForm}
-                {graduationDateForm}
+                {resume}
             </div>
             <div>
-                {applyEvent()}
+                {ProfileCard}
             </div>
         </div>
     );
