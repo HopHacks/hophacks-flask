@@ -8,12 +8,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-
+import { Link } from "react-router-dom";
 import { withAuthProps } from '../util/auth';
 
 import {
     useHistory
 } from "react-router-dom";
+import { Box, Typography } from "@material-ui/core";
 
 function Login(props) {
     
@@ -113,6 +114,11 @@ function Login(props) {
         onClose={handleLoginClose}
       > 
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
+        <DialogActions>
+          
+
+
+          </DialogActions>
         <DialogContent>
 
           <TextField
@@ -145,9 +151,18 @@ function Login(props) {
           <Button onClick={handleLogin} color="primary">
             Login
           </Button>
-        <DialogActions>
 
-        </DialogActions>
+
+          <Typography display="inline">
+            New to HopHacks?{' '}
+            <Link to={'/register'} style={{ textDecoration: 'none' }}>
+              Sign Up Now.
+              </Link>
+            </Typography>
+            
+
+
+
 
       </Dialog>  
 

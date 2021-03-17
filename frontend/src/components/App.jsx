@@ -22,7 +22,7 @@ import Nav from "./Nav"
 import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
 import RSVP from "./RSVP"
-
+import Register from "./Register"
 
 export default function App() {
     return (
@@ -46,6 +46,10 @@ export default function App() {
                 <Route path="/login">
                   <Login/>
                 </Route>
+                <Route path="/register">
+                  <Register/>
+                </Route>
+                
                 <Route path="/rsvp">
                 
                 <RSVP/>
