@@ -95,6 +95,11 @@ export default function Team() {
                             <MemberItem imgURL="aubin" memberName="Aubin Lohier" memberTitle="Social/PR" />
                             {/* <MemberItem imgURL="arielle" memberName="Arielle Summitt" memberTitle="Social/PR" /> */}
 
+                            <MemberItem imgURL="Kavan_Bansal" memberName="Kavan Bansal" memberTitle="Sponsor/Website" />
+                            <MemberItem imgURL="Marc_Helou" memberName="Marc Helou" memberTitle="Website" />
+                            <MemberItem imgURL="Elaine_He" memberName="Elaine He" memberTitle="Website/Design" />
+                            <MemberItem imgURL="Alan_Li" memberName="Alan Li" memberTitle="Website" />
+                            <MemberItem imgURL="Curtis_Ahn" memberName="Curtis Ahn" memberTitle="Website" />
 
                             <MemberItem imgURL="joanne" memberName="Joanne Selinski" memberTitle="Faculty Advisor" />
                             <MemberItem imgURL="kelly" memberName="Kelly Culotta" memberTitle="Admin Coordinator" />
