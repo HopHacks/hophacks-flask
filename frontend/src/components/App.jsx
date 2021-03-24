@@ -15,13 +15,13 @@ import { AuthProvider } from "../util/auth"
 
 import Login from "./Login"
 import Home from "./Home"
-import Profile from "./profile/Profile"
+import Profile from "./account/Profile"
 import Admin from "./admin/Admin"
 import Nav from "./Nav"
 import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
 import RSVP from "./RSVP"
-import Register from "./Register"
+import Register from "./account/Register"
 
 export default function App() {
     return (

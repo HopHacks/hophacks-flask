@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +15,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import { Link } from "react-router-dom";
+import MajorAutocomplete from "./MajorAutocomplete"
+import SchoolAutocomplete from "./SchoolAutocomplete"
 
 export default function Register() {
 
@@ -35,65 +35,11 @@ export default function Register() {
   const [grad_month, setGrad_month] = useState("");
   const [grad_year, setGrad_year] = useState("");
   const [profileSubmitMsg, setProfileSubmitMsg] = useState("");
-  const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState([]);
-  const loading = open && options.length === 0;
+
   // decide which step is actively showing
   const [activeStep, setActiveStep] = useState(0);
   const stepHeader = ['Account Information', 'Personal Information', 'Confirm Email'];
 
-  const majors = [
-    "Africana Studies",
-    "Anthropology",
-    "Applied Mathematics & Statistics",
-    "Archaeology",
-    "Behavioral Biology",
-    "Biology",
-    "Biomedical Engineering",
-    "Biophysics",
-    "Chemical & Biomolecular Engineering",
-    "Chemistry",
-    "Civil Engineering",
-    "Classics",
-    "Cognitive Science",
-    "Computer Engineering",
-    "Computer Science",
-    "Earth & Planetary Sciences",
-    "East Asian Studies",
-    "Economics",
-    "Electrical Engineering",
-    "Engineering Mechanics",
-    "English",
-    "Environmental Engineering",
-    "Environmental Science",
-    "Environmental Studies",
-    "Film & Media Studies",
-    "French",
-    "General Engineering",
-    "German",
-    "History",
-    "History of Art",
-    "History of Science, Medicine & Technology",
-    "Interdisciplinary Studies",
-    "International Studies",
-    "Italian",
-    "Materials Science & Engineering",
-    "Mathematics",
-    "Mechanical Engineering",
-    "Medicine, Science & the Humanities",
-    "Molecular & Cellular Biology",
-    "Natural Sciences",
-    "Near Eastern Studies",
-    "Neuroscience",
-    "Philosophy",
-    "Physics",
-    "Political Science",
-    "Psychology",
-    "Public Health Studies",
-    "Romance Languages",
-    "Sociology",
-    "Spanish",
-    "Writing Seminars"]
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -113,34 +59,9 @@ export default function Register() {
 
   const classes = useStyles();
 
-  // for school autocomplete
-  useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
-  useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      const response = await axios.get('http://universities.hipolabs.com/search');
-      const colleges = await response.data;
-      if (active) {
-        setOptions(Object.keys(colleges).map((key) => colleges[key]));
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
 
   async function handleAccountNext() {
-    if (password.length == 0 || passwordConfirm.length == 0 || username.length == 0) {
+    if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
 
       setConfirmMsg("* Required Field cannot be empty")
       return;
@@ -157,7 +78,7 @@ export default function Register() {
       return;
     }
 
-    const passwordre = /^(?=.*[0-9])(?=.*[!@#\$%\^\&*\)\(+=._-])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{6,15}$/;
+    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,15}$/;
 
     if (!password.match(passwordre)) {
       setConfirmMsg("Please enter a password between 7 to 15 characters which contain at least one numeric digit and a special character")
@@ -180,7 +101,7 @@ export default function Register() {
     }
 
     try {
-      const response = await axios.post('/api/accounts/create', {
+      await axios.post('/api/accounts/create', {
         "username": username,
         "password": password,
         "confirm_url": "http://hophacks.com/confirm_email",
@@ -270,55 +191,17 @@ export default function Register() {
 
       <Grid item>
         <FormControl variant="outlined" style={{ minWidth: 220 }}>
-          <Autocomplete
-            id="schools"
-            style={{ width: 300 }}
-            open={open}
-            onOpen={() => {
-              setOpen(true);
-            }}
-            onClose={() => {
-              setOpen(false);
-            }}
-            getOptionSelected={(option, value) => option.name === value.name}
-            getOptionLabel={(option) => option.name}
-            options={options}
-            loading={loading}
-            onChange={(event, newValue) => {
-              setSchool(newValue.name);
-            }}
-            renderInput={(params) => (
-              <TextField required
-                {...params}
-                label="School"
-                variant="outlined"
-                value={school}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <React.Fragment>
-                      {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                      {params.InputProps.endAdornment}
-                    </React.Fragment>
-                  ),
-                }}
-              />
-            )}
-          />
+          <SchoolAutocomplete
+            school={school}
+            setSchool={setSchool} />
         </FormControl>
 
       </Grid>
 
       <Grid item>
-        <Autocomplete
-          id="majors"
-          options={majors}
-          style={{ width: 300 }}
-          onChange={(event, newValue) => {
-            setMajor(newValue);
-          }}
-          renderInput={(params) => <TextField required  {...params} label="Major" variant="outlined" />}
-        />
+        <MajorAutocomplete
+          major={major}
+          setMajor={setMajor} />
       </Grid>
 
       <Grid item>
@@ -391,7 +274,7 @@ export default function Register() {
   );
 
   function selectStep(index) {
-    if (index == 0) {
+    if (index === 0) {
       return (
         <>
           {account}
@@ -410,7 +293,7 @@ export default function Register() {
         </>
       )
     }
-    else if (index == 1) {
+    else if (index === 1) {
       return (
         <>
           {personalInfo}

@@ -5,8 +5,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { withAuthCheck } from "../../util/auth.jsx";
 import { Link } from "react-router-dom";
@@ -19,60 +17,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import FormDialog from "./FormDialog"
-const Profile = function Profile(props) {
+import MajorAutocomplete from "./MajorAutocomplete"
+import SchoolAutocomplete from "./SchoolAutocomplete"
 
-  const majors = [
-    "Africana Studies",
-    "Anthropology",
-    "Applied Mathematics & Statistics",
-    "Archaeology",
-    "Behavioral Biology",
-    "Biology",
-    "Biomedical Engineering",
-    "Biophysics",
-    "Chemical & Biomolecular Engineering",
-    "Chemistry",
-    "Civil Engineering",
-    "Classics",
-    "Cognitive Science",
-    "Computer Engineering",
-    "Computer Science",
-    "Earth & Planetary Sciences",
-    "East Asian Studies",
-    "Economics",
-    "Electrical Engineering",
-    "Engineering Mechanics",
-    "English",
-    "Environmental Engineering",
-    "Environmental Science",
-    "Environmental Studies",
-    "Film & Media Studies",
-    "French",
-    "General Engineering",
-    "German",
-    "History",
-    "History of Art",
-    "History of Science, Medicine & Technology",
-    "Interdisciplinary Studies",
-    "International Studies",
-    "Italian",
-    "Materials Science & Engineering",
-    "Mathematics",
-    "Mechanical Engineering",
-    "Medicine, Science & the Humanities",
-    "Molecular & Cellular Biology",
-    "Natural Sciences",
-    "Near Eastern Studies",
-    "Neuroscience",
-    "Philosophy",
-    "Physics",
-    "Political Science",
-    "Psychology",
-    "Public Health Studies",
-    "Romance Languages",
-    "Sociology",
-    "Spanish",
-    "Writing Seminars"]
+const Profile = function Profile(props) {
 
   const [status, setStatus] = useState("not applied");
   const [file, setFile] = useState("");
@@ -90,8 +38,6 @@ const Profile = function Profile(props) {
   const [grad, setGrad] = useState("");
   const [grad_month, setGrad_month] = useState("");
   const [grad_year, setGrad_year] = useState("");
-  const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState([]);
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState("");
 
@@ -242,35 +188,6 @@ const Profile = function Profile(props) {
     getFileName();
     getEmailConfirmStatus();
   }, [props.isLoggedIn]);
-
-  const loading = open && options.length === 0;
-
-  useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      const response = await axios.get('http://universities.hipolabs.com/search');
-      const colleges = await response.data;
-      if (active) {
-        setOptions(Object.keys(colleges).map((key) => colleges[key]));
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
-
-
-  useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
 
   function ActionItems() {
     if (!confirmed) {
@@ -439,55 +356,17 @@ const Profile = function Profile(props) {
 
   const SchoolForm = (
     <form>
-      <Autocomplete
-        id="schools"
-        style={{ width: 300 }}
-        open={open}
-        onOpen={() => {
-          setOpen(true);
-        }}
-        onClose={() => {
-          setOpen(false);
-        }}
-        getOptionSelected={(option, value) => option.name === value.name}
-        getOptionLabel={(option) => option.name}
-        options={options}
-        loading={loading}
-        onChange={(event, newValue) => {
-          setSchool(newValue.name);
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="School"
-            variant="outlined"
-            value={school}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              ),
-            }}
-          />
-        )}
-      />
+      <SchoolAutocomplete
+        school={school}
+        setSchool={setSchool} />
     </form>
   )
 
   const MajorForm = (
     <form>
-      <Autocomplete
-        id="majors"
-        options={majors}
-        style={{ width: 300 }}
-        onChange={(event, newValue) => {
-          setMajor(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} label="Major" variant="outlined" />}
-      />
+      <MajorAutocomplete
+        major={major}
+        setMajor={setMajor} />
     </form>
   )
 
