@@ -4,7 +4,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import axios from "axios";
 
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -16,7 +15,7 @@ import { AuthProvider } from "../util/auth"
 
 import Login from "./Login"
 import Home from "./Home"
-import Profile from "./Profile"
+import Profile from "./profile/Profile"
 import Admin from "./admin/Admin"
 import Nav from "./Nav"
 import EmailConfirmation from "./EmailConfirmation"
