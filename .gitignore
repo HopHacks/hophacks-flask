@@ -9,3 +9,6 @@ config.json
 # frontend
 node_modules
 .eslintcache
+
+# OS generated files #
+.DS_Store
