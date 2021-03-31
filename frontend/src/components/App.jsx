@@ -13,7 +13,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { theme } from "../util/theme"
 import { AuthProvider } from "../util/auth"
 
-import Login from "./Login"
 import Home from "./Home"
 import Profile from "./account/Profile"
 import Admin from "./admin/Admin"
@@ -42,9 +41,7 @@ export default function App() {
                 <Route path="/profile">
                   <Profile/>
                 </Route>
-                <Route path="/login">
-                  <Login/>
-                </Route>
+
                 <Route path="/register">
                   <Register/>
                 </Route>
