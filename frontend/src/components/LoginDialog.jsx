@@ -85,7 +85,7 @@ function Login(props) {
           </Button>
       <Typography display="inline">
         New to HopHacks?{' '}
-        <Link to={'/register'} style={{ textDecoration: 'none' }}>
+        <Link to={'/register'} style={{ textDecoration: 'none' }} onClick={()=>{setLoginDialogOpen(false)}}>
           Sign Up Now
               </Link>
       </Typography>
