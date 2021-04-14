@@ -1,42 +1,43 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { Typography } from "@material-ui/core";
-
 import { withAuthProps } from '../util/auth';
+import Login from './LoginDialog';
 
 const Nav = function Nav(props) {
-    let history = useHistory();
-    async function handleLogout() {
-        await props.logout();
-        history.push("/");
-    }
+  let history = useHistory();
+  async function handleLogout() {
+    await props.logout();
+    history.push("/");
+  }
 
-    return (
-        <AppBar position="sticky">
-          <Toolbar>
-            <Button component={Link} to={'/'} color="inherit">
-              <Typography> Home </Typography>
+  return (
+    <AppBar position="sticky">
+      <Toolbar style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+        <Button component={Link} to={'/'} color="inherit">
+          <Typography> Home </Typography>
+        </Button>
 
-            </Button>
-            
-            {props.isLoggedIn && 
-              <Button component={Link} to={'/profile'} color="inherit">
-                <Typography> Profile </Typography>
-              </Button>
-            }
-            
-            {props.isLoggedIn && 
-              <Button onClick={handleLogout} color="inherit">
-                <Typography>Logout</Typography>
-              </Button>
-            }
-            </Toolbar>
-        </AppBar>);
+        {!props.isLoggedIn && <Login />
+        }
+
+        {props.isLoggedIn &&
+          <Button component={Link} to={'/profile'} color="inherit">
+            <Typography> Profile </Typography>
+          </Button>
+        }
+
+        {props.isLoggedIn &&
+          <Button onClick={handleLogout} color="inherit">
+            <Typography>Logout</Typography>
+          </Button>
+        }
+      </Toolbar>
+    </AppBar>);
 }
 
 export default withAuthProps(Nav);
