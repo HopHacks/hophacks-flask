@@ -4,7 +4,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import axios from "axios";
 
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -14,15 +13,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { theme } from "../util/theme"
 import { AuthProvider } from "../util/auth"
 
-import Login from "./Login"
 import Home from "./Home"
-import Profile from "./Profile"
+import Profile from "./account/Profile"
 import Admin from "./admin/Admin"
 import Nav from "./Nav"
 import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
 import RSVP from "./RSVP"
-
+import Register from "./account/Register"
 
 export default function App() {
     return (
@@ -43,9 +41,11 @@ export default function App() {
                 <Route path="/profile">
                   <Profile/>
                 </Route>
-                <Route path="/login">
-                  <Login/>
+
+                <Route path="/register">
+                  <Register/>
                 </Route>
+                
                 <Route path="/rsvp">
                 
                 <RSVP/>

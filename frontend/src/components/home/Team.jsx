@@ -76,7 +76,7 @@ export default function Team() {
                         <Grid container spacing={1} mx={20}>
                             <MemberItem imgURL="amber" memberName="Amber Zhou" memberTitle="Co-Director" />
                             <MemberItem imgURL="bwong" memberName="Brandon Wong" memberTitle="Co-Director" />
-                            <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Head of Website" />
+                            <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Head of Website" personal="http://www.danqian.net/"/>
                             <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="Co-Head of Design" />
                             <MemberItem imgURL="jimmy" memberName="Jimmy Shi" memberTitle="Co-Head of Design, Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
                             <MemberItem imgURL="david" memberName="David Yang" memberTitle="Head of Sponsors" />
