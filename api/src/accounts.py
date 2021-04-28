@@ -154,6 +154,44 @@ def create():
     })
     return jsonify({"msg": "user added"}), 200
 
+@accounts_api.route('/check/<username>', methods = ['GET'])
+def check_user(username):
+    """ Check if an user exists
+
+    :reqjson email: email address
+
+    :resjson profile: profile information
+
+    Example request:
+
+    .. sourcecode:: json
+
+        {
+            "username": awong@jhu.edu
+        }
+
+    Example reponse:
+
+    .. sourcecode:: json
+
+        {
+            "exist": False
+        }
+
+    :status 200: email check successful
+    :status 400: username is missing
+    
+    """
+    if (username is None):
+        return Response('no query username', status=400)
+
+    user = db.users.find_one({'username': username})
+    if (user is None):
+        return jsonify({"exist": False}), 200
+
+    return jsonify({'exist': True}), 200
+
+
 @accounts_api.route('/profile/get', methods = ['GET'])
 @jwt_required
 def get_profile():
