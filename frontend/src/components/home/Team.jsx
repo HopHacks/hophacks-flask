@@ -85,19 +85,24 @@ export default function Team() {
 
                             <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="Website" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
                             <MemberItem imgURL="Marc_Helou" memberName="Marc Helou" memberTitle="Website" />
-                            <MemberItem imgURL="Elaine_He" memberName="Elaine He" memberTitle="Website" />
                             <MemberItem imgURL="Alan_Li" memberName="Alan Li" memberTitle="Website" />
                             <MemberItem imgURL="Curtis_Ahn" memberName="Curtis Ahn" memberTitle="Website" />
                             {/* <MemberItem imgURL="xiangyu" memberName="Xiangyu Shen" memberTitle="Website" /> */}
                             <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="Logistics" />
                             <MemberItem imgURL="patrick" memberName="Patrick Herbert" memberTitle="Logistics" />
                             <MemberItem imgURL="theanh" memberName="Trần Thế Anh" memberTitle="Logistics" />
+                            <MemberItem imgURL="Neha" memberName="Neha Nandiwada" memberTitle="Logistics" />
+
                             <MemberItem imgURL="elizabeth" memberName="Elizabeth Cho" memberTitle="Design" />
-                            <MemberItem imgURL="charissa" memberName="Charissa Zou" memberTitle="Design" />
+                            <MemberItem imgURL="Elaine_He" memberName="Elaine He" memberTitle="Design/Website" />
+
+                            <MemberItem imgURL="charissa" memberName="Charissa Zou" memberTitle="Design/Website" />
                             <MemberItem imgURL="stella" memberName="Stella Li" memberTitle="Sponsors" />
                             <MemberItem imgURL="Kavan_Bansal" memberName="Kavan Bansal" memberTitle="Sponsors" />
                             <MemberItem imgURL="alison" memberName="Alison Lee" memberTitle="Sponsors" />
                             <MemberItem imgURL="aubin" memberName="Aubin Lohier" memberTitle="Social/PR" />
+                            <MemberItem imgURL="Laine_wang" memberName="Laine Wang" memberTitle="Social/PR" />
+
                             {/* <MemberItem imgURL="arielle" memberName="Arielle Summitt" memberTitle="Social/PR" /> */}
 
                             
