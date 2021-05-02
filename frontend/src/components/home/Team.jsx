@@ -74,20 +74,23 @@ export default function Team() {
 
                         {/*TODO make this grid better (spaced with 8? narrower?) */}
                         <Grid container spacing={1} mx={20}>
-                            <MemberItem imgURL="amber" memberName="Amber Zhou" memberTitle="Co-Director" />
-                            <MemberItem imgURL="bwong" memberName="Brandon Wong" memberTitle="Co-Director" />
+                            <MemberItem imgURL="Marc_Helou" memberName="Marc Helou" memberTitle="Director" />
+
                             <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Head of Website" personal="http://www.danqian.net/"/>
                             <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="Co-Head of Design" />
                             <MemberItem imgURL="jimmy" memberName="Jimmy Shi" memberTitle="Co-Head of Design, Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
                             <MemberItem imgURL="david" memberName="David Yang" memberTitle="Head of Sponsors" />
                             <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="Head of Social/PR" />
                             <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="Head of Membership" />
+                            <MemberItem imgURL="amber" memberName="Amber Zhou" memberTitle="Judges" />
+
 
                             <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="Website" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
-                            <MemberItem imgURL="Marc_Helou" memberName="Marc Helou" memberTitle="Website" />
                             <MemberItem imgURL="Alan_Li" memberName="Alan Li" memberTitle="Website" />
                             <MemberItem imgURL="Curtis_Ahn" memberName="Curtis Ahn" memberTitle="Website" />
                             {/* <MemberItem imgURL="xiangyu" memberName="Xiangyu Shen" memberTitle="Website" /> */}
+                            <MemberItem imgURL="bwong" memberName="Brandon Wong" memberTitle="Logistics/Membership" />
+
                             <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="Logistics" />
                             <MemberItem imgURL="patrick" memberName="Patrick Herbert" memberTitle="Logistics" />
                             <MemberItem imgURL="theanh" memberName="Trần Thế Anh" memberTitle="Logistics" />
