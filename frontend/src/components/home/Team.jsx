@@ -116,7 +116,7 @@ export default function Team() {
                     <Typography> Alumni </Typography>
                     <Box mx="10%">
                     <Grid container spacing={1}>
-                        <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="http://www.danqian.net/"/>
+                        <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="https://danqian.net/"/>
                         <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="" />
                         <MemberItem imgURL="david" memberName="David Yang" memberTitle="" />
                         <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="" />
