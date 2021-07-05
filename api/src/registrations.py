@@ -67,10 +67,13 @@ def get_registrations():
 
     return jsonify({'registrations': user['registrations']}), 200
 
+"""
+REPLACED WITH EMAIL CONFIRMATION 
 @registrations_api.route('/apply', methods = ['POST'])
 @jwt_required
 def apply():
-    """As a user, apply to an event
+    
+    As a user, apply to an event
 
     :reqheader Authorization: ``Bearer <JWT Token>``
 
@@ -80,7 +83,7 @@ def apply():
     :status 200: Sucessfully registered
     :status 400: Missing field in request or already registered
     :status 422: Not logged in
-    """
+    
     if ('event' not in request.json or 'details' not in request.json):
         return Response('Invalid request', status=400)
 
@@ -107,7 +110,7 @@ def apply():
 
     return jsonify({"num_changed": result.modified_count}), 200
 
-
+"""
 @registrations_api.route('/accept', methods = ['POST'])
 @jwt_required
 @check_admin
@@ -235,6 +238,30 @@ def rsvp_view():
         
 
     return jsonify({"rsvpList":rsvpList, "allList": allList}),200
+
+
+@registrations_api.route('/rsvp/status', methods = ['GET'])
+@jwt_required
+def rsvp_status():
+
+    """For a user, check if he/she RSVPed or not
+
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :status 200: Successful
+    """
+
+    id = get_jwt_identity()
+    user = db.users.find_one({'_id' : ObjectId(id)})
+
+    eventInfo = user["registrations"][0] # only need to check first one, because there should only be one entry
+    if("rsvp" not in eventInfo or eventInfo["rsvp"] == False):
+        return jsonify({"status":False}),200 
+    elif(eventInfo["rsvp"] == True):
+        return jsonify({"status":True}),200 
+
+
+    return jsonify({"status":"something wrong"}),500 
 
 @registrations_api.route('/rsvp/rsvp', methods = ['POST'])
 @jwt_required
