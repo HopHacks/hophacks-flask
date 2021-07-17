@@ -15,7 +15,7 @@ import { AuthProvider } from "../util/auth"
 
 import Home from "./Home"
 import Profile from "./account/Profile"
-// import Admin from "./admin/Admin"
+import Admin from "./admin/Admin"
 import Nav from "./Nav"
 import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
@@ -35,9 +35,9 @@ export default function App() {
               <Nav/>
 
               <Switch>
-                {/* <Route path="/admin">
+                <Route path="/admin">
                   <Admin />
-                </Route> */}
+                </Route>
                 <Route path="/profile">
                   <Profile/>
                 </Route>

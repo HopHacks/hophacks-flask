@@ -29,14 +29,18 @@ def get_all_users_account():
 
     cursor  = db.users.find({ "$or": [{"username" : {"$regex" : ".*"+query+".*", "$options" : "i"}}, {"profile.first_name": {"$regex" : ".*"+query+".*", "$options" : "i"}}, {"profile.first_name": {"$regex" : ".*"+query+".*", "$options" : "i"}}]})
 
+    totalPage = cursor.count()
+
     # Skip and limit
     cursor = cursor.skip(skips).limit(20)
     
+    
+
     users = []
     
     for document in cursor:
         users.append(document['profile'])
         
-    return {'users': users}, 200
+    return {'users': users, 'totalPage': totalPage}, 200
 
 
