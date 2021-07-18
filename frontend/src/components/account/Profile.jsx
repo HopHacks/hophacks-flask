@@ -19,6 +19,7 @@ import TableRow from '@material-ui/core/TableRow';
 import FormDialog from "./FormDialog"
 import MajorAutocomplete from "./MajorAutocomplete"
 import SchoolAutocomplete from "./SchoolAutocomplete"
+import eventName from '../../event.txt'
 
 const Profile = function Profile(props) {
 
@@ -41,7 +42,7 @@ const Profile = function Profile(props) {
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState("");
 
-  const currentEvent = "Fall 2021"; // fix next year
+  const currentEvent = "Fall 2021"
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
   const acceptedStatus = "You have been accepted to HopHacks. Please RSVP if you plan on participating!"
   const appCompleteStatus = "Application complete!"
