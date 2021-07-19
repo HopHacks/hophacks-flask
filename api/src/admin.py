@@ -39,8 +39,12 @@ def get_all_users_account():
     users = []
     
     for document in cursor:
-        users.append(document['profile'])
+        print(document)
+        if not document['is_admin']:
+            users.append({'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations']})
         
+
+
     return {'users': users, 'totalPage': totalPage}, 200
 
 

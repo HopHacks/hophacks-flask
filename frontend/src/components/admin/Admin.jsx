@@ -13,6 +13,7 @@ import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +31,6 @@ const Admin =  function() {
     const [users, setusers] = useState([]);
     const [query, setQuery] = useState("");
     const [event, setEvent] = useState("fall_2021");
-    const [school, setSchool] = useState("");
     const [status, setStatus] = useState("All");
     const [totalPage, setTotalPage] = useState(1);
     
@@ -43,9 +43,17 @@ const Admin =  function() {
     };
 
     async function getUsers(){
-      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&event=" + event + "&status=" + status + "&school=" + school);
+      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&event=" + event + "&status=" + status);
       setusers(response.data.users);
       setTotalPage(response.data.totalPage);
+    }
+
+    async function acceptUser(){
+      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&event=" + event + "&status=" + status);
+    }
+
+    async function rejectUser(){
+      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&event=" + event + "&status=" + status);
     }
 
 
@@ -56,35 +64,11 @@ const Admin =  function() {
     const populateUsers = 
         users.map((user, index) => 
           <div key={index} style={{color:"black"}}>
-            {index} - {user.first_name} {user.last_name} 
+            {index} - {user.profile.first_name} {user.profile.last_name} Email Confirmed:  {user.email_confirmed.toString()} Registrations: {user.registrations} 
+            <Button variant="contained" onClick={acceptUser()}>Accept</Button>
+            <Button variant="contained" onClick={rejectUser()}>Reject</Button>
           </div>
         );
-
-    const EventPicker = (
-<FormControl variant="outlined" style={{ minWidth: 220 }}>
-          <InputLabel >Event</InputLabel>
-          <Select
-            onChange={(e) => {
-              setEvent(e.target.value);
-              getUsers();
-            }}
-            defaultValue={"fall_2021"}
-          >
-            <MenuItem value="fall_2021">Fall 2021</MenuItem>
-            <MenuItem value="fall_2020">Fall 2020</MenuItem>
-            <MenuItem value="fall_2019">Fall 2019</MenuItem>
-            <MenuItem value="spring_2019">Spring 2019</MenuItem>
-            <MenuItem value="fall_2018">Fall 2018</MenuItem>
-            <MenuItem value="spring_2018">Spring 2018</MenuItem>
-            <MenuItem value="fall_2017">Fall 2017</MenuItem>
-            <MenuItem value="spring_2017">Spring 2017</MenuItem>
-            <MenuItem value="fall_2016">Fall 2016</MenuItem>
-            <MenuItem value="spring_2016">Spring 2016</MenuItem>
-            <MenuItem value="fall_2015">Fall 2015</MenuItem>
-            <MenuItem value="spring_2015">Spring 2015</MenuItem>
-          </Select>
-        </FormControl>
-    )
 
     const StatusPicker = (
       <FormControl variant="outlined" style={{ minWidth: 220 }}>
@@ -115,11 +99,7 @@ const Admin =  function() {
     onRequestSearch={() => getUsers()}
   />
 
-        {EventPicker}
       {StatusPicker}
-      <SchoolAutocomplete   
-      school={school}
-      setSchool={setSchool}/>
 
       {populateUsers}
       <div  className={classes.pagination}>
