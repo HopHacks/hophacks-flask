@@ -104,7 +104,7 @@ export default function Register() {
       await axios.post('/api/accounts/create', {
         "username": username,
         "password": password,
-        "confirm_url": "http://hophacks.com/confirm_email",
+        "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email',
         "profile": {
           "first_name": first_name,
           "last_name": last_name,
@@ -316,7 +316,7 @@ export default function Register() {
       return (
         <>
           <Typography>
-            You should have recieved a confirmation email. Please check your inbox(and spam) and click the link to confirm your email address.
+            You should have recieved a confirmation email. Please check your inbox (and spam) and click the link to confirm your email address. Your application to HopHacks will be complete after email confirmation!
                   </Typography>
           <div className={classes.actionsContainer}>
             <Button
