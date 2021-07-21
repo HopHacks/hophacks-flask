@@ -16,20 +16,15 @@ def test_admin():
 @jwt_required
 @check_admin
 def get_all_users_account():
-    query = request.args.get('query')
-    page_num = int(request.args.get('page_num'))
-    school = request.args.get('school')
-    event = request.args.get('event')
-    status = request.args.get('status')
-
-
-
+    query = request.args.get("query")
+    page_num = int(request.args.get("page_num"))
+    status = request.args.get("status")
     # Calculate number of documents to skip
     skips = 20 * (page_num - 1)
 
     cursor  = db.users.find({ "$or": [{"username" : {"$regex" : ".*"+query+".*", "$options" : "i"}}, {"profile.first_name": {"$regex" : ".*"+query+".*", "$options" : "i"}}, {"profile.first_name": {"$regex" : ".*"+query+".*", "$options" : "i"}}]})
 
-    totalPage = cursor.count()
+    totalPage = int((cursor.count()-1)/20) + 1
 
     # Skip and limit
     cursor = cursor.skip(skips).limit(20)
@@ -41,7 +36,7 @@ def get_all_users_account():
     for document in cursor:
         print(document)
         if not document['is_admin']:
-            users.append({'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations']})
+            users.append({'id': str(document['_id']), 'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations']})
         
 
 

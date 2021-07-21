@@ -14,7 +14,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -43,32 +49,87 @@ const Admin =  function() {
     };
 
     async function getUsers(){
-      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&event=" + event + "&status=" + status);
+      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&status=" + status);
       setusers(response.data.users);
       setTotalPage(response.data.totalPage);
     }
 
-    async function acceptUser(){
-      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&event=" + event + "&status=" + status);
+    async function acceptUser(id){
+      const response = await axios.post('/api/registrations/accept', 
+      {
+        "users": [id],
+        "event": "Fall 2021"
+    });
     }
 
-    async function rejectUser(){
-      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&event=" + event + "&status=" + status);
+    async function rejectUser(id){
+      const response = await axios.post('/api/registrations/reject', 
+      {
+        "user": id,
+        "event": "Fall 2021"
+    });
     }
 
+    async function checkInUser(id){
+      const response = await axios.post('/api/registrations/check_in', 
+      {
+        "user": id,
+        "event": "Fall 2021"
+    });
+    }
+
+    function getStatus(user){
+      if(user.email_confirmed) {
+        return user.registrations[0].status
+      }
+      else{
+        return "email not confirmed"
+      }
+    }
 
     useEffect(() => {
       getUsers()
   }, []);
 
-    const populateUsers = 
-        users.map((user, index) => 
-          <div key={index} style={{color:"black"}}>
-            {index} - {user.profile.first_name} {user.profile.last_name} Email Confirmed:  {user.email_confirmed.toString()} Registrations: {user.registrations} 
-            <Button variant="contained" onClick={acceptUser()}>Accept</Button>
-            <Button variant="contained" onClick={rejectUser()}>Reject</Button>
-          </div>
-        );
+    function populateUsers() {
+      return (
+        users.map((user, index) => (
+          <TableRow key={index}>
+            <TableCell component="th" scope="row">
+              {user.id}
+            </TableCell>
+            <TableCell align="right">
+            {user.profile.first_name}
+            </TableCell>
+            <TableCell align="right">
+            {user.profile.last_name}
+            </TableCell>
+            <TableCell align="right">
+            {getStatus(user)}
+            </TableCell>
+            <TableCell align="right">
+              <Button onClick = {()=>{
+                acceptUser(user.id)
+                getUsers()
+              }
+                }>Accept</Button>
+            </TableCell>
+            <TableCell align="right">
+              <Button onClick = {()=>{
+                rejectUser(user.id)
+                getUsers()
+                }}>Reject</Button>
+            </TableCell>
+            <TableCell align="right">
+              <Button onClick = {()=>{
+                checkInUser(user.id)
+                getUsers()
+              }}>Check in</Button>
+            </TableCell>
+          </TableRow>
+        ))
+      )
+    }
 
     const StatusPicker = (
       <FormControl variant="outlined" style={{ minWidth: 220 }}>
@@ -81,14 +142,40 @@ const Admin =  function() {
 
                   defaultValue={"All"}
                 >
-                  <MenuItem value="All">All</MenuItem>
-                  <MenuItem value="Checked in">Checked in</MenuItem>
-                  <MenuItem value="Accepted">Accepted</MenuItem>
-                  <MenuItem value="Waitlisted">Waitlisted</MenuItem>
-                  <MenuItem value="Not Accept">Not Accept</MenuItem>
+                  <MenuItem value="all">All</MenuItem>
+                  <MenuItem value="email_not_comfirmed">Email not confirmed</MenuItem>
+                  <MenuItem value="applied">Applied</MenuItem>
+                  <MenuItem value="accepted">Accepted</MenuItem>
+                  <MenuItem value="rejected">Rejected</MenuItem>
+                  <MenuItem value="rsvped">Rsvp</MenuItem>
+                  <MenuItem value="checked_in">Checked in</MenuItem>
+
                 </Select>
               </FormControl>
           )
+    
+    const table = (
+      <div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>id</TableCell>
+              <TableCell align="right">First Name</TableCell>
+              <TableCell align="right">Last Name</TableCell>
+              <TableCell align="right">Status</TableCell>
+              <TableCell align="right">Actions</TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {populateUsers()}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+    )
 
     return (
       <Container fixed>
@@ -102,6 +189,9 @@ const Admin =  function() {
       {StatusPicker}
 
       {populateUsers}
+
+      {table}
+
       <div  className={classes.pagination}>
       <Pagination count={totalPage} page={page} onChange={handleChange} />
       </div>
