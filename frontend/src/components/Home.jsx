@@ -35,57 +35,47 @@ export default function Home() {
         <ParallaxBanner
             layers={[
                 {
-                    image: img('parallax1.webp'),
-                    amount: 0.9,
-                },
-                {
-                    image: img('parallax2.webp'),
-                    amount: 0.825,
-                },
-                {
-                    image: img('parallax3.webp'),
-                    amount: 0.75,
-                },
-                {
-                    image: img('parallax4.webp'),
-                    amount: 0.675,
-                },
-                {
-                    image: img('parallax5.webp'),
-                    amount: 0.6,
-                },
-                {
-                    image: img('parallax6.webp'),
-                    amount: 0.525,
-                },
-                {
-                    image: img('parallax7.webp'),
-                    amount: 0.45,
-                },
-                {
-                    image: img('parallax8.webp'),
-                    amount: 0.375,
-                },
-                {
-                    image: img('parallax9.webp'),
-                    amount: 0.3,
-                },
-                {
-                    image: img('parallax10.webp'),
+                    image: img('010_sky.webp'),
                     amount: 0.225,
                 },
                 {
-                    image: img('parallax11.webp'),
-                    amount: 0.15,
+                    image: img('009_back_trees.webp'),
+                    amount: 0.3,
                 },
                 {
-                    image: img('parallax12.webp'),
-                    amount: 0.075,
+                    image: img('008_sun.webp'),
+                    amount: 0.375,
                 },
                 {
-                    image: img('parallax13.webp'),
-                    amount: 0,
+                    image: img('007_sky_clouds.webp'),
+                    amount: 0.45,
                 },
+                {
+                    image: img('006_mountains.webp'),
+                    amount: 0.525,
+                },
+                {
+                    image: img('005_behind_tower_trees.webp'),
+                    amount: 0.6,
+                },
+                {
+                    image: img('004_behind_tower_clouds.webp'),
+                    amount: 0.675,
+                },
+                {
+                    image: img('003_tower.webp'),
+                    amount: 0.75,
+                },
+                {
+                    image: img('002_front_of_tower_clouds.webp'),
+                    amount: 0.825,
+                },
+                
+                {
+                    image: img('001_bushes.webp'),
+                    amount: 0.9,
+                },
+
             ]}
 
             style={{
@@ -105,7 +95,7 @@ export default function Home() {
 
             <div/>
 
-            <img src={img('hoplogo.png')} style={{
+            <img src={img('HopHacks_logo.png')} style={{
                 'width': '6vw', 
             }} />
 
