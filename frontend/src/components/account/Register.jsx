@@ -95,7 +95,7 @@ export default function Register() {
 
   async function handleProfileNext() {
 
-    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || phone_number.length === 0 || school.length === 0 || ethnicity.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
+    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || school.length === 0 || ethnicity.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
       setProfileSubmitMsg("* Required Field cannot be empty")
       return;
     }
@@ -104,7 +104,7 @@ export default function Register() {
       await axios.post('/api/accounts/create', {
         "username": username,
         "password": password,
-        "confirm_url": "http://hophacks.com/confirm_email",
+        "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email',
         "profile": {
           "first_name": first_name,
           "last_name": last_name,
@@ -190,18 +190,23 @@ export default function Register() {
       </Grid>
 
       <Grid item>
-        <FormControl variant="outlined" style={{ minWidth: 220 }}>
+        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
           <SchoolAutocomplete
             school={school}
             setSchool={setSchool} />
         </FormControl>
-
+        <Typography style={{fontSize: '12px', color:"grey"}}>
+          * If your school is not in the list, choose 'other schools'
+        </Typography>
       </Grid>
 
       <Grid item>
         <MajorAutocomplete
           major={major}
           setMajor={setMajor} />
+        <Typography style={{fontSize: '12px', color:"grey"}}>
+          * If your major is not in the list, choose 'other majors'
+        </Typography>
       </Grid>
 
       <Grid item>
@@ -220,7 +225,7 @@ export default function Register() {
       </Grid>
 
       <Grid item>
-        <TextField required id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} />
+        <TextField id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} />
       </Grid>
 
       <Grid item>
@@ -316,7 +321,7 @@ export default function Register() {
       return (
         <>
           <Typography>
-            You should have recieved a confirmation email. Please check your inbox(and spam) and click the link to confirm your email address.
+            You should have recieved a confirmation email. Please check your inbox (and spam) and click the link to confirm your email address. Your application to HopHacks will be complete after email confirmation!
                   </Typography>
           <div className={classes.actionsContainer}>
             <Button
