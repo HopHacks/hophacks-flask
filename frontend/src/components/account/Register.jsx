@@ -95,7 +95,7 @@ export default function Register() {
 
   async function handleProfileNext() {
 
-    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || phone_number.length === 0 || school.length === 0 || ethnicity.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
+    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || school.length === 0 || ethnicity.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
       setProfileSubmitMsg("* Required Field cannot be empty")
       return;
     }
@@ -190,18 +190,23 @@ export default function Register() {
       </Grid>
 
       <Grid item>
-        <FormControl variant="outlined" style={{ minWidth: 220 }}>
+        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
           <SchoolAutocomplete
             school={school}
             setSchool={setSchool} />
         </FormControl>
-
+        <Typography style={{fontSize: '12px', color:"grey"}}>
+          * If your school is not in the list, choose 'other schools'
+        </Typography>
       </Grid>
 
       <Grid item>
         <MajorAutocomplete
           major={major}
           setMajor={setMajor} />
+        <Typography style={{fontSize: '12px', color:"grey"}}>
+          * If your major is not in the list, choose 'other majors'
+        </Typography>
       </Grid>
 
       <Grid item>
@@ -220,7 +225,7 @@ export default function Register() {
       </Grid>
 
       <Grid item>
-        <TextField required id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} />
+        <TextField id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} />
       </Grid>
 
       <Grid item>
