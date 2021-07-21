@@ -50,6 +50,7 @@ const MajorAutocomplete = function MajorAutocomplete({
         "Natural Sciences",
         "Near Eastern Studies",
         "Neuroscience",
+        "Other Majors",
         "Philosophy",
         "Physics",
         "Political Science",

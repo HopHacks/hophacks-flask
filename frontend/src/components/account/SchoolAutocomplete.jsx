@@ -61,6 +61,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({
             }}
             renderInput={(params) => (
                 <TextField
+                    required
                     {...params}
                     label="School"
                     variant="outlined"
