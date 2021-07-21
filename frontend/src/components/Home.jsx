@@ -95,7 +95,7 @@ export default function Home() {
 
             <div/>
 
-            <img src={img('hoplogo.png')} style={{
+            <img src={img('HopHacks_logo.png')} style={{
                 'width': '6vw', 
             }} />
 
