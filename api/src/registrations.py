@@ -150,7 +150,8 @@ def accept():
         {
             '$set': {
                 "registrations.$.accept": True,
-                "registrations.$.accept_at": datetime.datetime.utcnow()
+                "registrations.$.accept_at": datetime.datetime.utcnow(),
+                "registrations.$.status": "accepted"
             }
         }
     )
@@ -201,7 +202,49 @@ def check_in():
         {
             '$set': {
                 "registrations.$.checkin": True,
-                "registrations.$.checkin_at": datetime.datetime.utcnow()
+                "registrations.$.checkin_at": datetime.datetime.utcnow(),
+                "registrations.$.status": "checked_in"
+            }
+        }
+    )
+
+    return jsonify({"num_changed": result.modified_count}), 200
+
+@registrations_api.route('/reject', methods = ['POST'])
+@jwt_required
+@check_admin
+def reject():
+    """As an admin user,reject user in to an event
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson user: User id to be reject
+    :reqjson event: Semester and year, for exmaple ``Spring_2020``
+
+    .. sourcecode:: json
+
+        {
+            "user": "XuiJJ8rJRrbNJZ3Nb",
+            "event": "Spring_2020"
+        }
+
+    :status 200: Successful
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+
+    """
+    event = request.json["event"]
+    user = request.json["user"]
+
+    result = db.users.update_one(
+        {
+            '_id': ObjectId(user),
+            'registrations.event' : event
+        },
+        {
+            '$set': {
+                "registrations.$.reject_at": datetime.datetime.utcnow(),
+                "registrations.$.status": "rejected"
             }
         }
     )
@@ -294,7 +337,8 @@ def rsvp_rsvp():
         'registrations.event' : event,
         'registrations.accept': True},
     
-    {'$set': {"registrations.$.rsvp":True}})
+    {'$set': {"registrations.$.rsvp":True,
+    "registrations.$.status": "rsvped"}})
 
     if (ret.matched_count == 1 and ret.modified_count == 1):
         return jsonify({"msg": "RSPVed successfully"}), 200
@@ -338,7 +382,8 @@ def rsvp_cancel():
         'registrations.event' : event,
         'registrations.accept': True},
     
-    {'$set': {"registrations.$.rsvp":False}})
+    {'$set': {"registrations.$.rsvp":False,
+    "registrations.$.status": "accepted"}})
 
     if (ret.matched_count == 1 and ret.modified_count == 1):
         return jsonify({"msg": "Cancelled RSVP successfully"}), 200

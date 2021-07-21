@@ -457,7 +457,8 @@ def confirm_email():
         "event": eventFile.read(), # update 
         "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
         "accept": False,
-        "checkin": False
+        "checkin": False,
+        "status": "applied"
     }
 
 

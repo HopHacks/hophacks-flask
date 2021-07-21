@@ -11,3 +11,35 @@ admin_api = Blueprint('admin', __name__)
 @check_admin
 def test_admin():
     return jsonify({'is_admin': True}), 200
+
+@admin_api.route('/users', methods=['GET'])
+@jwt_required
+@check_admin
+def get_all_users_account():
+    query = request.args.get("query")
+    page_num = int(request.args.get("page_num"))
+    status = request.args.get("status")
+    # Calculate number of documents to skip
+    skips = 20 * (page_num - 1)
+
+    cursor  = db.users.find({ "$or": [{"username" : {"$regex" : ".*"+query+".*", "$options" : "i"}}, {"profile.first_name": {"$regex" : ".*"+query+".*", "$options" : "i"}}, {"profile.first_name": {"$regex" : ".*"+query+".*", "$options" : "i"}}]})
+
+    totalPage = int((cursor.count()-1)/20) + 1
+
+    # Skip and limit
+    cursor = cursor.skip(skips).limit(20)
+    
+    
+
+    users = []
+    
+    for document in cursor:
+        print(document)
+        if not document['is_admin']:
+            users.append({'id': str(document['_id']), 'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations']})
+        
+
+
+    return {'users': users, 'totalPage': totalPage}, 200
+
+
