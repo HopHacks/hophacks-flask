@@ -4,17 +4,17 @@
     top: 0% !important;
     bottom: 0% !important;  
 }
-.parallax-banner-layer-0{
+/* .parallax-banner-layer-6{
     animation: fogMovementRev 250s linear infinite;
-}
+} */
 
-.parallax-banner-layer-6 {
+.parallax-banner-layer-3 {
     animation: fogMovement 60s linear infinite;
 }
 
-.parallax-banner-layer-10 {
+/* .parallax-banner-layer-10 {
     animation: fogMovementRev 90s linear infinite;
-}
+} */
 
 @keyframes fogMovement{
     0%{background-position: 0 0;}
