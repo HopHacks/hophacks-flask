@@ -54,7 +54,7 @@ def send_confirmation_email(email, hashed, base_url):
       recipients=[email])
 
     msg.body = 'Hello,\nClick the following link to confirm your email ' + link
-    msg.html = render_template('email_template.html', link=link)
+    msg.html = render_template('email_confirmation.html', link=link)
     mail.send(msg)
 
     return confirm_secret
