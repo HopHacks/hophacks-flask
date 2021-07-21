@@ -109,8 +109,8 @@ export default function Home() {
                 'width': '6vw', 
             }} />
 
-            <Typography style = {{'color': '#FFFFFF'}} >
-                <strong>We're revamping our website, come back soon!</strong>
+            <Typography style = {{'color': '#FFFFFF', fontSize: '30px'}} >
+                <strong>SEPTEMBER 17-19, 2021</strong>
             </Typography>
         </div>
     );

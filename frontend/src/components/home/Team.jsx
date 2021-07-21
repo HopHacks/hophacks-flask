@@ -75,34 +75,29 @@ export default function Team() {
                         {/*TODO make this grid better (spaced with 8? narrower?) */}
                         <Grid container spacing={1} mx={20}>
                             <MemberItem imgURL="Marc_Helou" memberName="Marc Helou" memberTitle="Director" />
+                            <MemberItem imgURL="bwong" memberName="Brandon Wong" memberTitle="Head of Membership/ Logistics" />
+                            <MemberItem imgURL="Alan_Li" memberName="Alan Li" memberTitle="Head of Website" />
+                            <MemberItem imgURL="patrick" memberName="Patrick Herbert" memberTitle="Head of Logistics" />
+                            <MemberItem imgURL="theanh" memberName="Trần Thế Anh" memberTitle="Head of Logistics/ Sponsors" />
 
-                            <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Head of Website" personal="http://www.danqian.net/"/>
-                            <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="Co-Head of Design" />
-                            <MemberItem imgURL="jimmy" memberName="Jimmy Shi" memberTitle="Co-Head of Design, Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
-                            <MemberItem imgURL="david" memberName="David Yang" memberTitle="Head of Sponsors" />
-                            <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="Head of Social/PR" />
-                            <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="Head of Membership" />
-                            <MemberItem imgURL="amber" memberName="Amber Zhou" memberTitle="Judges" />
+                            <MemberItem imgURL="elizabeth" memberName="Elizabeth Cho" memberTitle="Head of Design" />
+                            <MemberItem imgURL="amber" memberName="Amber Zhou" memberTitle="Co-Head of Judges" />
 
+                            <MemberItem imgURL="stella" memberName="Stella Li" memberTitle="Co-Head of Judges/ Sponsors" />
+                            <MemberItem imgURL="alison" memberName="Alison Lee" memberTitle="Head of Sponsors/ Design" />
 
-                            <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="Website" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
-                            <MemberItem imgURL="Alan_Li" memberName="Alan Li" memberTitle="Website" />
-                            <MemberItem imgURL="Curtis_Ahn" memberName="Curtis Ahn" memberTitle="Website" />
                             {/* <MemberItem imgURL="xiangyu" memberName="Xiangyu Shen" memberTitle="Website" /> */}
-                            <MemberItem imgURL="bwong" memberName="Brandon Wong" memberTitle="Logistics/Membership" />
 
-                            <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="Logistics" />
-                            <MemberItem imgURL="patrick" memberName="Patrick Herbert" memberTitle="Logistics" />
-                            <MemberItem imgURL="theanh" memberName="Trần Thế Anh" memberTitle="Logistics" />
                             <MemberItem imgURL="Neha" memberName="Neha Nandiwada" memberTitle="Logistics" />
+                            <MemberItem imgURL="Curtis_Ahn" memberName="Curtis Ahn" memberTitle="Website" />
 
-                            <MemberItem imgURL="elizabeth" memberName="Elizabeth Cho" memberTitle="Design" />
+
+                            <MemberItem imgURL="jimmy" memberName="Jimmy Shi" memberTitle="Design/Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
+
                             <MemberItem imgURL="Elaine_He" memberName="Elaine He" memberTitle="Design/Website" />
 
                             <MemberItem imgURL="charissa" memberName="Charissa Zou" memberTitle="Design/Website" />
-                            <MemberItem imgURL="stella" memberName="Stella Li" memberTitle="Sponsors" />
-                            <MemberItem imgURL="Kavan_Bansal" memberName="Kavan Bansal" memberTitle="Sponsors" />
-                            <MemberItem imgURL="alison" memberName="Alison Lee" memberTitle="Sponsors" />
+                            <MemberItem imgURL="Kavan_Bansal" memberName="Kavan Bansal" memberTitle="Social/PR/ Sponsors" />
                             <MemberItem imgURL="aubin" memberName="Aubin Lohier" memberTitle="Social/PR" />
                             <MemberItem imgURL="Laine_wang" memberName="Laine Wang" memberTitle="Social/PR" />
 
@@ -121,6 +116,15 @@ export default function Team() {
                     <Typography> Alumni </Typography>
                     <Box mx="10%">
                     <Grid container spacing={1}>
+                        <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="https://danqian.net/"/>
+                        <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="" />
+                        <MemberItem imgURL="david" memberName="David Yang" memberTitle="" />
+                        <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="" />
+                        <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="" />
+                        <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
+                        <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="" />
+
+
                         <MemberItem imgURL="kristin" memberName="Kristin Yim" memberTitle="Google" />
                         <MemberItem imgURL="jessie" memberName="Jessie Bai" memberTitle="Goldman Sachs" />
                         <MemberItem imgURL="jz" memberName="Jason Zhang" memberTitle="MongoDB" />

@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from "axios";
+import list from "./list.json"
 const SchoolAutocomplete = function SchoolAutocomplete({
     school,
     setSchool,
@@ -25,8 +26,11 @@ const SchoolAutocomplete = function SchoolAutocomplete({
         }
 
         (async () => {
-            const response = await axios.get('http://universities.hipolabs.com/search');
-            const colleges = await response.data;
+            //const response = await axios.get('http://universities.hipolabs.com/search');
+            //console.log(response)
+            const response = require("./list.json")
+            const colleges = await response;
+            //const colleges = await response.data;
             if (active) {
                 setOptions(Object.keys(colleges).map((key) => colleges[key]));
             }
