@@ -14,3 +14,5 @@ boto3>=1.13.18
 
 sphinx
 sphinxcontrib-httpdomain
+
+requests

@@ -11,6 +11,7 @@ from flask import Blueprint, request, Response, current_app, render_template, js
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_mail import Message
 from registrations import send_apply_confirm
+import requests
 
 import bcrypt
 import jwt
@@ -24,6 +25,18 @@ accounts_api = Blueprint('accounts', __name__)
 
 profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
 "ethnicity", "grad", "is_jhu", "grad_month", "grad_year"]
+
+#Send text message to HopHacks Slack app registration channel
+def send_slack_message(text):
+    r = requests.post('https://hooks.slack.com/services/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', json={
+    "username": "HopHacks Bot",
+    "text": text,
+    "icon_url": "https://hophacks.com/images/HopHacks_logo.png"
+    })
+    print(r)
+    return r
+
+
 
 # Sends confirmation email with JWT-Token in URL for verification, returns secret key used
 # Note this secret key is based of the current user's hashed password, this way when the Password
@@ -465,6 +478,8 @@ def confirm_email():
     id = get_jwt_identity()
     result = db.users.update_one({'username' : email}, {'$push': {'registrations': new_reg}})
     send_apply_confirm(user['username'], user['profile']['first_name'])
+    text = "Recieve Application from User: " + user['username'] + "\n" + user['profile']['first_name'] + " " + user['profile']['last_name'] + " from " + user['profile']['school'] + " just applied, please review at https://hophacks.com/admin"
+    send_slack_message(text)
     return jsonify({"msg": "Email Confirmed"}), 200
 
 @accounts_api.route('/reset_password', methods = ['POST'])
