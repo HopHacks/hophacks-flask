@@ -6,13 +6,22 @@ import CardContent from '@material-ui/core/CardContent';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+const useStyles = makeStyles({
+
+    title: {
+        color: "#7289da",
+        fontFamily: "VCR OSD Mono",
+    },
+});
+
 
 
 function img(url) {
     return process.env.PUBLIC_URL + '/images/' + url;
 }
 
-function MemberItem (props) {
+function MemberItem(props) {
     let linkedin = (null);
     let github = (null);
     let personal = (null);
@@ -24,47 +33,53 @@ function MemberItem (props) {
     }
 
     if (props.github) {
-        github = <a href={`${props.github}`}><img className="social-icon" src={img("social/github.png")}  alt="github" /></a>;
+        github = <a href={`${props.github}`}><img className="social-icon" src={img("social/github.png")} alt="github" /></a>;
     }
 
     if (props.personal) {
-        personal = <a href={`${props.personal}`}><img className="social-icon" src={img("social/personal.png")}  alt="personal" /></a>;
+        personal = <a href={`${props.personal}`}><img className="social-icon" src={img("social/personal.png")} alt="personal" /></a>;
     }
 
     return (
         <Grid item xs={6} sm={3} md={2}>
-            
+
             <div className="grid-item">
-            <picture>
-                <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
-                <img src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
-            </picture>
-            <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
-            <Typography>{props.memberTitle}</Typography>
-            {linkedin}
-            {github}
-            {personal}
+                <picture>
+                    <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
+                    <img src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
+                </picture>
+                <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
+                <Typography>{props.memberTitle}</Typography>
+                {linkedin}
+                {github}
+                {personal}
             </div>
         </Grid>
     );
-    
+
 }
 
 export default function Team() {
+
+
+    const classes = useStyles();
+
     return (
         <Box py={2}>
             <Card>
                 <CardContent>
                     {/*TODO material UI*/}
-                    <Typography>Meet the Team!</Typography>
+                    <Typography className={classes.title} variant="h4" gutterBottom>Meet The Team!</Typography>
                     <div>
                         <Typography>
-                        We're a group of undergraduate students passionate about the intersection of
+                            We're a group of undergraduate students passionate about the intersection of
                             <b> technology</b>,
                             <b> innovation</b>,
                             <b> social good</b>, and
                             <b> fun</b>!
                             <font size="2"> (and pineapple on pizza) </font>
+
+                            <p></p>
                         </Typography>
                     </div>
 
@@ -103,8 +118,8 @@ export default function Team() {
 
                             {/* <MemberItem imgURL="arielle" memberName="Arielle Summitt" memberTitle="Social/PR" /> */}
 
-                            
-                            
+
+
 
                             <MemberItem imgURL="joanne" memberName="Joanne Selinski" memberTitle="Faculty Advisor" />
                             <MemberItem imgURL="kelly" memberName="Kelly Culotta" memberTitle="Admin Coordinator" />
@@ -113,28 +128,28 @@ export default function Team() {
                     <br />
                     <br />
 
-                    <Typography> Alumni </Typography>
+                    <Typography variant="h5" align="center"> Alumni <p> </p> </Typography>
                     <Box mx="10%">
-                    <Grid container spacing={1}>
-                        <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="https://danqian.net/"/>
-                        <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="" />
-                        <MemberItem imgURL="david" memberName="David Yang" memberTitle="" />
-                        <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="" />
-                        <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="" />
-                        <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
-                        <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="" />
+                        <Grid container spacing={1}>
+                            <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="https://danqian.net/" />
+                            <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="" />
+                            <MemberItem imgURL="david" memberName="David Yang" memberTitle="" />
+                            <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="" />
+                            <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="" />
+                            <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
+                            <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="" />
 
 
-                        <MemberItem imgURL="kristin" memberName="Kristin Yim" memberTitle="Google" />
-                        <MemberItem imgURL="jessie" memberName="Jessie Bai" memberTitle="Goldman Sachs" />
-                        <MemberItem imgURL="jz" memberName="Jason Zhang" memberTitle="MongoDB" />
-                        <MemberItem imgURL="will" memberName="Will Ye" memberTitle="Capital One" />
-                        {/* <MemberItem imgURL="frank" memberName="Frank Miao" memberTitle="Head of Transportation" /> */}
-                        {/* <MemberItem imgURL="stanley" memberName="Stanley Wang" memberTitle="Sponsors" /> */}
-                        <MemberItem imgURL="elaine" memberName="Elaine Wong" memberTitle="Facebook" />
-                        <MemberItem imgURL="awong" memberName="Andrew Wong" memberTitle="Atlassian" />
-                        <MemberItem imgURL="ryan" memberName="Ryan Demo" memberTitle="Lyft" />
-                    </Grid>
+                            <MemberItem imgURL="kristin" memberName="Kristin Yim" memberTitle="Google" />
+                            <MemberItem imgURL="jessie" memberName="Jessie Bai" memberTitle="Goldman Sachs" />
+                            <MemberItem imgURL="jz" memberName="Jason Zhang" memberTitle="MongoDB" />
+                            <MemberItem imgURL="will" memberName="Will Ye" memberTitle="Capital One" />
+                            {/* <MemberItem imgURL="frank" memberName="Frank Miao" memberTitle="Head of Transportation" /> */}
+                            {/* <MemberItem imgURL="stanley" memberName="Stanley Wang" memberTitle="Sponsors" /> */}
+                            <MemberItem imgURL="elaine" memberName="Elaine Wong" memberTitle="Facebook" />
+                            <MemberItem imgURL="awong" memberName="Andrew Wong" memberTitle="Atlassian" />
+                            <MemberItem imgURL="ryan" memberName="Ryan Demo" memberTitle="Lyft" />
+                        </Grid>
                     </Box>
                 </CardContent>
             </Card>

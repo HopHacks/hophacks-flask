@@ -13,8 +13,17 @@ import {
 import { Typography } from "@material-ui/core";
 import ResetPassword from "./ResetPasswordDialog";
 
+import { makeStyles } from '@material-ui/core/styles';
 function Login(props) {
 
+
+  const useStyles = makeStyles({
+
+    title: {
+        fontFamily: "VCR OSD Mono",
+    },
+  });
+  
   /* State for handling login */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,21 +95,24 @@ function Login(props) {
       <Typography display="inline">
         New to HopHacks?{' '}
         <Link to={'/register'} style={{ textDecoration: 'none' }} onClick={()=>{setLoginDialogOpen(false)}}>
-          Sign Up Now
+          Apply Now
               </Link>
       </Typography>
 
       <Typography display="inline">
-        Forget password?{' '}
+        Forgot password?{' '}
         <ResetPassword />
       </Typography>
     </Dialog>
   )
 
+
+
+  const classes = useStyles();
   return (
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
-        <Typography> Login </Typography>
+        <Typography variant="h5" className={classes.title}> Login </Typography>
       </Button>
 
       {LoginDialog}
