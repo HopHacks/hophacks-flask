@@ -67,10 +67,13 @@ def get_registrations():
 
     return jsonify({'registrations': user['registrations']}), 200
 
+"""
+REPLACED WITH EMAIL CONFIRMATION 
 @registrations_api.route('/apply', methods = ['POST'])
 @jwt_required
 def apply():
-    """As a user, apply to an event
+    
+    As a user, apply to an event
 
     :reqheader Authorization: ``Bearer <JWT Token>``
 
@@ -80,7 +83,7 @@ def apply():
     :status 200: Sucessfully registered
     :status 400: Missing field in request or already registered
     :status 422: Not logged in
-    """
+    
     if ('event' not in request.json or 'details' not in request.json):
         return Response('Invalid request', status=400)
 
@@ -107,7 +110,7 @@ def apply():
 
     return jsonify({"num_changed": result.modified_count}), 200
 
-
+"""
 @registrations_api.route('/accept', methods = ['POST'])
 @jwt_required
 @check_admin
@@ -147,7 +150,8 @@ def accept():
         {
             '$set': {
                 "registrations.$.accept": True,
-                "registrations.$.accept_at": datetime.datetime.utcnow()
+                "registrations.$.accept_at": datetime.datetime.utcnow(),
+                "registrations.$.status": "accepted"
             }
         }
     )
@@ -198,7 +202,49 @@ def check_in():
         {
             '$set': {
                 "registrations.$.checkin": True,
-                "registrations.$.checkin_at": datetime.datetime.utcnow()
+                "registrations.$.checkin_at": datetime.datetime.utcnow(),
+                "registrations.$.status": "checked_in"
+            }
+        }
+    )
+
+    return jsonify({"num_changed": result.modified_count}), 200
+
+@registrations_api.route('/reject', methods = ['POST'])
+@jwt_required
+@check_admin
+def reject():
+    """As an admin user,reject user in to an event
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson user: User id to be reject
+    :reqjson event: Semester and year, for exmaple ``Spring_2020``
+
+    .. sourcecode:: json
+
+        {
+            "user": "XuiJJ8rJRrbNJZ3Nb",
+            "event": "Spring_2020"
+        }
+
+    :status 200: Successful
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+
+    """
+    event = request.json["event"]
+    user = request.json["user"]
+
+    result = db.users.update_one(
+        {
+            '_id': ObjectId(user),
+            'registrations.event' : event
+        },
+        {
+            '$set': {
+                "registrations.$.reject_at": datetime.datetime.utcnow(),
+                "registrations.$.status": "rejected"
             }
         }
     )
@@ -236,6 +282,30 @@ def rsvp_view():
 
     return jsonify({"rsvpList":rsvpList, "allList": allList}),200
 
+
+@registrations_api.route('/rsvp/status', methods = ['GET'])
+@jwt_required
+def rsvp_status():
+
+    """For a user, check if he/she RSVPed or not
+
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :status 200: Successful
+    """
+
+    id = get_jwt_identity()
+    user = db.users.find_one({'_id' : ObjectId(id)})
+
+    eventInfo = user["registrations"][0] # only need to check first one, because there should only be one entry
+    if("rsvp" not in eventInfo or eventInfo["rsvp"] == False):
+        return jsonify({"status":False}),200 
+    elif(eventInfo["rsvp"] == True):
+        return jsonify({"status":True}),200 
+
+
+    return jsonify({"status":"something wrong"}),500 
+
 @registrations_api.route('/rsvp/rsvp', methods = ['POST'])
 @jwt_required
 def rsvp_rsvp():
@@ -267,7 +337,8 @@ def rsvp_rsvp():
         'registrations.event' : event,
         'registrations.accept': True},
     
-    {'$set': {"registrations.$.rsvp":True}})
+    {'$set': {"registrations.$.rsvp":True,
+    "registrations.$.status": "rsvped"}})
 
     if (ret.matched_count == 1 and ret.modified_count == 1):
         return jsonify({"msg": "RSPVed successfully"}), 200
@@ -311,7 +382,8 @@ def rsvp_cancel():
         'registrations.event' : event,
         'registrations.accept': True},
     
-    {'$set': {"registrations.$.rsvp":False}})
+    {'$set': {"registrations.$.rsvp":False,
+    "registrations.$.status": "accepted"}})
 
     if (ret.matched_count == 1 and ret.modified_count == 1):
         return jsonify({"msg": "Cancelled RSVP successfully"}), 200
