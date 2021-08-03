@@ -44,7 +44,6 @@ def send_reset_email(email, hashed, base_url):
 
 # Sends confirmation email with JWT-Token in URL for verification, returns the secret key used
 def send_confirmation_email(email, hashed, base_url):
-    
     confirm_secret = hashed.decode('utf-8') + '-' + str(datetime.datetime.utcnow().timestamp())
     token = create_confirm_token(email, confirm_secret)
     link = base_url + "/" + token.decode('utf-8')
