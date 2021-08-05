@@ -26,27 +26,28 @@
     100%{background-position: -100vw 0;}
 }
 
+@font-face {
+    font-family: vcrOsdMono;
+    src: local('vcrOsdMono'), url(./../fonts/VCR_OSD_MONO_1.001.ttf) format('truetype');
+}
+
 
 /* TODO: These are leftoever from old site Move to inline? */
 .grid-item {
     text-align: center;
     width: 100%;
-  
     font-family: 'Seravek', sans-serif;
     font-size: 1.17em;
     line-height: 1.5;
     margin-left: auto !important;
-    margin-right: auto !important;
-  
+    margin-right: auto !important; 
 }
 
 
 .grid-item h3 {
     margin:0;
-    
     font-weight: normal;
     font-size: 1em;
-
 }
 
 .grid-item img {
@@ -55,8 +56,7 @@
     margin-bottom: 5px;
     border-radius: 100%;
     margin-left: auto !important;
-    margin-right: auto !important;
-  
+    margin-right: auto !important; 
 }
   
 .social-icon {
@@ -67,4 +67,3 @@
     margin-left: 5px;
     cursor: pointer;
 }
-
