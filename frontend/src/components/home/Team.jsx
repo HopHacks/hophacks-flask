@@ -128,14 +128,16 @@ export default function Team() {
                     <br />
                     <br />
 
-                    <Typography variant="h5" align="center"> Alumni <p> </p> </Typography>
+                    <Typography className={classes.title} variant="h4" gutterBottom>
+                                Alumni
+                            </Typography>
                     <Box mx="10%">
                         <Grid container spacing={1}>
                             <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="https://danqian.net/" />
                             <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="" />
                             <MemberItem imgURL="david" memberName="David Yang" memberTitle="" />
                             <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="" />
-                            <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="" />
+                            <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="Datadog" />
                             <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
                             <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="" />
 

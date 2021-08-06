@@ -14,10 +14,11 @@ import { ParallaxBanner } from 'react-scroll-parallax';
 import { withStyles } from '@material-ui/core/styles';
 import Team from './home/Team';
 import '../stylesheets/home.css'
+import Sponsors from "./home/Sponsors";
 
 const useStyles = makeStyles({
     logo: {
-        top: '40%',
+        top: '25%',
         width: '60vw', // This is centered, 20 - 60 - 20
         left: '20vw',
         position: 'absolute',
@@ -104,17 +105,20 @@ export default function Home() {
     /* Logo on top of Parallax Banner */
     const Logo = (
         <div className={classes.logo}>
-            <img src={img('hoptext.gif')} style={{
-                'width': '35vw',
+
+            <img src={img('HopHacks_logo.png')} style={{
+                'width': '14vw',
             }} />
+
+            <Typography style={{ 'color': '#FFFFFF', fontSize: '100px', fontFamily: "VCR OSD Mono" }} >
+                <strong>HOPHACKS</strong>
+            </Typography>
 
             <div />
 
-            <img src={img('HopHacks_logo.png')} style={{
-                'width': '6vw',
-            }} />
 
-            <Typography style={{ 'color': '#FFFFFF', fontSize: '30px' }} >
+
+            <Typography style={{ 'color': '#FFFFFF', fontSize: '40px', fontFamily: "VCR OSD Mono" }} >
                 <strong>SEPTEMBER 17-19, 2021</strong>
             </Typography>
         </div>
@@ -136,7 +140,7 @@ export default function Home() {
                             </Typography>
                             <Typography >
                                 
-                                HopHacks is a 36-hour biannual Hackathon held at Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes up to $1024!
+                                HopHacks is a 36-hour biannual Hackathon held at Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for the prizes
 
                                 <p>
                                     <b>
@@ -211,7 +215,7 @@ export default function Home() {
                             </Card>
 
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            {/* <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                         What are the prizes?
@@ -238,7 +242,7 @@ export default function Home() {
                                     </Typography>
 
                                 </CardContent>
-                            </Card>
+                            </Card> */}
 
 
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
@@ -330,6 +334,7 @@ export default function Home() {
                     </Card>
 
                     <Team />
+                    <Sponsors />
 
                 </Box>
 
