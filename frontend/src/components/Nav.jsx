@@ -16,6 +16,21 @@ const useStyles = makeStyles({
 
     fontFamily: "VCR OSD Mono",
   },
+
+  hophacksButton:{
+
+    marginLeft:-12,
+    marginRight:16,
+
+  },
+
+  otherButton:{
+
+    marginLeft:"auto",
+    
+  },
+
+  
 });
 
 
@@ -30,7 +45,12 @@ const Nav = function Nav(props) {
 
   return (
     <AppBar position="sticky">
-      <Toolbar style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+      <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-end' }}>
+      <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
+          <Typography variant="h4" className={classes.title}> HopHacks </Typography>
+        </Button>
+
+        <section className={classes.otherButton}>
         <Button component={Link} to={'/'} color="inherit">
           <Typography variant="h5" className={classes.title}> Home </Typography>
         </Button>
@@ -56,6 +76,8 @@ const Nav = function Nav(props) {
             <Typography variant="h5" className={classes.title}>Logout</Typography>
           </Button>
         }
+
+        </section>
       </Toolbar>
     </AppBar>);
 }

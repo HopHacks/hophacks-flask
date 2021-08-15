@@ -10,10 +10,12 @@ import { withAuthProps } from '../util/auth';
 import {
   useHistory
 } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import ResetPassword from "./ResetPasswordDialog";
+import CloseIcon from '@material-ui/icons/Close';
 
 import { makeStyles } from '@material-ui/core/styles';
+
 function Login(props) {
 
 
@@ -21,9 +23,45 @@ function Login(props) {
 
     title: {
         fontFamily: "VCR OSD Mono",
+        
     },
+
+    closeButton: {
+      position: 'absolute',
+      right:'8px',
+      top:'8px',
+      color:"black",
+    },
+
+    dialogPad: {
+      padding:'5px',
+      paddingLeft:"10px",
+    },
+
+    dialogBox: {
+      backgroundColor:'#eef7ff',
+      padding:"8px",
+    },
+
+    loginButton: {
+      backgroundColor:'#1890ff',
+      "&:hover": {
+        backgroundColor:'#18baff'
+      },
+      color:"white",
+      margin:'10px',
+      
+    },
+
+    linkColor: {
+      color:'#1890ff',
+      "&:hover": {
+        color:'#18baff'
+      }
+    },
+
   });
-  
+  const classes = useStyles();
   /* State for handling login */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,9 +96,12 @@ function Login(props) {
   const LoginDialog = (
     <Dialog
       open={loginDialogOpen}
-      onClose={handleLoginClose}
-    >
-      <DialogTitle id="form-dialog-title">Login</DialogTitle>
+      onClose={handleLoginClose} PaperProps={{classes: {root: classes.dialogBox} }}>
+
+      <DialogTitle id="form-dialog-title" > <Typography variant="h5" className={classes.title}>  LOGIN </Typography><IconButton aria-label="close" className = {classes.closeButton} onClick={handleLoginClose}> <CloseIcon/>
+        
+        </IconButton>
+      </DialogTitle>
       <DialogActions>
       </DialogActions>
       <DialogContent>
@@ -75,7 +116,6 @@ function Login(props) {
           onChange={e => setEmail(e.target.value)}
         />
         <TextField
-          autoFocus
           margin="dense"
           id="password"
           label="Password"
@@ -86,21 +126,19 @@ function Login(props) {
         />
         <p>{attempted ? "Incorrect Username or Password" : ""}</p>
       </DialogContent>
-      <Button onClick={handleLoginClose} color="primary">
-        Cancel
-          </Button>
-      <Button onClick={handleLogin} color="primary">
+
+      <Button onClick={handleLogin} className={classes.loginButton}>
         Login
           </Button>
-      <Typography display="inline">
-        New to HopHacks?{' '}
-        <Link to={'/register'} style={{ textDecoration: 'none' }} onClick={()=>{setLoginDialogOpen(false)}}>
-          Apply Now
+      <Typography display="inline" className={classes.dialogPad}>
+        
+        <Link to={'/register'} style={{ textDecoration: 'none' }} onClick={()=>{setLoginDialogOpen(false)}} className={classes.linkColor}>
+        New to HopHacks? Apply now!
               </Link>
       </Typography>
 
-      <Typography display="inline">
-        Forgot password?{' '}
+      <Typography display="inline"className={classes.dialogPad}>
+        
         <ResetPassword />
       </Typography>
     </Dialog>
@@ -108,7 +146,7 @@ function Login(props) {
 
 
 
-  const classes = useStyles();
+
   return (
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
