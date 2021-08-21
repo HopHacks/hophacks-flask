@@ -7,59 +7,52 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import { withAuthProps } from '../util/auth';
-import {
-  useHistory
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { IconButton, Typography } from "@material-ui/core";
 import ResetPassword from "./ResetPasswordDialog";
 import CloseIcon from '@material-ui/icons/Close';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 function Login(props) {
 
-
   const useStyles = makeStyles({
 
     title: {
-        fontFamily: "VCR OSD Mono",
-        
+      fontFamily: "VCR OSD Mono",
     },
 
     closeButton: {
       position: 'absolute',
-      right:'8px',
-      top:'8px',
-      color:"black",
+      right: '8px',
+      top: '8px',
+      color: "black",
     },
 
     dialogPad: {
-      padding:'5px',
-      paddingLeft:"10px",
+      padding: '5px',
+      paddingLeft: "10px",
     },
 
     dialogBox: {
-      backgroundColor:'#eef7ff',
-      padding:"8px",
+      backgroundColor: '#eef7ff',
+      padding: "8px",
     },
 
     loginButton: {
-      backgroundColor:'#1890ff',
+      backgroundColor: '#1890ff',
       "&:hover": {
-        backgroundColor:'#18baff'
+        backgroundColor: '#18baff'
       },
-      color:"white",
-      margin:'10px',
-      
+      color: "white",
+      margin: '10px',
     },
 
     linkColor: {
-      color:'#1890ff',
+      color: '#1890ff',
       "&:hover": {
-        color:'#18baff'
+        color: '#18baff'
       }
     },
-
   });
   const classes = useStyles();
   /* State for handling login */
@@ -96,11 +89,10 @@ function Login(props) {
   const LoginDialog = (
     <Dialog
       open={loginDialogOpen}
-      onClose={handleLoginClose} PaperProps={{classes: {root: classes.dialogBox} }}>
-
-      <DialogTitle id="form-dialog-title" > <Typography variant="h5" className={classes.title}>  LOGIN </Typography><IconButton aria-label="close" className = {classes.closeButton} onClick={handleLoginClose}> <CloseIcon/>
-        
-        </IconButton>
+      onClose={handleLoginClose}
+      PaperProps={{ classes: { root: classes.dialogBox } }}>
+      <DialogTitle id="form-dialog-title" > <Typography variant="h5" className={classes.title}>  LOGIN </Typography><IconButton aria-label="close" className={classes.closeButton} onClick={handleLoginClose}> <CloseIcon />
+      </IconButton>
       </DialogTitle>
       <DialogActions>
       </DialogActions>
@@ -113,8 +105,7 @@ function Login(props) {
           type="email"
           fullWidth
           value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
+          onChange={e => setEmail(e.target.value)}/>
         <TextField
           margin="dense"
           id="password"
@@ -122,37 +113,28 @@ function Login(props) {
           type="password"
           fullWidth
           value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+          onChange={e => setPassword(e.target.value)} />
         <p>{attempted ? "Incorrect Username or Password" : ""}</p>
       </DialogContent>
-
       <Button onClick={handleLogin} className={classes.loginButton}>
         Login
-          </Button>
+      </Button>
       <Typography display="inline" className={classes.dialogPad}>
-        
-        <Link to={'/register'} style={{ textDecoration: 'none' }} onClick={()=>{setLoginDialogOpen(false)}} className={classes.linkColor}>
-        New to HopHacks? Apply now!
-              </Link>
+        <Link to={'/register'} style={{ textDecoration: 'none' }} onClick={() => { setLoginDialogOpen(false) }} className={classes.linkColor}>
+          New to HopHacks? Apply now!
+        </Link>
       </Typography>
-
-      <Typography display="inline"className={classes.dialogPad}>
-        
+      <Typography display="inline" className={classes.dialogPad}>
         <ResetPassword />
       </Typography>
     </Dialog>
   )
-
-
-
 
   return (
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
         <Typography variant="h5" className={classes.title}> Login </Typography>
       </Button>
-
       {LoginDialog}
     </>
   );

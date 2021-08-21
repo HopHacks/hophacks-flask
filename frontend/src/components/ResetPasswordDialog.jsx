@@ -12,19 +12,15 @@ import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 
 function ResetPassword(props) {
-
-
+    
     const useStyles = makeStyles({
-
-
         linkColor: {
           color:'#1890ff',
           "&:hover": {
             color:'#18baff'
           }
         },
-    
-      });
+    });
 
     const classes = useStyles();
     /* State for handling reset password modal */
@@ -54,8 +50,7 @@ function ResetPassword(props) {
     const ResetDialog = (
         <Dialog
             open={resetDialogOpen}
-            onClose={handleResetClose}
-        >
+            onClose={handleResetClose}>
             <DialogTitle id="form-dialog-title">Reset Password</DialogTitle>
 
             <DialogContent>
@@ -69,8 +64,7 @@ function ResetPassword(props) {
                     label="Email Address"
                     type="email"
                     fullWidth
-                    onChange={e => setResetEmail(e.target.value)}
-                />
+                    onChange={e => setResetEmail(e.target.value)}/>
             </DialogContent>
 
             <DialogActions>
