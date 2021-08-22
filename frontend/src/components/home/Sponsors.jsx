@@ -27,7 +27,7 @@ function SponsorItem(props) {
         <Grid item xs={6}>
 
                 <picture >
-                    <img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} />
+                    <a href={`${props.website}`}><img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} /></a>
                 </picture>
         </Grid>
     );
@@ -48,12 +48,12 @@ export default function Sponsors() {
                     <Typography className={classes.title} variant="h4" gutterBottom>Sponsors</Typography>
                     
                     <Grid container spacing={3}>
-                        <SponsorItem imgURL='Bloomberg' imgSytle={{width: '100%', maxHeight: "100%"}}/>
-                        <SponsorItem imgURL='SIEMENS' imgSytle={{width: '100%', maxHeight: "100%", marginTop:"5%"}}/>
-                        <SponsorItem imgURL='ffu' imgSytle={{width: '80%', maxHeight: "100%", marginTop: "8%", marginLeft: "10%"}}/>
-                        <SponsorItem imgURL='linode' imgSytle={{width: '80%', maxHeight: "100%"}}/>
-                        <SponsorItem imgURL='Googlecloud' imgSytle={{width: '100%', maxHeight: "100%"}}/>
-                        <SponsorItem imgURL='wolfram-alpha' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "5%"}}/>
+                        <SponsorItem imgURL='Bloomberg' website='https://www.bloomberg.com/' imgSytle={{width: '100%', maxHeight: "100%"}}/>
+                        <SponsorItem imgURL='SIEMENS' website='https://www.siemens-healthineers.com/' imgSytle={{width: '100%', maxHeight: "100%", marginTop:"5%"}}/>
+                        <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{width: '80%', maxHeight: "100%", marginTop: "8%", marginLeft: "10%"}}/>
+                        <SponsorItem imgURL='linode' website='https://www.linode.com/' imgSytle={{width: '80%', maxHeight: "100%"}}/>
+                        <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: '100%', maxHeight: "100%"}}/>
+                        <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "5%"}}/>
                     </Grid>
 
                 </CardContent>

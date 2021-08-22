@@ -134,12 +134,12 @@ export default function Team() {
                     <Box mx="10%">
                         <Grid container spacing={1}>
                             <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="https://danqian.net/" />
-                            <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="" />
-                            <MemberItem imgURL="david" memberName="David Yang" memberTitle="" />
-                            <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="" />
+                            <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="Class of 2021" />
+                            <MemberItem imgURL="david" memberName="David Yang" memberTitle="Accenture" />
+                            <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="Microsoft" />
                             <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="Datadog" />
                             <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
-                            <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="" />
+                            <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="Facebook" />
 
 
                             <MemberItem imgURL="kristin" memberName="Kristin Yim" memberTitle="Google" />
