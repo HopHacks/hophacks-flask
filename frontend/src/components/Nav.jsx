@@ -7,15 +7,24 @@ import Button from '@material-ui/core/Button';
 import { Typography } from "@material-ui/core";
 import { withAuthProps } from '../util/auth';
 import Login from './LoginDialog';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
 
   title: {
-
     fontFamily: "VCR OSD Mono",
   },
+
+  hophacksButton:{
+    marginLeft:-12,
+    marginRight:16,
+  },
+
+  otherButton:{
+    marginLeft:"auto",
+  },
+
+  
 });
 
 
@@ -30,7 +39,12 @@ const Nav = function Nav(props) {
 
   return (
     <AppBar position="sticky">
-      <Toolbar style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+      <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-end' }}>
+        <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
+          <Typography variant="h4" className={classes.title}> HopHacks </Typography>
+        </Button>
+
+        <section className={classes.otherButton}>
         <Button component={Link} to={'/'} color="inherit">
           <Typography variant="h5" className={classes.title}> Home </Typography>
         </Button>
@@ -39,9 +53,9 @@ const Nav = function Nav(props) {
         }
 
         {!props.isLoggedIn && 
-        <Button component={Link} to={'/register'} color="inherit">
-          <Typography variant="h5" className={classes.title}> Apply </Typography>
-        </Button>
+          <Button component={Link} to={'/register'} color="inherit">
+            <Typography variant="h5" className={classes.title}> Apply </Typography>
+          </Button>
 
         }
 
@@ -56,6 +70,8 @@ const Nav = function Nav(props) {
             <Typography variant="h5" className={classes.title}>Logout</Typography>
           </Button>
         }
+
+        </section>
       </Toolbar>
     </AppBar>);
 }
