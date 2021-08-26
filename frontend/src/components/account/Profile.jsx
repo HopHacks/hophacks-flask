@@ -41,6 +41,7 @@ const Profile = function Profile(props) {
   const [grad_year, setGrad_year] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState("");
+  const [resumeMsg, setResumeMsg] = useState("Acceptable format: *.pdf, *.doc, *.docx");
 
   const currentEvent = "Fall 2021"
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
@@ -87,7 +88,14 @@ const Profile = function Profile(props) {
     const data = new FormData();
     data.append("file", file);
 
-    const response = await axios.post("/api/resumes/", data);
+    try {
+      const response = await axios.post("/api/resumes/", data);
+      setResumeMsg("Resume has been successfully uploaded")
+    } 
+    catch (e) {
+      setResumeMsg("Fail to upload resume. Please try again.")
+    }
+
     // TODO handle error!
   }
 
@@ -331,6 +339,7 @@ async function cancel(event){
                   <input type="file" name="file" onChange={handleFileChange} />
                 </div>
                 <input type="submit" value="Submit" />
+                <Typography style={{ fontSize: '13px'}}> {resumeMsg} </Typography>
               </form>
             </TableCell>
           </TableRow>
