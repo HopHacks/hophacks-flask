@@ -72,3 +72,8 @@
     font-family: 'VCR OSD Mono';
     src: url('./VCR_OSD_MONO_1.001.ttf')  format('truetype');
   }
+
+  @font-face {
+    font-family: 'PT Sans';
+    src: url('./PT_Sans-Web-Regular.ttf')  format('truetype');
+  }

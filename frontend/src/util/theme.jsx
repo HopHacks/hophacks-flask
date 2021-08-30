@@ -4,7 +4,7 @@ import createPalette from '@material-ui/core/styles/createPalette';
 const theme = createMuiTheme({
 
   typography:{
-    fontFamily:"Seravek" //change font here
+    fontFamily:"PT Sans" //change font here
   },
 
     spacing: 8,

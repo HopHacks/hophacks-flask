@@ -140,7 +140,7 @@ export default function Home() {
                             </Typography>
                             <Typography >
                                 
-                                HopHacks is a 36-hour biannual Hackathon held at Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for the prizes
+                                HopHacks is a 36-hour biannual Hackathon held at Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
 
                                 <p>
                                     <b>
@@ -169,7 +169,7 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`} >
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
-                                        Who can participate?
+                                       <b> Who can participate? </b>
                                     </Typography>
 
                                     <Typography>
@@ -184,7 +184,7 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
-                                        Where will HopHacks take place?
+                                        <b>Where will HopHacks take place?</b>
                                     </Typography>
 
                                     <Typography >
@@ -199,7 +199,7 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
-                                        Who will be there?
+                                    <b>Who will be there?</b>
 
                                     </Typography>
 
@@ -248,7 +248,7 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
-                                        Who are the judges?
+                                    <b> Who are the judges? </b>
 
                                     </Typography>
 
@@ -265,7 +265,7 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography  variant="h6" gutterBottom>
-                                        Will I be able to participate in multiple virtual hackathons during the same weekend?
+                                    <b>Will I be able to participate in multiple virtual hackathons during the same weekend?</b>
 
                                     </Typography>
 
@@ -283,7 +283,7 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
-                                        Where will I sleep?
+                                        <b>Where will I sleep? </b>
 
                                     </Typography>
 
@@ -300,7 +300,7 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography  variant="h6" gutterBottom>
-                                        What about the free food?
+                                        <b>What about the free food?</b>
 
                                     </Typography>
 
@@ -316,7 +316,7 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography  variant="h6" gutterBottom>
-                                        What if I have any other questions?
+                                        <b>What if I have any other questions? </b>
 
                                     </Typography>
 
