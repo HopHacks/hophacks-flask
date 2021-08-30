@@ -78,10 +78,10 @@ export default function Register() {
       return;
     }
 
-    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,15}$/;
+    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {
-      setConfirmMsg("Please enter a password between 7 to 15 characters which contain at least one numeric digit and a special character")
+      setConfirmMsg("Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character")
       return;
     }
 
