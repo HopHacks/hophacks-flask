@@ -13,6 +13,35 @@ const useStyles = makeStyles({
         color: "#7289da",
         fontFamily: "VCR OSD Mono",
     },
+
+    team: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent:'space-between'
+    },
+
+    teambox: {
+        border: '1px solid',
+        borderColor:'#f3f3f3',
+        textAlign: 'center',
+        marginTop: '30px',
+        minHeight: '225px',
+        minWidth: '250px',
+        maxWidth: '250px',
+        maxHeight: '260px',
+        padding: '32px',
+        borderRadius: '8px',
+        boxShadow:'0 5px 15px rgb(0 0 0 / 7%)',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+
+    memberPic: {
+        width:'100px',
+        height: '100px',
+    },
+
+
 });
 
 
@@ -22,6 +51,7 @@ function img(url) {
 }
 
 function MemberItem(props) {
+    const classes = useStyles();
     let linkedin = (null);
     let github = (null);
     let personal = (null);
@@ -41,12 +71,12 @@ function MemberItem(props) {
     }
 
     return (
-        <Grid item xs={6} sm={3} md={2}>
+        <Grid item xs={3} >
 
             <div className="grid-item">
-                <picture>
+                <picture className = {classes.memberPic}>
                     <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
-                    <img src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
+                    <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
                 </picture>
                 <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
                 <Typography>{props.memberTitle}</Typography>
@@ -88,9 +118,15 @@ export default function Team() {
                     <Box mx="10%">
 
                         {/*TODO make this grid better (spaced with 8? narrower?) */}
-                        <Grid container spacing={1} mx={20}>
+                        <Grid className={classes.team} container>
+                            <div className = {classes.teambox}>
                             <MemberItem imgURL="Marc_Helou" memberName="Marc Helou" memberTitle="Director" />
+                            </div>
+
+                            <div className = {classes.teambox}>
                             <MemberItem imgURL="bwong" memberName="Brandon Wong" memberTitle="Head of Membership/ Logistics" />
+                            </div>
+                            
                             <MemberItem imgURL="Alan_Li" memberName="Alan Li" memberTitle="Head of Website" />
                             <MemberItem imgURL="patrick" memberName="Patrick Herbert" memberTitle="Head of Logistics" />
                             <MemberItem imgURL="theanh" memberName="Trần Thế Anh" memberTitle="Head of Logistics/ Sponsors" />
