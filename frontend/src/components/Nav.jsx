@@ -23,10 +23,7 @@ const useStyles = makeStyles({
   otherButton:{
     marginLeft:"auto",
   },
-
-  
 });
-
 
 const Nav = function Nav(props) {
   let history = useHistory();
@@ -39,7 +36,7 @@ const Nav = function Nav(props) {
 
   return (
     <AppBar position="sticky">
-      <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-end' }}>
+      <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-end', marginRight: '8rem' }}>
         <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
           <Typography variant="h4" className={classes.title}> HopHacks </Typography>
         </Button>
@@ -70,10 +67,10 @@ const Nav = function Nav(props) {
             <Typography variant="h5" className={classes.title}>Logout</Typography>
           </Button>
         }
-
-        </section>
+        </section>        
       </Toolbar>
-    </AppBar>);
+    </AppBar>
+    );
 }
 
 export default withAuthProps(Nav);
