@@ -104,13 +104,13 @@ export default function Home() {
                 'width': '14vw',
             }} />
 
-            <Typography style={{ 'color': '#FFFFFF', fontSize: '100px', fontFamily: "VCR OSD Mono" }} >
+            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '4.5em', fontFamily: "VCR OSD Mono" }} >
                 <strong>HOPHACKS</strong>
             </Typography>
 
             <div />
 
-            <Typography style={{ 'color': '#FFFFFF', fontSize: '40px', fontFamily: "VCR OSD Mono" }} >
+            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.8em', fontFamily: "VCR OSD Mono" }} >
                 <strong>SEPTEMBER 17-19, 2021</strong>
             </Typography>
         </div>

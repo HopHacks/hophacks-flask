@@ -16,8 +16,8 @@ const useStyles = makeStyles({
   },
 
   hophacksButton:{
-    marginLeft:-12,
-    marginRight:16,
+    marginLeft: 20,
+    marginRight: 20,
   },
 
   otherButton:{
