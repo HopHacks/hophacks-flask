@@ -16,7 +16,8 @@ function TablesAndRooms() {
 		axios.get('/table-assignments').then(response =>{
 			setTables(response.data);
 		});
-	}, []);
+    }, []);
+    console.log(tables);
 
   let rooms = Object.keys(roomAssignment);
   let teams = Object.values(roomAssignment);

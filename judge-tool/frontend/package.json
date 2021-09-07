@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-	"homepage": "https://hophacks.com/judging",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

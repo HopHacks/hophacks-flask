@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div style={{width : '70%', margin: 40}}>
-      <Router basename="/judging">
+      <Router>
         <Switch>
           <Route path="/assignments" exact component={Assignments}/>
           <Route path="/upload" exact component={Upload}/>
