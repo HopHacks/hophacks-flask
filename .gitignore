@@ -7,3 +7,14 @@ node_modules
 build
 
 settings.json
+
+judge-tool/venv/
+.DS_Store
+.judge-tool/instance/
+.judge-tool/.pytest_cache/
+.judge-tool/dist/
+.judge-tool/build/
+.judge-tool/*.egg-info/
+.judge-tool/npm-debug.log*
+.judge-tool/yarn-debug.log*
+.judge-tool/yarn-error.log*
