@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card';
@@ -7,14 +7,14 @@ import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
-import { ParallaxBanner } from 'react-scroll-parallax';
-
-
 import { withStyles } from '@material-ui/core/styles';
 import Team from './home/Team';
-import '../stylesheets/home.css'
 import Sponsors from "./home/Sponsors";
+import Prizes from "./home/Prizes";
+import Alumni from "./home/Alumni";
+import { ParallaxBanner } from 'react-scroll-parallax';
+
+import '../stylesheets/home.css'
 
 const useStyles = makeStyles({
     logo: {
@@ -35,9 +35,6 @@ const useStyles = makeStyles({
         fontFamily: "VCR OSD Mono",
     },
 });
-
-
-
 
 export default function Home() {
     const classes = useStyles();
@@ -105,33 +102,46 @@ export default function Home() {
     /* Logo on top of Parallax Banner */
     const Logo = (
         <div className={classes.logo}>
-
             <img src={img('HopHacks_logo.png')} style={{
                 'width': '14vw',
             }} />
 
-            <Typography style={{ 'color': '#FFFFFF', fontSize: '100px', fontFamily: "VCR OSD Mono" }} >
+            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '4.5em', fontFamily: "VCR OSD Mono" }} >
                 <strong>HOPHACKS</strong>
             </Typography>
 
             <div />
 
-
-
-            <Typography style={{ 'color': '#FFFFFF', fontSize: '40px', fontFamily: "VCR OSD Mono" }} >
+            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.8em', fontFamily: "VCR OSD Mono" }} >
                 <strong>SEPTEMBER 17-19, 2021</strong>
             </Typography>
+            <br />
+
+            
+            <Button style={{"backgroundColor":"#FFFFFF", "color": "#c8e7fa" ,width: "50%", minHeight :"50px" ,border:"4px solid"}} variant="outlined"  disableElevation component={Link} to={'/register'}>
+                
+                <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
+
+                <strong>Apply now!</strong>
+                </Typography>
+                </Button>
+            
         </div>
     );
 
     return (
-
         <div>
+            <a id="mlh-trust-badge" 
+               style={{'display':'block','maxWidth':'100px','minWidth':'60px','position':'fixed', 'right':'30px','top':'0','width':'10%','zIndex':'10000'}} 
+               href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray" 
+               target="_blank">
+                <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{"width":"100%"}}></img>
+            </a>
+
             {Banner}
             {Logo}
 
             <Container fixed>
-
                 <Box py={2}>
                     <Card>
                         <CardContent>
@@ -139,9 +149,7 @@ export default function Home() {
                                 About
                             </Typography>
                             <Typography >
-                                
                                 HopHacks is a 36-hour biannual Hackathon held at Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
-
                                 <p>
                                     <b>
                                         Note: Due to the COVID-19 pandemic, we will be hosting HopHacks virtually via Discord and Zoom.
@@ -150,21 +158,16 @@ export default function Home() {
                             </Typography>
                         </CardContent>
                     </Card>
+                
 
-
-
-                </Box>
-
-                <Box py={2}>
-
+               
+                    <Prizes/>
+                    <Sponsors />
                     <Card>
                         <CardContent>
-
                             <Typography className={classes.title} variant="h4" gutterBottom>
                                 FAQs
                             </Typography>
-
-
 
                             <Card raised="true" className={`${classes.margin} ${classes.color}`} >
                                 <CardContent>
@@ -175,11 +178,8 @@ export default function Home() {
                                     <Typography>
                                         Any <b>university student</b> enrolled in any undergraduate or graduate program may participate. High school students may <b>NOT</b> participate.
                                     </Typography>
-
                                 </CardContent>
                             </Card>
-
-
 
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
@@ -188,29 +188,20 @@ export default function Home() {
                                     </Typography>
 
                                     <Typography >
-
                                         Because of restrictions due to COVID-19, HopHacks will be virtual this year. We will be using a mix of Discord and Zoom, so make sure you have accounts for them!
-
                                     </Typography>
-
                                 </CardContent>
                             </Card>
 
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
-                                    <b>Who will be there?</b>
-
+                                        <b>Who will be there?</b>
                                     </Typography>
 
                                     <Typography >
-
                                         In addition to students in attendance, representatives from many of our sponsor companies will be there to mentor the participants.
-
-
-
                                     </Typography>
-
                                 </CardContent>
                             </Card>
 
@@ -248,35 +239,25 @@ export default function Home() {
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
-                                    <b> Who are the judges? </b>
-
+                                        <b> Who are the judges? </b>
                                     </Typography>
 
                                     <Typography >
-
                                         The judges will be a mix of local tech professionals and JHU faculty.
-
-
                                     </Typography>
-
                                 </CardContent>
                             </Card>
 
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography  variant="h6" gutterBottom>
-                                    <b>Will I be able to participate in multiple virtual hackathons during the same weekend?</b>
-
+                                        <b>Will I be able to participate in multiple virtual hackathons during the same weekend?</b>
                                     </Typography>
 
                                     <Typography >
-
                                         Yes! Because of the nature of virtual hackathons, you will be able to submit your project to multiple concurrent events.
                                         The project you create, however, must be new and <b>CANNOT</b> be worked on before the start of the hackathon.
-
-
                                     </Typography>
-
                                 </CardContent>
                             </Card>
 
@@ -284,16 +265,11 @@ export default function Home() {
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                         <b>Where will I sleep? </b>
-
                                     </Typography>
 
                                     <Typography >
-
                                         Since HopHacks is happening virtually this year, you can sleep anywhere you want (though we recommend sleeping in a bed)!
-
-
                                     </Typography>
-
                                 </CardContent>
                             </Card>
 
@@ -301,15 +277,11 @@ export default function Home() {
                                 <CardContent>
                                     <Typography  variant="h6" gutterBottom>
                                         <b>What about the free food?</b>
-
                                     </Typography>
 
                                     <Typography >
-
                                         Unfortunately, because we do not have the technology to provide virtual food, we will not be having free food this year. Feel free to create a hack to develop such technology!
-
                                     </Typography>
-
                                 </CardContent>
                             </Card>
 
@@ -317,29 +289,20 @@ export default function Home() {
                                 <CardContent>
                                     <Typography  variant="h6" gutterBottom>
                                         <b>What if I have any other questions? </b>
-
                                     </Typography>
 
                                     <Typography >
-
                                         You can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. Alternatively, you can email us at <a className="link-text" href="mailto:team@hophacks.com">team@hophacks.com</a>
                                     </Typography>
-
                                 </CardContent>
                             </Card>
-
-
-
                         </CardContent>
                     </Card>
-
                     <Team />
-                    <Sponsors />
-
+                    <Alumni />
+                    
                 </Box>
-
             </Container>
-
         </div>
     );
 

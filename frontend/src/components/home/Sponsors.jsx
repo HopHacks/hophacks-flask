@@ -50,7 +50,7 @@ export default function Sponsors() {
                     <Grid container spacing={3}>
                         <SponsorItem imgURL='Bloomberg' website='https://www.bloomberg.com/' imgSytle={{width: '100%', maxHeight: "100%"}}/>
                         <SponsorItem imgURL='SIEMENS' website='https://www.siemens-healthineers.com/' imgSytle={{width: '100%', maxHeight: "100%", marginTop:"5%"}}/>
-                        <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{width: '80%', maxHeight: "100%", marginTop: "8%", marginLeft: "10%"}}/>
+                        <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{width: '80%', maxHeight: "100%", marginTop: "8%", marginLeft: "-10%"}}/>
                         <SponsorItem imgURL='linode' website='https://www.linode.com/' imgSytle={{width: '80%', maxHeight: "100%"}}/>
                         <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: '100%', maxHeight: "100%"}}/>
                         <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "5%"}}/>

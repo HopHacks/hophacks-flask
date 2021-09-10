@@ -100,7 +100,7 @@ export default function Team() {
                 <CardContent>
                     {/*TODO material UI*/}
                     <Typography className={classes.title} variant="h4" gutterBottom>Meet The Team!</Typography>
-                    <div>
+                    
                         <Typography>
                             We're a group of undergraduate students passionate about the intersection of
                             <b> technology</b>,
@@ -111,7 +111,7 @@ export default function Team() {
 
                             <p></p>
                         </Typography>
-                    </div>
+    
 
                     <br />
 
