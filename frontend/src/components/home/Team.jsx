@@ -70,7 +70,7 @@ export default function Team() {
                 <CardContent>
                     {/*TODO material UI*/}
                     <Typography className={classes.title} variant="h4" gutterBottom>Meet The Team!</Typography>
-                    <div>
+                    
                         <Typography>
                             We're a group of undergraduate students passionate about the intersection of
                             <b> technology</b>,
@@ -81,7 +81,7 @@ export default function Team() {
 
                             <p></p>
                         </Typography>
-                    </div>
+    
 
                     <br />
 
@@ -125,34 +125,7 @@ export default function Team() {
                             <MemberItem imgURL="kelly" memberName="Kelly Culotta" memberTitle="Admin Coordinator" />
                         </Grid>
                     </Box>
-                    <br />
-                    <br />
-
-                    <Typography className={classes.title} variant="h4" gutterBottom>
-                                Alumni
-                            </Typography>
-                    <Box mx="10%">
-                        <Grid container spacing={1}>
-                            <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="https://danqian.net/" />
-                            <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="Class of 2021" />
-                            <MemberItem imgURL="david" memberName="David Yang" memberTitle="Accenture" />
-                            <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="Microsoft" />
-                            <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="Datadog" />
-                            <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
-                            <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="Facebook" />
-
-
-                            <MemberItem imgURL="kristin" memberName="Kristin Yim" memberTitle="Google" />
-                            <MemberItem imgURL="jessie" memberName="Jessie Bai" memberTitle="Goldman Sachs" />
-                            <MemberItem imgURL="jz" memberName="Jason Zhang" memberTitle="MongoDB" />
-                            <MemberItem imgURL="will" memberName="Will Ye" memberTitle="Capital One" />
-                            {/* <MemberItem imgURL="frank" memberName="Frank Miao" memberTitle="Head of Transportation" /> */}
-                            {/* <MemberItem imgURL="stanley" memberName="Stanley Wang" memberTitle="Sponsors" /> */}
-                            <MemberItem imgURL="elaine" memberName="Elaine Wong" memberTitle="Facebook" />
-                            <MemberItem imgURL="awong" memberName="Andrew Wong" memberTitle="Atlassian" />
-                            <MemberItem imgURL="ryan" memberName="Ryan Demo" memberTitle="Lyft" />
-                        </Grid>
-                    </Box>
+            
                 </CardContent>
             </Card>
         </Box>
