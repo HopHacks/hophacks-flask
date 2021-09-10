@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card';
@@ -10,6 +10,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
+import Prizes from "./home/Prizes";
+import Alumni from "./home/Alumni";
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
@@ -113,6 +115,17 @@ export default function Home() {
             <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.8em', fontFamily: "VCR OSD Mono" }} >
                 <strong>SEPTEMBER 17-19, 2021</strong>
             </Typography>
+            <br />
+
+            
+            <Button style={{"backgroundColor":"#FFFFFF", "color": "#c8e7fa" ,width: "50%", minHeight :"50px" ,border:"4px solid"}} variant="outlined"  disableElevation component={Link} to={'/register'}>
+                
+                <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
+
+                <strong>Apply now!</strong>
+                </Typography>
+                </Button>
+            
         </div>
     );
 
@@ -145,9 +158,11 @@ export default function Home() {
                             </Typography>
                         </CardContent>
                     </Card>
-                </Box>
+                
 
-                <Box py={2}>
+               
+                    <Prizes/>
+                    <Sponsors />
                     <Card>
                         <CardContent>
                             <Typography className={classes.title} variant="h4" gutterBottom>
@@ -284,7 +299,8 @@ export default function Home() {
                         </CardContent>
                     </Card>
                     <Team />
-                    <Sponsors />
+                    <Alumni />
+                    
                 </Box>
             </Container>
         </div>
