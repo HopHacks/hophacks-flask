@@ -44,58 +44,56 @@ export default function Home() {
     }
 
     const Banner = (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div style={{ width: "100%", height: "100%", backgroundColor: "#0F1827" }}>
             <ParallaxBanner
                 layers={[
                     {
-                        image: img('010_sky.webp'),
-                        amount: 0.225,
+                        image: img('010_sky_edit2.png'),
+                        amount: -0.225,
                     },
                     {
-                        image: img('009_back_trees.webp'),
-                        amount: 0.3,
+                        image: img('009_back_trees2.png'),
+                        amount: -0.3,
                     },
                     {
                         image: img('008_sun.webp'),
-                        amount: 0.375,
+                        amount: -0.375,
                     },
                     {
                         image: img('007_sky_clouds.webp'),
-                        amount: 0.45,
+                        amount: -0.45,
                     },
                     {
                         image: img('006_mountains.webp'),
-                        amount: 0.525,
+                        amount: -0.525,
                     },
                     {
-                        image: img('005_behind_tower_trees.webp'),
-                        amount: 0.6,
+                        image: img('005_behind_tower_trees2.png'),
+                        amount: -0.6,
                     },
                     {
-                        image: img('004_behind_tower_clouds.webp'),
-                        amount: 0.675,
+                        image: img('004_behind_tower_clouds2.png'),
+                        amount: -0.675,
                     },
                     {
                         image: img('003_tower.webp'),
-                        amount: 0.75,
+                        amount: -0.7,
                     },
                     {
-                        image: img('002_front_of_tower_clouds.webp'),
-                        amount: 0.825,
+                        image: img('002_front_of_tower_clouds2.png'),
+                        amount: -0.825,
                     },
-
                     {
-                        image: img('001_bushes.webp'),
-                        amount: 0.9,
+                        image: img('001_bushes3.png'),
+                        amount: -0.9,
                     },
 
                 ]}
-
                 style={{
                     height: '100vh',
                 }}
-            />
-
+            >
+            </ParallaxBanner>
         </div>
     )
 
