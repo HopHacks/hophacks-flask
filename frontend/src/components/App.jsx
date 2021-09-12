@@ -21,6 +21,11 @@ import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
 import RSVP from "./RSVP"
 import Register from "./account/Register"
+import Assignments from './judgetool/Assignments.jsx';
+import Upload from './judgetool/Upload.jsx';
+import UploadSponsors from './judgetool/UploadSponsors.jsx';
+import SponsorPrizes from './judgetool/SponsorPrizes.jsx';
+import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 
 export default function App() {
     return (
@@ -35,6 +40,13 @@ export default function App() {
               <Nav/>
 
               <Switch>
+
+                <Route path="/assignments" component={Assignments}/>
+                <Route path="/upload" component={Upload}/>
+                <Route path="/upload-sponsors" component={UploadSponsors}/>
+                <Route path="/sponsor-prizes" component={SponsorPrizes}/>
+                <Route path="/tables" component={TablesAndRooms}/>
+
                 <Route path="/admin">
                   <Admin />
                 </Route>
@@ -56,6 +68,8 @@ export default function App() {
                 <Route path="/">
                   <Home />
                 </Route>
+
+
               </Switch>
             </div>
           </Router>
