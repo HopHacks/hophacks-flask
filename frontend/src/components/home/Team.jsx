@@ -194,6 +194,7 @@ export default function Team() {
                             <div className = {classes.teambox}>
                             <MemberItem imgURL="kelly" memberName="Kelly Culotta" memberTitle="Admin Coordinator" />
                             </div>
+                            
                             {/* <MemberItem imgURL="xiangyu" memberName="Xiangyu Shen" memberTitle="Website" /> */}
 
                             {/* <MemberItem imgURL="arielle" memberName="Arielle Summitt" memberTitle="Social/PR" /> */}
@@ -203,74 +204,7 @@ export default function Team() {
                     <br />
                     <br />
 
-                    <Typography className={classes.title} variant="h4" gutterBottom>
-                                Alumni
-                    </Typography>
-
-                    <Box mx="10%">
-                        <Grid className= {classes.team} container>
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="dan" memberName="Daniel Qian" memberTitle="Bloomberg" personal="https://danqian.net/" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="melody" memberName="Melody Hsu" memberTitle="Class of 2021" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="david" memberName="David Yang" memberTitle="Accenture" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="rachel" memberName="Rachel Rosset" memberTitle="Microsoft" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="az" memberName="Andrew Zhang" memberTitle="Datadog" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="Facebook" />
-                            </div>
-
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="kristin" memberName="Kristin Yim" memberTitle="Google" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="jessie" memberName="Jessie Bai" memberTitle="Goldman Sachs" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="jz" memberName="Jason Zhang" memberTitle="MongoDB" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="will" memberName="Will Ye" memberTitle="Capital One" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="elaine" memberName="Elaine Wong" memberTitle="Facebook" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="awong" memberName="Andrew Wong" memberTitle="Atlassian" />
-                            </div>
-
-                            <div className = {classes.teambox}>
-                            <MemberItem imgURL="ryan" memberName="Ryan Demo" memberTitle="Lyft" />
-                            </div>
-
-
-                            {/* <MemberItem imgURL="frank" memberName="Frank Miao" memberTitle="Head of Transportation" /> */}
-                            {/* <MemberItem imgURL="stanley" memberName="Stanley Wang" memberTitle="Sponsors" /> */}
-                        </Grid>
-                    </Box>
+                    
                 </CardContent>
             </Card>
         </Box>

@@ -34,6 +34,13 @@ const useStyles = makeStyles({
         color: "#7289da",
         fontFamily: "VCR OSD Mono",
     },
+
+    button:{
+        backgroundColor:"#FFFFFF", color: "#c8e7fa" , width: "50%", minHeight :"50px" ,border:"4px solid",
+        "&:hover":{
+            backgroundColor:"#c8e7fa",
+        }
+    }
 });
 
 export default function Home() {
@@ -116,7 +123,7 @@ export default function Home() {
             <br />
 
             
-            <Button style={{"backgroundColor":"#FFFFFF", "color": "#c8e7fa" ,width: "50%", minHeight :"50px" ,border:"4px solid"}} variant="outlined"  disableElevation component={Link} to={'/register'}>
+            <Button className={classes.button} variant="outlined"  component={Link} to={'/register'}>
                 
                 <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
 
