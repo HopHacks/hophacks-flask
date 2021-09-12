@@ -24,10 +24,12 @@ const useStyles = makeStyles({
         
     },
     margin: {
+        minWidth:"100px",
         width: "15%",
     },
 
     margin2: {
+        minWidth:"100px",
         width: "20%",
     },
 

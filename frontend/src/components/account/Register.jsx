@@ -17,6 +17,8 @@ import StepContent from '@material-ui/core/StepContent';
 import { Link } from "react-router-dom";
 import MajorAutocomplete from "./MajorAutocomplete"
 import SchoolAutocomplete from "./SchoolAutocomplete"
+import CodeOfConduct from "../../doc/mlh-code-of-conduct.pdf"
+import Checkbox from '@material-ui/core/Checkbox';
 
 export default function Register() {
 
@@ -35,6 +37,7 @@ export default function Register() {
   const [grad_month, setGrad_month] = useState("");
   const [grad_year, setGrad_year] = useState("");
   const [profileSubmitMsg, setProfileSubmitMsg] = useState("");
+  const [conductCodeChecked, setConductCodeChecked] = useState(false)
 
   // decide which step is actively showing
   const [activeStep, setActiveStep] = useState(0);
@@ -99,6 +102,10 @@ export default function Register() {
       setProfileSubmitMsg("* Required Field cannot be empty")
       return;
     }
+    if (!conductCodeChecked) {
+      setProfileSubmitMsg("* Please read MLH Code of Conduct")
+      return;
+    }
 
     try {
       await axios.post('/api/accounts/create', {
@@ -145,6 +152,28 @@ export default function Register() {
 
     </Grid>
   );
+  const handleCheckBox = (event) => {
+    setConductCodeChecked(event.target.checked);
+  };
+
+  function openCodeOfConduct() {
+    window.open(CodeOfConduct);
+  }
+
+  const codeOfConduct = (
+    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
+      <Checkbox
+      checked={conductCodeChecked}
+      onChange={handleCheckBox}
+      inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      I have read and understand the {' '}
+      <Link onClick={openCodeOfConduct}>
+      MLH code of conduct
+      </Link>
+  </Typography>
+  )
+
   const personalInfo = (
     <Grid container direction={"column"} spacing={2}>
       <Grid item>
@@ -270,6 +299,7 @@ export default function Register() {
             <MenuItem value="2025">2025</MenuItem>
           </Select>
         </FormControl>
+        {codeOfConduct}
         <Typography style={{ color: "red" }}>
           {profileSubmitMsg}
         </Typography>
