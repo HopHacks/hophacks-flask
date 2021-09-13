@@ -86,6 +86,15 @@ function Login(props) {
     setLoginDialogOpen(false);
   }
 
+  function handleKey(event) {
+      //submit when press enter
+      
+    if (event.which === 13) {
+      
+      handleLogin(event);
+    }
+  }
+
   const LoginDialog = (
     <Dialog
       open={loginDialogOpen}
@@ -113,7 +122,7 @@ function Login(props) {
           type="password"
           fullWidth
           value={password}
-          onChange={e => setPassword(e.target.value)} />
+          onChange={e => setPassword(e.target.value)} onKeyPress={(event) => handleKey(event)} />
         <p>{attempted ? "Incorrect Username or Password" : ""}</p>
       </DialogContent>
       <Button onClick={handleLogin} className={classes.loginButton}>
