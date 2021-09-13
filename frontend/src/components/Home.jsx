@@ -154,7 +154,7 @@ export default function Home() {
                                 About
                             </Typography>
                             <Typography >
-                                HopHacks is a 36-hour biannual Hackathon held at Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
+                                HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
                                 <p>
                                     <b>
                                         Note: Due to the COVID-19 pandemic, we will be hosting HopHacks virtually via Discord and Zoom.
