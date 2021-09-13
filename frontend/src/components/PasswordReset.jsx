@@ -15,7 +15,7 @@ export default function PasswordReset(props) {
         const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
         if (!password.match(passwordre)) {
-            setMessage("Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character")
+            setMessage("Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.")
             return;
         }
 
@@ -26,7 +26,7 @@ export default function PasswordReset(props) {
             });
             setMessage('Password reset successfully!');
         } catch(e) {
-            setMessage('Unable to reset password');
+            setMessage('Unable to reset password. Password may have already been changed!');
         }
         setAttempted(true);
     }
@@ -34,21 +34,22 @@ export default function PasswordReset(props) {
     return (
         <Container fixed>
             <Card style={{ backgroundColor: "#d1e9ff"}}>
+                <br></br>
             <div>
             {attempted ||
-            <form onSubmit={reset_password}>
+            <form onSubmit={reset_password} align="center">
               <label>
                 New Password:
                 <input
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    type="password"
+                    type="password" style={{marginLeft:"5px"}}
                 />
               </label>
               <input type="submit" value="Submit" />
             </form>
             }
-            <p style={{ color: "red" }}>{message}</p>
+            <p style={{ color: "red" }} align="center">{message}</p>
             </div>
             </Card>
         </Container>
