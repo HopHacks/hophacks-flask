@@ -66,30 +66,30 @@ export default function Register() {
   async function handleAccountNext() {
     if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
 
-      setConfirmMsg("* Required Field cannot be empty")
+      setConfirmMsg("* Required field cannot be empty")
       return;
     }
     const emailre = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!emailre.test(String(username).toLowerCase())) {
-      setConfirmMsg("Please enter a valid email address")
+      setConfirmMsg("Please enter a valid email address.")
       return;
     }
 
     const response = await axios.get('/api/accounts/check/' + username)
     if (response.data.exist) {
-      setConfirmMsg("Email is already used")
+      setConfirmMsg("Email is already in use.")
       return;
     }
 
     const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {
-      setConfirmMsg("Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character")
+      setConfirmMsg("Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.")
       return;
     }
 
     if (password !== passwordConfirm) {
-      setConfirmMsg("Confirm password must match with the password")
+      setConfirmMsg("Confirm password must match with the password.")
       return;
     }
     //go to the next step    
@@ -99,7 +99,7 @@ export default function Register() {
   async function handleProfileNext() {
 
     if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || school.length === 0 || ethnicity.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
-      setProfileSubmitMsg("* Required Field cannot be empty")
+      setProfileSubmitMsg("* Required field cannot be empty.")
       return;
     }
     if (!conductCodeChecked) {

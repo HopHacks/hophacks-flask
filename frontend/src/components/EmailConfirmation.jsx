@@ -11,7 +11,7 @@ export default function EmailConfirmation(props) {
             const response = await axios.post("/api/accounts/confirm_email", {
                 'confirm_token': props.match.params.token
             });
-            setMessage('Email Confirmed! You have applied to this event successfully!');
+            setMessage('Email confirmed! You have applied to this event successfully!');
         } catch(e) {
             setMessage('Something went wrong :(, maybe the link was old? Try logging in to request a new confirmation token');
         }
