@@ -139,6 +139,18 @@ function Login(props) {
     </Dialog>
   )
 
+  const isMobile = window.innerWidth <=650;
+
+  if(isMobile){
+    return(
+    <>
+      <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
+        <Typography variant="h6" className={classes.title}> Login </Typography>
+      </Button>
+      {LoginDialog}
+    </>);
+  }
+
   return (
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
