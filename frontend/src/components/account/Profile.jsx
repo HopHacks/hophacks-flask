@@ -94,7 +94,7 @@ const Profile = function Profile(props) {
       setResumeMsg("Resume has been successfully uploaded")
     } 
     catch (e) {
-      setResumeMsg("Fail to upload resume. Please try again.")
+      setResumeMsg("Failed to upload resume. Please try again.")
     }
 
     // TODO handle error!
@@ -194,7 +194,7 @@ const Profile = function Profile(props) {
       await axios.post('/api/accounts/confirm_email/request', {
         "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email'
       })
-      setSendConfimationMsg("Send confirmation email successfully!")
+      setSendConfimationMsg("Sent confirmation email successfully!")
     }
     catch (e) {
       setSendConfimationMsg("Unable to send confirmation email")
