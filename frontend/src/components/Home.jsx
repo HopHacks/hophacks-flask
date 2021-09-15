@@ -117,7 +117,7 @@ export default function Home() {
 
             <div />
 
-            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.8em', fontFamily: "VCR OSD Mono" }} >
+            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.9em', fontFamily: "VCR OSD Mono" }} >
                 <strong>SEPTEMBER 17-19, 2021</strong>
             </Typography>
             <br />
