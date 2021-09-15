@@ -58,6 +58,7 @@ const Profile = function Profile(props) {
     root: {
       marginLeft: "25%",
       width: "50%",
+      minWidth:"450px",
     },
 
     title: {

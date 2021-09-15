@@ -111,7 +111,7 @@ export default function Home() {
                 'width': '14vw',
             }} />
 
-            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '4.5em', fontFamily: "VCR OSD Mono" }} >
+            <Typography align="center" justify="center" style={{ 'color': '#FFFFFF', fontSize: '3.8em', fontFamily: "VCR OSD Mono" }} >
                 <strong>HOPHACKS</strong>
             </Typography>
 

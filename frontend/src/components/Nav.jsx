@@ -9,6 +9,7 @@ import { withAuthProps } from '../util/auth';
 import Login from './LoginDialog';
 import { makeStyles } from '@material-ui/core/styles';
 
+
 const useStyles = makeStyles({
 
   title: {
@@ -33,6 +34,51 @@ const Nav = function Nav(props) {
   }
 
   const classes = useStyles();
+  const isMobile = window.innerWidth <=650;
+
+
+  if(isMobile){
+    return (
+      <div>
+    
+
+  <AppBar position="sticky">
+  <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-start' }}>
+  <section>
+        <Button component={Link} to={'/'} color="inherit">
+          <Typography variant="h6" className={classes.title}> Home </Typography>
+        </Button>
+
+        {!props.isLoggedIn && <Login />
+        }
+
+        {!props.isLoggedIn && 
+          <Button component={Link} to={'/register'} color="inherit">
+            <Typography variant="h6" className={classes.title}> Apply </Typography>
+          </Button>
+
+        }
+
+        {props.isLoggedIn &&
+          <Button component={Link} to={'/profile'} color="inherit">
+            <Typography variant="h6" className={classes.title}> Profile </Typography>
+          </Button>
+        }
+
+        {props.isLoggedIn &&
+          <Button onClick={handleLogout} color="inherit">
+            <Typography variant="h6" className={classes.title}>Logout</Typography>
+          </Button>
+        }
+        </section>        
+    </Toolbar>
+  </AppBar>
+      </div>
+      
+      
+      
+      );
+  }
 
   return (
     <AppBar position="sticky">
