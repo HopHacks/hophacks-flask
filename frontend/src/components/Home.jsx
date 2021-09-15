@@ -12,6 +12,7 @@ import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
 import Prizes from "./home/Prizes";
 import Alumni from "./home/Alumni";
+import Schedule from "./home/Schedule";
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
@@ -165,7 +166,7 @@ export default function Home() {
                     </Card>
                 
 
-               
+               <Schedule/>
                     <Prizes/>
                     <Sponsors />
                     <Card>
