@@ -38,8 +38,6 @@ export default function Register() {
   const [grad_year, setGrad_year] = useState("");
   const [profileSubmitMsg, setProfileSubmitMsg] = useState("");
   const [conductCodeChecked, setConductCodeChecked] = useState(false)
-  const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false)
-  const [communicationChecked, setCommunicationChecked] = useState(false)
 
   // decide which step is actively showing
   const [activeStep, setActiveStep] = useState(0);
@@ -105,17 +103,7 @@ export default function Register() {
       return;
     }
     if (!conductCodeChecked) {
-      setProfileSubmitMsg("* Please read the MLH Code of Conduct.")
-      return;
-    }
-
-    if (!eventLogisticsChecked) {
-      setProfileSubmitMsg("* Please read the MLH Terms and Conditions and Privacy Policy.")
-      return;
-    }
-
-    if (!communicationChecked) {
-      setProfileSubmitMsg("* Please check the box for MLH informational emails.")
+      setProfileSubmitMsg("* Please read MLH Code of Conduct")
       return;
     }
 
@@ -164,74 +152,25 @@ export default function Register() {
 
     </Grid>
   );
-  const handleConductCheckBox = (event) => {
+  const handleCheckBox = (event) => {
     setConductCodeChecked(event.target.checked);
-  };
-
-  const handleLogisticsCheckBox = (event) => {
-    setEventLogisticsChecked(event.target.checked);
-  };
-
-  const handleCommunicationCheckBox = (event) => {
-    setCommunicationChecked(event.target.checked);
   };
 
   function openCodeOfConduct() {
     window.open(CodeOfConduct);
   }
-  function openPrivacy(){
-    window.open("https://mlh.io/privacy","_blank");
-  }
-  function openTerms(){
-    window.open("https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md","_blank");
-  }
-
-  
 
   const codeOfConduct = (
     <Typography style={{fontSize: '16px', marginTop: '10px'}}>
       <Checkbox
       checked={conductCodeChecked}
-      onChange={handleConductCheckBox}
+      onChange={handleCheckBox}
       inputProps={{ 'aria-label': 'primary checkbox' }}
       />
       I have read and understand the {' '}
       <Link onClick={openCodeOfConduct}>
       MLH code of conduct
-      </Link> *
-  </Typography>
-  )
-
-  const eventLogistics = (
-    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
-      <Checkbox
-      checked={eventLogisticsChecked}
-      onChange={handleLogisticsCheckBox}
-      inputProps={{ 'aria-label': 'primary checkbox' }}
-      />
-      I authorize you to share my
-application/registration information with Major League Hacking for event
-administration, ranking, and MLH administration in-line with the <Link onClick={openPrivacy}>
-      MLH Privacy Policy
-      </Link>. I further agree to the terms of both the <Link onClick={openTerms}>
-      MLH Terms and Conditions
-      </Link> and the <Link onClick={openPrivacy}>
-      MLH Privacy Policy
       </Link>
-       . *
-  </Typography>
-  )
-
-  const communication = (
-    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
-      <Checkbox
-      checked={communicationChecked}
-      onChange={handleCommunicationCheckBox}
-      inputProps={{ 'aria-label': 'primary checkbox' }}
-      />
-      I authorize MLH to send me pre- and
-post-event informational emails, which contain free credit and
-opportunities from their partners. *
   </Typography>
   )
 
@@ -361,8 +300,6 @@ opportunities from their partners. *
           </Select>
         </FormControl>
         {codeOfConduct}
-        {eventLogistics}
-        {communication}
         <Typography style={{ color: "red" }}>
           {profileSubmitMsg}
         </Typography>
