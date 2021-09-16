@@ -24,7 +24,7 @@ const useStyles = makeStyles({
         backgroundColor: "#d1e9ff",
     },
     bodycolor:{
-       
+
     },
     title: {
         color: "#7289da",
@@ -43,10 +43,10 @@ export default function Sponsors() {
     return (
         <Box py={2}>
 
-    
 
-   
-      
+
+
+
         <Card>
             <CardContent>
                 <Typography className={classes.title} variant="h4" gutterBottom>
@@ -63,9 +63,9 @@ export default function Sponsors() {
 
                 <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        
-          
-        
+
+
+
         <TableBody>
 
         <TableRow className={classes.color}>
@@ -98,6 +98,12 @@ export default function Sponsors() {
             <TableCell align="left"></TableCell>
         </TableRow>
 
+        <TableRow className={classes.bodycolor}>
+            <TableCell width="40%">11:00 PM</TableCell>
+            <TableCell>echoAR Workshop</TableCell>
+            <TableCell align="left">TBD</TableCell>
+        </TableRow>
+
         <TableRow className={classes.color}>
             <TableCell width="40%"><b>Saturday (September 18th)</b></TableCell>
             <TableCell><b>Event</b></TableCell>
@@ -123,7 +129,7 @@ export default function Sponsors() {
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
-            <TableCell width="40%">1:00 PM</TableCell>
+            <TableCell width="40%">4:00 PM</TableCell>
             <TableCell>HopHacks & HopAI Workshop: Generative Adversarial Networks</TableCell>
             <TableCell align="left">TBD</TableCell>
         </TableRow>
@@ -165,14 +171,14 @@ export default function Sponsors() {
             <TableCell align="left"></TableCell>
         </TableRow>
 
-          
+
 
 
         </TableBody>
       </Table>
     </TableContainer>
 
-                
+
             </CardContent>
         </Card>
         </Box>
