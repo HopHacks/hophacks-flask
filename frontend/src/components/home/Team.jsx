@@ -100,7 +100,7 @@ export default function Team() {
                 <CardContent>
                     {/*TODO material UI*/}
                     <Typography className={classes.title} variant="h4" gutterBottom>Meet The Team!</Typography>
-                    
+
                         <Typography>
                             We're a group of undergraduate students passionate about the intersection of
                             <b> technology</b>,
@@ -111,7 +111,7 @@ export default function Team() {
 
                             <p></p>
                         </Typography>
-    
+
 
                     <br />
 
@@ -120,27 +120,27 @@ export default function Team() {
                         {/*TODO make this grid better (spaced with 8? narrower?) */}
                         <Grid className={classes.team} container>
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="Marc_Helou" memberName="Marc Helou" memberTitle="Director" />
+                            <MemberItem imgURL="marc_headshot" memberName="Marc Helou" memberTitle="Director" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="bwong" memberName="Brandon Wong" memberTitle="Head of Membership/ Logistics" />
+                            <MemberItem imgURL="brandon_headshot" memberName="Brandon Wong" memberTitle="Head of Membership/ Logistics" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="Alan_Li" memberName="Alan Li" memberTitle="Head of Website" />
+                            <MemberItem imgURL="alan_headshot" memberName="Alan Li" memberTitle="Head of Website" />
                             </div>
 
                             <div className = {classes.teambox}>
                             <MemberItem imgURL="patrick" memberName="Patrick Herbert" memberTitle="Head of Logistics" />
                             </div>
-                            
+
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="theanh" memberName="Trần Thế Anh" memberTitle="Head of Logistics/ Sponsors" />
+                            <MemberItem imgURL="theanh_headshot" memberName="Trần Thế Anh" memberTitle="Head of Logistics/ Sponsors" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="elizabeth" memberName="Elizabeth Cho" memberTitle="Head of Design" />
+                            <MemberItem imgURL="elizabeth_headshot" memberName="Elizabeth Cho" memberTitle="Head of Design" />
                             </div>
 
                             <div className = {classes.teambox}>
@@ -148,35 +148,35 @@ export default function Team() {
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="stella" memberName="Stella Li" memberTitle="Co-Head of Judges/ Sponsors" />
+                            <MemberItem imgURL="stella_headshot" memberName="Stella Li" memberTitle="Co-Head of Judges/ Sponsors" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="alison" memberName="Alison Lee" memberTitle="Head of Sponsors/ Design" />
+                            <MemberItem imgURL="alison_headshot" memberName="Alison Lee" memberTitle="Head of Sponsors/ Design" />
                             </div>
 
                             <div className = {classes.teambox}>
                             <MemberItem imgURL="Neha" memberName="Neha Nandiwada" memberTitle="Logistics" />
                             </div>
-                            
+
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="Curtis_Ahn" memberName="Curtis Ahn" memberTitle="Website" />
+                            <MemberItem imgURL="curtis_headshot" memberName="Curtis Ahn" memberTitle="Website" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="jimmy" memberName="Jimmy Shi" memberTitle="Design/Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
+                            <MemberItem imgURL="jimmy_headshot" memberName="Jimmy Shi" memberTitle="Design/Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="Elaine_He" memberName="Elaine He" memberTitle="Design/Website" />
+                            <MemberItem imgURL="elaine_headshot" memberName="Elaine He" memberTitle="Design/Website" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="charissa" memberName="Charissa Zou" memberTitle="Design/Website" />
+                            <MemberItem imgURL="charissa_headshot" memberName="Charissa Zou" memberTitle="Design/Website" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="Kavan_Bansal" memberName="Kavan Bansal" memberTitle="Social/PR/ Sponsors" />
+                            <MemberItem imgURL="kavan_headshot" memberName="Kavan Bansal" memberTitle="Social/PR/ Sponsors" />
                             </div>
 
                             <div className = {classes.teambox}>
@@ -194,7 +194,7 @@ export default function Team() {
                             <div className = {classes.teambox}>
                             <MemberItem imgURL="kelly" memberName="Kelly Culotta" memberTitle="Admin Coordinator" />
                             </div>
-                            
+
                             {/* <MemberItem imgURL="xiangyu" memberName="Xiangyu Shen" memberTitle="Website" /> */}
 
                             {/* <MemberItem imgURL="arielle" memberName="Arielle Summitt" memberTitle="Social/PR" /> */}
@@ -204,7 +204,7 @@ export default function Team() {
                     <br />
                     <br />
 
-                    
+
                 </CardContent>
             </Card>
         </Box>
