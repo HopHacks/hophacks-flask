@@ -125,7 +125,7 @@ export default function Sponsors() {
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">1:00 PM</TableCell>
             <TableCell>Bloomberg Tech Talk: Detecting Gender Bias in Software UI design</TableCell>
-            <TableCell align="left">TBD</TableCell>
+            <TableCell align="left"><a href="https://bloomberg.zoom.us/j/94547754929?pwd=OHVzQWFtNFRHRUhuWmFUU2Z6V1FMdz09">Zoom Link</a></TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
