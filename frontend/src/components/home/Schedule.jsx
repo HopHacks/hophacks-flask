@@ -118,13 +118,19 @@ export default function Sponsors() {
 
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">11:00 AM</TableCell>
-            <TableCell>Fast Forward U Workshop</TableCell>
+            <TableCell>Fast Forward U Workshop: Create Your Own Landing Page!</TableCell>
             <TableCell align="left">TBD</TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">1:00 PM</TableCell>
-            <TableCell>Bloomberg Workshop</TableCell>
+            <TableCell>Bloomberg Tech Talk: Detecting Gender Bias in Software UI design</TableCell>
+            <TableCell align="left"><a href="https://bloomberg.zoom.us/j/94547754929?pwd=OHVzQWFtNFRHRUhuWmFUU2Z6V1FMdz09">Zoom Link</a></TableCell>
+        </TableRow>
+
+        <TableRow className={classes.bodycolor}>
+            <TableCell width="40%">3:00 PM</TableCell>
+            <TableCell>Yet Analytics Workshop: IEEE Learning Technology Standards Committee Data Standards.</TableCell>
             <TableCell align="left">TBD</TableCell>
         </TableRow>
 
