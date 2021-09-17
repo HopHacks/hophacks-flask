@@ -118,8 +118,14 @@ export default function Sponsors() {
 
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">11:00 AM</TableCell>
+            <TableCell>MLH Event: Capture the Flag Presented by US Air Force</TableCell>
+            <TableCell align="left">Discord Livestream</TableCell>
+        </TableRow>
+
+        <TableRow className={classes.bodycolor}>
+            <TableCell width="40%">11:00 AM</TableCell>
             <TableCell>Fast Forward U Workshop: Create Your Own Landing Page!</TableCell>
-            <TableCell align="left">TBD</TableCell>
+            <TableCell align="left"><a href="https://zoom.us/my/startupxp">Zoom Link</a></TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
@@ -141,11 +147,22 @@ export default function Sponsors() {
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
+            <TableCell width="40%">8:00 PM</TableCell>
+            <TableCell>MLH Event: Bob Ross MS Paint</TableCell>
+            <TableCell align="left">Discord Livestream</TableCell>
+        </TableRow>
+
+        <TableRow className={classes.bodycolor}>
             <TableCell width="40%">9:00 PM</TableCell>
             <TableCell>Devpost Checkpoint</TableCell>
             <TableCell align="left"></TableCell>
         </TableRow>
 
+        <TableRow className={classes.bodycolor}>
+            <TableCell width="40%">10:00 PM</TableCell>
+            <TableCell>echoAR Workshop: How to Build a Cloud-Connected AR/VR App in 15 Minutes or Less</TableCell>
+            <TableCell align="left"><a href="twitch.tv/hophacks">Livestream Link</a></TableCell>
+        </TableRow>
 
           <TableRow className={classes.color}>
             <TableCell width="40%"><b>Sunday (September 19th)</b></TableCell>
