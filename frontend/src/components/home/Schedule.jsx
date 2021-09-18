@@ -138,7 +138,7 @@ export default function Sponsors() {
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">4:00 PM</TableCell>
             <TableCell>HopHacks & HopAI Workshop: Generative Adversarial Networks</TableCell>
-            <TableCell align="left"><a href="https://us02web.zoom.us/j/87896429343?pwd=RU5XQlA0UnU5UmExU1ZyQnkybEFodz09">Zoom Link</a></TableCell>
+            <TableCell align="left"><a href="https://jhubluejays.zoom.us/j/95919110259?pwd=cWRxZjVLT0ZZbXQvZ3NhZWlCWDVwQT09">Zoom Link</a></TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
