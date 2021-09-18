@@ -244,7 +244,7 @@ export default function Team() {
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="aubin" memberName="Aubin Lohier" memberTitle="Social/PR" />
+                            <MemberItem imgURL="zoe_headshot" memberName="Zoe Kim" memberTitle="Social & PR/Sponsors" />
                             </div>
 
                             <div className = {classes.teambox}>
