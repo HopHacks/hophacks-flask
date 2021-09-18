@@ -83,7 +83,7 @@ export default function Sponsors() {
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">8:00 PM</TableCell>
             <TableCell>Opening Ceremony</TableCell>
-            <TableCell align="left">TBD</TableCell>
+            <TableCell align="left"><a href="https://twitch.tv/hophacks">Twitch</a></TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
@@ -98,11 +98,6 @@ export default function Sponsors() {
             <TableCell align="left"></TableCell>
         </TableRow>
 
-        <TableRow className={classes.bodycolor}>
-            <TableCell width="40%">11:00 PM</TableCell>
-            <TableCell>echoAR Workshop</TableCell>
-            <TableCell align="left">TBD</TableCell>
-        </TableRow>
 
         <TableRow className={classes.color}>
             <TableCell width="40%"><b>Saturday (September 18th)</b></TableCell>
@@ -161,7 +156,7 @@ export default function Sponsors() {
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">10:00 PM</TableCell>
             <TableCell>echoAR Workshop: How to Build a Cloud-Connected AR/VR App in 15 Minutes or Less</TableCell>
-            <TableCell align="left"><a href="twitch.tv/hophacks">Livestream Link</a></TableCell>
+            <TableCell align="left"><a href="https://twitch.tv/hophacks">Twitch Link</a></TableCell>
         </TableRow>
 
           <TableRow className={classes.color}>
@@ -185,13 +180,13 @@ export default function Sponsors() {
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">12:30 PM</TableCell>
             <TableCell>Top 10 Demos & Judging</TableCell>
-            <TableCell align="left"></TableCell>
+            <TableCell align="left">TBD</TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">2:30 PM</TableCell>
             <TableCell>Awards & Closing Ceremony</TableCell>
-            <TableCell align="left"></TableCell>
+            <TableCell align="left">TBD</TableCell>
         </TableRow>
 
 
