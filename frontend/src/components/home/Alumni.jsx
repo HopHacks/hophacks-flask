@@ -100,17 +100,17 @@ export default function Alumni() {
                 <CardContent>
                     {/*TODO material UI*/}
                     <Typography className={classes.title} variant="h4" gutterBottom>Alumni</Typography>
-                    
+
                         <Typography>
                            Check out some of our alumni!
                         </Typography>
-    
+
                         <br />
-                    
 
-                    
 
-        
+
+
+
 
                     <Box mx="10%">
                         <Grid className= {classes.team} container>
@@ -169,6 +169,10 @@ export default function Alumni() {
 
                             <div className = {classes.teambox}>
                             <MemberItem imgURL="ryan" memberName="Ryan Demo" memberTitle="Lyft" />
+                            </div>
+
+                            <div className = {classes.teambox}>
+                            <MemberItem imgURL="aubin" memberName="Aubin Lohier" memberTitle="Facebook" />
                             </div>
 
 
