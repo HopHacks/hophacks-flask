@@ -180,13 +180,13 @@ export default function Sponsors() {
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">12:30 PM</TableCell>
             <TableCell>Top 10 Demos & Judging</TableCell>
-            <TableCell align="left">TBD</TableCell>
+            <TableCell align="left"><a href="https://twitch.tv/hophacks">Twitch Link</a></TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">2:30 PM</TableCell>
             <TableCell>Awards & Closing Ceremony</TableCell>
-            <TableCell align="left">TBD</TableCell>
+            <TableCell align="left"><a href="https://twitch.tv/hophacks">Twitch Link</a></TableCell>
         </TableRow>
 
 
