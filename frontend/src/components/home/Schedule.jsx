@@ -172,7 +172,7 @@ export default function Sponsors() {
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
-            <TableCell width="40%">10:00 AM</TableCell>
+            <TableCell width="40%">9:30 AM</TableCell>
             <TableCell>Presentations Fair</TableCell>
             <TableCell align="left"></TableCell>
         </TableRow>
