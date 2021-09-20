@@ -134,11 +134,11 @@ export default function Sponsors() {
             <TableCell>Yet Analytics Workshop: IEEE Learning Technology Standards Committee Data Standards.</TableCell>
             <TableCell align="left">TBD</TableCell>
         </TableRow>
-
+        
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">4:00 PM</TableCell>
             <TableCell>HopHacks & HopAI Workshop: Generative Adversarial Networks</TableCell>
-            <TableCell align="left">TBD</TableCell>
+            <TableCell align="left"><a href="https://jhubluejays.zoom.us/j/95919110259?pwd=cWRxZjVLT0ZZbXQvZ3NhZWlCWDVwQT09">Zoom Link</a></TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
@@ -172,7 +172,7 @@ export default function Sponsors() {
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
-            <TableCell width="40%">10:00 AM</TableCell>
+            <TableCell width="40%">9:30 AM</TableCell>
             <TableCell>Presentations Fair</TableCell>
             <TableCell align="left"></TableCell>
         </TableRow>
@@ -180,13 +180,13 @@ export default function Sponsors() {
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">12:30 PM</TableCell>
             <TableCell>Top 10 Demos & Judging</TableCell>
-            <TableCell align="left">TBD</TableCell>
+            <TableCell align="left"><a href="https://twitch.tv/hophacks">Twitch Link</a></TableCell>
         </TableRow>
 
         <TableRow className={classes.bodycolor}>
             <TableCell width="40%">2:30 PM</TableCell>
             <TableCell>Awards & Closing Ceremony</TableCell>
-            <TableCell align="left">TBD</TableCell>
+            <TableCell align="left"><a href="https://twitch.tv/hophacks">Twitch Link</a></TableCell>
         </TableRow>
 
 
