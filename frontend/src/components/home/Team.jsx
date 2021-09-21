@@ -70,71 +70,7 @@ function MemberItem(props) {
         personal = <a href={`${props.personal}`}><img className="social-icon" src={img("social/personal.png")} alt="personal" /></a>;
     }
 
-    if (props.memberName === "Alison Lee") {
-        return (
-            <Grid item >
-                <div className="grid-item">
-                    <picture className = {classes.memberPic}>
-                        <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
-                        <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
-                    </picture>
-                    <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
-                    <Typography>{props.memberTitle}<div style={{color: "#DFE6EE"}}>Co-Director</div></Typography>
-                    {linkedin}
-                    {github}
-                    {personal}
-                </div>
-            </Grid>
-        );
-    } else if (props.memberName === "Curtis Ahn") {
-        return (
-            <Grid item >
-                <div className="grid-item">
-                    <picture className = {classes.memberPic}>
-                        <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
-                        <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
-                    </picture>
-                    <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
-                    <Typography>{props.memberTitle}<div style={{color: "#DFE6EE"}}>Co-Director</div></Typography>
-                    {linkedin}
-                    {github}
-                    {personal}
-                </div>
-            </Grid>
-        );
-    } else if (props.memberName === "Alan Li") {
-        return (
-            <Grid item >
-                <div className="grid-item">
-                    <picture className = {classes.memberPic}>
-                        <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
-                        <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
-                    </picture>
-                    <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
-                    <Typography>{props.memberTitle}<div style={{color: "#DFE6EE"}}>Co-Director</div></Typography>
-                    {linkedin}
-                    {github}
-                    {personal}
-                </div>
-            </Grid>
-        );
-    } else if (props.memberName === "Brandon Wong") {
-        return (
-            <Grid item >
-                <div className="grid-item">
-                    <picture className = {classes.memberPic}>
-                        <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
-                        <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
-                    </picture>
-                    <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
-                    <Typography>{props.memberTitle}<div style={{color: "#DFE6EE"}}>Co-Director</div></Typography>
-                    {linkedin}
-                    {github}
-                    {personal}
-                </div>
-            </Grid>
-        );
-    } else return (
+    return (
         <Grid item >
 
             <div className="grid-item">
@@ -196,7 +132,7 @@ export default function Team() {
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="patrick" memberName="Patrick Herbert" memberTitle="Head of Logistics" />
+                            <MemberItem imgURL="patrick_headshot" memberName="Patrick Herbert" memberTitle="Head of Logistics" />
                             </div>
 
                             <div className = {classes.teambox}>
@@ -248,7 +184,7 @@ export default function Team() {
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="Laine_wang" memberName="Laine Wang" memberTitle="Social/PR" />
+                            <MemberItem imgURL="laine_headshot" memberName="Laine Wang" memberTitle="Social/PR" />
                             </div>
 
                             <div className = {classes.teambox}>

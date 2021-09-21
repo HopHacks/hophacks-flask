@@ -70,24 +70,24 @@ def assign_rooms(room_file):
     assignments = {}
     counter = 1
     end = False
-    # for room in rooms:
-    #     print(room)
-    #     cap = int(rooms[room])
-    #     teams = int(cap/4)
-    #     i = 0
-    #     print(room)
-    #     assignments[room] = []
-    #     while i < int(teams*.8):
-    #         if counter == len(tables) + 1:
-    #             end = True
-    #             break
-    #         print(room)
-    #         print(counter)
-    #         assignments[room].append(tables[counter])
-    #         i += 1
-    #         counter += 1
-    #     if end:
-    #         break
+    for room in rooms:
+        print(room)
+        cap = int(rooms[room])
+        teams = int(cap/4)
+        i = 0
+        print(room)
+        assignments[room] = []
+        while i < int(teams*.8):
+            if counter == len(tables) + 1:
+                end = True
+                break
+            print(room)
+            print(counter)
+            assignments[room].append(tables[counter])
+            i += 1
+            counter += 1
+        if end:
+            break
 
     db.room.replace_one({}, assignments, upsert=True)
 
