@@ -135,7 +135,7 @@ export default function Alumni() {
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="Yext" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
+                            <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="Facebook" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
                             </div>
 
                             <div className = {classes.teambox}>
