@@ -118,17 +118,17 @@ export default function Home() {
 
             <div />
 
-            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.9em', fontFamily: "VCR OSD Mono" }} >
-                <strong>SEPTEMBER 17-19, 2021</strong>
+            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.0em', fontFamily: "VCR OSD Mono" }} >
+                <strong>INTERESTED IN BEING AN ORGANIZER? </strong>
             </Typography>
             <br />
 
             
-            <Button className={classes.button} variant="outlined"  component={Link} to={'/register'}>
+            <Button className={classes.button} variant="outlined"  href="https://forms.gle/Znzy2aFq7Bwwx7P4A">
                 
                 <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
 
-                <strong>Apply now!</strong>
+                <strong>Join the team!</strong>
                 </Typography>
                 </Button>
             
