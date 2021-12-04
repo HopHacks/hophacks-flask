@@ -14,6 +14,7 @@ import { theme } from "../util/theme"
 import { AuthProvider } from "../util/auth"
 
 import Home from "./Home"
+import Recruiting from "./Recruiting"
 import Profile from "./account/Profile"
 import Admin from "./admin/Admin"
 import Nav from "./Nav"
@@ -56,6 +57,10 @@ export default function App() {
 
                 <Route path="/register">
                   <Register/>
+                </Route>
+
+                <Route path="/recruiting">
+                  <Recruiting />
                 </Route>
                 
                 <Route path="/rsvp">
