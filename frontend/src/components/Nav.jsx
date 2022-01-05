@@ -97,7 +97,7 @@ const Nav = function Nav(props) {
 
         {!props.isLoggedIn && 
           <Button component={Link} to={'/register'} color="inherit">
-            <Typography variant="h5" className={classes.title}> Apply </Typography>
+            <Typography variant="h5" className={classes.title}> Register </Typography>
           </Button>
 
         }
