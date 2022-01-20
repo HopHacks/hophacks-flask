@@ -135,11 +135,11 @@ export default function Alumni() {
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="Facebook" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
+                            <MemberItem imgURL="brice" memberName="Brice Halder" memberTitle="Meta" linkedin="https://www.linkedin.com/in/brice-halder/" github="https://github.com/bhalder2" />
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="Facebook" />
+                            <MemberItem imgURL="jwong" memberName="Jason Wong" memberTitle="Meta" />
                             </div>
 
 
@@ -160,7 +160,7 @@ export default function Alumni() {
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="elaine" memberName="Elaine Wong" memberTitle="Facebook" />
+                            <MemberItem imgURL="elaine" memberName="Elaine Wong" memberTitle="Meta" />
                             </div>
 
                             <div className = {classes.teambox}>
@@ -172,7 +172,7 @@ export default function Alumni() {
                             </div>
 
                             <div className = {classes.teambox}>
-                            <MemberItem imgURL="aubin" memberName="Aubin Lohier" memberTitle="Facebook" />
+                            <MemberItem imgURL="aubin" memberName="Aubin Lohier" memberTitle="Meta" />
                             </div>
 
 
