@@ -14,6 +14,7 @@ import { theme } from "../util/theme"
 import { AuthProvider } from "../util/auth"
 
 import Home from "./Home"
+import Annoucements from "./Announcements"
 import Recruiting from "./Recruiting"
 import Profile from "./account/Profile"
 import Admin from "./admin/Admin"
@@ -57,6 +58,10 @@ export default function App() {
 
                 <Route path="/register">
                   <Register/>
+                </Route>
+
+                <Route path="/announcements">
+                  <Announcements/>
                 </Route>
 
                 <Route path="/recruiting">
