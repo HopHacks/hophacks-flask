@@ -13,6 +13,7 @@ import Sponsors from "./home/Sponsors";
 import Prizes from "./home/Prizes";
 import Alumni from "./home/Alumni";
 import Schedule from "./home/Schedule";
+import Announcements from "./home/Announcements";
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
@@ -164,8 +165,8 @@ export default function Home() {
                             </Typography>
                         </CardContent>
                     </Card>
-                
 
+                <Announcements/>
                <Schedule/>
                     <Prizes/>
                     <Sponsors />
