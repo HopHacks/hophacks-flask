@@ -59,3 +59,20 @@ def create_announcement():
         })
     return jsonify({"msg": "user added"}), 200
 
+@admin_api.route('/get_announcement', methods = ['GET'])
+def get_announcement():
+    # if (request.json is None):
+    #     return Response('Data not in json format', status=400)
+    # title = request.json['title']
+    # body = request.json['body']
+
+    # with MongoClient("mongodb://localhost:27017") as client:
+    #     db = client['hophacks']
+        # db.announcements.insert_one({
+        #     'title': title,
+        #     'body': body
+        # })
+    # return jsonify({"msg": "user added"}), 200
+
+# get all the titles / bodies from mongodb
+# create html cards for each of them
