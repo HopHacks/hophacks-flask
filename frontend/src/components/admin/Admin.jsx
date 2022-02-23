@@ -204,12 +204,11 @@ const Admin = function () {
     // }
 
     try {
-      await axios.post('/api/announcements/create', {
-        "title": title,
-        "body": body
-      })
-    }
-    catch (e) {
+      await axios.post('/api/admin/create_announcement', {
+        "title": document.getElementById("title").value,
+        "body": document.getElementById("body").value
+      });
+    } catch (e) {
       return;
     }
   };
@@ -238,11 +237,11 @@ const Admin = function () {
           <Typography className={classes.title} variant="h4" gutterBottom>Announcements</Typography>
           <Grid container direction={"column"} spacing={2}>
             <Grid item>
-              <TextField required id="standard-basic" variant="outlined" label="Title" />
+              <TextField required id="title" variant="outlined" label="Title" />
             </Grid>
             <Grid item>
               <FormControl required variant="outlined" style={{ minWidth: 500 }}>
-                <TextField required id="standard-basic" variant="outlined" label="Body" />
+                <TextField required id="body" variant="outlined" label="Body" />
               </FormControl>
             </Grid>
           </Grid>

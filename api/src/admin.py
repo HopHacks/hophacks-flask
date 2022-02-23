@@ -4,6 +4,8 @@ from db import db
 from flask import Blueprint, request, Response, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
+from pymongo import MongoClient
+
 admin_api = Blueprint('admin', __name__)
 
 @admin_api.route('/', methods=['GET'])
@@ -42,4 +44,18 @@ def get_all_users_account():
 
     return {'users': users, 'totalPage': totalPage}, 200
 
+@admin_api.route('/create_announcement', methods = ['POST'])
+def create_announcement():
+    if (request.json is None):
+        return Response('Data not in json format', status=400)
+    title = request.json['title']
+    body = request.json['body']
+
+    with MongoClient("mongodb://localhost:27017") as client:
+        db = client['hophacks']
+        db.announcements.insert_one({
+            'title': title,
+            'body': body
+        })
+    return jsonify({"msg": "user added"}), 200
 
