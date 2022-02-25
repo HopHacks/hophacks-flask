@@ -61,6 +61,9 @@ def create_announcement():
 
 @admin_api.route('/get_announcement', methods = ['GET'])
 def get_announcement():
+    myCursor = db.announcements.find()#.forEach()
+   for i in myCursor:
+       print(myCursor)       
     # if (request.json is None):
     #     return Response('Data not in json format', status=400)
     # title = request.json['title']
