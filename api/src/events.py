@@ -16,20 +16,30 @@ def create_announcement():
         return Response('Data not in json format', status=400)
 
     if not (all(field in request.json for field in ['event', 'announcement'])):
-      return Response('Invalid request', status=400)
+        return Response('Invalid request', status=400)
 
     event = request.json['event']
     announcement = request.json['announcement']
-    created_time = datetime.now()
+    time_created = datetime.now()
 
     db.announcements.insert_one({
       'event': event,
       'announcement': announcement,
-      'created_time': created_time,
+      'time_created': time_created,
     })
     return jsonify({"msg": "announcement added"}), 200
 
-'''
+
 @events_api.route('/announcement', methods=['GET'])
 def get_announcements():
-'''
+    if not 'event' in request.args:
+        return Response('Invalid request', status=400)
+
+    cursor = db.announcements.find({ 'event': request.args['event']}).sort("time_created", -1)
+    
+    events = []
+    for annouc in cursor:
+        print(annouc)
+        events.append({'event': annouc['event'], 'announcement': annouc['announcement'], 'time_created': annouc['time_created']})
+  
+    return jsonify({'events': events}), 200
