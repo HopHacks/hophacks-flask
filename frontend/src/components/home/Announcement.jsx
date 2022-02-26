@@ -54,8 +54,8 @@ export default function Announcement() {
                     aria-controls="panel1a-content"
                     id="panel1a-header">
                 <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
-                        Fetch New Announcement
-                    </Typography>
+                        Recenet Announcements
+                </Typography>
                 </MuiAccordionSummary>
                 <MuiAccordionDetails>
                 <Typography>
