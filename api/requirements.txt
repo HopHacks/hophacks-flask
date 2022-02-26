@@ -2,6 +2,7 @@ flask>=1.1.2
 pymongo>=1.1.2
 pyjwt==1.7.1
 flask_jwt_extended>=3.25.0
+itsdangerous >= 0.24
 
 Flask-Mail>=0.9.1
 boto3>=1.13.18
