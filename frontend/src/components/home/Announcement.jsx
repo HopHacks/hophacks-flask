@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles({
     logo: {
@@ -46,10 +47,22 @@ export default function Announcement() {
                 <Typography className={classes.title} variant="h4" gutterBottom>
                     Announcements
                 </Typography>
-                <MuiAccordion className={classes.button} variant="outlined"  href="https://forms.gle/Znzy2aFq7Bwwx7P4A">
-                    <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
-                        <strong>Fetch New Announcement</strong>
+                
+                <MuiAccordion>
+                <MuiAccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header">
+                <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
+                        Fetch New Announcement
                     </Typography>
+                </MuiAccordionSummary>
+                <MuiAccordionDetails>
+                <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                    malesuada lacus ex, sit amet blandit leo lobortis eget.
+                </Typography>
+                </MuiAccordionDetails>
                 </MuiAccordion>
             </CardContent>
         </Card>
