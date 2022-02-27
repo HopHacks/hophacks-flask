@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
@@ -41,6 +42,18 @@ const useStyles = makeStyles({
 
 export default function Announcement() {
     const classes = useStyles();
+    const [eventsList, setEventsList] = useState([]); // list of announcements
+
+    let announcement;
+
+    async function fetchAnnouncement() {
+        const response = await axios.get("/api/events/announcement?event=S22");
+        setEventsList(response.data.eventsList);
+        announcement = (response.data['events'][0]['announcement']);
+        console.log(announcement)
+    }
+    
+
     return (
         <Card raised="true" className={`${classes.margin}`}>
             <CardContent>
@@ -52,15 +65,18 @@ export default function Announcement() {
                 <MuiAccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
-                    id="panel1a-header">
+                    id="panel1a-header"
+                    IconButtonProps={{
+                        onClick: fetchAnnouncement
+                    }}
+                >
                 <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
-                        Recenet Announcements
+                        Recent Announcements
                 </Typography>
                 </MuiAccordionSummary>
                 <MuiAccordionDetails>
                 <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                    malesuada lacus ex, sit amet blandit leo lobortis eget.
+                    {announcement}
                 </Typography>
                 </MuiAccordionDetails>
                 </MuiAccordion>

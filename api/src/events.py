@@ -9,8 +9,8 @@ from flask_jwt_extended import jwt_required
 events_api = Blueprint('events', __name__)
 
 @events_api.route('/announcement', methods=['POST'])
-@jwt_required
-@check_admin
+# @jwt_required
+# @check_admin
 def create_announcement():
     if (request.json is None):
         return Response('Data not in json format', status=400)
