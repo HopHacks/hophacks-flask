@@ -43,14 +43,20 @@ const useStyles = makeStyles({
 export default function Announcement() {
     const classes = useStyles();
     const [eventsList, setEventsList] = useState([]); // list of announcements
+    const [announcement, setAnnouncement] = useState("haha");
 
-    let announcement;
+    useEffect(() => {
+        fetchAnnouncement();
+      }, []);
 
     async function fetchAnnouncement() {
         const response = await axios.get("/api/events/announcement?event=S22");
-        setEventsList(response.data.eventsList);
-        announcement = (response.data['events'][0]['announcement']);
-        console.log(announcement)
+        setEventsList(response.data['events']);
+        setAnnouncement(response.data['events'][0]['announcement']);
+        console.log(eventsList)
+        console.log(announcement);
+        
+
     }
     
 
@@ -67,7 +73,7 @@ export default function Announcement() {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     IconButtonProps={{
-                        onClick: fetchAnnouncement
+                        onClick: null
                     }}
                 >
                 <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
@@ -76,7 +82,7 @@ export default function Announcement() {
                 </MuiAccordionSummary>
                 <MuiAccordionDetails>
                 <Typography>
-                    {announcement}
+                 {announcement}
                 </Typography>
                 </MuiAccordionDetails>
                 </MuiAccordion>
