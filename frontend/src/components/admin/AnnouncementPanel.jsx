@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     title: {
-        color:"white"
+        color :"white",
+        borderColor : "white !important"
     },
 
     root: {
@@ -44,7 +45,12 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
         width: '25ch',
-      },
+    },
+    verticalCenter: {
+        position: 'absolute',
+        marginTop: "-2.5%",
+        marginLeft: "36.5%",
+    }
 }));
 
 
@@ -57,46 +63,125 @@ const Panel = function() {
             <h2 className={classes.title}>
                 Announcement Panel
             </h2>
+            <div className={classes.verticalCenter}>
+            <Button variant="contained" color="white" margain='center'>
+                Send
+            </Button>
+            </div>
 
             <div className={classes.root}>
             <div>
         <TextField
-          id="standard-full-width"
-          label="Label"
+          id="outlined-multiline-flexible"
+          label="Title"
+          rows={2}
+          defaultValue="Please Enter the Title"
           style={{ margin: 8}}
-          placeholder="Placeholder"
-          helperText="Full width!"
           fullWidth
-          margin="normal"
-          color='white'
+          variant="outlined"
+          InputLabelProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+            },
+          }}
           InputProps={{
-            shrink: true,
-            className : 'title'
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+              notchedOutline: classes.title,
+            },
+          }}
+        />
+
+        <TextField
+          id="outlined-multiline-static"
+          label="Content"
+          multiline
+          fullWidth
+          rows={4}
+          defaultValue="Please Enter the Content"
+          variant="outlined"
+          style={{ margin: 8}}
+          InputLabelProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+            },
+          }}
+          InputProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+              notchedOutline: classes.title,
+            },
+          }}
+        />
+        <div>
+        <TextField
+          label="Event"
+          id="outlined-multiline-flexible"
+          defaultValue="Fall 2022"
+          variant="outlined"
+          style={{ margin: 8}}
+          className={classes.textField}
+          InputLabelProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+            },
+          }}
+          InputProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+              notchedOutline: classes.title,
+            },
           }}
         />
         <TextField
-          label="None"
-          id="margin-none"
-          defaultValue="Default Value"
+          label="Sender"
+          id="outlined-multiline-flexible"
+          defaultValue="Enter the Sender"
           className={classes.textField}
-          helperText="Some important text"
+          style={{ margin: 8}}
+          variant="outlined"
+          InputLabelProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+            },
+          }}
+          InputProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+              notchedOutline: classes.title,
+            },
+          }}
         />
         <TextField
-          label="Dense"
-          id="margin-dense"
-          defaultValue="Default Value"
+          label="Priority"
+          id="outlined-multiline-flexible"
+          defaultValue="Y / N"
           className={classes.textField}
-          helperText="Some important text"
-          margin="dense"
+          style={{ margin: 8}}
+          variant="outlined"
+          InputLabelProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+            },
+          }}
+          InputProps={{
+            classes: {
+              root: classes.title,
+              focused: classes.title,
+              notchedOutline: classes.title,
+            },
+          }}
         />
-        <TextField
-          label="Normal"
-          id="margin-normal"
-          defaultValue="Default Value"
-          className={classes.textField}
-          helperText="Some important text"
-          margin="normal"
-        />
+        </div>
         </div>
         </div>
         </div>
