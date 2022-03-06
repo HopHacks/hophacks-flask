@@ -1,4 +1,3 @@
-from tabnanny import check
 from util.decorators import check_admin
 from db import db
 
@@ -11,31 +10,38 @@ events_api = Blueprint('events', __name__)
 
 
 @events_api.route('/', methods=['GET'])
-def get():
-    return jsonify("helllo"), 200
-
-
-@events_api.route('/', methods=['POST'])
 # @jwt_required
 # @check_admin
-def create_event():
-    if (request.json is None):
-        return Response('Data not in json format', status=400)
-
-    if not (all(field in request.json for field in ['event_name', 'display_name', 'start_date', 'end_date'])):
-        return Response('Invalid request', status=400)
-
-    event = {}
-
-    event['event_name'] = request.json['event_name']
-    event['display_name'] = request.json['display_name']
-    event['start_date'] = request.json['start_date']
-    event['end_date'] = request.json['end_date']
-    if 'description' in request.json:
-        event['description'] = request.json['description']
+def get():
+  #  if not 'event_name' in request.args:
+  #      return Response('Invalid request', status=400)
+    cursor = db.events.find({ 'event_name': request.args['event_name']})
+    events = []
+    if 'start_date' and 'end_date' in request.args:
+        for e in cursor:
+            print(e)
+            if e['start_date'] >= request.args['start_date'] and e['end_date'] <= request.args['end_date']:
+                if 'description' in e.args:
+                    events.append({'event_name':e['event_name'], 'display_name':e['display_name'], 'start_date':e['start_date'], 'end_date':e['end_date'], 'description':e['description']})
+                 else:
+                    events.append({'event_name':e['event_name'], 'display_name':e['display_name'], 'start_date':e['start_date'], 'end_date':e['end_date']})
+    elif 'start_date' in request.args:
+        print(e)
+            if e['start_date'] >= request.args['start_date']:
+                if 'description' in e.args:
+                    events.append({'event_name':e['event_name'], 'display_name':e['display_name'], 'start_date':e['start_date'], 'end_date':e['end_date'], 'description':e['description']})
+                 else:
+                    events.append({'event_name':e['event_name'], 'display_name':e['display_name'], 'start_date':e['start_date'], 'end_date':e['end_date']})
+    elif 'end_date' in request.args:
+        print(e)
+            if e['end_date'] <= request.args['start_date']:
+                if 'description' in e.args:
+                    events.append({'event_name':e['event_name'], 'display_name':e['display_name'], 'start_date':e['start_date'], 'end_date':e['end_date'], 'description':e['description']})
+                 else:
+                    events.append({'event_name':e['event_name'], 'display_name':e['display_name'], 'start_date':e['start_date'], 'end_date':e['end_date']})
     else:
-        event['description'] = ""
-
-    db.events.insert_one(event)
-
-    return jsonify({"msg": "event added"}), 200
+        if 'description' in e.args:
+            events.append({'event_name':e['event_name'], 'display_name':e['display_name'], 'start_date':e['start_date'], 'end_date':e['end_date'], 'description':e['description']})
+        else:
+            events.append({'event_name':e['event_name'], 'display_name':e['display_name'], 'start_date':e['start_date'], 'end_date':e['end_date']})    
+    return jsonify({'events':events}), 200
