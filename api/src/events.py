@@ -29,8 +29,8 @@ def create_event():
 
     event['event_name'] = request.json['event_name']
     event['display_name'] = request.json['display_name']
-    event['start_date'] = request.json['start_date']
-    event['end_date'] = request.json['end_date']
+    event['start_date'] = datetime.strptime(request.json['start_date'], '%m-%d-%Y')
+    event['end_date'] = datetime.strptime(request.json['end_date'], '%m-%d-%Y')
     if 'description' in request.json:
         event['description'] = request.json['description']
     else:
