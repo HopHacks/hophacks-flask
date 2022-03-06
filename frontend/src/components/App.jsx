@@ -53,10 +53,10 @@ export default function App() {
                   <Admin />
                 </Route>
 
-                <Route path="/admin/announcement">
+                <Route path="/announcementPanel">
                   <AnnouncementPanel />
                 </Route>
-                
+
                 <Route path="/profile">
                   <Profile/>
                 </Route>
