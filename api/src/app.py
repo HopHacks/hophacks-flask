@@ -65,6 +65,7 @@ def create_app(config_file='config/config.json'):
     from resumes import resume_api
     from registrations import registrations_api
     from assign import assign_api
+    from announcements import announcements_api
 
     app.register_blueprint(auth_api, url_prefix='/api/auth')
     app.register_blueprint(admin_api, url_prefix='/api/admin')
@@ -72,5 +73,6 @@ def create_app(config_file='config/config.json'):
     app.register_blueprint(resume_api, url_prefix='/api/resumes')
     app.register_blueprint(registrations_api, url_prefix='/api/registrations')
     app.register_blueprint(assign_api, url_prefix='/api/judgetool')
+    app.register_blueprint(announcements_api, url_prefix='/api/announcements')
 
     return app

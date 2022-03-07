@@ -28,6 +28,7 @@ import Upload from './judgetool/Upload.jsx';
 import UploadSponsors from './judgetool/UploadSponsors.jsx';
 import SponsorPrizes from './judgetool/SponsorPrizes.jsx';
 import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
+import Announcements from './announcement/Announcements.jsx';
 
 export default function App() {
     return (
@@ -61,6 +62,10 @@ export default function App() {
                   <Profile/>
                 </Route>
 
+                <Route path="/announcements">
+                  <Announcements />
+                </Route>
+
                 <Route path="/register">
                   <Register/>
                 </Route>
@@ -80,6 +85,7 @@ export default function App() {
                   <Home />
                 </Route>
 
+                
 
               </Switch>
             </div>
