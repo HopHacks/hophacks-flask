@@ -191,15 +191,4 @@ const Panel = function() {
 };
 
 export default withAdminAuthCheck(Panel);
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
+
