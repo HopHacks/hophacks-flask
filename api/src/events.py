@@ -87,13 +87,17 @@ def delete_event():
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['event_name', 'display_name', 'start_date', 'end_date'])):
+    if not (all(field in request.json for field in ['event_name', 'display_name'])):
         return Response('Invalid request', status=400)
     event = {}
     event['event_name'] = request.json['event_name']
-        #'display_name': request.json['display_name'],
-        #'start_date': request.json['start_date'],
-        #'end_date': request.json['end_date']
-    db.events.remove({})
+    event['display_name'] = request.json['display_name']
+    #'display_name': request.json['display_name'],
+    #'start_date': request.json['start_date'],
+    #'end_date': request.json['end_date']
+    if db.events.find(event).size() == 0: 
+        return Response('Invalid request', status=400)
+    
+    db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
 
