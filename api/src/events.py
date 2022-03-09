@@ -92,11 +92,8 @@ def delete_event():
     event = {}
     event['event_name'] = request.json['event_name']
     event['display_name'] = request.json['display_name']
-    #'display_name': request.json['display_name'],
-    #'start_date': request.json['start_date'],
-    #'end_date': request.json['end_date']
-    if db.events.find(event).size() == 0: 
-        return Response('Invalid request', status=400)
+    if  len(list(db.events.find(event))) == 0: 
+        return Response('Event Does Not Exist', status=400)
     
     db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
