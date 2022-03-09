@@ -57,7 +57,13 @@ const useStyles = makeStyles({
         marginTop: "3%",
         marginLeft: "40%",
     },
-
+    inboxdescription: {
+        display: "-webkit-box",
+        boxOrient: "vertical",
+        lineClamp: 2,
+        wordBreak: "break-all",
+        overflow: "hidden"
+    },
 });
 
 export default function Announcements() {
@@ -113,7 +119,7 @@ export default function Announcements() {
               <TableRow>
                 <TableCell align="left">Title</TableCell>
                 <TableCell align="left">Time</TableCell>
-                <TableCell align="left">Contents</TableCell>
+                <TableCell align="left">Details</TableCell>
                 {/*<TableCell align="right">Importance</TableCell>*/}
               </TableRow>
             </TableHead>
@@ -144,9 +150,11 @@ export default function Announcements() {
             <Typography variant="h6" gutterBottom>
             Time
             </Typography>
-            <Typography variant="h6" color="text.secondary">
-            Description: esnvsjvi efjli zdsnz fzskei hv i zsjfesd bv ladh flsd hvldhs vhsilhv
-            </Typography>
+            <Box className={classes.inboxdescription}>
+                <Typography variant="h6" color="text.secondary">
+                Description: esnvs jnvsd nvn disjvk jsdj vdjsvjdsj vdjfi mvsdkmvk snvkns kvjksdnv kdsfmk sdmvkj dsis nfkfkse fkjie sjfjseijf siejgvkzsjev gj esi jvijw sjvs ejv sjvzsjoz sjrv jks djfisovs irodj sfsd svndvi efjli zdsnz fzskei hv i zsjfesd bv ladh flsd hvldhs vhsilhv one two three one two three one two three one two three one two three
+                </Typography>
+            </Box>
         </CardContent>
         <CardActions>
         <Button size="small">Learn More</Button>
@@ -159,12 +167,12 @@ export default function Announcements() {
         return (
         <Card>
         <CardContent>
-        <Grid container spacing={2}>
+        <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
             <img className={classes.announcementPic} src={img("hoplogo.png")} alt="default-img" />
             </Grid>
 
-            <Grid item xs={12} sm container>
+            <Grid item xs={12} sm container zeroMinWidth>
                 <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
                       <Typography gutterBottom variant="h5" component="div">
@@ -173,9 +181,11 @@ export default function Announcements() {
                       <Typography variant="body2" gutterBottom>
                         Time
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Description: esnvsjvi efjli zdsnz fzskei hv i zsjfesd bv ladh flsd hvldhs vhsilhv
-                      </Typography>
+                      <Box className={classes.inboxdescription}>
+                        <Typography variant="body2" color="text.secondary">
+                            Description: esnvs jnvsd nvn disjvk jsdj vdjsvjdsj vdjfi mvsdkmvk snvkns kvjksdnv kdsfmk sdmvkj dsis nfkfkse fkjie sjfjseijf siejgvkzsjev gj esi jvijw sjvs ejv sjvzsjoz sjrv jks djfisovs irodj sfsd svndvi efjli zdsnz fzskei hv i zsjfesd bv ladh flsd hvldhs vhsilhv one two three one two three one two three one two three one two three
+                        </Typography>
+                      </Box>
                     </Grid>
                     <Grid item>
                     <Button size="small">Learn More</Button>
