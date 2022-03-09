@@ -15,7 +15,7 @@ from registrations import send_apply_confirm
 import bcrypt
 import jwt
 import json
-import datetime
+from datetime import datetime
 from bson import ObjectId
 import pytz
 
@@ -62,7 +62,7 @@ def create():
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['title'])):
+    if not (all(field in request.json for field in ['title','content','event','broadcast','importance'])):
         return Response('Invalid request', status=400)
 
     title = request.json['title']
@@ -71,8 +71,8 @@ def create():
     broadcast = request.json['broadcast']
     importance = request.json['importance']
     id = get_jwt_identity()
-    sender = db.users.find_one({'_id': ObjectId(id)})
-    time = datetime.datetime.utcnow()
+    sender = db.users.find_one({'_id': ObjectId(id)})["username"]
+    time = datetime.utcnow()
 
     db.announcements.insert_one({
         "title": title,
@@ -88,26 +88,37 @@ def create():
 @announcements_api.route('/', methods = ['GET'])
 def display_all():
     """ 
-    Display all announcements sorted by the time posted
+    Display all announcements in the given event sorted by the time posted
 
-    Example reponse:
+    Example input:
 
     .. sourcecode:: json
-
         {
-            "exist": False
+            "event": "Spring 2022"
         }
 
+    :status 400: No json or ``announcement/json`` header, or field missing
     :status 200: display successful
     """
-    
-    list_a = []
-    for a in (db.announcements.find()):
-        list_a.append({"username":a["username"]})
-        list_a.append({"time_posted":a["time_posted"]})
-        list_a.append({"title":a["title"]})
-        list_a.append({"contents":a["contents"]})
-    
+    if (request.json is None):
+        return Response('Data not in json format', status=400)
 
-    return jsonify(announcements = list_a),200
+    if not (all(field in request.json for field in ['event'])):
+        return Response('Invalid request', status=400)
 
+    event = request.json['event']
+
+    cursor = db.announcements.find({'event': event}).sort("time", -1)
+    announcemnets = []
+    for annouc in cursor:
+        announcemnets.append({
+            'title': annouc['title'], 
+            'content': annouc['content'], 
+            'event': annouc['event'], 
+            'broadcast': annouc['broadcast'],
+            'importance': annouc['importance'], 
+            'sender': annouc['sender'],
+            'time': annouc['time']
+            })
+  
+    return jsonify({'announcemnets': announcemnets}), 200
