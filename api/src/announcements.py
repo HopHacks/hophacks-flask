@@ -20,9 +20,9 @@ from bson import ObjectId
 import pytz
 
 
-events_api = Blueprint('announcements', __name__)
+announcements_api = Blueprint('announcements', __name__)
 
-@events_api.route('/', methods = ['POST'])
+@announcements_api.route('/', methods = ['POST'])
 @jwt_required
 @check_admin
 def create():
@@ -32,12 +32,10 @@ def create():
     Example input:
 
     .. sourcecode:: json
-
         {
-            "username": "awong@jhu.edu",
-            "time_posted": "2022-02-25",
-            "title": "This Is The Title",
-            "contents": "This is some contents, some contents, and some contents."
+            "title": "Title 12345",
+            "content": "This is the content, the content, the content."
+            "broadcast": website(default), slack, discord, email
         }
 
     :status 200: Anouncement was added
@@ -50,7 +48,7 @@ def create():
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['username', 'time_posted', 'title', 'contents'])):
+    if not (all(field in request.json for field in ['title', 'content', 'b'])):
         return Response('Invalid request', status=400)
 
     username = request.json['username']
@@ -70,7 +68,7 @@ def create():
     })
     return jsonify({"msg": "announcement added"}), 200
 
-@events_api.route('/', methods = ['GET'])
+@announcements_api.route('/', methods = ['GET'])
 def display_all():
     """ 
     Display all announcements sorted by the time posted
