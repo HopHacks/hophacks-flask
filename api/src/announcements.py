@@ -29,13 +29,27 @@ def create():
     """ 
     Create a new announcement (only Admin)
 
+    Announcement fields:
+    input:
+        title: string 
+        content: string
+        event: string
+        broadcast: list of boolean
+            "website, slack, discord, email"
+        importance: boolean
+    noninput: 
+        time -- get current time
+        sender -- get current user
+        
     Example input:
 
     .. sourcecode:: json
         {
             "title": "Title 12345",
-            "content": "This is the content, the content, the content."
-            "broadcast": website(default), slack, discord, email
+            "content": "This is the content, the content, the content.",
+            "event": "Spring 2022",
+            "broadcast": [true,false,false,false],
+            "importance": true
         }
 
     :status 200: Anouncement was added
@@ -48,23 +62,26 @@ def create():
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['title', 'content', 'b'])):
+    if not (all(field in request.json for field in ['title'])):
         return Response('Invalid request', status=400)
 
-    username = request.json['username']
-    time_posted = request.json['time_posted']
     title = request.json['title']
-    contents = request.json['contents']
-
-
-    if (db.announcements.find_one({'title': title})):
-        return Response('Announcement with the same title already exists!', status=409)
+    content = request.json['content']
+    event = request.json['event']
+    broadcast = request.json['broadcast']
+    importance = request.json['importance']
+    id = get_jwt_identity()
+    sender = db.users.find_one({'_id': ObjectId(id)})
+    time = datetime.datetime.utcnow()
 
     db.announcements.insert_one({
-        "username": username,
-        "time_posted": time_posted,
         "title": title,
-        "contents": contents
+        "content": content,
+        "event": event,
+        "broadcast": broadcast,
+        "importance": importance,
+        "sender": sender,
+        "time": time,
     })
     return jsonify({"msg": "announcement added"}), 200
 
