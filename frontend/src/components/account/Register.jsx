@@ -150,8 +150,8 @@ export default function Register() {
   };
 
   const account = (
-    <Grid 
-      container 
+    <Grid
+      container
       spacing={4}
       alignItems="center"
       justifyContent="center"
@@ -210,14 +210,14 @@ export default function Register() {
   function openCodeOfConduct() {
     window.open(CodeOfConduct);
   }
-  function openPrivacy(){
-    window.open("https://mlh.io/privacy","_blank");
+  function openPrivacy() {
+    window.open("https://mlh.io/privacy", "_blank");
   }
-  function openTerms(){
-    window.open("https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md","_blank");
+  function openTerms() {
+    window.open("https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md", "_blank");
   }
 
-  
+
   const codeOfConduct = (
     <Typography style={{ fontSize: '14px', marginTop: '10px' }}>
       <Checkbox
@@ -268,17 +268,17 @@ opportunities from their partners. *
 
   const personalInfo = (
     <Grid container spacing={2}>
-      <Grid container item spacing={2} xs={12} sm={6}>
+      <Grid container item spacing={2} xs={12} md={6}>
         <Grid item xs={12}>
-          <TextField required id="standard-basic" variant="outlined" label="First Name" onChange={e => setFirst_name(e.target.value)} style={{ minWidth: 220 }} />
+          <TextField required id="standard-basic" variant="outlined" label="First Name" onChange={e => setFirst_name(e.target.value)} style={{ minWidth: 250 }} />
         </Grid>
 
         <Grid item xs={12}>
-          <TextField required id="standard-basic" variant="outlined" label="Last Name" onChange={e => setLast_name(e.target.value)} style={{ minWidth: 220 }} />
+          <TextField required id="standard-basic" variant="outlined" label="Last Name" onChange={e => setLast_name(e.target.value)} style={{ minWidth: 250 }} />
         </Grid>
 
         <Grid item xs={12}>
-          <TextField required variant="outlined" label="Gender" style={{ minWidth: 220 }}
+          <TextField required variant="outlined" label="Gender" style={{ minWidth: 250 }}
             onChange={(e) => {
               setGender(e.target.value);
             }}
@@ -292,7 +292,7 @@ opportunities from their partners. *
         </Grid>
 
         <Grid item xs={12}>
-          <TextField required variant="outlined" label="Ethnicity" style={{ minWidth: 220 }}
+          <TextField required variant="outlined" label="Ethnicity" style={{ minWidth: 250, maxWidth: 250 }}
             onChange={(e) => {
               setEthnicity(e.target.value);
             }}
@@ -310,14 +310,14 @@ opportunities from their partners. *
           </TextField>
         </Grid>
 
-        <Grid item xs={6}>
-          <TextField id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} style={{ minWidth: 220 }} />
+        <Grid item xs={12}>
+          <TextField id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} style={{ minWidth: 250 }} />
         </Grid>
       </Grid>
 
-      <Grid container item spacing={2} xs={12} sm={6}>
+      <Grid container item spacing={2} xs={12} md={6}>
         <Grid item xs={12}>
-          <FormControl required variant="outlined" style={{ minWidth: 220 }}>
+          <FormControl required variant="outlined" style={{ minWidth: 250 }}>
             <SchoolAutocomplete
               school={school}
               setSchool={setSchool} />
@@ -337,7 +337,7 @@ opportunities from their partners. *
         </Grid>
 
         <Grid item xs={12}>
-          <TextField required variant="outlined" label="Program" style={{ minWidth: 220 }}
+          <TextField required variant="outlined" label="Program" style={{ minWidth: 250 }}
             onChange={(e) => {
               setGrad(e.target.value);
             }}
@@ -350,7 +350,7 @@ opportunities from their partners. *
         </Grid>
 
         <Grid item xs={6}>
-          <TextField required variant="outlined" label="Graduation Month" style={{ minWidth: 175 }}
+          <TextField required variant="outlined" label="Grad Month" style={{ minWidth: 120 }}
             onChange={(e) => {
               setGrad_month(e.target.value);
             }}
@@ -372,7 +372,7 @@ opportunities from their partners. *
         </Grid>
 
         <Grid item xs={6}>
-          <TextField required variant="outlined" label="Graduation Year" style={{ minWidth: 175 }}
+          <TextField required variant="outlined" label="Grad Year" style={{ minWidth: 120 }}
             onChange={(e) => {
               setGrad_year(e.target.value);
             }}
