@@ -495,8 +495,7 @@ export default function Register() {
     if (activeStep === 0) {
       return (
         <>
-          {/* {account} */}
-          {personalInfo}
+          {account}
         </>
       )
     } else if (activeStep === 1) {
