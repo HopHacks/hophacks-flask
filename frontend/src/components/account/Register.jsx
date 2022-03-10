@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import axios from "axios";
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
 import { Link } from "react-router-dom";
 import MajorAutocomplete from "./MajorAutocomplete"
 import SchoolAutocomplete from "./SchoolAutocomplete"
 import CodeOfConduct from "../../doc/mlh-code-of-conduct.pdf"
 import Checkbox from '@material-ui/core/Checkbox';
+
+
+import FormLabel from '@material-ui/core/FormLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
 
 import '../../stylesheets/register.css';
 import img from "./temp.png";
@@ -97,7 +97,8 @@ export default function Register() {
       setConfirmMsg("Confirm password must match with the password.")
       return;
     }
-    //go to the next step    
+
+    // Go to the profile page  
     setActiveStep(1);
   };
 
@@ -145,8 +146,9 @@ export default function Register() {
     catch (e) {
       return;
     }
-    //go to the next step   
-    setActiveStep(activeStep + 1);
+
+    // Go to the confirmation page
+    setActiveStep(1);
   };
 
   const account = (
@@ -219,51 +221,126 @@ export default function Register() {
 
   
   const codeOfConduct = (
-    <Typography style={{ fontSize: '14px', marginTop: '10px' }}>
-      <Checkbox
-        checked={conductCodeChecked}
-        onChange={handleConductCheckBox}
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-        color="primary"
+    // <Typography style={{ fontSize: '14px', marginTop: '10px' }}>
+    //   <Checkbox
+    //     checked={conductCodeChecked}
+    //     onChange={handleConductCheckBox}
+    //     inputProps={{ 'aria-label': 'primary checkbox' }}
+    //     color="primary"
+    //   />
+    //   I have read and understand the {' '}
+    //   <Link onClick={openCodeOfConduct}>
+    //     MLH code of conduct
+    //   </Link> *
+    // </Typography>
+
+    <FormGroup>
+      <FormControlLabel
+        control={
+          <
+            Checkbox checked={conductCodeChecked}
+            onChange={handleConductCheckBox}
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+            color="primary"
+          />
+        }
+        label={
+          <div>
+            <span>I have read and understand the </span>
+            <Link onClick={openCodeOfConduct}>
+              MLH code of conduct
+            </Link>
+            <span> *</span>
+          </div>
+        }
       />
-      I have read and understand the {' '}
-      <Link onClick={openCodeOfConduct}>
-        MLH code of conduct
-      </Link> *
-    </Typography>
+    </FormGroup>
   )
   const eventLogistics = (
-    <Typography style={{ fontSize: '14px' }}>
-      <Checkbox
-        checked={eventLogisticsChecked}
-        onChange={handleLogisticsCheckBox}
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-        color="primary"
+    // <Typography style={{ fontSize: '14px' }}>
+    //   <Checkbox
+    //     checked={eventLogisticsChecked}
+    //     onChange={handleLogisticsCheckBox}
+    //     inputProps={{ 'aria-label': 'primary checkbox' }}
+    //     color="primary"
+    //   />
+    //   I authorize you to share my
+    //   application/registration information with Major League Hacking for event
+    //   administration, ranking, and MLH administration in-line with the <Link onClick={openPrivacy}>
+    //     MLH Privacy Policy
+    //   </Link>. I further agree to the terms of both the <Link onClick={openTerms}>
+    //     MLH Terms and Conditions
+    //   </Link> and the <Link onClick={openPrivacy}>
+    //     MLH Privacy Policy
+    //   </Link>
+    //    . *
+    // </Typography>
+
+    <FormGroup>
+      <FormControlLabel
+        style={{ display:'table'}}
+        control={
+          <div style={{display:'table-cell'}}>
+          <
+            Checkbox checked={eventLogisticsChecked}
+            onChange={handleLogisticsCheckBox}
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+            color="primary"
+          />
+        </div>
+        }
+        label={
+          <div>
+            <span>I authorize you to share my application/registration information 
+              with Major League Hacking for event administration, ranking, and MLH 
+              administration in-line with the </span>
+            <Link onClick={openPrivacy}>
+              MLH Privacy Policy
+            </Link>
+            <span> I further agree to the </span>
+            <Link onClick={openTerms}>
+              MLH Terms and Conditions
+            </Link>
+            <span> *</span>
+          </div>
+        }
       />
-      I authorize you to share my
-application/registration information with Major League Hacking for event
-administration, ranking, and MLH administration in-line with the <Link onClick={openPrivacy}>
-        MLH Privacy Policy
-      </Link>. I further agree to the terms of both the <Link onClick={openTerms}>
-        MLH Terms and Conditions
-      </Link> and the <Link onClick={openPrivacy}>
-        MLH Privacy Policy
-      </Link>
-       . *
-    </Typography>
+    </FormGroup>
   )
   const communication = (
-    <Typography style={{ fontSize: '14px' }}>
-      <Checkbox
-        checked={communicationChecked}
-        onChange={handleCommunicationCheckBox}
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-        color="primary"
-      />
-      I authorize MLH to send me pre- and
-post-event informational emails, which contain free credit and
-opportunities from their partners. *
-    </Typography>
+//     <Typography style={{ fontSize: '14px' }}>
+//       <Checkbox
+//         checked={communicationChecked}
+//         onChange={handleCommunicationCheckBox}
+//         inputProps={{ 'aria-label': 'primary checkbox' }}
+//         color="primary"
+//       />
+//       I authorize MLH to send me pre- and
+// post-event informational emails, which contain free credit and
+// opportunities from their partners. *
+//     </Typography>
+
+  <FormGroup>
+    <FormControlLabel
+      style={{ display:'table'}}
+      control={
+        <div style={{display:'table-cell'}}>
+        <
+          Checkbox checked={communicationChecked}
+          onChange={handleCommunicationCheckBox}
+          inputProps={{ 'aria-label': 'primary checkbox' }}
+          color="primary"
+        />
+      </div>
+      }
+      label={
+        <div>
+          <span>I authorize MLH to send me pre- and post-event informational emails, 
+            which contain free credit and opportunities from their partners. *</span>
+        </div>
+      }
+    />
+  </FormGroup>
   )
 
   const personalInfo = (
@@ -392,20 +469,25 @@ opportunities from their partners. *
         {communication}
       </Grid>
 
-      <Typography style={{ color: "red" }}>
-        {profileSubmitMsg}
-      </Typography>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          handleProfileNext();
-        }}
-        className={classes.button}
-      >
-        Submit
-      </Button>
+      <Grid item xs={12}>
+        <Typography style={{ color: "red" }}>
+          {profileSubmitMsg}
+        </Typography>
+      </Grid>
+      
+      <Grid item xs={12}>
+        <Button
+          variant="contained"
+          justifyContent="center"
+          color="primary"
+          onClick={() => {
+            handleProfileNext();
+          }}
+          className={classes.button}
+        >
+          Submit
+        </Button>
+      </Grid>
     </Grid>
   );
 
@@ -413,7 +495,8 @@ opportunities from their partners. *
     if (activeStep === 0) {
       return (
         <>
-          {account}
+          {/* {account} */}
+          {personalInfo}
         </>
       )
     } else if (activeStep === 1) {
