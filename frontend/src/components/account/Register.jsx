@@ -20,6 +20,9 @@ import SchoolAutocomplete from "./SchoolAutocomplete"
 import CodeOfConduct from "../../doc/mlh-code-of-conduct.pdf"
 import Checkbox from '@material-ui/core/Checkbox';
 
+import '../../stylesheets/register.css';
+import img from "./temp.png";
+
 export default function Register() {
 
   const [username, setUsername] = useState("")
@@ -43,8 +46,7 @@ export default function Register() {
 
   // decide which step is actively showing
   const [activeStep, setActiveStep] = useState(0);
-  const stepHeader = ['Account Information', 'Personal Information', 'Confirm Email'];
-
+  // const stepHeader = ['Account Information', 'Personal Information', 'Confirm Email'];
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,6 +73,7 @@ export default function Register() {
       setConfirmMsg("* Required field cannot be empty")
       return;
     }
+
     const emailre = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!emailre.test(String(username).toLowerCase())) {
       setConfirmMsg("Please enter a valid email address.")
@@ -95,7 +98,7 @@ export default function Register() {
       return;
     }
     //go to the next step    
-    setActiveStep(activeStep + 1);
+    setActiveStep(1);
   };
 
   async function handleProfileNext() {
@@ -147,21 +150,49 @@ export default function Register() {
   };
 
   const account = (
-    <Grid container direction={"column"} spacing={2}>
-      <Grid item>
-        <TextField required id="standard-basic" variant="outlined" label="Email Address" onChange={e => setUsername(e.target.value)} />
+    <Grid 
+      container 
+      spacing={4}
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: '35em', maxHeight: '65em' }}
+    >
+      <Grid item xs={0} md={1} lg={1} />
+      <Grid item xs={12} md={5} lg={5} align="center">
+        <img id="graphic" src={img} width="100%" />
       </Grid>
-
-      <Grid item>
-        <TextField type={'password'} required id="standard-basic" variant="outlined" label="Password" onChange={e => setPassword(e.target.value)} />
+      <Grid id="register" item xs={12} md={5} lg={5} align="center">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <h1>Register</h1>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField required id="standard-basic" variant="outlined" label="Email Address" onChange={e => setUsername(e.target.value)} />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField type={'password'} required id="standard-basic" variant="outlined" label="Password" onChange={e => setPassword(e.target.value)} />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField type={'password'} required id="standard-basic" variant="outlined" label="Confirm Password" onChange={e => setPasswordConfirm(e.target.value)} />
+            <Typography style={{ color: "red" }}>
+              {confirmMsg}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handleAccountNext();
+              }}
+              className={classes.button}
+            >
+              Next
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item>
-        <TextField type={'password'} required id="standard-basic" variant="outlined" label="Confirm Password" onChange={e => setPasswordConfirm(e.target.value)} />
-        <Typography style={{ color: "red" }}>
-          {confirmMsg}
-        </Typography>
-      </Grid>
-
+      <Grid item xs={0} md={1} lg={1} />
     </Grid>
   );
   const handleConductCheckBox = (event) => {
@@ -187,84 +218,85 @@ export default function Register() {
   }
 
   
-
   const codeOfConduct = (
-    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
+    <Typography style={{ fontSize: '14px', marginTop: '10px' }}>
       <Checkbox
-      checked={conductCodeChecked}
-      onChange={handleConductCheckBox}
-      inputProps={{ 'aria-label': 'primary checkbox' }}
+        checked={conductCodeChecked}
+        onChange={handleConductCheckBox}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+        color="primary"
       />
       I have read and understand the {' '}
       <Link onClick={openCodeOfConduct}>
-      MLH code of conduct
+        MLH code of conduct
       </Link> *
-  </Typography>
+    </Typography>
   )
-
   const eventLogistics = (
-    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
+    <Typography style={{ fontSize: '14px' }}>
       <Checkbox
-      checked={eventLogisticsChecked}
-      onChange={handleLogisticsCheckBox}
-      inputProps={{ 'aria-label': 'primary checkbox' }}
+        checked={eventLogisticsChecked}
+        onChange={handleLogisticsCheckBox}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+        color="primary"
       />
       I authorize you to share my
 application/registration information with Major League Hacking for event
 administration, ranking, and MLH administration in-line with the <Link onClick={openPrivacy}>
-      MLH Privacy Policy
+        MLH Privacy Policy
       </Link>. I further agree to the terms of both the <Link onClick={openTerms}>
-      MLH Terms and Conditions
+        MLH Terms and Conditions
       </Link> and the <Link onClick={openPrivacy}>
-      MLH Privacy Policy
+        MLH Privacy Policy
       </Link>
        . *
-  </Typography>
+    </Typography>
   )
-
   const communication = (
-    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
+    <Typography style={{ fontSize: '14px' }}>
       <Checkbox
-      checked={communicationChecked}
-      onChange={handleCommunicationCheckBox}
-      inputProps={{ 'aria-label': 'primary checkbox' }}
+        checked={communicationChecked}
+        onChange={handleCommunicationCheckBox}
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+        color="primary"
       />
       I authorize MLH to send me pre- and
 post-event informational emails, which contain free credit and
 opportunities from their partners. *
-  </Typography>
+    </Typography>
   )
 
   const personalInfo = (
-    <Grid container direction={"column"} spacing={2}>
-      <Grid item>
-        <TextField required id="standard-basic" variant="outlined" label="First Name" onChange={e => setFirst_name(e.target.value)} />
-      </Grid>
-      <Grid item>
-        <TextField required id="standard-basic" variant="outlined" label="Last Name" onChange={e => setLast_name(e.target.value)} />
-      </Grid>
-      <Grid item>
-        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
-          <InputLabel >Gender</InputLabel>
-          <Select
+    <Grid container spacing={2}>
+      <Grid container item spacing={2} xs={12} sm={6}>
+        <Grid item xs={12}>
+          <TextField required id="standard-basic" variant="outlined" label="First Name" onChange={e => setFirst_name(e.target.value)} style={{ minWidth: 220 }} />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField required id="standard-basic" variant="outlined" label="Last Name" onChange={e => setLast_name(e.target.value)} style={{ minWidth: 220 }} />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField required variant="outlined" label="Gender" style={{ minWidth: 220 }}
             onChange={(e) => {
               setGender(e.target.value);
             }}
+            select
           >
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
             <MenuItem value="Non-Binary">Non-Binary</MenuItem>
             <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid item>
-        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
-          <InputLabel >Ethnicity</InputLabel>
-          <Select
+          </TextField>
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField required variant="outlined" label="Ethnicity" style={{ minWidth: 220 }}
             onChange={(e) => {
               setEthnicity(e.target.value);
             }}
+            select
           >
             <MenuItem value="American Indian or Alaska Native">American Indian or Alaska Native</MenuItem>
             <MenuItem value="Asian">Asian</MenuItem>
@@ -275,58 +307,54 @@ opportunities from their partners. *
             <MenuItem value="White">White</MenuItem>
             <MenuItem value="Multiethnic">Multiethnic</MenuItem>
             <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-          </Select>
-        </FormControl>
+          </TextField>
+        </Grid>
+
+        <Grid item xs={6}>
+          <TextField id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} style={{ minWidth: 220 }} />
+        </Grid>
       </Grid>
 
-      <Grid item>
-        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
-          <SchoolAutocomplete
-            school={school}
-            setSchool={setSchool} />
-        </FormControl>
-        <Typography style={{fontSize: '12px', color:"grey"}}>
-          * If your school is not in the list, choose 'other schools'
+      <Grid container item spacing={2} xs={12} sm={6}>
+        <Grid item xs={12}>
+          <FormControl required variant="outlined" style={{ minWidth: 220 }}>
+            <SchoolAutocomplete
+              school={school}
+              setSchool={setSchool} />
+          </FormControl>
+          <Typography style={{ fontSize: '12px', color: "grey" }}>
+            * If your school is not in the list, choose 'other schools'
         </Typography>
-      </Grid>
+        </Grid>
 
-      <Grid item>
-        <MajorAutocomplete
-          major={major}
-          setMajor={setMajor} />
-        <Typography style={{fontSize: '12px', color:"grey"}}>
-          * If your major is not in the list, choose 'other majors'
+        <Grid item xs={12}>
+          <MajorAutocomplete
+            major={major}
+            setMajor={setMajor} />
+          <Typography style={{ fontSize: '12px', color: "grey" }}>
+            * If your major is not in the list, choose 'other majors'
         </Typography>
-      </Grid>
+        </Grid>
 
-      <Grid item>
-        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
-          <InputLabel >Program</InputLabel>
-          <Select
+        <Grid item xs={12}>
+          <TextField required variant="outlined" label="Program" style={{ minWidth: 220 }}
             onChange={(e) => {
               setGrad(e.target.value);
             }}
+            select
           >
             <MenuItem value="Undergraduate">Undergraduate</MenuItem>
             <MenuItem value="Graduate">Graduate</MenuItem>
             <MenuItem value="Postgraduate">Postgraduate</MenuItem>
-          </Select>
-        </FormControl>
-      </Grid>
+          </TextField>
+        </Grid>
 
-      <Grid item>
-        <TextField id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} />
-      </Grid>
-
-      <Grid item>
-        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
-          <InputLabel id="demo-simple-select-label">Graduation Month</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+        <Grid item xs={6}>
+          <TextField required variant="outlined" label="Graduation Month" style={{ minWidth: 175 }}
             onChange={(e) => {
               setGrad_month(e.target.value);
             }}
+            select
           >
             <MenuItem value="01">01</MenuItem>
             <MenuItem value="02">02</MenuItem>
@@ -340,118 +368,74 @@ opportunities from their partners. *
             <MenuItem value="10">10</MenuItem>
             <MenuItem value="11">11</MenuItem>
             <MenuItem value="12">12</MenuItem>
-          </Select>
-        </FormControl>
+          </TextField>
+        </Grid>
 
-        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
-          <InputLabel id="demo-simple-select-label">Graduation Year</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+        <Grid item xs={6}>
+          <TextField required variant="outlined" label="Graduation Year" style={{ minWidth: 175 }}
             onChange={(e) => {
               setGrad_year(e.target.value);
             }}
+            select
           >
-            <MenuItem value="2020">2020</MenuItem>
-            <MenuItem value="2021">2021</MenuItem>
             <MenuItem value="2022">2022</MenuItem>
             <MenuItem value="2023">2023</MenuItem>
             <MenuItem value="2024">2024</MenuItem>
             <MenuItem value="2025">2025</MenuItem>
-          </Select>
-        </FormControl>
+          </TextField>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
         {codeOfConduct}
         {eventLogistics}
         {communication}
-        <Typography style={{ color: "red" }}>
-          {profileSubmitMsg}
-        </Typography>
       </Grid>
 
-    </Grid >
+      <Typography style={{ color: "red" }}>
+        {profileSubmitMsg}
+      </Typography>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => {
+          handleProfileNext();
+        }}
+        className={classes.button}
+      >
+        Submit
+      </Button>
+    </Grid>
   );
 
-  function selectStep(index) {
-    if (index === 0) {
+  function selectPage() {
+    if (activeStep === 0) {
       return (
         <>
           {account}
-          <div className={classes.actionsContainer}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                handleAccountNext();
-              }}
-              className={classes.button}
-            >
-              Next
-            </Button>
-          </div>
         </>
       )
-    }
-    else if (index === 1) {
+    } else if (activeStep === 1) {
       return (
         <>
           {personalInfo}
-          <div className={classes.actionsContainer}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                handleProfileNext();
-              }}
-              className={classes.button}
-            >
-              Create Account
-                    </Button>
-          </div>
         </>
       )
-    }
-    else {
+    } else {
       return (
         <>
-          <Typography>
-            You should have recieved a confirmation email. Please check your inbox (and spam) and click the link to confirm your email address. Your application to HopHacks will be complete after email confirmation!
-                  </Typography>
-          <div className={classes.actionsContainer}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              component={Link} to={'/profile'}
-            >
-              Login
-                    </Button>
-          </div>
         </>
       )
     }
 
   }
 
-  const VerticalLinearStepper = (
-
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {stepHeader.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-            <StepContent>
-              {selectStep(activeStep)}
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-    </div>
-  );
-
-
   return (
-    <Container fixed>
-      {VerticalLinearStepper}
-    </Container>
+    <div class="container">
+      <div className="register-wrapper">
+        {selectPage()}
+      </div>
+    </div>
   )
 }
