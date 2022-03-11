@@ -85,7 +85,7 @@ def delete_event():
 def update_event():
     if (request.json is None):
         return Response('Data not in json format', status=400)
-
+    
     if not (all(field in request.json for field in ['event_name'])):
         return Response('Invalid request', status=400)
 
@@ -94,37 +94,49 @@ def update_event():
 
     if len(list(db.events.find(event_current))) == 0:
         return Response('Event Does Not Exist', status=400)
-
-    cursor = db.events.find(event_current)
-    if 'display_name' in request.json:
-        db.events.update_one(event_current, {"$set": {
-            'display_name': request.json['display_name']}
+    
+    for i in request.json:
+        if i == 'new_event_name':
+            continue
+        if "date" in i:
+            db.events.update_one(event_current, {"$set": {
+            i: datetime.strptime(request.json[i], '%m-%d-%Y')}})
+        else:
+            db.events.update_one(event_current, {"$set": {
+            i: request.json[i]}
         })
-    if 'start_date' in request.json:
-        db.events.update_one(event_current, {"$set": {
-            'start_date': datetime.strptime(request.json['start_date'], '%m-%d-%Y')}
-        })
-    if 'end_date' in request.json:
-        db.events.update_one(event_current, {"$set": {
-            'end_date': datetime.strptime(request.json['end_date'], '%m-%d-%Y')}
-        })
-    if 'description' in request.json:
-        db.events.update_one(event_current, {"$set": {
-            'description': request.json['description']}
-        })
+    if 'new_event_name' in request.json:
+        db.events.update_one(event_current, {"$set": {'event_name': request.json['new_event_name']}})
+        
+   # if 'display_name' in request.json:
+   #     db.events.update_one(event_current, {"$set": {
+   #         'display_name': request.json['display_name']}
+   #     })
+   # if 'start_date' in request.json:
+   #     db.events.update_one(event_current, {"$set": {
+    #        'start_date': datetime.strptime(request.json['start_date'], '%m-%d-%Y')}
+    #    })
+   # if 'end_date' in request.json:
+    #    db.events.update_one(event_current, {"$set": {
+    #        'end_date': datetime.strptime(request.json['end_date'], '%m-%d-%Y')}
+    #    })
+    #if 'description' in request.json:
+    #    db.events.update_one(event_current, {"$set": {
+    #        'description': request.json['description']}
+     #   })
 
     # These two fields may be deleted, as they technically shouldn't need to ever be altered
-    if 'num_registrations' in request.json:
-        db.events.update_one(event_current, {"$set": {
-            'num_registrations': request.json['num_registrations']}
-        })
-    if 'event_participants' in request.json:
-        db.events.update_one(event_current, {"$set": {
-            'event_participants': request.json['event_participants']}
-        })
+    #if 'num_registrations' in request.json:
+    #    db.events.update_one(event_current, {"$set": {
+     #       'num_registrations': request.json['num_registrations']}
+     #   })
+   # if 'event_participants' in request.json:
+    #    db.events.update_one(event_current, {"$set": {
+     #       'event_participants': request.json['event_participants']}
+     #   })
 
-    if 'new_event_name' in request.json:
-        db.events.update_one(event_current, {"$set": {
-            'event_name': request.json['new_event_name']}
-        })
+    #if 'new_event_name' in request.json:
+     #   db.events.update_one(event_current, {"$set": {
+      #      'event_name': request.json['new_event_name']}
+       # })
     return jsonify({"msg": "event updated"}), 200
