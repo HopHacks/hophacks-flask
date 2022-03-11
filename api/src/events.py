@@ -79,3 +79,49 @@ def delete_event():
 
     db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
+<<<<<<< HEAD
+=======
+
+@events_api.route('/', methods=['PUT'])
+# @jwt_required
+# @check_admin
+def update_event():
+    if (request.json is None):
+        return Response('Data not in json format', status=400)
+    
+    if not (all(field in request.json for field in ['event_name'])):
+        return Response('Invalid request', status=400)
+    
+    event_current = {}
+    event_current['event_name'] = request.json['event_name']
+    
+    if len(list(db.events.find(event_current))) == 0: 
+        return Response('Event Does Not Exist', status=400)
+    
+    cursor = db.events.find(event_current)
+    if 'display_name' in request.json:
+        db.events.update_one(event_current, { "$set": { 
+            'display_name': request.json['display_name'] }
+        })
+    if 'start_date' in request.json:
+        db.events.update_one(event_current, { "$set": {
+            'start_date': datetime.strptime(request.json['start_date'], '%m-%d-%Y') }
+        })    
+    if 'end_date' in request.json:
+        db.events.update_one(event_current, { "$set": {
+            'end_date': datetime.strptime(request.json['end_date'], '%m-%d-%Y') }              
+        })
+    if 'description' in request.json:
+        db.events.update_one(event_current, { "$set": { 
+            'description': request.json['description'] }
+        })
+    if 'new_event_name' in request.json:
+        db.events.update_one(event_current, { "$set": { 
+            'event_name': request.json['new_event_name'] }
+        })
+    return jsonify({"msg": "event updated"}), 200
+
+    
+
+    
+>>>>>>> d04f43de26d168c88d282e78a39568198378651f
