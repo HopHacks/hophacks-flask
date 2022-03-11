@@ -77,8 +77,6 @@ def delete_event():
 
     db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
-<<<<<<< HEAD
-=======
 
 
 @events_api.route('/', methods=['PUT'])
@@ -130,11 +128,3 @@ def update_event():
             'event_name': request.json['new_event_name']}
         })
     return jsonify({"msg": "event updated"}), 200
-<<<<<<< HEAD
-=======
-
-    
-
-    
->>>>>>> d04f43de26d168c88d282e78a39568198378651f
->>>>>>> 7ca0d3b06a181ee2c5875ff575a3072dd720ad93
