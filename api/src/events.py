@@ -95,7 +95,6 @@ def delete_event():
         return Response('Invalid request', status=400)
     event = {}
     event['event_name'] = request.json['event_name']
-    event['display_name'] = request.json['display_name']
     if  len(list(db.events.find(event))) == 0: 
         return Response('Event Does Not Exist', status=400)
     
@@ -135,6 +134,18 @@ def update_event():
         db.events.update_one(event_current, { "$set": { 
             'description': request.json['description'] }
         })
+        
+    # These two fields may be deleted, as they technically shouldn't need to ever be altered
+    if 'num_registrations' in request.json:
+        db.events.update_one(event_current, { "$set": { 
+            'num_registrations': request.json['num_registrations'] }
+        })
+    if 'event_participants' in request.json:
+        db.events.update_one(event_current, { "$set": { 
+            'event_participants': request.json['event_participants'] }
+        }) 
+        
+           
     if 'new_event_name' in request.json:
         db.events.update_one(event_current, { "$set": { 
             'event_name': request.json['new_event_name'] }
