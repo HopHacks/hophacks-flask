@@ -10,55 +10,26 @@ events_api = Blueprint('events', __name__)
 
 
 @events_api.route('/', methods=['GET'])
-# @jwt_required
-# @check_admin
-def get():
-    #  if not 'event_name' in request.args:
-    #  return Response('Invalid request', status=400)
-    cursor = db.events.find({})
+def get():  
+    start_date = datetime.strptime(
+        request.args['start_date'], '%m-%d-%Y') if 'start_date' in request.args else -1
+    end_date = datetime.strptime(
+        request.args['end_date'], '%m-%d-%Y') if 'end_date' in request.args else -1
+
+    args = {}
+
+    if 'start_date' in request.args:
+      args['start_date'] = {'$gte': start_date}
+    if 'end_date' in request.args:
+      args['end_date'] = {'$lte': end_date}
+
+    cursor = db.events.find(args)
+
     events = []
 
     for e in cursor:
-        print(e)
-        if 'start_date' and 'end_date' in request.args:
-            if e['start_date'] >= request.args['start_date'] and e['end_date'] <= request.args['end_date']:
-                if 'description' in e.args:
-                    events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                                  'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description'],
-                                   'num_registrations': e['num_registrations'], 'event_participants': e['event_participants']})
-                else:
-                    events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                                  'start_date': e['start_date'], 'end_date': e['end_date'],
-                                  'num_registrations': e['num_registrations'], 'event_participants': e['event_participants']})
-        elif 'start_date' in request.args:
-            if e['start_date'] >= request.args['start_date']:
-                if 'description' in e.args:
-                    events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                                  'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description'],
-                                  'num_registrations': e['num_registrations'], 'event_participants': e['event_participants']})
-                else:
-                    events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                                  'start_date': e['start_date'], 'end_date': e['end_date'],
-                                  'num_registrations': e['num_registrations'], 'event_participants': e['event_participants']})
-        elif 'end_date' in request.args:
-            if e['end_date'] <= request.args['start_date']:
-                if 'description' in e.args:
-                    events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                                  'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description'],
-                                  'num_registrations': e['num_registrations'], 'event_participants': e['event_participants']})
-                else:
-                    events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                                  'start_date': e['start_date'], 'end_date': e['end_date'],
-                                  'num_registrations': e['num_registrations'], 'event_participants': e['event_participants']})
-        else:
-            if 'description' in e:
-                events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                              'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description'],
-                              'num_registrations': e['num_registrations'], 'event_participants': e['event_participants']})
-            else:
-                events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                              'start_date': e['start_date'], 'end_date': e['end_date'],
-                              'num_registrations': e['num_registrations'], 'event_participants': e['event_participants']})
+        events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
+                       'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description']})
 
     return jsonify({'events': events}), 200
 
@@ -106,6 +77,8 @@ def delete_event():
 
     db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
+<<<<<<< HEAD
+=======
 
 
 @events_api.route('/', methods=['PUT'])
@@ -157,3 +130,11 @@ def update_event():
             'event_name': request.json['new_event_name']}
         })
     return jsonify({"msg": "event updated"}), 200
+<<<<<<< HEAD
+=======
+
+    
+
+    
+>>>>>>> d04f43de26d168c88d282e78a39568198378651f
+>>>>>>> 7ca0d3b06a181ee2c5875ff575a3072dd720ad93
