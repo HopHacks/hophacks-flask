@@ -72,12 +72,16 @@ def create_event():
     event['start_date'] = datetime.strptime(
         request.json['start_date'], '%m-%d-%Y')
     event['end_date'] = datetime.strptime(request.json['end_date'], '%m-%d-%Y')
+    event['num_registrations'] = 0
+    event['event_participants'] = []
     if 'description' in request.json:
         event['description'] = request.json['description']
     else:
         event['description'] = ""
     db.events.insert_one(event)
     return jsonify({"msg": "event added"}), 200
+
+
 
 
 @events_api.route('/', methods=['DELETE'])
