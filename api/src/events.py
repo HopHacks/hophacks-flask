@@ -11,8 +11,6 @@ events_api = Blueprint('events', __name__)
 
 @events_api.route('/', methods=['GET'])
 def get():  
-
-
     start_date = datetime.strptime(
         request.args['start_date'], '%m-%d-%Y') if 'start_date' in request.args else -1
     end_date = datetime.strptime(
@@ -30,7 +28,6 @@ def get():
     events = []
 
     for e in cursor:
-        print(e)
         events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
                        'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description']})
 
@@ -79,8 +76,6 @@ def delete_event():
 
     db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
-<<<<<<< HEAD
-=======
 
 @events_api.route('/', methods=['PUT'])
 # @jwt_required
@@ -124,4 +119,3 @@ def update_event():
     
 
     
->>>>>>> d04f43de26d168c88d282e78a39568198378651f
