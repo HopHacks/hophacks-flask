@@ -71,6 +71,9 @@ export default function Announcements() {
     
     const [page, setPage] = useState(1);
     const [announcements, setAnnouncements] = useState([]);
+    const [first_important_announcement,setTopAnnouncement] = useState({});
+    const [query, setQuery] = useState("");
+    const [event, setEvent] = useState("Spring 2022");
     const [totalPage, setTotalPage] = useState(1);
 
     function img(url) {
@@ -78,19 +81,34 @@ export default function Announcements() {
     }
 
     const handleChange = (event, value) => {
-        {/*setPage(value);*/}
-        setAnnouncements([]);
+        getTopAnnouncements()
+        setPage(value);
         getAnnouncements();
+        
     };
 
     useEffect(() => {
-        getAnnouncements()
+      getTopAnnouncements()
+      getAnnouncements()
     }, []);
 
+    async function getTopAnnouncements(){
+      try{
+        const response1 = await axios.get('/api/announcements/important'+"?event=Spring_2022");
+        setTopAnnouncement(response1.data.first_important_announcement);
+      } catch (ex){
+        console.log('Unable to get top announcement');
+      }
+      
+    }
+
     async function getAnnouncements(){
-        const response = await axios.get('/api/announcements');
+      try{
+        const response = await axios.get('/api/announcements'+"?event=Spring_2022");
         setAnnouncements(response.data.announcements);
-        {/*setTotalPage(response.data.totalPage);*/}
+      } catch (ex){
+        console.log('Unable to get all announcements');
+      }
     }
 
     function populateAnnouncements() {
@@ -101,7 +119,7 @@ export default function Announcements() {
               {announcement.title}
               </TableCell>
               <TableCell align="right">
-              {announcement.time_posted} {/*# change to time later*/}
+              {announcement.time} 
               </TableCell>
               <TableCell align="right">
               {announcement.contents} {/*# change or add importance later*/}
@@ -124,7 +142,7 @@ export default function Announcements() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/*{populateAnnouncements}*/}
+              {populateAnnouncements}
             </TableBody>
           </Table>
         </TableContainer>
@@ -238,11 +256,11 @@ export default function Announcements() {
                 <Grid item xs={12}>
                 <Card>
                 {table}
-                {/*
-                <div  className={classes.pagination}>
+                
+                <div className={classes.pagination}>
                 <Pagination count={totalPage} page={page} onChange={handleChange} />
                 </div>
-                */}
+                
                 </Card>
                 </Grid>
             </Grid>

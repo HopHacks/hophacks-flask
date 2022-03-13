@@ -2,6 +2,7 @@
 Endpoints related to creating and displaying anouncements 
 '''
 
+from pickle import TRUE
 from db import db
 from mail import mail
 from util.reset_tokens import *
@@ -100,13 +101,17 @@ def display_all():
     :status 400: No json or ``announcement/json`` header, or field missing
     :status 200: display successful
     """
-    if (request.json is None):
-        return Response('Data not in json format', status=400)
+    # if (request.json is None):
+    #     return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['event'])):
+    # if not (all(field in request.json for field in ['event'])):
+    #     return Response('Invalid request', status=400)
+
+    # event = request.json['event']
+
+    event = request.args.get('event')
+    if not event:
         return Response('Invalid request', status=400)
-
-    event = request.json['event']
 
     cursor = db.announcements.find({'event': event}).sort("time", -1)
     announcemnets = []
@@ -122,3 +127,121 @@ def display_all():
             })
   
     return jsonify({'announcemnets': announcemnets}), 200
+
+@announcements_api.route('/important', methods = ['GET'])
+def display_first_important():
+    """ 
+    Display the first important announcements in the given event sorted by the time posted
+
+    Example input:
+
+    .. sourcecode:: json
+        {
+            "event": "Spring 2022"
+        }
+
+    :status 400: No json or ``announcement/json`` header, or field missing
+    :status 200: display successful
+    """
+    event = request.args.get('event')
+    if not event:
+        return Response('Invalid request', status=400)
+
+    cursor = db.announcements.find({'event': event,'importance': True}).sort("time", -1)
+    announcement = {}
+    annouc = cursor[0]
+    announcement['title'] = annouc['title']
+    announcement['content'] = annouc['content']
+    announcement['event'] = annouc['event']
+    announcement['broadcast'] = annouc['broadcast']
+    announcement['importance'] = annouc['importance']
+    announcement['sender'] = annouc['sender']
+    announcement['time'] = annouc['time']
+  
+    return jsonify(announcement), 200
+
+@announcements_api.route('/recent', methods = ['GET'])
+def display_three_recent():
+    """ 
+    Display the first three recent announcements in the given event sorted by the time posted
+    NOTICE: this will not include the most recent & important announcement
+
+    NOTICE: if there is less than three target announcements in the data base, the function can return a list contianing less than three announcements
+
+    Example input:
+
+    .. sourcecode:: json
+        {
+            "event": "Spring 2022"
+        }
+
+    :status 400: No json or ``announcement/json`` header, or field missing
+    :status 200: display successful
+    """
+    event = request.args.get('event')
+    if not event:
+        return Response('Invalid request', status=400)
+
+    cursor = db.announcements.find({'event': event}).sort("time", -1)
+    announcements = []
+    passed_first_important = False
+    for annouc in cursor:
+        if(len(announcements) >= 3):
+            break
+        if(not passed_first_important and annouc['importance']):
+            passed_first_important = True
+            continue
+        announcements.append({
+            'title': annouc['title'], 
+            'content': annouc['content'], 
+            'event': annouc['event'], 
+            'broadcast': annouc['broadcast'],
+            'importance': annouc['importance'], 
+            'sender': annouc['sender'],
+            'time': annouc['time']
+            })
+  
+    return jsonify({'announcemnets': announcements}), 200
+
+@announcements_api.route('/history', methods = ['GET'])
+def display_history():
+    """ 
+    Display the history announcements in the given event sorted by the time posted
+    NOTICE: not include the first_important announcement and the three_recent accouncements
+
+    Example input:
+
+    .. sourcecode:: json
+        {
+            "event": "Spring 2022"
+        }
+
+    :status 400: No json or ``announcement/json`` header, or field missing
+    :status 200: display successful
+    """
+    event = request.args.get('event')
+    if not event:
+        return Response('Invalid request', status=400)
+
+    cursor = db.announcements.find({'event': event}).sort("time", -1)
+    announcements = []
+    passed_first_important = False
+    passed_recent = 0
+    for annouc in cursor:
+        if(not passed_first_important and annouc['importance']):
+            passed_first_important = True
+            continue
+        elif(passed_recent < 3):
+            passed_recent = passed_recent + 1
+        else:
+            announcements.append({
+                'title': annouc['title'], 
+                'content': annouc['content'], 
+                'event': annouc['event'], 
+                'broadcast': annouc['broadcast'],
+                'importance': annouc['importance'], 
+                'sender': annouc['sender'],
+                'time': annouc['time']
+                })
+    
+    return jsonify({'announcemnets': announcements}), 200
