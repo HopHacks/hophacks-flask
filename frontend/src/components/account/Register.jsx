@@ -13,11 +13,8 @@ import SchoolAutocomplete from "./SchoolAutocomplete"
 import CodeOfConduct from "../../doc/mlh-code-of-conduct.pdf"
 import Checkbox from '@material-ui/core/Checkbox';
 
-
-import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 
 import '../../stylesheets/register.css';
@@ -256,6 +253,7 @@ export default function Register() {
       />
     </FormGroup>
   )
+
   const eventLogistics = (
     // <Typography style={{ fontSize: '14px' }}>
     //   <Checkbox
