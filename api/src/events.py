@@ -11,17 +11,14 @@ events_api = Blueprint('events', __name__)
 
 @events_api.route('/', methods=['GET'])
 def get():
-    start_date_beg = datetime.strptime(
-        request.args['start_date_beg'], '%m-%d-%Y') if 'start_date_beg' in request.args else -1
-    start_date_end = datetime.strptime(
-        request.args['start_date_end'], '%m-%d-%Y') if 'start_date_end' in request.args else -1
-    end_date_beg = datetime.strptime(
-        request.args['end_date_beg'], '%m-%d-%Y') if 'end_date_beg' in request.args else -1
-    end_date_end = datetime.strptime(
-        request.args['end_date_end'], '%m-%d-%Y') if 'end_date_end' in request.args else -1
+    start_date_beg = datetime.fromisoformat(request.args['start_date_beg']) if 'start_date_beg' in request.args else -1
+    start_date_end = datetime.fromisoformat(request.args['start_date_end']) if 'start_date_end' in request.args else -1
+    end_date_beg = datetime.fromisoformat(request.args['end_date_beg']) if 'end_date_beg' in request.args else -1
+    end_date_end = datetime.fromisoformat(request.args['end_date_end']) if 'end_date_end' in request.args else -1
 
+
+    # Build the args for the querying based on paraemeters provided
     args = {}
-
     if 'start_date_beg' in request.args:
         args['start_date'] = {'$gte': start_date_beg}
         if 'start_date_end' in request.args:
@@ -36,6 +33,7 @@ def get():
     elif 'end_date_end' in request.args:
         args['end_date'] = {'$lte': end_date_end}
 
+    # Query and build result
     cursor = db.events.find(args)
 
     events = []
@@ -61,9 +59,8 @@ def create_event():
 
     event['event_name'] = request.json['event_name']
     event['display_name'] = request.json['display_name']
-    event['start_date'] = datetime.strptime(
-        request.json['start_date'], '%m-%d-%Y')
-    event['end_date'] = datetime.strptime(request.json['end_date'], '%m-%d-%Y')
+    event['start_date'] = datetime.fromisoformat(request.json['start_date'])
+    event['end_date'] = datetime.fromisoformat(request.json['end_date'])
     event['num_registrations'] = 0
     event['event_participants'] = []
     if 'description' in request.json:
