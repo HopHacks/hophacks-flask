@@ -10,19 +10,32 @@ events_api = Blueprint('events', __name__)
 
 
 @events_api.route('/', methods=['GET'])
-def get():  
-    start_date = datetime.strptime(
-        request.args['start_date'], '%m-%d-%Y') if 'start_date' in request.args else -1
-    end_date = datetime.strptime(
-        request.args['end_date'], '%m-%d-%Y') if 'end_date' in request.args else -1
+def get():
+    start_date_beg = datetime.strptime(
+        request.args['start_date_beg'], '%m-%d-%Y') if 'start_date_beg' in request.args else -1
+    start_date_end = datetime.strptime(
+        request.args['start_date_end'], '%m-%d-%Y') if 'start_date_end' in request.args else -1
+    end_date_beg = datetime.strptime(
+        request.args['end_date_beg'], '%m-%d-%Y') if 'end_date_beg' in request.args else -1
+    end_date_end = datetime.strptime(
+        request.args['end_date_end'], '%m-%d-%Y') if 'end_date_end' in request.args else -1
 
     args = {}
 
-    if 'start_date' in request.args:
-      args['start_date'] = {'$gte': start_date}
-    if 'end_date' in request.args:
-      args['end_date'] = {'$lte': end_date}
+    if 'start_date_beg' in request.args:
+        args['start_date'] = {'$gte': start_date_beg}
+        if 'start_date_end' in request.args:
+            args['start_date']['$lte'] = start_date_end
+    elif 'start_date_end' in request.args:
+        args['start_date'] = {'$lte': start_date_end}
 
+    if 'end_date_beg' in request.args:
+        args['end_date'] = {'$gte': end_date_beg}
+        if 'end_date_end' in request.args:
+            args['end_date']['$lte'] = end_date_end
+    elif 'end_date_end' in request.args:
+        args['end_date'] = {'$lte': end_date_end}
+    print(args)
     cursor = db.events.find(args)
 
     events = []
@@ -85,7 +98,7 @@ def delete_event():
 def update_event():
     if (request.json is None):
         return Response('Data not in json format', status=400)
-    
+
     if not (all(field in request.json for field in ['event_name'])):
         return Response('Invalid request', status=400)
 
@@ -94,18 +107,19 @@ def update_event():
 
     if len(list(db.events.find(event_current))) == 0:
         return Response('Event Does Not Exist', status=400)
-    
+
     for i in request.json:
         if i == 'new_event_name':
             continue
         if "date" in i:
             db.events.update_one(event_current, {"$set": {
-            i: datetime.strptime(request.json[i], '%m-%d-%Y')}})
+                i: datetime.strptime(request.json[i], '%m-%d-%Y')}})
         else:
             db.events.update_one(event_current, {"$set": {
-            i: request.json[i]}
-        })
+                i: request.json[i]}
+            })
     if 'new_event_name' in request.json:
-        db.events.update_one(event_current, {"$set": {'event_name': request.json['new_event_name']}})
+        db.events.update_one(
+            event_current, {"$set": {'event_name': request.json['new_event_name']}})
 
     return jsonify({"msg": "event updated"}), 200
