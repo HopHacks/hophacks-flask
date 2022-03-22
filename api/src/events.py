@@ -35,7 +35,7 @@ def get():
             args['end_date']['$lte'] = end_date_end
     elif 'end_date_end' in request.args:
         args['end_date'] = {'$lte': end_date_end}
-    print(args)
+
     cursor = db.events.find(args)
 
     events = []
