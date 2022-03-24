@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 from util.decorators import check_admin
 from db import db
 
@@ -8,6 +9,23 @@ from flask_jwt_extended import jwt_required
 
 events_api = Blueprint('events', __name__)
 
+# Event names need to be in the format Title_Season_Year. This method
+# enforces that and makes sure that everything is valid
+def check_event_name(event_name):
+    names = ['AlumniPanel', 'Hackathon', 'InterviewWorkshop']
+    seasons = ['Fall', 'Winter', 'Spring', 'Summer']
+    beg_year = 2007
+    end_year = 2025
+
+    params = event_name.split('_')
+    if len(params) != 3:
+      return False
+
+    year = int(params[2])
+    if (params[0] not in names) or (params[1] not in seasons) or (year < beg_year or year > end_year):
+      return False
+
+    return True
 
 @events_api.route('/', methods=['GET'])
 def get():
@@ -52,22 +70,29 @@ def create_event():
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['event_name', 'display_name', 'start_date', 'end_date'])):
+    if not (all(field in request.json for field in ['event_name', 'display_name', 'start_date', 'end_date', 'is_virtual'])):
         return Response('Invalid request', status=400)
 
     event = {}
 
+    # Get event name and make sure its valid
     event['event_name'] = request.json['event_name']
+    if not check_event_name(event['event_name']): return Response('Invalid event name', status=400)
+    # TODO: do we want to fold the next line into check_event_name or keep check_event_name just for checking the validity of the string itself
+    if len(list(db.events.find({'event_name': event['event_name']}))) != 0: return Response('Event name already exists', status=400)
+    
     event['display_name'] = request.json['display_name']
     event['start_date'] = datetime.fromisoformat(request.json['start_date'])
     event['end_date'] = datetime.fromisoformat(request.json['end_date'])
     event['num_registrations'] = 0
     event['event_participants'] = []
-    if 'description' in request.json:
-        event['description'] = request.json['description']
-    else:
-        event['description'] = ""
+    event['description'] = request.json['description'] if 'description' in request.json else None
+    event['is_virtual'] = request.json['is_virtual']
+    event['location'] = request.json['location'] if 'location' in request.json else None
+    event['zoom_link'] = request.json['zoom_link'] if 'zoom_link' in request.json else None
+
     db.events.insert_one(event)
+
     return jsonify({"msg": "event added"}), 200
 
 
