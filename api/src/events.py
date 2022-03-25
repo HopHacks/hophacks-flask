@@ -177,3 +177,42 @@ def add_participant():
     db.events.update_one(event, {'$push' : {'event_participants' : record}, '$inc': {'num_registrations': 1}})
 
     return jsonify({"msg": "participant added"}), 200
+
+@events_api.route('/getParticipants/<event>', methods=['GET'])
+# @jwt_required
+def get_participant(event):
+    if event is None:
+        return Response('Invalid request', status=400)
+    
+    args = {'event_name' : event}
+    if len(list(db.events.find(args))) == 0:
+        return Response('Event Does Not Exist', status=400)
+    
+    # Do not use hopkins_student in arguments (request.json) unless you only want Hopkins Students
+    # If a user being a Hopkins student is irrelevant, just do not include "hopkins_student" in request.json 
+    participants = []
+    cursor = db.events.find(args)
+    if 'hopkins_student' in request.json and 'reg_status' in request.json:
+        for i in cursor:
+            for j in i['event_participants']:
+                if j['status'] == request.json['reg_status'] and j['profile']['is_jhu'] == True:
+                    participants.append(j)
+            break
+    elif 'hopkins_student' in request.json:
+        for i in cursor:
+            for j in i['event_participants']:
+                print(j['profile']['school'])
+                if j['profile']['is_jhu'] == True:
+                    participants.append(j)
+            break
+    elif 'reg_status' in request.json:
+        for i in cursor:
+            for j in i['event_participants']:
+                if j['status'] == request.json['reg_status']:
+                    participants.append(j)
+            break
+    else:
+        for i in cursor:
+            participants = i['event_participants']
+            break
+    return jsonify({'participants': participants}), 200
