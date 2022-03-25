@@ -18,7 +18,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 import '../../stylesheets/register.css';
-import img from "./temp.png";
 
 export default function Register() {
 
@@ -43,7 +42,6 @@ export default function Register() {
 
   // decide which step is actively showing
   const [activeStep, setActiveStep] = useState(0);
-  // const stepHeader = ['Account Information', 'Personal Information', 'Confirm Email'];
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,6 +50,7 @@ export default function Register() {
     button: {
       marginTop: theme.spacing(1),
       marginRight: theme.spacing(1),
+      fontSize: 'min(max(calc(6px + 1.25vw), 3vw), 25px)',
     },
     actionsContainer: {
       marginBottom: theme.spacing(2),
@@ -59,10 +58,12 @@ export default function Register() {
     resetContainer: {
       padding: theme.spacing(3),
     },
+    label: {
+      backgroundColor: 'rgb(232, 235, 242)',
+    }
   }));
 
   const classes = useStyles();
-
 
   async function handleAccountNext() {
     if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
@@ -154,25 +155,49 @@ export default function Register() {
       spacing={4}
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: '35em', maxHeight: '65em' }}
+      style={{ minHeight: '35rem' }}
     >
       <Grid item xs={0} md={1} lg={1} />
       <Grid item xs={12} md={5} lg={5} align="center">
-        <img id="graphic" src={img} width="100%" />
+        <img id="graphic" src={`${process.env.PUBLIC_URL}/images/graphic.png`} width="100%" />
       </Grid>
       <Grid id="register" item xs={12} md={5} lg={5} align="center">
-        <Grid container spacing={2}>
+        <Grid container>
           <Grid item xs={12}>
             <h1>Register</h1>
           </Grid>
+          <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField required id="standard-basic" variant="outlined" label="Email Address" onChange={e => setUsername(e.target.value)} />
+            <TextField 
+              required id="standard-basic" 
+              variant="outlined" 
+              label="Email Address" 
+              onChange={e => setUsername(e.target.value)}
+              inputProps={{style: {fontSize: 'min(max(calc(12px + 1.25vw), 4vw), 30px)'}}} 
+              InputLabelProps={{style: {fontSize: 'min(max(calc(12px + 1.25vw), 4vw), 30px)', color: '#000000'}, classes: {root: classes.label}}}
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextField type={'password'} required id="standard-basic" variant="outlined" label="Password" onChange={e => setPassword(e.target.value)} />
+            <TextField 
+              type={'password'} 
+              required id="standard-basic" 
+              variant="outlined" 
+              label="Password" 
+              onChange={e => setPassword(e.target.value)} 
+              inputProps={{style: {fontSize: 'min(max(calc(12px + 1.25vw), 4vw), 30px)'}}}
+              InputLabelProps={{style: {fontSize: 'min(max(calc(12px + 1.25vw), 4vw), 30px)', color: '#000000'}, classes: {root: classes.label}}} 
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextField type={'password'} required id="standard-basic" variant="outlined" label="Confirm Password" onChange={e => setPasswordConfirm(e.target.value)} />
+            <TextField 
+              type={'password'} 
+              required id="standard-basic" 
+              variant="outlined" 
+              label="Confirm Password" 
+              onChange={e => setPasswordConfirm(e.target.value)} 
+              inputProps={{style: {fontSize: 'min(max(calc(12px + 1.25vw), 4vw), 30px)'}}} 
+              InputLabelProps={{style: {fontSize: 'min(max(calc(12px + 1.25vw), 4vw), 30px)', color: '#000000'}, classes: {root: classes.label}}}
+            />
             <Typography style={{ color: "red" }}>
               {confirmMsg}
             </Typography>
@@ -188,6 +213,7 @@ export default function Register() {
             >
               Next
             </Button>
+          </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -218,19 +244,6 @@ export default function Register() {
 
 
   const codeOfConduct = (
-    // <Typography style={{ fontSize: '14px', marginTop: '10px' }}>
-    //   <Checkbox
-    //     checked={conductCodeChecked}
-    //     onChange={handleConductCheckBox}
-    //     inputProps={{ 'aria-label': 'primary checkbox' }}
-    //     color="primary"
-    //   />
-    //   I have read and understand the {' '}
-    //   <Link onClick={openCodeOfConduct}>
-    //     MLH code of conduct
-    //   </Link> *
-    // </Typography>
-
     <FormGroup>
       <FormControlLabel
         control={
@@ -255,25 +268,6 @@ export default function Register() {
   )
 
   const eventLogistics = (
-    // <Typography style={{ fontSize: '14px' }}>
-    //   <Checkbox
-    //     checked={eventLogisticsChecked}
-    //     onChange={handleLogisticsCheckBox}
-    //     inputProps={{ 'aria-label': 'primary checkbox' }}
-    //     color="primary"
-    //   />
-    //   I authorize you to share my
-    //   application/registration information with Major League Hacking for event
-    //   administration, ranking, and MLH administration in-line with the <Link onClick={openPrivacy}>
-    //     MLH Privacy Policy
-    //   </Link>. I further agree to the terms of both the <Link onClick={openTerms}>
-    //     MLH Terms and Conditions
-    //   </Link> and the <Link onClick={openPrivacy}>
-    //     MLH Privacy Policy
-    //   </Link>
-    //    . *
-    // </Typography>
-
     <FormGroup>
       <FormControlLabel
         style={{ display:'table'}}
@@ -306,58 +300,67 @@ export default function Register() {
     </FormGroup>
   )
   const communication = (
-//     <Typography style={{ fontSize: '14px' }}>
-//       <Checkbox
-//         checked={communicationChecked}
-//         onChange={handleCommunicationCheckBox}
-//         inputProps={{ 'aria-label': 'primary checkbox' }}
-//         color="primary"
-//       />
-//       I authorize MLH to send me pre- and
-// post-event informational emails, which contain free credit and
-// opportunities from their partners. *
-//     </Typography>
-
-  <FormGroup>
-    <FormControlLabel
-      style={{ display:'table'}}
-      control={
-        <div style={{display:'table-cell'}}>
-        <
-          Checkbox checked={communicationChecked}
-          onChange={handleCommunicationCheckBox}
-          inputProps={{ 'aria-label': 'primary checkbox' }}
-          color="primary"
-        />
-      </div>
-      }
-      label={
-        <div>
-          <span>I authorize MLH to send me pre- and post-event informational emails, 
-            which contain free credit and opportunities from their partners. *</span>
+    <FormGroup>
+      <FormControlLabel
+        style={{ display:'table'}}
+        control={
+          <div style={{display:'table-cell'}}>
+          <
+            Checkbox checked={communicationChecked}
+            onChange={handleCommunicationCheckBox}
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+            color="primary"
+          />
         </div>
-      }
-    />
-  </FormGroup>
+        }
+        label={
+          <div>
+            <span>I authorize MLH to send me pre- and post-event informational emails, 
+              which contain free credit and opportunities from their partners. *</span>
+          </div>
+        }
+      />
+    </FormGroup>
   )
 
   const personalInfo = (
     <Grid container spacing={2}>
       <Grid container item spacing={2} xs={12} md={6}>
         <Grid item xs={12}>
-          <TextField required id="standard-basic" variant="outlined" label="First Name" onChange={e => setFirst_name(e.target.value)} style={{ minWidth: 250 }} />
+          <TextField 
+            required id="standard-basic" 
+            variant="outlined" 
+            label="First Name" 
+            onChange={e => setFirst_name(e.target.value)} 
+            style={{ minWidth: 250 }} 
+            inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+            InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}, classes: {root: classes.label}}}
+          />
         </Grid>
 
         <Grid item xs={12}>
-          <TextField required id="standard-basic" variant="outlined" label="Last Name" onChange={e => setLast_name(e.target.value)} style={{ minWidth: 250 }} />
+          <TextField 
+            required id="standard-basic" 
+            variant="outlined" 
+            label="Last Name" 
+            onChange={e => setLast_name(e.target.value)} 
+            style={{ minWidth: 250 }} 
+            inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+            InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}, classes: {root: classes.label}}}
+          />
         </Grid>
 
         <Grid item xs={12}>
-          <TextField required variant="outlined" label="Gender" style={{ minWidth: 250 }}
+          <TextField 
+            required variant="outlined" 
+            label="Gender" 
+            style={{ minWidth: 250 }}
             onChange={(e) => {
               setGender(e.target.value);
             }}
             select
+            inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+            InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}, classes: {root: classes.label}}}
           >
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
@@ -367,11 +370,16 @@ export default function Register() {
         </Grid>
 
         <Grid item xs={12}>
-          <TextField required variant="outlined" label="Ethnicity" style={{ minWidth: 250, maxWidth: 250 }}
+          <TextField 
+            required variant="outlined" 
+            label="Ethnicity" 
+            style={{ minWidth: 250 }}
             onChange={(e) => {
               setEthnicity(e.target.value);
             }}
             select
+            inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+            InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}, classes: {root: classes.label}}}
           >
             <MenuItem value="American Indian or Alaska Native">American Indian or Alaska Native</MenuItem>
             <MenuItem value="Asian">Asian</MenuItem>
@@ -386,18 +394,29 @@ export default function Register() {
         </Grid>
 
         <Grid item xs={12}>
-          <TextField id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} style={{ minWidth: 250 }} />
+          <TextField 
+            id="standard-basic" 
+            variant="outlined" 
+            label="Phone Number" 
+            onChange={e => setPhone_number(e.target.value)} 
+            style={{ minWidth: 250 }} 
+            inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+            InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}, classes: {root: classes.label}}}
+          />
         </Grid>
       </Grid>
 
       <Grid container item spacing={2} xs={12} md={6}>
         <Grid item xs={12}>
-          <FormControl required variant="outlined" style={{ minWidth: 250 }}>
+          <FormControl 
+            required variant="outlined" 
+            style={{ minWidth: 250 }}
+          >
             <SchoolAutocomplete
               school={school}
               setSchool={setSchool} />
           </FormControl>
-          <Typography style={{ fontSize: '12px', color: "grey" }}>
+          <Typography style={{ fontSize: '12px', color: "black" }}>
             * If your school is not in the list, choose 'other schools'
         </Typography>
         </Grid>
@@ -406,17 +425,22 @@ export default function Register() {
           <MajorAutocomplete
             major={major}
             setMajor={setMajor} />
-          <Typography style={{ fontSize: '12px', color: "grey" }}>
+          <Typography style={{ fontSize: '12px', color: "black" }}>
             * If your major is not in the list, choose 'other majors'
         </Typography>
         </Grid>
 
         <Grid item xs={12}>
-          <TextField required variant="outlined" label="Program" style={{ minWidth: 250 }}
+          <TextField 
+            required variant="outlined" 
+            label="Program" 
+            style={{ minWidth: 250 }}
             onChange={(e) => {
               setGrad(e.target.value);
             }}
             select
+            inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+            InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}, classes: {root: classes.label}}}
           >
             <MenuItem value="Undergraduate">Undergraduate</MenuItem>
             <MenuItem value="Graduate">Graduate</MenuItem>
@@ -425,11 +449,16 @@ export default function Register() {
         </Grid>
 
         <Grid item xs={6}>
-          <TextField required variant="outlined" label="Grad Month" style={{ minWidth: 120 }}
+          <TextField 
+            required variant="outlined" 
+            label="Grad Month" 
+            style={{ minWidth: 190 }}
             onChange={(e) => {
               setGrad_month(e.target.value);
             }}
             select
+            inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+            InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}, classes: {root: classes.label}}}
           >
             <MenuItem value="01">01</MenuItem>
             <MenuItem value="02">02</MenuItem>
@@ -447,11 +476,16 @@ export default function Register() {
         </Grid>
 
         <Grid item xs={6}>
-          <TextField required variant="outlined" label="Grad Year" style={{ minWidth: 120 }}
+          <TextField 
+            required variant="outlined" 
+            label="Grad Year" 
+            style={{ minWidth: 170 }}
             onChange={(e) => {
               setGrad_year(e.target.value);
             }}
             select
+            inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+            InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}, classes: {root: classes.label}}}
           >
             <MenuItem value="2022">2022</MenuItem>
             <MenuItem value="2023">2023</MenuItem>
@@ -512,10 +546,15 @@ export default function Register() {
   }
 
   return (
-    <div class="container">
-      <div className="register-wrapper">
-        {selectPage()}
+    <body style={{
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2021_theme.png")`
+    }}>
+      <div class="container">
+        <div className="register-wrapper">
+          {/* {selectPage()} */}
+          {personalInfo}
+        </div>
       </div>
-    </div>
+    </body>
   )
 }
