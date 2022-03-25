@@ -6,11 +6,14 @@ from datetime import datetime
 
 from flask import Blueprint, request, Response, jsonify
 from flask_jwt_extended import jwt_required
+from bson import ObjectId
 
 events_api = Blueprint('events', __name__)
 
 # Event names need to be in the format Title_Season_Year. This method
 # enforces that and makes sure that everything is valid
+
+
 def check_event_name(event_name):
     names = ['AlumniPanel', 'Hackathon', 'InterviewWorkshop']
     seasons = ['Fall', 'Winter', 'Spring', 'Summer']
@@ -27,13 +30,17 @@ def check_event_name(event_name):
 
     return True
 
+
 @events_api.route('/', methods=['GET'])
 def get():
-    start_date_beg = datetime.fromisoformat(request.args['start_date_beg']) if 'start_date_beg' in request.args else -1
-    start_date_end = datetime.fromisoformat(request.args['start_date_end']) if 'start_date_end' in request.args else -1
-    end_date_beg = datetime.fromisoformat(request.args['end_date_beg']) if 'end_date_beg' in request.args else -1
-    end_date_end = datetime.fromisoformat(request.args['end_date_end']) if 'end_date_end' in request.args else -1
-
+    start_date_beg = datetime.fromisoformat(
+        request.args['start_date_beg']) if 'start_date_beg' in request.args else -1
+    start_date_end = datetime.fromisoformat(
+        request.args['start_date_end']) if 'start_date_end' in request.args else -1
+    end_date_beg = datetime.fromisoformat(
+        request.args['end_date_beg']) if 'end_date_beg' in request.args else -1
+    end_date_end = datetime.fromisoformat(
+        request.args['end_date_end']) if 'end_date_end' in request.args else -1
 
     # Build the args for the querying based on paraemeters provided
     args = {}
@@ -80,7 +87,7 @@ def create_event():
     if not check_event_name(event['event_name']): return Response('Invalid event name', status=400)
     # TODO: do we want to fold the next line into check_event_name or keep check_event_name just for checking the validity of the string itself
     if len(list(db.events.find({'event_name': event['event_name']}))) != 0: return Response('Event name already exists', status=400)
-    
+
     event['display_name'] = request.json['display_name']
     event['start_date'] = datetime.fromisoformat(request.json['start_date'])
     event['end_date'] = datetime.fromisoformat(request.json['end_date'])
@@ -145,3 +152,31 @@ def update_event():
             event_current, {"$set": {'event_name': request.json['new_event_name']}})
 
     return jsonify({"msg": "event updated"}), 200
+
+
+@events_api.route('/addParticipant', methods=['POST'])
+# @jwt_required
+def add_participant():
+
+    if not (all(field in request.json for field in ['event_name', 'user_id'])):
+        return Response('Invalid request', status=400)
+
+    event_name = request.json["event_name"]
+    user_id = request.json["user_id"]
+
+    event = {'event_name' : event_name}
+    if len(list(db.events.find(event))) == 0:
+        return Response('Event Does Not Exist', status=400)
+
+    user = db.users.find_one({"_id": ObjectId(user_id)})
+    print(user)
+    record = {
+      'user_id': user_id,
+      'username': user['username'],
+      'profile': user['profile'],
+      'status': 'registered'
+    }
+
+    db.events.update_one(event, {'$push' : {'event_participants' : record}})
+
+    return jsonify({"msg": "participant added"}), 200
