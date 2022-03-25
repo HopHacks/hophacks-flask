@@ -169,7 +169,6 @@ def add_participant():
         return Response('Event Does Not Exist', status=400)
 
     user = db.users.find_one({"_id": ObjectId(user_id)})
-    print(user)
     record = {
       'user_id': user_id,
       'username': user['username'],
@@ -177,6 +176,6 @@ def add_participant():
       'status': 'registered'
     }
 
-    db.events.update_one(event, {'$push' : {'event_participants' : record}})
+    db.events.update_one(event, {'$push' : {'event_participants' : record}, '$inc': {'num_registrations': 1}})
 
     return jsonify({"msg": "participant added"}), 200
