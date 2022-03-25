@@ -12,8 +12,6 @@ events_api = Blueprint('events', __name__)
 
 # Event names need to be in the format Title_Season_Year. This method
 # enforces that and makes sure that everything is valid
-
-
 def check_event_name(event_name):
     names = ['AlumniPanel', 'Hackathon', 'InterviewWorkshop']
     seasons = ['Fall', 'Winter', 'Spring', 'Summer']
