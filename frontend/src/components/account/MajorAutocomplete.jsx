@@ -70,7 +70,14 @@ const MajorAutocomplete = function MajorAutocomplete({
           onChange={(event, newValue) => {
             setMajor(newValue);
           }}
-          renderInput={(params) => <TextField required  {...params} label="Major" variant="outlined" />}
+          renderInput={(params) => 
+            <TextField 
+              required
+              {...params}
+              label="Major"
+              variant="outlined" 
+              InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}}}
+            />}
         />
     )
 }
