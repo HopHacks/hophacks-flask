@@ -216,3 +216,55 @@ def get_participant(event):
             participants = i['event_participants']
             break
     return jsonify({'participants': participants}), 200
+
+@events_api.route('/getParticipants/', methods=['GET'])
+# @jwt_required
+def get_participant_by_date():
+    start_date_beg = datetime.fromisoformat(
+        request.args['start_date_beg']) if 'start_date_beg' in request.args else -1
+    start_date_end = datetime.fromisoformat(
+        request.args['start_date_end']) if 'start_date_end' in request.args else -1
+    end_date_beg = datetime.fromisoformat(
+        request.args['end_date_beg']) if 'end_date_beg' in request.args else -1
+    end_date_end = datetime.fromisoformat(
+        request.args['end_date_end']) if 'end_date_end' in request.args else -1
+
+    # Build the args for the querying based on paraemeters provided
+    args = {}
+    if 'start_date_beg' in request.args:
+        args['start_date'] = {'$gte': start_date_beg}
+        if 'start_date_end' in request.args:
+            args['start_date']['$lte'] = start_date_end
+    elif 'start_date_end' in request.args:
+        args['start_date'] = {'$lte': start_date_end}
+
+    if 'end_date_beg' in request.args:
+        args['end_date'] = {'$gte': end_date_beg}
+        if 'end_date_end' in request.args:
+            args['end_date']['$lte'] = end_date_end
+    elif 'end_date_end' in request.args:
+        args['end_date'] = {'$lte': end_date_end}
+
+    # Query and build result
+    cursor = db.events.find(args)
+    
+    if len(list(db.events.find(args))) == 0:
+        return Response('No events occurred in this time frame', status=400)
+    
+    participants = []
+    
+    # Do not use hopkins_student in arguments (request.json) unless you only want Hopkins Students
+    # If a user being a Hopkins student is irrelevant, just do not include "hopkins_student" in request.json
+    
+    if 'hopkins_student' in request.json:
+        for i in cursor:
+            for j in i['event_participants']:
+                if j['profile']['is_jhu'] == True:
+                    participants.append(j)
+    else:
+        for i in cursor:
+            for j in i['event_participants']:
+                participants.append(j)
+    # Remove duplicate participants
+    participants = list(set(participants))
+    return jsonify({'participants': participants}), 200
