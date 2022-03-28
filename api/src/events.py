@@ -171,12 +171,53 @@ def add_participant():
       'user_id': user_id,
       'username': user['username'],
       'profile': user['profile'],
-      'status': 'registered'
+      'status': 'applied'
     }
 
     db.events.update_one(event, {'$push' : {'event_participants' : record}, '$inc': {'num_registrations': 1}})
 
+    event_record = {
+      'event_name': event_name,
+      'status': 'applied'
+    }
+    
+    db.users.update_one({"_id": ObjectId(user_id)}, {'$push' : {'registrations' : event_record}})
+
     return jsonify({"msg": "participant added"}), 200
+
+@events_api.route('/update_status', methods=['PUT'])
+# @jwt_required
+def update_status():
+
+    if not (all(field in request.json for field in ['event_name', 'user_id', 'status'])):
+        return Response('Invalid request', status=400)
+
+    event_name = request.json["event_name"]
+    user_id = request.json["user_id"]
+    status = request.json["status"]
+    '''
+    event = {'event_name' : event_name}
+    if len(list(db.events.find(event))) == 0:
+        return Response('Event Does Not Exist', status=400)
+
+    user = db.users.find_one({"_id": ObjectId(user_id)})
+    record = {
+      'user_id': user_id,
+      'username': user['username'],
+      'profile': user['profile'],
+      'status': 'applied'
+    }
+
+    db.events.update_one(event, {'$push' : {'event_participants' : record}, '$inc': {'num_registrations': 1}})
+
+    event_record = {
+      'event_name': event_name,
+      'status': 'applied'
+    }
+    
+    db.users.update_one({"_id": ObjectId(user_id)}, {'$push' : {'registrations' : event_record}})
+    '''
+    return jsonify({"msg": "registration updated"}), 200
 
 @events_api.route('/getParticipants/<event>', methods=['GET'])
 # @jwt_required
@@ -192,23 +233,23 @@ def get_participant(event):
     # If a user being a Hopkins student is irrelevant, just do not include "hopkins_student" in request.json 
     participants = []
     cursor = db.events.find(args)
-    if 'hopkins_student' in request.json and 'reg_status' in request.json:
+    if 'hopkins_student' in request.args and 'reg_status' in request.args:
         for i in cursor:
             for j in i['event_participants']:
-                if j['status'] == request.json['reg_status'] and j['profile']['is_jhu'] == True:
+                if j['status'] == request.args['reg_status'] and j['profile']['is_jhu'] == True:
                     participants.append(j)
             break
-    elif 'hopkins_student' in request.json:
+    elif 'hopkins_student' in request.args:
         for i in cursor:
             for j in i['event_participants']:
                 print(j['profile']['school'])
                 if j['profile']['is_jhu'] == True:
                     participants.append(j)
             break
-    elif 'reg_status' in request.json:
+    elif 'reg_status' in request.args:
         for i in cursor:
             for j in i['event_participants']:
-                if j['status'] == request.json['reg_status']:
+                if j['status'] == request.args['reg_status']:
                     participants.append(j)
             break
     else:
@@ -254,16 +295,16 @@ def get_participant_by_date():
 
     # Query and build result
     cursor = db.events.find(args)
-    
+
     if len(list(db.events.find(args))) == 0:
         return Response('No events occurred in this time frame', status=400)
     
     participants = []
     
-    # Do not use hopkins_student in arguments (request.json) unless you only want Hopkins Students
-    # If a user being a Hopkins student is irrelevant, just do not include "hopkins_student" in request.json
+    # Do not use hopkins_student in arguments (request.args) unless you only want Hopkins Students
+    # If a user being a Hopkins student is irrelevant, just do not include "hopkins_student" in request.args
     
-    if 'hopkins_student' in request.json:
+    if 'hopkins_student' in request.args:
         for i in cursor:
             for j in i['event_participants']:
                 if j['profile']['is_jhu'] == True:
