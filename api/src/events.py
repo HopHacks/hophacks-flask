@@ -217,7 +217,14 @@ def get_participant(event):
             break
     return jsonify({'participants': participants}), 200
 
-@events_api.route('/getParticipants/', methods=['GET'])
+def remove_duplicates_from_list(random_list):
+    res = []
+    for i in random_list:
+        if i not in res:
+            res.append(i)
+    return res
+
+@events_api.route('/getParticipants', methods=['GET'])
 # @jwt_required
 def get_participant_by_date():
     start_date_beg = datetime.fromisoformat(
@@ -266,5 +273,5 @@ def get_participant_by_date():
             for j in i['event_participants']:
                 participants.append(j)
     # Remove duplicate participants
-    participants = list(set(participants))
+    participants = remove_duplicates_from_list(participants)
     return jsonify({'participants': participants}), 200
