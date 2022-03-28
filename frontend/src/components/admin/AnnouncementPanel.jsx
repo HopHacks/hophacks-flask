@@ -47,16 +47,61 @@ const useStyles = makeStyles((theme) => ({
         width: '25ch',
     },
     verticalCenter: {
-        position: 'absolute',
+        position: 'flex',
         marginTop: "-2.5%",
         marginLeft: "36.5%",
+    },
+
+    cssLabel: {
+      color: "white"
+    },
+    cssOutlinedInput: {
+      color: 'white',   // <!-- ADD THIS ONE
+      "&$cssFocused $notchedOutline": {
+        borderColor: `white !important`
+      }
+    },
+    cssFocused: { color: "white !important" },
+  
+    notchedOutline: {
+      borderColor: "white !important"
     }
-}));
+  })
+);
 
 
 const Panel = function() {
     const classes = useStyles();
-    const [page, setPage] = useState(1);
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [event, setEvent] = useState("");
+    const [sender, setSender] = useState("");
+    const [priority, setPriority] = useState("");
+    
+    const handleTitleChange = (event) => {
+      setTitle(event.target.value)
+      console.log(event.target.value);
+    };
+
+    const handleContentChange = (event) => {
+      setContent(event.target.value)
+      console.log(event.target.value);
+    };
+
+    const handleEventChange = (event) => {
+      setEvent(event.target.value)
+      console.log(event.target.value);
+    };
+
+    const handleSenderChange = (event) => {
+      setSender(event.target.value)
+      console.log(event.target.value);
+    };
+
+    const handlePriorityChange = (event) => {
+      setPriority(event.target.value)
+      console.log(event.target.value);
+    };
     return (
         <>
         <div>
@@ -75,23 +120,24 @@ const Panel = function() {
           id="outlined-multiline-flexible"
           label="Title"
           rows={2}
-          defaultValue="Please Enter the Title"
           style={{ margin: 8}}
           fullWidth
+          color="white"
           variant="outlined"
           InputLabelProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
+              root: classes.cssLabel,
+              focused: classes.cssFocused,
             },
           }}
           InputProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
-              notchedOutline: classes.title,
-            },
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused,
+              notchedOutline: classes.notchedOutline,
+            }
           }}
+          onChange={handleTitleChange}
         />
 
         <TextField
@@ -100,87 +146,111 @@ const Panel = function() {
           multiline
           fullWidth
           rows={4}
-          defaultValue="Please Enter the Content"
           variant="outlined"
           style={{ margin: 8}}
           InputLabelProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
+              root: classes.cssLabel,
+              focused: classes.cssFocused,
             },
           }}
           InputProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
-              notchedOutline: classes.title,
-            },
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused,
+              notchedOutline: classes.notchedOutline,
+            }
           }}
+          onChange={handleContentChange}
         />
         <div>
         <TextField
+          select
           label="Event"
-          id="outlined-multiline-flexible"
-          defaultValue="Fall 2022"
           variant="outlined"
           style={{ margin: 8}}
           className={classes.textField}
           InputLabelProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
+              root: classes.cssLabel,
+              focused: classes.cssFocused,
             },
           }}
           InputProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
-              notchedOutline: classes.title,
-            },
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused,
+              notchedOutline: classes.notchedOutline,
+            }
           }}
-        />
+          SelectProps={{
+            MenuProps: {
+              anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "left"
+              },
+              getContentAnchorEl: null
+            }
+          }}
+          onChange={handleEventChange}
+        >
+         <MenuItem value={"Fall 2022"}>Fall 2022</MenuItem>
+         </TextField>
         <TextField
           label="Sender"
           id="outlined-multiline-flexible"
-          defaultValue="Enter the Sender"
           className={classes.textField}
           style={{ margin: 8}}
           variant="outlined"
           InputLabelProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
+              root: classes.cssLabel,
+              focused: classes.cssFocused,
             },
           }}
           InputProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
-              notchedOutline: classes.title,
-            },
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused,
+              notchedOutline: classes.notchedOutline,
+            }
           }}
+          onChange={handleSenderChange}
         />
         <TextField
           label="Priority"
-          id="outlined-multiline-flexible"
-          defaultValue="Y / N"
+          select
           className={classes.textField}
           style={{ margin: 8}}
           variant="outlined"
           InputLabelProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
+              root: classes.cssLabel,
+              focused: classes.cssFocused,
             },
           }}
           InputProps={{
             classes: {
-              root: classes.title,
-              focused: classes.title,
-              notchedOutline: classes.title,
-            },
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused,
+              notchedOutline: classes.notchedOutline,
+            }
           }}
-        />
+          SelectProps={{
+            MenuProps: {
+              anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "left"
+              },
+              getContentAnchorEl: null
+            }
+          }}
+          onChange={handlePriorityChange}
+          >
+            <MenuItem value={"Yes"}>Yes</MenuItem>
+            <MenuItem value={"No"}>No</MenuItem>
+         </TextField>
+
         </div>
         </div>
         </div>

@@ -50,11 +50,11 @@ export default function App() {
                 <Route path="/sponsor-prizes" component={SponsorPrizes}/>
                 <Route path="/tables" component={TablesAndRooms}/>
 
-                <Route path="/admin">
+                <Route exact path="/admin">
                   <Admin />
                 </Route>
 
-                <Route path="/announcementPanel">
+                <Route exact path="/admin/announcementpanel">
                   <AnnouncementPanel />
                 </Route>
 
