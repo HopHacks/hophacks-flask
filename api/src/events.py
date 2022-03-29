@@ -65,9 +65,22 @@ def get():
 
     for e in cursor:
         events.append({'event_name': e['event_name'], 'display_name': e['display_name'],
-                       'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description']})
+                       'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description'], 'is_virtual': e['is_virtual'],
+                       'zoom_link': e['zoom_link'], 'location': e['location']})
 
     return jsonify({'events': events}), 200
+
+@events_api.route('/<event_name>', methods=['GET'])
+def get_event(event_name):
+    e = db.events.find_one({"event_name": event_name})
+    if e == None:
+        return Response('Event does not exist', status=400)
+
+    event = {'event_name': e['event_name'], 'display_name': e['display_name'],
+                       'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description'], 'is_virtual': e['is_virtual'],
+                       'zoom_link': e['zoom_link'], 'location': e['location']}
+
+    return jsonify(event), 200
 
 
 @events_api.route('/', methods=['POST'])
