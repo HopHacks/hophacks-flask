@@ -17,13 +17,14 @@ events_api = Blueprint('events', __name__)
     
 
 def check_event_name(event_name):
+
     """Checks to see if event names are properly formatted
 
     Example of valid event name: Hackation_Fall_2022
     Another Example of valid event name: AlumniPanel_Spring_2022
 
     :param event_name: String that is being checked
-    :returns whether event_name is a valid event name
+    :return: whether event_name is a valid event name
 
     """
 
@@ -44,6 +45,7 @@ def check_event_name(event_name):
 
 @events_api.route('/', methods=['GET'])
 def get():
+
     """Gets all events within a specified time frame
 
     :reqjson start_date_beg: Start date and time
@@ -60,7 +62,7 @@ def get():
         "end_date_end": "2022-09-24"
     }
 
-    :returns dictionary with key 'events' and the value is a list of all events within specified time frame
+    :return: dictionary with key 'events' and the value is a list of all events within specified time frame
 
     :status 200: Successful
 
@@ -105,11 +107,12 @@ def get():
 
 @events_api.route('/<event_name>', methods=['GET'])
 def get_event(event_name):
+
     """Gets an event based on the event's name.
 
-    :param event_name is the name that is being checked to see if it is associated with an event
+    :param event_name: name that is being checked to see if it is associated with an event
 
-    :returns the event as a dictionary with fields 'event_name', 'display_name', 'start_date', 'end_date', 'description', 'is_virtual', 'zoom_link', and 'location'
+    :return: the event as a dictionary with fields 'event_name', 'display_name', 'start_date', 'end_date', 'description', 'is_virtual', 'zoom_link', and 'location'
 
     :status 200: Successful
     :status 400: Event doesn't exist
@@ -374,7 +377,7 @@ def update_status():
     :status 400: Invalid request or registration does not exist
 
     """
-    
+
     if not (all(field in request.json for field in ['event_name', 'user_id', 'status'])):
         return Response('Invalid request', status=400)
 
@@ -428,10 +431,29 @@ def update_status():
 
     return jsonify({"msg": "registration updated"}), 200
 
-
 @events_api.route('/getRegistrations/', methods=['GET'])
 # @jwt_required
 def get_registrations():
+
+    """Get all events that a user has registered for.
+
+    :reqjson user_id: the object ID of the user in the database
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "user_id": "623e2e52eebe994953ba2f84"
+    }
+
+    :return: list of all events user has registered for
+
+    :status 200: Registrations returned successfully
+    :status 400: Invalid request
+
+    """
+
     if 'user_id' not in request.args:
         return Response('Invalid request', status=400)
 
@@ -445,6 +467,32 @@ def get_registrations():
 @events_api.route('/getParticipants/<event>', methods=['GET'])
 # @jwt_required
 def get_participant(event):
+
+    """Get all participants for a specific event.
+
+    :param event_name: event name
+
+    :reqjson hopkins_student: Used if and only if ONLY Hopkins students should be returned
+    :reqjson reg_status: registration status of users being returned
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "hopkins_student": "ye",
+        "reg_status": "rsvp"
+    }
+
+    Both hopkins_student and reg_status are essentially search filters
+
+    :return: dictionary with 'participants' as key and value as list of all participants of the event
+
+    :status 200: list of all participants is returned successfully
+    :status 400: Invalid request or event does not exist
+
+    """
+
     if event is None:
         return Response('Invalid request', status=400)
 
