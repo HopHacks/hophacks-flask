@@ -186,6 +186,20 @@ def create_event():
 
     """Deletes an event.
 
+    :reqjson event_name: event name
+    :reqjson display_name: name of event displayed to general public
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "event_name": "HopHacks_Fall_2022",
+        "display_name": "HopHacks Fall 2022"
+    }
+
+    :status 200: Event deleted
+    :status 400: Error with request or operation
     
     """
 @events_api.route('/', methods=['DELETE'])
