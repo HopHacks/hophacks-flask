@@ -531,6 +531,12 @@ def get_participant(event):
 
 
 def remove_duplicates_from_list(random_list):
+    """Removes duplicates from a list
+
+    :param random_list: List that duplicates will be removed from
+    :return: list without any duplicate values
+
+    """
     res = []
     for i in random_list:
         if i not in res:
@@ -541,6 +547,28 @@ def remove_duplicates_from_list(random_list):
 @events_api.route('/getParticipants', methods=['GET'])
 # @jwt_required
 def get_participant_by_date():
+
+    """Gets all participants within a certain time frame
+
+    :reqjson start_date_beg: Start date and time
+    :reqjson start_date_end: Start date and time (used in conjunction with start_date_beg for one-day events)
+    :reqjson end_date_beg: End date and time (used in conjunction with end_date_end potentially for one-date events)
+    :reqjson end_date_end: End date and time 
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "start_date_beg": "2022-09-22",
+        "end_date_end": "2022-09-24"
+    }
+
+    :status 200: Successful
+    :status 400: No events in timeframe
+
+    """
+    
     start_date_beg = datetime.fromisoformat(
         request.args['start_date_beg']) if 'start_date_beg' in request.args else -1
     start_date_end = datetime.fromisoformat(
