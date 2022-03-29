@@ -278,7 +278,24 @@ def update_event():
 
     return jsonify({"msg": "event updated"}), 200
 
+    """Adds a participant to an event.
 
+    :reqjson event_name: event name
+    :reqjson user_id: the object ID of the user in the database
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "event_name": "HopHacks_Fall_2022
+        "user_id": "623e2e52eebe994953ba2f84"
+    }
+    
+    :status 200: Participant added
+    :status 400: Error with request or event doesn't exist
+
+    """
 @events_api.route('/addParticipant', methods=['POST'])
 # @jwt_required
 def add_participant():
