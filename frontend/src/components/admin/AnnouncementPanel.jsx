@@ -2,6 +2,12 @@ import React, {useState,useEffect} from "react";
 import { withAdminAuthCheck } from "../../util/auth";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 import Select from '@material-ui/core/Select';
@@ -33,7 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
     title: {
         color :"white",
-        borderColor : "white !important"
+        borderColor : "white !important",
+        position: 'flex',
+        marginTop: "2.5%",
+        marginLeft: "7.5%",
     },
 
     root: {
@@ -77,6 +86,7 @@ const Panel = function() {
     const [event, setEvent] = useState("");
     const [sender, setSender] = useState("");
     const [priority, setPriority] = useState("");
+    const [open, setOpen] = useState(false);
     
     const handleTitleChange = (event) => {
       setTitle(event.target.value)
@@ -102,6 +112,26 @@ const Panel = function() {
       setPriority(event.target.value)
       console.log(event.target.value);
     };
+
+    const handleOpenDialog = () => {
+      setOpen(true);
+    }
+    
+    async function sendAnnouncement() {
+      try{
+        await axios.post("/api/announcements/", {"title" : title, "content" : content, "event" : event, "broadcast" : "no", "importance" : priority});
+      } catch (ex) {
+        console.log(ex);
+      }
+    } 
+
+    const handleCloseDialog = (event) => {
+      if (event.currentTarget.id === "confirm") {
+        sendAnnouncement();
+      }
+      setOpen(false);
+    }
+
     return (
         <>
         <div>
@@ -109,9 +139,31 @@ const Panel = function() {
                 Announcement Panel
             </h2>
             <div className={classes.verticalCenter}>
-            <Button variant="contained" color="white" margain='center'>
+            <Button variant="contained" color="white" margain='center' onClick={handleOpenDialog}> 
                 Send
             </Button>
+            <Dialog
+              open={open}
+              // TransitionComponent={Transition}
+              keepMounted
+              onClose={handleCloseDialog}
+              aria-describedby="alert-dialog-slide-description"
+            >
+            <DialogTitle>{"Please Confirm The Announcement"}</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              <p> Title : {title} </p>
+              <p> Content : {content} </p>
+              <p> Event : {event} </p>
+              <p> Sender : {sender} </p>
+              <p> Priority : {priority} </p>
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            < Button onClick={handleCloseDialog} id="back">Back</Button>
+            < Button onClick={handleCloseDialog} id="confirm">Confirm</Button>
+            </DialogActions>
+            </Dialog>
             </div>
 
             <div className={classes.root}>
