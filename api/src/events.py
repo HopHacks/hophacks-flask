@@ -14,6 +14,15 @@ events_api = Blueprint('events', __name__)
 # enforces that and makes sure that everything is valid
 
 
+    """Checks to see if event names are properly formatted
+
+    Example of valid event name: Hackation_Fall_2022
+    Another Example of valid event name: AlumniPanel_Spring_2022
+
+    :param event_name: String that is being checked
+    :returns whether event_name is a valid event name
+    """
+
 def check_event_name(event_name):
     names = ['AlumniPanel', 'Hackathon', 'InterviewWorkshop']
     seasons = ['Fall', 'Winter', 'Spring', 'Summer']
@@ -31,6 +40,27 @@ def check_event_name(event_name):
     return True
 
 
+    """Gets all events within a specified time frame
+
+    :reqjson start_date_beg: Start date and time
+    :reqjson start_date_end: Start date and time (used in conjunction with start_date_beg for one-day events)
+    :reqjson end_date_beg: End date and time (used in conjunction with end_date_end potentially for one-date events)
+    :reqjson end_date_end: End date and time 
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "start_date_beg": "2022-09-22",
+        "end_date_end": "2022-09-24"
+    }
+
+    :returns dictionary with key 'events' and the value is a list of all events within specified time frame
+
+    :status 200: Successful
+
+    """
 @events_api.route('/', methods=['GET'])
 def get():
     start_date_beg = datetime.fromisoformat(
@@ -70,6 +100,16 @@ def get():
 
     return jsonify({'events': events}), 200
 
+    """Gets an event based on the event's name.
+
+    :param event_name is the name that is being checked to see if it is associated with an event
+
+    :returns the event as a dictionary with fields 'event_name', 'display_name', 'start_date', 'end_date', 'description', 'is_virtual', 'zoom_link', and 'location'
+
+    :status 200: Successful
+    :status 400: Event doesn't exist
+
+    """
 @events_api.route('/<event_name>', methods=['GET'])
 def get_event(event_name):
     e = db.events.find_one({"event_name": event_name})
@@ -82,7 +122,33 @@ def get_event(event_name):
 
     return jsonify(event), 200
 
+    """Creates an event.
 
+    :reqjson event_name: event name
+    :reqjson display_name: name of event displayed to general public
+    :reqjson start_date: start date of event
+    :reqjson end_date: end date of event
+    :reqjson description: description of event optional)
+    :reqjson is_virtual: boolean string true/false saying whether event is virtual or in-person
+    :reqjson location: location of event (optional)
+    :reqjson zoom_link: zoom link of event (optional)
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "event_name": "HopHacks_Fall_2022",
+        "display_name": "HopHacks Fall 2022",
+        "start_date": "2022-09-22",
+        "end_date": "2022-09-24",
+        "description": "36 hour hackathon for college students",
+        "is_virtual": "true"
+    }
+
+    :status 200: Event added
+    :status 400: Error with request
+    """
 @events_api.route('/', methods=['POST'])
 # @jwt_required
 # @check_admin
@@ -118,6 +184,10 @@ def create_event():
     return jsonify({"msg": "event added"}), 200
 
 
+    """Deletes an event.
+
+    
+    """
 @events_api.route('/', methods=['DELETE'])
 # @jwt_required
 # @check_admin
