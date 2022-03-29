@@ -128,7 +128,7 @@ def get_event(event_name):
     :reqjson display_name: name of event displayed to general public
     :reqjson start_date: start date of event
     :reqjson end_date: end date of event
-    :reqjson description: description of event optional)
+    :reqjson description: description of event (optional)
     :reqjson is_virtual: boolean string true/false saying whether event is virtual or in-person
     :reqjson location: location of event (optional)
     :reqjson zoom_link: zoom link of event (optional)
@@ -219,7 +219,31 @@ def delete_event():
     db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
 
+    """Updates an event.
 
+    :reqjson event_name: event name
+    :reqjson new_event_name: new event name that event_name is being changed to (optional)
+    :reqjson display_name: new name of event displayed to general public (optional)
+    :reqjson start_date: new start date of event (optional)
+    :reqjson end_date: new end date of event (optional)
+    :reqjson description: new description of event (optional)
+    :reqjson is_virtual: new boolean string true/false saying whether event is virtual or in-person (optional)
+    :reqjson location: new location of event (optional)
+    :reqjson zoom_link: new zoom link of event (optional)
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "event_name": "HopHacks_Fall_2022
+        "new_event_name": "Hophacks_Fall_2023"
+    }
+
+    :status 200: Event updated
+    :status 400: Error with request or update operation
+
+    """
 @events_api.route('/', methods=['PUT'])
 # @jwt_required
 # @check_admin
@@ -247,6 +271,8 @@ def update_event():
                 i: request.json[i]}
             })
     if 'new_event_name' in request.json:
+        if not check_event_name(request.json['event_name']):
+            return Response('Invalid new_event_name', status=400)
         db.events.update_one(
             event_current, {"$set": {'event_name': request.json['new_event_name']}})
 
