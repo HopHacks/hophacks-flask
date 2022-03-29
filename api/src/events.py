@@ -14,6 +14,9 @@ events_api = Blueprint('events', __name__)
 # enforces that and makes sure that everything is valid
 
 
+    
+
+def check_event_name(event_name):
     """Checks to see if event names are properly formatted
 
     Example of valid event name: Hackation_Fall_2022
@@ -21,9 +24,9 @@ events_api = Blueprint('events', __name__)
 
     :param event_name: String that is being checked
     :returns whether event_name is a valid event name
+
     """
 
-def check_event_name(event_name):
     names = ['AlumniPanel', 'Hackathon', 'InterviewWorkshop']
     seasons = ['Fall', 'Winter', 'Spring', 'Summer']
     beg_year = 2007
@@ -39,7 +42,8 @@ def check_event_name(event_name):
 
     return True
 
-
+@events_api.route('/', methods=['GET'])
+def get():
     """Gets all events within a specified time frame
 
     :reqjson start_date_beg: Start date and time
@@ -61,8 +65,7 @@ def check_event_name(event_name):
     :status 200: Successful
 
     """
-@events_api.route('/', methods=['GET'])
-def get():
+
     start_date_beg = datetime.fromisoformat(
         request.args['start_date_beg']) if 'start_date_beg' in request.args else -1
     start_date_end = datetime.fromisoformat(
@@ -100,6 +103,8 @@ def get():
 
     return jsonify({'events': events}), 200
 
+@events_api.route('/<event_name>', methods=['GET'])
+def get_event(event_name):
     """Gets an event based on the event's name.
 
     :param event_name is the name that is being checked to see if it is associated with an event
@@ -110,8 +115,7 @@ def get():
     :status 400: Event doesn't exist
 
     """
-@events_api.route('/<event_name>', methods=['GET'])
-def get_event(event_name):
+
     e = db.events.find_one({"event_name": event_name})
     if e == None:
         return Response('Event does not exist', status=400)
@@ -121,6 +125,12 @@ def get_event(event_name):
                        'zoom_link': e['zoom_link'], 'location': e['location']}
 
     return jsonify(event), 200
+
+    
+@events_api.route('/', methods=['POST'])
+# @jwt_required
+# @check_admin
+def create_event():
 
     """Creates an event.
 
@@ -148,11 +158,9 @@ def get_event(event_name):
 
     :status 200: Event added
     :status 400: Error with request
+    
     """
-@events_api.route('/', methods=['POST'])
-# @jwt_required
-# @check_admin
-def create_event():
+
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
@@ -184,6 +192,12 @@ def create_event():
     return jsonify({"msg": "event added"}), 200
 
 
+    
+@events_api.route('/', methods=['DELETE'])
+# @jwt_required
+# @check_admin
+def delete_event():
+
     """Deletes an event.
 
     :reqjson event_name: event name
@@ -202,10 +216,7 @@ def create_event():
     :status 400: Error with request or operation
     
     """
-@events_api.route('/', methods=['DELETE'])
-# @jwt_required
-# @check_admin
-def delete_event():
+
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
@@ -218,6 +229,12 @@ def delete_event():
 
     db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
+
+    
+@events_api.route('/', methods=['PUT'])
+# @jwt_required
+# @check_admin
+def update_event():
 
     """Updates an event.
 
@@ -236,7 +253,7 @@ def delete_event():
     .. sourcecode:: json
 
     {
-        "event_name": "HopHacks_Fall_2022
+        "event_name": "HopHacks_Fall_2022",
         "new_event_name": "Hophacks_Fall_2023"
     }
 
@@ -244,10 +261,7 @@ def delete_event():
     :status 400: Error with request or update operation
 
     """
-@events_api.route('/', methods=['PUT'])
-# @jwt_required
-# @check_admin
-def update_event():
+
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
@@ -278,6 +292,11 @@ def update_event():
 
     return jsonify({"msg": "event updated"}), 200
 
+    
+@events_api.route('/addParticipant', methods=['POST'])
+# @jwt_required
+def add_participant():
+
     """Adds a participant to an event.
 
     :reqjson event_name: event name
@@ -288,7 +307,7 @@ def update_event():
     .. sourcecode:: json
 
     {
-        "event_name": "HopHacks_Fall_2022
+        "event_name": "HopHacks_Fall_2022",
         "user_id": "623e2e52eebe994953ba2f84"
     }
     
@@ -296,9 +315,6 @@ def update_event():
     :status 400: Error with request or event doesn't exist
 
     """
-@events_api.route('/addParticipant', methods=['POST'])
-# @jwt_required
-def add_participant():
 
     if not (all(field in request.json for field in ['event_name', 'user_id'])):
         return Response('Invalid request', status=400)
@@ -332,10 +348,33 @@ def add_participant():
     return jsonify({"msg": "participant added"}), 200
 
 
+    
+
 @events_api.route('/update_status', methods=['PUT'])
 # @jwt_required
 def update_status():
 
+    """Updates the registration status of a user
+
+    :reqjson event_name: event name
+    :reqjson user_id: the object ID of the user in the database
+    :status: the new registration status of the user for this event
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "event_name": "HopHacks_Fall_2022",
+        "user_id": "623e2e52eebe994953ba2f84",
+        "status": "rsvp"
+    }
+
+    :status 200: Registration status updated
+    :status 400: Invalid request or registration does not exist
+
+    """
+    
     if not (all(field in request.json for field in ['event_name', 'user_id', 'status'])):
         return Response('Invalid request', status=400)
 
