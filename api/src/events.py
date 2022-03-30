@@ -542,9 +542,11 @@ def remove_duplicates_from_list(random_list):
 
     """
     res = []
+    user_ids = set()
     for i in random_list:
-        if i not in res:
-            res.append(i)
+        if i["user_id"] not in user_ids:
+            res.append({"profile": i["profile"], "username": i["username"]})
+            user_ids.add(i["user_id"])
     return res
 
 
