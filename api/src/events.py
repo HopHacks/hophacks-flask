@@ -127,8 +127,8 @@ def get_event(event_name):
 
     
 @events_api.route('/', methods=['POST'])
-# @jwt_required
-# @check_admin
+@jwt_required
+@check_admin
 def create_event():
 
     """Creates an event.
@@ -193,8 +193,8 @@ def create_event():
 
     
 @events_api.route('/', methods=['DELETE'])
-# @jwt_required
-# @check_admin
+@jwt_required
+@check_admin
 def delete_event():
 
     """Deletes an event.
@@ -230,8 +230,8 @@ def delete_event():
 
     
 @events_api.route('/', methods=['PUT'])
-# @jwt_required
-# @check_admin
+@jwt_required
+@check_admin
 def update_event():
 
     """Updates an event.
@@ -292,7 +292,7 @@ def update_event():
 
     
 @events_api.route('/addParticipant', methods=['POST'])
-# @jwt_required
+@jwt_required
 def add_participant():
 
     """Adds a participant to an event.
@@ -351,7 +351,7 @@ def add_participant():
     
 
 @events_api.route('/update_status', methods=['PUT'])
-# @jwt_required
+@jwt_required
 def update_status():
 
     """Updates the registration status of a user
@@ -434,7 +434,7 @@ def update_status():
     return jsonify({"msg": "registration updated"}), 200
 
 @events_api.route('/getRegistrations/', methods=['GET'])
-# @jwt_required
+@jwt_required
 def get_registrations():
 
     """Get all events that a user has registered for.
@@ -469,7 +469,7 @@ def get_registrations():
 
 
 @events_api.route('/getParticipants/<event>', methods=['GET'])
-# @jwt_required
+@jwt_required
 def get_participant(event):
 
     """Get all participants for a specific event.
@@ -551,7 +551,7 @@ def remove_duplicates_from_list(random_list):
 
 
 @events_api.route('/getParticipants', methods=['GET'])
-# @jwt_required
+@jwt_required
 def get_participant_by_date():
 
     """Gets all participants within a certain time frame
