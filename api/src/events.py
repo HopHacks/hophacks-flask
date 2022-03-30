@@ -208,7 +208,6 @@ def delete_event():
 
     {
         "event_name": "HopHacks_Fall_2022",
-        "display_name": "HopHacks Fall 2022"
     }
 
     :status 200: Event deleted
@@ -219,7 +218,7 @@ def delete_event():
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['event_name', 'display_name'])):
+    if not (all(field in request.json for field in ['event_name'])):
         return Response('Invalid request', status=400)
     event = {}
     event['event_name'] = request.json['event_name']
