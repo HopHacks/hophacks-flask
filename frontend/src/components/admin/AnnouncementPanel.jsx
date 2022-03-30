@@ -87,6 +87,39 @@ const Panel = function() {
     const [sender, setSender] = useState("");
     const [priority, setPriority] = useState("");
     const [open, setOpen] = useState(false);
+
+    const [announcements, setAnnouncements] = useState([]);
+
+    async function getAnnouncements(){
+      try{
+        const response = await axios.get("/api/announcements/titles");
+        setAnnouncements(response.data['announcements']);
+        console.log(announcements)
+        console.log(response.data['announcements'])
+      } catch (ex){
+        console.log('Unable to get all announcements');
+      }
+    }
+
+    function populateAnnouncements() {
+      console.log(announcements)
+      console.log(announcements)
+      return (
+        announcements?.map((announcement, index) => (
+          <TableRow key={index}>
+            <TableCell component="th" scope="row">
+            {announcement.title}
+            </TableCell>
+          </TableRow>
+        ))
+      )
+    }
+
+    useEffect(() => {
+      getAnnouncements()
+      populateAnnouncements()
+    }, []);
+
     
     const handleTitleChange = (event) => {
       setTitle(event.target.value)
@@ -306,6 +339,22 @@ const Panel = function() {
         </div>
         </div>
         </div>
+        </div>
+
+
+        <div>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">Title</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {populateAnnouncements()}
+            </TableBody>
+          </Table>
+        </TableContainer>
         </div>
         </>
     );
