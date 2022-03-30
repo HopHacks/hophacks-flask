@@ -114,9 +114,9 @@ def display_all():
         return Response('Invalid request', status=400)
 
     cursor = db.announcements.find({'event': event}).sort("time", -1)
-    announcemnets = []
+    announcements = []
     for annouc in cursor:
-        announcemnets.append({
+        announcements.append({
             'title': annouc['title'], 
             'content': annouc['content'], 
             'event': annouc['event'], 
@@ -126,7 +126,7 @@ def display_all():
             'time': annouc['time']
             })
   
-    return jsonify({'announcemnets': announcemnets}), 200
+    return jsonify({'announcements': announcements}), 200
 
 @announcements_api.route('/important', methods = ['GET'])
 def display_first_important():
@@ -201,7 +201,7 @@ def display_three_recent():
             'time': annouc['time']
             })
   
-    return jsonify({'announcemnets': announcements}), 200
+    return jsonify({'announcements': announcements}), 200
 
 @announcements_api.route('/history', methods = ['GET'])
 def display_history():
@@ -244,4 +244,4 @@ def display_history():
                 'time': annouc['time']
                 })
     
-    return jsonify({'announcemnets': announcements}), 200
+    return jsonify({'announcements': announcements}), 200

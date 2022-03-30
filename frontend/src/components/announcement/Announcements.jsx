@@ -24,6 +24,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import {useState,useEffect} from "react";
 
 
+
+
 const useStyles = makeStyles({
 
     title: {
@@ -47,22 +49,42 @@ const useStyles = makeStyles({
         width:'150px',
         height: '150px',
     },
+
     imAnnouncementPic: {
         width:'60%',
         height:'60%',
         marginLeft: '20%',
         marginRight: '20%',
     },
+
     pagination: {
         marginTop: "3%",
         marginLeft: "40%",
     },
-    inboxdescription: {
+
+    topAnnouncementContent: {
         display: "-webkit-box",
         boxOrient: "vertical",
-        lineClamp: 2,
+        lineClamp: 3,
         wordBreak: "break-all",
         overflow: "hidden"
+    },
+
+    recentThreeAnnouncementContent: {
+      display: "-webkit-box",
+      boxOrient: "vertical",
+      lineClamp: 2,
+      wordBreak: "break-all",
+      overflow: "hidden"
+    },
+
+    historyAnnouncementContent: {
+      display: "-webkit-box",
+      boxOrient: "vertical",
+      lineClamp: 1,
+      wordBreak: "break-all",
+      overflow: "hidden",
+      maxWidth: "500px"
     },
 });
 
@@ -70,8 +92,9 @@ export default function Announcements() {
     const classes = useStyles();
     
     const [page, setPage] = useState(1);
-    const [announcements, setAnnouncements] = useState([]);
-    const [first_important_announcement,setTopAnnouncement] = useState({});
+    const [historyAnnouncements, setHistoryAnnouncements] = useState([]);
+    const [topAnnouncement,setTopAnnouncement] = useState({});
+    const [recentThreeAnnouncements, setRecentThreeAnnouncements] = useState([]);
     const [query, setQuery] = useState("");
     const [event, setEvent] = useState("Spring 2022");
     const [totalPage, setTotalPage] = useState(1);
@@ -80,56 +103,81 @@ export default function Announcements() {
         return process.env.PUBLIC_URL + '/images/' + url;
     }
 
-    const handleChange = (event, value) => {
-        getTopAnnouncements()
-        setPage(value);
-        getAnnouncements();
-        
-    };
-
-    useEffect(() => {
-      getTopAnnouncements()
-      getAnnouncements()
-    }, []);
-
-    async function getTopAnnouncements(){
+    async function getTopAnnouncement(){
       try{
-        const response1 = await axios.get('/api/announcements/important'+"?event=Spring_2022");
-        setTopAnnouncement(response1.data.first_important_announcement);
+        const response = await axios.get('/api/announcements/important'+"?event=Spring_2022");
+        setTopAnnouncement(response.data);
       } catch (ex){
         console.log('Unable to get top announcement');
       }
-      
     }
 
-    async function getAnnouncements(){
+    async function getRecentThreeAnnouncements(){
       try{
-        const response = await axios.get('/api/announcements'+"?event=Spring_2022");
-        setAnnouncements(response.data.announcements);
+        const response = await axios.get('/api/announcements/recent'+"?event=Spring_2022");
+        setRecentThreeAnnouncements(response.data.announcements);
       } catch (ex){
-        console.log('Unable to get all announcements');
+        console.log('Unable to get recent three announcements');
       }
+    }
+
+    async function getHistoryAnnouncements(){
+      try{
+        const response = await axios.get('/api/announcements/history'+"?event=Spring_2022");
+        setHistoryAnnouncements(response.data.announcements);
+      } catch (ex){
+        console.log('Unable to get history announcements');
+      }
+    }
+
+    const handleChange = (event, value) => {
+        setTopAnnouncement({});
+        getTopAnnouncement();
+        setRecentThreeAnnouncements([]);
+        getRecentThreeAnnouncements();
+        setHistoryAnnouncements([]);
+        getHistoryAnnouncements();
+        setPage(value);
+    };
+
+    useEffect(() => {
+      getTopAnnouncement()
+      getRecentThreeAnnouncements()
+      getHistoryAnnouncements()
+    }, []);
+
+    function getImportance(announcement) {
+      if(announcement.importance){
+        return "True";
+      }
+      return "False";
     }
 
     function populateAnnouncements() {
         return (
-          announcements.map((announcement, index) => (
+          historyAnnouncements.map((announcement, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
-              {announcement.title}
+                {announcement.title}
               </TableCell>
-              <TableCell align="right">
-              {announcement.time} 
+              <TableCell component="th" scope="row">
+                {announcement.time} 
               </TableCell>
-              <TableCell align="right">
-              {announcement.contents} {/*# change or add importance later*/}
+              <TableCell component="th" scope="row">
+                <Box className={classes.historyAnnouncementContent}>
+                  {announcement.content} 
+                </Box>
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {getImportance(announcement)}
               </TableCell>
             </TableRow>
           ))
         )
-      }
+    }
 
-    const table = (
+     function table(){
+       return(
         <div>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -138,16 +186,17 @@ export default function Announcements() {
                 <TableCell align="left">Title</TableCell>
                 <TableCell align="left">Time</TableCell>
                 <TableCell align="left">Details</TableCell>
-                {/*<TableCell align="right">Importance</TableCell>*/}
+                <TableCell align="left">Importance</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {populateAnnouncements}
+              {populateAnnouncements()}
             </TableBody>
           </Table>
         </TableContainer>
         </div>
-      )
+        );
+      }
 
     const title = (
         <Card className={classes.titlebox}>
@@ -162,15 +211,15 @@ export default function Announcements() {
         <Card>
         <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-            Important Announcement
+            {topAnnouncement.title}
             </Typography> 
             <img className={classes.imAnnouncementPic} src={img("hoplogo.png")} alt="default-img" />
             <Typography variant="h6" gutterBottom>
-            Time
+            {topAnnouncement.time}
             </Typography>
-            <Box className={classes.inboxdescription}>
+            <Box className={classes.topAnnouncementContent}>
                 <Typography variant="h6" color="text.secondary">
-                Description: esnvs jnvsd nvn disjvk jsdj vdjsvjdsj vdjfi mvsdkmvk snvkns kvjksdnv kdsfmk sdmvkj dsis nfkfkse fkjie sjfjseijf siejgvkzsjev gj esi jvijw sjvs ejv sjvzsjoz sjrv jks djfisovs irodj sfsd svndvi efjli zdsnz fzskei hv i zsjfesd bv ladh flsd hvldhs vhsilhv one two three one two three one two three one two three one two three
+                {topAnnouncement.content}
                 </Typography>
             </Box>
         </CardContent>
@@ -181,7 +230,7 @@ export default function Announcements() {
         );
     };
 
-    function RecentEvent() {
+    function RecentEvent(announcement) {
         return (
         <Card>
         <CardContent>
@@ -194,14 +243,14 @@ export default function Announcements() {
                 <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
                       <Typography gutterBottom variant="h5" component="div">
-                        Announcement Title
+                        {announcement.title}
                       </Typography>
                       <Typography variant="body2" gutterBottom>
-                        Time
+                        {announcement.time}
                       </Typography>
-                      <Box className={classes.inboxdescription}>
+                      <Box className={classes.recentThreeAnnouncementContent}>
                         <Typography variant="body2" color="text.secondary">
-                            Description: esnvs jnvsd nvn disjvk jsdj vdjsvjdsj vdjfi mvsdkmvk snvkns kvjksdnv kdsfmk sdmvkj dsis nfkfkse fkjie sjfjseijf siejgvkzsjev gj esi jvijw sjvs ejv sjvzsjoz sjrv jks djfisovs irodj sfsd svndvi efjli zdsnz fzskei hv i zsjfesd bv ladh flsd hvldhs vhsilhv one two three one two three one two three one two three one two three
+                          {announcement.content}
                         </Typography>
                       </Box>
                     </Grid>
@@ -216,17 +265,18 @@ export default function Announcements() {
         );
     };
 
-    const threeRecentEvents = (
-        <React.Fragment>
+    function threeRecentEvents() {
+      return (
         <Grid container spacing={1}>
-        {Array.from(Array(3)).map((_, index) => (
+        {recentThreeAnnouncements.map((announcement, index) => (
             <Grid item xs={12}>
-                <RecentEvent />
+              {RecentEvent(announcement)}
             </Grid> 
         ))}
         </Grid>
-        </React.Fragment>
-    )
+      );
+    }
+
 
     return(
         <Container fixed>
@@ -240,32 +290,29 @@ export default function Announcements() {
                     <Grid item xs={0.5}>
                     </Grid>
                     <Grid item xs={5}>
-                    <ImportantEvent />
+                      {ImportantEvent()}
                     </Grid>
                     <Grid item xs={0.5}>
                     </Grid>
                     <Grid item xs={6}>
-                    {threeRecentEvents}
+                      {threeRecentEvents()}
                     </Grid>
                 </Grid>
 
                 <Grid item>
-                    
                 </Grid>
 
                 <Grid item xs={12}>
-                <Card>
-                {table}
-                
-                <div className={classes.pagination}>
-                <Pagination count={totalPage} page={page} onChange={handleChange} />
-                </div>
-                
-                </Card>
+                  <Card>
+                    {table()}
+                    <div className={classes.pagination}>
+                      <Pagination count={totalPage} page={page} onChange={handleChange} />
+                    </div>  
+                  </Card>
                 </Grid>
             </Grid>
             </Box>
         </Container>
         
-    )
+    );
 };
