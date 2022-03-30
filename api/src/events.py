@@ -12,10 +12,6 @@ events_api = Blueprint('events', __name__)
 
 # Event names need to be in the format Title_Season_Year. This method
 # enforces that and makes sure that everything is valid
-
-
-    
-
 def check_event_name(event_name):
 
     """Checks to see if event names are properly formatted
@@ -419,7 +415,7 @@ def update_status():
     user = db.users.find_one({"_id": ObjectId(user_id)})
     if user == None:
         return Response('Event Does Not Exist', status=400)
-        
+
     registrations = user['registrations']
     found = False
     for i in range(len(registrations)):
