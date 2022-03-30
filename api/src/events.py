@@ -330,6 +330,8 @@ def add_participant():
         return Response('Event Does Not Exist', status=400)
 
     user = db.users.find_one({"_id": ObjectId(user_id)})
+    if user == None:
+        return Response('Event Does Not Exist', status=400) 
     record = {
         'user_id': user_id,
         'username': user['username'],
@@ -392,6 +394,8 @@ def update_status():
     # Update event record
     event_query = {'event_name': event_name}
     event = db.events.find_one(event_query)
+    if event == None:
+        return Response('Event Does Not Exist', status=400)
     registrations = event['event_participants']
     found = False
     for i in range(len(registrations)):
@@ -413,6 +417,9 @@ def update_status():
 
     # Update user record
     user = db.users.find_one({"_id": ObjectId(user_id)})
+    if user == None:
+        return Response('Event Does Not Exist', status=400)
+        
     registrations = user['registrations']
     found = False
     for i in range(len(registrations)):
@@ -459,6 +466,8 @@ def get_registrations():
 
     user_id = request.args['user_id']
     user = db.users.find_one({"_id": ObjectId(user_id)})
+    if user == None:
+        return Response('Invalid request', status=400)
     registrations = user['registrations']
 
     return jsonify(registrations)
