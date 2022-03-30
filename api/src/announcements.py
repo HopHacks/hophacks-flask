@@ -114,9 +114,9 @@ def display_all():
         return Response('Invalid request', status=400)
 
     cursor = db.announcements.find({'event': event}).sort("time", -1)
-    announcemnets = []
+    announcements = []
     for annouc in cursor:
-        announcemnets.append({
+        announcements.append({
             'title': annouc['title'], 
             'content': annouc['content'], 
             'event': annouc['event'], 
@@ -126,7 +126,7 @@ def display_all():
             'time': annouc['time']
             })
   
-    return jsonify({'announcemnets': announcemnets}), 200
+    return jsonify({'announcements': announcements}), 200
 
 @announcements_api.route('/important', methods = ['GET'])
 def display_first_important():
@@ -201,7 +201,7 @@ def display_three_recent():
             'time': annouc['time']
             })
   
-    return jsonify({'announcemnets': announcements}), 200
+    return jsonify({'announcements': announcements}), 200
 
 @announcements_api.route('/history', methods = ['GET'])
 def display_history():
@@ -244,4 +244,28 @@ def display_history():
                 'time': annouc['time']
                 })
     
-    return jsonify({'announcemnets': announcements}), 200
+    return jsonify({'announcements': announcements}), 200
+
+
+@announcements_api.route('/titles', methods = ['GET'])
+def getAllTitles():
+    """ 
+    Display the titles of all announcementssorted by the time posted
+    Example input:
+    .. sourcecode:: json
+        {
+            "event": "Spring 2022"
+        }
+    :status 200: display successful
+    """
+
+    cursor = db.announcements.find().sort("time", -1)
+    announcements = []
+    passed_first_important = False
+    passed_recent = 0
+    for annouc in cursor:
+        announcements.append({
+            'title': annouc['title'], 
+            })
+
+    return jsonify({'announcements': announcements}), 200
