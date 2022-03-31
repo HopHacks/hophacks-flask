@@ -44,19 +44,10 @@ def get():
 
     """Gets all events within a specified time frame
 
-    :reqjson start_date_beg: Start date and time
-    :reqjson start_date_end: Start date and time (used in conjunction with start_date_beg for one-day events)
-    :reqjson end_date_beg: End date and time (used in conjunction with end_date_end potentially for one-date events)
-    :reqjson end_date_end: End date and time 
-
-    Example input:
-
-    .. sourcecode:: json
-
-    {
-        "start_date_beg": "2022-09-22",
-        "end_date_end": "2022-09-24"
-    }
+    :reqarg start_date_beg: Start date and time
+    :reqarg start_date_end: Start date and time (used in conjunction with start_date_beg for one-day events)
+    :reqarg end_date_beg: End date and time (used in conjunction with end_date_end potentially for one-date events)
+    :reqarg end_date_end: End date and time 
 
     :return: dictionary with key 'events' and the value is a list of all events within specified time frame
 
@@ -111,13 +102,13 @@ def get_event(event_name):
     :return: the event as a dictionary with fields 'event_name', 'display_name', 'start_date', 'end_date', 'description', 'is_virtual', 'zoom_link', and 'location'
 
     :status 200: Successful
-    :status 400: Event doesn't exist
+    :status 404: Event doesn't exist
 
     """
 
     e = db.events.find_one({"event_name": event_name})
     if e == None:
-        return Response('Event does not exist', status=400)
+        return Response('Event does not exist', status=404)
 
     event = {'event_name': e['event_name'], 'display_name': e['display_name'],
                        'start_date': e['start_date'], 'end_date': e['end_date'], 'description': e['description'], 'is_virtual': e['is_virtual'],
@@ -155,8 +146,9 @@ def create_event():
         "is_virtual": "true"
     }
 
-    :status 200: Event added
+    :status 201: Event added
     :status 400: Error with request
+    :status 409: Event already exists
     
     """
 
@@ -174,7 +166,7 @@ def create_event():
         return Response('Invalid event name', status=400)
     # TODO: do we want to fold the next line into check_event_name or keep check_event_name just for checking the validity of the string itself
     if len(list(db.events.find({'event_name': event['event_name']}))) != 0:
-        return Response('Event name already exists', status=400)
+        return Response('Event name already exists', status=409)
 
     event['display_name'] = request.json['display_name']
     event['start_date'] = datetime.fromisoformat(request.json['start_date'])
@@ -188,7 +180,7 @@ def create_event():
 
     db.events.insert_one(event)
 
-    return jsonify({"msg": "event added"}), 200
+    return jsonify({"msg": "event added"}), 201
 
 
     
@@ -212,6 +204,7 @@ def delete_event():
 
     :status 200: Event deleted
     :status 400: Error with request or operation
+    :status 404: Event does not exist
     
     """
 
@@ -223,7 +216,7 @@ def delete_event():
     event = {}
     event['event_name'] = request.json['event_name']
     if len(list(db.events.find(event))) == 0:
-        return Response('Event Does Not Exist', status=400)
+        return Response('Event Does Not Exist', status=404)
 
     db.events.delete_one(event)
     return jsonify({"msg": "event deleted"}), 200
@@ -257,6 +250,7 @@ def update_event():
 
     :status 200: Event updated
     :status 400: Error with request or update operation
+    :status 404: Event does not exist
 
     """
 
@@ -270,17 +264,17 @@ def update_event():
     event_current['event_name'] = request.json['event_name']
 
     if len(list(db.events.find(event_current))) == 0:
-        return Response('Event Does Not Exist', status=400)
+        return Response('Event Does Not Exist', status=404)
 
-    for i in request.json:
-        if i == 'new_event_name':
+    for field in request.json:
+        if field == 'new_event_name':
             continue
-        if "date" in i:
+        if "date" in field:
             db.events.update_one(event_current, {"$set": {
-                i: datetime.strptime(request.json[i], '%m-%d-%Y')}})
+                field: datetime.strptime(request.json[field], '%m-%d-%Y')}})
         else:
             db.events.update_one(event_current, {"$set": {
-                i: request.json[i]}
+                field: request.json[field]}
             })
     if 'new_event_name' in request.json:
         if not check_event_name(request.json['event_name']):
@@ -391,13 +385,13 @@ def update_status():
     event = db.events.find_one(event_query)
     if event == None:
         return Response('Event Does Not Exist', status=400)
-    registrations = event['event_participants']
+    participants = event['event_participants']
     found = False
-    for i in range(len(registrations)):
-        user = registrations[i]
+    for i in range(len(participants)):
+        user = participants[i]
         if user['user_id'] == user_id:
             found = True
-            registrations[i]['status'] = status
+            participants[i]['status'] = status
 
     if not found:
         return Response('Registration Does Not Exist', status=400)
@@ -439,20 +433,13 @@ def get_registrations():
 
     """Get all events that a user has registered for.
 
-    :reqjson user_id: the object ID of the user in the database
-
-    Example input:
-
-    .. sourcecode:: json
-
-    {
-        "user_id": "623e2e52eebe994953ba2f84"
-    }
+    :reqarg user_id: the object ID of the user in the database
 
     :return: list of all events user has registered for
 
     :status 200: Registrations returned successfully
     :status 400: Invalid request
+    :status 404: User not found
 
     """
 
@@ -462,7 +449,7 @@ def get_registrations():
     user_id = request.args['user_id']
     user = db.users.find_one({"_id": ObjectId(user_id)})
     if user == None:
-        return Response('Invalid request', status=400)
+        return Response('User not found', status=404)
     registrations = user['registrations']
 
     return jsonify(registrations)
@@ -476,17 +463,8 @@ def get_participant(event):
 
     :param event_name: event name
 
-    :reqjson hopkins_student: Used if and only if ONLY Hopkins students should be returned
-    :reqjson reg_status: registration status of users being returned
-
-    Example input:
-
-    .. sourcecode:: json
-
-    {
-        "hopkins_student": "ye",
-        "reg_status": "rsvp"
-    }
+    :reqarg hopkins_student: Used if and only if ONLY Hopkins students should be returned
+    :reqarg reg_status: registration status of users being returned
 
     Both hopkins_student and reg_status are essentially search filters
 
@@ -556,19 +534,10 @@ def get_participant_by_date():
 
     """Gets all participants within a certain time frame
 
-    :reqjson start_date_beg: Start date and time
-    :reqjson start_date_end: Start date and time (used in conjunction with start_date_beg for one-day events)
-    :reqjson end_date_beg: End date and time (used in conjunction with end_date_end potentially for one-date events)
-    :reqjson end_date_end: End date and time 
-
-    Example input:
-
-    .. sourcecode:: json
-
-    {
-        "start_date_beg": "2022-09-22",
-        "end_date_end": "2022-09-24"
-    }
+    :reqarg start_date_beg: Start date and time
+    :reqarg start_date_end: Start date and time (used in conjunction with start_date_beg for one-day events)
+    :reqarg end_date_beg: End date and time (used in conjunction with end_date_end potentially for one-date events)
+    :reqarg end_date_end: End date and time 
 
     :status 200: Successful
     :status 400: No events in timeframe
