@@ -269,3 +269,33 @@ def getAllTitles():
             })
 
     return jsonify({'announcements': announcements}), 200
+
+@announcements_api.route('/', methods = ['DELETE'])
+@jwt_required
+@check_admin
+def deleteAnnouncements():
+    """ 
+    Delete the announcement with a specific title specified by the admin
+    Example input:
+    .. sourcecode:: json
+        {
+            "title": "free pizza"
+        }
+    :status 200: successfully deleted
+    """
+
+    # announcement = {}
+    # announcement['title'] = request.json['title']
+    title = request.json['title']
+    print(title)
+    announcement = {'title' : title}
+    
+    if len(list(db.announcements.find(announcement))) == 0 :
+        return Response('Event Does Not Exist', status=404)
+
+    try:
+        db.announcements.delete_one(announcement)
+    except:
+        return Response('Invalid request', status=400)
+
+    return Response('Successfully deleted', status=200)

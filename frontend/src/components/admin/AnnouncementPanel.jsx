@@ -88,6 +88,9 @@ const Panel = function() {
     const [priority, setPriority] = useState("");
     const [open, setOpen] = useState(false);
     const [announcements, setAnnouncements] = useState([]);
+    const [openDelete, setOpenDelete] = useState(false);
+    const [deleteTitle, setdeleteTitle] = useState("");
+    
 
     async function getAnnouncements(){
       try{
@@ -109,6 +112,26 @@ const Panel = function() {
             <TableCell component="th" scope="row">
             {announcement.title}
             </TableCell>
+            <Button variant="contained" color="white" margain='center' id={announcement.title} onClick={handleOpenDeleteDialog}> 
+                Delete
+            </Button>
+            <Dialog
+              open={openDelete}
+              keepMounted
+              onClose={handleCloseDeleteDialog}
+              aria-describedby="alert-dialog-slide-description"
+            >
+            <DialogTitle>{"You are going to delete the announcement"}</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+                <p>Title: {deleteTitle}</p>
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            < Button onClick={handleCloseDeleteDialog} id="back">Back</Button>
+            < Button onClick={handleCloseDeleteDialog} id="confirm">Confirm</Button>
+            </DialogActions>
+            </Dialog>
           </TableRow>
         ))
       )
@@ -148,10 +171,26 @@ const Panel = function() {
     const handleOpenDialog = () => {
       setOpen(true);
     }
+
+    const handleOpenDeleteDialog = (event) => {
+      console.log(event.currentTarget.id)
+      setdeleteTitle(event.currentTarget.id)
+      setOpenDelete(true);
+    }
     
     async function sendAnnouncement() {
       try{
         await axios.post("/api/announcements/", {"title" : title, "content" : content, "event" : event, "broadcast" : "no", "importance" : priority});
+        window.location.reload();
+      } catch (ex) {
+        console.log(ex);
+      }
+    } 
+
+    async function deleteAnnouncement() {
+      try{
+        await axios.delete("/api/announcements/", {data: {"title" : deleteTitle}});
+        window.location.reload();
       } catch (ex) {
         console.log(ex);
       }
@@ -162,6 +201,13 @@ const Panel = function() {
         sendAnnouncement();
       }
       setOpen(false);
+    }
+
+    const handleCloseDeleteDialog = (event) => {
+      if (event.currentTarget.id === "confirm") {
+        deleteAnnouncement();
+      }
+      setOpenDelete(false);
     }
 
     return (
