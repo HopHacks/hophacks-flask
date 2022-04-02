@@ -465,7 +465,7 @@ def confirm_email():
     id = get_jwt_identity()
     result = db.users.update_one({'username' : email}, {'$push': {'registrations': new_reg}})
     send_apply_confirm(user['username'], user['profile']['first_name'])
-    return jsonify({"msg": "Email Confirmed"}), 200
+    return jsonify({"msg": "Email Confirmed", "email": email}), 200
 
 @accounts_api.route('/reset_password', methods = ['POST'])
 def reset_password():
