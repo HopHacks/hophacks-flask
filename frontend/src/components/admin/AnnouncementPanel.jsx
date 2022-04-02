@@ -7,7 +7,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 import Select from '@material-ui/core/Select';
@@ -43,6 +45,15 @@ const useStyles = makeStyles((theme) => ({
         position: 'flex',
         marginTop: "2.5%",
         marginLeft: "7.5%",
+    },
+
+    table : {
+      width: "50%",
+      marginTop: "2.5%",
+    },
+
+    cell : {
+      minWidth:'800'
     },
 
     root: {
@@ -90,6 +101,8 @@ const Panel = function() {
     const [announcements, setAnnouncements] = useState([]);
     const [openDelete, setOpenDelete] = useState(false);
     const [deleteTitle, setdeleteTitle] = useState("");
+
+    const fileInput = React.useRef();
     
 
     async function getAnnouncements(){
@@ -108,8 +121,8 @@ const Panel = function() {
       console.log(announcements)
       return (
         announcements?.map((announcement, index) => (
-          <TableRow key={index}>
-            <TableCell component="th" scope="row">
+          <TableRow key={index}  >
+            <TableCell className={classes.cell} style={{width: '1000%'}}  scope="row">
             {announcement.title}
             </TableCell>
             <Button variant="contained" color="white" margain='center' id={announcement.title} onClick={handleOpenDeleteDialog}> 
@@ -326,26 +339,16 @@ const Panel = function() {
         >
          <MenuItem value={"Fall 2022"}>Fall 2022</MenuItem>
          </TextField>
-        <TextField
-          label="Sender"
-          id="outlined-multiline-flexible"
-          className={classes.textField}
-          style={{ margin: 8}}
-          variant="outlined"
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            }
-          }}
-          onChange={handleSenderChange}
+         
+        <Button variant="contained" color="white" style={{ marginLeft: "auto", marginTop: "2.5%", }}
+          onClick={()=>fileInput.current.click()}
+        >
+        Upload Image
+        </Button >
+        <input 
+          ref={fileInput} 
+          type="file" 
+          style={{ display: 'none' }} 
         />
         <TextField
           label="Priority"
@@ -386,9 +389,9 @@ const Panel = function() {
         </div>
         </div>
 
-        <div>
+        <div className={classes.table}>
         <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="left">Title</TableCell>
