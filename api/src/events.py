@@ -456,7 +456,7 @@ def get_registrations():
 
 
 @events_api.route('/getParticipants/<event>', methods=['GET'])
-#@jwt_required
+@jwt_required
 def get_participant(event):
 
     """Get all participants for a specific event.
@@ -520,12 +520,12 @@ def remove_duplicates_from_list(random_list):
 
     """
     res = []
-    [res.append(x) for x in random_list if x not in res]
+    [res.append({"profile": x["profile"], "username": x["username"]}) for x in random_list if {"profile": x["profile"], "username": x["username"]} not in res]
     return res
 
 
 @events_api.route('/getParticipants', methods=['GET'])
-#@jwt_required
+@jwt_required
 def get_participant_by_date():
 
     """Gets all participants within a certain time frame
