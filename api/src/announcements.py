@@ -19,6 +19,12 @@ import json
 from datetime import datetime
 from bson import ObjectId
 import pytz
+#import boto3
+
+
+#ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
+#BUCKET = 'hophacks-announcement-image'
+
 
 
 announcements_api = Blueprint('announcements', __name__)
@@ -71,9 +77,13 @@ def create():
     event = request.json['event']
     broadcast = request.json['broadcast']
     importance = request.json['importance']
+    #file = request.files['image']
+    #file_name = secure_filename(file.filename)
+    #s3 = boto3.client('s3')
     id = get_jwt_identity()
     sender = db.users.find_one({'_id': ObjectId(id)})["username"]
     time = datetime.utcnow()
+    #s3.upload_fileobj(file, BUCKET, file_name)
 
     db.announcements.insert_one({
         "title": title,
@@ -83,6 +93,7 @@ def create():
         "importance": importance,
         "sender": sender,
         "time": time,
+        #"image_file_name" : file_name
     })
     return jsonify({"msg": "announcement added"}), 200
 
@@ -299,3 +310,5 @@ def deleteAnnouncements():
         return Response('Invalid request', status=400)
 
     return Response('Successfully deleted', status=200)
+
+

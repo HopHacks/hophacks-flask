@@ -96,14 +96,13 @@ const Panel = function() {
     const [content, setContent] = useState("");
     const [event, setEvent] = useState("");
     const [sender, setSender] = useState("");
-    const [priority, setPriority] = useState("");
+    const [priority, setPriority] = useState(false);
     const [open, setOpen] = useState(false);
     const [announcements, setAnnouncements] = useState([]);
     const [openDelete, setOpenDelete] = useState(false);
     const [deleteTitle, setdeleteTitle] = useState("");
-
-    const fileInput = React.useRef();
-    
+    const [image, setImage] = useState("");
+    const [imageMsg, setImageMsg] = useState("Acceptable format: *.jpg, *.jpeg");
 
     async function getAnnouncements(){
       try{
@@ -171,10 +170,9 @@ const Panel = function() {
       console.log(event.target.value);
     };
 
-    const handleSenderChange = (event) => {
-      setSender(event.target.value)
-      console.log(event.target.value);
-    };
+    function handleImageChange(event) {
+      setImage(event.target.files[0])
+    }
 
     const handlePriorityChange = (event) => {
       setPriority(event.target.value)
@@ -246,7 +244,7 @@ const Panel = function() {
               <p> Title : {title} </p>
               <p> Content : {content} </p>
               <p> Event : {event} </p>
-              <p> Sender : {sender} </p>
+              <p> Image Filename : {image['name']} </p>
               <p> Priority : {priority} </p>
             </DialogContentText>
             </DialogContent>
@@ -339,17 +337,6 @@ const Panel = function() {
         >
          <MenuItem value={"Fall 2022"}>Fall 2022</MenuItem>
          </TextField>
-         
-        <Button variant="contained" color="white" style={{ marginLeft: "auto", marginTop: "2.5%", }}
-          onClick={()=>fileInput.current.click()}
-        >
-        Upload Image
-        </Button >
-        <input 
-          ref={fileInput} 
-          type="file" 
-          style={{ display: 'none' }} 
-        />
         <TextField
           label="Priority"
           select
@@ -380,9 +367,15 @@ const Panel = function() {
           }}
           onChange={handlePriorityChange}
           >
-            <MenuItem value={"Yes"}>Yes</MenuItem>
-            <MenuItem value={"No"}>No</MenuItem>
+            <MenuItem value={true}>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
          </TextField>
+
+          <div id="box">
+         <Typography style={{ fontSize: '15px', color:'white'}}> Upload Cover Image </Typography>
+         <input type="file" name="file" onChange={handleImageChange} style={{color:'white'}} />
+          <Typography style={{ fontSize: '13px', color:'white'}}> {imageMsg} </Typography>
+          </div>
 
         </div>
         </div>
