@@ -64,7 +64,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({
                     required
                     {...params}
                     label="School"
-                    variant="outlined"
+                    variant="standard"
                     value={school}
                     InputProps={{
                         ...params.InputProps,
@@ -75,7 +75,8 @@ const SchoolAutocomplete = function SchoolAutocomplete({
                             </React.Fragment>
                         ),
                     }}
-                    InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}}}
+                    // inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+                    InputLabelProps={{style: {color: '#000000'}}}
                 />
             )}
         />

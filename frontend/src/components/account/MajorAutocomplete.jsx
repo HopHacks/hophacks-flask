@@ -66,7 +66,7 @@ const MajorAutocomplete = function MajorAutocomplete({
           id="majors"
           options={majors}
           // defaultValue={major}
-          style={{ width: 250 }}
+          style={{ width: 250, marginTop: -5 }}
           onChange={(event, newValue) => {
             setMajor(newValue);
           }}
@@ -75,8 +75,9 @@ const MajorAutocomplete = function MajorAutocomplete({
               required
               {...params}
               label="Major"
-              variant="outlined" 
-              InputLabelProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)', color: '#000000'}}}
+              variant="standard" 
+              // inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
+              InputLabelProps={{style: {color: '#000000'}}}
             />}
         />
     )
