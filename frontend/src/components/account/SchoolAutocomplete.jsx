@@ -44,7 +44,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({
     return (
         <Autocomplete
             id="schools"
-            style={{ width: 250 }}
+            style={{ width: 300, marginTop: -3 }}
             open={open}
             onOpen={() => {
                 setOpen(true);

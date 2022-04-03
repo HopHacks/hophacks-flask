@@ -358,7 +358,7 @@ export default function Register() {
               variant="standard"
               label="First Name"
               onChange={e => setFirst_name(e.target.value)}
-              style={{ minWidth: 125 }}
+              style={{ minWidth: 145, maxWidth: 145 }}
               InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
             />
           </Grid>
@@ -369,7 +369,7 @@ export default function Register() {
               variant="standard"
               label="Last Name"
               onChange={e => setLast_name(e.target.value)}
-              style={{ minWidth: 125 }}
+              style={{ minWidth: 145, marginLeft: -40, maxWidth: 145 }}
               InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
             />
           </Grid>
@@ -379,7 +379,7 @@ export default function Register() {
           <TextField
             required variant="standard"
             label="Gender"
-            style={{ minWidth: 250 }}
+            style={{ minWidth: 300, maxWidth: 300 }}
             onChange={(e) => {
               setGender(e.target.value);
             }}
@@ -397,7 +397,7 @@ export default function Register() {
           <TextField
             required variant="standard"
             label="Ethnicity"
-            style={{ minWidth: 250 }}
+            style={{ minWidth: 300, maxWidth: 300 }}
             onChange={(e) => {
               setEthnicity(e.target.value);
             }}
@@ -422,7 +422,7 @@ export default function Register() {
             variant="standard"
             label="Phone Number"
             onChange={e => setPhone_number(e.target.value)}
-            style={{ minWidth: 250 }}
+            style={{ minWidth: 300, maxWidth: 300 }}
             InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
           />
         </Grid>
@@ -432,7 +432,7 @@ export default function Register() {
         <Grid item xs={12}>
           <FormControl
             required variant="standard"
-            style={{ minWidth: 250 }}
+            style={{ minWidth: 300, maxWidth: 300 }}
           >
             <SchoolAutocomplete
               school={school}
@@ -447,7 +447,7 @@ export default function Register() {
           <MajorAutocomplete
             major={major}
             setMajor={setMajor} />
-          <FormHelperText style={{ fontSize: 9, color: "black", maxWidth: 250 }}>
+          <FormHelperText style={{ fontSize: 9, color: "black", maxWidth: 300 }}>
             * If your major is not in the list, choose 'other majors'
           </FormHelperText>
         </Grid>
@@ -456,7 +456,7 @@ export default function Register() {
           <TextField
             required variant="standard"
             label="Program"
-            style={{ minWidth: 250, marginTop: -5 }}
+            style={{ minWidth: 300, marginTop: -5.5, maxWidth: 300 }}
             onChange={(e) => {
               setGrad(e.target.value);
             }}
@@ -474,7 +474,7 @@ export default function Register() {
             <TextField
               required variant="standard"
               label="Grad Month"
-              style={{ minWidth: 115, marginTop: 10 }}
+              style={{ minWidth: 140, marginTop: 10, maxWidth: 140, marginBottom: -3 }}
               onChange={(e) => {
                 setGrad_month(e.target.value);
               }}
@@ -500,7 +500,7 @@ export default function Register() {
             <TextField
               required variant="standard"
               label="Grad Year"
-              style={{ minWidth: 115, marginLeft: -10, marginTop: 10 }}
+              style={{ minWidth: 145, marginLeft: 10, marginTop: 10, maxWidth:145, marginBottom: -3 }}
               onChange={(e) => {
                 setGrad_year(e.target.value);
               }}
@@ -511,6 +511,9 @@ export default function Register() {
               <MenuItem value="2023">2023</MenuItem>
               <MenuItem value="2024">2024</MenuItem>
               <MenuItem value="2025">2025</MenuItem>
+              <MenuItem value="2026">2026</MenuItem>
+              <MenuItem value="2027">2027</MenuItem>
+              <MenuItem value="2028">2028</MenuItem>
             </TextField>
           </Grid>
         </Grid>
@@ -566,7 +569,9 @@ export default function Register() {
     } else if (activeStep === 1) {
       return (
         <>
-          {personalInfo}
+          <div class="personal-wrapper">
+            {personalInfo}
+          </div>
         </>
       )
     } else {

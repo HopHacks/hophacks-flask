@@ -66,7 +66,7 @@ const MajorAutocomplete = function MajorAutocomplete({
           id="majors"
           options={majors}
           // defaultValue={major}
-          style={{ width: 250, marginTop: -5 }}
+          style={{ width: 300, marginTop: -6.5 }}
           onChange={(event, newValue) => {
             setMajor(newValue);
           }}

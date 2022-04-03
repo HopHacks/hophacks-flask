@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { Typography } from '@material-ui/core';
 import Login from './LoginDialog';
 import '../stylesheets/email_confirm.css';
 
@@ -36,7 +35,7 @@ export default function EmailConfirmation(props) {
         return (<Login fromConfirmEmail={true} email={email} />)
     } else if (message === attemptedMsg) {
         return (
-            <div class="container">
+            <div class="container-email">
                 <div className="wrapper">
                     <img id="graphic" src={`${process.env.PUBLIC_URL}/images/hoplogo.png`} width="100%" />
                     <h1>Oh no!</h1>
@@ -47,7 +46,7 @@ export default function EmailConfirmation(props) {
         )
     }
     return (
-        <div class="container">
+        <div class="container-email">
             <div className="wrapper">
                 <h5>{message}</h5>
             </div>
