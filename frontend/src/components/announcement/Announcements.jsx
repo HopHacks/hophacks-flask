@@ -23,6 +23,8 @@ import axios from "axios";
 import { makeStyles } from '@material-ui/core/styles';
 import {useState,useEffect} from "react";
 
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -96,7 +98,7 @@ export default function Announcements() {
     const [topAnnouncement,setTopAnnouncement] = useState({});
     const [recentThreeAnnouncements, setRecentThreeAnnouncements] = useState([]);
     const [query, setQuery] = useState("");
-    const [event, setEvent] = useState("Spring 2022");
+    const [event, setEvent] = useState("Fall_2022");
     const [totalPage, setTotalPage] = useState(1);
 
     function img(url) {
@@ -105,7 +107,7 @@ export default function Announcements() {
 
     async function getTopAnnouncement(){
       try{
-        const response = await axios.get('/api/announcements/important'+"?event=Spring_2022");
+        const response = await axios.get('/api/announcements/important'+"?event="+event);
         setTopAnnouncement(response.data);
       } catch (ex){
         console.log('Unable to get top announcement');
@@ -114,7 +116,7 @@ export default function Announcements() {
 
     async function getRecentThreeAnnouncements(){
       try{
-        const response = await axios.get('/api/announcements/recent'+"?event=Spring_2022");
+        const response = await axios.get('/api/announcements/recent'+"?event="+event);
         setRecentThreeAnnouncements(response.data.announcements);
       } catch (ex){
         console.log('Unable to get recent three announcements');
@@ -123,7 +125,7 @@ export default function Announcements() {
 
     async function getHistoryAnnouncements(){
       try{
-        const response = await axios.get('/api/announcements/history'+"?event=Spring_2022");
+        const response = await axios.get('/api/announcements/history'+"?event="+event);
         setHistoryAnnouncements(response.data.announcements);
       } catch (ex){
         console.log('Unable to get history announcements');
@@ -213,7 +215,7 @@ export default function Announcements() {
             <Typography gutterBottom variant="h5" component="div">
             {topAnnouncement.title}
             </Typography> 
-            <img className={classes.imAnnouncementPic} src={img("hoplogo.png")} alt="default-img" />
+            <img className={classes.imAnnouncementPic} src={img(topAnnouncement.image)} alt="default-img" />
             <Typography variant="h6" gutterBottom>
             {topAnnouncement.time}
             </Typography>
@@ -224,7 +226,12 @@ export default function Announcements() {
             </Box>
         </CardContent>
         <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">
+          <Link to={{ 
+            pathname: `/announcements/detail/${topAnnouncement.title}`, 
+            state: topAnnouncement
+          }}>Learn More</Link>
+        </Button>
         </CardActions>
         </Card>
         );
@@ -236,7 +243,7 @@ export default function Announcements() {
         <CardContent>
         <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
-            <img className={classes.announcementPic} src={img("hoplogo.png")} alt="default-img" />
+            <img className={classes.announcementPic} src={img(announcement.image)} alt="default-img" />
             </Grid>
 
             <Grid item xs={12} sm container zeroMinWidth>

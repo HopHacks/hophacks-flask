@@ -69,20 +69,22 @@ def create():
     title = request.json['title']
     content = request.json['content']
     event = request.json['event']
-    broadcast = request.json['broadcast']
+    broadcast = [True,True,True,True]
     importance = request.json['importance']
     id = get_jwt_identity()
     sender = db.users.find_one({'_id': ObjectId(id)})["username"]
     time = datetime.utcnow()
+    image = "hoplogo.png"
 
     db.announcements.insert_one({
         "title": title,
         "content": content,
-        "event": event,
         "broadcast": broadcast,
+        "event": event,
         "importance": importance,
         "sender": sender,
         "time": time,
+        "image": image,
     })
     return jsonify({"msg": "announcement added"}), 200
 
@@ -91,24 +93,11 @@ def display_all():
     """ 
     Display all announcements in the given event sorted by the time posted
 
-    Example input:
-
-    .. sourcecode:: json
-        {
-            "event": "Spring 2022"
-        }
+    request.args: event
 
     :status 400: No json or ``announcement/json`` header, or field missing
     :status 200: display successful
     """
-    # if (request.json is None):
-    #     return Response('Data not in json format', status=400)
-
-    # if not (all(field in request.json for field in ['event'])):
-    #     return Response('Invalid request', status=400)
-
-    # event = request.json['event']
-
     event = request.args.get('event')
     if not event:
         return Response('Invalid request', status=400)
@@ -123,7 +112,8 @@ def display_all():
             'broadcast': annouc['broadcast'],
             'importance': annouc['importance'], 
             'sender': annouc['sender'],
-            'time': annouc['time']
+            'time': annouc['time'],
+            'image': annouc['image']
             })
   
     return jsonify({'announcements': announcements}), 200
@@ -133,12 +123,7 @@ def display_first_important():
     """ 
     Display the first important announcements in the given event sorted by the time posted
 
-    Example input:
-
-    .. sourcecode:: json
-        {
-            "event": "Spring 2022"
-        }
+    request.args: event
 
     :status 400: No json or ``announcement/json`` header, or field missing
     :status 200: display successful
@@ -157,6 +142,7 @@ def display_first_important():
     announcement['importance'] = annouc['importance']
     announcement['sender'] = annouc['sender']
     announcement['time'] = annouc['time']
+    announcement['image'] = annouc['image']
   
     return jsonify(announcement), 200
 
@@ -168,12 +154,7 @@ def display_three_recent():
 
     NOTICE: if there is less than three target announcements in the data base, the function can return a list contianing less than three announcements
 
-    Example input:
-
-    .. sourcecode:: json
-        {
-            "event": "Spring 2022"
-        }
+    request.args: event
 
     :status 400: No json or ``announcement/json`` header, or field missing
     :status 200: display successful
@@ -198,7 +179,8 @@ def display_three_recent():
             'broadcast': annouc['broadcast'],
             'importance': annouc['importance'], 
             'sender': annouc['sender'],
-            'time': annouc['time']
+            'time': annouc['time'],
+            'image': annouc['image']
             })
   
     return jsonify({'announcements': announcements}), 200
@@ -209,12 +191,7 @@ def display_history():
     Display the history announcements in the given event sorted by the time posted
     NOTICE: not include the first_important announcement and the three_recent accouncements
 
-    Example input:
-
-    .. sourcecode:: json
-        {
-            "event": "Spring 2022"
-        }
+    request.args: event
 
     :status 400: No json or ``announcement/json`` header, or field missing
     :status 200: display successful
@@ -241,7 +218,8 @@ def display_history():
                 'broadcast': annouc['broadcast'],
                 'importance': annouc['importance'], 
                 'sender': annouc['sender'],
-                'time': annouc['time']
+                'time': annouc['time'],
+                'image': annouc['image']
                 })
     
     return jsonify({'announcements': announcements}), 200

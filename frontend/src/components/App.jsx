@@ -29,6 +29,7 @@ import UploadSponsors from './judgetool/UploadSponsors.jsx';
 import SponsorPrizes from './judgetool/SponsorPrizes.jsx';
 import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 import Announcements from './announcement/Announcements.jsx';
+import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 
 export default function App() {
     return (
@@ -62,10 +63,14 @@ export default function App() {
                   <Profile/>
                 </Route>
 
+                <Route path="/announcements/detail">
+                  <AnnouncementDetails/>
+                </Route>
+
                 <Route path="/announcements">
                   <Announcements />
                 </Route>
-
+                
                 <Route path="/register">
                   <Register/>
                 </Route>
