@@ -167,7 +167,10 @@ export default function Announcements() {
               </TableCell>
               <TableCell component="th" scope="row">
                 <Box className={classes.historyAnnouncementContent}>
-                  {announcement.content} 
+                  {announcement.content} <Link to={{ 
+                        pathname: `/announcements/detail/${announcement.title}`, 
+                        state: announcement
+                      }}>[more]</Link>
                 </Box>
               </TableCell>
               <TableCell component="th" scope="row">
@@ -262,7 +265,12 @@ export default function Announcements() {
                       </Box>
                     </Grid>
                     <Grid item>
-                    <Button size="small">Learn More</Button>
+                    <Button size="small">
+                      <Link to={{ 
+                        pathname: `/announcements/detail/${announcement.title}`, 
+                        state: announcement
+                      }}>Learn More</Link>
+                    </Button>
                     </Grid>
                   </Grid>
             </Grid>

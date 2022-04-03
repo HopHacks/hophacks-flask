@@ -23,6 +23,7 @@ import axios from "axios";
 import { makeStyles } from '@material-ui/core/styles';
 import {useState,useEffect,useQuery} from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"; 
+import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles({
 
@@ -40,13 +41,14 @@ const useStyles = makeStyles({
         fontFamily: "VCR OSD Mono",
     },
     picture: {
-        width:'50%',
+        height:'300px',
     },
 });
 
 export default function AnnouncementDetails(props) {
     const classes = useStyles();
-    const announcement = props;
+    const location = useLocation()
+    const announcement = location.state;
 
     const title = announcement.title;
     const time = announcement.time;
