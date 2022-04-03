@@ -350,8 +350,8 @@ export default function Register() {
 
   const personalInfo = (
     <Grid container>
-      <Grid container item spacing={2} sm={12} md={7}  >
-        <Grid container item spacing={1} xs={12} direction="row" alignItems="center" justify="center">
+      <Grid container item spacing={2} sm={12} md={7} direction="row" alignItems="center" justify="center">
+        <Grid container item spacing={0} xs={12}>
           <Grid item xs={12} sm={6}>
             <TextField
               required id="standard-basic"
