@@ -167,7 +167,7 @@ export default function Register() {
     }
 
     // Go to the confirmation page
-    setActiveStep(1);
+    setActiveStep(2);
   };
 
   const account = (
@@ -547,6 +547,15 @@ export default function Register() {
     </Grid>
   );
 
+  const confirmation = (
+    <div style={{textAlign:"center"}}>
+      <h1>Thank you!</h1>
+      <h3>A confirmation has been sent to your email.</h3>
+      <Typography>Please check your inbox (and spam) and click the link to confirm your email address.</Typography>
+      <Typography>Your application to HopHacks will be complete after email confirmation!</Typography>
+    </div>
+  );
+
   function selectPage() {
     if (activeStep === 0) {
       return (
@@ -563,6 +572,7 @@ export default function Register() {
     } else {
       return (
         <>
+          {confirmation}
         </>
       )
     }
@@ -576,7 +586,6 @@ export default function Register() {
       <div class="container">
         <div className="register-wrapper">
           {selectPage()}
-          {/* {personalInfo} */}
         </div>
       </div>
     </body>
