@@ -17,6 +17,13 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+import PhoneInput from 'react-phone-number-input'
+import { isPossiblePhoneNumber } from 'react-phone-number-input'
+import { isValidPhoneNumber } from 'react-phone-number-input'
+import { getCountries, getCountryCallingCode } from 'react-phone-number-input/input'
+import en from 'react-phone-number-input/locale/en.json'
+import PhoneNumber from './PhoneNumber'
+
 import '../../stylesheets/register.css';
 
 export default function Register() {
@@ -102,27 +109,12 @@ export default function Register() {
 
   async function handleProfileNext() {
 
-    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || school.length === 0 || ethnicity.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
+    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || school.length === 0 || ethnicity.length === 0 || phone_number === undefined || phone_number.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
       setProfileSubmitMsg("* Required field cannot be empty.")
       return;
     }
 
-    // ^\s*                #Line start, match any whitespaces at the beginning if any.
-    // (?:\+?(\d{1,3}))?   #GROUP 1: The country code. Optional.
-    // [-. (]*             #Allow certain non numeric characters that may appear between the Country Code and the Area Code.
-    // (\d{3})             #GROUP 2: The Area Code. Required.
-    // [-. )]*             #Allow certain non numeric characters that may appear between the Area Code and the Exchange number.
-    // (\d{3})             #GROUP 3: The Exchange number. Required.
-    // [-. ]*              #Allow certain non numeric characters that may appear between the Exchange number and the Subscriber number.
-    // (\d{4})             #Group 4: The Subscriber Number. Required.
-    // (?: *x(\d+))?       #Group 5: The Extension number. Optional.
-    // \s*$                #Match any ending whitespaces if any and the end of string.
-
-    // npmjs.com/package/google-libphonenumber
-    // https://stackoverflow.com/questions/60909788/how-to-use-material-ui-textfield-with-react-phone-number-input
-
-    const phonere = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
-    if (!phonere.test(phone_number)) {
+    if (!isPossiblePhoneNumber(phone_number) || !isValidPhoneNumber(phone_number)) {
       setProfileSubmitMsg("* Please enter a valid phone number.")
       return;
     }
@@ -231,7 +223,6 @@ export default function Register() {
                 onClick={() => {
                   handleAccountNext();
                 }}
-              // className={classes.button}
               >
                 Next
             </Button>
@@ -348,6 +339,22 @@ export default function Register() {
     </FormGroup>
   )
 
+  const CountrySelect = ({ value, onChange, labels, ...rest }) => (
+    <select
+      {...rest}
+      value={value}
+      onChange={event => onChange(event.target.value || undefined)}>
+      <option value="">
+        {labels['ZZ']}
+      </option>
+      {getCountries().map((country) => (
+        <option key={country} value={country}>
+          {labels[country]} +{getCountryCallingCode(country)}
+        </option>
+      ))}
+    </select>
+  )
+
   const personalInfo = (
     <Grid container>
       <Grid container item spacing={2} sm={12} md={7} direction="row" alignItems="center" justify="center">
@@ -389,6 +396,9 @@ export default function Register() {
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
             <MenuItem value="Non-Binary">Non-Binary</MenuItem>
+            <MenuItem value="Transgender">Transgender</MenuItem>
+            <MenuItem value="Intersex">Intersex</MenuItem>
+            <MenuItem value="Not listed">Not listed</MenuItem>
             <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
           </TextField>
         </Grid>
@@ -417,13 +427,11 @@ export default function Register() {
         </Grid>
 
         <Grid item xs={12}>
-          <TextField
-            id="standard-basic"
-            variant="standard"
-            label="Phone Number"
-            onChange={e => setPhone_number(e.target.value)}
-            style={{ minWidth: 300, maxWidth: 300 }}
-            InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
+          <PhoneInput
+            international
+            withCountryCallingCode
+            onChange={setPhone_number}
+            inputComponent={PhoneNumber}
           />
         </Grid>
       </Grid>
@@ -500,7 +508,7 @@ export default function Register() {
             <TextField
               required variant="standard"
               label="Grad Year"
-              style={{ minWidth: 145, marginLeft: 10, marginTop: 10, maxWidth:145, marginBottom: -3 }}
+              style={{ minWidth: 145, marginLeft: 10, marginTop: 10, maxWidth: 145, marginBottom: -3 }}
               onChange={(e) => {
                 setGrad_year(e.target.value);
               }}
@@ -551,7 +559,7 @@ export default function Register() {
   );
 
   const confirmation = (
-    <div style={{textAlign:"center"}}>
+    <div style={{ textAlign: "center" }}>
       <h1>Thank you!</h1>
       <h3>A confirmation has been sent to your email.</h3>
       <Typography>Please check your inbox (and spam) and click the link to confirm your email address.</Typography>
@@ -590,7 +598,10 @@ export default function Register() {
     }}>
       <div class="container">
         <div className="register-wrapper">
-          {selectPage()}
+          {/* {selectPage()} */}
+          <div class="personal-wrapper">
+            {personalInfo}
+          </div>
         </div>
       </div>
     </body>
