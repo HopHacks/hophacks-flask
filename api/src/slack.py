@@ -1,0 +1,3 @@
+from slackclient import SlackClient
+slack_client = SlackClient('xoxe.xoxp-1-Mi0yLTc4Mzk4NTk4NDQtMzA4OTA0MDA5ODgxOC0zMzY0NTk2OTY1OTU3LTMzNjc0ODMzOTQ5OTUtODUzYzdlZWNjYmFiYmQ2MDQ0ZGYzMWQwNzY0Njk2OGQyMWIyMmU0NTNkZTIzYmVkMTAyOTI5ZTE2ZWQzYjYwMg')
+slack_client.api_call("auth.test")
