@@ -10,7 +10,7 @@ from slack_sdk.errors import SlackApiError
 
 # client = WebClient(token=os.environ.get("SLACK_TOKEN"))
 
-client = WebClient(token='xoxb-7839859844-3367841886306-0KozXTBawhZQvz7pHz1gp5Un')
+client = WebClient(token='add token manually')
 logger = logging.getLogger(__name__)
 
 slack_api = Blueprint('slack', __name__)
