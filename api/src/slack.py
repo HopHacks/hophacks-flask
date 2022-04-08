@@ -11,7 +11,7 @@ client = WebClient(token=os.environ.get("SLACK_TOKEN"))
 logger = logging.getLogger(__name__)
 
 slack_api = Blueprint('slack', __name__)
-channel_id = ''
+channel_id = 'C03ACRYLK5M'
 
 def channel_info(channel_id):
     channel_info = slack_client.api_call("channels.info", channel=channel_id)
@@ -29,6 +29,7 @@ def send_message(channel_id, message):
     )
 
 @slack_api.route('/', methods = ['POST'])
-def send_message_in_channel(message):
-    send_message(os.environ.get(CHANNEL_TOKEN_TEST), message)
+def send_message_in_channel():
+    print(request)
+    send_message(channel_id, request)
 
