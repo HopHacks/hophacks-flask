@@ -20,12 +20,9 @@ def channel_info(channel_id):
     return None
 
 def send_message(channel_id, message):
-    slack_client.api_call(
-        "chat.postMessage",
-        channel=channel_id,
-        text=message,
-        username='pythonbot',
-        icon_emoji=':robot_face:'
+    client.chat_postMessage(
+        channel=channel_id, 
+        text="Hello world"
     )
 
 @slack_api.route('/', methods = ['POST'])
