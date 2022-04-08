@@ -4,6 +4,8 @@ slack_client = SlackClient()
 SLACK_TOKEN = os.environ.get('SLACK_TOKEN', None)
 slack_client = SlackClient(SLACK_TOKEN)
 
+events_api = Blueprint('slack', __name__)
+
 def channel_info(channel_id):
     channel_info = slack_client.api_call("channels.info", channel=channel_id)
     if channel_info:
