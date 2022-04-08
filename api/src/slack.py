@@ -1,10 +1,17 @@
+from flask import Blueprint, request, Response, jsonify
+import logging
 import os
-from slackclient import SlackClient
-slack_client = SlackClient()
-SLACK_TOKEN = os.environ.get('SLACK_TOKEN', None)
-slack_client = SlackClient(SLACK_TOKEN)
+# Import WebClient from Python SDK (github.com/slackapi/python-slack-sdk)
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 
-events_api = Blueprint('slack', __name__)
+# WebClient instantiates a client that can call API methods
+# When using Bolt, you can use either `app.client` or the `client` passed to listeners.
+client = WebClient(token=os.environ.get("SLACK_TOKEN"))
+logger = logging.getLogger(__name__)
+
+slack_api = Blueprint('slack', __name__)
+channel_id = ''
 
 def channel_info(channel_id):
     channel_info = slack_client.api_call("channels.info", channel=channel_id)
