@@ -31,6 +31,7 @@ def send_message(channel_id, message):
 
 @slack_api.route('/', methods = ['POST'])
 def send_message_in_channel():
+    if 'message' not in request.json:
+        return Response('Invalid request', status=400)
     print(request.json['message'])
     send_message(channel_id, request.json['message'])
-
