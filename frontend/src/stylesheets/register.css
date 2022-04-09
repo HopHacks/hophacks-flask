@@ -127,7 +127,8 @@ body {
 	position: relative;
 	align-self: stretch;
 	display: flex;
-	align-items: flex-end;
+    align-self: center;
+    margin-top: 15px;
 	margin-right: var(--PhoneInputCountrySelect-marginRight);
 }
 
@@ -161,7 +162,8 @@ body {
 	border-left-width: 0;
 	border-right-width: var(--PhoneInputCountrySelectArrow-borderWidth);
 	transform: var(--PhoneInputCountrySelectArrow-transform);
-	opacity: var(--PhoneInputCountrySelectArrow-opacity);
+    opacity: var(--PhoneInputCountrySelectArrow-opacity);
+    align-self: center;
 }
 
 .PhoneInputCountrySelect:focus + .PhoneInputCountryIcon + .PhoneInputCountrySelectArrow {

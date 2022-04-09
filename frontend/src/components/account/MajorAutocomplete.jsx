@@ -50,7 +50,6 @@ const MajorAutocomplete = function MajorAutocomplete({
         "Natural Sciences",
         "Near Eastern Studies",
         "Neuroscience",
-        "Other Majors",
         "Philosophy",
         "Physics",
         "Political Science",
@@ -59,7 +58,8 @@ const MajorAutocomplete = function MajorAutocomplete({
         "Romance Languages",
         "Sociology",
         "Spanish",
-        "Writing Seminars"]
+        "Writing Seminars",
+        "Other Majors"]
 
     return (
         <Autocomplete
@@ -76,7 +76,6 @@ const MajorAutocomplete = function MajorAutocomplete({
               {...params}
               label="Major"
               variant="standard" 
-              // inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
               InputLabelProps={{style: {color: '#000000'}}}
             />}
         />

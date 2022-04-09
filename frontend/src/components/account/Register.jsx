@@ -20,8 +20,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import PhoneInput from 'react-phone-number-input'
 import { isPossiblePhoneNumber } from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
-import { getCountries, getCountryCallingCode } from 'react-phone-number-input/input'
-import en from 'react-phone-number-input/locale/en.json'
 import PhoneNumber from './PhoneNumber'
 
 import '../../stylesheets/register.css';
@@ -269,12 +267,12 @@ export default function Register() {
           />
         }
         label={
-          <div style={{ fontSize: 14 }}>
+          <div style={{ fontSize: 15 }}>
             <span>I have read and understand the </span>
             <Link onClick={openCodeOfConduct}>
               MLH code of conduct
             </Link>
-            <span> *</span>
+            <span>. *</span>
           </div>
         }
       />
@@ -297,18 +295,18 @@ export default function Register() {
           </div>
         }
         label={
-          <div style={{ fontSize: 14 }}>
+          <div style={{ fontSize: 15 }}>
             <span>I authorize you to share my application/registration information
             with Major League Hacking for event administration, ranking, and MLH
               administration in-line with the </span>
             <Link onClick={openPrivacy}>
               MLH Privacy Policy
             </Link>
-            <span> I further agree to the </span>
+            <span>. I further agree to the </span>
             <Link onClick={openTerms}>
               MLH Terms and Conditions
             </Link>
-            <span> *</span>
+            <span>. *</span>
           </div>
         }
       />
@@ -330,7 +328,7 @@ export default function Register() {
           </div>
         }
         label={
-          <div style={{ fontSize: 14 }}>
+          <div style={{ fontSize: 15 }}>
             <span>I authorize MLH to send me pre- and post-event informational emails,
               which contain free credit and opportunities from their partners. *</span>
           </div>
@@ -339,27 +337,11 @@ export default function Register() {
     </FormGroup>
   )
 
-  const CountrySelect = ({ value, onChange, labels, ...rest }) => (
-    <select
-      {...rest}
-      value={value}
-      onChange={event => onChange(event.target.value || undefined)}>
-      <option value="">
-        {labels['ZZ']}
-      </option>
-      {getCountries().map((country) => (
-        <option key={country} value={country}>
-          {labels[country]} +{getCountryCallingCode(country)}
-        </option>
-      ))}
-    </select>
-  )
-
   const personalInfo = (
     <Grid container>
       <Grid container item spacing={2} sm={12} md={7} direction="row" alignItems="center" justify="center">
         <Grid container item spacing={0} xs={12}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={5}>
             <TextField
               required id="standard-basic"
               variant="standard"
@@ -370,13 +352,13 @@ export default function Register() {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={7}>
             <TextField
               required id="standard-basic"
               variant="standard"
               label="Last Name"
               onChange={e => setLast_name(e.target.value)}
-              style={{ minWidth: 145, marginLeft: -40, maxWidth: 145 }}
+              style={{ minWidth: 145, maxWidth: 145 }}
               InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
             />
           </Grid>
@@ -436,7 +418,7 @@ export default function Register() {
         </Grid>
       </Grid>
 
-      <Grid container spacing={0} xs={6} sm={5} direction="row" alignItems="center" justify="center">
+      <Grid container spacing={0} xs={6} md={5} direction="row" alignItems="center" justify="center">
         <Grid item xs={12}>
           <FormControl
             required variant="standard"
@@ -446,7 +428,7 @@ export default function Register() {
               school={school}
               setSchool={setSchool} />
           </FormControl>
-          <FormHelperText style={{ fontSize: 9, color: "black", maxWidth: 250 }}>
+          <FormHelperText style={{ fontSize: 9, color: "black", width: 300 }}>
             * If your school is not in the list, choose 'other schools'
           </FormHelperText>
         </Grid>
@@ -455,7 +437,7 @@ export default function Register() {
           <MajorAutocomplete
             major={major}
             setMajor={setMajor} />
-          <FormHelperText style={{ fontSize: 9, color: "black", maxWidth: 300 }}>
+          <FormHelperText style={{ fontSize: 9, color: "black", width: 300 }}>
             * If your major is not in the list, choose 'other majors'
           </FormHelperText>
         </Grid>
@@ -478,11 +460,11 @@ export default function Register() {
         </Grid>
 
         <Grid container item xs={12} direction="row" alignItems="center" justify="center">
-          <Grid item xs={6}>
+          <Grid item xs={11} md={7}>
             <TextField
               required variant="standard"
               label="Grad Month"
-              style={{ minWidth: 140, marginTop: 10, maxWidth: 140, marginBottom: -3 }}
+              style={{ minWidth: 145, marginTop: 10, maxWidth: 145, marginBottom: -3 }}
               onChange={(e) => {
                 setGrad_month(e.target.value);
               }}
@@ -504,11 +486,11 @@ export default function Register() {
             </TextField>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={1} md={5}>
             <TextField
               required variant="standard"
               label="Grad Year"
-              style={{ minWidth: 145, marginLeft: 10, marginTop: 10, maxWidth: 145, marginBottom: -3 }}
+              style={{ minWidth: 145, marginLeft: -12, marginTop: 10, maxWidth: 145, marginBottom: -3 }}
               onChange={(e) => {
                 setGrad_year(e.target.value);
               }}
@@ -549,7 +531,6 @@ export default function Register() {
             onClick={() => {
               handleProfileNext();
             }}
-          // className={classes.button}
           >
             Submit
           </Button>
@@ -598,10 +579,7 @@ export default function Register() {
     }}>
       <div class="container">
         <div className="register-wrapper">
-          {/* {selectPage()} */}
-          <div class="personal-wrapper">
-            {personalInfo}
-          </div>
+          {selectPage()}
         </div>
       </div>
     </body>

@@ -75,7 +75,6 @@ const SchoolAutocomplete = function SchoolAutocomplete({
                             </React.Fragment>
                         ),
                     }}
-                    // inputProps={{style: {fontSize: 'min(max(calc(10px + 1.25vw), 4vw), 25px)'}}} 
                     InputLabelProps={{style: {color: '#000000'}}}
                 />
             )}

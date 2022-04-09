@@ -1,3 +1,4 @@
+import React from 'react'
 import { forwardRef } from 'react'
 import TextField from '@material-ui/core/TextField'
 
@@ -5,7 +6,7 @@ const phoneInput = (props, ref) => {
   return (
     <TextField
       {...props}
-      style={{ maxWidth: 225 }}
+      style={{ maxWidth: 245 }}
       inputRef={ref}
       fullWidth
       required
