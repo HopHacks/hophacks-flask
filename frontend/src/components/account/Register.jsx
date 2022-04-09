@@ -566,7 +566,9 @@ export default function Register() {
     } else {
       return (
         <>
-          {confirmation}
+         <div class="confirm-wrapper">
+           {confirmation}
+         </div>
         </>
       )
     }

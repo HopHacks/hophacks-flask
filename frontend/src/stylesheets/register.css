@@ -24,6 +24,10 @@ body {
     padding: 50px;
 }
 
+.confirm-wrapper {
+    padding-bottom: 25px;
+}
+
 .register-wrapper {
     height: auto;
     width: 80vw;
