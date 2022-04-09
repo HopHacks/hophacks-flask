@@ -47,7 +47,7 @@ export default function EmailConfirmation(props) {
     }
     return (
         <div class="container-email">
-            <div className="wrapper">
+            <div className="wrapper-email">
                 <h5>{message}</h5>
             </div>
         </div>

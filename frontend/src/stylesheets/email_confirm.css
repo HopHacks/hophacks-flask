@@ -15,7 +15,7 @@ html,body {
     font-size: min(max(calc(12px + 1.25vw), 4vw), 30px);
 }
 
-.wrapper {
+.wrapper-email {
     height: auto;
     width: 80vw;
     max-width: 50rem;
@@ -26,6 +26,7 @@ html,body {
     overflow: hidden; 
     background-color: rgb(232, 235, 242);
     padding: calc(12px + 2vw);
+    padding-bottom: 25px;
 }
 
 h1, h3, h6 {
