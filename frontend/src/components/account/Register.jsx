@@ -412,6 +412,7 @@ export default function Register() {
           <PhoneInput
             international
             withCountryCallingCode
+            defaultCountry="US"
             onChange={setPhone_number}
             inputComponent={PhoneNumber}
           />
