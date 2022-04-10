@@ -36,7 +36,7 @@ export default function EmailConfirmation(props) {
     } else if (message === attemptedMsg) {
         return (
             <div class="container-email">
-                <div className="wrapper">
+                <div className="wrapper-email">
                     <img id="graphic" src={`${process.env.PUBLIC_URL}/images/hoplogo.png`} width="100%" />
                     <h1>Oh no!</h1>
                     <h3>Sorry, something went wrong :(</h3>
