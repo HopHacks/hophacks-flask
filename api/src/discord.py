@@ -6,6 +6,17 @@ from discord_webhook import DiscordWebhook
 import requests
 
 
+class client():
+    def __init__(self):
+        self.webhook = None
+
+    def init_app(self, app):
+        self.webhook = app.config['DISCORD_WEBHOOK']
+
+
+# Global slack api object
+discord_client  = client()
+
 discord_api = Blueprint('discord', __name__)
 
 
@@ -18,5 +29,5 @@ def send_message_in_channel():
     Message = {
     "content": request.json['message']
     }
-    requests.post(discord_webhook_url, data=Message)
+    requests.post(discord_client.webhook, data=Message)
     return jsonify({"msg": "message sent"}), 200

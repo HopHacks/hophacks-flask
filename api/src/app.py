@@ -3,6 +3,7 @@ from flask_jwt_extended import JWTManager
 from mail import mail
 from db import db
 from slack import slack_client
+from discord import discord_client
 
 import json
 
@@ -36,6 +37,7 @@ def create_app(config_file='config/config.json'):
     get_req_config(app, config, 'TESTING')
     get_req_config(app, config, 'BASE_URL')
     get_req_config(app, config, 'SLACK_WEBHOOK')
+    get_req_config(app, config, 'DISCORD_WEBHOOK')
 
     get_opt_config(app, config, 'MAIL_SERVER')
     get_opt_config(app, config, 'MAIL_PORT')
@@ -59,6 +61,7 @@ def create_app(config_file='config/config.json'):
     db.init_app(app)
     mail.init_app(app)
     slack_client.init_app(app)
+    discord_client.init_app(app)
 
     # Add endpoints from these files
     # Note order is important here
