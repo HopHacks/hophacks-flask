@@ -53,6 +53,6 @@ def send_message(channel_id, message):
 def send_message_in_channel():
     if 'message' not in request.json:
         return Response('Invalid request', status=400)
-    slack_client.client.post(text="Hello, world.")
+    slack_client.client.post(text=request.json['message'])
     print(request.json['message'])
     return jsonify({"msg": "message sent"}), 200
