@@ -35,7 +35,7 @@ def create_app(config_file='config/config.json'):
     get_req_config(app, config, 'MONGO_DB_NAME')
     get_req_config(app, config, 'TESTING')
     get_req_config(app, config, 'BASE_URL')
-    get_req_config(app, config, 'SLACK_BOT_TOKEN')
+    get_req_config(app, config, 'SLACK_WEBHOOK')
 
     get_opt_config(app, config, 'MAIL_SERVER')
     get_opt_config(app, config, 'MAIL_PORT')

@@ -5,6 +5,7 @@ import os
 # Import WebClient from Python SDK (github.com/slackapi/python-slack-sdk)
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+from slack_webhook import Slack
 
 # WebClient instantiates a client that can call API methods
 # When using Bolt, you can use either `app.client` or the `client` passed to listeners.
@@ -15,8 +16,8 @@ class client():
         self.token = None
 
     def init_app(self, app):
-        self.token = app.config['SLACK_BOT_TOKEN']
-        self.client = WebClient(token=app.config['SLACK_BOT_TOKEN'])
+        self.webhook = app.config['SLACK_WEBHOOK']
+        self.client = Slack(url=app.config['SLACK_WEBHOOK'])
 
 
 
@@ -48,9 +49,10 @@ def send_message(channel_id, message):
     return None
 
 @slack_api.route('/', methods = ['POST'])
-@jwt_required
+# @jwt_required
 def send_message_in_channel():
     if 'message' not in request.json:
         return Response('Invalid request', status=400)
+    slack_client.client.post(text="Hello, world.")
     print(request.json['message'])
-    send_message(channel_id, request.json['message'])
+    return jsonify({"msg": "message sent"}), 200
