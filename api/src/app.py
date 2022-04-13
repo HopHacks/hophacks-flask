@@ -2,6 +2,7 @@ from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
 from mail import mail
 from db import db
+from slack import slack_client
 
 import json
 
@@ -34,6 +35,7 @@ def create_app(config_file='config/config.json'):
     get_req_config(app, config, 'MONGO_DB_NAME')
     get_req_config(app, config, 'TESTING')
     get_req_config(app, config, 'BASE_URL')
+    get_req_config(app, config, 'SLACK_BOT_TOKEN')
 
     get_opt_config(app, config, 'MAIL_SERVER')
     get_opt_config(app, config, 'MAIL_PORT')
@@ -56,6 +58,7 @@ def create_app(config_file='config/config.json'):
     jwt = JWTManager(app)
     db.init_app(app)
     mail.init_app(app)
+    slack_client.init_app(app)
 
     # Add endpoints from these files
     # Note order is important here
