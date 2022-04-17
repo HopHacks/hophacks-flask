@@ -42,12 +42,8 @@ const useStyles = makeStyles((theme) => ({
 
   title: {
     color: "white",
-    // borderColor: "white !important",
     fontWeight: "bold",
     marginBottom: 25,
-    // position: 'flex',
-    // marginTop: "2.5%",
-    // marginLeft: "7.5%",
   },
 
   table: {
@@ -78,17 +74,7 @@ const useStyles = makeStyles((theme) => ({
   cssLabel: {
     color: "black"
   },
-  // cssOutlinedInput: {
-  //   color: 'white',   // <!-- ADD THIS ONE
-  //   "&$cssFocused $notchedOutline": {
-  //     borderColor: `white !important`
-  //   }
-  // },
-  // cssFocused: { color: "white !important" },
 
-  // notchedOutline: {
-  //   borderColor: "white !important"
-  // },
   panel: {
     marginTop: 125,
   },
@@ -111,43 +97,34 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginLeft: 30,
   },
-  // editDeleteButton: {
-  //   align: flex-end,
-  //   // align: right,
-  //   // marginLeft: 450,
-  // }
 })
 );
 
 
 const Panel = function () {
   const classes = useStyles();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [event, setEvent] = useState("");
-  const [sender, setSender] = useState("");
-  const [priority, setPriority] = useState(false);
   const [open, setOpen] = useState(false);
   const [announcements, setAnnouncements] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteTitle, setdeleteTitle] = useState("");
-  const [image, setImage] = useState("");
-  // const [imageMsg, setImageMsg] = useState("Acceptable format: *.jpg, *.jpeg");
+  const [currentAnnouncement,setCurrentAnnouncement] = useState({
+    "_id": "6249fa566bcdae51504b5a0b",
+    "title": "1",
+    "content": "2",
+    "event": "Spring_2022",
+    "importance": true
+  });
 
   async function getAnnouncements() {
     try {
       const response = await axios.get("/api/announcements/");
       setAnnouncements(response.data['announcements']);
-      console.log(announcements)
-      console.log(response.data['announcements'])
     } catch (ex) {
       console.log('Unable to get all announcements');
     }
   }
 
   function populateAnnouncements() {
-    console.log(announcements)
-    console.log(announcements)
     return (
       announcements?.map((announcement, index) => (
         <TableRow key={index}  >
@@ -157,12 +134,12 @@ const Panel = function () {
                 {announcement.title}
               </Grid>
               <Grid item xs={1.5}>
-                <Button variant="contained" color="white" id={announcement.title} onClick={handleOpenDeleteDialog}>
+                <Button variant="contained" color="white" id={announcement} onClick={handlePreviewAndEditButton}>
                   Edit
             </Button>
               </Grid>
               <Grid item xs={1.5}>
-                <Button variant="contained" color="white" id={announcement.title} onClick={handleOpenDeleteDialog}>
+                <Button variant="contained" color="white" id={announcement} onClick={handleOpenDeleteDialog}>
                   Delete
             </Button>
               </Grid>
@@ -191,85 +168,13 @@ const Panel = function () {
     )
   }
 
-  useEffect(() => {
-    getAnnouncements()
-    populateAnnouncements()
-  }, []);
-
-
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value)
-    console.log(event.target.value);
-  };
-
-  const handleContentChange = (event) => {
-    setContent(event.target.value)
-    console.log(event.target.value);
-  };
-
-  const handleEventChange = (event) => {
-    setEvent(event.target.value)
-    console.log(event.target.value);
-  };
-
-  function handleImageChange(event) {
-    setImage(event.target.files[0])
-  }
-
-  const handlePriorityChange = (event) => {
-    setPriority(event.target.value)
-    console.log(event.target.value);
-  };
-
-  const handleOpenDialog = () => {
-    setOpen(true);
-  }
-
-  const handleOpenDeleteDialog = (event) => {
-    console.log(event.currentTarget.id)
-    setdeleteTitle(event.currentTarget.id)
-    setOpenDelete(true);
-  }
-
-  async function sendAnnouncement() {
-    try {
-      await axios.post("/api/announcements/", { "title": title, "content": content, "event": event, "broadcast": "no", "importance": priority });
-      window.location.reload();
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
-
-  async function deleteAnnouncement() {
-    try {
-      await axios.delete("/api/announcements/", { data: { "title": deleteTitle } });
-      window.location.reload();
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
-
-  const handleCloseDialog = (event) => {
-    if (event.currentTarget.id === "confirm") {
-      sendAnnouncement();
-    }
-    setOpen(false);
-  }
-
-  const handleCloseDeleteDialog = (event) => {
-    if (event.currentTarget.id === "confirm") {
-      deleteAnnouncement();
-    }
-    setOpenDelete(false);
-  }
-
-  return (
-    <>
-      <Grid container className={classes.panel}>
-        <Grid item xs={12}>
-          <Typography variant="h4" align="center" className={classes.title}>Announcement Panel</Typography>
-        </Grid>
-        <Grid container item spacing={1} xs={8} className={classes.left}>
+  function makeAnnouncement(currentAnnouncement){
+    console.log(currentAnnouncement._id)
+    console.log(currentAnnouncement.title)
+    console.log(currentAnnouncement.content)
+    if(currentAnnouncement._id == ""){
+    return(
+    <Grid container item spacing={1} xs={8} className={classes.left}>
           <Grid container item spacing={1} direction="column" alignItems="center">
             <Dialog
               open={open}
@@ -281,11 +186,10 @@ const Panel = function () {
               <DialogTitle>{"Please Confirm The Announcement"}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                  <p> Title : {title} </p>
-                  <p> Content : {content} </p>
-                  <p> Event : {event} </p>
-                  {/* <p> Image Filename : {image['name']} </p> */}
-                  <p> Priority : {priority} </p>
+                  <p> Title : {currentAnnouncement.title} </p>
+                  <p> Content : {currentAnnouncement.content} </p>
+                  <p> Event : {currentAnnouncement.event} </p>
+                  <p> Priority : {currentAnnouncement.importance} </p>
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -299,6 +203,7 @@ const Panel = function () {
                 <TextField
                   id="outlined-multiline-flexible"
                   label="Title"
+                  defaultValue=""
                   rows={2}
                   style={{ margin: 8, marginBottom: 16 }}
                   fullWidth
@@ -322,6 +227,7 @@ const Panel = function () {
                 <TextField
                   id="outlined-multiline-static"
                   label="Content"
+                  defaultValue=""
                   multiline
                   fullWidth
                   rows={4}
@@ -346,6 +252,7 @@ const Panel = function () {
                   <TextField
                     select
                     label="Event"
+                    defaultValue=""
                     variant="outlined"
                     style={{ margin: 8, marginBottom: 16 }}
                     className={classes.textField}
@@ -373,10 +280,12 @@ const Panel = function () {
                     }}
                     onChange={handleEventChange}
                   >
+                    <MenuItem value={"Spring_2022"}>Spring 2022</MenuItem>
                     <MenuItem value={"Fall 2022"}>Fall 2022</MenuItem>
                   </TextField>
                   <TextField
                     label="Priority"
+                    defaultValue=""
                     select
                     className={classes.textField}
                     style={{ margin: 8, marginBottom: 16 }}
@@ -409,12 +318,6 @@ const Panel = function () {
                     <MenuItem value={false}>No</MenuItem>
                   </TextField>
 
-                  {/* <div id="box">
-         <Typography style={{ fontSize: '15px', color:'white'}}> Upload Cover Image </Typography>
-         <input type="file" name="file" onChange={handleImageChange} style={{color:'white'}} />
-          <Typography style={{ fontSize: '13px', color:'white'}}> {imageMsg} </Typography>
-          </div> */}
-
                 </div>
               </div>
             </div>
@@ -423,11 +326,278 @@ const Panel = function () {
             <Button variant="contained" color="white" onClick={handleOpenDialog} className={classes.button}>
               Submit
             </Button>
-            <Button variant="contained" color="white" onClick={handleOpenDialog} className={classes.button}>
+            <Button variant="contained" color="white" onClick={handleCancelButton} className={classes.button}>
               Cancel
             </Button>
           </Grid>
         </Grid>
+    );
+    } else {
+      return(
+        <Grid container item spacing={1} xs={8} className={classes.left}>
+              <Grid container item spacing={1} direction="column" alignItems="center">
+                <Dialog
+                  open={open}
+                  // TransitionComponent={Transition}
+                  keepMounted
+                  onClose={handleCloseDialog}
+                  aria-describedby="alert-dialog-slide-description"
+                >
+                  <DialogTitle>{"Please Confirm The Updating"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                      <p> Title : {currentAnnouncement.title} </p>
+                      <p> Content : {currentAnnouncement.content} </p>
+                      <p> Event : {currentAnnouncement.event} </p>
+                      {/* <p> Image Filename : {image['name']} </p> */}
+                      <p> Priority : {currentAnnouncement.importance} </p>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    < Button onClick={handleCloseDialogForEditing} id="back">Back</Button>
+                    < Button onClick={handleCloseDialogForEditing} id="confirm">Confirm</Button>
+                  </DialogActions>
+                </Dialog>
+    
+                <div className={classes.root}>
+                  <div>
+                    <TextField
+                      id="outlined-multiline-flexible"
+                      label="Title"
+                      defaultValue={currentAnnouncement.title}
+                      rows={2}
+                      style={{ margin: 8, marginBottom: 16 }}
+                      fullWidth
+                      color="white"
+                      variant="outlined"
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.cssLabel,
+                          focused: classes.cssFocused,
+                        },
+                      }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                          focused: classes.cssFocused,
+                          notchedOutline: classes.notchedOutline,
+                        }
+                      }}
+                      onChange={handleTitleChange}
+                    />
+                    <TextField
+                      id="outlined-multiline-static"
+                      label="Content"
+                      defaultValue={currentAnnouncement.content}
+                      multiline
+                      fullWidth
+                      rows={4}
+                      variant="outlined"
+                      style={{ margin: 8, marginBottom: 16 }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.cssLabel,
+                          focused: classes.cssFocused,
+                        },
+                      }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                          focused: classes.cssFocused,
+                          notchedOutline: classes.notchedOutline,
+                        }
+                      }}
+                      onChange={handleContentChange}
+                    />
+                    <div>
+                      <TextField
+                        select
+                        label="Event"
+                        variant="outlined"
+                        style={{ margin: 8, marginBottom: 16 }}
+                        className={classes.textField}
+                        InputLabelProps={{
+                          classes: {
+                            root: classes.cssLabel,
+                            focused: classes.cssFocused,
+                          },
+                        }}
+                        InputProps={{
+                          classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline,
+                          }
+                        }}
+                        SelectProps={{
+                          MenuProps: {
+                            anchorOrigin: {
+                              vertical: "bottom",
+                              horizontal: "left"
+                            },
+                            getContentAnchorEl: null
+                          }
+                        }}
+                        value={currentAnnouncement.event}
+                        onChange={handleEventChange}
+                      >
+                        <MenuItem value={"Spring_2022"}>Spring 2022</MenuItem>
+                        <MenuItem value={"Fall_2022"}>Fall 2022</MenuItem>
+                      </TextField>
+                      <TextField
+                        label="Priority"
+                        select
+                        defaultValue={currentAnnouncement.importance}
+                        className={classes.textField}
+                        style={{ margin: 8, marginBottom: 16 }}
+                        variant="outlined"
+                        InputLabelProps={{
+                          classes: {
+                            root: classes.cssLabel,
+                            focused: classes.cssFocused,
+                          },
+                        }}
+                        InputProps={{
+                          classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline,
+                          }
+                        }}
+                        SelectProps={{
+                          MenuProps: {
+                            anchorOrigin: {
+                              vertical: "bottom",
+                              horizontal: "left"
+                            },
+                            getContentAnchorEl: null
+                          }
+                        }}
+                        onChange={handlePriorityChange}
+                      >
+                        <MenuItem value={true}>Yes</MenuItem>
+                        <MenuItem value={false}>No</MenuItem>
+                      </TextField>
+    
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+              <Grid container item xs={12} direction="row" justify="flex-start">
+                <Button variant="contained" color="white" onClick={handleOpenDialog} className={classes.button}>
+                  Submit
+                </Button>
+                <Button variant="contained" color="white" onClick={handleCancelButton} className={classes.button}>
+                  Cancel
+                </Button>
+              </Grid>
+            </Grid>
+        );
+    }
+  }
+
+  useEffect(() => {
+    getAnnouncements()
+    makeAnnouncement(currentAnnouncement)
+    populateAnnouncements()
+  }, []);
+
+
+  const handleTitleChange = (event) => {
+    currentAnnouncement.title = (event.target.value)
+  };
+
+  const handleContentChange = (event) => {
+    currentAnnouncement.content = (event.target.value)
+  };
+
+  const handleEventChange = (event) => {
+    currentAnnouncement.event = (event.target.value)
+  };
+
+  const handlePriorityChange = (event) => {
+    currentAnnouncement.importance = (event.target.value)
+  };
+
+  const handleOpenDialog = () => {
+    setOpen(true);
+  }
+
+  const handleOpenDeleteDialog = (event) => {
+    setdeleteTitle(event.currentTarget.id)
+    setOpenDelete(true);
+  }
+
+  const handlePreviewAndEditButton = (event) => {
+    setCurrentAnnouncement(event.currentTarget.id)
+  }
+
+  const handleCancelButton = () => {
+    setCurrentAnnouncement({
+      "_id": "",
+      "title": "",
+      "content": "",
+      "event": "",
+      "importance": null
+    })
+    window.location.reload();
+  }
+
+  async function sendAnnouncement() {
+    try {
+      await axios.post("/api/announcements/", { "title": currentAnnouncement.title, "content": currentAnnouncement.content, "event": currentAnnouncement.event, "importance": currentAnnouncement.importance });
+      window.location.reload();
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
+  async function updateAnnouncement() {
+    try {
+      await axios.put("/api/announcements/update", { "_id": currentAnnouncement._id, "title": currentAnnouncement.title, "content": currentAnnouncement.content, "event": currentAnnouncement.event, "importance": currentAnnouncement.importance });
+      window.location.reload();
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
+  async function deleteAnnouncement() {
+    try {
+      await axios.delete("/api/announcements/", { data: { "title": deleteTitle } });
+      window.location.reload();
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
+  const handleCloseDialog = (event) => {
+    if (event.currentTarget.id === "confirm") {
+      sendAnnouncement();
+    }
+    setOpen(false);
+  }
+
+  const handleCloseDialogForEditing = (event) => {
+    if (event.currentTarget.id === "confirm") {
+      updateAnnouncement();
+    }
+    setOpen(false);
+  }
+
+  const handleCloseDeleteDialog = (event) => {
+    if (event.currentTarget.id === "confirm") {
+      deleteAnnouncement();
+    }
+    setOpenDelete(false);
+  }
+
+  return (
+    <>
+      <Grid container className={classes.panel}>
+        <Grid item xs={12}>
+          <Typography variant="h4" align="center" className={classes.title}>Announcement Panel</Typography>
+        </Grid>
+        {makeAnnouncement(currentAnnouncement)}
         <Grid container xs={5}>
           {/* <div className={classes.table}> */}
           <TableContainer component={Paper}>
