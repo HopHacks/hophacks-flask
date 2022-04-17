@@ -19,13 +19,6 @@ import json
 from datetime import datetime
 from bson import ObjectId
 import pytz
-#import boto3
-
-
-#ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
-#BUCKET = 'hophacks-announcement-image'
-
-
 
 announcements_api = Blueprint('announcements', __name__)
 
@@ -41,8 +34,6 @@ def create():
         title: string 
         content: string
         event: string
-        broadcast: list of boolean
-            "website, slack, discord, email"
         importance: boolean
     noninput: 
         time -- get current time
@@ -55,45 +46,101 @@ def create():
             "title": "Title 12345",
             "content": "This is the content, the content, the content.",
             "event": "Spring 2022",
-            "broadcast": [true,false,false,false],
             "importance": true
         }
 
     :status 200: Anouncement was added
     :status 400: No json or ``announcement/json`` header, or field missing
     :status 401: Need admin access
-    :status 409: Anouncement alreay exists
     :status 422: Not logged in
     """
 
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['title','content','event','broadcast','importance'])):
+    if not (all(field in request.json for field in ['title','content','event','importance'])):
         return Response('Invalid request', status=400)
 
     title = request.json['title']
     content = request.json['content']
     event = request.json['event']
-    broadcast = [True,True,True,True]
     importance = request.json['importance']
-    #file = request.files['image']
-    #file_name = secure_filename(file.filename)
-    #s3 = boto3.client('s3')
     id = get_jwt_identity()
     sender = db.users.find_one({'_id': ObjectId(id)})["username"]
     time = datetime.utcnow()
-
+    
     db.announcements.insert_one({
         "title":title,
-        "broadcast": broadcast,
         "event": event,
+        "content":content,
         "importance": importance,
         "sender": sender,
         "time": time,
-        #"image": image,
     })
     return jsonify({"msg": "announcement added"}), 200
+
+@announcements_api.route('/update', methods = ['PUT'])
+@jwt_required
+@check_admin
+def update():
+    """ 
+    Update an existing announcement (only Admin)
+
+    Example input:
+
+    .. sourcecode:: json
+        {
+            "_id": "6249fa566bcdae51504b5a0b",
+            "title": "Title 12345",
+            "content": "This is the content, the content, the content.",
+            "event": "Spring 2022",
+            "importance": true
+        }
+
+    :status 200: Anouncement was updated
+    :status 400: No json or ``announcement/json`` header, or field missing
+    :status 401: Need admin access
+    :status 409: Anouncement doesn't exists
+    :status 422: Not logged in
+    :status 404: Invalid request
+    """
+    if (request.json is None):
+        return Response('Data not in json format', status=400)
+
+    if not (all(field in request.json for field in ['_id','title','content','event','importance'])):
+        return Response('Invalid request', status=400)
+    
+    id = request.json['_id']
+    filter = {'_id': ObjectId(id)}
+    
+    if len(list(db.announcements.find(filter))) == 0 :
+        return Response('Event Does Not Exist', status=409)
+    
+    announcement = db.announcements.find_one(filter)
+    title = request.json['title']
+    content = request.json['content']
+    event = request.json['event']
+    importance = request.json['importance']
+    sender_id = get_jwt_identity()
+    sender = db.users.find_one({'_id': ObjectId(sender_id)})["username"]
+    time = datetime.utcnow()
+    
+    try:
+        db.announcements.update_one(
+        {'_id': ObjectId(announcement['_id'])},
+        {'$set': {
+            "title":title,
+            "event": event,
+            "content":content,
+            "importance": importance,
+            "sender": sender,
+            "time": time,
+        }}
+        )
+    except:
+        return Response('Invalid request', status=404)
+    
+    return Response('Announcement updated', status=200)
 
 @announcements_api.route('/', methods = ['GET'])
 def display_all():
@@ -141,15 +188,14 @@ def display_first_important():
 
     cursor = db.announcements.find({'event': event,'importance': True}).sort("time", -1)
     announcement = {}
+
     annouc = cursor[0]
     announcement['title'] = annouc['title']
     announcement['content'] = annouc['content']
     announcement['event'] = annouc['event']
-    announcement['broadcast'] = annouc['broadcast']
     announcement['importance'] = annouc['importance']
     announcement['sender'] = annouc['sender']
     announcement['time'] = annouc['time']
-    announcement['image'] = annouc['image']
   
     return jsonify(announcement), 200
 
@@ -182,12 +228,10 @@ def display_three_recent():
         announcements.append({
             'title': annouc['title'], 
             'content': annouc['content'], 
-            'event': annouc['event'], 
-            'broadcast': annouc['broadcast'],
+            'event': annouc['event'],
             'importance': annouc['importance'], 
             'sender': annouc['sender'],
-            'time': annouc['time'],
-            'image': annouc['image']
+            'time': annouc['time']
             })
   
     return jsonify({'announcements': announcements}), 200
@@ -222,15 +266,12 @@ def display_history():
                 'title': annouc['title'], 
                 'content': annouc['content'], 
                 'event': annouc['event'], 
-                'broadcast': annouc['broadcast'],
                 'importance': annouc['importance'], 
                 'sender': annouc['sender'],
-                'time': annouc['time'],
-                'image': annouc['image']
+                'time': annouc['time']
                 })
     
     return jsonify({'announcements': announcements}), 200
-
 
 @announcements_api.route('/titles', methods = ['GET'])
 def getAllTitles():
@@ -243,7 +284,6 @@ def getAllTitles():
         }
     :status 200: display successful
     """
-
     cursor = db.announcements.find().sort("time", -1)
     announcements = []
     passed_first_important = False
@@ -268,11 +308,7 @@ def deleteAnnouncements():
         }
     :status 200: successfully deleted
     """
-
-    # announcement = {}
-    # announcement['title'] = request.json['title']
     title = request.json['title']
-    print(title)
     announcement = {'title' : title}
     
     if len(list(db.announcements.find(announcement))) == 0 :
@@ -284,5 +320,3 @@ def deleteAnnouncements():
         return Response('Invalid request', status=400)
 
     return Response('Successfully deleted', status=200)
-
-
