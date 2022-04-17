@@ -136,7 +136,7 @@ const Panel = function () {
 
   async function getAnnouncements() {
     try {
-      const response = await axios.get("/api/announcements/titles");
+      const response = await axios.get("/api/announcements/");
       setAnnouncements(response.data['announcements']);
       console.log(announcements)
       console.log(response.data['announcements'])

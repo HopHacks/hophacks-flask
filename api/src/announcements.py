@@ -1,3 +1,5 @@
+
+
 '''
 Endpoints related to creating and displaying anouncements 
 '''
@@ -145,9 +147,28 @@ def update():
 @announcements_api.route('/', methods = ['GET'])
 def display_all():
     """ 
-    Display all announcements in the given event sorted by the time posted
+    Display all announcements in all events sorted by the time posted
 
-    request.args: event
+    :status 200: display successful
+    """
+    cursor = db.announcements.find().sort("time", -1)
+    announcements = []
+    for annouc in cursor:
+        announcements.append({
+            'title': annouc['title'], 
+            'content': annouc['content'], 
+            'event': annouc['event'], 
+            'importance': annouc['importance'], 
+            'sender': annouc['sender'],
+            'time': annouc['time'],
+            })
+  
+    return jsonify({'announcements': announcements}), 200
+
+@announcements_api.route('/event', methods = ['GET'])
+def display_all_in_event():
+    """ 
+    Display all announcements in the given event sorted by the time posted
 
     :status 400: No json or ``announcement/json`` header, or field missing
     :status 200: display successful
@@ -163,11 +184,9 @@ def display_all():
             'title': annouc['title'], 
             'content': annouc['content'], 
             'event': annouc['event'], 
-            'broadcast': annouc['broadcast'],
             'importance': annouc['importance'], 
             'sender': annouc['sender'],
-            'time': annouc['time'],
-            'image': annouc['image']
+            'time': annouc['time']
             })
   
     return jsonify({'announcements': announcements}), 200
