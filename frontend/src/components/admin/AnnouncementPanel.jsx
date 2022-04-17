@@ -90,32 +90,35 @@ const useStyles = makeStyles((theme) => ({
   //   borderColor: "white !important"
   // },
   panel: {
-    marginTop: 125,
+    marginTop: 50,
   },
   left: {
-    maxHeight: 425,
     backgroundColor: 'white',
     borderRadius: 5,
+    maxHeight: 475,
+    minWidth: 500,
     maxWidth: 600,
     paddingTop: 30,
     paddingBottom: 30,
     paddingRight: 25,
-    marginLeft: 140,
-    marginRight: 50,
+    margin: 'auto',
+    marginBottom: 50,
+  },
+  right: {
+    maxHeight: 325,
+    minWidth: 500,
+    margin: 'auto',
+    marginTop: 0,
   },
   pagination: {
-    marginLeft: 200,
-    marginTop: 40,
-    marginBottom: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 15,
+    marginBottom: 10,
   },
   button: {
-    marginLeft: 30,
+    marginLeft: 35,
   },
-  // editDeleteButton: {
-  //   align: flex-end,
-  //   // align: right,
-  //   // marginLeft: 450,
-  // }
 })
 );
 
@@ -131,7 +134,8 @@ const Panel = function () {
   const [announcements, setAnnouncements] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteTitle, setdeleteTitle] = useState("");
-  const [image, setImage] = useState("");
+  const [page, setPage] = useState(1);
+  // const [image, setImage] = useState("");
   // const [imageMsg, setImageMsg] = useState("Acceptable format: *.jpg, *.jpeg");
 
   async function getAnnouncements() {
@@ -145,26 +149,25 @@ const Panel = function () {
     }
   }
 
-  function populateAnnouncements() {
-    console.log(announcements)
+  function populateAnnouncements(page) {
     console.log(announcements)
     return (
-      announcements?.map((announcement, index) => (
+      announcements?.filter((announcement, index) => index >= page.page * 5 - 5 && index < page.page * 5).map((announcement, index) => (
         <TableRow key={index}  >
           <TableCell className={classes.cell} style={{ width: '1000%' }} scope="row">
             <Grid container>
-              <Grid item xs={9}>
+              <Grid item xs={8} lg={10}>
                 {announcement.title}
               </Grid>
-              <Grid item xs={1.5}>
+              <Grid item sm={1.5} lg={1}>
                 <Button variant="contained" color="white" id={announcement.title} onClick={handleOpenDeleteDialog}>
                   Edit
-            </Button>
+                </Button>
               </Grid>
-              <Grid item xs={1.5}>
+              <Grid item sm={1.5} lg={1}>
                 <Button variant="contained" color="white" id={announcement.title} onClick={handleOpenDeleteDialog}>
                   Delete
-            </Button>
+                </Button>
               </Grid>
             </Grid>
 
@@ -196,7 +199,6 @@ const Panel = function () {
     populateAnnouncements()
   }, []);
 
-
   const handleTitleChange = (event) => {
     setTitle(event.target.value)
     console.log(event.target.value);
@@ -212,9 +214,9 @@ const Panel = function () {
     console.log(event.target.value);
   };
 
-  function handleImageChange(event) {
-    setImage(event.target.files[0])
-  }
+  // function handleImageChange(event) {
+  //   setImage(event.target.files[0])
+  // }
 
   const handlePriorityChange = (event) => {
     setPriority(event.target.value)
@@ -229,6 +231,10 @@ const Panel = function () {
     console.log(event.currentTarget.id)
     setdeleteTitle(event.currentTarget.id)
     setOpenDelete(true);
+  }
+
+  const handlePageChange = (page) => {
+    setPage(page);
   }
 
   async function sendAnnouncement() {
@@ -269,7 +275,7 @@ const Panel = function () {
         <Grid item xs={12}>
           <Typography variant="h4" align="center" className={classes.title}>Announcement Panel</Typography>
         </Grid>
-        <Grid container item spacing={1} xs={8} className={classes.left}>
+        <Grid container item spacing={1} xs={10} sm={8} className={classes.left}>
           <Grid container item spacing={1} direction="column" alignItems="center">
             <Dialog
               open={open}
@@ -428,7 +434,7 @@ const Panel = function () {
             </Button>
           </Grid>
         </Grid>
-        <Grid container xs={5}>
+        <Grid container xs={10} sm={6} className={classes.right}>
           {/* <div className={classes.table}> */}
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
@@ -438,10 +444,10 @@ const Panel = function () {
                   </TableRow>
                 </TableHead> */}
               <TableBody>
-                {populateAnnouncements()}
+                {populateAnnouncements({ page })}
               </TableBody>
             </Table>
-            <Pagination count={10} size="small" className={classes.pagination} />
+            <Pagination count={announcements.length / 5} size="small" className={classes.pagination} onChange={(e, p) => handlePageChange(p)} />
           </TableContainer>
           {/* </div> */}
         </Grid>
