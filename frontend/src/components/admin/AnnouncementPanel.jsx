@@ -42,8 +42,9 @@ const useStyles = makeStyles((theme) => ({
 
   title: {
     color: "white",
-    borderColor: "white !important",
+    // borderColor: "white !important",
     fontWeight: "bold",
+    marginBottom: 25,
     // position: 'flex',
     // marginTop: "2.5%",
     // marginLeft: "7.5%",
@@ -66,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '30ch',
+    width: '32ch',
   },
   verticalCenter: {
     position: 'flex',
@@ -75,22 +76,46 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cssLabel: {
-    color: "white"
+    color: "black"
   },
-  cssOutlinedInput: {
-    color: 'white',   // <!-- ADD THIS ONE
-    "&$cssFocused $notchedOutline": {
-      borderColor: `white !important`
-    }
-  },
-  cssFocused: { color: "white !important" },
+  // cssOutlinedInput: {
+  //   color: 'white',   // <!-- ADD THIS ONE
+  //   "&$cssFocused $notchedOutline": {
+  //     borderColor: `white !important`
+  //   }
+  // },
+  // cssFocused: { color: "white !important" },
 
-  notchedOutline: {
-    borderColor: "white !important"
-  },
+  // notchedOutline: {
+  //   borderColor: "white !important"
+  // },
   panel: {
-    marginTop: 200,
-  }
+    marginTop: 125,
+  },
+  left: {
+    maxHeight: 425,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    maxWidth: 600,
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingRight: 25,
+    marginLeft: 140,
+    marginRight: 50,
+  },
+  pagination: {
+    marginLeft: 200,
+    marginTop: 40,
+    marginBottom: 5,
+  },
+  button: {
+    marginLeft: 30,
+  },
+  // editDeleteButton: {
+  //   align: flex-end,
+  //   // align: right,
+  //   // marginLeft: 450,
+  // }
 })
 );
 
@@ -107,7 +132,7 @@ const Panel = function () {
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteTitle, setdeleteTitle] = useState("");
   const [image, setImage] = useState("");
-  const [imageMsg, setImageMsg] = useState("Acceptable format: *.jpg, *.jpeg");
+  // const [imageMsg, setImageMsg] = useState("Acceptable format: *.jpg, *.jpeg");
 
   async function getAnnouncements() {
     try {
@@ -127,11 +152,23 @@ const Panel = function () {
       announcements?.map((announcement, index) => (
         <TableRow key={index}  >
           <TableCell className={classes.cell} style={{ width: '1000%' }} scope="row">
-            {announcement.title}
-          </TableCell>
-          <Button variant="contained" color="white" margain='center' id={announcement.title} onClick={handleOpenDeleteDialog}>
-            Delete
+            <Grid container>
+              <Grid item xs={9}>
+                {announcement.title}
+              </Grid>
+              <Grid item xs={1.5}>
+                <Button variant="contained" color="white" id={announcement.title} onClick={handleOpenDeleteDialog}>
+                  Edit
             </Button>
+              </Grid>
+              <Grid item xs={1.5}>
+                <Button variant="contained" color="white" id={announcement.title} onClick={handleOpenDeleteDialog}>
+                  Delete
+            </Button>
+              </Grid>
+            </Grid>
+
+          </TableCell>
           <Dialog
             open={openDelete}
             keepMounted
@@ -229,10 +266,10 @@ const Panel = function () {
   return (
     <>
       <Grid container className={classes.panel}>
-        <Grid container item spacing={1} xs={6}>
-          <Grid item xs={12}>
-            <Typography variant="h5" align="center" className={classes.title}>Announcement Panel</Typography>
-          </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h4" align="center" className={classes.title}>Announcement Panel</Typography>
+        </Grid>
+        <Grid container item spacing={1} xs={8} className={classes.left}>
           <Grid container item spacing={1} direction="column" alignItems="center">
             <Dialog
               open={open}
@@ -263,7 +300,7 @@ const Panel = function () {
                   id="outlined-multiline-flexible"
                   label="Title"
                   rows={2}
-                  style={{ margin: 8 }}
+                  style={{ margin: 8, marginBottom: 16 }}
                   fullWidth
                   color="white"
                   variant="outlined"
@@ -289,7 +326,7 @@ const Panel = function () {
                   fullWidth
                   rows={4}
                   variant="outlined"
-                  style={{ margin: 8 }}
+                  style={{ margin: 8, marginBottom: 16 }}
                   InputLabelProps={{
                     classes: {
                       root: classes.cssLabel,
@@ -310,7 +347,7 @@ const Panel = function () {
                     select
                     label="Event"
                     variant="outlined"
-                    style={{ margin: 8 }}
+                    style={{ margin: 8, marginBottom: 16 }}
                     className={classes.textField}
                     InputLabelProps={{
                       classes: {
@@ -342,7 +379,7 @@ const Panel = function () {
                     label="Priority"
                     select
                     className={classes.textField}
-                    style={{ margin: 8 }}
+                    style={{ margin: 8, marginBottom: 16 }}
                     variant="outlined"
                     InputLabelProps={{
                       classes: {
@@ -382,26 +419,30 @@ const Panel = function () {
               </div>
             </div>
           </Grid>
-          <Grid container item xs={12} direction="row" alignItems="center" justify="center">
-            <Button variant="contained" color="white" onClick={handleOpenDialog}>
-              Send
+          <Grid container item xs={12} direction="row" justify="flex-start">
+            <Button variant="contained" color="white" onClick={handleOpenDialog} className={classes.button}>
+              Submit
+            </Button>
+            <Button variant="contained" color="white" onClick={handleOpenDialog} className={classes.button}>
+              Cancel
             </Button>
           </Grid>
         </Grid>
-        <Grid container xs={6}>
+        <Grid container xs={5}>
           {/* <div className={classes.table}> */}
-            <TableContainer component={Paper}>
-              <Table aria-label="simple table">
-                <TableHead>
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+              {/* <TableHead>
                   <TableRow>
                     <TableCell align="left">Announcements</TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {populateAnnouncements()}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                </TableHead> */}
+              <TableBody>
+                {populateAnnouncements()}
+              </TableBody>
+            </Table>
+            <Pagination count={10} size="small" className={classes.pagination} />
+          </TableContainer>
           {/* </div> */}
         </Grid>
       </Grid>
