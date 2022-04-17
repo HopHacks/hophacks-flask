@@ -74,28 +74,35 @@ const useStyles = makeStyles((theme) => ({
   cssLabel: {
     color: "black"
   },
-
   panel: {
-    marginTop: 125,
+    marginTop: 50,
   },
   left: {
-    maxHeight: 425,
     backgroundColor: 'white',
     borderRadius: 5,
+    maxHeight: 475,
+    minWidth: 500,
     maxWidth: 600,
     paddingTop: 30,
     paddingBottom: 30,
     paddingRight: 25,
-    marginLeft: 140,
-    marginRight: 50,
+    margin: 'auto',
+    marginBottom: 50,
+  },
+  right: {
+    maxHeight: 325,
+    minWidth: 500,
+    margin: 'auto',
+    marginTop: 0,
   },
   pagination: {
-    marginLeft: 200,
-    marginTop: 40,
-    marginBottom: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 15,
+    marginBottom: 10,
   },
   button: {
-    marginLeft: 30,
+    marginLeft: 35,
   },
 })
 );
@@ -107,13 +114,14 @@ const Panel = function () {
   const [announcements, setAnnouncements] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteTitle, setdeleteTitle] = useState("");
-  const [currentAnnouncement,setCurrentAnnouncement] = useState({
+  const [currentAnnouncement, setCurrentAnnouncement] = useState({
     "_id": "6249fa566bcdae51504b5a0b",
     "title": "1",
     "content": "2",
     "event": "Spring_2022",
     "importance": true
   });
+  const [page, setPage] = useState(1);
 
   async function getAnnouncements() {
     try {
@@ -124,24 +132,24 @@ const Panel = function () {
     }
   }
 
-  function populateAnnouncements() {
+  function populateAnnouncements(page) {
     return (
-      announcements?.map((announcement, index) => (
+      announcements?.filter((announcement, index) => index >= page.page * 5 - 5 && index < page.page * 5).map((announcement, index) => (
         <TableRow key={index}  >
           <TableCell className={classes.cell} style={{ width: '1000%' }} scope="row">
             <Grid container>
-              <Grid item xs={9}>
+              <Grid item xs={8} lg={10}>
                 {announcement.title}
               </Grid>
-              <Grid item xs={1.5}>
-                <Button variant="contained" color="white" id={announcement} onClick={handlePreviewAndEditButton}>
+              <Grid item sm={1.5} lg={1}>
+                <Button variant="contained" color="white" id={announcement.title} onClick={handleOpenDeleteDialog}>
                   Edit
-            </Button>
+                </Button>
               </Grid>
-              <Grid item xs={1.5}>
-                <Button variant="contained" color="white" id={announcement} onClick={handleOpenDeleteDialog}>
+              <Grid item sm={1.5} lg={1}>
+                <Button variant="contained" color="white" id={announcement.title} onClick={handleOpenDeleteDialog}>
                   Delete
-            </Button>
+                </Button>
               </Grid>
             </Grid>
 
@@ -168,13 +176,13 @@ const Panel = function () {
     )
   }
 
-  function makeAnnouncement(currentAnnouncement){
+  function makeAnnouncement(currentAnnouncement) {
     console.log(currentAnnouncement._id)
     console.log(currentAnnouncement.title)
     console.log(currentAnnouncement.content)
-    if(currentAnnouncement._id == ""){
-    return(
-    <Grid container item spacing={1} xs={8} className={classes.left}>
+    if (currentAnnouncement._id == "") {
+      return (
+        <Grid container item spacing={1} xs={10} sm={8} className={classes.left}>
           <Grid container item spacing={1} direction="column" alignItems="center">
             <Dialog
               open={open}
@@ -331,177 +339,175 @@ const Panel = function () {
             </Button>
           </Grid>
         </Grid>
-    );
+      );
     } else {
-      return(
-        <Grid container item spacing={1} xs={8} className={classes.left}>
-              <Grid container item spacing={1} direction="column" alignItems="center">
-                <Dialog
-                  open={open}
-                  // TransitionComponent={Transition}
-                  keepMounted
-                  onClose={handleCloseDialog}
-                  aria-describedby="alert-dialog-slide-description"
-                >
-                  <DialogTitle>{"Please Confirm The Updating"}</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                      <p> Title : {currentAnnouncement.title} </p>
-                      <p> Content : {currentAnnouncement.content} </p>
-                      <p> Event : {currentAnnouncement.event} </p>
-                      {/* <p> Image Filename : {image['name']} </p> */}
-                      <p> Priority : {currentAnnouncement.importance} </p>
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    < Button onClick={handleCloseDialogForEditing} id="back">Back</Button>
-                    < Button onClick={handleCloseDialogForEditing} id="confirm">Confirm</Button>
-                  </DialogActions>
-                </Dialog>
-    
-                <div className={classes.root}>
-                  <div>
-                    <TextField
-                      id="outlined-multiline-flexible"
-                      label="Title"
-                      defaultValue={currentAnnouncement.title}
-                      rows={2}
-                      style={{ margin: 8, marginBottom: 16 }}
-                      fullWidth
-                      color="white"
-                      variant="outlined"
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.cssLabel,
-                          focused: classes.cssFocused,
+      return (
+        <Grid container item spacing={1} xs={10} sm={8} className={classes.left}>
+          <Grid container item spacing={1} direction="column" alignItems="center">
+            <Dialog
+              open={open}
+              // TransitionComponent={Transition}
+              keepMounted
+              onClose={handleCloseDialog}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle>{"Please Confirm The Updating"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  <p> Title : {currentAnnouncement.title} </p>
+                  <p> Content : {currentAnnouncement.content} </p>
+                  <p> Event : {currentAnnouncement.event} </p>
+                  {/* <p> Image Filename : {image['name']} </p> */}
+                  <p> Priority : {currentAnnouncement.importance} </p>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                < Button onClick={handleCloseDialogForEditing} id="back">Back</Button>
+                < Button onClick={handleCloseDialogForEditing} id="confirm">Confirm</Button>
+              </DialogActions>
+            </Dialog>
+
+            <div className={classes.root}>
+              <div>
+                <TextField
+                  id="outlined-multiline-flexible"
+                  label="Title"
+                  defaultValue={currentAnnouncement.title}
+                  rows={2}
+                  style={{ margin: 8, marginBottom: 16 }}
+                  fullWidth
+                  color="white"
+                  variant="outlined"
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    }
+                  }}
+                  onChange={handleTitleChange}
+                />
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Content"
+                  defaultValue={currentAnnouncement.content}
+                  multiline
+                  fullWidth
+                  rows={4}
+                  variant="outlined"
+                  style={{ margin: 8, marginBottom: 16 }}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    }
+                  }}
+                  onChange={handleContentChange}
+                />
+                <div>
+                  <TextField
+                    select
+                    label="Event"
+                    variant="outlined"
+                    style={{ margin: 8, marginBottom: 16 }}
+                    className={classes.textField}
+                    InputLabelProps={{
+                      classes: {
+                        root: classes.cssLabel,
+                        focused: classes.cssFocused,
+                      },
+                    }}
+                    InputProps={{
+                      classes: {
+                        root: classes.cssOutlinedInput,
+                        focused: classes.cssFocused,
+                        notchedOutline: classes.notchedOutline,
+                      }
+                    }}
+                    SelectProps={{
+                      MenuProps: {
+                        anchorOrigin: {
+                          vertical: "bottom",
+                          horizontal: "left"
                         },
-                      }}
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                          focused: classes.cssFocused,
-                          notchedOutline: classes.notchedOutline,
-                        }
-                      }}
-                      onChange={handleTitleChange}
-                    />
-                    <TextField
-                      id="outlined-multiline-static"
-                      label="Content"
-                      defaultValue={currentAnnouncement.content}
-                      multiline
-                      fullWidth
-                      rows={4}
-                      variant="outlined"
-                      style={{ margin: 8, marginBottom: 16 }}
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.cssLabel,
-                          focused: classes.cssFocused,
+                        getContentAnchorEl: null
+                      }
+                    }}
+                    value={currentAnnouncement.event}
+                    onChange={handleEventChange}
+                  >
+                    <MenuItem value={"Spring_2022"}>Spring 2022</MenuItem>
+                    <MenuItem value={"Fall_2022"}>Fall 2022</MenuItem>
+                  </TextField>
+                  <TextField
+                    label="Priority"
+                    select
+                    defaultValue={currentAnnouncement.importance}
+                    className={classes.textField}
+                    style={{ margin: 8, marginBottom: 16 }}
+                    variant="outlined"
+                    InputLabelProps={{
+                      classes: {
+                        root: classes.cssLabel,
+                        focused: classes.cssFocused,
+                      },
+                    }}
+                    InputProps={{
+                      classes: {
+                        root: classes.cssOutlinedInput,
+                        focused: classes.cssFocused,
+                        notchedOutline: classes.notchedOutline,
+                      }
+                    }}
+                    SelectProps={{
+                      MenuProps: {
+                        anchorOrigin: {
+                          vertical: "bottom",
+                          horizontal: "left"
                         },
-                      }}
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                          focused: classes.cssFocused,
-                          notchedOutline: classes.notchedOutline,
-                        }
-                      }}
-                      onChange={handleContentChange}
-                    />
-                    <div>
-                      <TextField
-                        select
-                        label="Event"
-                        variant="outlined"
-                        style={{ margin: 8, marginBottom: 16 }}
-                        className={classes.textField}
-                        InputLabelProps={{
-                          classes: {
-                            root: classes.cssLabel,
-                            focused: classes.cssFocused,
-                          },
-                        }}
-                        InputProps={{
-                          classes: {
-                            root: classes.cssOutlinedInput,
-                            focused: classes.cssFocused,
-                            notchedOutline: classes.notchedOutline,
-                          }
-                        }}
-                        SelectProps={{
-                          MenuProps: {
-                            anchorOrigin: {
-                              vertical: "bottom",
-                              horizontal: "left"
-                            },
-                            getContentAnchorEl: null
-                          }
-                        }}
-                        value={currentAnnouncement.event}
-                        onChange={handleEventChange}
-                      >
-                        <MenuItem value={"Spring_2022"}>Spring 2022</MenuItem>
-                        <MenuItem value={"Fall_2022"}>Fall 2022</MenuItem>
-                      </TextField>
-                      <TextField
-                        label="Priority"
-                        select
-                        defaultValue={currentAnnouncement.importance}
-                        className={classes.textField}
-                        style={{ margin: 8, marginBottom: 16 }}
-                        variant="outlined"
-                        InputLabelProps={{
-                          classes: {
-                            root: classes.cssLabel,
-                            focused: classes.cssFocused,
-                          },
-                        }}
-                        InputProps={{
-                          classes: {
-                            root: classes.cssOutlinedInput,
-                            focused: classes.cssFocused,
-                            notchedOutline: classes.notchedOutline,
-                          }
-                        }}
-                        SelectProps={{
-                          MenuProps: {
-                            anchorOrigin: {
-                              vertical: "bottom",
-                              horizontal: "left"
-                            },
-                            getContentAnchorEl: null
-                          }
-                        }}
-                        onChange={handlePriorityChange}
-                      >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
-                      </TextField>
-    
-                    </div>
-                  </div>
+                        getContentAnchorEl: null
+                      }
+                    }}
+                    onChange={handlePriorityChange}
+                  >
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
+                  </TextField>
+
                 </div>
-              </Grid>
-              <Grid container item xs={12} direction="row" justify="flex-start">
-                <Button variant="contained" color="white" onClick={handleOpenDialog} className={classes.button}>
-                  Submit
+              </div>
+            </div>
+          </Grid>
+          <Grid container item xs={12} direction="row" justify="flex-start">
+            <Button variant="contained" color="white" onClick={handleOpenDialog} className={classes.button}>
+              Submit
                 </Button>
-                <Button variant="contained" color="white" onClick={handleCancelButton} className={classes.button}>
-                  Cancel
+            <Button variant="contained" color="white" onClick={handleCancelButton} className={classes.button}>
+              Cancel
                 </Button>
-              </Grid>
-            </Grid>
-        );
+          </Grid>
+        </Grid>
+      );
     }
   }
 
   useEffect(() => {
     getAnnouncements()
-    makeAnnouncement(currentAnnouncement)
     populateAnnouncements()
   }, []);
-
 
   const handleTitleChange = (event) => {
     currentAnnouncement.title = (event.target.value)
@@ -540,7 +546,10 @@ const Panel = function () {
       "event": "",
       "importance": null
     })
-    window.location.reload();
+  }
+
+  const handlePageChange = (page) => {
+    setPage(page);
   }
 
   async function sendAnnouncement() {
@@ -583,7 +592,7 @@ const Panel = function () {
     }
     setOpen(false);
   }
-
+  
   const handleCloseDeleteDialog = (event) => {
     if (event.currentTarget.id === "confirm") {
       deleteAnnouncement();
@@ -598,7 +607,7 @@ const Panel = function () {
           <Typography variant="h4" align="center" className={classes.title}>Announcement Panel</Typography>
         </Grid>
         {makeAnnouncement(currentAnnouncement)}
-        <Grid container xs={5}>
+        <Grid container xs={10} sm={6} className={classes.right}>
           {/* <div className={classes.table}> */}
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
@@ -608,10 +617,10 @@ const Panel = function () {
                   </TableRow>
                 </TableHead> */}
               <TableBody>
-                {populateAnnouncements()}
+                {populateAnnouncements({ page })}
               </TableBody>
             </Table>
-            <Pagination count={10} size="small" className={classes.pagination} />
+            <Pagination count={announcements.length / 5} size="small" className={classes.pagination} onChange={(e, p) => handlePageChange(p)} />
           </TableContainer>
           {/* </div> */}
         </Grid>
@@ -623,4 +632,3 @@ const Panel = function () {
 };
 
 export default withAdminAuthCheck(Panel);
-
