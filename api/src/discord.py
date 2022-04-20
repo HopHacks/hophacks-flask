@@ -29,7 +29,8 @@ def makeAnnouncement():
         elif request.json['audience'] == 'judge':
             role_id = "<@&966442873472045106>" # ID of the judges role (retrieved by doing \@judge)
         elif request.json['audience'] == 'everyone':
-            role_id = "@everyone" #<@&963888263087677523>' # This is the id of the channel
+            role_id = "@everyone"
+        # Add more elifs based on number of roles
         if (role_id == ''):
             Message = {
                 "content": request.json['message']
