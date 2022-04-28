@@ -12,18 +12,22 @@ class client():
     def init_app(self, app):
         self.webhook = app.config['DISCORD_WEBHOOK']
 
-# Global slack api object
+# Global Discord api object
 discord_client  = client()
 
 discord_api = Blueprint('discord', __name__)
 
+
+# This really only applies if we were to create a full competition Discord server.
 @discord_api.route('/', methods = ['POST'])
 def makeAnnouncement():
     if 'message' not in request.json:
         return Response('Invalid request', status=400)
     discord_webhook_url = ''
     role_id = ''
-    if "audience" in request.json:
+    if "channel" in request.json:
+
+    elif "audience" in request.json:
         if request.json['audience'] == "hacker":
             role_id = "<@&966437057041940540>"  # Change this to REAL hacker role ID on official server (retrieved by doing \@hacker)
         elif request.json['audience'] == 'judge':

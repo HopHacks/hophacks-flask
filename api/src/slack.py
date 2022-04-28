@@ -71,17 +71,3 @@ def notify_registration_in_channel():
     notification = "(" + num_registered + ")" + " New Registration: " + first_name + " " + last_name + " from " + school
     slack_client.client.post(text=notification)
     return jsonify({"msg": "message sent"}), 200
-
-@slack_api.route('/checkin', methods = ['POST'])
-# @jwt_required
-def notify_registration_in_channel():
-    if not (all(field in request.json for field in ['first_name', 'last_name', 'num_registered', 'school'])):
-        return Response('Invalid request', status=400)
-    
-    first_name = request.json['first_name']
-    last_name = request.json['last_name']
-    num_registered = request.json['num_registered']
-    school = request.json['school']
-    notification = "(" + num_registered + ")" + " New Registration: " + first_name + " " + last_name + " from " + school
-    slack_client.client.post(text=notification)
-    return jsonify({"msg": "message sent"}), 200
