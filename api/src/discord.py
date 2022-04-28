@@ -14,13 +14,37 @@ class client():
 
 # Global Discord api object
 discord_client  = client()
-
 discord_api = Blueprint('discord', __name__)
-
 
 # This really only applies if we were to create a full competition Discord server.
 @discord_api.route('/', methods = ['POST'])
 def makeAnnouncement():
+    
+    """Makes an announcement via Discord. Can mention/emphasize a specific role.
+    
+    NOTE: This code is based on a test server. Role IDs will have to be updated. 
+          Current roles in this test server are hacker, judges, and everyone. This of course can be changed in real server.
+    
+    NOTE: Only way to send a message to different channels is to create a webhook for each channel that is an option
+
+    :reqjson message: message being sent
+    :reqjson audience: server role being emphasized (@) (optional)
+
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "message": "Hello World!",
+        "audience": "hacker"
+    }
+
+    :status 200: Message sent
+    :status 400: Error with request
+    
+    """
+    
     if 'message' not in request.json:
         return Response('Invalid request', status=400)
     discord_webhook_url = ''
