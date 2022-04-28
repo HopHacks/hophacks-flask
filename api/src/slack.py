@@ -2,13 +2,10 @@ from flask import Blueprint, request, Response, jsonify
 from flask_jwt_extended import jwt_required
 import logging
 import os
-# Import WebClient from Python SDK (github.com/slackapi/python-slack-sdk)
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from slack_webhook import Slack
-
-# WebClient instantiates a client that can call API methods
-# When using Bolt, you can use either `app.client` or the `client` passed to listeners.
+from db import db
 
 
 class client():
@@ -49,7 +46,7 @@ def send_message(channel_id, message):
     return None
 
 @slack_api.route('/', methods = ['POST'])
-# @jwt_required
+@jwt_required
 def send_message_in_channel():
     if 'message' not in request.json:
         return Response('Invalid request', status=400)
@@ -59,15 +56,15 @@ def send_message_in_channel():
 
 
 @slack_api.route('/registration', methods = ['POST'])
-# @jwt_required
+@jwt_required
 def notify_registration_in_channel():
-    if not (all(field in request.json for field in ['first_name', 'last_name', 'num_registered', 'school'])):
+    if not (all(field in request.json for field in ['first_name', 'last_name', 'school'])):
         return Response('Invalid request', status=400)
     
     first_name = request.json['first_name']
     last_name = request.json['last_name']
-    num_registered = request.json['num_registered']
     school = request.json['school']
+    num_registered = str(len(list(db.users.find())))
     notification = "(" + num_registered + ")" + " New Registration: " + first_name + " " + last_name + " from " + school
     slack_client.client.post(text=notification)
     return jsonify({"msg": "message sent"}), 200
