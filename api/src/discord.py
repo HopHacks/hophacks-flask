@@ -18,6 +18,8 @@ discord_api = Blueprint('discord', __name__)
 
 # This really only applies if we were to create a full competition Discord server.
 @discord_api.route('/', methods = ['POST'])
+@jwt_required
+@check_admin
 def makeAnnouncement():
     
     """Makes an announcement via Discord. Can mention/emphasize a specific role.
