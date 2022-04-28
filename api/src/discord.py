@@ -25,9 +25,7 @@ def makeAnnouncement():
         return Response('Invalid request', status=400)
     discord_webhook_url = ''
     role_id = ''
-    if "channel" in request.json:
-
-    elif "audience" in request.json:
+    if "audience" in request.json:
         if request.json['audience'] == "hacker":
             role_id = "<@&966437057041940540>"  # Change this to REAL hacker role ID on official server (retrieved by doing \@hacker)
         elif request.json['audience'] == 'judge':
