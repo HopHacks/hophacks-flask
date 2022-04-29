@@ -7,10 +7,12 @@ from slack_sdk.errors import SlackApiError
 from slack_webhook import Slack
 from db import db
 
+slack_api = Blueprint('slack', __name__)
 
-class client():
+class slack_client():
     def __init__(self):
-        self.token = None
+        self.webhook = None
+        self.client = None
 
     def init_app(self, app):
         self.webhook = app.config['SLACK_WEBHOOK']
@@ -19,52 +21,95 @@ class client():
 
 
 # Global slack api object
-slack_client  = client()
+slack_client  = slack_client()
 
-
-
-# client = WebClient(token=os.environ.get("SLACK_TOKEN"))
-slack_api = Blueprint('slack', __name__)
-
-
-# client = WebClient(token=SLACK_BOT_TOKEN)
-logger = logging.getLogger(__name__)
-
-channel_id = 'C03AD7FEKRD'
-
-def channel_info(channel_id):
-    channel_info = slack_client.api_call("channels.info", channel=channel_id)
-    if channel_info:
-        return channel_info['channel']
-    return None
-
-def send_message(channel_id, message):
-    client.chat_postMessage(
-        channel=channel_id, 
-        text="Hello world"
-    )
-    return None
 
 @slack_api.route('/', methods = ['POST'])
 @jwt_required
-def send_message_in_channel():
-    if 'message' not in request.json:
+
+"""Makes an customized announcement to a specific channel achieved by the according slack webhook via Slack.
+    
+    NOTE: This code is based on a test server. Webhooks will have to be updated. 
+    
+    NOTE: Only way to send a message to different channels is to create a webhook for each channel that is an option. Right now,
+    the messages are sent to slack-api-testing channel.
+
+    :reqjson message: message / announcement being sent
+
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "message": "Hello World!",
+    }
+
+    :status 200: Message sent
+    :status 400: Error with request
+    
+    """
+
+def makeAnnouncement():
+
+    if (request.json is None):
+        return Response('Data not in json format', status=400)
+
+    if not (all(field in request.json for field in ['message'])):
         return Response('Invalid request', status=400)
-    slack_client.client.post(text=request.json['message'])
-    print(request.json['message'])
+
+    announcement = "New Announcement: " + request.json['message']
+    slack_client.client.post(text=announcement)
     return jsonify({"msg": "message sent"}), 200
+
+
 
 
 @slack_api.route('/registration', methods = ['POST'])
 @jwt_required
+
+"""Makes a notification to a specific slack channel when a new user registers.
+    
+    NOTE: This code is based on a test server. Webhooks will have to be updated. 
+    
+    NOTE: Only way to send a message to different channels is to create a webhook for each channel that is an option. Right now,
+    the messages are sent to slack-api-testing channel.
+
+    :reqjson first_name: first name of the new user registered
+    :reqjson last_name: last name of the new user registered
+    :reqjson school: school of the new user 
+
+
+    Example input:
+
+    .. sourcecode:: json
+
+    {
+        "first_name": "Blue",
+        "last_name": "Jay",
+        "school": "Johns Hopkins Univerity"
+    }
+
+    :status 200: Message sent
+    :status 400: Error with request
+    
+    """
+
 def notify_registration_in_channel():
+    
+    if (request.json is None):
+        return Response('Data not in json format', status=400)
+
     if not (all(field in request.json for field in ['first_name', 'last_name', 'school'])):
         return Response('Invalid request', status=400)
     
     first_name = request.json['first_name']
     last_name = request.json['last_name']
     school = request.json['school']
+
+    # use num_registered in the events API for next year's events
     num_registered = str(len(list(db.users.find())))
+
     notification = "(" + num_registered + ")" + " New Registration: " + first_name + " " + last_name + " from " + school
     slack_client.client.post(text=notification)
     return jsonify({"msg": "message sent"}), 200
