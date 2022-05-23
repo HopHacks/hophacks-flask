@@ -250,7 +250,7 @@ export default function Register() {
     window.open("https://mlh.io/privacy", "_blank");
   }
   function openTerms() {
-    window.open("https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md", "_blank");
+    window.open("https://mlh.io/terms", "_blank");
   }
 
 
