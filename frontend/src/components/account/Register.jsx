@@ -45,8 +45,11 @@ export default function Register() {
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false)
   const [communicationChecked, setCommunicationChecked] = useState(false)
 
-  // decide which step is actively showing
-  const [activeStep, setActiveStep] = useState(0);
+  // decide which page is actively showing
+  const ACCOUNT = 0;
+  const PROFILE = 1;
+  const CONFIRMATION = 2;
+  const [activePage, setActivePage] = useState(ACCOUNT);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -102,17 +105,21 @@ export default function Register() {
     }
 
     // Go to the profile page  
-    setActiveStep(1);
+    setActivePage(PROFILE);
   };
+
+  function isEmpty() {
+    return username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || school.length === 0 || ethnicity.length === 0 || phone_number === undefined || phone_number.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0;
+  }
 
   async function handleProfileNext() {
 
-    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || school.length === 0 || ethnicity.length === 0 || phone_number === undefined || phone_number.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
+    if (isEmpty()) {
       setProfileSubmitMsg("* Required field cannot be empty.")
       return;
     }
 
-    if (!isPossiblePhoneNumber(phone_number) || !isValidPhoneNumber(phone_number)) {
+    if (!isValidPhoneNumber(phone_number)) {
       setProfileSubmitMsg("* Please enter a valid phone number.")
       return;
     }
@@ -157,7 +164,7 @@ export default function Register() {
     }
 
     // Go to the confirmation page
-    setActiveStep(2);
+    setActivePage(CONFIRMATION);
   };
 
   const account = (
@@ -550,13 +557,13 @@ export default function Register() {
   );
 
   function selectPage() {
-    if (activeStep === 0) {
+    if (activePage === ACCOUNT) {
       return (
         <>
           {account}
         </>
       )
-    } else if (activeStep === 1) {
+    } else if (activePage === PROFILE) {
       return (
         <>
           <div class="personal-wrapper">
@@ -564,7 +571,7 @@ export default function Register() {
           </div>
         </>
       )
-    } else {
+    } else { // confirmation page
       return (
         <>
          <div class="confirm-wrapper">

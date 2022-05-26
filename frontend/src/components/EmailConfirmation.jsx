@@ -8,7 +8,7 @@ export default function EmailConfirmation(props) {
     const [email, setEmail] = useState("");
     let attempted = false;
     const emailConfirmed = 'Email confirmed! You have applied to this event successfully!';
-    const attemptedMsg = 'Maybe the link was old? Try logging in to request a new confirmation token.'
+    const attemptedMsg = 'Maybe the link is old? Try logging in.'
 
     async function confirm_email() {
         try {
