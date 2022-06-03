@@ -159,7 +159,7 @@ export default function Announcements() {
             {announcement.title}
           </TableCell>
           <TableCell component="th" scope="row">
-            {announcement.time}
+            {announcement.created_time}
           </TableCell>
           <TableCell component="th" scope="row">
             <Box className={classes.historyAnnouncementContent}>
@@ -216,7 +216,7 @@ export default function Announcements() {
             {topAnnouncement.title}
           </Typography>
           <Typography variant="h6" gutterBottom>
-            {topAnnouncement.time}
+            {topAnnouncement.created_time}
           </Typography>
           <Box className={classes.topAnnouncementContent}>
             <Typography variant="h6" color="text.secondary">
@@ -244,7 +244,7 @@ export default function Announcements() {
             {announcement.title}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            {announcement.time}
+            {announcement.created_time}
           </Typography>
           <Box className={classes.recentFourAnnouncementContent}>
             <Typography variant="body2" color="text.secondary">
