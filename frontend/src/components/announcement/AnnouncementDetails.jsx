@@ -21,71 +21,71 @@ import Paper from '@material-ui/core/Paper';
 import axios from "axios";
 
 import { makeStyles } from '@material-ui/core/styles';
-import {useState,useEffect,useQuery} from "react";
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"; 
+import { useState, useEffect, useQuery } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles({
 
-    margin: {
-        marginBottom: "13px",
-    },
-    color: {
-        backgroundColor: "#d1e9ff",
-    },
-    bodycolor:{
+  margin: {
+    marginBottom: "13px",
+  },
 
-    },
-    title: {
-        color: "#7289da",
-        fontFamily: "VCR OSD Mono",
-    },
-    picture: {
-        height:'300px',
-    },
+  color: {
+    backgroundColor: "#d1e9ff",
+  },
+
+  bodycolor: {
+
+  },
+
+  // title: {
+  //   color: "#7289da",
+  //   fontFamily: "VCR OSD Mono",
+  // },
+
+  picture: {
+    height: '300px',
+  },
+
+  card: {
+    marginLeft: '22.5%',
+    maxWidth: '55%',
+    padding: 12,
+  },
 });
 
 export default function AnnouncementDetails(props) {
-    const classes = useStyles();
-    const location = useLocation()
-    const announcement = location.state;
+  const classes = useStyles();
+  const location = useLocation()
+  const announcement = location.state;
 
-    const title = announcement.title;
-    const time = announcement.time;
-    const image = announcement.image;
-    const content = announcement.content;
+  const title = announcement.title;
+  const time = announcement.time;
+  const image = announcement.image;
+  const content = announcement.content;
 
-    function img(url) {
-        return process.env.PUBLIC_URL + '/images/' + url;
-    }
+  function img(url) {
+    return process.env.PUBLIC_URL + '/images/' + url;
+  }
 
-    return (
-        <Box py={2}>
-
-        <Card>
-            <CardContent>
-                <Typography className={classes.title} variant="h4" gutterBottom>
-                    {title}
-                </Typography>
-
-                <Typography variant="h6">
-                    {time}
-                <br></br>
-                <br></br>
-                </Typography>
-
-                <img className={classes.picture} src={img(image)} alt="default-img" />
-
-                <Typography variant="h6">
-                <br></br>
-                <br></br>
-                    {content}
-                <br></br>
-                <br></br>
-                </Typography>
-                
-            </CardContent>
-        </Card>
-        </Box>
-    );
+  return (
+    <Box py={2}>
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography className={classes.title} variant="h4" gutterBottom>
+            {title}
+          </Typography>
+          <Typography>
+            {time}
+          </Typography>
+          <Typography variant="h6">
+            <br/>
+            {content}
+            <br/><br/>
+          </Typography>
+        </CardContent>
+      </Card>
+    </Box>
+  );
 }
