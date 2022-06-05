@@ -26,8 +26,9 @@ slack_client  = slack_client()
 
 @slack_api.route('/', methods = ['POST'])
 @jwt_required
-
-"""Makes an customized announcement to a specific channel achieved by the according slack webhook via Slack.
+def makeAnnouncement():
+    
+    """Makes an customized announcement to a specific channel achieved by the according slack webhook via Slack.
     
     NOTE: This code is based on a test server. Webhooks will have to be updated. 
     
@@ -50,8 +51,6 @@ slack_client  = slack_client()
     
     """
 
-def makeAnnouncement():
-
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
@@ -67,8 +66,9 @@ def makeAnnouncement():
 
 @slack_api.route('/registration', methods = ['POST'])
 @jwt_required
-
-"""Makes a notification to a specific slack channel when a new user registers.
+def notify_registration_in_channel():
+    
+    """Makes a notification to a specific slack channel when a new user registers.
     
     NOTE: This code is based on a test server. Webhooks will have to be updated. 
     
@@ -94,8 +94,6 @@ def makeAnnouncement():
     :status 400: Error with request
     
     """
-
-def notify_registration_in_channel():
     
     if (request.json is None):
         return Response('Data not in json format', status=400)
