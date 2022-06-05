@@ -49,8 +49,30 @@ const useStyles = makeStyles({
         width:'230px',
         height:'230px',
         borderRadius: '10px',
+        opacity: 1.0,
+        '&:hover': {
+            opacity: 0.8,
+        },
     },
 
+    memberPic1: {
+        width:'230px',
+        height:'230px',
+        borderRadius: '10px',
+        opacity: 1.0,
+        '&:hover': {
+            opacity: 0.8,
+        },
+    },
+
+    memberBg: {
+        width:'230px',
+        height:'230px',
+        borderRadius: '10px',
+        backgroundColor: 'black',
+        textAlign: 'right',
+        position: 'relative',
+    },
 
 });
 
@@ -69,15 +91,15 @@ function MemberItem(props) {
 
 
     if (props.linkedin) {
-        linkedin = <a href={`${props.linkedin}`}><img style={buttons} className="social-icon" src={img("social/linkedin.png")} alt="linkedin" /></a>;
+        linkedin = <a href={`${props.linkedin}`}><img style={buttons} className="social-icon linkedin" src={img("social/linkedin-white.png")} alt="linkedin" /></a>;
     }
 
     if (props.github) {
-        github = <a href={`${props.github}`}><img style={buttons} className="social-icon" src={img("social/github.png")} alt="github" /></a>;
+        github = <a href={`${props.github}`}><img style={buttons} className="social-icon github" src={img("social/github-white.png")} alt="github" /></a>;
     }
 
     if (props.personal) {
-        personal = <a href={`${props.personal}`}><img style={buttons} className="social-icon" src={img("social/personal.png")} alt="personal" /></a>;
+        personal = <a href={`${props.personal}`}><img style={buttons} className="social-icon personal" src={img("social/personal-white.png")} alt="personal" /></a>;
     }
 
     return (
@@ -91,16 +113,18 @@ function MemberItem(props) {
                         setButtons({display: 'none'})
                     }}
                 >
-                    <picture className = {classes.memberPic}>
-                        <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} />
-                        <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
-                    </picture>
+                    <div className={classes.memberBg}>
+                        <div className = {classes.memberPic1}>
+                            {/* <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} /> */}
+                            <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
+                            {linkedin}
+                            {github}
+                            {personal}
+                        </div>
+                        
+                    </div>
                     <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
                     <Typography>{props.memberTitle}</Typography>
-                
-                    {linkedin}
-                    {github}
-                    {personal}
                 </div>
             {/* </div> */}
         </Grid>
@@ -136,6 +160,7 @@ export default function Team() {
                             <Tab label="SOCIAL/PR" />
                             <Tab label="SPONSORS" />
                             <Tab label="WEBSITE" />
+                            {/* <Tab label="ALUMNI" /> */}
                         </Tabs>
                         {value === 0 && <div>
                             <div className = {classes.teambox}>
@@ -162,6 +187,11 @@ export default function Team() {
                                 <MemberItem imgURL="curtis_headshot" memberName="Curtis 5" memberTitle="Website" />
                             </div>
                         </div>}
+                        {/* {value === 5 && <div>
+                            <div className = {classes.teambox}>
+                                <MemberItem imgURL="curtis_headshot" memberName="Alum Curtis" memberTitle="Website" />
+                            </div>
+                        </div>} */}
                     </Paper>
 
                 </CardContent>
