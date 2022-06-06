@@ -67,7 +67,7 @@
     cursor: pointer;
     position: absolute;
     bottom: 5%;
-    right: 20%;
+    right: 0;
 }
 
 .social-icon.github {
@@ -91,7 +91,7 @@
     cursor: pointer;
     position: absolute;
     bottom: 5%;
-    right: 0;
+    right: 20%;
 }
 
 @font-face {

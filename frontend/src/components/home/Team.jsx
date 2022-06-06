@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   team: {
     display: 'flex',
     flexWrap: 'wrap',
-    padding: '20px',
+    padding: '10px',
     justifyContent: 'center',
   },
 
@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     maxWidth: '300px',
     maxHeight: '300px',
     margin: '10px',
-    padding: '10px',
+    padding: '2.5px 20px',
     // borderRadius: '8px',
     // boxShadow:'0 5px 15px rgb(0 0 0 / 7%)',
     display: 'flex',
