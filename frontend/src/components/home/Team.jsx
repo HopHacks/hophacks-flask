@@ -121,7 +121,7 @@ function MemberItem(props) {
             >
                 <div className={classes.memberBg}>
                     <div className = {classes.memberPic1}>
-                        <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
+                        <img className = {classes.memberPic} src={img(`team/img/${props.imgURL}.jpg`)} alt="loading" />
                         {linkedin}
                         {github}
                         {personal}
@@ -180,51 +180,51 @@ export default function Team() {
               <div className={classes.teambox}>
                   <MemberItem imgURL="jimmy_headshot" memberName="Jimmy Shi" memberTitle="Design/Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
               </div>
+            </Grid>}
+            {value === 1 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                  <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
+                <MemberItem imgURL="AnhTran" memberName="Trần Thế Anh" memberTitle="Logistics Head" />
               </div>
               <div className={classes.teambox}>
-                  <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
+                <MemberItem imgURL="SejalSrivastava" memberName="Sejal Srivastava" memberTitle="Logistics" />
               </div>
               <div className={classes.teambox}>
-                  <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
+                <MemberItem imgURL="AkhilDeo" memberName="Akhil Deo" memberTitle="Logistics" />
               </div>
               <div className={classes.teambox}>
-                  <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
-              </div>
-              <div className={classes.teambox}>
-                  <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
-              </div>
-              <div className={classes.teambox}>
-                  <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
-              </div>
-              <div className={classes.teambox}>
-                  <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
-              </div>
-              <div className={classes.teambox}>
-                  <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
+                <MemberItem imgURL="IrisGupta" memberName="Iris Gupta" memberTitle="Logistics" />
               </div>
             </Grid>}
-            {value === 1 && <div>
+            {value === 2 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                <MemberItem imgURL="curtis_headshot" memberName="Curtis 2" memberTitle="Website" />
+                <MemberItem imgURL="ZoeKim" memberName="Zoe Kim" memberTitle="Social/PR Co-Head" />
               </div>
-            </div>}
-            {value === 2 && <div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="curtis_headshot" memberName="Curtis 3" memberTitle="Website" />
+                <MemberItem imgURL="ElizabethHsieh" memberName="Elizabeth Hsieh" memberTitle="Social/PR" />
               </div>
-            </div>}
-            {value === 3 && <div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="curtis_headshot" memberName="Curtis 4" memberTitle="Website" />
+                <MemberItem imgURL="RuoyanShang" memberName="Ruoyan Shang" memberTitle="Social/PR" />
               </div>
-            </div>}
-            {value === 4 && <div>
+            </Grid>}
+            {value === 3 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                <MemberItem imgURL="curtis_headshot" memberName="Curtis 5" memberTitle="Website" />
+                <MemberItem imgURL="DhruvDubey" memberName="Dhruv Dubey" memberTitle="Sponsors" />
               </div>
-            </div>}
+              <div className={classes.teambox}>
+                <MemberItem imgURL="JosephineDeng" memberName="Josephine Deng" memberTitle="Sponsors" />
+              </div>
+            </Grid>}
+            {value === 4 && <Grid className={classes.team} container>
+              <div className={classes.teambox}>
+                <MemberItem imgURL="AlanLi" memberName="Alan Li" memberTitle="Website Head" />
+              </div>
+              <div className={classes.teambox}>
+                <MemberItem imgURL="NicholasBowen" memberName="Nicholas Bowen" memberTitle="Website" />
+              </div>
+              <div className={classes.teambox}>
+                <MemberItem imgURL="ShaopengZeng" memberName="Shaopeng Zeng" memberTitle="Website" />
+              </div>
+            </Grid>}
           </Paper>
 
         </CardContent>
