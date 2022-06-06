@@ -305,7 +305,7 @@ export default function Home() {
                         </CardContent>
                     </Card>
                     <Team />
-                    <Alumni />
+                    {/* <Alumni /> */}
                     
                 </Box>
             </Container>

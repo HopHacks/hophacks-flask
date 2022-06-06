@@ -30,9 +30,20 @@ const useStyles = makeStyles({
     justifyContent: 'center',
   },
 
+  firstRow: {
+    textAlign: 'center',
+    marginTop: '30px',
+    minHeight: '210px',
+    minWidth: '210px',
+    maxWidth: '300px',
+    maxHeight: '300px',
+    margin: '10px',
+    padding: '2.5px 50px',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
   teambox: {
-    // border: '1px solid',
-    // borderColor:'#f3f3f3',
     textAlign: 'center',
     marginTop: '30px',
     minHeight: '210px',
@@ -41,8 +52,6 @@ const useStyles = makeStyles({
     maxHeight: '300px',
     margin: '10px',
     padding: '2.5px 20px',
-    // borderRadius: '8px',
-    // boxShadow:'0 5px 15px rgb(0 0 0 / 7%)',
     display: 'flex',
     justifyContent: 'center',
   },
@@ -102,29 +111,26 @@ function MemberItem(props) {
 
     return (
         <Grid item >
-            {/* <div className="grid-item"> */}
-                <div
-                    onMouseEnter={e => {
-                        setButtons({display: ''});
-                    }}
-                    onMouseLeave={e => {
-                        setButtons({display: 'none'})
-                    }}
-                >
-                    <div className={classes.memberBg}>
-                        <div className = {classes.memberPic1}>
-                            {/* <source type="image/webp" srcSet={img(`team/webp/${props.imgURL}.webp`)} /> */}
-                            <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
-                            {linkedin}
-                            {github}
-                            {personal}
-                        </div>
-                        
+            <div
+                onMouseEnter={e => {
+                    setButtons({display: ''});
+                }}
+                onMouseLeave={e => {
+                    setButtons({display: 'none'})
+                }}
+            >
+                <div className={classes.memberBg}>
+                    <div className = {classes.memberPic1}>
+                        <img className = {classes.memberPic} src={img(`team/jpg/${props.imgURL}.jpg`)} alt="loading" />
+                        {linkedin}
+                        {github}
+                        {personal}
                     </div>
-                    <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
-                    <Typography>{props.memberTitle}</Typography>
+                    
                 </div>
-            {/* </div> */}
+                <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
+                <Typography>{props.memberTitle}</Typography>
+            </div>
         </Grid>
     );
 
@@ -145,6 +151,17 @@ export default function Team() {
       <Card>
         <CardContent>
           <Typography className={classes.title} variant="h4" gutterBottom>Our Perfect Team</Typography>
+          <div className = {classes.team}>
+              <div className={classes.firstRow}>
+                <MemberItem imgURL="curtis_headshot" memberName="Curtis Ahn" memberTitle="Director" linkedin="linkedin.com/in/ctsahn" />
+              </div>
+              <div className={classes.firstRow}>
+                <MemberItem imgURL="joanne" memberName="Joanne Selinski" memberTitle="Faculty Advisor" />
+              </div>
+              <div className={classes.firstRow}>
+                <MemberItem imgURL="kelly" memberName="Kelly Culotta" memberTitle="Admin Coordinator" />
+              </div>
+          </div>
           <Paper className={classes.root} style={{padding: '5px'}}>
             <Tabs
               value={value}
