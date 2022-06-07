@@ -61,8 +61,7 @@ export default function AnnouncementDetails(props) {
   const announcement = location.state;
 
   const title = announcement.title;
-  const time = announcement.time;
-  const image = announcement.image;
+  const time = announcement.created_time.substring(0, 10);
   const content = announcement.content;
 
   function img(url) {

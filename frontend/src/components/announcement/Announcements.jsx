@@ -144,11 +144,19 @@ export default function Announcements() {
     getHistoryAnnouncements()
   }, []);
 
-  function getImportance(announcement) {
-    if (announcement.importance) {
-      return "True";
+  function highlightImportance(title, importance) {
+    if (!importance) {
+      return(
+      <Typography>
+        {title} 
+      </Typography>
+      );
     }
-    return "False";
+    return (
+      <Typography style={{ fontWeight : "bold" }}>
+        {title} 
+      </Typography>
+    );
   }
 
   function populateAnnouncements() {
@@ -156,10 +164,10 @@ export default function Announcements() {
       historyAnnouncements.filter((announcement, index) => index >= page * 10 - 10 && index < page * 10).map((announcement, index) => (
         <TableRow key={index}>
           <TableCell component="th" scope="row">
-            {announcement.title}
+            {highlightImportance(announcement.title, announcement.importance)}
           </TableCell>
           <TableCell component="th" scope="row">
-            {announcement.created_time}
+            {shortenTime(announcement.created_time)}
           </TableCell>
           <TableCell component="th" scope="row">
             <Box className={classes.historyAnnouncementContent}>
@@ -168,9 +176,6 @@ export default function Announcements() {
                 state: announcement
               }}>[more]</Link>
             </Box>
-          </TableCell>
-          <TableCell component="th" scope="row">
-            {getImportance(announcement)}
           </TableCell>
         </TableRow>
       ))
@@ -187,7 +192,6 @@ export default function Announcements() {
                 <TableCell align="left">Title</TableCell>
                 <TableCell align="left">Time</TableCell>
                 <TableCell align="left">Details</TableCell>
-                <TableCell align="left">Importance</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -216,7 +220,7 @@ export default function Announcements() {
             {topAnnouncement.title}
           </Typography>
           <Typography variant="h6" gutterBottom>
-            {topAnnouncement.created_time}
+            {shortenTime(topAnnouncement.created_time)}
           </Typography>
           <Box className={classes.topAnnouncementContent}>
             <Typography variant="h6" color="text.secondary">
@@ -244,7 +248,7 @@ export default function Announcements() {
             {announcement.title}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            {announcement.created_time}
+            {shortenTime(announcement.created_time)}
           </Typography>
           <Box className={classes.recentFourAnnouncementContent}>
             <Typography variant="body2" color="text.secondary">
@@ -274,6 +278,13 @@ export default function Announcements() {
         ))}
       </Grid>
     );
+  }
+
+  function shortenTime(time) {
+    if (typeof time !== 'undefined'){
+      return time.substring(0,10);
+    }
+    return "";
   }
 
   return (
@@ -311,3 +322,4 @@ export default function Announcements() {
     </Container>
   );
 };
+
