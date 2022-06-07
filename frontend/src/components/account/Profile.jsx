@@ -24,8 +24,10 @@ import eventName from '../../event.txt'
 const Profile = function Profile(props) {
 
   const [status, setStatus] = useState("Application not complete: confirm email");
-  const [file, setFile] = useState("");
-  const [oldName, setOldName] = useState("");
+  const [resumeFile, setResumeFile] = useState("");
+  const [vaccinationFile, setVaccinationFile] = useState("");
+  const [oldResumeName, setOldResumeName] = useState("");
+  const [oldVaccinationName, setOldVaccinationName] = useState("");
   //display database
   const [profile, setProfile] = useState([]);
   //edit 
@@ -42,6 +44,8 @@ const Profile = function Profile(props) {
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState("");
   const [resumeMsg, setResumeMsg] = useState("Acceptable format: *.pdf, *.doc, *.docx");
+  const [vaccinationMsg, setVaccinationMsg] = useState("Acceptable format: *.pdf, *.png, *.jpeg, *.jpg");
+
 
   const currentEvent = "Fall 2021"
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
@@ -68,26 +72,42 @@ const Profile = function Profile(props) {
   }));
   const classes = useStyles();
 
-  async function getFileName() {
+  async function getResumeFileName() {
     /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
     if (!props.isLoggedIn) return;
 
     try {
       const response = await axios.get("/api/resumes/filename");
-      setOldName(response.data["filename"])
+      setOldResumeName(response.data["filename"])
     } catch (e) {
-      setOldName("");
+      setOldResumeName("");
     }
   }
 
-  function handleFileChange(e) {
-    setFile(e.target.files[0])
+  async function getVaccinationFileName() {
+    /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
+    if (!props.isLoggedIn) return;
+
+    try {
+      const response = await axios.get("/api/vaccination/filename");
+      setOldVaccinationName(response.data["filename"])
+    } catch (e) {
+      setOldVaccinationName("");
+    }
   }
 
-  async function handleSubmit(e) {
+  function handleResumeFileChange(e) {
+    setResumeFile(e.target.files[0])
+  }
+
+  function handleVaccinationFileChange(e) {
+    setVaccinationFile(e.target.files[0])
+  }
+
+  async function handleResumeSubmit(e) {
     e.preventDefault();
     const data = new FormData();
-    data.append("file", file);
+    data.append("file", resumeFile);
 
     try {
       const response = await axios.post("/api/resumes/", data);
@@ -100,10 +120,34 @@ const Profile = function Profile(props) {
     // TODO handle error!
   }
 
-  async function handleDownload(e) {
+  async function handleVaccinationSubmit(e) {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("file", vaccinationFile);
+
+    try {
+      const response = await axios.post("/api/vaccination/", data);
+      setVaccinationMsg("Vaccination card has been successfully uploaded")
+    } 
+    catch (e) {
+      setVaccinationMsg("Failed to upload vaccination card. Please try again.")
+    }
+
+    // TODO handle error!
+  }
+
+  async function handleResumeDownload(e) {
     e.preventDefault();
 
     const response = await axios.get("/api/resumes/");
+    const url = response.data['url'];
+    window.open(url, "_blank");
+  }
+
+  async function handleVaccinationDownload(e) {
+    e.preventDefault();
+
+    const response = await axios.get("/api/vaccination/");
     const url = response.data['url'];
     window.open(url, "_blank");
   }
@@ -231,7 +275,8 @@ async function cancel(event){
   useEffect(() => {
     getStatus();
     getProfile();
-    getFileName();
+    getResumeFileName();
+    getVaccinationFileName();
     getEmailConfirmStatus();
   }, [props.isLoggedIn]);
 
@@ -327,17 +372,17 @@ async function cancel(event){
           </TableHead>
           <TableRow>
             <TableCell>
-              {oldName}
+              {oldResumeName}
             </TableCell>
             <TableCell>
-              <Link onClick={handleDownload} style={{ fontSize: '15px', color: 'blue' }}>
+              <Link onClick={handleResumeDownload} style={{ fontSize: '15px', color: 'blue' }}>
                 Download
               </Link>
             </TableCell>
             <TableCell>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleResumeSubmit}>
                 <div>
-                  <input type="file" name="file" onChange={handleFileChange} />
+                  <input type="file" name="file" onChange={handleResumeFileChange} />
                 </div>
                 <input type="submit" value="Submit" />
                 <Typography style={{ fontSize: '13px'}}> {resumeMsg} </Typography>
@@ -347,6 +392,51 @@ async function cancel(event){
         </Table>
       </CardContent>
 
+    </Card>
+  );
+
+  const vaccination = (
+    <Card className={classes.root} variant="outlined">
+      <CardContent>
+        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
+          Vaccination
+        </Typography>
+        <Typography color="textSecondary" style={{ fontSize: '15px' }} >
+          In response to the current administrative policy, this year's participants are required to be fully vaccinated or follow the indoor mask policy. Please upload a picture of your vaccination card if you are fully vaccinated. 
+        </Typography>
+        <Table>
+          <TableHead>
+            <TableCell>
+              File Name
+                    </TableCell>
+            <TableCell>
+              Action
+                    </TableCell>
+            <TableCell>
+              Upload Vaccination Card
+                    </TableCell>
+          </TableHead>
+          <TableRow>
+            <TableCell>
+              {oldVaccinationName}
+            </TableCell>
+            <TableCell>
+              <Link onClick={handleVaccinationDownload} style={{ fontSize: '15px', color: 'blue' }}>
+                Download
+              </Link>
+            </TableCell>
+            <TableCell>
+              <form onSubmit={handleVaccinationSubmit}>
+                <div>
+                  <input type="file" name="file" onChange={handleVaccinationFileChange} />
+                </div>
+                <input type="submit" value="Submit" />
+                <Typography style={{ fontSize: '13px'}}> {vaccinationMsg} </Typography>
+              </form>
+            </TableCell>
+          </TableRow>
+        </Table>
+      </CardContent>
     </Card>
   );
 
@@ -581,6 +671,9 @@ async function cancel(event){
       </div>
       <div>
         {resume}
+      </div>
+      <div>
+        {vaccination}
       </div>
       <div>
         {ProfileCard}
