@@ -9,7 +9,6 @@ import { ParallaxProvider } from 'react-scroll-parallax'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-
 import { theme } from "../util/theme"
 import { AuthProvider } from "../util/auth"
 
@@ -22,6 +21,7 @@ import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
 import RSVP from "./RSVP"
 import Register from "./account/Register"
+import Footer from "./Footer"
 import Assignments from './judgetool/Assignments.jsx';
 import Upload from './judgetool/Upload.jsx';
 import UploadSponsors from './judgetool/UploadSponsors.jsx';
@@ -64,9 +64,8 @@ export default function App() {
                 </Route>
                 
                 <Route path="/rsvp">
-                
-                <RSVP/>
-              </Route>
+                  <RSVP/>
+                </Route>
                 <Route path="/reset_password/:token" component={PasswordReset}/>
                 <Route path="/confirm_email/:token" component={EmailConfirmation}/>
 
@@ -76,6 +75,8 @@ export default function App() {
 
 
               </Switch>
+              
+              <Footer/>
             </div>
           </Router>
         </AuthProvider>
