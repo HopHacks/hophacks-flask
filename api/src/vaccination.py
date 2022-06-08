@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 vaccination_api = Blueprint('vaccination', __name__)
 
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpeg', 'jpg'}
-BUCKET = 'hophacks-vaccination'
+BUCKET = 'hophacks-vaccinations'
 
 # remove weird directories just in case
 def check_filename(filename):
