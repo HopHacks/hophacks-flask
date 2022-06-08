@@ -19,10 +19,11 @@ import TableRow from '@material-ui/core/TableRow';
 import FormDialog from "./FormDialog"
 import MajorAutocomplete from "./MajorAutocomplete"
 import SchoolAutocomplete from "./SchoolAutocomplete"
+import eventName from '../../event.txt'
 
 const Profile = function Profile(props) {
 
-  const [status, setStatus] = useState("not applied");
+  const [status, setStatus] = useState("Application not complete: confirm email");
   const [file, setFile] = useState("");
   const [oldName, setOldName] = useState("");
   //display database
@@ -40,8 +41,13 @@ const Profile = function Profile(props) {
   const [grad_year, setGrad_year] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState("");
+  const [resumeMsg, setResumeMsg] = useState("Acceptable format: *.pdf, *.doc, *.docx");
 
-  const currentEvent = "spring_2021"
+  const currentEvent = "Fall 2021"
+  const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
+  const acceptedStatus = "You have been accepted to HopHacks. Please RSVP if you plan on participating!"
+  const appCompleteStatus = "Application complete!"
+  
 
   const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -52,6 +58,7 @@ const Profile = function Profile(props) {
     root: {
       marginLeft: "25%",
       width: "50%",
+      minWidth:"450px",
     },
 
     title: {
@@ -82,7 +89,14 @@ const Profile = function Profile(props) {
     const data = new FormData();
     data.append("file", file);
 
-    const response = await axios.post("/api/resumes/", data);
+    try {
+      const response = await axios.post("/api/resumes/", data);
+      setResumeMsg("Resume has been successfully uploaded")
+    } 
+    catch (e) {
+      setResumeMsg("Failed to upload resume. Please try again.")
+    }
+
     // TODO handle error!
   }
 
@@ -147,7 +161,7 @@ const Profile = function Profile(props) {
 
   async function applyToCurrentEvent() {
     if (!props.isLoggedIn) return;
-    if (status === "not applied") {
+    if (status === "Application not complete: confirm email") {
       const res = await axios.post('/api/registrations/apply', {
         "event": currentEvent, "details": "none"
       })
@@ -160,11 +174,16 @@ const Profile = function Profile(props) {
     const response = await axios.get('/api/registrations/get')
     response.data.registrations.forEach(registration => {
       if (registration.event === currentEvent) {
-        if (registration.accept) {
-          setStatus("accepted")
+        
+        if(registration.rsvp){
+          setStatus(rsvpStatus)
         }
+        else if (registration.accept) {
+          setStatus(acceptedStatus)
+        }
+        
         else {
-          setStatus("applied")
+          setStatus(appCompleteStatus)
         }
       }
     });
@@ -175,12 +194,39 @@ const Profile = function Profile(props) {
       await axios.post('/api/accounts/confirm_email/request', {
         "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email'
       })
-      setSendConfimationMsg("Send confirmation email successfully!")
+      setSendConfimationMsg("Sent confirmation email successfully!")
     }
     catch (e) {
       setSendConfimationMsg("Unable to send confirmation email")
     }
   }
+
+async function rsvp(event){
+    try{
+        await axios.post("/api/registrations/rsvp/rsvp", {"event":event});
+        setStatus(rsvpStatus)
+    }
+    catch(e){
+        // maybe TODO: more descriptive error messages depending on error code?
+        alert("Failed");
+    }
+
+   
+}
+
+async function cancel(event){
+
+  try{
+      await axios.post("/api/registrations/rsvp/cancel", {"event":event});
+      setStatus(acceptedStatus)
+  }
+  catch(e){
+      alert("Failed");
+  }
+
+  
+
+}
 
   useEffect(() => {
     getStatus();
@@ -197,19 +243,26 @@ const Profile = function Profile(props) {
           <p>{sendConfimationMsg}</p>
         </>
       )
-    } else if (confirmed && status === "not applied") {
+    } else if (confirmed && status === appCompleteStatus) {
       return (
-        <button onClick={applyToCurrentEvent}>Apply For Current Hackathon</button>
+        <p>You have successfully applied to HopHacks. Please be patient while we process your application :)</p>
       )
-    } else if (confirmed && status === "applied") {
+    } else if (status === acceptedStatus) {
       return (
-        <p>You have applied to the current event</p>
+        <>
+        <button onClick={() => rsvp(currentEvent)}>RSVP</button>
+        </>
       )
-    } else if (status === "accepted") {
-      return (
-        <Link to="/rsvp">RSVP</Link>
+    } else if (status == rsvpStatus){
+      
+      return(
+      <>
+      <button onClick={() => cancel(currentEvent)}>Cancel RSVP</button>
+      </>
       )
     }
+
+
   }
 
   const appStatus = (
@@ -287,6 +340,7 @@ const Profile = function Profile(props) {
                   <input type="file" name="file" onChange={handleFileChange} />
                 </div>
                 <input type="submit" value="Submit" />
+                <Typography style={{ fontSize: '13px'}}> {resumeMsg} </Typography>
               </form>
             </TableCell>
           </TableRow>

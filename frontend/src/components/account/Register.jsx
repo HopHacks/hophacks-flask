@@ -17,6 +17,8 @@ import StepContent from '@material-ui/core/StepContent';
 import { Link } from "react-router-dom";
 import MajorAutocomplete from "./MajorAutocomplete"
 import SchoolAutocomplete from "./SchoolAutocomplete"
+import CodeOfConduct from "../../doc/mlh-code-of-conduct.pdf"
+import Checkbox from '@material-ui/core/Checkbox';
 
 export default function Register() {
 
@@ -35,6 +37,9 @@ export default function Register() {
   const [grad_month, setGrad_month] = useState("");
   const [grad_year, setGrad_year] = useState("");
   const [profileSubmitMsg, setProfileSubmitMsg] = useState("");
+  const [conductCodeChecked, setConductCodeChecked] = useState(false)
+  const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false)
+  const [communicationChecked, setCommunicationChecked] = useState(false)
 
   // decide which step is actively showing
   const [activeStep, setActiveStep] = useState(0);
@@ -63,30 +68,30 @@ export default function Register() {
   async function handleAccountNext() {
     if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
 
-      setConfirmMsg("* Required Field cannot be empty")
+      setConfirmMsg("* Required field cannot be empty")
       return;
     }
     const emailre = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!emailre.test(String(username).toLowerCase())) {
-      setConfirmMsg("Please enter a valid email address")
+      setConfirmMsg("Please enter a valid email address.")
       return;
     }
 
     const response = await axios.get('/api/accounts/check/' + username)
     if (response.data.exist) {
-      setConfirmMsg("Email is already used")
+      setConfirmMsg("Email is already in use.")
       return;
     }
 
-    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,15}$/;
+    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {
-      setConfirmMsg("Please enter a password between 7 to 15 characters which contain at least one numeric digit and a special character")
+      setConfirmMsg("Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.")
       return;
     }
 
     if (password !== passwordConfirm) {
-      setConfirmMsg("Confirm password must match with the password")
+      setConfirmMsg("Confirm password must match with the password.")
       return;
     }
     //go to the next step    
@@ -95,8 +100,22 @@ export default function Register() {
 
   async function handleProfileNext() {
 
-    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || phone_number.length === 0 || school.length === 0 || ethnicity.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
-      setProfileSubmitMsg("* Required Field cannot be empty")
+    if (username.length === 0 || password.length === 0 || first_name.length === 0 || last_name.length === 0 || gender.length === 0 || major.length === 0 || school.length === 0 || ethnicity.length === 0 || grad.length === 0 || grad_month === 0 || grad_year === 0) {
+      setProfileSubmitMsg("* Required field cannot be empty.")
+      return;
+    }
+    if (!conductCodeChecked) {
+      setProfileSubmitMsg("* Please read the MLH Code of Conduct.")
+      return;
+    }
+
+    if (!eventLogisticsChecked) {
+      setProfileSubmitMsg("* Please read the MLH Terms and Conditions and Privacy Policy.")
+      return;
+    }
+
+    if (!communicationChecked) {
+      setProfileSubmitMsg("* Please check the box for MLH informational emails.")
       return;
     }
 
@@ -104,7 +123,7 @@ export default function Register() {
       await axios.post('/api/accounts/create', {
         "username": username,
         "password": password,
-        "confirm_url": "http://hophacks.com/confirm_email",
+        "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email',
         "profile": {
           "first_name": first_name,
           "last_name": last_name,
@@ -145,6 +164,77 @@ export default function Register() {
 
     </Grid>
   );
+  const handleConductCheckBox = (event) => {
+    setConductCodeChecked(event.target.checked);
+  };
+
+  const handleLogisticsCheckBox = (event) => {
+    setEventLogisticsChecked(event.target.checked);
+  };
+
+  const handleCommunicationCheckBox = (event) => {
+    setCommunicationChecked(event.target.checked);
+  };
+
+  function openCodeOfConduct() {
+    window.open(CodeOfConduct);
+  }
+  function openPrivacy(){
+    window.open("https://mlh.io/privacy","_blank");
+  }
+  function openTerms(){
+    window.open("https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md","_blank");
+  }
+
+  
+
+  const codeOfConduct = (
+    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
+      <Checkbox
+      checked={conductCodeChecked}
+      onChange={handleConductCheckBox}
+      inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      I have read and understand the {' '}
+      <Link onClick={openCodeOfConduct}>
+      MLH code of conduct
+      </Link> *
+  </Typography>
+  )
+
+  const eventLogistics = (
+    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
+      <Checkbox
+      checked={eventLogisticsChecked}
+      onChange={handleLogisticsCheckBox}
+      inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      I authorize you to share my
+application/registration information with Major League Hacking for event
+administration, ranking, and MLH administration in-line with the <Link onClick={openPrivacy}>
+      MLH Privacy Policy
+      </Link>. I further agree to the terms of both the <Link onClick={openTerms}>
+      MLH Terms and Conditions
+      </Link> and the <Link onClick={openPrivacy}>
+      MLH Privacy Policy
+      </Link>
+       . *
+  </Typography>
+  )
+
+  const communication = (
+    <Typography style={{fontSize: '16px', marginTop: '10px'}}>
+      <Checkbox
+      checked={communicationChecked}
+      onChange={handleCommunicationCheckBox}
+      inputProps={{ 'aria-label': 'primary checkbox' }}
+      />
+      I authorize MLH to send me pre- and
+post-event informational emails, which contain free credit and
+opportunities from their partners. *
+  </Typography>
+  )
+
   const personalInfo = (
     <Grid container direction={"column"} spacing={2}>
       <Grid item>
@@ -190,18 +280,23 @@ export default function Register() {
       </Grid>
 
       <Grid item>
-        <FormControl variant="outlined" style={{ minWidth: 220 }}>
+        <FormControl required variant="outlined" style={{ minWidth: 220 }}>
           <SchoolAutocomplete
             school={school}
             setSchool={setSchool} />
         </FormControl>
-
+        <Typography style={{fontSize: '12px', color:"grey"}}>
+          * If your school is not in the list, choose 'other schools'
+        </Typography>
       </Grid>
 
       <Grid item>
         <MajorAutocomplete
           major={major}
           setMajor={setMajor} />
+        <Typography style={{fontSize: '12px', color:"grey"}}>
+          * If your major is not in the list, choose 'other majors'
+        </Typography>
       </Grid>
 
       <Grid item>
@@ -220,7 +315,7 @@ export default function Register() {
       </Grid>
 
       <Grid item>
-        <TextField required id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} />
+        <TextField id="standard-basic" variant="outlined" label="Phone Number" onChange={e => setPhone_number(e.target.value)} />
       </Grid>
 
       <Grid item>
@@ -265,6 +360,9 @@ export default function Register() {
             <MenuItem value="2025">2025</MenuItem>
           </Select>
         </FormControl>
+        {codeOfConduct}
+        {eventLogistics}
+        {communication}
         <Typography style={{ color: "red" }}>
           {profileSubmitMsg}
         </Typography>
@@ -316,7 +414,7 @@ export default function Register() {
       return (
         <>
           <Typography>
-            You should have recieved a confirmation email. Please check your inbox(and spam) and click the link to confirm your email address.
+            You should have recieved a confirmation email. Please check your inbox (and spam) and click the link to confirm your email address. Your application to HopHacks will be complete after email confirmation!
                   </Typography>
           <div className={classes.actionsContainer}>
             <Button

@@ -63,6 +63,9 @@ def login():
 
     if not bcrypt.checkpw(password.encode('utf-8'), user['hashed']):
         return jsonify({'msg': 'Bad username or password'}), 401
+    #if (user["email_confirmed"] == False):
+        #print("not allowed")
+        #return jsonify({'msg': 'Email not confirmed'}), 403
 
     id = str(user['_id'])
     ret = {

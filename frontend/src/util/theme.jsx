@@ -2,6 +2,11 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 
 const theme = createMuiTheme({
+
+  typography:{
+    fontFamily:"PT Sans" //change font here
+  },
+
     spacing: 8,
     palette: createPalette({
       primary: {
@@ -17,6 +22,8 @@ const theme = createMuiTheme({
           background: '#dfe6ee',
         },
       },
+
+      
 
     },
   

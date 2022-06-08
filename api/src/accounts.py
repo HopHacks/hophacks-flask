@@ -10,12 +10,15 @@ from util.decorators import check_admin
 from flask import Blueprint, request, Response, current_app, render_template, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_mail import Message
+from registrations import send_apply_confirm
 
 import bcrypt
 import jwt
 import json
 import datetime
 from bson import ObjectId
+import pytz
+
 
 accounts_api = Blueprint('accounts', __name__)
 
@@ -26,7 +29,8 @@ profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
 # Note this secret key is based of the current user's hashed password, this way when the Password
 # is changed the link becomes invalid!
 def send_reset_email(email, hashed, base_url):
-    secret = hashed.decode('utf-8') + '-' + str(datetime.datetime.utcnow().timestamp())
+    eastern = pytz.timezone("America/New_York")
+    secret = hashed.decode('utf-8') + '-' + str(pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern).timestamp())
     token = create_reset_token(email, secret)
     link = base_url + "/" + token.decode('utf-8')
 
@@ -44,8 +48,8 @@ def send_reset_email(email, hashed, base_url):
 
 # Sends confirmation email with JWT-Token in URL for verification, returns the secret key used
 def send_confirmation_email(email, hashed, base_url):
-    
-    confirm_secret = hashed.decode('utf-8') + '-' + str(datetime.datetime.utcnow().timestamp())
+    eastern = pytz.timezone("America/New_York")
+    confirm_secret = hashed.decode('utf-8') + '-' + str(pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern).timestamp())
     token = create_confirm_token(email, confirm_secret)
     link = base_url + "/" + token.decode('utf-8')
 
@@ -120,6 +124,9 @@ def create():
     :status 409: User alreay exists
 
     """
+
+
+
     if (request.json is None):
         return Response('Data not in json format', status=400)
 
@@ -421,7 +428,7 @@ def reset_password_req():
 @accounts_api.route('/confirm_email', methods = ['POST'])
 def confirm_email():
     """Confirm email using the token from the email sent by ``/api/accounts/create``
-    and ``/api/accounts/confirm_email/request``
+    and ``/api/accounts/confirm_email/request``. Confirming completes the user's application.
 
     :reqjson confirm_token: Token from confirmation email link.
 
@@ -441,6 +448,23 @@ def confirm_email():
         {'_id': ObjectId(user['_id'])},
         {'$set': {'confirm_secret': '', 'email_confirmed': True}}
     )
+
+    eastern = pytz.timezone("America/New_York")
+
+    eventFile = open("event.txt", "r")
+    
+    new_reg = {
+        "event": eventFile.read(), # update 
+        "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
+        "accept": False,
+        "checkin": False,
+        "status": "applied"
+    }
+
+
+    id = get_jwt_identity()
+    result = db.users.update_one({'username' : email}, {'$push': {'registrations': new_reg}})
+    send_apply_confirm(user['username'], user['profile']['first_name'])
     return jsonify({"msg": "Email Confirmed"}), 200
 
 @accounts_api.route('/reset_password', methods = ['POST'])

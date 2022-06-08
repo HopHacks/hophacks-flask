@@ -7,6 +7,24 @@ import Button from '@material-ui/core/Button';
 import { Typography } from "@material-ui/core";
 import { withAuthProps } from '../util/auth';
 import Login from './LoginDialog';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+const useStyles = makeStyles({
+
+  title: {
+    fontFamily: "VCR OSD Mono",
+  },
+
+  hophacksButton:{
+    marginLeft: 20,
+    marginRight: 20,
+  },
+
+  otherButton:{
+    marginLeft:"auto",
+  },
+});
 
 const Nav = function Nav(props) {
   let history = useHistory();
@@ -15,29 +33,90 @@ const Nav = function Nav(props) {
     history.push("/");
   }
 
-  return (
-    <AppBar position="sticky">
-      <Toolbar style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+  const classes = useStyles();
+  const isMobile = window.innerWidth <=650;
+
+
+  if(isMobile){
+    return (
+      <div>
+    
+
+  <AppBar position="sticky">
+  <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-start' }}>
+  <section>
         <Button component={Link} to={'/'} color="inherit">
-          <Typography> Home </Typography>
+          <Typography variant="h6" className={classes.title}> Home </Typography>
         </Button>
 
         {!props.isLoggedIn && <Login />
         }
 
+        {!props.isLoggedIn && 
+          <Button component={Link} to={'/register'} color="inherit">
+            <Typography variant="h6" className={classes.title}> Register </Typography>
+          </Button>
+
+        }
+
         {props.isLoggedIn &&
           <Button component={Link} to={'/profile'} color="inherit">
-            <Typography> Profile </Typography>
+            <Typography variant="h6" className={classes.title}> Profile </Typography>
           </Button>
         }
 
         {props.isLoggedIn &&
           <Button onClick={handleLogout} color="inherit">
-            <Typography>Logout</Typography>
+            <Typography variant="h6" className={classes.title}>Logout</Typography>
           </Button>
         }
+        </section>        
+    </Toolbar>
+  </AppBar>
+      </div>
+      
+      
+      
+      );
+  }
+
+  return (
+    <AppBar position="sticky">
+      <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-end', marginRight: '8rem' }}>
+        <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
+          <Typography variant="h4" className={classes.title}> HopHacks </Typography>
+        </Button>
+
+        <section className={classes.otherButton}>
+        <Button component={Link} to={'/'} color="inherit">
+          <Typography variant="h5" className={classes.title}> Home </Typography>
+        </Button>
+
+        {!props.isLoggedIn && <Login />
+        }
+
+        {!props.isLoggedIn && 
+          <Button component={Link} to={'/register'} color="inherit">
+            <Typography variant="h5" className={classes.title}> Register </Typography>
+          </Button>
+
+        }
+
+        {props.isLoggedIn &&
+          <Button component={Link} to={'/profile'} color="inherit">
+            <Typography variant="h5" className={classes.title}> Profile </Typography>
+          </Button>
+        }
+
+        {props.isLoggedIn &&
+          <Button onClick={handleLogout} color="inherit">
+            <Typography variant="h5" className={classes.title}>Logout</Typography>
+          </Button>
+        }
+        </section>        
       </Toolbar>
-    </AppBar>);
+    </AppBar>
+    );
 }
 
 export default withAuthProps(Nav);

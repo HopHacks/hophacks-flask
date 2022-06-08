@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { Typography } from '@material-ui/core';
 
 export default function EmailConfirmation(props) {
     const [message, setMessage] = useState('Confirming Email...');
@@ -10,7 +11,7 @@ export default function EmailConfirmation(props) {
             const response = await axios.post("/api/accounts/confirm_email", {
                 'confirm_token': props.match.params.token
             });
-            setMessage('Email Confirmed! Login to your account again to apply!');
+            setMessage('Email confirmed! You have applied to this event successfully!');
         } catch(e) {
             setMessage('Something went wrong :(, maybe the link was old? Try logging in to request a new confirmation token');
         }
@@ -25,5 +26,5 @@ export default function EmailConfirmation(props) {
         }
     }, []);
 
-    return (<div>{message}</div>);
+    return (<Typography style={{color:'white'}}>{message}</Typography>);
 }

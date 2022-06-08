@@ -4,17 +4,17 @@
     top: 0% !important;
     bottom: 0% !important;  
 }
-.parallax-banner-layer-0{
+/* .parallax-banner-layer-6{
     animation: fogMovementRev 250s linear infinite;
-}
+} */
 
-.parallax-banner-layer-6 {
+.parallax-banner-layer-3 {
     animation: fogMovement 60s linear infinite;
 }
 
-.parallax-banner-layer-10 {
+/* .parallax-banner-layer-10 {
     animation: fogMovementRev 90s linear infinite;
-}
+} */
 
 @keyframes fogMovement{
     0%{background-position: 0 0;}
@@ -51,7 +51,6 @@
 }
 
 .grid-item img {
-    width: 80%;
     box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
     margin-bottom: 5px;
     border-radius: 100%;
@@ -67,3 +66,15 @@
     margin-left: 5px;
     cursor: pointer;
 }
+
+
+@font-face {
+    font-family: 'VCR OSD Mono';
+    src: url('./VCR_OSD_MONO_1.001.ttf')  format('truetype');
+  }
+
+  @font-face {
+    font-family: 'PT Sans';
+    src: url('./PT_Sans-Web-Regular.ttf')  format('truetype');
+  }
+
