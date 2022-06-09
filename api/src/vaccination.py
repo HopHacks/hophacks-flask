@@ -50,14 +50,14 @@ def upload():
     # remove old vaccination card
     if ('vaccination' in user):
         old_file_name = user['vaccination']
-        object_name = 'vaccination/{}-{}'.format(id, old_file_name)
+        object_name = 'Fall-2022/{}-{}'.format(id, old_file_name)
         s3.delete_object(Bucket=BUCKET, Key=object_name)
 
     # TODO make this atomic? what if the file upload doesn't work?
-    object_name = 'vaccination/{}-{}'.format(id, file_name)
+    object_name = 'Fall-2022/{}-{}'.format(id, file_name)
     s3.upload_fileobj(file, BUCKET, object_name)
 
-    db.users.update(
+    db.users.update_one(
         {'_id': ObjectId(id)},
         {'$set': {'vaccination': file_name}}
     )
@@ -116,7 +116,7 @@ def download():
         return jsonify({'msg': 'no vaccination card uploaded!'}, 404)
 
     s3 = boto3.client('s3')
-    object_name = 'vaccination/{}-{}'.format(id, user['vaccination'])
+    object_name = 'Fall-2022/{}-{}'.format(id, user['vaccination'])
 
     url = s3.generate_presigned_url('get_object',
                                      Params={'Bucket': BUCKET, 'Key': object_name},

@@ -57,7 +57,7 @@ def upload():
     object_name = 'resumes/{}-{}'.format(id, file_name)
     s3.upload_fileobj(file, BUCKET, object_name)
 
-    db.users.update(
+    db.users.update_one(
         {'_id': ObjectId(id)},
         {'$set': {'resume': file_name}}
     )
