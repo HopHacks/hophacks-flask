@@ -99,15 +99,15 @@ function MemberItem(props) {
 
 
   if (props.linkedin) {
-    linkedin = <a href={`${props.linkedin}`}><img style={buttons} className="social-icon linkedin" src={img("social/linkedin-white.png")} alt="linkedin" /></a>;
+    linkedin = <a target="_blank" href={`${props.linkedin}`}><img style={buttons} className="social-icon linkedin" src={img("social/linkedin-white.png")} alt="linkedin" /></a>;
   }
 
   if (props.github) {
-    github = <a href={`${props.github}`}><img style={buttons} className="social-icon github" src={img("social/github-white.png")} alt="github" /></a>;
+    github = <a target="_blank" href={`${props.github}`}><img style={buttons} className="social-icon github" src={img("social/github-white.png")} alt="github" /></a>;
   }
 
   if (props.personal) {
-    personal = <a href={`${props.personal}`}><img style={buttons} className="social-icon personal" src={img("social/personal-white.png")} alt="personal" /></a>;
+    personal = <a target="_blank" href={`${props.personal}`}><img style={buttons} className="social-icon personal" src={img("social/personal-white.png")} alt="personal" /></a>;
   }
 
   return (
@@ -186,46 +186,46 @@ export default function Team() {
             </Grid>}
             {value === 1 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                <MemberItem imgURL="AnhTran" memberName="Trần Thế Anh" memberTitle="Logistics Head" />
+                <MemberItem imgURL="AnhTran" memberName="Trần Thế Anh" memberTitle="Logistics Head" linkedin="https://www.linkedin.com/in/anh-the-tran/"/>
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="SejalSrivastava" memberName="Sejal Srivastava" memberTitle="Logistics" />
+                <MemberItem imgURL="SejalSrivastava" memberName="Sejal Srivastava" memberTitle="Logistics" linkedin="linkedin.com/in/sejal-srivastava0123"/>
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="AkhilDeo" memberName="Akhil Deo" memberTitle="Logistics" />
+                <MemberItem imgURL="AkhilDeo" memberName="Akhil Deo" memberTitle="Logistics" linkedin="https://www.linkedin.com/in/akhildeo" github="https://github.com/akhildeo"/>
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="IrisGupta" memberName="Iris Gupta" memberTitle="Logistics" />
+                <MemberItem imgURL="IrisGupta" memberName="Iris Gupta" memberTitle="Logistics" linkedin="https://www.linkedin.com/in/iris-gupta-5b422a190" />
               </div>
             </Grid>}
             {value === 2 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                <MemberItem imgURL="ZoeKim" memberName="Zoe Kim" memberTitle="Social/PR Co-Head" />
+                <MemberItem imgURL="ZoeKim" memberName="Zoe Kim" memberTitle="Social/PR Co-Head" linkedin="https://www.linkedin.com/in/kimminjeong/"/>
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="ElizabethHsieh" memberName="Elizabeth Hsieh" memberTitle="Social/PR" />
+                <MemberItem imgURL="ElizabethHsieh" memberName="Elizabeth Hsieh" memberTitle="Social/PR" linkedin="https://www.linkedin.com/in/elizabeth-hsieh/"/>
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="RuoyanShang" memberName="Ruoyan Shang" memberTitle="Social/PR" />
+                <MemberItem imgURL="RuoyanShang" memberName="Ruoyan Shang" memberTitle="Social/PR" linkedin="https://www.linkedin.com/in/ruoyan-shang/" github="https://github.com/Elvaaaaaa"/>
               </div>
             </Grid>}
             {value === 3 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                <MemberItem imgURL="DhruvDubey" memberName="Dhruv Dubey" memberTitle="Sponsors" />
+                <MemberItem imgURL="DhruvDubey" memberName="Dhruv Dubey" memberTitle="Sponsors" linkedin="https://www.linkedin.com/in/dhruv-dubey-51660b1b7/"/>
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="JosephineDeng" memberName="Josephine Deng" memberTitle="Sponsors" />
+                <MemberItem imgURL="JosephineDeng" memberName="Josephine Deng" memberTitle="Sponsors" linkedin="https://www.linkedin.com/in/josephine-deng"/>
               </div>
             </Grid>}
             {value === 4 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                <MemberItem imgURL="AlanLi" memberName="Alan Li" memberTitle="Website Head" />
+                <MemberItem imgURL="AlanLi" memberName="Alan Li" memberTitle="Website Head" linkedin="https://www.linkedin.com/in/alan-li-a45aa7197/" />
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="NicholasBowen" memberName="Nicholas Bowen" memberTitle="Website" />
+                <MemberItem imgURL="NicholasBowen" memberName="Nicholas Bowen" memberTitle="Website" linkedin="www.linkedin.com/in/nicholas-bowen24"/>
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="ShaopengZeng" memberName="Shaopeng Zeng" memberTitle="Website" />
+                <MemberItem imgURL="ShaopengZeng" memberName="Shaopeng Zeng" memberTitle="Website" linkedin="https://www.linkedin.com/in/shaopeng-zeng-862154149/"/>
               </div>
             </Grid>}
           </Paper>
