@@ -16,6 +16,7 @@ const useStyles = makeStyles({
 
   root: {
     flexGrow: 1,
+    backgroundColor: "#eef7ff"
   },
 
   title: {
@@ -33,8 +34,8 @@ const useStyles = makeStyles({
   firstRow: {
     textAlign: 'center',
     marginTop: '30px',
-    minHeight: '210px',
-    minWidth: '210px',
+    minHeight: '190px',
+    minWidth: '190px',
     maxWidth: '300px',
     maxHeight: '300px',
     margin: '10px',
@@ -62,24 +63,24 @@ const useStyles = makeStyles({
     borderRadius: '10px',
   },
 
-    memberPic1: {
-        width:'210px',
-        height:'210px',
-        borderRadius: '10px',
-        opacity: 1.0,
-        '&:hover': {
-            opacity: 0.8,
-        },
+  memberPic1: {
+    width: '210px',
+    height: '210px',
+    borderRadius: '10px',
+    opacity: 1.0,
+    '&:hover': {
+      opacity: 0.8,
     },
+  },
 
-    memberBg: {
-        width:'210px',
-        height:'210px',
-        borderRadius: '10px',
-        backgroundColor: 'black',
-        textAlign: 'right',
-        position: 'relative',
-    },
+  memberBg: {
+    width: '210px',
+    height: '210px',
+    borderRadius: '10px',
+    backgroundColor: 'black',
+    textAlign: 'right',
+    position: 'relative',
+  },
 
 });
 
@@ -88,57 +89,57 @@ function img(url) {
 }
 
 function MemberItem(props) {
-    const [buttons, setButtons] = React.useState({display: 'none'});
+  const [buttons, setButtons] = React.useState({ display: 'none' });
 
-    const classes = useStyles();
-    let linkedin = (null);
-    let github = (null);
-    let personal = (null);
+  const classes = useStyles();
+  let linkedin = (null);
+  let github = (null);
+  let personal = (null);
 
 
 
-    if (props.linkedin) {
-        linkedin = <a href={`${props.linkedin}`}><img style={buttons} className="social-icon linkedin" src={img("social/linkedin-white.png")} alt="linkedin" /></a>;
-    }
+  if (props.linkedin) {
+    linkedin = <a href={`${props.linkedin}`}><img style={buttons} className="social-icon linkedin" src={img("social/linkedin-white.png")} alt="linkedin" /></a>;
+  }
 
-    if (props.github) {
-        github = <a href={`${props.github}`}><img style={buttons} className="social-icon github" src={img("social/github-white.png")} alt="github" /></a>;
-    }
+  if (props.github) {
+    github = <a href={`${props.github}`}><img style={buttons} className="social-icon github" src={img("social/github-white.png")} alt="github" /></a>;
+  }
 
-    if (props.personal) {
-        personal = <a href={`${props.personal}`}><img style={buttons} className="social-icon personal" src={img("social/personal-white.png")} alt="personal" /></a>;
-    }
+  if (props.personal) {
+    personal = <a href={`${props.personal}`}><img style={buttons} className="social-icon personal" src={img("social/personal-white.png")} alt="personal" /></a>;
+  }
 
-    return (
-        <Grid item >
-            <div
-                onMouseEnter={e => {
-                    setButtons({display: ''});
-                }}
-                onMouseLeave={e => {
-                    setButtons({display: 'none'})
-                }}
-            >
-                <div className={classes.memberBg}>
-                    <div className = {classes.memberPic1}>
-                        <img className = {classes.memberPic} src={img(`team/img/${props.imgURL}.jpg`)} alt="loading" />
-                        {linkedin}
-                        {github}
-                        {personal}
-                    </div>
-                    
-                </div>
-                <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
-                <Typography>{props.memberTitle}</Typography>
-            </div>
-        </Grid>
-    );
+  return (
+    <Grid item >
+      <div
+        onMouseEnter={e => {
+          setButtons({ display: '' });
+        }}
+        onMouseLeave={e => {
+          setButtons({ display: 'none' })
+        }}
+      >
+        <div className={classes.memberBg}>
+          <div className={classes.memberPic1}>
+            <img className={classes.memberPic} src={img(`team/img/${props.imgURL}.jpg`)} alt="loading" />
+            {linkedin}
+            {github}
+            {personal}
+          </div>
+
+        </div>
+        <Typography color="textSecondary"><strong>{props.memberName}</strong></Typography>
+        <Typography>{props.memberTitle}</Typography>
+      </div>
+    </Grid>
+  );
 
 }
 
 export default function Team() {
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(2);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -151,7 +152,8 @@ export default function Team() {
       <Card>
         <CardContent>
           <Typography className={classes.title} variant="h4" gutterBottom>Our Perfect Team</Typography>
-          <div className = {classes.team}>
+          <Paper className={classes.root} style={{ padding: '5px', marginBottom: '10px' }}>
+            <div className={classes.team}>
               <div className={classes.firstRow}>
                 <MemberItem imgURL="curtis_headshot" memberName="Curtis Ahn" memberTitle="Director" linkedin="linkedin.com/in/ctsahn" />
               </div>
@@ -161,8 +163,9 @@ export default function Team() {
               <div className={classes.firstRow}>
                 <MemberItem imgURL="kelly" memberName="Kelly Culotta" memberTitle="Admin Coordinator" />
               </div>
-          </div>
-          <Paper className={classes.root} style={{padding: '5px'}}>
+            </div>
+          </Paper>
+          <Paper className={classes.root} style={{ padding: '5px' }}>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -178,7 +181,7 @@ export default function Team() {
             </Tabs>
             {value === 0 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                  <MemberItem imgURL="jimmy_headshot" memberName="Jimmy Shi" memberTitle="Design/Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
+                <MemberItem imgURL="jimmy_headshot" memberName="Jimmy Shi" memberTitle="Design/Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
               </div>
             </Grid>}
             {value === 1 && <Grid className={classes.team} container>
