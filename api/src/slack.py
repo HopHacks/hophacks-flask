@@ -29,7 +29,7 @@ slack_client  = slack_client()
 
 
 @slack_api.route('/', methods = ['POST'])
-#@jwt_required
+@jwt_required
 def makeAnnouncement():
     
     """Makes an customized announcement to a specific channel achieved by the according slack webhook via Slack.
