@@ -72,9 +72,11 @@ def create_app(config_file='config/config.json'):
     from vaccination import vaccination_api
     from registrations import registrations_api
     from assign import assign_api
+    from announcements import announcements_api
     from events import events_api
     from slack import slack_api
     from discord import discord_api
+
 
     app.register_blueprint(auth_api, url_prefix='/api/auth')
     app.register_blueprint(admin_api, url_prefix='/api/admin')
@@ -83,9 +85,11 @@ def create_app(config_file='config/config.json'):
     app.register_blueprint(vaccination_api, url_prefix='/api/vaccination')
     app.register_blueprint(registrations_api, url_prefix='/api/registrations')
     app.register_blueprint(assign_api, url_prefix='/api/judgetool')
+    app.register_blueprint(announcements_api, url_prefix='/api/announcements')
     app.register_blueprint(events_api, url_prefix='/api/events')
     app.register_blueprint(slack_api, url_prefix='/api/slack')
     app.register_blueprint(discord_api, url_prefix='/api/discord')
+
 
 
     return app
