@@ -138,6 +138,12 @@ export default function Register() {
           "grad_year": grad_year,
         }
       })
+
+      await axios.post('/api/slack/registration', {
+        "first_name": first_name,
+        "last_name": last_name,
+        "school" : school
+      })
     }
     catch (e) {
       return;
