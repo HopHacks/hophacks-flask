@@ -63,6 +63,7 @@ def create_app(config_file='config/config.json'):
     from accounts import accounts_api
     from admin import admin_api
     from resumes import resume_api
+    from vaccination import vaccination_api
     from registrations import registrations_api
     from assign import assign_api
     from events import events_api
@@ -71,6 +72,7 @@ def create_app(config_file='config/config.json'):
     app.register_blueprint(admin_api, url_prefix='/api/admin')
     app.register_blueprint(accounts_api, url_prefix='/api/accounts')
     app.register_blueprint(resume_api, url_prefix='/api/resumes')
+    app.register_blueprint(vaccination_api, url_prefix='/api/vaccination')
     app.register_blueprint(registrations_api, url_prefix='/api/registrations')
     app.register_blueprint(assign_api, url_prefix='/api/judgetool')
     app.register_blueprint(events_api, url_prefix='/api/events')

@@ -7,24 +7,24 @@ from bson import ObjectId
 import boto3
 from werkzeug.utils import secure_filename
 
-resume_api = Blueprint('resumes', __name__)
+vaccination_api = Blueprint('vaccination', __name__)
 
-ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
-BUCKET = 'hophacks-resume'
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpeg', 'jpg'}
+BUCKET = 'hophacks-vaccinations'
 
 # remove weird directories just in case
 def check_filename(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@resume_api.route('/', methods = ['POST'])
+@vaccination_api.route('/', methods = ['POST'])
 @jwt_required
 def upload():
-    """Upload a resume to the current users profile. Behind the scene stores a file in AWS s3.
+    """Upload a vaccination card to the current users profile. Behind the scene stores a file in AWS s3.
 
     :reqheader Authorization: ``Bearer <JWT Token>``
 
-    :form file: Resume file, should be .pdf or .docx
+    :form file: Vaccination card file, should be .pdf / .png / .jpeg / .jpg
 
     :status 200: File uploaded successfully
     :status 400: No file was uploaded, or wrong file type
@@ -47,9 +47,9 @@ def upload():
     id = get_jwt_identity()
     user = db.users.find_one({'_id': ObjectId(id)})
 
-    # remove old resume
-    if ('resume' in user):
-        old_file_name = user['resume']
+    # remove old vaccination card
+    if ('vaccination' in user):
+        old_file_name = user['vaccination']
         object_name = 'Fall-2022/{}-{}'.format(id, old_file_name)
         s3.delete_object(Bucket=BUCKET, Key=object_name)
 
@@ -59,16 +59,16 @@ def upload():
 
     db.users.update_one(
         {'_id': ObjectId(id)},
-        {'$set': {'resume': file_name}}
+        {'$set': {'vaccination': file_name}}
     )
 
     return jsonify({'msg': 'file uploaded'}, 200)
 
 
-@resume_api.route('/filename', methods = ['GET'])
+@vaccination_api.route('/filename', methods = ['GET'])
 @jwt_required
 def filename():
-    """Get the filename of the current user's resume.
+    """Get the filename of the current user's vaccination card.
 
     :reqheader Authorization: ``Bearer <JWT Token>``
 
@@ -80,7 +80,7 @@ def filename():
         }
 
 
-    :resjson filename: name of resume file
+    :resjson filename: name of vaccination card file
 
     :status 200: File uploaded successfully
     :status 422: Not logged in
@@ -90,16 +90,16 @@ def filename():
     id = get_jwt_identity()
     user = db.users.find_one({'_id': ObjectId(id)})
 
-    if ('resume' not in user):
+    if ('vaccination' not in user):
         return jsonify({'filename': ''}), 200
 
-    return jsonify({'filename': user['resume']}), 200
+    return jsonify({'filename': user['vaccination']}), 200
 
 
-@resume_api.route('/', methods = ['GET'])
+@vaccination_api.route('/', methods = ['GET'])
 @jwt_required
 def download():
-    """Get the actual resume file stored in S3. (though actually returns a link).
+    """Get the actual vaccination card file stored in S3. (though actually returns a link).
 
     :reqheader Authorization: ``Bearer <JWT Token>``
 
@@ -112,11 +112,11 @@ def download():
     id = get_jwt_identity()
     user = db.users.find_one({'_id': ObjectId(id)})
 
-    if ('resume' not in user):
-        return jsonify({'msg': 'no resume uploaded!'}, 404)
+    if ('vaccination' not in user):
+        return jsonify({'msg': 'no vaccination card uploaded!'}, 404)
 
     s3 = boto3.client('s3')
-    object_name = 'Fall-2022/{}-{}'.format(id, user['resume'])
+    object_name = 'Fall-2022/{}-{}'.format(id, user['vaccination'])
 
     url = s3.generate_presigned_url('get_object',
                                      Params={'Bucket': BUCKET, 'Key': object_name},
