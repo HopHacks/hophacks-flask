@@ -46,7 +46,7 @@ def create_app(config_file='config/config.json'):
 
     app.config['SLACK_SUPPRESS_SEND'] = False
     app.config['DISCORD_SUPPRESS_SEND'] = False 
-    
+
     # Supress mail sending if not specified, i.e. in dev
     if ('MAIL_SERVER' not in config):
         app.config['MAIL_SUPPRESS_SEND'] = True 
@@ -55,7 +55,7 @@ def create_app(config_file='config/config.json'):
     if ('SLACK_WEBHOOK' not in config):
         app.config['SLACK_SUPPRESS_SEND'] = True
     
-    # Supress mail sending if not specified, i.e. in dev
+    # Supress discord sending if not specified, i.e. in dev
     if ('DISCORD_WEBHOOK' not in config):
         app.config['DISCORD_SUPPRESS_SEND'] = True 
 
