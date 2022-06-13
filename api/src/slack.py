@@ -15,8 +15,12 @@ class slack_client():
         self.client = None
 
     def init_app(self, app):
-        self.webhook = app.config['SLACK_WEBHOOK']
-        self.client = Slack(url=app.config['SLACK_WEBHOOK'])
+        if app.config['SLACK_SUPPRESS_SEND']:
+            self.webhook = None
+            self.client = None
+        else:
+            self.webhook = app.config['SLACK_WEBHOOK']
+            self.client = Slack(url=app.config['SLACK_WEBHOOK'])
 
 
 
@@ -25,7 +29,7 @@ slack_client  = slack_client()
 
 
 @slack_api.route('/', methods = ['POST'])
-@jwt_required
+#@jwt_required
 def makeAnnouncement():
     
     """Makes an customized announcement to a specific channel achieved by the according slack webhook via Slack.

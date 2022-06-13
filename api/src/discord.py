@@ -11,7 +11,12 @@ class client():
         self.webhook = None
 
     def init_app(self, app):
-        self.webhook = app.config['DISCORD_WEBHOOK']
+        if app.config['DISCORD_SUPPRESS_SEND']:
+            self.webhook = None
+        else:
+            self.webhook = app.config['DISCORD_WEBHOOK']
+    
+        
 
 # Global Discord api object
 discord_client  = client()

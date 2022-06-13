@@ -36,18 +36,28 @@ def create_app(config_file='config/config.json'):
     get_req_config(app, config, 'MONGO_DB_NAME')
     get_req_config(app, config, 'TESTING')
     get_req_config(app, config, 'BASE_URL')
-    get_req_config(app, config, 'SLACK_WEBHOOK')
-    get_req_config(app, config, 'DISCORD_WEBHOOK')
+    get_opt_config(app, config, 'SLACK_WEBHOOK')
+    get_opt_config(app, config, 'DISCORD_WEBHOOK')
 
     get_opt_config(app, config, 'MAIL_SERVER')
     get_opt_config(app, config, 'MAIL_PORT')
     get_opt_config(app, config, 'MAIL_USERNAME')
     get_opt_config(app, config, 'MAIL_PASSWORD')
 
+    app.config['SLACK_SUPPRESS_SEND'] = False
+    app.config['DISCORD_SUPPRESS_SEND'] = False 
+    
     # Supress mail sending if not specified, i.e. in dev
     if ('MAIL_SERVER' not in config):
         app.config['MAIL_SUPPRESS_SEND'] = True 
 
+    # Supress slack sending if not specified, i.e. in dev
+    if ('SLACK_WEBHOOK' not in config):
+        app.config['SLACK_SUPPRESS_SEND'] = True
+    
+    # Supress mail sending if not specified, i.e. in dev
+    if ('DISCORD_WEBHOOK' not in config):
+        app.config['DISCORD_SUPPRESS_SEND'] = True 
 
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers']
