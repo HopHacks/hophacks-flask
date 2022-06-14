@@ -69,7 +69,6 @@ def makeAnnouncement():
 
 
 @slack_api.route('/registration', methods = ['POST'])
-@jwt_required
 def notify_registration_in_channel():
     
     """Makes a notification to a specific slack channel when a new user registers.

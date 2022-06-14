@@ -358,8 +358,6 @@ opportunities from their partners. *
               setGrad_year(e.target.value);
             }}
           >
-            <MenuItem value="2020">2020</MenuItem>
-            <MenuItem value="2021">2021</MenuItem>
             <MenuItem value="2022">2022</MenuItem>
             <MenuItem value="2023">2023</MenuItem>
             <MenuItem value="2024">2024</MenuItem>

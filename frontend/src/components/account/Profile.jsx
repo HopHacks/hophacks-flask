@@ -47,7 +47,7 @@ const Profile = function Profile(props) {
   const [vaccinationMsg, setVaccinationMsg] = useState("Acceptable format: *.pdf, *.png, *.jpeg, *.jpg");
 
 
-  const currentEvent = "Fall 2021"
+  const currentEvent = "Fall 2022"
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
   const acceptedStatus = "You have been accepted to HopHacks. Please RSVP if you plan on participating!"
   const appCompleteStatus = "Application complete!"
