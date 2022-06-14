@@ -15,8 +15,12 @@ class slack_client():
         self.client = None
 
     def init_app(self, app):
-        self.webhook = app.config['SLACK_WEBHOOK']
-        self.client = Slack(url=app.config['SLACK_WEBHOOK'])
+        if app.config['SLACK_SUPPRESS_SEND']:
+            self.webhook = None
+            self.client = None
+        else:
+            self.webhook = app.config['SLACK_WEBHOOK']
+            self.client = Slack(url=app.config['SLACK_WEBHOOK'])
 
 
 
