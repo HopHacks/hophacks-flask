@@ -63,16 +63,6 @@ const useStyles = makeStyles({
     borderRadius: '10px',
   },
 
-  memberPic1: {
-    width: '210px',
-    height: '210px',
-    borderRadius: '10px',
-    opacity: 1.0,
-    '&:hover': {
-      opacity: 0.8,
-    },
-  },
-
   memberBg: {
     width: '210px',
     height: '210px',
@@ -90,6 +80,7 @@ function img(url) {
 
 function MemberItem(props) {
   const [buttons, setButtons] = React.useState({ display: 'none' });
+  const [background, setBackground] = React.useState({ opacity: 1 });
 
   const classes = useStyles();
   let linkedin = (null);
@@ -115,14 +106,16 @@ function MemberItem(props) {
       <div
         onMouseEnter={e => {
           setButtons({ display: '' });
+          setBackground({ opacity: 0.7 })
         }}
         onMouseLeave={e => {
           setButtons({ display: 'none' })
+          setBackground({ opacity: 1 })
         }}
       >
         <div className={classes.memberBg}>
-          <div className={classes.memberPic1}>
-            <img className={classes.memberPic} src={img(`team/img/${props.imgURL}.jpg`)} alt="loading" />
+          <div className={classes.memberPic}>
+            <img className={classes.memberPic} style={background} src={img(`team/img/${props.imgURL}.jpg`)} alt="loading" />
             {linkedin}
             {github}
             {personal}
@@ -139,7 +132,7 @@ function MemberItem(props) {
 
 export default function Team() {
 
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -182,7 +175,7 @@ export default function Team() {
             </Tabs>
             {value === 0 && <Grid className={classes.team} container>
               <div className={classes.teambox}>
-                <MemberItem imgURL="jimmy_headshot" memberName="Jimmy Shi" memberTitle="Design/Website" personal="https://www.jimmyshi.com/" linkedin="https://www.linkedin.com/in/jimmyshi360/" github="https://github.com/jimmyshi360" />
+                <MemberItem imgURL="LaurenBack" memberName="Lauren Back" memberTitle="Design" linkedin="https://www.linkedin.com/in/backs/"/>
               </div>
             </Grid>}
             {value === 1 && <Grid className={classes.team} container>
@@ -224,6 +217,9 @@ export default function Team() {
               </div>
               <div className={classes.teambox}>
                 <MemberItem imgURL="NicholasBowen" memberName="Nicholas Bowen" memberTitle="Website" linkedin="www.linkedin.com/in/nicholas-bowen24"/>
+              </div>
+              <div className={classes.teambox}>
+                <MemberItem imgURL="JuliaBian" memberName="Julia Bian" memberTitle="Website" linkedin="https://www.linkedin.com/in/juliabian/"/>
               </div>
               <div className={classes.teambox}>
                 <MemberItem imgURL="ShaopengZeng" memberName="Shaopeng Zeng" memberTitle="Website" linkedin="https://www.linkedin.com/in/shaopeng-zeng-862154149/"/>

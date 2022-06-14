@@ -11,7 +11,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
 import Prizes from "./home/Prizes";
-import Alumni from "./home/Alumni";
 import Schedule from "./home/Schedule";
 import { ParallaxBanner } from 'react-scroll-parallax';
 
@@ -304,9 +303,7 @@ export default function Home() {
                             </Card>
                         </CardContent>
                     </Card>
-                    <Team />
-                    {/* <Alumni /> */}
-                    
+                    <Team />                    
                 </Box>
             </Container>
         </div>
