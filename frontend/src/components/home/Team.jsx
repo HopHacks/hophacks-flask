@@ -148,7 +148,7 @@ export default function Team() {
           <Paper className={classes.root} style={{ padding: '5px', marginBottom: '10px' }}>
             <div className={classes.team}>
               <div className={classes.firstRow}>
-                <MemberItem imgURL="curtis_headshot" memberName="Curtis Ahn" memberTitle="Director" linkedin="linkedin.com/in/ctsahn" />
+                <MemberItem imgURL="curtis_headshot" memberName="Curtis Ahn" memberTitle="Director" linkedin="https://www.linkedin.com/in/ctsahn" />
               </div>
               <div className={classes.firstRow}>
                 <MemberItem imgURL="joanne" memberName="Joanne Selinski" memberTitle="Faculty Advisor" />
@@ -183,7 +183,7 @@ export default function Team() {
                 <MemberItem imgURL="AnhTran" memberName="Trần Thế Anh" memberTitle="Logistics Head" linkedin="https://www.linkedin.com/in/anh-the-tran/"/>
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="SejalSrivastava" memberName="Sejal Srivastava" memberTitle="Logistics" linkedin="linkedin.com/in/sejal-srivastava0123"/>
+                <MemberItem imgURL="SejalSrivastava" memberName="Sejal Srivastava" memberTitle="Logistics" linkedin="https://www.linkedin.com/in/sejal-srivastava0123"/>
               </div>
               <div className={classes.teambox}>
                 <MemberItem imgURL="AkhilDeo" memberName="Akhil Deo" memberTitle="Logistics" linkedin="https://www.linkedin.com/in/akhildeo" github="https://github.com/akhildeo"/>
@@ -216,7 +216,7 @@ export default function Team() {
                 <MemberItem imgURL="AlanLi" memberName="Alan Li" memberTitle="Website Head" linkedin="https://www.linkedin.com/in/alan-li-a45aa7197/" />
               </div>
               <div className={classes.teambox}>
-                <MemberItem imgURL="NicholasBowen" memberName="Nicholas Bowen" memberTitle="Website" linkedin="www.linkedin.com/in/nicholas-bowen24"/>
+                <MemberItem imgURL="NicholasBowen" memberName="Nicholas Bowen" memberTitle="Website" linkedin="https://www.linkedin.com/in/nicholas-bowen24"/>
               </div>
               <div className={classes.teambox}>
                 <MemberItem imgURL="JuliaBian" memberName="Julia Bian" memberTitle="Website" linkedin="https://www.linkedin.com/in/juliabian/"/>
