@@ -11,18 +11,19 @@ const useStyles = makeStyles({
 
     title: {
         color: "#ffffff",
-        fontFamily: "Impact Light",
+        fontFamily: "Inter",
         fontWeight: "bold",
+        // fontStyle: "italic",
         textAlign: "left",
         fontSize: "375%"
     },
     minititle: {
         color: "#ffffff",
-        fontFamily: "Impact Light",
+        fontFamily: "Inter",
         fontWeight: "bold",
+        // fontStyle: "italic",
         textAlign: "center",
         fontSize: "250%",
-        width: "100%",
     },
 
     image: {
