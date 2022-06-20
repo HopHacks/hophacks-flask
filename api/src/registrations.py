@@ -12,22 +12,16 @@ import datetime
 registrations_api = Blueprint('registrations', __name__)
 
 app = Flask(__name__)
-# app.config.from_json("config/config.json")
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'hophacks2022@gmail.com'
-app.config['MAIL_PASSWORD'] = 'hsongsacmjnhrsgc'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+app.config.from_json("config/config.json")
 mail = Mail(app)
 
 @registrations_api.route('/send', methods = ['POST'])            
-def send_acceptances_trial2():
-    email = "Medoazsp@outlook.com"
+def send_acceptances_trial():
+    email = "adeo1@jhu.edu"
     subject = "Acceptance Letter - Hophacks.com"
     msg = Message(recipients=[email], sender="hophacks2022@gmail.com", subject=subject)
     msg.body = 'Congrats on being accepted to HopHacks!'
-    msg.html = render_template('email_acceptance.html', first_name="Shaopeng") 
+    msg.html = render_template('email_acceptance.html', first_name="Akhil") 
     mail.send(msg)
     return "Sent"
 
@@ -44,7 +38,7 @@ class email_client():
             self.mail_port = app.config['MAIL_PORT']
             self.mail_pwd = app.config['MAIL_PASSWORD']
 
-email_client = email_client()
+email_client_registrations = email_client()
         
 def send_acceptances(users):
     for user in users:
