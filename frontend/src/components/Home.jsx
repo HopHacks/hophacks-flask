@@ -43,6 +43,9 @@ const useStyles = makeStyles({
         "&:hover":{
             backgroundColor:"#c8e7fa",
         }
+    },
+    gradient: {
+        backgroundImage: "linear-gradient(#15ABFB, #376CC9)",
     }
 });
 
@@ -138,7 +141,7 @@ export default function Home() {
     );
 
     return (
-        <div>
+        <div className={classes.gradient}>
             <a id="mlh-trust-badge" 
                style={{'display':'block','maxWidth':'100px','minWidth':'60px','position':'fixed', 'right':'30px','top':'0','width':'10%','zIndex':'10000'}} 
                href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray" 
