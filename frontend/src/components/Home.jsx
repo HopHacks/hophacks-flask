@@ -15,6 +15,9 @@ import Schedule from "./home/Schedule";
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
+// import '../stylesheets/demo.css'
+// import '../stylesheets/component.css'
+import TouchRipple from "@material-ui/core/ButtonBase/TouchRipple";
 
 const useStyles = makeStyles({
     logo: {
@@ -143,8 +146,28 @@ export default function Home() {
                 <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{"width":"100%"}}></img>
             </a>
 
-            {Banner}
-            {Logo}
+            <div className="parallax">
+            <div className="parallax-body">
+            <main className="site-wrapper">
+                <div className="content">
+                    <div className="slide-wrapper">
+                        <div className="slide-item">
+                            <img src={img("Julia.png")} className="slide-item__image"></img>
+                        </div>
+                        <div className="slide-item">
+                            <img src={img("Julia1.png")}className="slide-item__image"></img>
+                        </div>		
+                    </div>
+                </div>
+            </main>
+            </div>
+            </div>
+            <script src="home/demo.js"></script>
+            <script src="home/pixi.min.js"></script>
+            <script src="home/TweenMax.min.js"></script>
+            <script src="home/main.js"></script>
+            <script src="home/imagesloaded.pkgd.min.js"></script>
+            <script src="home/home.js"></script>
 
             <Container fixed>
                 <Box py={2}>
@@ -166,15 +189,15 @@ export default function Home() {
                 
 
                <Schedule/>
-                    <Prizes/>
-                    <Sponsors />
+                    {/* <Prizes/> */}
+                    {/* <Sponsors /> */}
                     <Card>
                         <CardContent>
                             <Typography className={classes.title} variant="h4" gutterBottom>
                                 FAQs
                             </Typography>
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`} >
+                            {/* <Card raised="true" className={`${classes.margin} ${classes.color}`} >
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                        <b> Who can participate? </b>
@@ -208,7 +231,7 @@ export default function Home() {
                                         In addition to students in attendance, representatives from many of our sponsor companies will be there to mentor the participants.
                                     </Typography>
                                 </CardContent>
-                            </Card>
+                            </Card>  */}
 
 
                             {/* <Card raised="true" className={`${classes.margin} ${classes.color}`}>
@@ -240,8 +263,7 @@ export default function Home() {
                                 </CardContent>
                             </Card> */}
 
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            {/* <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                         <b> Who are the judges? </b>
@@ -300,12 +322,12 @@ export default function Home() {
                                         You can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. Alternatively, you can email us at <a className="link-text" href="mailto:team@hophacks.com">team@hophacks.com</a>
                                     </Typography>
                                 </CardContent>
-                            </Card>
+                            </Card> */}
                         </CardContent>
                     </Card>
                     <Team />                    
                 </Box>
-            </Container>
+            </Container> 
         </div>
     );
 
