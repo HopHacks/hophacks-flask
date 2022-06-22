@@ -12,6 +12,7 @@ import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
 import Prizes from "./home/Prizes";
 import Schedule from "./home/Schedule";
+import About from "./home/About"
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
@@ -148,23 +149,7 @@ export default function Home() {
 
             <Container fixed>
                 <Box py={2}>
-                    <Card>
-                        <CardContent>
-                            <Typography className={classes.title} variant="h4" gutterBottom>
-                                About
-                            </Typography>
-                            <Typography >
-                                HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
-                                <p>
-                                    <b>
-                                        Note: Due to the COVID-19 pandemic, we will be hosting HopHacks virtually via Discord and Zoom.
-                                    </b>
-                                </p>
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                
-
+                <About/>
                <Schedule/>
                     <Prizes/>
                     <Sponsors />
