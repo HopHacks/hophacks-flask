@@ -77,7 +77,7 @@ export default function Schedule() {
             <Table className={classes.table} aria-label="simple table" sx={{
               height: "max-content"
             }}>
-              {day === "fri" && <TableBody>
+              {day === "fri" && <div style={{ height: "150px", overflow: "auto"}} ><TableBody>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="40%">5:00 PM</TableCell>
                   <TableCell>Check-in Begins </TableCell>
@@ -99,9 +99,9 @@ export default function Schedule() {
                   <TableCell> Sponsor Hall Opens & Hacking Begins!</TableCell>
                   <TableCell align="left"></TableCell>
                 </TableRow>
-              </TableBody>}
+              </TableBody> </div>}
 
-              {day === "sat" && <TableBody>
+              {day === "sat" && <div style={{ height: "350px", overflow: "auto"}} > <TableBody>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="40%">9:00 AM</TableCell>
                   <TableCell>Devpost Checkpoint & Check-in Ends</TableCell>
@@ -155,7 +155,7 @@ export default function Schedule() {
                   <TableCell>echoAR Workshop: How to Build a Cloud-Connected AR/VR App in 15 Minutes or Less</TableCell>
                   <TableCell align="left"><a href="https://twitch.tv/hophacks">Twitch Link</a></TableCell>
                 </TableRow>
-              </TableBody>}
+              </TableBody> </div>}
 
               {day === "sun" && <TableBody>
                 <TableRow className={classes.bodycolor}>
