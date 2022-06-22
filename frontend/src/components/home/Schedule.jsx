@@ -59,6 +59,7 @@ export default function Schedule() {
           <Typography className={classes.title} variant="h4" gutterBottom>
             Schedule
           </Typography>
+          <div>All times in EDT (GMT-4)</div>
 
           <TableContainer component={Paper} style={{ width: "100%"}} align="center" sx={{ maxHeight: 440 }}>
 
@@ -68,7 +69,9 @@ export default function Schedule() {
               indicatorColor="primary"
               textColor="primary"
               centered
+              fullWidth={true}
               className={classes.schedule}
+              variant="fullWidth"
             >
               <Tab label="Fri September 17th" value="fri" />
               <Tab label="Sat September 18th" value="sat" />
@@ -192,6 +195,7 @@ export default function Schedule() {
               </TableBody>}
             </Table>
           </TableContainer>
+          
         </CardContent>
       </Card>
     </Box>
