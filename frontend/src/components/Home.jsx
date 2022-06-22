@@ -18,6 +18,7 @@ import '../stylesheets/home.css'
 // import '../stylesheets/demo.css'
 // import '../stylesheets/component.css'
 import TouchRipple from "@material-ui/core/ButtonBase/TouchRipple";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
     logo: {
@@ -56,123 +57,73 @@ export default function Home() {
         return process.env.PUBLIC_URL + '/images/' + url;
     }
 
-    const Banner = (
-        <div style={{ width: "100%", height: "100%", backgroundColor: "#0F1827" }}>
-            <ParallaxBanner
-                layers={[
-                    {
-                        image: img('010_sky_edit2.png'),
-                        amount: -0.225,
-                    },
-                    {
-                        image: img('009_back_trees2.png'),
-                        amount: -0.3,
-                    },
-                    {
-                        image: img('008_sun.webp'),
-                        amount: -0.375,
-                    },
-                    {
-                        image: img('007_sky_clouds.webp'),
-                        amount: -0.45,
-                    },
-                    {
-                        image: img('006_mountains.webp'),
-                        amount: -0.525,
-                    },
-                    {
-                        image: img('005_behind_tower_trees2.png'),
-                        amount: -0.6,
-                    },
-                    {
-                        image: img('004_behind_tower_clouds2.png'),
-                        amount: -0.675,
-                    },
-                    {
-                        image: img('003_tower.webp'),
-                        amount: -0.7,
-                    },
-                    {
-                        image: img('002_front_of_tower_clouds2.png'),
-                        amount: -0.825,
-                    },
-                    {
-                        image: img('001_bushes3.png'),
-                        amount: -0.9,
-                    },
+    useEffect(() => {
+        const script1 = document.createElement("script");
+        const script2 = document.createElement("script");
+        const script3 = document.createElement("script");
+        const script4 = document.createElement("script");
+        const script5 = document.createElement("script");
 
-                ]}
-                style={{
-                    height: '100vh',
-                }}
-            >
-            </ParallaxBanner>
-        </div>
-    )
+        script1.src = "pixi.min.js";
+        script1.async = true;
 
-    /* Logo on top of Parallax Banner */
-    const Logo = (
-        <div className={classes.logo}>
-            <img src={img('HopHacks_logo.png')} style={{
-                'width': '14vw',
-            }} />
+        script2.src = "TweenMax.min.js";
+        script2.async = true;
 
-            <Typography align="center" justify="center" style={{ 'color': '#FFFFFF', fontSize: '3.8em', fontFamily: "VCR OSD Mono" }} >
-                <strong>HOPHACKS</strong>
-            </Typography>
+        script3.src = "main.js";
+        script3.async = true;
 
-            <div />
+        // script4.src = "imagesloaded.pkgd.min.js";
+        // script4.async = true;
 
-            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.0em', fontFamily: "VCR OSD Mono" }} >
-                <strong>INTERESTED IN BEING AN ORGANIZER? </strong>
-            </Typography>
-            <br />
+        script5.src = "home.js";
+        script5.async = true;
 
-            
-            <Button className={classes.button} variant="outlined"  href="https://forms.gle/Znzy2aFq7Bwwx7P4A">
-                
-                <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
+        document.body.appendChild(script1);
+        document.body.appendChild(script2);
+        document.body.appendChild(script3);
+        // document.body.appendChild(script4);
+        document.body.appendChild(script5);
 
-                <strong>Join the team!</strong>
-                </Typography>
-                </Button>
-            
-        </div>
-    );
+        return () => {
+            document.body.removeChild(script1);
+            document.body.removeChild(script2);
+            document.body.removeChild(script3);
+            // document.body.removeChild(script4);
+            document.body.removeChild(script5);
+          }
+    }, [])
 
     return (
-        <div className={classes.gradient}>
-            <a id="mlh-trust-badge" 
-               style={{'display':'block','maxWidth':'100px','minWidth':'60px','position':'fixed', 'right':'30px','top':'0','width':'10%','zIndex':'10000'}} 
-               href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray" 
-               target="_blank">
-                <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{"width":"100%"}}></img>
-            </a>
+        // <div className={classes.gradient}>
+        //     <a id="mlh-trust-badge" 
+        //        style={{'display':'block','maxWidth':'100px','minWidth':'60px','position':'fixed', 'right':'30px','top':'0','width':'10%','zIndex':'10000'}} 
+        //        href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray" 
+        //        target="_blank">
+        //         <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{"width":"100%"}}></img>
+        //     </a>
 
+        <div>
             <div className="parallax">
             <div className="parallax-body">
             <main className="site-wrapper">
                 <div className="content">
                     <div className="slide-wrapper">
                         <div className="slide-item">
-                            <img src={img("Julia.png")} className="slide-item__image"></img>
+                            <img src={img("cover.png")} className="slide-item__image"></img>
                         </div>
-                        <div className="slide-item">
-                            <img src={img("Julia1.png")}className="slide-item__image"></img>
-                        </div>		
                     </div>
                 </div>
             </main>
             </div>
             </div>
-            <script src="home/demo.js"></script>
-            <script src="home/pixi.min.js"></script>
+            {/* <script src="home/pixi.min.js"></script>
             <script src="home/TweenMax.min.js"></script>
             <script src="home/main.js"></script>
             <script src="home/imagesloaded.pkgd.min.js"></script>
-            <script src="home/home.js"></script>
+            <script src="home/home.js"></script> */}
 
-            <Container fixed>
+            {/* <Container fixed>
                 <Box py={2}>
                     <Card>
                         <CardContent>
@@ -191,14 +142,14 @@ export default function Home() {
                     </Card>
                 
 
-               <Schedule/>
+               <Schedule/> */}
                     {/* <Prizes/> */}
                     {/* <Sponsors /> */}
-                    <Card>
+                    {/* <Card>
                         <CardContent>
                             <Typography className={classes.title} variant="h4" gutterBottom>
                                 FAQs
-                            </Typography>
+                            </Typography> */}
 
                             {/* <Card raised="true" className={`${classes.margin} ${classes.color}`} >
                                 <CardContent>
@@ -326,11 +277,11 @@ export default function Home() {
                                     </Typography>
                                 </CardContent>
                             </Card> */}
-                        </CardContent>
+                        {/* </CardContent>
                     </Card>
                     <Team />                    
                 </Box>
-            </Container> 
+            </Container>  */}
         </div>
     );
 

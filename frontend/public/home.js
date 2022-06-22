@@ -1,4 +1,4 @@
-imagesLoaded(document.body, () => document.body.classList.remove('loading'));
+// imagesLoaded(document.body, () => document.body.classList.remove('loading'));
                 
 var spriteImages = document.querySelectorAll( '.slide-item__image' );
 var spriteImagesSrc = [];

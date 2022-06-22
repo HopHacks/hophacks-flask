@@ -18,7 +18,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
     "react-scroll-parallax": "^2.3.5",
-    "serve": "^11.3.2"
+    "serve": "^11.3.2",
+    "pixi.js": "4.5.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -70,14 +70,14 @@ main {
 	width: 100%;
 }
 
-.content {
+/* .content {
 	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
 	margin: 0 auto;
-}
+} */
 
 canvas {
 	display: block;
