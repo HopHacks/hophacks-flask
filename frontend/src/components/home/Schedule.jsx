@@ -25,8 +25,9 @@ const useStyles = makeStyles({
   color: {
     backgroundColor: "#d1e9ff",
   },
-  bodycolor: {
-
+  body: {
+    maxHeight: "150px",
+    overflow: "auto"
   },
   title: {
     color: "#7289da",
@@ -59,7 +60,7 @@ export default function Schedule() {
             Schedule
           </Typography>
 
-          <TableContainer component={Paper} style={{ width: "75%", height: "50%" }} align="center">
+          <TableContainer component={Paper} style={{ width: "100%"}} align="center" sx={{ maxHeight: 440 }}>
 
             <Tabs
               value={day}
@@ -77,7 +78,14 @@ export default function Schedule() {
             <Table className={classes.table} aria-label="simple table" sx={{
               height: "max-content"
             }}>
-              {day === "fri" && <div style={{ height: "150px", overflow: "auto"}} ><TableBody>
+              <TableHead className={classes.color}>
+                <TableRow>
+                  <TableCell>Time</TableCell>
+                  <TableCell>Event</TableCell>
+                  <TableCell>Location/Link</TableCell>
+                </TableRow>
+              </TableHead>
+              {day === "fri" && <TableBody className={classes.body}>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="40%">5:00 PM</TableCell>
                   <TableCell>Check-in Begins </TableCell>
@@ -99,9 +107,9 @@ export default function Schedule() {
                   <TableCell> Sponsor Hall Opens & Hacking Begins!</TableCell>
                   <TableCell align="left"></TableCell>
                 </TableRow>
-              </TableBody> </div>}
+              </TableBody>}
 
-              {day === "sat" && <div style={{ height: "350px", overflow: "auto"}} > <TableBody>
+              {day === "sat" && <TableBody className={classes.body}>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="40%">9:00 AM</TableCell>
                   <TableCell>Devpost Checkpoint & Check-in Ends</TableCell>
@@ -155,9 +163,9 @@ export default function Schedule() {
                   <TableCell>echoAR Workshop: How to Build a Cloud-Connected AR/VR App in 15 Minutes or Less</TableCell>
                   <TableCell align="left"><a href="https://twitch.tv/hophacks">Twitch Link</a></TableCell>
                 </TableRow>
-              </TableBody> </div>}
+              </TableBody>}
 
-              {day === "sun" && <TableBody>
+              {day === "sun" &&<TableBody className={classes.body}>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="40%">8:45 AM</TableCell>
                   <TableCell>Submissions Due</TableCell>
