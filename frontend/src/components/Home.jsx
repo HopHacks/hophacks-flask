@@ -15,9 +15,6 @@ import Schedule from "./home/Schedule";
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
-// import '../stylesheets/demo.css'
-// import '../stylesheets/component.css'
-import TouchRipple from "@material-ui/core/ButtonBase/TouchRipple";
 import { useEffect } from "react";
 
 const useStyles = makeStyles({
@@ -111,11 +108,6 @@ export default function Home() {
             </main>
             </div>
             </div>
-            {/* <script src="home/pixi.min.js"></script>
-            <script src="home/TweenMax.min.js"></script>
-            <script src="home/main.js"></script>
-            <script src="home/imagesloaded.pkgd.min.js"></script>
-            <script src="home/home.js"></script> */}
 
             {/* <Container fixed>
                 <Box py={2}>

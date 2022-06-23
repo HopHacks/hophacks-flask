@@ -177,7 +177,6 @@
     });
 
 
-    var isPlaying   = false;  
     var slideImages = slidesContainer.children;    
     this.moveSlider = function( newIndex ) {
 

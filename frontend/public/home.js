@@ -19,7 +19,6 @@ for ( var i = 0; i < spriteImages.length; i++ ) {
 var initCanvasSlideshow = new CanvasSlideshow({
     sprites: spriteImagesSrc,
     displacementImage: 'img/dmaps/2048x2048/ripple.jpg',
-    autoPlay: true,
-    autoPlaySpeed: [0.1, 0.1],
+    fullScreen: true,
     centerSprites: false
 });
