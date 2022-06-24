@@ -61,16 +61,16 @@ export default function Home() {
         const script4 = document.createElement("script");
 
         script1.src = "pixi.min.js";
-        script1.async = true;
+        script1.async = false;
 
         script2.src = "TweenMax.min.js";
-        script2.async = true;
+        script2.async = false;
 
         script3.src = "main.js";
-        script3.async = true;
+        script3.async = false;
 
         script4.src = "home.js";
-        script4.async = true;
+        script4.async = false;
 
         document.body.appendChild(script1);
         document.body.appendChild(script2);
