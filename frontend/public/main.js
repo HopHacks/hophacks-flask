@@ -231,6 +231,15 @@
     this.init = function() {
       that.initPixi();
       that.loadPixiSprites( options.pixiSprites );
+
+      /*
+        if ( options.fullScreen === true ) {
+          window.addEventListener("resize", function( event ){ 
+            scaleToWindow( renderer.view );
+          });
+          scaleToWindow( renderer.view );  
+        }
+        */
     };
     
     /// ---------------------------
