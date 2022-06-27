@@ -95,25 +95,25 @@ export default function Home() {
             </a>
 
             <div className="parallax">
-            <div className="parallax-body">
-            <main className="site-wrapper">
-                <div className="content">
-                    <div className="slide-wrapper">
-                        <div className="slide-item">
-                            <img src={img("cover.png")} className="slide-item__image"></img>
+                <div className="parallax-body">
+                    <main className="site-wrapper">
+                        <div className="content">
+                            <div className="slide-wrapper">
+                                <div className="slide-item">
+                                    <img src={img("cover.png")} className="slide-item__image"></img>
+                                </div>
+                                <div className="slide-item">
+                                    <img src={img("transparent.png")} className="slide-item__image"></img>
+                                </div>
+                            </div>
                         </div>
-                        <div className="slide-item">
-                            <img src={img("transparent.png")} className="slide-item__image"></img>
-                        </div>
-                    </div>
+                    </main>
                 </div>
-            </main>
-            </div>
             </div>
 
-            {/* <Container fixed>
+            <Container fixed>
                 <Box py={2}>
-                    <Card>
+                    {/* <Card>
                         <CardContent>
                             <Typography className={classes.title} variant="h4" gutterBottom>
                                 About
@@ -127,19 +127,19 @@ export default function Home() {
                                 </p>
                             </Typography>
                         </CardContent>
-                    </Card>
+                    </Card> */}
                 
 
-               <Schedule/> */}
-                    {/* <Prizes/> */}
-                    {/* <Sponsors /> */}
-                    {/* <Card>
+               {/* <Schedule/>
+                    <Prizes/>
+                    <Sponsors />
+                    <Card>
                         <CardContent>
                             <Typography className={classes.title} variant="h4" gutterBottom>
                                 FAQs
-                            </Typography> */}
+                            </Typography>
 
-                            {/* <Card raised="true" className={`${classes.margin} ${classes.color}`} >
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`} >
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                        <b> Who can participate? </b>
@@ -204,8 +204,8 @@ export default function Home() {
 
                                 </CardContent>
                             </Card> */}
-
-                            {/* <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+{/* 
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                         <b> Who are the judges? </b>
@@ -264,12 +264,12 @@ export default function Home() {
                                         You can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. Alternatively, you can email us at <a className="link-text" href="mailto:team@hophacks.com">team@hophacks.com</a>
                                     </Typography>
                                 </CardContent>
-                            </Card> */}
-                        {/* </CardContent>
+                            </Card>
+                        </CardContent>
                     </Card>
-                    <Team />                    
+                    <Team />                     */}
                 </Box>
-            </Container>  */}
+            </Container> 
         </div>
     );
 
