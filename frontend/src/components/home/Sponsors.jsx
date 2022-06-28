@@ -115,10 +115,14 @@ export default function Sponsors() {
                             initial={"offscreen"}
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
-                            <span alignItems="center">
-                                <SponsorItem imgURL='Bloomberg' website='https://www.bloomberg.com/' imgSytle={{ width: size.width * gold, maxHeight: "100%", height: 150, alignItems: "center" }} />
-                                <SponsorItem imgURL='yet' website='https://www.yetanalytics.com/' imgSytle={{ width: size.width * gold, maxHeight: "100%", height: 125, alignItems: "center" }} />
-                            </span>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='Bloomberg' website='https://www.bloomberg.com/' imgSytle={{ width: size.width * gold * 1.25}} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='yet' website='https://www.yetanalytics.com/' imgSytle={{ width: size.width * gold * 1.25, marginTop: "4%"}} />
+                                </Grid>
+                            </Grid>
                         </motion.div>
                         <div>
                             <Typography className={classes.minititle} gutterBottom>Sable</Typography>
@@ -127,12 +131,20 @@ export default function Sponsors() {
                             initial={"offscreen"}
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
-                            <SponsorItem imgURL='apl' website='https://www.jhuapl.edu/' imgSytle={{ width: size.width * sable , maxHeight: "100%", marginTop: "5%" }} />
-                            <SponsorItem imgURL='one' website='https://www.capitalone.com/' imgSytle={{ width: size.width * sable, maxHeight: "100%", marginTop: "5%" }} />
-                            <br></br>
-                            <SponsorItem imgURL='SIEMENS' website='https://www.siemens-healthineers.com/' imgSytle={{ width: size.width * sable, maxHeight: "100%", marginTop: "7%" }} />
-                            <SponsorItem imgURL='it' website='https://it.johnshopkins.edu/' imgSytle={{ width: size.width * sable / 1.5, maxHeight: "100%", marginTop: "12%" }} />
-
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='apl' website='https://www.jhuapl.edu/' imgSytle={{ width: size.width * sable * 1.5 , maxHeight: "100%", marginTop: "5%" }} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='one' website='https://www.capitalone.com/' imgSytle={{ width: size.width * sable, maxHeight: "100%", marginTop: "5%" }} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='SIEMENS' website='https://www.siemens-healthineers.com/' imgSytle={{ width: size.width * sable, maxHeight: "100%", marginTop: "7%" }} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='it' website='https://it.johnshopkins.edu/' imgSytle={{ width: size.width * sable / 1.4, maxHeight: "100%", marginTop: "12%" }} />
+                                </Grid>
+                            </Grid>
                         </motion.div>
                         <div>
                             <Typography className={classes.minititle} gutterBottom>Blue</Typography>
@@ -141,7 +153,13 @@ export default function Sponsors() {
                             initial={"offscreen"}
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
-                            <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{ width: size.width * blue * 1.5, maxHeight: "100%", marginTop: "5%" }} />
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                <Grid item xs={4}/>
+                                <Grid item xs={4}>
+                                    <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{ width: size.width * blue * 2, maxHeight: "100%", marginTop: "5%" }} />
+                                </Grid>
+                                <Grid item xs={4}/>
+                            </Grid>
                         </motion.div>
                         <div>
                             <Typography className={classes.minititle} gutterBottom>Starter</Typography>
@@ -150,11 +168,21 @@ export default function Sponsors() {
                             initial={"offscreen"}
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
-                            <SponsorItem imgURL='linode' website='https://www.linode.com/' imgSytle={{ width: size.width * starter * 1.25, maxHeight: "100%", marginTop: "5%" }} />
-                            <SponsorItem imgURL='ground' website='https://www.groundcontrol.coffee/' imgSytle={{width: size.width * starter, maxHeight: "100%", marginTop: "1%"}}/>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                <Grid item xs={3}>
+                                    <SponsorItem imgURL='linode' website='https://www.linode.com/' imgSytle={{ width: size.width * starter, maxHeight: "100%", marginTop: "5%" }} />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <SponsorItem imgURL='ground' website='https://www.groundcontrol.coffee/' imgSytle={{width: size.width * starter * 0.75, maxHeight: "100%", marginTop: "1%"}}/>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: size.width * starter*1.5, maxHeight: "100%", marginTop: "5%"}}/>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: size.width * starter*1.5, maxHeight: "100%", marginTop: "1%"}}/>
+                                </Grid>
+                            </Grid>
                             <br></br>
-                            <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: size.width * starter * 2, maxHeight: "100%", marginTop: "5%"}}/>
-                            <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: size.width * starter * 1.75, maxHeight: "100%", marginTop: "1%"}}/>
                         </motion.div>
                     </CardContent>
                 </Card>
