@@ -95,18 +95,17 @@ export default function Sponsors() {
         onscreen: {
             y: 0,
             opacity: 1,
-            duration: 4,
-
+            duration: 3,
             transition: {
                 type: "spring",
                 bounce: 0.0,
-                duration: 2
+                duration: 6
             }
         }
     }
 
     const imageAnimate = {
-        offscreen: { x: -750, opacity: 0 },
+        offscreen: { x: -50, opacity: 0 },
         onscreen: {
             x: 0,
             opacity: 1,
@@ -127,9 +126,12 @@ export default function Sponsors() {
                         <div>
                             <h4 className={classes.title} gutterBottom>Sponsors</h4>
                         </div>
-                        <div>
+                        <motion.div
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={textAnimate}>
                             <Typography className={classes.minititle} gutterBottom>Gold</Typography>
-                        </div>
+                        </motion.div>
                         <motion.div class={classes.logos}
                             initial={"offscreen"}
                             whileInView={"onscreen"}
@@ -143,9 +145,12 @@ export default function Sponsors() {
                                 </Grid>
                             </Grid>
                         </motion.div>
-                        <div>
+                        <motion.div
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={textAnimate}>
                             <Typography className={classes.minititle} gutterBottom>Sable</Typography>
-                        </div>
+                        </motion.div>
                         <motion.div class={classes.logos}
                             initial={"offscreen"}
                             whileInView={"onscreen"}
@@ -165,9 +170,12 @@ export default function Sponsors() {
                                 </Grid>
                             </Grid>
                         </motion.div>
-                        <div>
+                        <motion.div
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={textAnimate}>
                             <Typography className={classes.minititle} gutterBottom>Blue</Typography>
-                        </div>
+                        </motion.div>
                         <motion.div class={classes.logos}
                             initial={"offscreen"}
                             whileInView={"onscreen"}
@@ -180,9 +188,12 @@ export default function Sponsors() {
                                 <Grid item xs={4}/>
                             </Grid>
                         </motion.div>
-                        <div>
+                        <motion.div
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={textAnimate}>
                             <Typography className={classes.minititle} gutterBottom>Starter</Typography>
-                        </div>
+                        </motion.div>
                         <motion.div class={classes.logos}
                             initial={"offscreen"}
                             whileInView={"onscreen"}
