@@ -5,8 +5,8 @@
 }
 
 .parallax {
-	/* background: #15ABFB; */
-	/* overflow: auto; */
+	position: absolute;
+	z-index: -1;
 }
 
 .parallax-body {

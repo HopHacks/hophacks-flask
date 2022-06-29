@@ -2,8 +2,6 @@
   
   window.CanvasSlideshow = function( options ) {
 
-    var lastScrollTop = 0;
-
     //  SCOPE
     /// ---------------------------      
     var that = this;
@@ -143,13 +141,13 @@
     /// ---------------------------
     //  DEFAULT RENDER
     /// ---------------------------        
-      var render = new PIXI.ticker.Ticker();
+    var render = new PIXI.ticker.Ticker();
 
-      render.autoStart = true;
+    render.autoStart = true;
 
-      render.add(function( delta ) {
-        renderer.render( stage );
-      });        
+    render.add(function( delta ) {
+      renderer.render( stage );
+    });        
     
 
     /// ---------------------------
@@ -171,6 +169,7 @@
       transitionAnimation.start();
 
       var baseTimeline = new TimelineMax( { onComplete: function () {
+        that.showCover = false;
         that.currentIndex = newIndex;
         transitionAnimation.stop();
         if ( options.wacky === true ) {
@@ -199,16 +198,32 @@
 
     };
 
+    /// ---------------------------
+    //  SCROLL
+    /// ---------------------------   
+    this.lastScroll = 0;
+    this.showCover = true;
+    
     window.onscroll = function(e) {
       var scroll = window.pageYOffset || document.documentElement.scrollTop;
-      if (scroll > lastScrollTop) {
+      var situation = 0;
+      if ((that.lastScroll === undefined) || ((scroll > that.lastScroll) && (that.showCover === true))) {
+        window.scrollTo(0, 0);
         that.moveSlider(1);
-        console.log("julia");
-      } else {
+        situation = 0;
+      } else if ((window.scrollX !== 0) && (window.scrollY !== 0) && (that.showCover === true)) {
         that.moveSlider(0);
         console.log("josephine");
+      } else if (that.showCover === false) {
+        that.showCover = true;
+        situation = 2;
       }
-      lastScrollTop = scroll <= 0 ? 0 : scroll; // For Mobile or negative scrolling
+      that.lastScroll = scroll <= 0 ? 0 : scroll;
+      if (situation === 0) {
+        that.showCover = true;
+      } else if (situation === 2) {
+        that.showCover = false;
+      }
     }
     
     /// ---------------------------

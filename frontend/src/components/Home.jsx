@@ -44,6 +44,11 @@ const useStyles = makeStyles({
     },
     gradient: {
         backgroundImage: "linear-gradient(#15ABFB, #376CC9)",
+    },
+
+    blank: {
+        padding: "30px",
+        backgroundColor: "#c8e7fa"
     }
 });
 
@@ -113,7 +118,7 @@ export default function Home() {
 
             <Container fixed>
                 <Box py={2}>
-                    {/* <Card>
+                    <Card>
                         <CardContent>
                             <Typography className={classes.title} variant="h4" gutterBottom>
                                 About
@@ -127,10 +132,10 @@ export default function Home() {
                                 </p>
                             </Typography>
                         </CardContent>
-                    </Card> */}
+                    </Card>
                 
 
-               {/* <Schedule/>
+                <Schedule/>
                     <Prizes/>
                     <Sponsors />
                     <Card>
@@ -173,7 +178,7 @@ export default function Home() {
                                         In addition to students in attendance, representatives from many of our sponsor companies will be there to mentor the participants.
                                     </Typography>
                                 </CardContent>
-                            </Card>  */}
+                            </Card>
 
 
                             {/* <Card raised="true" className={`${classes.margin} ${classes.color}`}>
@@ -204,7 +209,7 @@ export default function Home() {
 
                                 </CardContent>
                             </Card> */}
-{/* 
+
                             <Card raised="true" className={`${classes.margin} ${classes.color}`}>
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
@@ -267,7 +272,7 @@ export default function Home() {
                             </Card>
                         </CardContent>
                     </Card>
-                    <Team />                     */}
+                    <Team />  
                 </Box>
             </Container> 
         </div>
