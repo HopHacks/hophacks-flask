@@ -207,15 +207,43 @@
     }
 
     this.lastScroll = "hop";
-    this.showCover = true;
+    this.showUpCover = true;
+    this.showDownCover = true;
     this.distorted = false;
     
-    
+    window.addEventListener('wheel', function(event) {
+      var situation = 0;
+      var scroll = window.pageYOffset || document.documentElement.scrollTop;
+
+      console.log(that.showUpCover)
+
+      if (event.deltaY < 0) { // scroll up
+        if (that.showUpCover === false) {
+          that.moveSlider(0);
+          that.showUpCover = true;
+        } else if (that.lastScroll - scroll === 0 && that.lastScroll !== 0) {
+          that.showUpCover = false;
+        }
+      } else if (event.deltaY > 0) { // scroll down
+        if (that.showDownCover === true) {
+          document.body.style.overflow = 'hidden';
+          window.scrollTo(0,0);
+          that.moveSlider(1);
+          that.showDownCover = false;
+          setTimeout(function() {
+            document.body.style.overflow = 'auto';
+          }, 1000);
+        } else {
+          console.log("false")
+        }
+      }
+
+      that.lastScroll = scroll <= 0 ? 0 : scroll;
+    });
+
     window.onscroll = function(e) {
       var scroll = window.pageYOffset || document.documentElement.scrollTop;
       var situation = 0;
-      // document.body.style.overflow = 'hidden';
-      // window.scrollTo(0,0);
 
       // console.log(that.showCover);
 
@@ -240,33 +268,39 @@
       //   console.log(scroll);
       // }
 
-      if ((that.lastScroll === "hop") || ((scroll > that.lastScroll) && (that.showCover === true))) { // scroll down
-        document.body.style.overflow = 'hidden';
-        window.scrollTo(0,0);
-        that.moveSlider(1);
-        situation = 0;
-        setTimeout(function() {
-          document.body.style.overflow = 'auto';
-        }, 500);
-      } else if ((window.scrollY === 0) && (that.showCover === false)) {
-        // that.moveSlider(0);
-        situation = 0;
-        console.log("2");
-      } else if (that.showCover === false) {
-        situation = 1;
-        console.log("3");
-      } else if ((scroll < that.lastScroll) && (that.showCover === false)) { // scroll up
-        situation = 0;
-        console.log("4");
-      }
+    //   if ((that.lastScroll === "hop") || ((scroll > that.lastScroll) && (that.showCover === true))) { // scroll down
+    //     document.body.style.overflow = 'hidden';
+    //     window.scrollTo(0,0);
+    //     that.moveSlider(1);
+    //     situation = 0;
+    //     setTimeout(function() {
+    //       document.body.style.overflow = 'auto';
+    //     }, 500);
+    //   } else if ((window.scrollY === 0) && (that.showCover === false)) {
+    //     // that.moveSlider(0);
+    //     situation = 2;
+    //     console.log("2");
+    //   } else if (that.distorted === true && that.showCover === true) {
+    //     that.moveSlider(0);
+    //     situation = 1;
+    //   } else if (that.showCover === false) {
+    //     situation = 1;
+    //     console.log("3");
+    //   } else if ((scroll < that.lastScroll) && (that.showCover === false)) { // scroll up
+    //     situation = 0;
+    //     console.log("4");
+    //   }
       
-      that.lastScroll = scroll <= 0 ? 0 : scroll;
-      if (situation === 0) {
-        that.showCover = true;
-        that.distorted = true;
-      } else if (situation === 1) {
-        that.showCover = false;
-      }
+    //   that.lastScroll = scroll <= 0 ? 0 : scroll;
+    //   if (situation === 0) {
+    //     that.showCover = true;
+    //   } else if (situation === 1) {
+    //     that.showCover = false;
+    //     that.distorted = false;
+    //   } else {
+    //     that.showCover = true;
+    //     that.distorted = true;
+    //   }
     }
     
     /// ---------------------------
