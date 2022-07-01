@@ -28,18 +28,27 @@ const useStyles = makeStyles({
         marginBottom: "13px",
     },
     color: {
-        backgroundColor: "#eef7ff",
+        //backgroundColor: "#2195ea",
+        backgroundColor: "#376efa",
+
+    },
+    colorBackground: {
+        backgroundColor: "#376eea",
     },
     title: {
-        color: "#7289da",
+        color: "#ffffff",
         fontFamily: "VCR OSD Mono",
     },
 
-    button:{
-        backgroundColor:"#FFFFFF", color: "#c8e7fa" , width: "50%", minHeight :"50px" ,border:"4px solid",
-        "&:hover":{
-            backgroundColor:"#c8e7fa",
+    button: {
+        backgroundColor: "#FFFFFF", color: "#c8e7fa", width: "50%", minHeight: "50px", border: "4px solid",
+        "&:hover": {
+            backgroundColor: "#c8e7fa",
         }
+    },
+    text: {
+        color: "#ffffff",
+        fontFamily: "Inter",
     }
 });
 
@@ -122,25 +131,25 @@ export default function Home() {
             </Typography>
             <br />
 
-            
-            <Button className={classes.button} variant="outlined"  href="https://forms.gle/Znzy2aFq7Bwwx7P4A">
-                
-                <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
 
-                <strong>Join the team!</strong>
+            <Button className={classes.button} variant="outlined" href="https://forms.gle/Znzy2aFq7Bwwx7P4A">
+
+                <Typography style={{ "color": "#202c63", fontSize: '2.8em', fontFamily: "VCR OSD Mono" }}>
+
+                    <strong>Join the team!</strong>
                 </Typography>
-                </Button>
-            
+            </Button>
+
         </div>
     );
 
     return (
         <div>
-            <a id="mlh-trust-badge" 
-               style={{'display':'block','maxWidth':'100px','minWidth':'60px','position':'fixed', 'right':'30px','top':'0','width':'10%','zIndex':'10000'}} 
-               href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray" 
-               target="_blank">
-                <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{"width":"100%"}}></img>
+            <a id="mlh-trust-badge"
+                style={{ 'display': 'block', 'maxWidth': '100px', 'minWidth': '60px', 'position': 'fixed', 'right': '30px', 'top': '0', 'width': '10%', 'zIndex': '10000' }}
+                href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray"
+                target="_blank">
+                <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{ "width": "100%" }}></img>
             </a>
 
             {Banner}
@@ -163,21 +172,21 @@ export default function Home() {
                             </Typography>
                         </CardContent>
                     </Card>
-                
 
-               <Schedule/>
-                    <Prizes/>
+
+                    <Schedule />
+                    <Prizes />
                     <Sponsors />
-                    <Card>
+                    <Card className={`${classes.colorBackground}`}>
                         <CardContent>
                             <Typography className={classes.title} variant="h4" gutterBottom>
                                 FAQs
                             </Typography>
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`} >
+                            <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
-                                       <b> Who can participate? </b>
+                                        <b> Who can participate? </b>
                                     </Typography>
 
                                     <Typography>
@@ -186,7 +195,7 @@ export default function Home() {
                                 </CardContent>
                             </Card>
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                         <b>Where will HopHacks take place?</b>
@@ -198,7 +207,7 @@ export default function Home() {
                                 </CardContent>
                             </Card>
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                         <b>Who will be there?</b>
@@ -241,7 +250,7 @@ export default function Home() {
                             </Card> */}
 
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                         <b> Who are the judges? </b>
@@ -253,9 +262,9 @@ export default function Home() {
                                 </CardContent>
                             </Card>
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
-                                    <Typography  variant="h6" gutterBottom>
+                                    <Typography variant="h6" gutterBottom>
                                         <b>Will I be able to participate in multiple virtual hackathons during the same weekend?</b>
                                     </Typography>
 
@@ -266,7 +275,7 @@ export default function Home() {
                                 </CardContent>
                             </Card>
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
                                     <Typography variant="h6" gutterBottom>
                                         <b>Where will I sleep? </b>
@@ -278,9 +287,9 @@ export default function Home() {
                                 </CardContent>
                             </Card>
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
-                                    <Typography  variant="h6" gutterBottom>
+                                    <Typography variant="h6" gutterBottom>
                                         <b>What about the free food?</b>
                                     </Typography>
 
@@ -290,9 +299,9 @@ export default function Home() {
                                 </CardContent>
                             </Card>
 
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                            <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
-                                    <Typography  variant="h6" gutterBottom>
+                                    <Typography variant="h6" gutterBottom>
                                         <b>What if I have any other questions? </b>
                                     </Typography>
 
@@ -303,7 +312,7 @@ export default function Home() {
                             </Card>
                         </CardContent>
                     </Card>
-                    <Team />                    
+                    <Team />
                 </Box>
             </Container>
         </div>
