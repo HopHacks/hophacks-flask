@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,7 +6,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { motion, useMotionValue, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
+import { motion, useMotionValue, useTransform, useViewportScroll, useAnimation } from 'framer-motion/dist/framer-motion';
+import { useInView } from "react-intersection-observer";
+import styled from "styled-components";
 
 
 const useStyles = makeStyles({
@@ -97,6 +99,25 @@ const useStyles = makeStyles({
 
 });
 
+const Title = styled.h2`
+  font-size: 3rem;
+  font-weight: 600;
+  font-family: Inter;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+`;
+
+const Word = styled(motion.span)`
+  display: inline-block;
+  margin-right: 0.25em;
+  white-space: nowrap;
+`;
+
+const Character = styled(motion.span)`
+  display: inline-block;
+  margin-right: -0.05em;
+`;
+
 
 
 export default function About() {
@@ -105,6 +126,42 @@ export default function About() {
         return process.env.PUBLIC_URL + '/images/' + url;
     }
     const { scrollY } = useViewportScroll();
+
+    const introText = 'HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!' 
+    const ctrls = useAnimation();
+    const { ref, inView } = useInView({
+        threshold: 0.5,
+        triggerOnce: true,
+    });
+
+    useEffect(() => {
+        if (inView) {
+          ctrls.start("visible");
+        }
+        if (!inView) {
+          ctrls.start("hidden");
+        }
+    }, [ctrls, inView]);
+
+    const wordAnimation = {
+        hidden: {},
+        visible: {},
+      };
+      
+      const characterAnimation = {
+        hidden: {
+          opacity: 0,
+          y: `0.25em`,
+        },
+        visible: {
+          opacity: 1,
+          y: `0em`,
+          transition: {
+            duration: 1,
+            ease: [0.2, 0.65, 0.3, 0.9],
+          },
+        },
+      };
 
     const scaleRight = useTransform(scrollY, [0, 500], [2, 1]);
     const yRight = useTransform(scrollY, [0, 500], ["25vh", "0vh"]);
@@ -146,10 +203,35 @@ export default function About() {
                 }}>
                 About
             </motion.Typography>
-                    <Typography className={classes.intro}>
-                        HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
-                            
-                    </Typography>
+            <Title aria-label={introText} role="heading">
+            {introText.split(" ").map((word, index) => {
+                return (
+                    <Word
+                        ref={ref}
+                        aria-hidden="true"
+                        key={index}
+                        initial="hidden"
+                        animate={ctrls}
+                        variants={wordAnimation}
+                        transition={{
+                        delayChildren: index * 0.25,
+                        staggerChildren: 0.05,
+                    }}>
+                    {word.split("").map((character, index) => {
+                        return (
+                            <Character
+                                aria-hidden="true"
+                                key={index}
+                                variants={characterAnimation}
+                            >
+                            {character}
+                            </Character>
+                        );
+                        })}
+                    </Word>
+                    );
+                })}
+            </Title>
             </CardContent>
         </Card>
     </div>
