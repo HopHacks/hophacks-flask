@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     marginBottom: "13px",
   },
   color: {
-    backgroundColor: "#d1e9ff",
+    backgroundColor: "#278be2",
   },
   body: {
     maxHeight: "150px",
@@ -53,7 +53,7 @@ export default function Schedule() {
   return (
     <Box py={2}>
 
-      <Card>
+      <Card className={classes.color}>
         {/* <Paper className={classes.root} style={{ padding: '5px', marginBottom: '10px' }}> */}
         <CardContent>
           <Typography className={classes.title} variant="h4" gutterBottom>
