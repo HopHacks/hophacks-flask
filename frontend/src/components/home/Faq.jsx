@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import { ParallaxBanner } from 'react-scroll-parallax';
-
+import "@fontsource/rosarivo" 
 import '../../stylesheets/home.css'
 
 const useStyles = makeStyles({
@@ -37,11 +37,8 @@ const useStyles = makeStyles({
     },
     text: {
         color: "#ffffff",
-        fontFamily: "Inter",
+        fontFamily: "Rosarivo",
     },
-    link: {
-
-    }
 });
 
 export default function Faq() {
@@ -57,11 +54,11 @@ export default function Faq() {
 
                             <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
                                 <CardContent>
-                                    <Typography variant="h6" gutterBottom>
+                                    <Typography variant="h6" gutterBottom >
                                         <b> Who can participate? </b>
                                     </Typography>
 
-                                    <Typography>
+                                    <Typography className={classes.text}>
                                         Any <b>university student</b> enrolled in any undergraduate or graduate program may participate. High school students may <b>NOT</b> participate.
                                     </Typography>
                                 </CardContent>
@@ -73,7 +70,7 @@ export default function Faq() {
                                         <b>Where will HopHacks take place?</b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         HopHacks is held at the Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found <a className="link-text" href="https://www.jhu.edu/assets/uploads/2014/10/homewood_campus_map.pdf" target="_blank">here</a>, and you can navigate to us on <a className="link-text" href="https://www.google.com/maps/place/Johns+Hopkins+University/@39.3299013,-76.6227117,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df8502f88d:0x303d58494fa04c66!8m2!3d39.3299013!4d-76.6205177" target="_blank">Google Maps</a>.
                                     </Typography>
                                 </CardContent>
@@ -85,11 +82,11 @@ export default function Faq() {
                                         <b>How do I get to HopHacks?</b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         To get to us, we offer two bus routes. The North Bus will pick up students from New York City, Rutgers, and Philadelphia; the South Bus will pick up students from Georgetown, UMDCP, and UMDBC. More information on the exact pickup locations of these busses will be posted and sent out shortly to those who indicate interest in their registration.
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         If none of those options are for you, here are more ways to get to the party:
                                         <ul>
                                             <li>For students from local Baltimore schools, we recommend the <a className="link-text" href="https://baltimorecollegetown.org/shuttle/" target="_blank">Collegetown Shuttle</a>.</li>
@@ -99,7 +96,7 @@ export default function Faq() {
                                         </ul>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         <b>Note:</b> We will not be offering individual travel reimbursements.
                                     </Typography>
                                 </CardContent>
@@ -111,7 +108,7 @@ export default function Faq() {
                                         <b>Who will be there?</b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         In addition to students in attendance, representatives from many of our sponsor companies will be there to mentor the participants.
                                     </Typography>
                                 </CardContent>
@@ -123,7 +120,7 @@ export default function Faq() {
                                         <b> Who are the judges? </b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         The judges will be a mix of local tech professionals and JHU faculty.
                                     </Typography>
                                 </CardContent>
@@ -135,7 +132,7 @@ export default function Faq() {
                                         <b>Can I sleep?</b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         No. Real hackers are hardcore.
                                     </Typography>
                                 </CardContent>
@@ -147,7 +144,7 @@ export default function Faq() {
                                         <b>Are you serious?</b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         Lol no. Sleeping rooms will be set aside for visiting students, although you should still bring your own blankets/sleeping bags/plushies/etc.
                                         These areas will be specified on our website closer to the event and also denoted with signs. Hopkins students may return to their dorms to sleep,
                                         but may not hack outside of the designated HopHacks buildings.
@@ -204,7 +201,7 @@ export default function Faq() {
                                         <b>What about the FREE FOOD?</b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         At registration, all participants will be given a wristband which MUST BE VISIBLE when you are getting food. If you do not have your wristband, you will not be able to get food. Also, we do not like people who come to HopHacks for the free food and then leave. We are watching you.
                                     </Typography>
                                 </CardContent>
@@ -216,7 +213,7 @@ export default function Faq() {
                                         <b>When can I pick up parking passes?</b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         We will distribute parking passes to participants on the Sunday morning of HopHacks.
                                     </Typography>
                                 </CardContent>
@@ -228,7 +225,7 @@ export default function Faq() {
                                         <b>Will there be travel reimbursements?</b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         We will not be offering individual travel reimbursements but are sponsoring other modes of transportation detailed above.
                                     </Typography>
                                 </CardContent>
@@ -240,7 +237,7 @@ export default function Faq() {
                                         <b>What if I have any other questions? </b>
                                     </Typography>
 
-                                    <Typography >
+                                    <Typography className={classes.text}>
                                         You can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. Alternatively, you can email us at <a className="link-text" href="mailto:hophacks@gmail.com">hophacks@gmail.com</a>
                                     </Typography>
                                 </CardContent>
