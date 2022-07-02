@@ -202,30 +202,40 @@
     /// ---------------------------
     //  SCROLL
     /// ---------------------------   
-    this.lastScroll = 0;
-    this.showCover = true;
-    
-    window.onscroll = function(e) {
-      var scroll = window.pageYOffset || document.documentElement.scrollTop;
-      var situation = 0;
-      if ((that.lastScroll === undefined) || ((scroll > that.lastScroll) && (that.showCover === true))) {
-        window.scrollTo(0, 0);
-        that.moveSlider(1);
-        situation = 0;
-      } else if ((window.scrollX !== 0) && (window.scrollY !== 0) && (that.showCover === true)) {
-        that.moveSlider(0);
-        console.log("josephine");
-      } else if (that.showCover === false) {
-        that.showCover = true;
-        situation = 2;
-      }
-      that.lastScroll = scroll <= 0 ? 0 : scroll;
-      if (situation === 0) {
-        that.showCover = true;
-      } else if (situation === 2) {
-        that.showCover = false;
-      }
+
+    window.onbeforeunload = function () { // page refresh to top of page
+      window.scrollTo(0, 0);
     }
+
+    this.lastScroll = 0;
+    this.showUpCover = true;
+    this.showDownCover = true;
+    
+    window.addEventListener('wheel', function(event) {
+      var scroll = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (event.deltaY < 0) { // scroll up
+        if (that.showUpCover === false) {
+          that.moveSlider(0);
+          that.showUpCover = true;
+          that.showDownCover = true;
+        } else if (that.lastScroll !== 0) {
+          that.showUpCover = false;
+        }
+      } else if (event.deltaY > 0) { // scroll down
+        if (that.showDownCover === true) {
+          document.body.style.overflow = 'hidden';
+          window.scrollTo(0,0);
+          that.moveSlider(1);
+          that.showDownCover = false;
+          setTimeout(function() {
+            document.body.style.overflow = 'auto';
+          }, 1000);
+        } 
+      }
+
+      that.lastScroll = scroll <= 0 ? 0 : scroll;
+    });
     
     /// ---------------------------
     //  INIT FUNCTIONS
