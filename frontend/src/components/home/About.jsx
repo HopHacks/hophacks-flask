@@ -85,6 +85,23 @@ const useStyles = makeStyles({
 
     }, 
 
+    intro: {
+        // position: "absolute",
+        // width: '1127.38px',
+        // height: '353.64px',
+        left: '58px',
+        top: '1407px',
+        color: "rgba(255, 255, 255, 0.8)",
+        backgroundColor: "none",
+        fontFamily: "Inter",
+        fontWeight: '400',
+        fontStyle: 'normal',
+        fontSize: '36px',
+        lineHeight: '58px',
+        textAlign: 'center',
+        letterSpacing: "0.11em",
+    }, 
+
 });
 
 export default function About() {
@@ -116,16 +133,9 @@ export default function About() {
                 className={classes.font3}>
                 About
             </Typography>
-                <Typography className={classes.title} variant="h4" gutterBottom>
-                    About
-                </Typography>
-                    <Typography >
+                    <Typography className={classes.intro}>
                         HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
-                            <p>
-                                <b>
-                                    Note: Due to the COVID-19 pandemic, we will be hosting HopHacks virtually via Discord and Zoom.
-                                </b>
-                            </p>
+                            
                     </Typography>
             </CardContent>
         </Card>
