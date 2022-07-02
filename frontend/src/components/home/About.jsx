@@ -6,15 +6,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import { motion, useMotionValue, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
+
 
 const useStyles = makeStyles({
 
@@ -104,11 +97,24 @@ const useStyles = makeStyles({
 
 });
 
+
+
 export default function About() {
     const classes = useStyles();
     function img(url) {
         return process.env.PUBLIC_URL + '/images/' + url;
     }
+    const { scrollY } = useViewportScroll();
+
+    const scaleRight = useTransform(scrollY, [0, 500], [2, 1]);
+    const yRight = useTransform(scrollY, [0, 500], ["25vh", "0vh"]);
+    const xRight = useTransform(scrollY, [800, 100], ["15%", "-23vw"]);
+
+    const xLeft = useTransform(scrollY, [800,100], ["-25%", "20vw"]);
+
+    const xLeft2 = useTransform(scrollY, [1500,300], ["5%", "100vw"]);
+ 
+
     return (
     <div style={{ position: "relative" }}>
         <Card className={classes.color} >
@@ -121,18 +127,25 @@ export default function About() {
             {/* <img src={img('About_Background.png')} style={{
                 // 'width': '14vw',
             }} /> */}
-            <Typography
-                className={classes.font1}>
+            <motion.Typography
+                className={classes.font1}  style={{
+                    x: xLeft,
+                }}>
+                
                 About
-            </Typography>
-            <Typography
-                className={classes.font2}>
+            </motion.Typography>
+            <motion.Typography
+                className={classes.font2} style={{
+                    x: xRight,
+                }}>
                 About
-            </Typography>
-            <Typography
-                className={classes.font3}>
+            </motion.Typography>
+            <motion.Typography
+                className={classes.font3} style={{
+                    x: xLeft2,
+                }}>
                 About
-            </Typography>
+            </motion.Typography>
                     <Typography className={classes.intro}>
                         HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
                             
