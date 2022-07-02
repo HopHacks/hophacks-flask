@@ -22,7 +22,7 @@ const useStyles = makeStyles({
         marginBottom: "13px",
     },
     color: {
-        backgroundColor: "#eef7ff",
+        backgroundColor: "#278be2",
     },
     title: {
         color: "#7289da",
@@ -34,8 +34,56 @@ const useStyles = makeStyles({
         // objectFit: 'cover', 
         // justifyContent:'center'
         width: '65%',
-        marginLeft: '33%'
+        marginLeft: '33%',
+        backgroundColor: "#278be2",
     },
+    font1: {
+        position: "absolute",
+        width: '1127.38px',
+        height: '353.64px',
+        left: '415px',
+        top: '110px',
+        color: "rgba(255, 255, 255, 0.6)",
+        backgroundColor: "none",
+        fontFamily: "Inter",
+        fontWeight: '700',
+        fontStyle: 'italic',
+        fontSize: '251.02px',
+        lineHeight: '304px'
+
+    }, 
+
+    font2: {
+        position: "absolute",
+        width: '1127.38px',
+        height: '353.64px',
+        left: '200px',
+        top: '400px',
+        color: "rgba(255, 255, 255)",
+        backgroundColor: "none",
+        fontFamily: "Inter",
+        fontWeight: '700',
+        fontStyle: 'italic',
+        fontSize: '251.02px',
+        lineHeight: '304px'
+
+    }, 
+
+    font3: {
+        position: "absolute",
+        width: '1127.38px',
+        height: '353.64px',
+        left: '0px',
+        top: '690px',
+        color: "rgba(255, 255, 255, 0.6)",
+        backgroundColor: "none",
+        fontFamily: "Inter",
+        fontWeight: '700',
+        fontStyle: 'italic',
+        fontSize: '251.02px',
+        lineHeight: '304px'
+
+    }, 
 
 });
 
@@ -45,7 +93,8 @@ export default function About() {
         return process.env.PUBLIC_URL + '/images/' + url;
     }
     return (
-        <Card >
+    <div style={{ position: "relative" }}>
+        <Card className={classes.color} >
             <CardContent>
             <CardMedia
                 component="img"
@@ -55,6 +104,18 @@ export default function About() {
             {/* <img src={img('About_Background.png')} style={{
                 // 'width': '14vw',
             }} /> */}
+            <Typography
+                className={classes.font1}>
+                About
+            </Typography>
+            <Typography
+                className={classes.font2}>
+                About
+            </Typography>
+            <Typography
+                className={classes.font3}>
+                About
+            </Typography>
                 <Typography className={classes.title} variant="h4" gutterBottom>
                     About
                 </Typography>
@@ -68,5 +129,6 @@ export default function About() {
                     </Typography>
             </CardContent>
         </Card>
+    </div>
     );
 }
