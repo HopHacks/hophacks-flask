@@ -26,7 +26,10 @@ const useStyles = makeStyles({
     },
     title: {
         color: "#ffffff",
-        fontFamily: "VCR OSD Mono",
+        fontFamily: "Inter",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "375%"
     },
 
     button: {
