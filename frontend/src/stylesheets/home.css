@@ -4,6 +4,11 @@
 	box-sizing: border-box;
 }
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .parallax {
 	position: absolute;
 	z-index: -1;
@@ -68,6 +73,7 @@
 main {
 	position: relative;
 	width: 100%;
+
 }
 
 .content {
