@@ -18,9 +18,14 @@ import '../../stylesheets/home.css'
 
 const useStyles = makeStyles({
     margin: {
-        marginBottom: "13px",
+        // marginBottom: "20px",
         borderTop: "1",
         borderBottom: "1"
+    },
+    marginBot: {
+        // marginBottom: "20px",
+        borderTop: "1",
+        borderBottom: "20"
     },
     color: {
         //backgroundColor: "#2195ea",
@@ -70,9 +75,9 @@ export default function Faq() {
                                 FAQs
                             </Typography>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff">
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
-                                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: "#ffffff"}} />} >
                                         <Typography variant="h6" gutterBottom >
                                             <b> Who can participate? </b>
                                         </Typography>
@@ -85,7 +90,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -100,7 +105,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -129,7 +134,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff">
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -144,7 +149,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -159,7 +164,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -174,7 +179,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -234,7 +239,7 @@ export default function Faq() {
                                 </CardContent>
                             </Card> */}
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -249,7 +254,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -264,7 +269,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
@@ -279,7 +284,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" >
+                            <Box raised="true" className={`${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" sx={{height: "800px"}} >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant="h6" gutterBottom>
