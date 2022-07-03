@@ -18,12 +18,10 @@ import '../../stylesheets/home.css'
 
 const useStyles = makeStyles({
     margin: {
-        // marginBottom: "20px",
         borderTop: "1",
         borderBottom: "1"
     },
     marginBot: {
-        // marginBottom: "20px",
         borderTop: "1",
         borderBottom: "20"
     },
