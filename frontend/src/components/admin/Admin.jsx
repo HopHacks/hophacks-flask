@@ -1,13 +1,9 @@
 import React, {useState,useEffect} from "react";
 import { withAdminAuthCheck } from "../../util/auth";
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Pagination from '@material-ui/lab/Pagination';
 import Select from '@material-ui/core/Select';
 import SearchBar from "material-ui-search-bar";
 import axios from "axios";
-import SchoolAutocomplete from '../account/SchoolAutocomplete'
-import Card from '@material-ui/core/Card';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -21,6 +17,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -33,40 +30,43 @@ const useStyles = makeStyles((theme) => ({
 
 const Admin =  function() {
     const classes = useStyles();
-    const [page, setPage] = useState(1);
     const [users, setusers] = useState([]);
     const [query, setQuery] = useState("");
-    const [event, setEvent] = useState("fall_2021");
     const [status, setStatus] = useState("All");
-    const [totalPage, setTotalPage] = useState(1);
     
+    async function handleResumeDownload(userid) {
+  
+      const response = await axios.get("/api/admin/resume?id=" + userid);
+      const url = response.data['url'];
+      window.open(url, "_blank");
+    }
+  
+    async function handleVaccinationDownload(userid) {
+  
+      const response = await axios.get("/api/admin/vaccination?id=" + userid);
+      const url = response.data['url'];
+      window.open(url, "_blank");
+    }
 
-
-    const handleChange = (event, value) => {
-      setPage(value);
-      setusers([]);
-      getUsers();
-    };
 
     async function getUsers(){
-      const response = await axios.get('/api/admin/users' + '?page_num=' + page + '&query=' + query + "&status=" + status);
+      const response = await axios.get('/api/admin/users' + '?query=' + query);
       setusers(response.data.users);
-      setTotalPage(response.data.totalPage);
     }
 
     async function acceptUser(id){
       const response = await axios.post('/api/registrations/accept', 
       {
         "users": [id],
-        "event": "Fall 2021"
-    });
+        "event": "Fall 2022"
+      });
     }
 
     async function rejectUser(id){
       const response = await axios.post('/api/registrations/reject', 
       {
         "user": id,
-        "event": "Fall 2021"
+        "event": "Fall 2022"
     });
     }
 
@@ -74,7 +74,7 @@ const Admin =  function() {
       const response = await axios.post('/api/registrations/check_in', 
       {
         "user": id,
-        "event": "Fall 2021"
+        "event": "Fall 2022"
     });
     }
 
@@ -87,16 +87,44 @@ const Admin =  function() {
       }
     }
 
+    function filterUser(user) {
+      if (status == "All") {
+        return true
+      } 
+      else if (status == "not") {
+
+        if(user.email_confirmed) {
+          return user.registrations[0].status != "checked_in"
+        }
+        else{
+          return true
+        }
+
+      } else {
+
+        if(user.email_confirmed) {
+          return user.registrations[0].status == "checked_in"
+        }
+        else{
+          return false
+        }
+        
+      }
+
+    }
+
     useEffect(() => {
       getUsers()
   }, []);
 
     function populateUsers() {
       return (
-        users.map((user, index) => (
+        users
+        .filter( user => filterUser(user))
+        .map((user, index) => (
           <TableRow key={index}>
             <TableCell component="th" scope="row">
-              {user.id}
+              {user.username}
             </TableCell>
             <TableCell align="right">
             {user.profile.first_name}
@@ -105,8 +133,24 @@ const Admin =  function() {
             {user.profile.last_name}
             </TableCell>
             <TableCell align="right">
+            {user.profile.school}
+            </TableCell>
+            <TableCell align="right">
             {getStatus(user)}
             </TableCell>
+
+            <TableCell>
+              <Link onClick={() => handleResumeDownload(user.id)} style={{ fontSize: '15px', color: 'blue' }}>
+                Download
+              </Link>
+            </TableCell>
+
+            <TableCell>
+              <Link onClick={() => handleVaccinationDownload(user.id)} style={{ fontSize: '15px', color: 'blue' }}>
+                Download
+              </Link>
+            </TableCell>
+
             <TableCell align="right">
               <Button onClick = {()=>{
                 acceptUser(user.id)
@@ -137,17 +181,12 @@ const Admin =  function() {
                 <Select
                   onChange={(e) => {
                     setStatus(e.target.value);
-                    getUsers();
                   }}
 
                   defaultValue={"All"}
                 >
-                  <MenuItem value="all">All</MenuItem>
-                  <MenuItem value="email_not_comfirmed">Email not confirmed</MenuItem>
-                  <MenuItem value="applied">Applied</MenuItem>
-                  <MenuItem value="accepted">Accepted</MenuItem>
-                  <MenuItem value="rejected">Rejected</MenuItem>
-                  <MenuItem value="rsvped">Rsvp</MenuItem>
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="not">Not checked in</MenuItem>
                   <MenuItem value="checked_in">Checked in</MenuItem>
 
                 </Select>
@@ -160,10 +199,13 @@ const Admin =  function() {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>id</TableCell>
+              <TableCell>email</TableCell>
               <TableCell align="right">First Name</TableCell>
               <TableCell align="right">Last Name</TableCell>
+              <TableCell align="right">School</TableCell>
               <TableCell align="right">Status</TableCell>
+              <TableCell align="right">Resume</TableCell>
+              <TableCell align="right">Vaccination</TableCell>
               <TableCell align="right">Actions</TableCell>
               <TableCell align="right"></TableCell>
               <TableCell align="right"></TableCell>
@@ -180,21 +222,27 @@ const Admin =  function() {
     return (
       <Container fixed>
         <Box style={{backgroundColor:"white"}}>
-        <SearchBar
+
+      <div style = {{ marginBottom : 20 }}>
+      <SearchBar
     value={query}
     onChange={(newValue) => setQuery(newValue)}
     onRequestSearch={() => getUsers()}
   />
-
+  
+      </div>
       {StatusPicker}
 
+      <div>
+
       {populateUsers}
+      </div>
+     
+
+      
 
       {table}
 
-      <div  className={classes.pagination}>
-      <Pagination count={totalPage} page={page} onChange={handleChange} />
-      </div>
         </Box>
         </Container>
 
