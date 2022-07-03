@@ -9,8 +9,7 @@
     //  OPTIONS
     /// ---------------------------      
     options                     = options || {};
-    // options.stageWidth          = options.hasOwnProperty('stageWidth') ? options.stageWidth : 1920;
-    options.stageWidth          = options.hasOwnProperty('stageWidth') ? options.stageWidth : 2000;
+    options.stageWidth          = options.hasOwnProperty('stageWidth') ? options.stageWidth : 1920;
     options.stageHeight         = options.hasOwnProperty('stageHeight') ? options.stageHeight : 1080;
     options.pixiSprites         = options.hasOwnProperty('sprites') ? options.sprites : [];
     options.texts               = options.hasOwnProperty('texts') ? options.texts : [];
@@ -114,6 +113,8 @@
         var texture   = new PIXI.Texture.fromImage( sprites[i] );
         var image     = new PIXI.Sprite( texture );
 
+        image.scale.set(0.8, 0.8);
+
         if ( rTexts ) {
           var richText = new PIXI.Text( rTexts[i], style);
           image.addChild(richText);
@@ -123,11 +124,11 @@
           richText.y = image.height / 2;                     
         }      
 
-        if ( options.centerSprites === true ) {
+        // if ( options.centerSprites === true ) {
           image.anchor.set(0.5);
           image.x = renderer.width / 2;
           image.y = renderer.height / 2;            
-        }
+        // }
         
         if ( i !== 0  ) {
           TweenMax.set( image, { alpha: 0 } );
