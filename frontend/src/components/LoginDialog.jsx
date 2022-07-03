@@ -56,12 +56,12 @@ function Login(props) {
   });
   const classes = useStyles();
   /* State for handling login */
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(props.email);
   const [password, setPassword] = useState("");
   const [attempted, setAttempted] = useState(false);
 
   /* State for handling login modal */
-  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const [loginDialogOpen, setLoginDialogOpen] = useState(props.fromConfirmEmail ? true : false);
 
   let history = useHistory();
 

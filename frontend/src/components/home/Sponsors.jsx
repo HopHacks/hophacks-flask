@@ -13,28 +13,25 @@ const useStyles = makeStyles({
         color: "#7289da",
         fontFamily: "VCR OSD Mono",
     },
-
-    image:{
-        width:"15%",
-        justifyContent:"center",
-        alignItems:"center",
+    image: {
+        width: "15%",
+        justifyContent: "center",
+        alignItems: "center",
     }
 });
-
-
 
 function img(url) {
     return process.env.PUBLIC_URL + '/images/' + url;
 }
 
 function SponsorItem(props) {
-const classes = useStyles();
+    const classes = useStyles();
     return (
-        <Grid container  xs={6} alignItems="center" justify="center" className={classes.image} style={{width:"15%"}}>
+        <Grid container xs={6} alignItems="center" justify="center" className={classes.image} style={{ width: "15%" }}>
 
-                <picture align="center" >
-                    <a href={`${props.website}`}><img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} /></a>
-                </picture>
+            <picture align="center" >
+                <a href={`${props.website}`}><img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} /></a>
+            </picture>
         </Grid>
     );
 
@@ -52,7 +49,7 @@ export default function Sponsors() {
                 <CardContent>
                     {/*TODO material UI*/}
                     <Typography className={classes.title} variant="h4" gutterBottom>Sponsors</Typography>
-                    
+
                     <Grid container spacing={0} alignItems="center" justify="center">
                     <SponsorItem imgURL='Bloomberg' website='https://www.bloomberg.com/' imgSytle={{width: '100%', maxHeight: "100%"}}/>
                     </Grid>
@@ -88,7 +85,7 @@ export default function Sponsors() {
                     <SponsorItem imgURL='ground' website='https://www.groundcontrol.coffee/' imgSytle={{width: '35%', maxHeight: "100%", marginTop: "1%"}}/>
                     </Grid>
                     <Grid container spacing={0} alignItems="center" justify="center">
-                
+
                         <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "5%"}}/>
                     </Grid>
                     
@@ -96,10 +93,9 @@ export default function Sponsors() {
                     <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "1%"}}/>
                     </Grid>
 
-                   
-                    
+
+
                 </CardContent>
             </Card>
         </Box>
-    );
-}
+    )}

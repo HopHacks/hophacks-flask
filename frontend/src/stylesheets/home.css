@@ -94,6 +94,16 @@
     right: 20%;
 }
 
+.link-text {
+    color: #00ecff;
+    
+}
+
+.link-text:hover {
+    color: #e368aa;
+}
+
+
 
 @font-face {
     font-family: 'VCR OSD Mono';

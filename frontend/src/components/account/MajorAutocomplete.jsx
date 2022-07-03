@@ -50,7 +50,6 @@ const MajorAutocomplete = function MajorAutocomplete({
         "Natural Sciences",
         "Near Eastern Studies",
         "Neuroscience",
-        "Other Majors",
         "Philosophy",
         "Physics",
         "Political Science",
@@ -59,18 +58,26 @@ const MajorAutocomplete = function MajorAutocomplete({
         "Romance Languages",
         "Sociology",
         "Spanish",
-        "Writing Seminars"]
+        "Writing Seminars",
+        "Other Majors"]
 
     return (
         <Autocomplete
           id="majors"
           options={majors}
-          defaultValue={major}
-          style={{ width: 300 }}
+          // defaultValue={major}
+          style={{ width: 300, marginTop: -6.5 }}
           onChange={(event, newValue) => {
             setMajor(newValue);
           }}
-          renderInput={(params) => <TextField required  {...params} label="Major" variant="outlined" />}
+          renderInput={(params) => 
+            <TextField 
+              required
+              {...params}
+              label="Major"
+              variant="standard" 
+              InputLabelProps={{style: {color: '#000000'}}}
+            />}
         />
     )
 }

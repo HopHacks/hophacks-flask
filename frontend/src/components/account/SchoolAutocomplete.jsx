@@ -44,7 +44,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({
     return (
         <Autocomplete
             id="schools"
-            style={{ width: 300 }}
+            style={{ width: 300, marginTop: -3 }}
             open={open}
             onOpen={() => {
                 setOpen(true);
@@ -64,7 +64,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({
                     required
                     {...params}
                     label="School"
-                    variant="outlined"
+                    variant="standard"
                     value={school}
                     InputProps={{
                         ...params.InputProps,
@@ -75,6 +75,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({
                             </React.Fragment>
                         ),
                     }}
+                    InputLabelProps={{style: {color: '#000000'}}}
                 />
             )}
         />
