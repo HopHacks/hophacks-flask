@@ -51,11 +51,18 @@ const useStyles = makeStyles({
         color: "#ffffff",
         fontFamily: "Rosarivo",
         flexDirection: "column",
+        marginBottom: "0px"
     },
     MuiAccordionroot: {
         "&.MuiAccordion-root:before": {
-          backgroundColor: "#376eea"
+          backgroundColor: "#376eea",
+          flexDirection: "column",
+        },
+        "&.MuiAccordion-root.Mui-expanded:last-child": {
+           marginTop: "1px",
+           marginBottom: "25px"
         }
+
     }
 });
 
@@ -73,14 +80,14 @@ export default function Faq() {
                                 FAQs
                             </Typography>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
+                            <Box raised="true" className= "MuiAccordion-root.Mui-expanded" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
-                                    <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: "#ffffff"}} />} >
-                                        <Typography variant="h6" gutterBottom >
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: "#ffffff"}} />} className= "MuiAccordion-root.Mui-expanded" >
+                                        <Typography variant="h6" gutterBottom > 
                                             <b> Who can participate? </b>
                                         </Typography>
                                     </AccordionSummary>
-                                    <AccordionDetails>
+                                    <AccordionDetails className= "MuiAccordion-root.Mui-expanded">
                                         <Typography className={classes.text}>
                                             Any <b>university student</b> enrolled in any undergraduate or graduate program may participate. High school students may <b>NOT</b> participate.
                                         </Typography>
