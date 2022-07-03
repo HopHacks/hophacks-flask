@@ -1155,6 +1155,11 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
+"@fontsource/rosarivo@^4.5.9":
+  "integrity" "sha512-654FMEcHPewO113ksiBty5maaQ+aKwcI+w2lDZw3vusQHuIj5Sp0qayKvamK1N3t9QMLx4Ug817fXbJ+5xpnmg=="
+  "resolved" "https://registry.npmjs.org/@fontsource/rosarivo/-/rosarivo-4.5.9.tgz"
+  "version" "4.5.9"
+
 "@hapi/address@2.x.x":
   "integrity" "sha512-QD1PhQk+s31P1ixsX0H0Suoupp3VMXzIVMSwobR3F3MSUO2YCV0B7xqLcUw/Bh8yuvd3LhpyqLQWTNcRmp6IdQ=="
   "resolved" "https://registry.npmjs.org/@hapi/address/-/address-2.1.4.tgz"
