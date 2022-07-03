@@ -77,7 +77,7 @@ export default function Faq() {
         <Card className={`${classes.colorBackground}`}>
                         <CardContent>
                             <Typography className={classes.title} variant="h4" gutterBottom>
-                                FAQs
+                            Frequently Asked Questions
                             </Typography>
 
                             <Box raised="true" className= "MuiAccordion-root.Mui-expanded" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
