@@ -37,12 +37,11 @@ const useStyles = makeStyles({
     fontSize: "375%"
   },
   schedule: {
-    backgroundColor: "#278be2",
-  
+    backgroundColor: "#eef7ff",
   },
   font: {
     fontFamily: "Inter",
-    color: "#ffffff",
+    color: "#000000",
   }
 });
 
@@ -69,7 +68,7 @@ export default function Schedule() {
           </Typography>
           <div className={classes.font}>All times in EDT (GMT-4)</div>
 
-          <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"#278be2"}} align="center" sx={{ maxHeight: 440 }}>
+          <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"#eef7ff"}} align="center" sx={{ maxHeight: 440 }}>
 
             <Tabs
               value={day}
@@ -89,7 +88,7 @@ export default function Schedule() {
             <Table className={classes.table} aria-label="simple table" sx={{
               height: "max-content"
             }}>
-              <TableHead className={classes.color}>
+              <TableHead className={classes.schedule}>
                 <TableRow>
                   <TableCell className={classes.font}>Time</TableCell>
                   <TableCell  className={classes.font}>Event</TableCell>
