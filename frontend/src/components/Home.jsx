@@ -128,12 +128,12 @@ export default function Home() {
             <div />
 
             <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.0em', fontFamily: "VCR OSD Mono" }} >
-                <strong>September 16-18 2022</strong>
+                <strong>September 16-18 2022 121</strong>
             </Typography>
             <br />
 
 
-            <Button className={classes.button} variant="outlined" href="https://forms.gle/bVRLmpbLfDuZ7pkX6">
+            <Button className={classes.button} variant="outlined" href="https://forms.gle/bVRLmpbLfDuZ7pkX6" >
 
                 <Typography style={{ "color": "#202c63", fontSize: '2.8em', fontFamily: "VCR OSD Mono" }}>
 
