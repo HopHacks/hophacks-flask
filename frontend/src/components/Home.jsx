@@ -128,7 +128,7 @@ export default function Home() {
             <div />
 
             <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.0em', fontFamily: "VCR OSD Mono" }} >
-                <strong>September 16-18 2022</strong>
+                <strong>September</strong>
             </Typography>
             <br />
 
