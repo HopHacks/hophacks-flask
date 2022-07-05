@@ -9,7 +9,8 @@
     //  OPTIONS
     /// ---------------------------      
     options                     = options || {};
-    options.stageWidth          = options.hasOwnProperty('stageWidth') ? options.stageWidth : 1920;
+    // options.stageWidth          = options.hasOwnProperty('stageWidth') ? options.stageWidth : 1920;
+    options.stageWidth          = options.hasOwnProperty('stageWidth') ? options.stageWidth : 2000;
     options.stageHeight         = options.hasOwnProperty('stageHeight') ? options.stageHeight : 1080;
     options.pixiSprites         = options.hasOwnProperty('sprites') ? options.sprites : [];
     options.texts               = options.hasOwnProperty('texts') ? options.texts : [];
