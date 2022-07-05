@@ -220,20 +220,18 @@
           that.moveSlider(0);
           that.showUpCover = true;
           that.showDownCover = true;
-        } else if (that.lastScroll !== 0) {
+        } else if (that.lastScroll <= 1) {
           that.showUpCover = false;
         }
       } else if (event.deltaY > 0) { // scroll down
         if (that.showDownCover === true) {
-          document.body.style.overflow = 'hidden';
-          window.scrollTo(0,1);
+          document.body.style.overflowY = 'hidden';
+          window.scrollTo(0,0.5);
           that.moveSlider(1);
-          that.showDownCover = false;
           setTimeout(function() {
-            window.scrollTo(0,1);
-            document.body.style.overflow = 'auto';
+            document.body.style.overflowY = 'auto';
             that.showDownCover = false;
-          }, 1500);
+          }, 1000);
         } 
       }
 
