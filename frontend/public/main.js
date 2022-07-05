@@ -215,6 +215,7 @@
 
       if (event.deltaY < 0) { // scroll up
         if (that.showUpCover === false) {
+          window.scrollTo(0,0);
           that.moveSlider(0);
           that.showUpCover = true;
           that.showDownCover = true;
@@ -224,12 +225,14 @@
       } else if (event.deltaY > 0) { // scroll down
         if (that.showDownCover === true) {
           document.body.style.overflow = 'hidden';
-          window.scrollTo(0,0);
+          window.scrollTo(0,1);
           that.moveSlider(1);
           that.showDownCover = false;
           setTimeout(function() {
+            window.scrollTo(0,1);
             document.body.style.overflow = 'auto';
-          }, 1000);
+            that.showDownCover = false;
+          }, 1500);
         } 
       }
 
