@@ -214,28 +214,36 @@
     
     window.addEventListener('wheel', function(event) {
       var scroll = window.pageYOffset || document.documentElement.scrollTop;
-
+      
       if (event.deltaY < 0) { // scroll up
         if (that.showUpCover === false) {
           window.scrollTo(0,0);
           that.moveSlider(0);
-          that.showUpCover = true;
-          that.showDownCover = true;
-          that.coverPresent = true;
+          setTimeout(function() {
+            that.showUpCover = true;
+            that.showDownCover = true;
+            that.coverPresent = true;
+          },50);
+          
         } else if (that.lastScroll <= 1 && that.coverPresent === false) {
           that.showUpCover = false;
         }
       } else if (event.deltaY > 0) { // scroll down
         if (that.showDownCover === true) {
           document.body.style.overflowY = 'hidden';
-          window.scrollTo(0,1);
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
           that.moveSlider(1);
           setTimeout(function() {
-            window.scrollTo(0,1);
-            document.body.style.overflowY = 'auto';
+            window.scrollTo(0,0);
             that.showDownCover = false;
             that.coverPresent = false;
-          }, 1000);
+          }, 10);
+          setTimeout(function() {
+            document.body.style.overflowY = 'auto';
+          }, 1500)
         } 
       }
 

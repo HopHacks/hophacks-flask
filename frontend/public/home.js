@@ -1,5 +1,3 @@
-// imagesLoaded(document.body, () => document.body.classList.remove('loading'));
-                
 var spriteImages = document.querySelectorAll( '.slide-item__image' );
 var spriteImagesSrc = [];
 var texts = [];
@@ -22,3 +20,7 @@ var initCanvasSlideshow = new CanvasSlideshow({
     fullScreen: true,
     centerSprites: false,
 });
+
+var element = document.getElementById("website");
+var cover = document.getElementById('parallax');
+element.style.top = cover.offsetHeight + "px";
