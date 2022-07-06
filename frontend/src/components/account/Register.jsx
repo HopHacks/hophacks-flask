@@ -590,14 +590,16 @@ export default function Register() {
   }
 
   return (
-    <body style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2021_theme.png")`
+    <div style={{
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+      backgroundSize: 'cover',
+      height: "100vh"
     }}>
       <div class="container">
         <div className="register-wrapper">
           {selectPage()}
         </div>
       </div>
-    </body>
+    </div>
   )
 }

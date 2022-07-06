@@ -35,7 +35,12 @@ export default function EmailConfirmation(props) {
         return (<Login fromConfirmEmail={true} email={email} />)
     } else if (message === attemptedMsg) {
         return (
-            <div class="container-email">
+            
+            <div class="container-email" style={{
+                backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+                backgroundSize: 'cover',
+                height: "100vh"
+              }}>
                 <div className="wrapper-email">
                     <img id="graphic" src={`${process.env.PUBLIC_URL}/images/hoplogo.png`} width="100%" />
                     <h1>Oh no!</h1>
@@ -46,7 +51,13 @@ export default function EmailConfirmation(props) {
         )
     }
     return (
-        <div class="container-email">
+        
+        <div class="container-email" style={{
+            backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+            backgroundSize: 'cover',
+            height: "100vh"
+          }}>
+            
             <div className="wrapper-email">
                 <h5>{message}</h5>
             </div>
