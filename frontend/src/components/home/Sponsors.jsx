@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -25,6 +26,13 @@ const useStyles = makeStyles({
         fontWeight: "bold",
         textAlign: "center",
         fontSize: "375%"
+    },
+    contact: {
+        color: "#ffffff",
+        fontFamily: "Inter",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "100%"
     },
     minititle: {
         color: "#ffffff",
@@ -125,7 +133,10 @@ export default function Sponsors() {
                     <CardContent>
                         <div>
                             <h4 className={classes.title} gutterBottom>Sponsors</h4>
+                            <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Contact {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
+                            <Divider style={{marginBottom: "3%"}}/>
                         </div>
+                        {/*
                         <motion.div
                             initial={"offscreen"}
                             whileInView={"onscreen"}
@@ -145,6 +156,7 @@ export default function Sponsors() {
                                 </Grid>
                             </Grid>
                         </motion.div>
+                        */}
                         <motion.div
                             initial={"offscreen"}
                             whileInView={"onscreen"}
@@ -156,6 +168,7 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
+                                {/*
                                 <Grid item xs={6}>
                                     <SponsorItem imgURL='apl' website='https://www.jhuapl.edu/' imgSytle={{ width: windowSize.width * sable * 1.5 , maxHeight: "100%", marginTop: "5%" }} />
                                 </Grid>
@@ -165,9 +178,11 @@ export default function Sponsors() {
                                 <Grid item xs={6}>
                                     <SponsorItem imgURL='SIEMENS' website='https://www.siemens-healthineers.com/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "7%" }} />
                                 </Grid>
-                                <Grid item xs={6}>
-                                    <SponsorItem imgURL='it' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable / 1.4, maxHeight: "100%", marginTop: "12%" }} />
-                                </Grid>
+                                 */}
+                                
+                                
+                                    <SponsorItem imgURL='it' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable / 1.4, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
+                                
                             </Grid>
                         </motion.div>
                         <motion.div
@@ -181,11 +196,13 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                                <Grid item xs={4}/>
-                                <Grid item xs={4}>
+                                {/*
+                                <Grid item xs={6}>
                                     <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{ width: windowSize.width * blue * 2, maxHeight: "100%", marginTop: "5%"}} />
                                 </Grid>
-                                <Grid item xs={4}/>
+                                 */}
+                                    <SponsorItem imgURL='scm_hori' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue * 1.35, maxHeight: "100%", marginTop: "5%", marginBottom: "5%"}} />
+                                
                             </Grid>
                         </motion.div>
                         <motion.div
@@ -199,18 +216,22 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
+                                {/*
                                 <Grid item xs={3}>
                                     <SponsorItem imgURL='linode' website='https://www.linode.com/' imgSytle={{ width: windowSize.width * starter, maxHeight: "100%", marginTop: "5%" }} />
                                 </Grid>
                                 <Grid item xs={3}>
-                                    <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "5%"}}/>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "1%"}}/>
-                                </Grid>
-                                <Grid item xs={3}>
                                     <SponsorItem imgURL='ground' website='https://www.groundcontrol.coffee/' imgSytle={{width: windowSize.width * starter * 0.75, maxHeight: "100%", marginTop: "1%"}}/>
                                 </Grid>
+                                */}
+                                
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "2%"}}/>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "0%"}}/>
+                                </Grid>
+                                
                             </Grid>
                             <br></br>
                         </motion.div>
