@@ -223,26 +223,19 @@
             that.showUpCover = true;
             that.showDownCover = true;
             that.coverPresent = true;
-          },50);
-          
+          }, 50);
         } else if (that.lastScroll <= 1 && that.coverPresent === false) {
           that.showUpCover = false;
         }
       } else if (event.deltaY > 0) { // scroll down
         if (that.showDownCover === true) {
           document.body.style.overflowY = 'hidden';
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
           that.moveSlider(1);
-          setTimeout(function() {
-            window.scrollTo(0,0);
-            that.showDownCover = false;
-            that.coverPresent = false;
-          }, 10);
+          window.scrollTo(0,0);
           setTimeout(function() {
             document.body.style.overflowY = 'auto';
+            that.showDownCover = false;
+            that.coverPresent = false;
           }, 1500)
         } 
       }

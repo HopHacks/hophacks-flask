@@ -20,7 +20,3 @@ var initCanvasSlideshow = new CanvasSlideshow({
     fullScreen: true,
     centerSprites: false,
 });
-
-var element = document.getElementById("website");
-var cover = document.getElementById('parallax');
-element.style.top = cover.offsetHeight + "px";
