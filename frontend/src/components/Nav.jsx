@@ -52,13 +52,6 @@ const Nav = function Nav(props) {
         {!props.isLoggedIn && <Login />
         }
 
-        {!props.isLoggedIn && 
-          <Button component={Link} to={'/register'} color="inherit">
-            <Typography variant="h6" className={classes.title}> Register </Typography>
-          </Button>
-
-        }
-
         {props.isLoggedIn &&
           <Button component={Link} to={'/profile'} color="inherit">
             <Typography variant="h6" className={classes.title}> Profile </Typography>
@@ -93,13 +86,6 @@ const Nav = function Nav(props) {
         </Button>
 
         {!props.isLoggedIn && <Login />
-        }
-
-        {!props.isLoggedIn && 
-          <Button component={Link} to={'/register'} color="inherit">
-            <Typography variant="h5" className={classes.title}> Register </Typography>
-          </Button>
-
         }
 
         {props.isLoggedIn &&
