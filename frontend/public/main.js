@@ -211,27 +211,33 @@
     this.lastScroll = 0;
     this.showUpCover = true;
     this.showDownCover = true;
+    this.coverPresent = true;
     
     window.addEventListener('wheel', function(event) {
       var scroll = window.pageYOffset || document.documentElement.scrollTop;
-
+      
       if (event.deltaY < 0) { // scroll up
         if (that.showUpCover === false) {
+          window.scrollTo(0,0);
           that.moveSlider(0);
-          that.showUpCover = true;
-          that.showDownCover = true;
-        } else if (that.lastScroll !== 0) {
+          setTimeout(function() {
+            that.showUpCover = true;
+            that.showDownCover = true;
+            that.coverPresent = true;
+          }, 50);
+        } else if (that.lastScroll <= 1 && that.coverPresent === false) {
           that.showUpCover = false;
         }
       } else if (event.deltaY > 0) { // scroll down
         if (that.showDownCover === true) {
-          document.body.style.overflow = 'hidden';
-          window.scrollTo(0,0);
+          document.body.style.overflowY = 'hidden';
           that.moveSlider(1);
-          that.showDownCover = false;
+          window.scrollTo(0,0);
           setTimeout(function() {
-            document.body.style.overflow = 'auto';
-          }, 1000);
+            document.body.style.overflowY = 'auto';
+            that.showDownCover = false;
+            that.coverPresent = false;
+          }, 1500)
         } 
       }
 

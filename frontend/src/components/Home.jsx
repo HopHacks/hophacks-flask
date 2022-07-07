@@ -125,17 +125,7 @@ export default function Home() {
                 <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{"width":"100%"}}></img>
             </a>
 
-            {Logo}
-
-            {/* <br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /> */}
-
-            <div className="parallax">
+            <div id="parallax" className="parallax">
                 <div className="parallax-body">
                     <main className="site-wrapper">
                         <div className="content">
@@ -157,7 +147,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <Container fixed>
+            <Container id="website" fixed>
                 <Box py={2}>
                     <Card>
                         <CardContent>
