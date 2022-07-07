@@ -90,6 +90,32 @@ export default function Home() {
           }
     }, [])
 
+
+    const Logo = (
+        <div className={classes.logo} >
+            <img src={img('logo2022.png')} style={{
+                'width': '14vw',
+            }} />
+
+            <Typography align="center" justify="center" style={{ 'color': '#FFFFFF', fontSize: '4.0em', fontFamily: "Inter Medium" }} >
+                <strong><i>HOPHACKS</i></strong>
+            </Typography>
+
+            <div />
+
+            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '1.5em', fontFamily: "Inter Light" }} >
+                <strong><i>S&nbsp; E&nbsp; P&nbsp; T&nbsp; E&nbsp; M&nbsp; B&nbsp; E&nbsp; R &nbsp; 1&nbsp; 6&nbsp; -&nbsp; 1&nbsp; 8</i></strong>
+            </Typography>
+            <br />
+
+            <Button className={classes.button} variant="outlined" component={Link} to={'/register'}>
+                <Typography style={{ "color": "#202c63", fontSize: '2.8em', fontFamily: "Inter Medium" }}>
+                    <strong>REGISTER!</strong>
+                </Typography>
+            </Button>
+        </div>
+    );
+
     return (
         <div className={classes.gradient}>
             <a id="mlh-trust-badge" 
@@ -99,6 +125,16 @@ export default function Home() {
                 <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{"width":"100%"}}></img>
             </a>
 
+            {Logo}
+
+            {/* <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /> */}
+
             <div className="parallax">
                 <div className="parallax-body">
                     <main className="site-wrapper">
@@ -106,7 +142,11 @@ export default function Home() {
                             <div className="slide-wrapper">
                                 <div className="slide-item">
                                     {/* <img src={img("cover.png")} className="slide-item__image"></img> */}
+                                    {/* <img src={img('HopHacks_logo.png')} style={{
+                'width': '14vw',
+            }} className="slide-item__image" /> */}
                                     <img src={img("cover1.png")} className="slide-item__image"></img>
+                                    
                                 </div>
                                 <div className="slide-item">
                                     <img src={img("transparent.png")} className="slide-item__image"></img>
