@@ -132,8 +132,8 @@ export default function Sponsors() {
                 <Card className={classes.card}>
                     <CardContent>
                         <div>
-                            <h4 className={classes.title} gutterBottom>Sponsors</h4>
-                            <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Contact {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
+                            <h4 className={classes.title}>Sponsors</h4>
+                            <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Email us at {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
                             <Divider style={{marginBottom: "3%"}}/>
                         </div>
                         {/*
@@ -201,7 +201,7 @@ export default function Sponsors() {
                                     <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{ width: windowSize.width * blue * 2, maxHeight: "100%", marginTop: "5%"}} />
                                 </Grid>
                                  */}
-                                    <SponsorItem imgURL='scm_hori' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue * 1.35, maxHeight: "100%", marginTop: "5%", marginBottom: "5%"}} />
+                                    <SponsorItem imgURL='scm' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue * 0.7, maxHeight: "100%", marginTop: "5%", marginBottom: "5%"}} />
                                 
                             </Grid>
                         </motion.div>
