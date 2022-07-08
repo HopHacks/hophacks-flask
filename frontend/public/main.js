@@ -269,6 +269,7 @@
     var slideImages = slidesContainer.children;
     this.moveSlider = function (newIndex) {
       transitionAnimation.start();
+      button.visible = false;
 
       var baseTimeline = new TimelineMax({
         onComplete: function () {
@@ -336,11 +337,14 @@
           window.scrollTo(0, 0);
           that.moveSlider(0);
           setTimeout(function () {
-            button.visible = true;
             that.showUpCover = true;
             that.showDownCover = true;
             that.coverPresent = true;
           }, 50);
+          setTimeout(function () {
+            button.visible = true;
+          }, 1000);
+          
         } else if (that.lastScroll <= 1 && that.coverPresent === false) {
           that.showUpCover = false;
         }
@@ -352,7 +356,6 @@
           that.moveSlider(1);
           window.scrollTo(0, 0);
           setTimeout(function () {
-            button.visible = false;
             document.body.style.overflowY = "auto";
             that.showDownCover = false;
             that.coverPresent = false;
