@@ -11,20 +11,26 @@ const Footer = function Footer(props) {
     }
 
     return (
-        <Box pt={5} bgcolor="#8a98a8" color="white">
+        <Box pt={5} bgcolor="#FFC0CB" color="white">
         <Container maxWidth="lg">
             <Grid container spacing={5}>
-                <Grid item xs={12} sm={6}>
-                    <Grid container><Typography style={{fontFamily: "vcrOsdMono,arial,helvetica,sans-serif", fontSize: 20}}>Hackathon Info</Typography></Grid>
+
+                <Grid item xs={12} sm={2}>
+                    <img src={img('bluejay-icon.png')} style={{ width: "100px"}} />
+                </Grid>
+
+                <Grid item xs={6} sm={3}>
+                    
                     <Grid container>
-                        <Typography style={{fontSize: 16}}>
-                        To contact us, please email&nbsp;
-                        <a href="mailto:hophacks@gmail.com">hophacks@gmail.com</a>
+                        <Typography style={{fontSize: 18}}>
+                        <a href="mailto:hophacks2022@gmail.com" style = {{textDecoration: 'none', color:'white' }}>hophacks2022@gmail.com</a>
                         </Typography>
                     </Grid>
+                    <Grid container><Typography style={{fontSize: 18}}>Malone Hall</Typography></Grid>
+                    <Grid container><Typography style={{fontSize: 18}}>Johns Hopkins University</Typography></Grid>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Grid container><Typography style={{fontFamily: "vcrOsdMono,arial,helvetica,sans-serif", fontSize: 20}}>Contacts</Typography></Grid>
+                <Grid item xs={6} sm={2}>
+                    <Grid container><Typography style={{fontFamily: "vcrOsdMono,arial,helvetica,sans-serif", fontSize: 20}}>Follow Us</Typography></Grid>
                     <Grid container>
                         <Grid item>
                             <a href="https://www.facebook.com/HopHacks" title="Facebook">
@@ -36,17 +42,9 @@ const Footer = function Footer(props) {
                                 <img src={img('linkedin-icon.png')} style={{ width: "40px", margin: "10px 5px 5px" }} alt="linkedin-icon" />
                             </a>
                         </Grid>
-                        <Grid item>
-                            <a href="\" title="Discord">
-                                <img src={img('discord-icon.png')} style={{ width: "40px", margin: "10px 5px 5px" }} alt="discord-icon" />
-                            </a>
-                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-            <Box textAlign="center" pt={{xs: 5, sm: 5}} pb={{xs: 5, sm: 2}}>
-                <Typography style={{fontSize: 14}}>HopHacks &reg; {new Date().getFullYear()}</Typography>
-            </Box>
         </Container>
         </Box>  
     );

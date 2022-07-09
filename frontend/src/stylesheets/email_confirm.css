@@ -1,0 +1,38 @@
+html,body { 
+    box-sizing: border-box; 
+    font-family: 'Open Sans', sans-serif; 
+    margin:0;
+    padding:0;
+    color:inherit;
+    background-color:inherit;
+ }
+
+.container-email {
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 100px;
+    text-align: center;
+    font-size: min(max(calc(12px + 1.25vw), 4vw), 30px);
+}
+
+.wrapper-email {
+    height: auto;
+    width: 80vw;
+    max-width: 50rem;
+    margin:auto;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 2px 7px rgba(0,0,0,0.2);
+    overflow: hidden; 
+    background-color: rgb(232, 235, 242);
+    padding: calc(12px + 2vw);
+}
+
+h1, h3, h6 {
+    margin: 20px;
+}
+
+#graphic {
+    width: auto;
+    height: 50px;
+}

@@ -87,13 +87,14 @@ export default function App() {
 
                 <Route path="/">
                   <Home />
+                  <Footer/>
                 </Route>
 
                 
 
               </Switch>
               
-              <Footer/>
+              
             </div>
           </Router>
         </AuthProvider>

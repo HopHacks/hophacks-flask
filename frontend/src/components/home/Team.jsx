@@ -148,7 +148,7 @@ export default function Team() {
           <Paper className={classes.root} style={{ padding: '5px', marginBottom: '10px' }}>
             <div className={classes.team}>
               <div className={classes.firstRow}>
-                <MemberItem imgURL="curtis_headshot" memberName="Curtis Ahn" memberTitle="Director" linkedin="https://www.linkedin.com/in/ctsahn" />
+                <MemberItem imgURL="curtis_headshot" memberName="Curtis S. Ahn" memberTitle="Director" linkedin="https://www.linkedin.com/in/ctsahn" />
               </div>
               <div className={classes.firstRow}>
                 <MemberItem imgURL="joanne" memberName="Joanne Selinski" memberTitle="Faculty Advisor" />
