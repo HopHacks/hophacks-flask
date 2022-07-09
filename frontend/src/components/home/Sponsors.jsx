@@ -136,6 +136,24 @@ export default function Sponsors() {
                             <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Email us at {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
                             <Divider style={{marginBottom: "3%"}}/>
                         </div>
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                            <SponsorItem imgURL='it_bg' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable / 1.4, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
+                            <SponsorItem imgURL='scm_hori_bg' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue*1.3, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
+                            </Grid>
+                        </motion.div>
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                            <SponsorItem imgURL='wolfram-alpha_bg' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "2%"}}/>
+                            <SponsorItem imgURL='Googlecloud_bg' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "0%", marginLeft: "5%"}}/>
+                            </Grid>
+                        </motion.div>
                         {/*
                         <motion.div
                             initial={"offscreen"}
@@ -156,7 +174,7 @@ export default function Sponsors() {
                                 </Grid>
                             </Grid>
                         </motion.div>
-                        */}
+                        
                         <motion.div
                             initial={"offscreen"}
                             whileInView={"onscreen"}
@@ -168,7 +186,6 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                                {/*
                                 <Grid item xs={6}>
                                     <SponsorItem imgURL='apl' website='https://www.jhuapl.edu/' imgSytle={{ width: windowSize.width * sable * 1.5 , maxHeight: "100%", marginTop: "5%" }} />
                                 </Grid>
@@ -178,9 +195,6 @@ export default function Sponsors() {
                                 <Grid item xs={6}>
                                     <SponsorItem imgURL='SIEMENS' website='https://www.siemens-healthineers.com/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "7%" }} />
                                 </Grid>
-                                 */}
-                                
-                                
                                     <SponsorItem imgURL='it' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable / 1.4, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
                                 
                             </Grid>
@@ -196,11 +210,11 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                                {/*
+                                
                                 <Grid item xs={6}>
                                     <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{ width: windowSize.width * blue * 2, maxHeight: "100%", marginTop: "5%"}} />
                                 </Grid>
-                                 */}
+                                 
                                     <SponsorItem imgURL='scm' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue * 0.7, maxHeight: "100%", marginTop: "5%", marginBottom: "5%"}} />
                                 
                             </Grid>
@@ -216,14 +230,14 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                                {/*
+                                
                                 <Grid item xs={3}>
                                     <SponsorItem imgURL='linode' website='https://www.linode.com/' imgSytle={{ width: windowSize.width * starter, maxHeight: "100%", marginTop: "5%" }} />
                                 </Grid>
                                 <Grid item xs={3}>
                                     <SponsorItem imgURL='ground' website='https://www.groundcontrol.coffee/' imgSytle={{width: windowSize.width * starter * 0.75, maxHeight: "100%", marginTop: "1%"}}/>
                                 </Grid>
-                                */}
+                                
                                 
                                 <Grid item xs={6}>
                                     <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "2%"}}/>
@@ -235,10 +249,13 @@ export default function Sponsors() {
                             </Grid>
                             <br></br>
                         </motion.div>
+                        */}
                     </CardContent>
                 </Card>
             </Box >
+            
         </motion.div>
+        
 
     );
 }
