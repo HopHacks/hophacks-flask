@@ -1,6 +1,7 @@
 import React from "react";
 
 import Box from '@material-ui/core/Box';
+import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
     marginBottom: "13px",
   },
   color: {
-    backgroundColor: "#278be2",
+    backgroundColor: "transparent",
   },
   body: {
     maxHeight: "150px",
@@ -33,17 +34,44 @@ const useStyles = makeStyles({
     fontSize: "375%"
   },
   schedule: {
-    backgroundColor: "#eef7ff",
+    backgroundColor: "transparent",
   },
   font: {
     fontFamily: "Inter",
-    color: "#000000",
+    color: "rgba(255, 255, 255, 0.8)",
+    backgroundColor:"transparent",
+    "&.Mui-selected": {
+      color: "rgba(255, 255, 255, 1)",
+     },
+     fontSize: '18px',
   },
   divFont: {
     fontFamily: "Inter",
-    color: "#000000",
-    height: "30px"
-  }
+    color: "rgba(255, 255, 255, 1)",
+    height: "35px",
+    fontSize: '17px',
+  },
+  indicator: {
+    backgroundColor : 'white',
+  },
+  selected: {
+    color: "rgba(255, 255, 255, 0.8)",
+  },
+  Media: {
+    position: "absolute",
+    width: '300px',
+    height: '200px',
+    backgroundColor: "transparent",
+  },
+
+  Media2: {
+    position: "absolute",
+    width: '300px',
+    height: '200px',
+    backgroundColor: "transparent",
+    left: '1108px',
+    top: '2150px',
+  },
 });
 
 
@@ -53,6 +81,10 @@ export default function Schedule() {
 
   const classes = useStyles();
   const [day, setDay] = React.useState("fri");
+
+  function img(url) {
+    return process.env.PUBLIC_URL + '/images/' + url;
+  };
 
   const handleChange = (event, newDay) => {
     setDay(newDay);
@@ -66,8 +98,18 @@ export default function Schedule() {
             Schedule
           </Typography>
           <div className={classes.divFont}>All times in EDT (GMT-4)</div>
+          <CardMedia
+            component="img"
+            className={classes.Media}
+            image={img('schedule_png.png')}
+          />
 
-          <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"#eef7ff"}} align="center" sx={{ maxHeight: 440 }}>
+          <CardMedia
+            component="img"
+            className={classes.Media2}
+            image={img('schedule_png_2.png')}
+          />
+          <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"transparent"}} align="center" sx={{ maxHeight: 440 }}>
 
             <Tabs
               value={day}
@@ -77,6 +119,8 @@ export default function Schedule() {
               centered
               fullWidth={true}
               className={classes.schedule}
+              classes={{indicator: classes.indicator, selected: classes.selected}}
+              style={{ width: "100%", backgroundColor:"transparent", color:"white"}}
               variant="fullWidth"
             >
               <Tab label="Fri September 16th" value="fri" className={classes.font}/>
@@ -85,11 +129,12 @@ export default function Schedule() {
             </Tabs>
 
             <Table className={classes.table} aria-label="simple table" sx={{
-              height: "max-content"
+              height: "max-content",
+              backgroundColor:"transparent"
             }}>
               <TableHead className={classes.schedule}>
                 <TableRow>
-                  <TableCell className={classes.font}>Time</TableCell>
+                  <TableCell className={classes.font} style={{ backgroundColor:"transparent"}}>Time</TableCell>
                   <TableCell  className={classes.font}>Event</TableCell>
                   <TableCell className={classes.font}>Location</TableCell>
                 </TableRow>
