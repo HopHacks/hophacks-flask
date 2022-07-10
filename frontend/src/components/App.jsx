@@ -30,6 +30,7 @@ import SponsorPrizes from './judgetool/SponsorPrizes.jsx';
 import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
+import Team from "./Team"
 
 export default function App() {
     return (
@@ -85,15 +86,16 @@ export default function App() {
                 <Route path="/reset_password/:token" component={PasswordReset}/>
                 <Route path="/confirm_email/:token" component={EmailConfirmation}/>
 
+                <Route path="/team">
+                  <Team/>
+                </Route>
+
                 <Route path="/">
                   <Home />
                   <Footer/>
                 </Route>
 
-                
-
               </Switch>
-              
               
             </div>
           </Router>

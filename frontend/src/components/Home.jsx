@@ -105,9 +105,7 @@ export default function Home() {
                         <div className="content">
                             <div className="slide-wrapper">
                                 <div className="slide-item">
-                                    {/* <img src={img('logo2022.png')} style={{'width': '14vw'}} className="slide-item__image" /> */}
                                     <img src={img("cover1.png")} className="slide-item__image"></img>
-                                    {/* <h3 className="slide-item__title">HOPHACKS&#10;SEPTEMBER 16-18</h3> */}
                                 </div>
                                 <div className="slide-item">
                                     <img src={img("transparent.png")} className="slide-item__image"></img>
@@ -125,7 +123,7 @@ export default function Home() {
                     <Prizes />
                     <Sponsors />
                     <Faq />
-                    <Team />
+                    {/* <Team /> */}
 
             </Container>
         </div>
