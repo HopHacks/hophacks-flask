@@ -105,7 +105,7 @@ export default function Home() {
                         <div className="content">
                             <div className="slide-wrapper">
                                 <div className="slide-item">
-                                    <img src={img("cover1.png")} className="slide-item__image"></img>
+                                    <img src={img("cover2.png")} className="slide-item__image"></img>
                                 </div>
                                 <div className="slide-item">
                                     <img src={img("transparent.png")} className="slide-item__image"></img>

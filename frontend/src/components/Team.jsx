@@ -29,13 +29,13 @@ export default function TeamPage() {
 
   const classes = useStyles();
 
-  const account = (
+  const team = (
     <Grid
       container
       spacing={4}
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: '35rem' }}
+      style={{ minHeight: '37.5rem' }}
     >
       <Grid item xs={0} md={1} lg={1} />
       <Grid id="register" item xs={12} align="center">
@@ -49,13 +49,13 @@ export default function TeamPage() {
 
   return (
     <div style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/team-page.png")`,
       backgroundSize: 'cover',
-      height: "100vh"
+      minHeight: "100vh"
     }}>
       <div class="container">
         <div className="register-wrapper">
-          {account}
+          {team}
         </div>
       </div>
     </div>
