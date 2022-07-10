@@ -18,12 +18,9 @@ const useStyles = makeStyles({
   },
 
   title: {
-    color: "#ffffff",
-    fontFamily: "Inter",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: "375%"
-},
+    color: "#7289da",
+    fontFamily: "VCR OSD Mono",
+  },
 
   team: {
     display: 'flex',

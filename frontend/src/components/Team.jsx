@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Team from './home/Team';
 
+
 import '../stylesheets/team.css';
 
 export default function TeamPage() {
@@ -49,7 +50,7 @@ export default function TeamPage() {
 
   return (
     <div style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/team-page.png")`,
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/cover.png")`,
       backgroundSize: 'cover',
       minHeight: "100vh"
     }}>
@@ -59,5 +60,6 @@ export default function TeamPage() {
         </div>
       </div>
     </div>
+
   )
 }

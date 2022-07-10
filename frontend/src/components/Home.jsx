@@ -125,9 +125,9 @@ export default function Home() {
                     <Prizes />
                     <Sponsors />
                     <Faq />
-                    {/* <Team /> */}
 
             </Container>
+            <span STYLE="font-size:300%" >&nbsp;&nbsp;</span>
         </div>
     );
 }

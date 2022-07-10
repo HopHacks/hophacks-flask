@@ -1,14 +1,13 @@
 import React from "react";
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
 import "@fontsource/rosarivo" 
 import '../../stylesheets/home.css'
 
@@ -93,7 +92,7 @@ export default function Faq() {
    
 
     return (
-        <Box>
+        <Box >
                             <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"7%"}}>
                                 <Grid item xs={2}>
                                     <img style={{marginLeft: "5%", width: "120%"}} src={img("home_bg/3.png")}/>
@@ -288,6 +287,7 @@ export default function Faq() {
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
+                                
                             </Box>
                             </Box>
 
