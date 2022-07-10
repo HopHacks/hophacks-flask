@@ -140,7 +140,7 @@
         if (i == 0) {
           button.anchor.set(0.5);
           button.x = renderer.width / 2;
-          button.y = renderer.height / 2 + 350;
+          button.y = renderer.height / 2 + 250;
 
           button.interactive = true;
           button.buttonMode = true;
