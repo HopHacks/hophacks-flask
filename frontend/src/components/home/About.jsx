@@ -126,8 +126,8 @@ export default function About() {
   const introText = 'HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!'
   const ctrls = useAnimation();
   const { ref, inView } = useInView({
-    threshold: 0.5,
-    triggerOnce: true,
+    threshold: 0.6,
+    triggerOnce: false,
   });
 
   useEffect(() => {

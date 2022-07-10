@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     fontWeight: '700',
     fontStyle: 'italic',
-    fontSize: '251.02px',
+    fontSize: '188px',
     lineHeight: '304px'
 
   },
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     fontWeight: '700',
     fontStyle: 'italic',
-    fontSize: '251.02px',
+    fontSize: '188px',
     lineHeight: '304px'
 
   },
@@ -69,7 +69,7 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     fontWeight: '700',
     fontStyle: 'italic',
-    fontSize: '251.02px',
+    fontSize: '188px',
     lineHeight: '304px'
 
   },
@@ -111,9 +111,9 @@ export default function AboutTransition() {
 
   const xRight = useTransform(scrollY, [800, 0], ["-15%", "23vw"]);
 
-  const xLeft = useTransform(scrollY, [800, 0], ["25%", "-20vw"]);
+  const xLeft = useTransform(scrollY, [800, 0], ["25%", "-15vw"]);
 
-  const xLeft2 = useTransform(scrollY, [800, 300], ["25%", "-5vw"]);
+  const xLeft2 = useTransform(scrollY, [800, 0], ["45%", "25vw"]);
 
   return (
     <div style={{position: "relative"}}>

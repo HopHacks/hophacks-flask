@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     marginBottom: "13px",
   },
   color: {
-    backgroundColor: "#278be2",
+    backgroundColor: "transparent",
   },
   body: {
     maxHeight: "150px",
@@ -37,16 +37,26 @@ const useStyles = makeStyles({
     fontSize: "375%"
   },
   schedule: {
-    backgroundColor: "#eef7ff",
+    backgroundColor: "transparent",
   },
   font: {
     fontFamily: "Inter",
-    color: "#000000",
+    color: "#ffffff",
+    backgroundColor:"transparent",
+    "&.Mui-selected": {
+      color: "white",
+     }
   },
   divFont: {
     fontFamily: "Inter",
-    color: "#000000",
+    color: "#ffffff",
     height: "30px"
+  },
+  indicator: {
+    backgroundColor : 'white',
+  },
+  selected: {
+    color: 'white',
   }
 });
 
@@ -71,7 +81,7 @@ export default function Schedule() {
           </Typography>
           <div className={classes.divFont}>All times in EDT (GMT-4)</div>
 
-          <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"#eef7ff"}} align="center" sx={{ maxHeight: 440 }}>
+          <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"transparent"}} align="center" sx={{ maxHeight: 440 }}>
 
             <Tabs
               value={day}
@@ -81,6 +91,8 @@ export default function Schedule() {
               centered
               fullWidth={true}
               className={classes.schedule}
+              classes={{indicator: classes.indicator, selected: classes.selected}}
+              style={{ width: "100%", backgroundColor:"transparent", color:"white"}}
               variant="fullWidth"
             >
               <Tab label="Fri September 16th" value="fri" className={classes.font}/>
@@ -89,11 +101,12 @@ export default function Schedule() {
             </Tabs>
 
             <Table className={classes.table} aria-label="simple table" sx={{
-              height: "max-content"
+              height: "max-content",
+              backgroundColor:"transparent"
             }}>
               <TableHead className={classes.schedule}>
                 <TableRow>
-                  <TableCell className={classes.font}>Time</TableCell>
+                  <TableCell className={classes.font} style={{ backgroundColor:"transparent"}}>Time</TableCell>
                   <TableCell  className={classes.font}>Event</TableCell>
                   <TableCell className={classes.font}>Location</TableCell>
                 </TableRow>
