@@ -89,11 +89,15 @@ const Nav = function Nav(props) {
           <Typography variant="h5" className={classes.title}> Home </Typography>
         </Button>
 
-        {/* <Button component={Link} to={'/team'} onload={() => window.location.reload()} color="inherit"> */}
-        <Button component={Link} onclick={() => {
+        <Button component={Link} to={'/team'} color="inherit">
+        {/* <Button component={Link} onclick={() => {
           window.location = "/team";
-        }} color="inherit">
+        }} color="inherit"> */}
           <Typography variant="h5" className={classes.title}> Team </Typography>
+        </Button>
+
+        <Button component={Link} to={'/register'} color="inherit">
+          <Typography variant="h5" className={classes.title}> Register </Typography>
         </Button>
 
         {!props.isLoggedIn && <Login />
