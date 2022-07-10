@@ -62,7 +62,7 @@ const useStyles = makeStyles({
   },
   Media: {
     position: "absolute",
-    width: '200px',
+    width: '300px',
     height: '200px',
     backgroundColor: "transparent",
   },
