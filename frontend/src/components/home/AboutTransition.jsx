@@ -18,10 +18,6 @@ const useStyles = makeStyles({
     fontFamily: "VCR OSD Mono",
   },
   Media: {
-    // height: '50%',
-    // width: '55%',
-    // objectFit: 'cover', 
-    // justifyContent:'center'
     width: '65%',
     marginLeft: '33%',
     backgroundColor: "transparent",

@@ -3,7 +3,7 @@ import React from "react";
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
+import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,23 +41,40 @@ const useStyles = makeStyles({
   },
   font: {
     fontFamily: "Inter",
-    color: "#ffffff",
+    color: "rgba(255, 255, 255, 0.8)",
     backgroundColor:"transparent",
     "&.Mui-selected": {
-      color: "white",
-     }
+      color: "rgba(255, 255, 255, 1)",
+     },
+     fontSize: '18px',
   },
   divFont: {
     fontFamily: "Inter",
-    color: "#ffffff",
-    height: "30px"
+    color: "rgba(255, 255, 255, 1)",
+    height: "35px",
+    fontSize: '17px',
   },
   indicator: {
     backgroundColor : 'white',
   },
   selected: {
-    color: 'white',
-  }
+    color: "rgba(255, 255, 255, 0.8)",
+  },
+  Media: {
+    position: "absolute",
+    width: '200px',
+    height: '200px',
+    backgroundColor: "transparent",
+  },
+
+  Media2: {
+    position: "absolute",
+    width: '300px',
+    height: '200px',
+    backgroundColor: "transparent",
+    left: '1108px',
+    top: '2150px',
+  },
 });
 
 
@@ -67,6 +84,10 @@ export default function Schedule() {
 
   const classes = useStyles();
   const [day, setDay] = React.useState("fri");
+
+  function img(url) {
+    return process.env.PUBLIC_URL + '/images/' + url;
+  };
 
   const handleChange = (event, newDay) => {
     setDay(newDay);
@@ -80,7 +101,17 @@ export default function Schedule() {
             Schedule
           </Typography>
           <div className={classes.divFont}>All times in EDT (GMT-4)</div>
+          <CardMedia
+            component="img"
+            className={classes.Media}
+            image={img('schedule_png.png')}
+          />
 
+          <CardMedia
+            component="img"
+            className={classes.Media2}
+            image={img('schedule_png_2.png')}
+          />
           <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"transparent"}} align="center" sx={{ maxHeight: 440 }}>
 
             <Tabs
