@@ -45,8 +45,7 @@ const useStyles = makeStyles({
   },
   divFont: {
     fontFamily: "Inter",
-    color: "#000000",
-    height: "30px"
+    color: "#000000"
   }
 });
 
@@ -66,10 +65,11 @@ export default function Schedule() {
     <Box py={2}>
 
 
-          <Typography className={classes.title} variant="h4" gutterBottom>
+          <Typography className={classes.title} variant="h4" style={{ marginTop:"0%"}} gutterBottom>
             Schedule
           </Typography>
-          <div className={classes.divFont}>All times in EDT (GMT-4)</div>
+
+          <div className={classes.divFont} style={{ color: "#ffffff", fontWeight: "bold", fontSize: "150%"}} >All times in EDT (GMT-4)</div>
 
           <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"#eef7ff"}} align="center" sx={{ maxHeight: 440 }}>
 

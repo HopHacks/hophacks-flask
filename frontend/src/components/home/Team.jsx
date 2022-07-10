@@ -20,9 +20,12 @@ const useStyles = makeStyles({
   },
 
   title: {
-    color: "#7289da",
-    fontFamily: "VCR OSD Mono",
-  },
+    color: "#ffffff",
+    fontFamily: "Inter",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: "375%"
+},
 
   team: {
     display: 'flex',
@@ -142,7 +145,20 @@ export default function Team() {
 
   return (
     <Box py={2}>
-          <Typography className={classes.title} variant="h4" gutterBottom>Our Perfect Team</Typography>
+          <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"15%"}} >
+            <Grid item xs={4}>
+              <img style={{marginLeft: "80%", width: "20%"}} src={img("home_bg/7.png")}/>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography className={classes.title} variant="h4" style={{ marginTop:"20%"}} gutterBottom>
+                Our Perfect Team
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>  
+              <img style={{marginLeft: "0%", width: "20%"}} src={img("home_bg/7.png")}/>
+            </Grid>
+          </Grid>
+          
           <Paper className={classes.root} style={{ padding: '5px', marginBottom: '10px' }}>
             <div className={classes.team}>
               <div className={classes.firstRow}>
@@ -156,7 +172,7 @@ export default function Team() {
               </div>
             </div>
           </Paper>
-          <Paper className={classes.root} style={{ padding: '5px' }}>
+          <Paper className={classes.root} style={{ padding: '5px' , marginBottom: '5%'}}>
             <Tabs
               value={value}
               onChange={handleChange}

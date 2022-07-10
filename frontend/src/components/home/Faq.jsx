@@ -90,7 +90,7 @@ export default function Faq() {
     return (
         <Box>
 
-                            <Typography className={classes.title} variant="h4" gutterBottom>
+                            <Typography className={classes.title} variant="h4" style={{ marginTop:"0%"}} gutterBottom>
                             Frequently Asked Questions
                             </Typography>
 

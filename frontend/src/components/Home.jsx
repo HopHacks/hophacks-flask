@@ -11,6 +11,8 @@ import Faq from "./home/Faq"
 import '../stylesheets/home.css'
 import { useEffect } from "react";
 import AboutTransition from "./home/AboutTransition";
+import Grid from '@material-ui/core/Grid';
+
 
 const useStyles = makeStyles({
     logo: {
@@ -122,9 +124,21 @@ export default function Home() {
             <Container fixed>
                     <AboutTransition />
                     <About />
+                    <img style={{marginLeft: "70%", width: "20%"}} src={img("home_bg/1.png")}/>
                     <Schedule />
                     <Prizes />
                     <Sponsors />
+                    <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"10%"}}>
+                        <Grid item xs={4}>
+                            <img style={{marginLeft: "0%", width: "60%"}} src={img("home_bg/3.png")}/>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <img style={{marginLeft: "15%", width: "60%"}} src={img("home_bg/3.png")}/>
+                        </Grid>
+                        <Grid item xs={4}>  
+                            <img style={{marginLeft: "30%", width: "60%"}} src={img("home_bg/3.png")}/>
+                        </Grid>
+                    </Grid>
                     <Faq />
                     <Team />
 
