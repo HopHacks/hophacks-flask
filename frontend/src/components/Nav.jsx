@@ -85,6 +85,10 @@ const Nav = function Nav(props) {
           <Typography variant="h5" className={classes.title}> Home </Typography>
         </Button>
 
+        <Button component={Link} to={'/register'} color="inherit">
+          <Typography variant="h5" className={classes.title}> Register </Typography>
+        </Button>
+
         {!props.isLoggedIn && <Login />
         }
 
