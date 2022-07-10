@@ -17,6 +17,7 @@ import Faq from "./home/Faq"
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
+import { useEffect } from "react";
 import AboutTransition from "./home/AboutTransition";
 
 const useStyles = makeStyles({
@@ -51,6 +52,11 @@ const useStyles = makeStyles({
     },
     gradient: {
         backgroundImage: "linear-gradient(#15ABFB, #376CC9)",
+    },
+
+    blank: {
+        padding: "30px",
+        backgroundColor: "#c8e7fa"
     }
   }
 );
@@ -62,89 +68,36 @@ export default function Home() {
         return process.env.PUBLIC_URL + '/images/' + url;
     }
 
-    const Banner = (
-        <div style={{ width: "100%", height: "100%", backgroundColor: "#0F1827" }}>
-            <ParallaxBanner
-                layers={[
-                    {
-                        image: img('010_sky_edit2.png'),
-                        amount: -0.225,
-                    },
-                    {
-                        image: img('009_back_trees2.png'),
-                        amount: -0.3,
-                    },
-                    {
-                        image: img('008_sun.webp'),
-                        amount: -0.375,
-                    },
-                    {
-                        image: img('007_sky_clouds.webp'),
-                        amount: -0.45,
-                    },
-                    {
-                        image: img('006_mountains.webp'),
-                        amount: -0.525,
-                    },
-                    {
-                        image: img('005_behind_tower_trees2.png'),
-                        amount: -0.6,
-                    },
-                    {
-                        image: img('004_behind_tower_clouds2.png'),
-                        amount: -0.675,
-                    },
-                    {
-                        image: img('003_tower.webp'),
-                        amount: -0.7,
-                    },
-                    {
-                        image: img('002_front_of_tower_clouds2.png'),
-                        amount: -0.825,
-                    },
-                    {
-                        image: img('001_bushes3.png'),
-                        amount: -0.9,
-                    },
+    useEffect(() => {
+        const script1 = document.createElement("script");
+        const script2 = document.createElement("script");
+        const script3 = document.createElement("script");
+        const script4 = document.createElement("script");
 
-                ]}
-                style={{
-                    height: '100vh',
-                }}
-            >
-            </ParallaxBanner>
-        </div>
-    )
+        script1.src = "pixi.min.js";
+        script1.async = false;
 
-    /* Logo on top of Parallax Banner */
-    const Logo = (
-        <div className={classes.logo}>
-            <img src={img('HopHacks_logo.png')} style={{
-                'width': '14vw',
-            }} />
+        script2.src = "TweenMax.min.js";
+        script2.async = false;
 
-            <Typography align="center" justify="center" style={{ 'color': '#FFFFFF', fontSize: '3.8em', fontFamily: "VCR OSD Mono" }} >
-                <strong>HOPHACKS</strong>
-            </Typography>
+        script3.src = "main.js";
+        script3.async = false;
 
-            <div />
+        script4.src = "home.js";
+        script4.async = false;
 
-            <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.0em', fontFamily: "VCR OSD Mono" }} >
-                <strong>September</strong>
-            </Typography>
-            <br />
+        document.body.appendChild(script1);
+        document.body.appendChild(script2);
+        document.body.appendChild(script3);
+        document.body.appendChild(script4);
 
-
-            <Button className={classes.button} variant="outlined" href="https://forms.gle/bVRLmpbLfDuZ7pkX6" >
-
-                <Typography style={{ "color": "#202c63", fontSize: '2.8em', fontFamily: "VCR OSD Mono" }}>
-
-                    <strong>Pre-registration</strong>
-                </Typography>
-            </Button>
-
-        </div>
-    );
+        return () => {
+            document.body.removeChild(script1);
+            document.body.removeChild(script2);
+            document.body.removeChild(script3);
+            document.body.removeChild(script4);
+          }
+    }, [])
 
     return (
         <div className={classes.gradient}>
@@ -155,11 +108,184 @@ export default function Home() {
                 <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{"width":"100%"}}></img>
             </a>
 
-            {Banner}
-            {Logo}
+            {/* {Logo} */}
 
-            <Container fixed>
+            <div id="parallax" className="parallax">
+                <div className="parallax-body">
+                    <main className="site-wrapper">
+                        <div className="content">
+                            <div className="slide-wrapper">
+                                <div className="slide-item">
+                                    {/* <img src={img('logo2022.png')} style={{'width': '14vw'}} className="slide-item__image" /> */}
+                                    <img src={img("cover1.png")} className="slide-item__image"></img>
+                                    {/* <h3 className="slide-item__title">HOPHACKS&#10;SEPTEMBER 16-18</h3> */}
+                                </div>
+                                <div className="slide-item">
+                                    <img src={img("transparent.png")} className="slide-item__image"></img>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+
+            <Container id="website" fixed>
                 <Box py={2}>
+                    <Card>
+                        <CardContent>
+                            <Typography className={classes.title} variant="h4" gutterBottom>
+                                About
+                            </Typography>
+                            <Typography >
+                                HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
+                                <p>
+                                    <b>
+                                        Note: Due to the COVID-19 pandemic, we will be hosting HopHacks virtually via Discord and Zoom.
+                                    </b>
+                                </p>
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                
+
+                <Schedule/>
+                    <Prizes/>
+                    <Sponsors />
+                    <Card>
+                        <CardContent>
+                            <Typography className={classes.title} variant="h4" gutterBottom>
+                                FAQs
+                            </Typography>
+
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`} >
+                                <CardContent>
+                                    <Typography variant="h6" gutterBottom>
+                                       <b> Who can participate? </b>
+                                    </Typography>
+
+                                    <Typography>
+                                        Any <b>university student</b> enrolled in any undergraduate or graduate program may participate. High school students may <b>NOT</b> participate.
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                                <CardContent>
+                                    <Typography variant="h6" gutterBottom>
+                                        <b>Where will HopHacks take place?</b>
+                                    </Typography>
+
+                                    <Typography >
+                                        Because of restrictions due to COVID-19, HopHacks will be virtual this year. We will be using a mix of Discord and Zoom, so make sure you have accounts for them!
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                                <CardContent>
+                                    <Typography variant="h6" gutterBottom>
+                                        <b>Who will be there?</b>
+                                    </Typography>
+
+                                    <Typography >
+                                        In addition to students in attendance, representatives from many of our sponsor companies will be there to mentor the participants.
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+
+                            {/* <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                                <CardContent>
+                                    <Typography variant="h6" gutterBottom>
+                                        What are the prizes?
+
+                                    </Typography>
+
+                                    <Typography >
+
+                                        <p>HopHacks will be awarding larger prizes this year for the top 10!</p>
+                                        <p>
+                                            We will have: a $1,024 grand prize, a $768 second place prize, a $512 third place prize,
+                                            a $384 fourth place prize, and a $256 fifth place prize. The rest of the top 10 teams (sixth to tenth place)
+                                            will receive $128 each. The prize will be distributed among team members, and all teams are automatically eligible
+                                            to compete for these prizes.
+                                        </p>
+
+                                        <p>
+                                            In addition to the HopHacks prizes, there will also be several branded prizes offered
+                                            by our sponsors. The full list of prizes will be on our Devpost, which will be linked when available.
+                                            You may sign up for individual branded prizes there (which you must do for each branded prize you wish to compete for).
+                                        </p>
+
+
+                                    </Typography>
+
+                                </CardContent>
+                            </Card> */}
+
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                                <CardContent>
+                                    <Typography variant="h6" gutterBottom>
+                                        <b> Who are the judges? </b>
+                                    </Typography>
+
+                                    <Typography >
+                                        The judges will be a mix of local tech professionals and JHU faculty.
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                                <CardContent>
+                                    <Typography  variant="h6" gutterBottom>
+                                        <b>Will I be able to participate in multiple virtual hackathons during the same weekend?</b>
+                                    </Typography>
+
+                                    <Typography >
+                                        Yes! Because of the nature of virtual hackathons, you will be able to submit your project to multiple concurrent events.
+                                        The project you create, however, must be new and <b>CANNOT</b> be worked on before the start of the hackathon.
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                                <CardContent>
+                                    <Typography variant="h6" gutterBottom>
+                                        <b>Where will I sleep? </b>
+                                    </Typography>
+
+                                    <Typography >
+                                        Since HopHacks is happening virtually this year, you can sleep anywhere you want (though we recommend sleeping in a bed)!
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                                <CardContent>
+                                    <Typography  variant="h6" gutterBottom>
+                                        <b>What about the free food?</b>
+                                    </Typography>
+
+                                    <Typography >
+                                        Unfortunately, because we do not have the technology to provide virtual food, we will not be having free food this year. Feel free to create a hack to develop such technology!
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
+                                <CardContent>
+                                    <Typography  variant="h6" gutterBottom>
+                                        <b>What if I have any other questions? </b>
+                                    </Typography>
+
+                                    <Typography >
+                                        You can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. Alternatively, you can email us at <a className="link-text" href="mailto:team@hophacks.com">team@hophacks.com</a>
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </CardContent>
+                    </Card>
+                    <Team />  
                     <AboutTransition />
                     <About />
                     <Schedule />
@@ -168,7 +294,7 @@ export default function Home() {
                     <Faq />
                     <Team />
                 </Box>
-            </Container>
+            </Container> 
         </div>
     );
 

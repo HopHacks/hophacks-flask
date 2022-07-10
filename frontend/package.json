@@ -23,6 +23,7 @@
     "react-scripts": "^4.0.1",
     "react-scroll-parallax": "^2.3.5",
     "serve": "^11.3.2",
+    "pixi.js": "4.5.1",
     "styled-components": "^5.3.5"
   },
   "scripts": {
