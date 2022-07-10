@@ -145,9 +145,9 @@ export default function Team() {
 
   return (
     <Box py={2}>
-          <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"15%"}} >
+          <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"7%"}} >
             <Grid item xs={4}>
-              <img style={{marginLeft: "80%", width: "20%"}} src={img("home_bg/7.png")}/>
+              <img style={{marginLeft: "80%", width: "30%"}} src={img("home_bg/7.png")}/>
             </Grid>
             <Grid item xs={4}>
               <Typography className={classes.title} variant="h4" style={{ marginTop:"20%"}} gutterBottom>
@@ -155,7 +155,7 @@ export default function Team() {
               </Typography>
             </Grid>
             <Grid item xs={4}>  
-              <img style={{marginLeft: "0%", width: "20%"}} src={img("home_bg/7.png")}/>
+              <img style={{marginLeft: "-10%", width: "30%"}} src={img("home_bg/7.png")}/>
             </Grid>
           </Grid>
           

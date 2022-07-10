@@ -1,5 +1,6 @@
 import React from "react";
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -80,6 +81,10 @@ const useStyles = makeStyles({
     }
 });
 
+function img(url) {
+    return process.env.PUBLIC_URL + '/images/' + url;
+  }
+
 export default function Faq() {
 
     const classes = useStyles();
@@ -89,10 +94,20 @@ export default function Faq() {
 
     return (
         <Box>
-
-                            <Typography className={classes.title} variant="h4" style={{ marginTop:"0%"}} gutterBottom>
-                            Frequently Asked Questions
-                            </Typography>
+                            <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"7%"}}>
+                                <Grid item xs={2}>
+                                    <img style={{marginLeft: "5%", width: "120%"}} src={img("home_bg/3.png")}/>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography className={classes.title} variant="h4" style={{ marginTop:"0%"}} gutterBottom>
+                                        Frequently Asked Questions
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <img style={{marginLeft: "-30%", width: "120%"}} src={img("home_bg/3.png")}/>
+                                </Grid>
+                            </Grid>
+                            
 
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>

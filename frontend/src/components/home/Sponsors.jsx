@@ -133,10 +133,10 @@ export default function Sponsors() {
                         <div>
                             <Grid container spacing={2} justify="center" alignItems="center">
                                 <Grid item xs={4}>
-                                    <img style={{marginLeft: "30%", marginBottom: "45%", width: "60%"}} src={img("home_bg/4.png")}/>
+                                    <img style={{marginLeft: "40%", marginBottom: "0%", width: "60%"}} src={img("home_bg/4_edit.png")}/>
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <h4 className={classes.title} style={{ marginTop:"55%"}} >Sponsors</h4>
+                                    <h4 className={classes.title} style={{ marginTop:"30%"}} >Sponsors</h4>
                                     <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Email us at {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
                                 </Grid>
                                 <Grid item xs={4}></Grid>
