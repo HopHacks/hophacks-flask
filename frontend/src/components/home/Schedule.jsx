@@ -40,8 +40,10 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     color: "rgba(255, 255, 255, 0.8)",
     backgroundColor:"transparent",
+    fontWeight: "bold",
     "&.Mui-selected": {
       color: "rgba(255, 255, 255, 1)",
+      fontWeight: "bold",
      },
      fontSize: '18px',
   },
@@ -50,6 +52,7 @@ const useStyles = makeStyles({
     color: "rgba(255, 255, 255, 1)",
     height: "35px",
     fontSize: '17px',
+    fontWeight: "bold",
   },
   indicator: {
     backgroundColor : 'white',
@@ -61,6 +64,8 @@ const useStyles = makeStyles({
     position: "absolute",
     width: '300px',
     height: '200px',
+    left: '350px',
+    top: '1850px',
     backgroundColor: "transparent",
   },
 
@@ -69,7 +74,7 @@ const useStyles = makeStyles({
     width: '300px',
     height: '200px',
     backgroundColor: "transparent",
-    left: '1108px',
+    left: '1350px',
     top: '2150px',
   },
 });
