@@ -65,10 +65,10 @@ export default function Sponsors() {
 
     const classes = useStyles();
 
-    const gold = 0.3;
-    const sable = 0.25;
-    const blue = 0.15;
-    const starter = 0.15;
+    const gold = 0.6;
+    const sable = 0.5;
+    const blue = 0.4;
+    const starter = 0.3;
 
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
@@ -123,8 +123,17 @@ export default function Sponsors() {
             <Box py={2}>
 
                         <div>
-                            <h4 className={classes.title}>Sponsors</h4>
-                            <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Email us at {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                <Grid item xs={4}>
+                                    <img style={{marginLeft: "40%", marginBottom: "0%", width: "60%"}} src={img("home_bg/4_edit.png")}/>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <h4 className={classes.title} style={{ marginTop:"30%"}} >Sponsors</h4>
+                                    <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Email us at {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
+                                </Grid>
+                                <Grid item xs={4}></Grid>
+                            </Grid>
+                            
                             <Divider style={{marginBottom: "3%"}}/>
                         </div>
                         <motion.div class={classes.logos}
@@ -132,8 +141,8 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                            <SponsorItem imgURL='it_bg' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable / 1.4, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
-                            <SponsorItem imgURL='scm_hori_bg' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue*1.3, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
+                            <SponsorItem imgURL='it_hori_brush' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
+                            <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
                             </Grid>
                         </motion.div>
                         <motion.div class={classes.logos}
@@ -141,10 +150,11 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                            <SponsorItem imgURL='wolfram-alpha_bg' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "2%"}}/>
-                            <SponsorItem imgURL='Googlecloud_bg' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "0%", marginLeft: "5%"}}/>
+                            <SponsorItem imgURL='wolfram_alpha_brush' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter, maxHeight: "100%", marginTop: "2%"}}/>
+                            <SponsorItem imgURL='google_cloud_brush' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter, maxHeight: "100%", marginTop: "0%", marginLeft: "5%"}}/>
                             </Grid>
                         </motion.div>
+                        <Divider style={{marginTop: "3%", marginBottom: "3%"}}/>
                         {/*
                         <motion.div
                             initial={"offscreen"}

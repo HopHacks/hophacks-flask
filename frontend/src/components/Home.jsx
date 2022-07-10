@@ -10,6 +10,8 @@ import Faq from "./home/Faq"
 import '../stylesheets/home.css'
 import { useEffect } from "react";
 import AboutTransition from "./home/AboutTransition";
+import Grid from '@material-ui/core/Grid';
+
 
 const useStyles = makeStyles({
     logo: {

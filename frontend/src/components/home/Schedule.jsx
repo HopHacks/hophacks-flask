@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
 
@@ -83,6 +84,9 @@ const useStyles = makeStyles({
 
 export default function Schedule() {
 
+  function img(url) {
+    return process.env.PUBLIC_URL + '/images/' + url;
+  }
 
   const classes = useStyles();
   const [day, setDay] = React.useState("fri");
@@ -97,12 +101,22 @@ export default function Schedule() {
 
   return (
     <Box py={2}>
+          <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"15%"}}>
+            <Grid item xs={4}>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography className={classes.title} variant="h4" style={{marginTop: "-30%"}} gutterBottom>
+                Schedule
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <img style={{marginLeft: "0%", marginTop: "-60%", width: "60%"}} src={img("home_bg/1_edit.png")}/>
+            </Grid>              
+          </Grid>
+          
 
+          <div className={classes.divFont} style={{ color: "#ffffff", fontWeight: "bold", fontSize: "150%", marginTop: "-10%"}} >All times in EDT (GMT-4)</div>
 
-          <Typography className={classes.title} variant="h4" gutterBottom>
-            Schedule
-          </Typography>
-          <div className={classes.divFont}>All times in EDT (GMT-4)</div>
           <CardMedia
             component="img"
             className={classes.Media}
