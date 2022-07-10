@@ -265,10 +265,13 @@ export default function Register() {
   function openTerms() {
     window.open("https://mlh.io/terms", "_blank");
   }
+  function openBusForm() {
+    window.open("https://forms.gle/qiYu547aoQ6SvYKz6", "_blank");
+  }
 
 
   const codeOfConduct = (
-    <FormGroup style={{ marginTop: 50 }}>
+    <FormGroup style={{ marginTop: 20, display:'initial' }}>
       <FormControlLabel
         control={
           <
@@ -281,11 +284,11 @@ export default function Register() {
         }
         label={
           <div style={{ fontSize: 15 }}>
-            <span>I have read and understand the </span>
+            <span>* I have read and understand the </span>
             <Link onClick={openCodeOfConduct}>
               MLH code of conduct
             </Link>
-            <span>. *</span>
+            <span>.</span>
           </div>
         }
       />
@@ -293,7 +296,7 @@ export default function Register() {
   )
 
   const eventLogistics = (
-    <FormGroup style={{ marginTop: -10 }}>
+    <FormGroup style={{ marginTop: -10, display:'initial'  }}>
       <FormControlLabel
         style={{ display: 'table' }}
         control={
@@ -309,7 +312,7 @@ export default function Register() {
         }
         label={
           <div style={{ fontSize: 15 }}>
-            <span>I authorize you to share my application/registration information
+            <span>* I authorize you to share my application/registration information
             with Major League Hacking for event administration, ranking, and MLH
               administration in-line with the </span>
             <Link onClick={openPrivacy}>
@@ -319,14 +322,14 @@ export default function Register() {
             <Link onClick={openTerms}>
               MLH Terms and Conditions
             </Link>
-            <span>. *</span>
+            <span>.</span>
           </div>
         }
       />
     </FormGroup>
   )
   const communication = (
-    <FormGroup style={{ marginTop: -10, marginBottom: 25 }}>
+    <FormGroup style={{ marginTop: -10, marginBottom: 25, display:'initial' }}>
       <FormControlLabel
         style={{ display: 'table' }}
         control={
@@ -342,12 +345,20 @@ export default function Register() {
         }
         label={
           <div style={{ fontSize: 15 }}>
-            <span>I authorize MLH to send me pre- and post-event informational emails,
-              which contain free credit and opportunities from their partners. *</span>
+            <span>* I authorize MLH to send me pre- and post-event informational emails,
+              which contain free credit and opportunities from their partners.</span>
           </div>
         }
       />
     </FormGroup>
+  )
+
+  const busForm = (
+    <div style={{ fontSize: 15, fontWeight: "bold", marginTop: "30px" }}>
+      <span>* Note: If you are interested in taking a bus (limited availability) to Johns Hopkins University, please fill the   
+        <Link onClick={openBusForm}>  Bus RSVP Form  </Link>    
+      </span>
+    </div>  
   )
 
   const personalInfo = (
@@ -524,6 +535,7 @@ export default function Register() {
       </Grid>
 
       <Grid item xs={12}>
+        {busForm}
         {codeOfConduct}
         {eventLogistics}
         {communication}
@@ -590,16 +602,14 @@ export default function Register() {
   }
 
   return (
-    <div style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
-      backgroundSize: 'cover',
-      height: "100vh"
+    <body style={{
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2021_theme.png")`
     }}>
       <div class="container">
         <div className="register-wrapper">
           {selectPage()}
         </div>
       </div>
-    </div>
+    </body>
   )
 }
