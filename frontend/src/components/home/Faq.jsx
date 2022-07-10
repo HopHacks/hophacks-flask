@@ -1,14 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card';
-import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
-import { ParallaxBanner } from 'react-scroll-parallax';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -93,13 +88,13 @@ export default function Faq() {
    
 
     return (
-        <Card className={`${classes.colorBackground}`}>
-                        <CardContent>
+        <Box>
+
                             <Typography className={classes.title} variant="h4" gutterBottom>
                             Frequently Asked Questions
                             </Typography>
 
-                            <Box raised="true" className= "MuiAccordion-root.Mui-expanded" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }} >
                                         <Typography variant="h6" gutterBottom > 
@@ -114,7 +109,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -129,7 +124,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -158,7 +153,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -173,7 +168,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -188,7 +183,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -203,7 +198,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -220,50 +215,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-
-                            {/* <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        What are the prizes?
-
-                                    </Typography>
-
-                                    <Typography >
-
-                                        <p>HopHacks will be awarding larger prizes this year for the top 10!</p>
-                                        <p>
-                                            We will have: a $1,024 grand prize, a $768 second place prize, a $512 third place prize,
-                                            a $384 fourth place prize, and a $256 fifth place prize. The rest of the top 10 teams (sixth to tenth place)
-                                            will receive $128 each. The prize will be distributed among team members, and all teams are automatically eligible
-                                            to compete for these prizes.
-                                        </p>
-
-                                        <p>
-                                            In addition to the HopHacks prizes, there will also be several branded prizes offered
-                                            by our sponsors. The full list of prizes will be on our Devpost, which will be linked when available.
-                                            You may sign up for individual branded prizes there (which you must do for each branded prize you wish to compete for).
-                                        </p>
-
-
-                                    </Typography>
-
-                                </CardContent>
-                            </Card> */}
-
-                            {/* <Card raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} >
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        <b>Will I be able to participate in multiple virtual hackathons during the same weekend?</b>
-                                    </Typography>
-
-                                    <Typography >
-                                        Yes! Because of the nature of virtual hackathons, you will be able to submit your project to multiple concurrent events.
-                                        The project you create, however, must be new and <b>CANNOT</b> be worked on before the start of the hackathon.
-                                    </Typography>
-                                </CardContent>
-                            </Card> */}
-
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -278,7 +230,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -293,7 +245,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.margin} ${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                            <Box border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -308,7 +260,7 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
-                            <Box raised="true" className={`${classes.color} ${classes.text}`} border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" sx={{height: "800px"}} >
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" sx={{height: "800px"}} >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                                         <Typography variant="h6" gutterBottom>
@@ -322,8 +274,7 @@ export default function Faq() {
                                     </AccordionDetails>
                                 </Accordion>
                             </Box>
-                        </CardContent>
-                    </Card>
+                            </Box>
 
     );
 }

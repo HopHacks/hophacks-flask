@@ -142,8 +142,6 @@ export default function Team() {
 
   return (
     <Box py={2}>
-      <Card>
-        <CardContent>
           <Typography className={classes.title} variant="h4" gutterBottom>Our Perfect Team</Typography>
           <Paper className={classes.root} style={{ padding: '5px', marginBottom: '10px' }}>
             <div className={classes.team}>
@@ -232,8 +230,6 @@ export default function Team() {
             </Grid>}
           </Paper>
 
-        </CardContent>
-      </Card>
     </Box>
   );
 }

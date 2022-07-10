@@ -1,6 +1,6 @@
 import React from "react";
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import link from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
@@ -100,8 +100,6 @@ export default function Home() {
                 <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{ "width": "100%" }}></img>
             </a>
 
-            {/* {Logo} */}
-
             <div id="parallax" className="parallax">
                 <div className="parallax-body">
                     <main className="site-wrapper">
@@ -121,9 +119,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <Container id="website" fixed>
-                <Box py={2}>
-
+            <Container fixed>
                     <AboutTransition />
                     <About />
                     <Schedule />
@@ -131,7 +127,7 @@ export default function Home() {
                     <Sponsors />
                     <Faq />
                     <Team />
-                </Box>
+
             </Container>
         </div>
     );

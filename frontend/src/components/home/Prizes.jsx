@@ -10,7 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
 
     title: {
-        color: "#7289da",
         fontFamily: "VCR OSD Mono",
     },
 
@@ -54,116 +53,6 @@ export default function Sponsors() {
 
     return (
         <Box py={2}>
-            <Card>
-                <CardContent>
-                    {/*TODO material UI*/}
-                    <Typography  className={classes.title} variant="h4" gutterBottom>Prizes</Typography>
-                    
-                    <Grid container spacing={1} mx={20} alignItems="center" justify="center">
-                    <Card style={{display: 'inline-block'}} raised="true" className={`${classes.margin} ${classes.color}`} >
-                                <CardContent>
-                                    <Typography variant="h5" className={classes.prizetitle} align="center" gutterBottom>
-                                        <b>1st Place </b>
-                                    </Typography>
-
-                                    <Typography variant="h6" className={classes.prizetitle} align="center">
-                                        $1024
-                                    </Typography>
-                                </CardContent>
-                    </Card>
-
-                    <Card style={{display: 'inline-block'}} raised="true" className={`${classes.margin} ${classes.color}`} >
-                                <CardContent>
-                                    <Typography variant="h5" className={classes.prizetitle} align="center" gutterBottom>
-                                       <b> 2nd Place </b>
-                                    </Typography >
-
-                                    <Typography  variant="h6" className={classes.prizetitle} align="center">
-                                        $768
-                                    </Typography>
-                                </CardContent>
-                    </Card>
-
-                    <Card style={{display: 'inline-block'}} raised="true" className={`${classes.margin} ${classes.color}`} >
-                                <CardContent>
-                                    <Typography variant="h5"  className={classes.prizetitle} align="center" gutterBottom>
-                                       <b> 3rd Place </b>
-                                    </Typography>
-
-                                    <Typography variant="h6" className={classes.prizetitle} align="center">
-                                        $512
-                                    </Typography>
-                                </CardContent>
-                    </Card>
-                    </Grid>
-
-                    <Grid container spacing={1} mx={20} alignItems="center" justify="center">
-                    <Card style={{display: 'inline-block'}} raised="true" className={`${classes.margin} ${classes.color}`} >
-                                <CardContent>
-                                    <Typography variant="h5" className={classes.prizetitle} align="center" gutterBottom>
-                                       <b> 4th Place </b>
-                                    </Typography>
-
-                                    <Typography variant="h6" className={classes.prizetitle} align="center">
-                                        $384
-                                    </Typography>
-                                </CardContent>
-                    </Card>
-
-                    <Card style={{display: 'inline-block'}} raised="true" className={`${classes.margin} ${classes.color}`} >
-                                <CardContent>
-                                    <Typography variant="h5" className={classes.prizetitle} align="center" gutterBottom>
-                                       <b> 5th Place </b>
-                                    </Typography >
-
-                                    <Typography  variant="h6" className={classes.prizetitle} align="center">
-                                        $256
-                                    </Typography>
-                                </CardContent>
-                    </Card>
-
-                
-                    </Grid>
-
-                    <Grid container spacing={1} mx={20} alignItems="center" justify="center">
-                    
-
-                    <Card style={{display: 'inline-block'}} raised="true" className={`${classes.margin2} ${classes.color}`} >
-                                <CardContent>
-                                    <Typography variant="h5" className={classes.prizetitle} align="center" gutterBottom>
-                                       <b> 6th - 10th Place </b>
-                                    </Typography >
-
-                                    <Typography  variant="h6" className={classes.prizetitle} align="center">
-                                        $128 each
-                                    </Typography>
-                                </CardContent>
-                    </Card>
-
-                
-                    </Grid>
-
-                    <Grid container spacing={1} mx={20} alignItems="center" justify="center">
-                    
-
-                    <Card style={{display: 'inline-block'}} raised="true" className={`${classes.margin3} ${classes.color}`} >
-                                <CardContent>
-                                    <Typography variant="h5" className={classes.prizetitle} align="center" gutterBottom>
-                                       <b> Sponsor Prizes</b>
-                                    </Typography >
-
-                                    <Typography   align="center">
-                                    In addition to the HopHacks cash prizes, there will also be several branded prizes offered by our sponsors! The full list of prizes will be on our Devpost, which will be linked when available.
-                                    </Typography>
-                                </CardContent>
-                    </Card>
-
-                
-                    </Grid>
-
-                    
-                </CardContent>
-            </Card>
         </Box>
     );
 }

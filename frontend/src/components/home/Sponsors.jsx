@@ -129,8 +129,7 @@ export default function Sponsors() {
     return (
         <motion.div>
             <Box py={2}>
-                <Card className={classes.card}>
-                    <CardContent>
+
                         <div>
                             <h4 className={classes.title}>Sponsors</h4>
                             <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Email us at {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
@@ -250,8 +249,7 @@ export default function Sponsors() {
                             <br></br>
                         </motion.div>
                         */}
-                    </CardContent>
-                </Card>
+
             </Box >
             
         </motion.div>

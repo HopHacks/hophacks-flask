@@ -65,9 +65,7 @@ export default function Schedule() {
   return (
     <Box py={2}>
 
-      <Card className={classes.color}>
-        {/* <Paper className={classes.root} style={{ padding: '5px', marginBottom: '10px' }}> */}
-        <CardContent>
+
           <Typography className={classes.title} variant="h4" gutterBottom>
             Schedule
           </Typography>
@@ -210,9 +208,7 @@ export default function Schedule() {
               </TableBody>}
             </Table>
           </TableContainer>
-          
-        </CardContent>
-      </Card>
+
     </Box>
   );
 }
