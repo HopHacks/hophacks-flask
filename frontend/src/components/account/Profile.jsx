@@ -19,7 +19,6 @@ import TableRow from '@material-ui/core/TableRow';
 import FormDialog from "./FormDialog"
 import MajorAutocomplete from "./MajorAutocomplete"
 import SchoolAutocomplete from "./SchoolAutocomplete"
-import eventName from '../../event.txt'
 
 const Profile = function Profile(props) {
 

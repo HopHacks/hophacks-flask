@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,10 +18,6 @@ const useStyles = makeStyles({
     fontFamily: "VCR OSD Mono",
   },
   Media: {
-    // height: '50%',
-    // width: '55%',
-    // objectFit: 'cover', 
-    // justifyContent:'center'
     width: '65%',
     marginLeft: '33%',
     backgroundColor: "transparent",
@@ -37,7 +33,7 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     fontWeight: '700',
     fontStyle: 'italic',
-    fontSize: '251.02px',
+    fontSize: '188px',
     lineHeight: '304px'
 
   },
@@ -53,7 +49,7 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     fontWeight: '700',
     fontStyle: 'italic',
-    fontSize: '251.02px',
+    fontSize: '188px',
     lineHeight: '304px'
 
   },
@@ -69,7 +65,7 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     fontWeight: '700',
     fontStyle: 'italic',
-    fontSize: '251.02px',
+    fontSize: '188px',
     lineHeight: '304px'
 
   },
@@ -107,12 +103,13 @@ export default function AboutTransition() {
 
 
   const scaleRight = useTransform(scrollY, [0, 500], [2, 1]);
-  const yRight = useTransform(scrollY, [0, 500], ["25vh", "0vh"]);
-  const xRight = useTransform(scrollY, [1500, 300], ["15%", "-23vw"]);
 
-  const xLeft = useTransform(scrollY, [1500, 300], ["-25%", "20vw"]);
 
-  const xLeft2 = useTransform(scrollY, [1500, 300], ["5%", "100vw"]);
+  const xRight = useTransform(scrollY, [800, 0], ["-15%", "23vw"]);
+
+  const xLeft = useTransform(scrollY, [800, 0], ["25%", "-15vw"]);
+
+  const xLeft2 = useTransform(scrollY, [800, 0], ["45%", "25vw"]);
 
   return (
     <div style={{position: "relative"}}>

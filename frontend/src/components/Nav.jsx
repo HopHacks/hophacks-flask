@@ -16,13 +16,13 @@ const useStyles = makeStyles({
     fontFamily: "VCR OSD Mono",
   },
 
-  hophacksButton:{
+  hophacksButton: {
     marginLeft: 20,
     marginRight: 20,
   },
 
-  otherButton:{
-    marginLeft:"auto",
+  otherButton: {
+    marginLeft: "auto",
   },
 });
 
@@ -34,75 +34,99 @@ const Nav = function Nav(props) {
   }
 
   const classes = useStyles();
-  const isMobile = window.innerWidth <=650;
+  const isMobile = window.innerWidth <= 650;
 
 
-  if(isMobile){
+  if (isMobile) {
     return (
       <div>
-    
 
-  <AppBar position="sticky">
-  <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-start' }}>
-  <section>
-        <Button component={Link} to={'/'} color="inherit">
-          <Typography variant="h6" className={classes.title}> Home </Typography>
-        </Button>
 
-        {!props.isLoggedIn && <Login />
-        }
+        <AppBar position="sticky">
+          <Toolbar style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+            <section>
+              <Button component={Link} to={'/'} color="inherit">
+                <Typography variant="h6" className={classes.title}> Home </Typography>
+              </Button>
 
-        {props.isLoggedIn &&
-          <Button component={Link} to={'/profile'} color="inherit">
-            <Typography variant="h6" className={classes.title}> Profile </Typography>
+              <Button onClick={() => {
+            window.location = "/register";
+          }} color="inherit">
+            <Typography variant="h5" className={classes.title}> Register </Typography>
           </Button>
-        }
 
-        {props.isLoggedIn &&
-          <Button onClick={handleLogout} color="inherit">
-            <Typography variant="h6" className={classes.title}>Logout</Typography>
-          </Button>
-        }
-        </section>        
-    </Toolbar>
-  </AppBar>
+              {!props.isLoggedIn && <Login />
+              }
+
+              {props.isLoggedIn &&
+                <Button onClick={() => {
+                  window.location = "/profile";
+                }} color="inherit">
+                  <Typography variant="h6" className={classes.title}> Profile </Typography>
+                </Button>
+              }
+
+              {props.isLoggedIn &&
+                <Button onClick={handleLogout} color="inherit">
+                  <Typography variant="h6" className={classes.title}>Logout</Typography>
+                </Button>
+              }
+            </section>
+          </Toolbar>
+        </AppBar>
       </div>
-      
-      
-      
-      );
+
+
+
+    );
   }
 
   return (
     <AppBar position="sticky">
-      <Toolbar style={{  flexDirection: 'row', justifyContent: 'flex-end', marginRight: '8rem' }}>
+      <Toolbar style={{ flexDirection: 'row', justifyContent: 'flex-end', marginRight: '8rem' }}>
         <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
           <Typography variant="h4" className={classes.title}> HopHacks </Typography>
         </Button>
 
         <section className={classes.otherButton}>
-        <Button component={Link} to={'/'} color="inherit">
-          <Typography variant="h5" className={classes.title}> Home </Typography>
-        </Button>
-
-        {!props.isLoggedIn && <Login />
-        }
-
-        {props.isLoggedIn &&
-          <Button component={Link} to={'/profile'} color="inherit">
-            <Typography variant="h5" className={classes.title}> Profile </Typography>
+          <Button component={Link} to={'/'} color="inherit">
+            <Typography variant="h5" className={classes.title}> Home </Typography>
           </Button>
-        }
 
-        {props.isLoggedIn &&
-          <Button onClick={handleLogout} color="inherit">
-            <Typography variant="h5" className={classes.title}>Logout</Typography>
+          <Button onClick={() => {
+            window.location = "/team";
+          }} color="inherit">
+            <Typography variant="h5" className={classes.title}> Team </Typography>
           </Button>
-        }
-        </section>        
+          
+          <Button onClick={() => {
+            window.location = "/register";
+          }} color="inherit">
+            <Typography variant="h5" className={classes.title}> Register </Typography>
+          </Button>
+
+
+
+          {!props.isLoggedIn && <Login />
+          }
+
+          {props.isLoggedIn &&
+            <Button onClick={() => {
+              window.location = "/profile";
+            }} color="inherit">
+              <Typography variant="h5" className={classes.title}> Profile </Typography>
+            </Button>
+          }
+
+          {props.isLoggedIn &&
+            <Button onClick={handleLogout} color="inherit">
+              <Typography variant="h5" className={classes.title}>Logout</Typography>
+            </Button>
+          }
+        </section>
       </Toolbar>
     </AppBar>
-    );
+  );
 }
 
 export default withAuthProps(Nav);

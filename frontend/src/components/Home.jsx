@@ -1,6 +1,5 @@
 import React from "react";
 import Container from '@material-ui/core/Container';
-import link from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
@@ -108,9 +107,7 @@ export default function Home() {
                         <div className="content">
                             <div className="slide-wrapper">
                                 <div className="slide-item">
-                                    {/* <img src={img('logo2022.png')} style={{'width': '14vw'}} className="slide-item__image" /> */}
-                                    <img src={img("cover1.png")} className="slide-item__image"></img>
-                                    {/* <h3 className="slide-item__title">HOPHACKS&#10;SEPTEMBER 16-18</h3> */}
+                                    <img src={img("cover2.png")} className="slide-item__image"></img>
                                 </div>
                                 <div className="slide-item">
                                     <img src={img("transparent.png")} className="slide-item__image"></img>
@@ -128,7 +125,7 @@ export default function Home() {
                     <Prizes />
                     <Sponsors />
                     <Faq />
-                    <Team />
+                    {/* <Team /> */}
 
             </Container>
         </div>
