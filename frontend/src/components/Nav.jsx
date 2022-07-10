@@ -49,6 +49,10 @@ const Nav = function Nav(props) {
           <Typography variant="h6" className={classes.title}> Home </Typography>
         </Button>
 
+        <Button component={Link} to={'/team'} onclick={() => window.location.reload()} color="inherit">
+          <Typography variant="h6" className={classes.title}> Team </Typography>
+        </Button>
+
         {!props.isLoggedIn && <Login />
         }
 
@@ -83,6 +87,13 @@ const Nav = function Nav(props) {
         <section className={classes.otherButton}>
         <Button component={Link} to={'/'} color="inherit">
           <Typography variant="h5" className={classes.title}> Home </Typography>
+        </Button>
+
+        {/* <Button component={Link} to={'/team'} onload={() => window.location.reload()} color="inherit"> */}
+        <Button component={Link} onclick={() => {
+          window.location = "/team";
+        }} color="inherit">
+          <Typography variant="h5" className={classes.title}> Team </Typography>
         </Button>
 
         {!props.isLoggedIn && <Login />
