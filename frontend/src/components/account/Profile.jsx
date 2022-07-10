@@ -665,7 +665,11 @@ async function cancel(event){
     );
 
   return (
-    <div>
+    <div style={{
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+      backgroundSize: 'cover',
+      height: "100%"
+    }}>
       <div>
         {appStatus}
       </div>

@@ -8,6 +8,7 @@ export default function PasswordReset(props) {
     const [message, setMessage] = useState('');
     const [attempted, setAttempted] = useState(false);
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     async function reset_password(event) {
         event.preventDefault();
@@ -16,6 +17,11 @@ export default function PasswordReset(props) {
 
         if (!password.match(passwordre)) {
             setMessage("Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.")
+            return;
+        }
+
+        if (password != confirmPassword) {
+            setMessage("Confirm password must match with the password")
             return;
         }
 
@@ -32,7 +38,14 @@ export default function PasswordReset(props) {
     }
 
     return (
-        <Container fixed>
+        <div style={{
+            backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+            backgroundSize: 'cover',
+            height: "100vh"
+          }}>
+        <Container fixed style={{
+                paddingTop:"100px"
+              }}>
             <Card style={{ backgroundColor: "#d1e9ff"}}>
                 <br></br>
             <div>
@@ -46,12 +59,21 @@ export default function PasswordReset(props) {
                     type="password" style={{marginLeft:"5px"}}
                 />
               </label>
-              <input type="submit" value="Submit" />
+              <label style={{marginLeft:"30px"}}>
+                Confirm Password:
+                <input
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                    type="password" style={{marginLeft:"5px"}}
+                />
+              </label>
+              <input type="submit" value="Submit"style={{marginLeft:"30px"}} />
             </form>
             }
             <p style={{ color: "red" }} align="center">{message}</p>
             </div>
             </Card>
         </Container>
+        </div>
         );
     }

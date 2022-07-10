@@ -12,10 +12,13 @@ import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
 import Prizes from "./home/Prizes";
 import Schedule from "./home/Schedule";
+import About from "./home/About"
+import Faq from "./home/Faq"
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
 import { useEffect } from "react";
+import AboutTransition from "./home/AboutTransition";
 
 const useStyles = makeStyles({
     logo: {
@@ -29,17 +32,22 @@ const useStyles = makeStyles({
         marginBottom: "13px",
     },
     color: {
-        backgroundColor: "#eef7ff",
+        //backgroundColor: "#2195ea",
+        backgroundColor: "#376efa",
+
+    },
+    colorBackground: {
+        backgroundColor: "#376eea",
     },
     title: {
-        color: "#7289da",
+        color: "#ffffff",
         fontFamily: "VCR OSD Mono",
     },
 
-    button:{
-        backgroundColor:"#FFFFFF", color: "#c8e7fa" , width: "50%", minHeight :"50px" ,border:"4px solid",
-        "&:hover":{
-            backgroundColor:"#c8e7fa",
+    button: {
+        backgroundColor: "#FFFFFF", color: "#c8e7fa", width: "50%", minHeight: "50px", border: "4px solid",
+        "&:hover": {
+            backgroundColor: "#c8e7fa",
         }
     },
     gradient: {
@@ -50,7 +58,8 @@ const useStyles = makeStyles({
         padding: "30px",
         backgroundColor: "#c8e7fa"
     }
-});
+  }
+);
 
 export default function Home() {
     const classes = useStyles();
@@ -89,32 +98,6 @@ export default function Home() {
             document.body.removeChild(script4);
           }
     }, [])
-
-
-    // const Logo = (
-    //     <div className={classes.logo} >
-    //         <img src={img('logo2022.png')} style={{
-    //             'width': '14vw',
-    //         }} />
-
-    //         <Typography align="center" justify="center" style={{ 'color': '#FFFFFF', fontSize: '4.0em', fontFamily: "Inter Medium" }} >
-    //             <strong><i>HOPHACKS</i></strong>
-    //         </Typography>
-
-    //         <div />
-
-    //         <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '1.5em', fontFamily: "Inter Light" }} >
-    //             <strong><i>S&nbsp; E&nbsp; P&nbsp; T&nbsp; E&nbsp; M&nbsp; B&nbsp; E&nbsp; R &nbsp; 1&nbsp; 6&nbsp; -&nbsp; 1&nbsp; 8</i></strong>
-    //         </Typography>
-    //         <br />
-
-    //         <Button className={classes.button} variant="outlined" component={Link} to={'/register'}>
-    //             <Typography style={{ "color": "#202c63", fontSize: '2.8em', fontFamily: "Inter Medium" }}>
-    //                 <strong>REGISTER!</strong>
-    //             </Typography>
-    //         </Button>
-    //     </div>
-    // );
 
     return (
         <div className={classes.gradient}>
@@ -303,6 +286,13 @@ export default function Home() {
                         </CardContent>
                     </Card>
                     <Team />  
+                    <AboutTransition />
+                    <About />
+                    <Schedule />
+                    <Prizes />
+                    <Sponsors />
+                    <Faq />
+                    <Team />
                 </Box>
             </Container> 
         </div>

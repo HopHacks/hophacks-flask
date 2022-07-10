@@ -1,105 +1,261 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
 
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
+import ReactDOM from "react-dom";
+import { ParallaxProvider, Parallax } from "react-scroll-parallax";
+import { useWindowSize } from "react-use";
+import { motion, Variants } from 'framer-motion/dist/framer-motion'// Needs to be added to requirements.txt
+import { FormHelperText } from "@material-ui/core";
+
+
+const config = { mass: 2, tension: 2000, friction: 200 };
+
 const useStyles = makeStyles({
 
     title: {
-        color: "#7289da",
-        fontFamily: "VCR OSD Mono",
+        color: "#ffffff",
+        fontFamily: "Inter",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "375%"
     },
+    contact: {
+        color: "#ffffff",
+        fontFamily: "Inter",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "100%"
+    },
+    minititle: {
+        color: "#ffffff",
+        fontFamily: "Inter",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "300%",
+        alignItems: "center",
+        justifyItems: "center"
+    },
+    logos: {
+        color: "#ffffff",
+        fontFamily: "Inter",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "250%",
+        alignItems: "center",
+        justifyItems: "center"
 
-    image:{
-        width:"15%",
-        justifyContent:"center",
-        alignItems:"center",
-    }
+    },
+    card: {
+        backgroundColor: "#278be2",
+    },
 });
-
-
 
 function img(url) {
     return process.env.PUBLIC_URL + '/images/' + url;
 }
 
 function SponsorItem(props) {
-const classes = useStyles();
     return (
-        <Grid container  xs={6} alignItems="center" justify="center" className={classes.image} style={{width:"15%"}}>
-
-                <picture align="center" >
-                    <a href={`${props.website}`}><img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} /></a>
-                </picture>
-        </Grid>
+        <a href={`${props.website}`}><img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} /></a>
     );
-
 }
-
 
 export default function Sponsors() {
 
 
     const classes = useStyles();
 
+    const gold = 0.3;
+    const sable = 0.25;
+    const blue = 0.15;
+    const starter = 0.15;
+
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+
+    useEffect(() => {
+        function handleWindowResize() {
+          setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+            });
+        }
+    
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleWindowResize);
+        };
+      }, []);
+
+    const textAnimate = {
+        offscreen: { y: 0, opacity: 0 },
+        onscreen: {
+            y: 0,
+            opacity: 1,
+            duration: 3,
+            transition: {
+                type: "spring",
+                bounce: 0.0,
+                duration: 6
+            }
+        }
+    }
+
+    const imageAnimate = {
+        offscreen: { x: -50, opacity: 0 },
+        onscreen: {
+            x: 0,
+            opacity: 1,
+            duration: 3,
+            transition: {
+                type: "spring",
+                bounce: 0.0,
+                duration: 4
+            }
+        }
+    }
+
     return (
-        <Box py={2}>
-            <Card>
-                <CardContent>
-                    {/*TODO material UI*/}
-                    <Typography className={classes.title} variant="h4" gutterBottom>Sponsors</Typography>
-                    
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='Bloomberg' website='https://www.bloomberg.com/' imgSytle={{width: '100%', maxHeight: "100%"}}/>
-                    </Grid>
+        <motion.div>
+            <Box py={2}>
+                <Card className={classes.card}>
+                    <CardContent>
+                        <div>
+                            <h4 className={classes.title}>Sponsors</h4>
+                            <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Email us at {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
+                            <Divider style={{marginBottom: "3%"}}/>
+                        </div>
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                            <SponsorItem imgURL='it_bg' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable / 1.4, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
+                            <SponsorItem imgURL='scm_hori_bg' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue*1.3, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
+                            </Grid>
+                        </motion.div>
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                            <SponsorItem imgURL='wolfram-alpha_bg' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "2%"}}/>
+                            <SponsorItem imgURL='Googlecloud_bg' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "0%", marginLeft: "5%"}}/>
+                            </Grid>
+                        </motion.div>
+                        {/*
+                        <motion.div
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={textAnimate}>
+                            <Typography className={classes.minititle} gutterBottom>Gold</Typography>
+                        </motion.div>
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='Bloomberg' website='https://www.bloomberg.com/' imgSytle={{ width: windowSize.width * gold}} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='yet' website='https://www.yetanalytics.com/' imgSytle={{ width: windowSize.width * gold, marginTop: "4%"}} />
+                                </Grid>
+                            </Grid>
+                        </motion.div>
+                        
+                        <motion.div
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={textAnimate}>
+                            <Typography className={classes.minititle} gutterBottom>Sable</Typography>
+                        </motion.div>
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='apl' website='https://www.jhuapl.edu/' imgSytle={{ width: windowSize.width * sable * 1.5 , maxHeight: "100%", marginTop: "5%" }} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='one' website='https://www.capitalone.com/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "5%" }} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='SIEMENS' website='https://www.siemens-healthineers.com/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "7%" }} />
+                                </Grid>
+                                    <SponsorItem imgURL='it' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable / 1.4, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
+                                
+                            </Grid>
+                        </motion.div>
+                        <motion.div
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={textAnimate}>
+                            <Typography className={classes.minititle} gutterBottom>Blue</Typography>
+                        </motion.div>
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{ width: windowSize.width * blue * 2, maxHeight: "100%", marginTop: "5%"}} />
+                                </Grid>
+                                 
+                                    <SponsorItem imgURL='scm' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue * 0.7, maxHeight: "100%", marginTop: "5%", marginBottom: "5%"}} />
+                                
+                            </Grid>
+                        </motion.div>
+                        <motion.div
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={textAnimate}>
+                            <Typography className={classes.minititle} gutterBottom>Starter</Typography>
+                        </motion.div>
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                
+                                <Grid item xs={3}>
+                                    <SponsorItem imgURL='linode' website='https://www.linode.com/' imgSytle={{ width: windowSize.width * starter, maxHeight: "100%", marginTop: "5%" }} />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <SponsorItem imgURL='ground' website='https://www.groundcontrol.coffee/' imgSytle={{width: windowSize.width * starter * 0.75, maxHeight: "100%", marginTop: "1%"}}/>
+                                </Grid>
+                                
+                                
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "2%"}}/>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter*1.4, maxHeight: "100%", marginTop: "0%"}}/>
+                                </Grid>
+                                
+                            </Grid>
+                            <br></br>
+                        </motion.div>
+                        */}
+                    </CardContent>
+                </Card>
+            </Box >
+            
+        </motion.div>
+        
 
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='yet' website='https://www.yetanalytics.com/' imgSytle={{width: '80%', maxHeight: "100%", marginTop: "0%"}}/>
-                    </Grid>
-
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='apl' website='https://www.jhuapl.edu/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "5%"}}/>
-                    </Grid>
-
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='one' website='https://www.capitalone.com/' imgSytle={{width: '70%', maxHeight: "100%", marginTop: "5%"}}/>
-                    </Grid>
-
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='SIEMENS' website='https://www.siemens-healthineers.com/' imgSytle={{width: '80%', maxHeight: "100%", marginTop: "7%"}}/>
-                    </Grid>
-
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='it' website='https://it.johnshopkins.edu/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "12%"}}/>
-                    </Grid>
-
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='ffu' website='https://ventures.jhu.edu/programs-services/fastforward-u/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "5%"}}/>
-                    </Grid>
-
-                    <Grid container spacing={0} alignItems="center" justify="center" >
-                    <SponsorItem imgURL='linode' website='https://www.linode.com/' imgSytle={{width: '60%', maxHeight: "100%", marginTop: "5%"}}/>
-                    </Grid>
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='ground' website='https://www.groundcontrol.coffee/' imgSytle={{width: '35%', maxHeight: "100%", marginTop: "1%"}}/>
-                    </Grid>
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                
-                        <SponsorItem imgURL='wolfram-alpha' website='https://www.wolframalpha.com/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "5%"}}/>
-                    </Grid>
-                    
-                    <Grid container spacing={0} alignItems="center" justify="center">
-                    <SponsorItem imgURL='Googlecloud' website='https://cloud.google.com/' imgSytle={{width: '100%', maxHeight: "100%", marginTop: "1%"}}/>
-                    </Grid>
-
-                   
-                    
-                </CardContent>
-            </Card>
-        </Box>
     );
 }

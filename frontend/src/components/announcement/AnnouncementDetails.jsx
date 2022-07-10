@@ -69,6 +69,11 @@ export default function AnnouncementDetails(props) {
   }
 
   return (
+    <div style={{
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+      backgroundSize: 'cover',
+      height: "100vh"
+    }}>
     <Box py={2}>
       <Card className={classes.card}>
         <CardContent>
@@ -86,5 +91,6 @@ export default function AnnouncementDetails(props) {
         </CardContent>
       </Card>
     </Box>
+    </div>
   );
 }
