@@ -94,10 +94,18 @@ const Nav = function Nav(props) {
           </Button>
 
           <Button onClick={() => {
+            window.location = "/team";
+          }} color="inherit">
+            <Typography variant="h5" className={classes.title}> Team </Typography>
+          </Button>
+          
+          <Button onClick={() => {
             window.location = "/register";
           }} color="inherit">
             <Typography variant="h5" className={classes.title}> Register </Typography>
           </Button>
+
+
 
           {!props.isLoggedIn && <Login />
           }
