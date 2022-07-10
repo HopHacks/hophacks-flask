@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';

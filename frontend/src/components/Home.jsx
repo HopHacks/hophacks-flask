@@ -1,6 +1,5 @@
 import React from "react";
 import Container from '@material-ui/core/Container';
-import link from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
