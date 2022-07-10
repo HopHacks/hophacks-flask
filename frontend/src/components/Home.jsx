@@ -12,9 +12,12 @@ import Team from './home/Team';
 import Sponsors from "./home/Sponsors";
 import Prizes from "./home/Prizes";
 import Schedule from "./home/Schedule";
+import About from "./home/About"
+import Faq from "./home/Faq"
 import { ParallaxBanner } from 'react-scroll-parallax';
 
 import '../stylesheets/home.css'
+import AboutTransition from "./home/AboutTransition";
 
 const useStyles = makeStyles({
     logo: {
@@ -28,20 +31,29 @@ const useStyles = makeStyles({
         marginBottom: "13px",
     },
     color: {
-        backgroundColor: "#eef7ff",
+        //backgroundColor: "#2195ea",
+        backgroundColor: "#376efa",
+
+    },
+    colorBackground: {
+        backgroundColor: "#376eea",
     },
     title: {
-        color: "#7289da",
+        color: "#ffffff",
         fontFamily: "VCR OSD Mono",
     },
 
-    button:{
-        backgroundColor:"#FFFFFF", color: "#c8e7fa" , width: "50%", minHeight :"50px" ,border:"4px solid",
-        "&:hover":{
-            backgroundColor:"#c8e7fa",
+    button: {
+        backgroundColor: "#FFFFFF", color: "#c8e7fa", width: "50%", minHeight: "50px", border: "4px solid",
+        "&:hover": {
+            backgroundColor: "#c8e7fa",
         }
+    },
+    gradient: {
+        backgroundImage: "linear-gradient(#15ABFB, #376CC9)",
     }
-});
+  }
+);
 
 export default function Home() {
     const classes = useStyles();
@@ -118,24 +130,24 @@ export default function Home() {
             <div />
 
             <Typography align="center" style={{ 'color': '#FFFFFF', fontSize: '2.0em', fontFamily: "VCR OSD Mono" }} >
-                <strong>INTERESTED IN BEING AN ORGANIZER? </strong>
+                <strong>September</strong>
             </Typography>
             <br />
 
-            
-            <Button className={classes.button} variant="outlined"  href="https://forms.gle/Znzy2aFq7Bwwx7P4A">
-                
-                <Typography style = {{"color":"#202c63",fontSize: '2.8em',fontFamily: "VCR OSD Mono"}}>
 
-                <strong>Join the team!</strong>
+            <Button className={classes.button} variant="outlined" href="https://forms.gle/bVRLmpbLfDuZ7pkX6" >
+
+                <Typography style={{ "color": "#202c63", fontSize: '2.8em', fontFamily: "VCR OSD Mono" }}>
+
+                    <strong>Pre-registration</strong>
                 </Typography>
-                </Button>
-            
+            </Button>
+
         </div>
     );
 
     return (
-        <div>
+        <div className={classes.gradient}>
             <a id="mlh-trust-badge" 
                style={{'display':'block','maxWidth':'100px','minWidth':'60px','position':'fixed', 'right':'30px','top':'0','width':'10%','zIndex':'10000'}} 
                href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray" 
@@ -148,162 +160,13 @@ export default function Home() {
 
             <Container fixed>
                 <Box py={2}>
-                    <Card>
-                        <CardContent>
-                            <Typography className={classes.title} variant="h4" gutterBottom>
-                                About
-                            </Typography>
-                            <Typography >
-                                HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes!
-                                <p>
-                                    <b>
-                                        Note: Due to the COVID-19 pandemic, we will be hosting HopHacks virtually via Discord and Zoom.
-                                    </b>
-                                </p>
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                
-
-               <Schedule/>
-                    <Prizes/>
+                    <AboutTransition />
+                    <About />
+                    <Schedule />
+                    <Prizes />
                     <Sponsors />
-                    <Card>
-                        <CardContent>
-                            <Typography className={classes.title} variant="h4" gutterBottom>
-                                FAQs
-                            </Typography>
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`} >
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                       <b> Who can participate? </b>
-                                    </Typography>
-
-                                    <Typography>
-                                        Any <b>university student</b> enrolled in any undergraduate or graduate program may participate. High school students may <b>NOT</b> participate.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        <b>Where will HopHacks take place?</b>
-                                    </Typography>
-
-                                    <Typography >
-                                        Because of restrictions due to COVID-19, HopHacks will be virtual this year. We will be using a mix of Discord and Zoom, so make sure you have accounts for them!
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        <b>Who will be there?</b>
-                                    </Typography>
-
-                                    <Typography >
-                                        In addition to students in attendance, representatives from many of our sponsor companies will be there to mentor the participants.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-
-
-                            {/* <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        What are the prizes?
-
-                                    </Typography>
-
-                                    <Typography >
-
-                                        <p>HopHacks will be awarding larger prizes this year for the top 10!</p>
-                                        <p>
-                                            We will have: a $1,024 grand prize, a $768 second place prize, a $512 third place prize,
-                                            a $384 fourth place prize, and a $256 fifth place prize. The rest of the top 10 teams (sixth to tenth place)
-                                            will receive $128 each. The prize will be distributed among team members, and all teams are automatically eligible
-                                            to compete for these prizes.
-                                        </p>
-
-                                        <p>
-                                            In addition to the HopHacks prizes, there will also be several branded prizes offered
-                                            by our sponsors. The full list of prizes will be on our Devpost, which will be linked when available.
-                                            You may sign up for individual branded prizes there (which you must do for each branded prize you wish to compete for).
-                                        </p>
-
-
-                                    </Typography>
-
-                                </CardContent>
-                            </Card> */}
-
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        <b> Who are the judges? </b>
-                                    </Typography>
-
-                                    <Typography >
-                                        The judges will be a mix of local tech professionals and JHU faculty.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography  variant="h6" gutterBottom>
-                                        <b>Will I be able to participate in multiple virtual hackathons during the same weekend?</b>
-                                    </Typography>
-
-                                    <Typography >
-                                        Yes! Because of the nature of virtual hackathons, you will be able to submit your project to multiple concurrent events.
-                                        The project you create, however, must be new and <b>CANNOT</b> be worked on before the start of the hackathon.
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        <b>Where will I sleep? </b>
-                                    </Typography>
-
-                                    <Typography >
-                                        Since HopHacks is happening virtually this year, you can sleep anywhere you want (though we recommend sleeping in a bed)!
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography  variant="h6" gutterBottom>
-                                        <b>What about the free food?</b>
-                                    </Typography>
-
-                                    <Typography >
-                                        Unfortunately, because we do not have the technology to provide virtual food, we will not be having free food this year. Feel free to create a hack to develop such technology!
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-
-                            <Card raised="true" className={`${classes.margin} ${classes.color}`}>
-                                <CardContent>
-                                    <Typography  variant="h6" gutterBottom>
-                                        <b>What if I have any other questions? </b>
-                                    </Typography>
-
-                                    <Typography >
-                                        You can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. Alternatively, you can email us at <a className="link-text" href="mailto:team@hophacks.com">team@hophacks.com</a>
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </CardContent>
-                    </Card>
-                    <Team />                    
+                    <Faq />
+                    <Team />
                 </Box>
             </Container>
         </div>

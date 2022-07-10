@@ -288,7 +288,12 @@ export default function Announcements() {
   }
 
   return (
-    <Container fixed className={classes.container}>
+    <div style={{
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+      backgroundSize: 'cover',
+      height: "100vh"
+    }}>
+      <Container fixed className={classes.container} >
       <Box py={2}>
         <Grid container spacing={4}>
           {/* <Grid item>
@@ -320,6 +325,8 @@ export default function Announcements() {
         </Grid>
       </Box>
     </Container>
+    </div>
+    
   );
 };
 

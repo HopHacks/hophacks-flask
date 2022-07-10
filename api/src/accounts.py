@@ -7,10 +7,10 @@ from mail import mail
 from util.reset_tokens import *
 from util.decorators import check_admin
 
-from flask import Blueprint, request, Response, current_app, render_template, jsonify
+from flask import Blueprint, request, Response, current_app, render_template, jsonify, Flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_mail import Message
-from registrations import send_apply_confirm
+from flask_mail import Message, Mail
+from registrations import send_apply_confirm, email_client
 
 import bcrypt
 import jwt
@@ -21,6 +21,10 @@ import pytz
 
 
 accounts_api = Blueprint('accounts', __name__)
+app = Flask(__name__)
+app.config.from_json("config/config.json")
+mail = Mail(app)
+email_client_accounts = email_client()
 
 profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
 "ethnicity", "grad", "is_jhu", "grad_month", "grad_year"]
@@ -35,7 +39,7 @@ def send_reset_email(email, hashed, base_url):
     link = base_url + "/" + token.decode('utf-8')
 
     msg = Message("Reset Your Password - HopHacks.com",
-      sender="team@hophacks.com",
+      sender="hophacks2022@gmail.com",
       recipients=[email])
 
     msg.body = 'Hello,\nYou or someone else has requested that a new password'\
@@ -47,18 +51,18 @@ def send_reset_email(email, hashed, base_url):
     return secret
 
 # Sends confirmation email with JWT-Token in URL for verification, returns the secret key used
-def send_confirmation_email(email, hashed, base_url):
+def send_confirmation_email(email, hashed, base_url, firstName):
     eastern = pytz.timezone("America/New_York")
     confirm_secret = hashed.decode('utf-8') + '-' + str(pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern).timestamp())
     token = create_confirm_token(email, confirm_secret)
     link = base_url + "/" + token.decode('utf-8')
 
     msg = Message("Confirm your Email - HopHacks.com",
-      sender="team@hophacks.com",
+      sender="hophacks2022@gmail.com",
       recipients=[email])
 
     msg.body = 'Hello,\nClick the following link to confirm your email ' + link
-    msg.html = render_template('email_confirmation.html', link=link)
+    msg.html = render_template('email_confirmation.html', link=link, first_name=firstName)
     mail.send(msg)
 
     return confirm_secret
@@ -145,8 +149,7 @@ def create():
 
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password, salt)
-
-    confirm_secret = send_confirmation_email(username, hashed, confirm_url)
+    confirm_secret = send_confirmation_email(username, hashed, confirm_url, profile["first_name"])
 
     db.users.insert_one({
         'username': username,
@@ -465,7 +468,7 @@ def confirm_email():
     id = get_jwt_identity()
     result = db.users.update_one({'username' : email}, {'$push': {'registrations': new_reg}})
     send_apply_confirm(user['username'], user['profile']['first_name'])
-    return jsonify({"msg": "Email Confirmed"}), 200
+    return jsonify({"msg": "Email Confirmed", "email": email}), 200
 
 @accounts_api.route('/reset_password', methods = ['POST'])
 def reset_password():
