@@ -43,7 +43,7 @@ const useStyles = makeStyles({
         }
     },
     gradient: {
-        backgroundImage: "linear-gradient(#15ABFB, #f179c8ç)",
+        backgroundImage: "linear-gradient(#15ABFB, #f179c8)",
     },
 
     blank: {
