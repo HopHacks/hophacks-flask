@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     marginBottom: "13px",
   },
   color: {
-    backgroundColor: "#0F1827",
+    backgroundColor: "#376eea",
   },
   title: {
     color: "#7289da",
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     // justifyContent:'center'
     width: '65%',
     marginLeft: '33%',
-    backgroundColor: "#0F1827",
+    backgroundColor: "#376eea",
   },
   font1: {
     position: "absolute",
