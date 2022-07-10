@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import { motion, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
@@ -12,7 +11,7 @@ const useStyles = makeStyles({
     marginBottom: "13px",
   },
   color: {
-    backgroundColor: "#376eea",
+    backgroundColor: "transparent",
   },
   title: {
     color: "#7289da",
@@ -25,7 +24,7 @@ const useStyles = makeStyles({
     // justifyContent:'center'
     width: '65%',
     marginLeft: '33%',
-    backgroundColor: "#376eea",
+    backgroundColor: "transparent",
   },
   font1: {
     position: "absolute",
@@ -117,8 +116,7 @@ export default function AboutTransition() {
 
   return (
     <div style={{position: "relative"}}>
-    <Card className={classes.color} >
-      <CardContent>
+    <Box className={classes.color} >
         <CardMedia
           component="img"
           className={classes.Media}
@@ -143,8 +141,7 @@ export default function AboutTransition() {
           }}>
           About
         </motion.Typography>
-      </CardContent>
-    </Card>
+    </Box>
     </div >
   );
 }

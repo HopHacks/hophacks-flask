@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
 import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { motion, useMotionValue, useTransform, useViewportScroll, useAnimation } from 'framer-motion/dist/framer-motion';
 import { useInView } from "react-intersection-observer";
@@ -17,7 +12,7 @@ const useStyles = makeStyles({
     marginBottom: "13px",
   },
   color: {
-    backgroundColor: "#376eea",
+    backgroundColor: "transparent",
   },
   title: {
     color: "#7289da",
@@ -175,8 +170,7 @@ export default function About() {
 
   return (
     <div style={{ position: "relative" }}>
-      <Card className={classes.color} >
-        <CardContent>
+      <Box className={classes.color} >
           <Title aria-label={introText} role="heading">
             {introText.split(" ").map((word, index) => {
               return (
@@ -206,8 +200,7 @@ export default function About() {
               );
             })}
           </Title>
-        </CardContent>
-      </Card>
+      </Box>
     </div>
   );
 }

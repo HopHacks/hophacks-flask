@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
     },
     colorBackground: {
-        backgroundColor: "#376eea",
+        backgroundColor: "transparent",
     },
     title: {
         color: "#ffffff",
