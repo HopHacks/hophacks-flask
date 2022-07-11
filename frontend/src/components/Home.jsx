@@ -136,7 +136,10 @@ export default function Home() {
                         <img src={img('footer/bluejay-icon.png')} style={{ position: "fixed", bottom: "50%", right: "40%", width: "15%"}} />
                         <LinearProgress color="secondary" style={{position: "fixed", bottom: "50%", right:"25%", width: "50%"}}/>
                         </div>)
-                    : (<Container fixed>
+                    : (
+                    <>
+
+<Container fixed>
                             <AboutTransition />
                             <About />
                             <Schedule />
@@ -144,8 +147,11 @@ export default function Home() {
                             <Sponsors />
                             <Faq />
                             {/* <Team /> */}
-                            <Footer/>
+                            
                         </Container>
+                        <Footer/>
+                    </>
+
                     )
                     }
                 </div>
