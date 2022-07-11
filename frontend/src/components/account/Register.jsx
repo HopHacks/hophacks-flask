@@ -183,7 +183,7 @@ export default function Register() {
     >
       <Grid item xs={0} md={1} lg={1} />
       <Grid item xs={12} md={5} lg={5} align="center">
-        <img id="graphic" src={`${process.env.PUBLIC_URL}/images/graphic.png`} width="100%" />
+        <img id="graphic" src={`${process.env.PUBLIC_URL}/images/register-graphic.png`} />
       </Grid>
       <Grid id="register" item xs={12} md={5} lg={5} align="center">
         <Grid container>
@@ -603,7 +603,7 @@ export default function Register() {
 
   return (
     <body style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2021_theme.png")`
+      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`
     }}>
       <div class="container">
         <div className="register-wrapper">
