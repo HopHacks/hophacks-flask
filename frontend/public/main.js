@@ -10,7 +10,11 @@
     /// ---------------------------      
     options                     = options || {};
     options.stageWidth          = options.hasOwnProperty('stageWidth') ? options.stageWidth : 1920;
-    options.stageHeight         = options.hasOwnProperty('stageHeight') ? options.stageHeight : 1080;
+    if (window.innerWidth <= 650) {
+      options.stageHeight         = options.hasOwnProperty('stageHeight') ? options.stageHeight : 950;
+    } else {
+      options.stageHeight         = options.hasOwnProperty('stageHeight') ? options.stageHeight : 1080;
+    }
     options.pixiSprites         = options.hasOwnProperty('sprites') ? options.sprites : [];
     options.texts               = options.hasOwnProperty('texts') ? options.texts : [];
     options.autoPlay            = options.hasOwnProperty('autoPlay') ? options.autoPlay : false;
@@ -103,7 +107,11 @@
     var textureButton = PIXI.Texture.from("register-button.png");
     var button = new PIXI.Sprite(textureButton);
 
-    button.scale.set(0.7, 0.7);
+    if (window.innerWidth <= 650) {
+      button.scale.set(0.5, 0.5);
+    } else {
+      button.scale.set(0.7, 0.7);
+    }
 
     /// ---------------------------
     //  LOAD PICS TO CANVAS
@@ -118,7 +126,15 @@
         var texture   = new PIXI.Texture.fromImage( sprites[i] );
         var image     = new PIXI.Sprite( texture );
 
-        image.scale.set(0.8, 0.8);
+        if (window.innerWidth <= 650) {
+          image.scale.set(0.4, 0.4);
+          image.y = renderer.height / 2 + 580;
+
+        } else {
+          image.scale.set(0.8, 0.8);
+          image.y = renderer.height / 2;
+
+        }
 
         if ( rTexts ) {
           var richText = new PIXI.Text( rTexts[i], style);
@@ -131,7 +147,7 @@
 
         image.anchor.set(0.5);
         image.x = renderer.width / 2;
-        image.y = renderer.height / 2;
+        // image.y = renderer.height / 2;
         
         if ( i !== 0  ) {
           TweenMax.set( image, { alpha: 0 } );
@@ -140,18 +156,22 @@
         if (i == 0) {
           button.anchor.set(0.5);
           button.x = renderer.width / 2;
-          button.y = renderer.height / 2 + 250;
+
+          if (window.innerWidth <= 650) { 
+            button.y = renderer.height / 2 + 75;
+          } else {
+            button.y = renderer.height / 2 + 250;
+          }
 
           button.interactive = true;
           button.buttonMode = true;
 
           button
             .on("pointerdown", onButtonDown)
-            .on("pointerover", onButtonOver);
+            // .on("pointerover", onButtonOver);
         }
 
-        slidesContainer.addChild( image );
-
+        slidesContainer.addChild(image);
         slidesContainer.addChild(button);
       } 
       
@@ -162,13 +182,13 @@
       window.location.href = "/register";
     }
 
-    function onButtonOver() {
-      this.isOver = true;
-      if (this.isdown) {
-        return;
-      }
+    // function onButtonOver() {
+    //   this.isOver = true;
+    //   if (this.isdown) {
+    //     return;
+    //   }
       // this.texture = textureButtonOver;
-    }
+    // }
 
     /// ---------------------------
     //  DEFAULT RENDER
