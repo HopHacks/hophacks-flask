@@ -22,7 +22,6 @@ import EmailConfirmation from "./EmailConfirmation"
 import PasswordReset from "./PasswordReset"
 import RSVP from "./RSVP"
 import Register from "./account/Register"
-import Footer from "./Footer"
 import Assignments from './judgetool/Assignments.jsx';
 import Upload from './judgetool/Upload.jsx';
 import UploadSponsors from './judgetool/UploadSponsors.jsx';
@@ -92,7 +91,6 @@ export default function App() {
 
                 <Route path="/">
                   <Home />
-                  <Footer/>
                 </Route>
 
               </Switch>

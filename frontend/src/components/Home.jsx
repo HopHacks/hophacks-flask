@@ -8,9 +8,11 @@ import Schedule from "./home/Schedule";
 import About from "./home/About"
 import Faq from "./home/Faq"
 import '../stylesheets/home.css'
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import AboutTransition from "./home/AboutTransition";
 import Grid from '@material-ui/core/Grid';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Footer from "./Footer"
 
 
 const useStyles = makeStyles({
@@ -55,6 +57,8 @@ const useStyles = makeStyles({
 );
 
 export default function Home() {
+    const [loading, setLoading] = useState(true);
+
     const classes = useStyles();
 
     function img(url) {
@@ -62,6 +66,10 @@ export default function Home() {
     }
 
     useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
         const script1 = document.createElement("script");
         const script2 = document.createElement("script");
         const script3 = document.createElement("script");
@@ -93,41 +101,54 @@ export default function Home() {
     }, [])
 
     return (
+        <div>
+        {loading ? (
+            <div>
+                <img src={img('footer/bluejay-icon.png')} style={{ position: "fixed", bottom: "50%", right: "40%", width: "15%"}} />
+                <LinearProgress color="secondary" style={{position: "fixed", bottom: "50%", right:"25%", width: "50%"}}/>
+            </div>
+        ) : (
         <div className={classes.gradient}>
-            <a id="mlh-trust-badge"
-                style={{ 'display': 'block', 'maxWidth': '100px', 'minWidth': '60px', 'position': 'fixed', 'right': '30px', 'top': '0', 'width': '10%', 'zIndex': '10000' }}
-                href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray"
-                target="_blank">
-                <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{ "width": "100%" }}></img>
-            </a>
+            <div>
+                <a id="mlh-trust-badge"
+                    style={{ 'display': 'block', 'maxWidth': '100px', 'minWidth': '60px', 'position': 'fixed', 'right': '30px', 'top': '0', 'width': '10%', 'zIndex': '10000' }}
+                    href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray"
+                    target="_blank">
+                    <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{ "width": "100%" }}></img>
+                </a>
 
-            <div id="parallax" className="parallax">
-                <div className="parallax-body">
-                    <main className="site-wrapper">
-                        <div className="content">
-                            <div className="slide-wrapper">
-                                <div className="slide-item">
-                                    <img src={img("cover2.png")} className="slide-item__image"></img>
-                                </div>
-                                <div className="slide-item">
-                                    <img src={img("transparent.png")} className="slide-item__image"></img>
+                <div id="parallax" className="parallax">
+                    <div className="parallax-body">
+                        <main className="site-wrapper">
+                            <div className="content">
+                                <div className="slide-wrapper">
+                                    <div className="slide-item">
+                                        <img src={img("cover2.png")} className="slide-item__image"></img>
+                                    </div>
+                                    <div className="slide-item">
+                                        <img src={img("transparent.png")} className="slide-item__image"></img>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </main>
+                        </main>
+                    </div>
                 </div>
+
+                <Container fixed>
+                        <AboutTransition />
+                        <About />
+                        <Schedule />
+                        <Prizes />
+                        <Sponsors />
+                        <Faq />
+                        {/* <Team /> */}
+
+                </Container>
+
+                <Footer/>
             </div>
-
-            <Container fixed>
-                    <AboutTransition />
-                    <About />
-                    <Schedule />
-                    <Prizes />
-                    <Sponsors />
-                    <Faq />
-                    {/* <Team /> */}
-
-            </Container>
+        </div>
+        )}
         </div>
     );
 }
