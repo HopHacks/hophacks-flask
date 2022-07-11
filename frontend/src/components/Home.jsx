@@ -66,10 +66,9 @@ export default function Home() {
     }
 
     useEffect(() => {
-        setLoading(true);
         setTimeout(() => {
-            setLoading(false);
-        }, 2000);
+            setLoading(false)
+          }, 2000);
         const script1 = document.createElement("script");
         const script2 = document.createElement("script");
         const script3 = document.createElement("script");
@@ -98,16 +97,12 @@ export default function Home() {
             document.body.removeChild(script3);
             document.body.removeChild(script4);
         }
+        
     }, [])
 
     return (
         <div>
-        {loading ? (
-            <div>
-                <img src={img('footer/bluejay-icon.png')} style={{ position: "fixed", bottom: "50%", right: "40%", width: "15%"}} />
-                <LinearProgress color="secondary" style={{position: "fixed", bottom: "50%", right:"25%", width: "50%"}}/>
-            </div>
-        ) : (
+        
         <div className={classes.gradient}>
             <div>
                 <a id="mlh-trust-badge"
@@ -134,21 +129,35 @@ export default function Home() {
                     </div>
                 </div>
 
-                <Container fixed>
-                        <AboutTransition />
-                        <About />
-                        <Schedule />
-                        <Prizes />
-                        <Sponsors />
-                        <Faq />
-                        {/* <Team /> */}
+                <div>
+                    {loading
+        ?  (<div>
+            <img src={img('dark_blue_bg.jpg')} style={{ position: "fixed", bottom: "0%", right: "0%", width: "100%"}} />
+            <img src={img('footer/bluejay-icon.png')} style={{ position: "fixed", bottom: "50%", right: "40%", width: "15%"}} />
+            <LinearProgress color="secondary" style={{position: "fixed", bottom: "50%", right:"25%", width: "50%"}}/>
+            </div>)
+        : (<Container fixed>
 
-                </Container>
+        <AboutTransition />
+            <About />
+            <Schedule />
+            <Prizes />
+            <Sponsors />
+            <Faq />
+            {/* <Team /> */}
+
+    </Container>
+    )
+      }
+
+                        
+                    </div>
+
+                
 
                 <Footer/>
             </div>
         </div>
-        )}
         </div>
     );
 }
