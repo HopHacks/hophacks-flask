@@ -109,7 +109,7 @@ def notify_registration_in_channel():
     school = request.json['school']
 
     # use num_registered in the events API for next year's events
-    num_registered = str(len(list(db.users.find())))
+    num_registered = str(len(list(db.users.find())) - 1)
 
     notification = "(" + num_registered + ")" + " New Registration: " + first_name + " " + last_name + " from " + school
     slack_client.client.post(text=notification)
