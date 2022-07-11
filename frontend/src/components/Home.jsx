@@ -131,31 +131,24 @@ export default function Home() {
 
                 <div>
                     {loading
-        ?  (<div>
-            <img src={img('dark_blue_bg.jpg')} style={{ position: "fixed", bottom: "0%", right: "0%", width: "100%"}} />
-            <img src={img('footer/bluejay-icon.png')} style={{ position: "fixed", bottom: "50%", right: "40%", width: "15%"}} />
-            <LinearProgress color="secondary" style={{position: "fixed", bottom: "50%", right:"25%", width: "50%"}}/>
-            </div>)
-        : (<Container fixed>
-
-        <AboutTransition />
-            <About />
-            <Schedule />
-            <Prizes />
-            <Sponsors />
-            <Faq />
-            {/* <Team /> */}
-
-    </Container>
-    )
-      }
-
-                        
-                    </div>
-
-                
-
-                <Footer/>
+                    ?  (<div>
+                        <img src={img('dark_blue_bg.jpg')} style={{ position: "fixed", bottom: "0%", right: "0%", width: "100%", height: "100%"}} />
+                        <img src={img('footer/bluejay-icon.png')} style={{ position: "fixed", bottom: "50%", right: "40%", width: "15%"}} />
+                        <LinearProgress color="secondary" style={{position: "fixed", bottom: "50%", right:"25%", width: "50%"}}/>
+                        </div>)
+                    : (<Container fixed>
+                            <AboutTransition />
+                            <About />
+                            <Schedule />
+                            <Prizes />
+                            <Sponsors />
+                            <Faq />
+                            {/* <Team /> */}
+                            <Footer/>
+                        </Container>
+                    )
+                    }
+                </div>
             </div>
         </div>
         </div>
