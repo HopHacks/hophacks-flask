@@ -49,11 +49,14 @@ const Nav = function Nav(props) {
                 <Typography variant="h6" className={classes.title}> Home </Typography>
               </Button>
 
-              <Button onClick={() => {
+              {!props.isLoggedIn && <Button onClick={() => {
             window.location = "/register";
           }} color="inherit">
             <Typography variant="h5" className={classes.title}> Register </Typography>
           </Button>
+              }
+              
+              
 
               {!props.isLoggedIn && <Login />
               }
@@ -99,11 +102,12 @@ const Nav = function Nav(props) {
             <Typography variant="h5" className={classes.title}> Team </Typography>
           </Button>
           
-          <Button onClick={() => {
+          {!props.isLoggedIn && <Button onClick={() => {
             window.location = "/register";
           }} color="inherit">
             <Typography variant="h5" className={classes.title}> Register </Typography>
           </Button>
+              }
 
 
 

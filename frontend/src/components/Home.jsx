@@ -158,17 +158,17 @@ export default function Home() {
                     </div>
                 </div>
 
-                <Container fixed>
-                        <AboutTransition />
-                        <About />
-                        <Schedule />
-                        <Prizes />
-                        <Sponsors />
-                        <Faq />
-                        {/* <Team /> */}
+            <Container fixed>
+                    <AboutTransition />
+                    <About />
+                    <Schedule />
+                    <Prizes />
+                    <Sponsors />
+                    <Faq />
 
-                </Container>
-            </div>
-        );
-    }
+            </Container>
+            <span STYLE="font-size:300%" >&nbsp;&nbsp;</span>
+        </div>
+    );
+}
 }
