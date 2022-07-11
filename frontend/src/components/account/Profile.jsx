@@ -43,7 +43,7 @@ const Profile = function Profile(props) {
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState("");
   const [resumeMsg, setResumeMsg] = useState("Acceptable format: *.pdf, *.doc, *.docx");
-  const [vaccinationMsg, setVaccinationMsg] = useState("Acceptable format: *.pdf, *.png, *.jpeg, *.jpg");
+  const [vaccinationMsg, setVaccinationMsg] = useState("Acceptable format: *.pdf, *.png, *.jpeg, *.jpg, *.heic");
 
 
   const currentEvent = "Fall 2022"
