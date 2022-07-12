@@ -112,7 +112,7 @@ export default function AboutTransition() {
   const xLeft2 = useTransform(scrollY, [800, 0], ["45%", "25vw"]);
 
   return (
-    <div style={{position: "relative"}}>
+    <div style={{position: "relative", marginTop: "11%"}}>
     <Box className={classes.color} >
         <CardMedia
           component="img"
