@@ -283,7 +283,7 @@ export default function Faq() {
                                     </AccordionSummary>
                                     <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
                                         <Typography className={classes.text}>
-                                            You can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. Alternatively, you can email us at <a className="link-text" href="mailto:hophacks@gmail.com">hophacks@gmail.com</a>
+                                        You can email us at <a className="link-text" href="mailto:hophacks2022@gmail.com">hophacks2022@gmail.com</a>. Alternatively, you can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. 
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
