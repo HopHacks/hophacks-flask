@@ -40,7 +40,9 @@ export default function Register() {
   const [grad, setGrad] = useState("");
   const [grad_month, setGrad_month] = useState("");
   const [grad_year, setGrad_year] = useState("");
+  const [resumeFile, setResumeFile] = useState("");
   const [profileSubmitMsg, setProfileSubmitMsg] = useState("");
+  const [resumeChecked, setResumeChecked] = useState(false)
   const [conductCodeChecked, setConductCodeChecked] = useState(false)
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false)
   const [communicationChecked, setCommunicationChecked] = useState(false)
@@ -72,6 +74,10 @@ export default function Register() {
   }));
 
   const classes = useStyles();
+
+  function handleResumeFileChange(e) {
+    setResumeFile(e.target.files[0])
+  }
 
   async function handleAccountNext() {
     if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
@@ -124,6 +130,11 @@ export default function Register() {
       return;
     }
 
+    if (!resumeChecked || resumeFile === "") {
+      setProfileSubmitMsg("* Please upload your resume.")
+      return;
+    }
+
     if (!conductCodeChecked) {
       setProfileSubmitMsg("* Please read the MLH Code of Conduct.")
       return;
@@ -139,25 +150,29 @@ export default function Register() {
       return;
     }
 
+    const data = new FormData();
+    data.append("file", resumeFile);
+    data.append("json_file", JSON.stringify({
+      "username": username,
+      "password": password,
+      "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email',
+      "profile": {
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender,
+        "major": major,
+        "phone_number": phone_number,
+        "school": school,
+        "ethnicity": ethnicity,
+        "grad": grad,
+        "is_jhu": school === "Johns Hopkins University" ? true : false,
+        "grad_month": grad_month,
+        "grad_year": grad_year,
+      }
+    }));
+
     try {
-      await axios.post('/api/accounts/create', {
-        "username": username,
-        "password": password,
-        "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email',
-        "profile": {
-          "first_name": first_name,
-          "last_name": last_name,
-          "gender": gender,
-          "major": major,
-          "phone_number": phone_number,
-          "school": school,
-          "ethnicity": ethnicity,
-          "grad": grad,
-          "is_jhu": school === "Johns Hopkins University" ? true : false,
-          "grad_month": grad_month,
-          "grad_year": grad_year,
-        }
-      })
+      await axios.post('/api/accounts/create', data)
 
       await axios.post('/api/slack/registration', {
         "first_name": first_name,
@@ -244,6 +259,10 @@ export default function Register() {
       <Grid item xs={0} md={1} lg={1} />
     </Grid>
   );
+  const handleResumeCheckBox = (event) => {
+    setResumeChecked(event.target.checked);
+  };
+
   const handleConductCheckBox = (event) => {
     setConductCodeChecked(event.target.checked);
   };
@@ -270,10 +289,43 @@ export default function Register() {
   }
 
 
+  const resume = (
+    <FormGroup style={{ marginTop: 20, display:'initial' }}>
+      <FormControlLabel
+        style={{ display: 'table' }}
+        control={
+          <div style={{ display: 'table-cell' }}>
+          <
+            Checkbox checked={resumeChecked}
+            onChange={handleResumeCheckBox}
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+            color="primary"
+            size="small"
+          />
+          </div>
+        }
+        label={
+          <div style={{ fontSize: 15 }}>
+            <span>* I authorize HopHacks to send my resume to our event sponsors for recruiting purpose.   
+              
+            </span>
+
+            <div>
+                <input accept=".pdf, .doc, .docx" type="file" name="file" onChange={handleResumeFileChange} />
+            </div>
+            
+          </div>
+        }
+      />
+    </FormGroup>
+  )
+
   const codeOfConduct = (
     <FormGroup style={{ marginTop: 20, display:'initial' }}>
       <FormControlLabel
+        style={{ display: 'table' }}
         control={
+          <div style={{ display: 'table-cell' }}>
           <
             Checkbox checked={conductCodeChecked}
             onChange={handleConductCheckBox}
@@ -281,6 +333,7 @@ export default function Register() {
             color="primary"
             size="small"
           />
+          </div>
         }
         label={
           <div style={{ fontSize: 15 }}>
@@ -536,6 +589,7 @@ export default function Register() {
 
       <Grid item xs={12}>
         {busForm}
+        {resume}
         {codeOfConduct}
         {eventLogistics}
         {communication}

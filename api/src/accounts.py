@@ -19,6 +19,9 @@ import datetime
 from bson import ObjectId
 import pytz
 
+import boto3
+from werkzeug.utils import secure_filename
+
 
 accounts_api = Blueprint('accounts', __name__)
 app = Flask(__name__)
@@ -28,6 +31,14 @@ email_client_accounts = email_client()
 
 profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
 "ethnicity", "grad", "is_jhu", "grad_month", "grad_year"]
+
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
+BUCKET = 'hophacks-resume'
+
+# remove weird directories just in case
+def check_filename(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Sends confirmation email with JWT-Token in URL for verification, returns secret key used
 # Note this secret key is based of the current user's hashed password, this way when the Password
@@ -130,18 +141,15 @@ def create():
     """
 
 
-
-    if (request.json is None):
+    if 'json_file' not in request.form:
         return Response('Data not in json format', status=400)
 
-    if not (all(field in request.json for field in ['username', 'password', 'confirm_url'])
-            and validate_profile(request)):
-        return Response('Invalid request', status=400)
+    json_info = json.loads(request.form['json_file'])
 
-    username = request.json['username']
-    password = request.json['password'].encode()
-    confirm_url = request.json['confirm_url']
-    profile = request.json['profile']
+    username = json_info['username']
+    password = json_info['password'].encode()
+    confirm_url = json_info['confirm_url']
+    profile = json_info['profile']
 
 
     if (db.users.find_one({'username': username})):
@@ -151,6 +159,27 @@ def create():
     hashed = bcrypt.hashpw(password, salt)
     confirm_secret = send_confirmation_email(username, hashed, confirm_url, profile["first_name"])
 
+    resume_link = ''
+
+    if 'file' in request.files:
+        
+        file = request.files['file']
+
+        file_name = file.filename
+
+        if file.filename == '':
+            file_name = 'resume'
+
+        file_name = secure_filename(file_name)
+        if (file and check_filename(file.filename)):
+
+            s3 = boto3.client('s3')
+
+            object_name = 'Fall-2022/{}-{}'.format(id, file_name)
+            s3.upload_fileobj(file, BUCKET, object_name)
+
+            resume_link = file_name
+    
     db.users.insert_one({
         'username': username,
         'hashed': hashed,
@@ -161,7 +190,9 @@ def create():
         'reset_secret': '',
         'is_admin': False,
         'registrations': [],
+        'resume': resume_link
     })
+
     return jsonify({"msg": "user added"}), 200
 
 @accounts_api.route('/check/<username>', methods = ['GET'])
