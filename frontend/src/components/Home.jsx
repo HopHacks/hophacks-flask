@@ -7,12 +7,12 @@ import Prizes from "./home/Prizes";
 import Schedule from "./home/Schedule";
 import About from "./home/About"
 import Faq from "./home/Faq"
-import '../stylesheets/home.css'
+import Cover from "./home/Cover";
+import LoadingAnimation from "./home/LoadingAnimation";
 import { useState, useEffect } from "react";
 import AboutTransition from "./home/AboutTransition";
-import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Footer from "./Footer"
+import { motion, useScroll } from 'framer-motion/dist/framer-motion'// Needs to be added to requirements.txt
 
 
 const useStyles = makeStyles({
@@ -65,40 +65,46 @@ export default function Home() {
         return process.env.PUBLIC_URL + '/images/' + url;
     }
 
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+
+    
+
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-          }, 2000);
-        const script1 = document.createElement("script");
-        const script2 = document.createElement("script");
-        const script3 = document.createElement("script");
-        const script4 = document.createElement("script");
+        }, 2000);
 
-        script1.src = "pixi.min.js";
-        script1.async = false;
-
-        script2.src = "TweenMax.min.js";
-        script2.async = false;
-
-        script3.src = "main.js";
-        script3.async = false;
-
-        script4.src = "home.js";
-        script4.async = false;
-
-        document.body.appendChild(script1);
-        document.body.appendChild(script2);
-        document.body.appendChild(script3);
-        document.body.appendChild(script4);
-
-        return () => {
-            document.body.removeChild(script1);
-            document.body.removeChild(script2);
-            document.body.removeChild(script3);
-            document.body.removeChild(script4);
+        function handleWindowResize() {
+            setWindowSize({
+              width: window.innerWidth,
+              height: window.innerHeight
+            });
         }
-        
+
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleWindowResize);
+          
+        };
+
     }, [])
+
+    const CoverAnimate = {
+        offscreen: { y: 1000, opacity: 0 },
+        onscreen: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                type: "spring",
+                bounce: 0.0,
+                duration: 6
+            }
+        }
+    }
 
     if (window.innerWidth <= 650) {
         return (
@@ -112,34 +118,13 @@ export default function Home() {
                         target="_blank">
                         <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{ "width": "100%" }}></img>
                     </a>
-                    <div id="parallax" className="parallax">
-                        <div className="parallax-body">
-                            <main className="site-wrapper">
-                                <div className="content">
-                                    <div className="slide-wrapper">
-                                        <div className="slide-item">
-                                            <img src={img("team-page.png")} className="slide-item__image"></img>
-                                        </div>
-                                        <div className="slide-item">
-                                            <img src={img("transparent.png")} className="slide-item__image"></img>
-                                        </div>
-                                    </div>
-                                </div>
-                            </main>
-                        </div>
-                    </div>
-    
                     <div>
                         {loading
-                        ?  (<div>
-                            <img src={img('dark_blue_bg.jpg')} style={{ position: "fixed", bottom: "0%", right: "0%", width: "100%", height: "100%"}} />
-                            <img src={img('footer/bluejay-icon.png')} style={{ position: "fixed", bottom: "50%", right: "40%", width: "15%"}} />
-                            <LinearProgress color="secondary" style={{position: "fixed", bottom: "50%", right:"25%", width: "50%"}}/>
-                            </div>)
+                        ?  (<LoadingAnimation/>)
                         : (
                         <>
-    
-    <Container fixed>
+                            <Container fixed>
+                                <Cover/>
                                 <AboutTransition />
                                 <About />
                                 <Schedule />
@@ -153,7 +138,6 @@ export default function Home() {
                             <Footer/>
                             
                         </>
-    
                         )
                         }
                     </div>
@@ -163,8 +147,6 @@ export default function Home() {
         );
     } else {
         return (
-            <div>
-            
             <div className={classes.gradient}>
                 <div>
                     <a id="mlh-trust-badge"
@@ -173,34 +155,16 @@ export default function Home() {
                         target="_blank">
                         <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg" alt="Major League Hacking 2022 Hackathon Season" style={{ "width": "100%" }}></img>
                     </a>
-                    <div id="parallax" className="parallax">
-                        <div className="parallax-body">
-                            <main className="site-wrapper">
-                                <div className="content">
-                                    <div className="slide-wrapper">
-                                        <div className="slide-item">
-                                            <img src={img("cover2.png")} className="slide-item__image"></img>
-                                        </div>
-                                        <div className="slide-item">
-                                            <img src={img("transparent.png")} className="slide-item__image"></img>
-                                        </div>
-                                    </div>
-                                </div>
-                            </main>
-                        </div>
-                    </div>
     
                     <div>
-                        {loading
-                        ?  (<div>
-                            <img src={img('dark_blue_bg.jpg')} style={{ position: "fixed", bottom: "0%", right: "0%", width: "100%", height: "100%"}} />
-                            <img src={img('footer/bluejay-icon.png')} style={{ position: "fixed", bottom: "50%", right: "40%", width: "15%"}} />
-                            <LinearProgress color="secondary" style={{position: "fixed", bottom: "50%", right:"25%", width: "50%"}}/>
-                            </div>)
-                        : (
-                        <>
-    
-    <Container fixed>
+                        {loading ? (<LoadingAnimation/>)
+                        : ( <Container fixed>
+                                <motion.div class={classes.logos}
+                                    initial={"onscreen"}
+                                    whileInView={"onscreen"}
+                                    variants={CoverAnimate}>
+                                    <Cover/>
+                                </motion.div>
                                 <AboutTransition />
                                 <About />
                                 <Schedule />
@@ -209,17 +173,11 @@ export default function Home() {
                                 <Faq />
                                 <span STYLE="font-size:300%" >&nbsp;&nbsp;</span>
                                 {/* <Team /> */}
-                                
-                            </Container>
-                            <Footer/>
-                            
-                        </>
-    
-                        )
+                                <Footer/>
+                            </Container>)
                         }
                     </div>
                 </div>
-            </div>
             </div>
         );
     }
