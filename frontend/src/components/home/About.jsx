@@ -169,7 +169,7 @@ export default function About() {
 
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", top: "800px"}}>
       <Box className={classes.color} >
           <Title aria-label={introText} role="heading">
             {introText.split(" ").map((word, index) => {

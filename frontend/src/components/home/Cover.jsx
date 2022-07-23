@@ -13,13 +13,13 @@ export default function Cover() {
     const classes = useStyles();
     return (
         <div>
-            <img src={img('cover.png')} style={{ position: "fixed", top: "0%", left: "0%", width: "100%", height: "100%"}} />
-            <img src={img('logo2022.png')} style={{ position: "fixed", top: "25%", left: "40%", width: "22.5%", height: "50%"}} />
+        <img src={img('cover.png')} style={{ position: "absolute", top: "0%", left: "0%", width: "100%", height: "100%"}} />
+            <img src={img('logo2022.png')} style={{ position: "absolute", top: "25%", left: "40%", width: "22.5%", height: "50%"}} />
             <Button onClick={() => {
                   window.location = "/register";
                 }} 
                 color="inherit"
-                style={{ position: "fixed", top: "75%", left: "41.25%", width: "20%", height: "10%"}}
+                style={{ position: "absolute", top: "75%", left: "41.25%", width: "20%", height: "10%"}}
                 >
                 <img src={img('../register-button.png')}/>
             </Button>

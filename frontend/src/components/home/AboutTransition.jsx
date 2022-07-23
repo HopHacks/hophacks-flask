@@ -12,6 +12,7 @@ const useStyles = makeStyles({
   },
   color: {
     backgroundColor: "transparent",
+
   },
   title: {
     color: "#7289da",
@@ -21,6 +22,10 @@ const useStyles = makeStyles({
     width: '65%',
     marginLeft: '33%',
     backgroundColor: "transparent",
+
+  },
+  moveDown: {
+    top: 'px',
   },
   font1: {
     position: "absolute",
@@ -112,33 +117,35 @@ export default function AboutTransition() {
   const xLeft2 = useTransform(scrollY, [800, 0], ["45%", "25vw"]);
 
   return (
-    <div style={{position: "relative"}}>
-    <Box className={classes.color} >
-        <CardMedia
-          component="img"
-          className={classes.Media}
-          image={img('About_Background.png')}
-        />
-        <motion.Typography
-          className={classes.font1} style={{
-            x: xLeft,
-          }}>
+    <div style={{ position: "relative", top: "900px"}}>
+      <Box className={classes.color} >
+        {/* <div className={classes.moveDown}> */}
+          <CardMedia
+            component="img"
+            className={classes.Media}
+            image={img('About_Background.png')}
+          />
+          <motion.Typography
+            className={classes.font1} style={{
+              x: xLeft,
+            }}>
 
-          About
-        </motion.Typography>
-        <motion.Typography
-          className={classes.font2} style={{
-            x: xRight,
-          }}>
-          About
-        </motion.Typography>
-        <motion.Typography
-          className={classes.font3} style={{
-            x: xLeft2,
-          }}>
-          About
-        </motion.Typography>
-    </Box>
+            About
+          </motion.Typography>
+          <motion.Typography
+            className={classes.font2} style={{
+              x: xRight,
+            }}>
+            About
+          </motion.Typography>
+          <motion.Typography
+            className={classes.font3} style={{
+              x: xLeft2,
+            }}>
+            About
+          </motion.Typography>
+        {/* </div> */}
+      </Box>
     </div >
   );
 }
