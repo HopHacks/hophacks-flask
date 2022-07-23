@@ -306,7 +306,7 @@ export default function Register() {
         }
         label={
           <div style={{ fontSize: 15 }}>
-            <span>* I authorize HopHacks to send my resume to our event sponsors for recruiting purpose.   
+            <span>* I authorize HopHacks to send my resume to our event sponsors for recruiting purposes.   
               
             </span>
 
