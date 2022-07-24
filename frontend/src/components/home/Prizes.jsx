@@ -1,18 +1,11 @@
-import React from "react";
+import React, { useState, useEffect }from "react";
 
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import { motion, useTransform, useViewportScroll, useAnimation } from 'framer-motion/dist/framer-motion'
+import { useInView } from "react-intersection-observer";
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
@@ -28,7 +21,7 @@ const useStyles = makeStyles({
     firstTitle: {
         fontFamily: "Inter",
         position: 'relative',
-        top: -1275,
+        top: -295,
         bottom: 0,
         left: 5,
         right: 0,
@@ -38,7 +31,7 @@ const useStyles = makeStyles({
     secondTitle: {
         fontFamily: "Inter",
         position: 'relative',
-        top: -840,
+        top: 160,
         bottom: 0,
         left: 265,
         right: 0,
@@ -47,7 +40,7 @@ const useStyles = makeStyles({
     secondSubTitle: {
         fontFamily: "Inter",
         position: 'relative',
-        top: -840,
+        top: 160,
         bottom: 0,
         left: 295,
         right: 0,
@@ -57,7 +50,7 @@ const useStyles = makeStyles({
     thirdTitle: {
         fontFamily: "Inter",
         position: 'relative',
-        top: -1235,
+        top: -245,
         bottom: 0,
         left: 845,
         right: 0,
@@ -67,7 +60,7 @@ const useStyles = makeStyles({
     thirdSubTitle: {
         fontFamily: "Inter",
         position: 'relative',
-        top: -1235,
+        top: -245,
         bottom: 0,
         left: 870,
         right: 0,
@@ -95,7 +88,10 @@ const useStyles = makeStyles({
     birds: {
         backgroundColor: "transparent",
         position: "relative",
+        top: -700,
+        bottom: 0,
         left: -15,
+        right: 0,
 
     },
 
@@ -105,7 +101,7 @@ const useStyles = makeStyles({
         marginTop: "0%", 
         width: "18%",
         position: 'relative',
-        top: -700,
+        top: 300,
         bottom: 0,
         left: 210,
         right: 0,
@@ -117,7 +113,7 @@ const useStyles = makeStyles({
         marginTop: "0%", 
         width: "18%",
         position: 'relative',
-        top: -1135,
+        top: -150,
         bottom: 0,
         left: 512,
         right: 0,
@@ -129,7 +125,7 @@ const useStyles = makeStyles({
         marginTop: "0%", 
         width: "18%",
         position: 'relative',
-        top: -1095,
+        top: -105,
         bottom: 0,
         left: 785,
         right: 0,
@@ -146,8 +142,42 @@ function img(url) {
 
 
 
-export default function Sponsors() {
+export default function Prizes() {
 
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+
+    useEffect(() => {
+        function handleWindowResize() {
+          setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+            });
+        }
+    
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleWindowResize);
+        };
+      }, []);
+
+
+      const imageAnimate = {
+        offscreen: { x: -30, opacity: 0 },
+        onscreen: {
+            x: 0,
+            opacity: 1,
+            duration: 3,
+            transition: {
+                type: "spring",
+                bounce: 0.3,
+                duration: 3
+            }
+        }
+    }
 
     const classes = useStyles();
 
@@ -162,52 +192,56 @@ export default function Sponsors() {
               </Typography>
             </Grid>              
             </Grid>
+            <motion.div
+                initial={"offscreen"}
+                whileInView={"onscreen"}
+                variants={imageAnimate}>
+                <div>
+                    <CardMedia
+                        component="img"
+                        className={classes.chatBox1}
+                        image={img('chatbox_above_birds.png')}
+                    />
+                    <Typography variant="h5" className={classes.secondTitle}  gutterBottom>
+                        <b>2nd Place </b>
+                        </Typography>
+                    <Typography variant="h6" className={classes.secondSubTitle} >
+                        $512
+                    </Typography>
+                </div>  
+            
+                <div> 
+                    <CardMedia
+                        component="img"
+                        className={classes.chatBox2}
+                        image={img('chatbox_above_birds.png')}
+                    />
+                    <Typography variant="h5" className={classes.firstTitle} align="center" gutterBottom>
+                        <b>1st Place </b>
+                        </Typography>
+                    <Typography variant="h6" className={classes.firstTitle} align="center">
+                        $1024
+                    </Typography>
+                </div>
+                <div>
+                    <CardMedia
+                        component="img"
+                        className={classes.chatBox3}
+                        image={img('chatbox_above_birds.png')}
+                    />
+                    <Typography variant="h5" className={classes.thirdTitle}  gutterBottom>
+                        <b>3rd Place </b>
+                        </Typography>
+                    <Typography variant="h6" className={classes.thirdSubTitle} >
+                        $256
+                    </Typography>
+                </div> 
+            </motion.div>
             <CardMedia
                 component="img"
                 className={classes.birds}
                 image={img('Birds.png')}
-            />
-             
-            <div>
-                <CardMedia
-                    component="img"
-                    className={classes.chatBox1}
-                    image={img('chatbox_above_birds.png')}
-                />
-                <Typography variant="h5" className={classes.secondTitle}  gutterBottom>
-                    <b>2nd Place </b>
-                    </Typography>
-                <Typography variant="h6" className={classes.secondSubTitle} >
-                    $512
-                </Typography>
-            </div>  
-            
-            <div> 
-                <CardMedia
-                    component="img"
-                    className={classes.chatBox2}
-                    image={img('chatbox_above_birds.png')}
-                />
-                <Typography variant="h5" className={classes.firstTitle} align="center" gutterBottom>
-                    <b>1st Place </b>
-                    </Typography>
-                <Typography variant="h6" className={classes.firstTitle} align="center">
-                    $1024
-                </Typography>
-            </div>
-            <div>
-                <CardMedia
-                    component="img"
-                    className={classes.chatBox3}
-                    image={img('chatbox_above_birds.png')}
-                />
-                <Typography variant="h5" className={classes.thirdTitle}  gutterBottom>
-                    <b>3rd Place </b>
-                    </Typography>
-                <Typography variant="h6" className={classes.thirdSubTitle} >
-                    $256
-                </Typography>
-            </div>        
+            />       
         </Box>
     );
 }
