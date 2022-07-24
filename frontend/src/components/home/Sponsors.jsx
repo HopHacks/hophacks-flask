@@ -120,7 +120,7 @@ export default function Sponsors() {
 
     return (
         <motion.div>
-            <Box py={2}>
+            <Box py={2} style={{ marginTop: -630}}>
 
                         <div>
                             <Grid container spacing={2} justify="center" alignItems="center">

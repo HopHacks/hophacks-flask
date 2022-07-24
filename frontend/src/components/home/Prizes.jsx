@@ -153,7 +153,7 @@ export default function Sponsors() {
 
     return (
         <Box py={1} >
-            <Grid container spacing={2}  alignItems="center" style={{ marginTop:"10%"}}>
+            <Grid container spacing={2}  alignItems="center" style={{ marginTop:"14%"}}>
                 <Grid item xs={4}>
             </Grid>
             <Grid item xs={4}>
