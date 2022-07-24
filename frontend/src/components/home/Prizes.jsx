@@ -25,15 +25,60 @@ const useStyles = makeStyles({
         fontSize: "375%"
     },
 
-    prizetitle: {
-        
-        fontFamily: "VCR OSD Mono",
+    firstTitle: {
+        fontFamily: "Inter",
+        position: 'relative',
+        top: -1275,
+        bottom: 0,
+        left: 5,
+        right: 0,
+        color: "white",
+    },
+
+    secondTitle: {
+        fontFamily: "Inter",
+        position: 'relative',
+        top: -840,
+        bottom: 0,
+        left: 265,
+        right: 0,
+        color: "white",
+    },
+    secondSubTitle: {
+        fontFamily: "Inter",
+        position: 'relative',
+        top: -840,
+        bottom: 0,
+        left: 295,
+        right: 0,
+        color: "white",
+    },
+
+    thirdTitle: {
+        fontFamily: "Inter",
+        position: 'relative',
+        top: -1235,
+        bottom: 0,
+        left: 845,
+        right: 0,
+        color: "white",
+    },
+
+    thirdSubTitle: {
+        fontFamily: "Inter",
+        position: 'relative',
+        top: -1235,
+        bottom: 0,
+        left: 870,
+        right: 0,
+        color: "white",
     },
 
     color: {
         backgroundColor: "#d1e9ff",
         
     },
+
     margin: {
         minWidth:"100px",
         width: "15%",
@@ -53,6 +98,7 @@ const useStyles = makeStyles({
         left: -15,
 
     },
+
     chatBox1: {
         backgroundColor: "transparent",
         marginLeft: "0%", 
@@ -64,24 +110,26 @@ const useStyles = makeStyles({
         left: 210,
         right: 0,
     },
+
     chatBox2: {
         backgroundColor: "transparent",
         marginLeft: "0%", 
         marginTop: "0%", 
         width: "18%",
         position: 'relative',
-        top: -1070,
+        top: -1135,
         bottom: 0,
         left: 512,
         right: 0,
     },
+
     chatBox3: {
         backgroundColor: "transparent",
         marginLeft: "0%", 
         marginTop: "0%", 
         width: "18%",
         position: 'relative',
-        top: -970,
+        top: -1095,
         bottom: 0,
         left: 785,
         right: 0,
@@ -118,22 +166,48 @@ export default function Sponsors() {
                 component="img"
                 className={classes.birds}
                 image={img('Birds.png')}
-            />  
-            <CardMedia
-                component="img"
-                className={classes.chatBox1}
-                image={img('chatbox_above_birds.png')}
             />
-            <CardMedia
-                component="img"
-                className={classes.chatBox2}
-                image={img('chatbox_above_birds.png')}
-            />
-            <CardMedia
-                component="img"
-                className={classes.chatBox3}
-                image={img('chatbox_above_birds.png')}
-            />        
+             
+            <div>
+                <CardMedia
+                    component="img"
+                    className={classes.chatBox1}
+                    image={img('chatbox_above_birds.png')}
+                />
+                <Typography variant="h5" className={classes.secondTitle}  gutterBottom>
+                    <b>2nd Place </b>
+                    </Typography>
+                <Typography variant="h6" className={classes.secondSubTitle} >
+                    $512
+                </Typography>
+            </div>  
+            
+            <div> 
+                <CardMedia
+                    component="img"
+                    className={classes.chatBox2}
+                    image={img('chatbox_above_birds.png')}
+                />
+                <Typography variant="h5" className={classes.firstTitle} align="center" gutterBottom>
+                    <b>1st Place </b>
+                    </Typography>
+                <Typography variant="h6" className={classes.firstTitle} align="center">
+                    $1024
+                </Typography>
+            </div>
+            <div>
+                <CardMedia
+                    component="img"
+                    className={classes.chatBox3}
+                    image={img('chatbox_above_birds.png')}
+                />
+                <Typography variant="h5" className={classes.thirdTitle}  gutterBottom>
+                    <b>3rd Place </b>
+                    </Typography>
+                <Typography variant="h6" className={classes.thirdSubTitle} >
+                    $256
+                </Typography>
+            </div>        
         </Box>
     );
 }
