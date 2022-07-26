@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
 
   title: {
-    fontFamily: "VCR OSD Mono",
+    fontFamily: "Inter",
   },
 
   hophacksButton: {

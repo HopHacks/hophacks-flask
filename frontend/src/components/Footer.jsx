@@ -22,15 +22,15 @@ const Footer = function Footer(props) {
                 <Grid item xs={6} sm={3}>
                     
                     <Grid container>
-                        <Typography style={{fontSize: 18}}>
+                        <Typography style={{fontFamily: "Inter", fontSize: 18}}>
                         <a href="mailto:hophacks2022@gmail.com" style = {{textDecoration: 'none', color:'white' }}>hophacks2022@gmail.com</a>
                         </Typography>
                     </Grid>
-                    <Grid container><Typography style={{fontSize: 18}}>Malone Hall</Typography></Grid>
-                    <Grid container><Typography style={{fontSize: 18}}>Johns Hopkins University</Typography></Grid>
+                    <Grid container><Typography style={{fontFamily: "Inter", fontSize: 18}}>Malone Hall</Typography></Grid>
+                    <Grid container><Typography style={{fontFamily: "Inter", fontSize: 18}}>Johns Hopkins University</Typography></Grid>
                 </Grid>
                 <Grid item xs={6} sm={2}>
-                    <Grid container><Typography style={{fontFamily: "vcrOsdMono,arial,helvetica,sans-serif", fontSize: 20}}>Follow Us</Typography></Grid>
+                    <Grid container><Typography style={{fontFamily: "Inter", fontSize: 20}}>Follow Us</Typography></Grid>
                     <Grid container>
                         <Grid item>
                             <a href="https://www.facebook.com/HopHacks" title="Facebook">

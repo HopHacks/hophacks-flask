@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     },
     text: {
         color: "#ffffff",
-        fontFamily: "Rosarivo",
+        fontFamily: "Inter",
         flexDirection: "column",
         marginBottom: "0px"
     },
@@ -111,7 +111,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }} >
-                                        <Typography variant="h6" gutterBottom > 
+                                        <Typography className={classes.text} variant="h6" gutterBottom > 
                                             <b> Who can participate? </b>
                                         </Typography>
                                     </AccordionSummary>
@@ -126,7 +126,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>Where will HopHacks take place?</b>
                                         </Typography>
                                     </AccordionSummary>
@@ -141,7 +141,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>How do I get to HopHacks?</b>
                                         </Typography>
                                     </AccordionSummary>
@@ -170,7 +170,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>Who will be there?</b>
                                         </Typography>
                                         </AccordionSummary>
@@ -185,7 +185,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b> Who are the judges? </b>
                                         </Typography>
                                     </AccordionSummary>
@@ -200,7 +200,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>Can I sleep?</b>
                                         </Typography>
                                     </AccordionSummary>
@@ -215,7 +215,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>Are you serious?</b>
                                         </Typography>
                                     </AccordionSummary>
@@ -232,7 +232,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>What about the FREE FOOD?</b>
                                         </Typography>
                                     </AccordionSummary>
@@ -247,7 +247,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>When can I pick up parking passes?</b>
                                         </Typography>
                                     </AccordionSummary>
@@ -262,7 +262,7 @@ export default function Faq() {
                             <Box border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>Will there be travel reimbursements?</b>
                                         </Typography>
                                     </AccordionSummary>
@@ -277,7 +277,7 @@ export default function Faq() {
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" sx={{height: "800px"}} >
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
-                                        <Typography variant="h6" gutterBottom>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
                                             <b>What if I have any other questions? </b>
                                         </Typography>
                                     </AccordionSummary>

@@ -18,7 +18,7 @@ function Login(props) {
   const useStyles = makeStyles({
 
     title: {
-      fontFamily: "VCR OSD Mono",
+      fontFamily: "Inter",
     },
 
     closeButton: {
