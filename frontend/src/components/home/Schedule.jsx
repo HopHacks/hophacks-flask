@@ -65,8 +65,8 @@ const useStyles = makeStyles({
     position: "absolute",
     width: '300px',
     height: '200px',
-    left: '170px',
-    top: '200px',
+    left: '450px',
+    top: '2750px',
     backgroundColor: "transparent",
   },
 
@@ -75,8 +75,8 @@ const useStyles = makeStyles({
     width: '300px',
     height: '200px',
     backgroundColor: "transparent",
-    left: '1050px',
-    top: '500px',
+    left: '1350px',
+    top: '3050px',
   },
 });
 
