@@ -76,7 +76,7 @@ const useStyles = makeStyles({
     height: '200px',
     backgroundColor: "transparent",
     left: '1350px',
-    top: '3050px',
+    top: '3075px',
   },
 });
 
