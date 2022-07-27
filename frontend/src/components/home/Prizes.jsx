@@ -2,6 +2,8 @@ import React, { useState, useEffect }from "react";
 
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { motion, useTransform, useViewportScroll, useAnimation } from 'framer-motion/dist/framer-motion'
@@ -20,52 +22,62 @@ const useStyles = makeStyles({
 
     firstTitle: {
         fontFamily: "Inter",
-        position: 'relative',
-        top: -295,
-        bottom: 0,
-        left: 5,
-        right: 0,
-        color: "white",
+        position: 'absolute',
+        top: "29%",
+        left: "25%",
+        color: "black",
+        fontSize: "1.4vw",
     },
 
-    secondTitle: {
+    firstSubTitle: {
         fontFamily: "Inter",
-        position: 'relative',
-        top: 160,
-        bottom: 0,
-        left: 265,
-        right: 0,
-        color: "white",
+        position: 'absolute',
+        top: "33%",
+        left: "27%",
+        color: "black",
+        fontSize: "1.2vw",
     },
-    secondSubTitle: {
-        fontFamily: "Inter",
-        position: 'relative',
-        top: 160,
-        bottom: 0,
-        left: 295,
-        right: 0,
-        color: "white",
-    },
+  
 
-    thirdTitle: {
-        fontFamily: "Inter",
-        position: 'relative',
-        top: -245,
-        bottom: 0,
-        left: 845,
-        right: 0,
-        color: "white",
-    },
 
-    thirdSubTitle: {
-        fontFamily: "Inter",
-        position: 'relative',
-        top: -245,
-        bottom: 0,
-        left: 870,
-        right: 0,
-        color: "white",
-    },
+    // secondTitle: {
+    //     fontFamily: "Inter",
+    //     position: 'relative',
+    //     top: 160,
+    //     bottom: 0,
+    //     left: 265,
+    //     right: 0,
+    //     color: "white",
+    // },
+    // secondSubTitle: {
+    //     fontFamily: "Inter",
+    //     position: 'relative',
+    //     top: 160,
+    //     bottom: 0,
+    //     left: 295,
+    //     right: 0,
+    //     color: "white",
+    // },
+
+    // thirdTitle: {
+    //     fontFamily: "Inter",
+    //     position: 'relative',
+    //     top: -245,
+    //     bottom: 0,
+    //     left: 845,
+    //     right: 0,
+    //     color: "white",
+    // },
+
+    // thirdSubTitle: {
+    //     fontFamily: "Inter",
+    //     position: 'relative',
+    //     top: -245,
+    //     bottom: 0,
+    //     left: 870,
+    //     right: 0,
+    //     color: "white",
+    // },
 
     color: {
         backgroundColor: "#d1e9ff",
@@ -87,49 +99,51 @@ const useStyles = makeStyles({
     },
     birds: {
         backgroundColor: "transparent",
-        position: "relative",
-        top: -700,
-        bottom: 0,
-        left: -15,
-        right: 0,
-
+        // width: "80%",
+        // left: "100px",
+        position: "relative"
     },
+    card: {
+        position: "relative",
+        border: "none", 
+        boxShadow: "none",
+        backgroundColor: "transparent",
+    },
+
+    
+
 
     chatBox1: {
         backgroundColor: "transparent",
-        marginLeft: "0%", 
-        marginTop: "0%", 
-        width: "18%",
-        position: 'relative',
-        top: 300,
-        bottom: 0,
-        left: 210,
-        right: 0,
+        position: 'absolute',
+        top: "25%",
+        left: "20%",
+        width: "19%",
     },
 
-    chatBox2: {
-        backgroundColor: "transparent",
-        marginLeft: "0%", 
-        marginTop: "0%", 
-        width: "18%",
-        position: 'relative',
-        top: -150,
-        bottom: 0,
-        left: 512,
-        right: 0,
-    },
+    // chatBox2: {
+    //     backgroundColor: "transparent",
+    //     marginLeft: "0%", 
+    //     marginTop: "0%", 
+    //     width: "18%",
+    //     position: 'relative',
+    //     top: -150,
+    //     bottom: 0,
+    //     left: 512,
+    //     right: 0,
+    // },
 
-    chatBox3: {
-        backgroundColor: "transparent",
-        marginLeft: "0%", 
-        marginTop: "0%", 
-        width: "18%",
-        position: 'relative',
-        top: -105,
-        bottom: 0,
-        left: 785,
-        right: 0,
-    },
+    // chatBox3: {
+    //     backgroundColor: "transparent",
+    //     marginLeft: "0%", 
+    //     marginTop: "0%", 
+    //     width: "18%",
+    //     position: 'relative',
+    //     top: -105,
+    //     bottom: 0,
+    //     left: 785,
+    //     right: 0,
+    // },
     
 });
 
@@ -192,7 +206,29 @@ export default function Prizes() {
               </Typography>
             </Grid>              
             </Grid>
-            <motion.div
+            <Card className={classes.card}>
+                <CardMedia
+                    component="img"
+                    className={classes.birds}
+                    image={img('Birds.png')}
+                />
+                <div>
+                    <img src={img('chatbox_above_birds.png')} className={classes.chatBox1}/>;
+                    {/* <CardMedia
+                        component="img"
+                        image={img('chatbox_above_birds.png')}
+                        className={classes.chatBox1}
+                    /> */}
+                    
+                    <Typography variant="h5" className={classes.firstTitle}  gutterBottom>
+                        <b>2nd Place </b>
+                        </Typography>
+                    <Typography variant="h6" className={classes.firstSubTitle}>
+                        $512
+                    </Typography>
+                </div>            
+            </Card>
+            {/* <motion.div
                 initial={"offscreen"}
                 whileInView={"onscreen"}
                 variants={imageAnimate}>
@@ -236,12 +272,8 @@ export default function Prizes() {
                         $256
                     </Typography>
                 </div> 
-            </motion.div>
-            <CardMedia
-                component="img"
-                className={classes.birds}
-                image={img('Birds.png')}
-            />       
+            </motion.div> */}
+            
         </Box>
     );
 }
