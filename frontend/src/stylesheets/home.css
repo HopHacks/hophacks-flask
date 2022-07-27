@@ -187,11 +187,16 @@ canvas {
 }
 
 @font-face {
-  font-family: "Inter Light";
-  src: url("./Inter-Light.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter Medium";
+  font-family: "Inter";
   src: url("./Inter-Medium.ttf") format("truetype");
 }
+
+/* @font-face {
+  font-family: "Inter Light";
+  src: url("./Inter-Light.ttf") format("truetype");
+} */
+
+/* @font-face {
+  font-family: "Inter Medium";
+  src: url("./Inter-Medium.ttf") format("truetype");
+} */
