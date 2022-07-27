@@ -26,7 +26,7 @@ const useStyles = makeStyles({
         top: "29%",
         left: "25%",
         color: "black",
-        fontSize: "1.4vw",
+        // fontSize: "1.4vw",
     },
 
     firstSubTitle: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
         top: "33%",
         left: "27%",
         color: "black",
-        fontSize: "1.2vw",
+        // fontSize: "1.2vw",
     },
   
 
@@ -108,6 +108,7 @@ const useStyles = makeStyles({
         border: "none", 
         boxShadow: "none",
         backgroundColor: "transparent",
+        left: "-22px"
     },
 
     
@@ -116,34 +117,26 @@ const useStyles = makeStyles({
     chatBox1: {
         backgroundColor: "transparent",
         position: 'absolute',
-        top: "25%",
-        left: "20%",
+        top: "26%",
+        left: "18%",
         width: "19%",
     },
 
-    // chatBox2: {
-    //     backgroundColor: "transparent",
-    //     marginLeft: "0%", 
-    //     marginTop: "0%", 
-    //     width: "18%",
-    //     position: 'relative',
-    //     top: -150,
-    //     bottom: 0,
-    //     left: 512,
-    //     right: 0,
-    // },
+    chatBox2: {
+        backgroundColor: "transparent",
+        position: 'absolute',
+        top: "4.2%",
+        left: "42.3%",
+        width: "19%",
+    },
 
-    // chatBox3: {
-    //     backgroundColor: "transparent",
-    //     marginLeft: "0%", 
-    //     marginTop: "0%", 
-    //     width: "18%",
-    //     position: 'relative',
-    //     top: -105,
-    //     bottom: 0,
-    //     left: 785,
-    //     right: 0,
-    // },
+    chatBox3: {
+        backgroundColor: "transparent",
+        position: 'absolute',
+        top: "33.5%",
+        left: "62.8%",
+        width: "19%",
+    },
     
 });
 
@@ -212,21 +205,32 @@ export default function Prizes() {
                     className={classes.birds}
                     image={img('Birds.png')}
                 />
+                <motion.div
+                initial={"offscreen"}
+                whileInView={"onscreen"}
+                variants={imageAnimate}>
                 <div>
-                    <img src={img('chatbox_above_birds.png')} className={classes.chatBox1}/>;
-                    {/* <CardMedia
+                    <CardMedia
                         component="img"
-                        image={img('chatbox_above_birds.png')}
+                        image={img('2nd_chatbox.png')}
                         className={classes.chatBox1}
-                    /> */}
-                    
-                    <Typography variant="h5" className={classes.firstTitle}  gutterBottom>
-                        <b>2nd Place </b>
-                        </Typography>
-                    <Typography variant="h6" className={classes.firstSubTitle}>
-                        $512
-                    </Typography>
-                </div>            
+                    />
+                </div>
+                <div>
+                    <CardMedia
+                        component="img"
+                        image={img('1st_chatbox.png')}
+                        className={classes.chatBox2}
+                    />
+                </div>
+                <div>
+                    <CardMedia
+                        component="img"
+                        image={img('3rd_chatbox.png')}
+                        className={classes.chatBox3}
+                    />
+                </div>  
+                </motion.div>                   
             </Card>
             {/* <motion.div
                 initial={"offscreen"}
