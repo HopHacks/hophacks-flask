@@ -27,8 +27,8 @@ const useStyles = makeStyles({
 
     birds: {
         backgroundColor: "transparent",
-        // width: "80%",
-        // left: "100px",
+        width: "80%",
+        left: "10%",
         position: "relative"
     },
 
@@ -43,25 +43,25 @@ const useStyles = makeStyles({
     chatBox1: {
         backgroundColor: "transparent",
         position: 'absolute',
-        top: "26%",
-        left: "18%",
-        width: "19%",
+        top: "25%",
+        left: "25%",
+        width: "15.5%",
     },
 
     chatBox2: {
         backgroundColor: "transparent",
         position: 'absolute',
-        top: "4.2%",
-        left: "42.3%",
-        width: "19%",
+        top: "4%",
+        left: "43.7%",
+        width: "15.5%",
     },
 
     chatBox3: {
         backgroundColor: "transparent",
         position: 'absolute',
-        top: "33.5%",
-        left: "62.8%",
-        width: "19%",
+        top: "33%",
+        left: "60%",
+        width: "15.5%",
     },
     
 });
