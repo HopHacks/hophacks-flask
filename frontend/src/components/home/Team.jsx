@@ -12,9 +12,13 @@ import Tab from '@material-ui/core/Tab';
 
 const useStyles = makeStyles({
 
+  box: {
+    width: '100%',
+  },
+
   root: {
     flexGrow: 1,
-    backgroundColor: "#eef7ff"
+    backgroundColor: "#eef7ff",
   },
 
   title: {
@@ -26,19 +30,6 @@ const useStyles = makeStyles({
     display: 'flex',
     flexWrap: 'wrap',
     padding: '10px',
-    justifyContent: 'center',
-  },
-
-  firstRow: {
-    textAlign: 'center',
-    marginTop: '30px',
-    minHeight: '190px',
-    minWidth: '190px',
-    maxWidth: '300px',
-    maxHeight: '300px',
-    margin: '10px',
-    padding: '2.5px 50px',
-    display: 'flex',
     justifyContent: 'center',
   },
 
@@ -139,9 +130,9 @@ export default function Team() {
   const classes = useStyles();
 
   return (
-    <Box py={2} > 
+    <Box className={classes.box} py={2}> 
       <Typography className={classes.title} variant="h4" gutterBottom>Our Perfect Team</Typography>
-      <Paper className={classes.root} style={{ padding: '5px', marginLeft: '15px' }}>
+      <Paper className={classes.root}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -156,7 +147,7 @@ export default function Team() {
           <Tab label="SPONSORS" />
           <Tab label="WEBSITE" />
           <Tab label="ALUMNI" />
-          </Tabs>
+        </Tabs>
         {value === 0 && <Grid className={classes.team} container>
           <div className={classes.teambox}>
             <MemberItem imgURL="curtis_headshot" memberName="Curtis S. Ahn" memberTitle="Director" linkedin="https://www.linkedin.com/in/ctsahn" />
