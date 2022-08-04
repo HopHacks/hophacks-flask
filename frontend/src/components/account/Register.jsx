@@ -37,6 +37,7 @@ export default function Register() {
   const [phone_number, setPhone_number] = useState("");
   const [school, setSchool] = useState("");
   const [ethnicity, setEthnicity] = useState("");
+  const [age, setAge] = useState(0);
   const [grad, setGrad] = useState("");
   const [grad_month, setGrad_month] = useState("");
   const [grad_year, setGrad_year] = useState("");
@@ -160,6 +161,7 @@ export default function Register() {
         "first_name": first_name,
         "last_name": last_name,
         "gender": gender,
+        "age": age,
         "major": major,
         "phone_number": phone_number,
         "school": school,
@@ -174,11 +176,11 @@ export default function Register() {
     try {
       await axios.post('/api/accounts/create', data)
 
-      await axios.post('/api/slack/registration', {
-        "first_name": first_name,
-        "last_name": last_name,
-        "school" : school
-      })
+      // await axios.post('/api/slack/registration', {
+      //   "first_name": first_name,
+      //   "last_name": last_name,
+      //   "school" : school
+      // })
     }
     catch (e) {
       return;
@@ -441,11 +443,22 @@ export default function Register() {
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={5}>
+          <TextField
+              required id="standard-basic"
+              variant="standard"
+              label="Age"
+              onChange={e => setAge(e.target.value)}
+              style={{ minWidth: 145, maxWidth: 145 }}
+              InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
+            />
+        </Grid>
+
+        <Grid item xs={7}>
           <TextField
             required variant="standard"
             label="Gender"
-            style={{ minWidth: 300, maxWidth: 300 }}
+            style={{ minWidth: 145, maxWidth: 145 }}
             onChange={(e) => {
               setGender(e.target.value);
             }}

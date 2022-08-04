@@ -33,6 +33,7 @@ const Profile = function Profile(props) {
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
   const [gender, setGender] = useState("");
+  const [age, setAge] = useState(0);
   const [major, setMajor] = useState("");
   const [phone_number, setPhone_number] = useState("");
   const [school, setSchool] = useState("");
@@ -166,6 +167,7 @@ const Profile = function Profile(props) {
     setGrad(response.data.profile.grad)
     setGrad_month(response.data.profile.grad_month)
     setGrad_year(response.data.profile.grad_year)
+    setAge(response.data.profile.age);
   }
 
   async function getStatus() {
@@ -191,6 +193,7 @@ const Profile = function Profile(props) {
     profile.grad = grad;
     profile.grad_month = grad_month;
     profile.grad_year = grad_year;
+    profile.age = age;
     try {
       await axios.post('/api/accounts/profile/update', {
         "profile": profile
@@ -451,24 +454,32 @@ async function cancel(event){
   )
 
   const GenderForm = (
-    <form>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={gender}
-          onChange={(e) => {
-            setGender(e.target.value);
-          }}
-        >
-          <MenuItem value="Male">Male</MenuItem>
-          <MenuItem value="Female">Female</MenuItem>
-          <MenuItem value="Non-Binary">Non-Binary</MenuItem>
-          <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-        </Select>
-      </FormControl>
-    </form>
+      <form>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={gender}
+            onChange={(e) => {
+              setGender(e.target.value);
+            }}
+          >
+            <MenuItem value="Male">Male</MenuItem>
+            <MenuItem value="Female">Female</MenuItem>
+            <MenuItem value="Non-Binary">Non-Binary</MenuItem>
+            <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
+          </Select>
+        </FormControl>
+      </form>
+  )
+
+  const AgeForm = (
+    <div>
+      <form>
+          <TextField id="stand-basic" variant="outlined" label="Age" defaultValue={profile.age} onChange={e => setAge(e.target.value)}></TextField>
+      </form>
+    </div>
   )
 
   const EthnicityForm = (
@@ -614,6 +625,13 @@ async function cancel(event){
               handleProfileSave={handleProfileSave}
               primaryText={"Gender"}
               secondaryText={profile.gender} />
+
+            <FormDialog
+              title={"Edit Age"}
+              form={AgeForm}
+              handleProfileSave={handleProfileSave}
+              primaryText={"Age"}
+              secondaryText={profile.age} />
 
             <FormDialog
               title={"Edit Ethnicity"}
