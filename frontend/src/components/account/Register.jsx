@@ -151,6 +151,12 @@ export default function Register() {
       return;
     }
 
+    const agere = /^[0-9\b]+$/;
+    if (!agere.test(age)) {
+      setProfileSubmitMsg("* Age must be an integer value.")
+      return;
+    }
+
     const data = new FormData();
     data.append("file", resumeFile);
     data.append("json_file", JSON.stringify({
@@ -443,36 +449,38 @@ export default function Register() {
           </Grid>
         </Grid>
 
-        <Grid item xs={5}>
-          <TextField
-              required id="standard-basic"
-              variant="standard"
-              label="Age"
-              onChange={e => setAge(e.target.value)}
-              style={{ minWidth: 145, maxWidth: 145 }}
-              InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
-            />
-        </Grid>
+        <Grid container item spacing={0} xs={12}>
+          <Grid item xs={5}>
+            <TextField
+                required id="standard-basic"
+                variant="standard"
+                label="Age"
+                onChange={e => setAge(e.target.value)}
+                style={{ minWidth: 145, maxWidth: 145 }}
+                InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
+              />
+          </Grid>
 
-        <Grid item xs={7}>
-          <TextField
-            required variant="standard"
-            label="Gender"
-            style={{ minWidth: 145, maxWidth: 145 }}
-            onChange={(e) => {
-              setGender(e.target.value);
-            }}
-            select
-            InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
-          >
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-            <MenuItem value="Non-Binary">Non-Binary</MenuItem>
-            <MenuItem value="Transgender">Transgender</MenuItem>
-            <MenuItem value="Intersex">Intersex</MenuItem>
-            <MenuItem value="Not listed">Not listed</MenuItem>
-            <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-          </TextField>
+          <Grid item xs={7}>
+            <TextField
+              required variant="standard"
+              label="Gender"
+              style={{ minWidth: 145, maxWidth: 145 }}
+              onChange={(e) => {
+                setGender(e.target.value);
+              }}
+              select
+              InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
+            >
+              <MenuItem value="Male">Male</MenuItem>
+              <MenuItem value="Female">Female</MenuItem>
+              <MenuItem value="Non-Binary">Non-Binary</MenuItem>
+              <MenuItem value="Transgender">Transgender</MenuItem>
+              <MenuItem value="Intersex">Intersex</MenuItem>
+              <MenuItem value="Not listed">Not listed</MenuItem>
+              <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
+            </TextField>
+          </Grid>
         </Grid>
 
         <Grid item xs={12}>
