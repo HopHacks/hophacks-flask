@@ -45,6 +45,7 @@ const Profile = function Profile(props) {
   const [sendConfimationMsg, setSendConfimationMsg] = useState("");
   const [resumeMsg, setResumeMsg] = useState("Acceptable format: *.pdf, *.doc, *.docx");
   const [vaccinationMsg, setVaccinationMsg] = useState("Acceptable format: *.pdf, *.png, *.jpeg, *.jpg, *.heic");
+  const [ageMsg, setAgeMsg] = useState("");
 
 
   const currentEvent = "Fall 2022"
@@ -203,6 +204,16 @@ const Profile = function Profile(props) {
     catch (e) {
       console.log("fail to update")
     }
+  }
+
+  const checkAgeValid = e => {
+    const agere = /^[0-9\b]+$/;
+    if (!agere.test(age)) {
+      setAgeMsg("* Age must be an integer value. Please try again.");
+      return;
+    }
+    setAgeMsg("");
+    handleProfileSave();
   }
 
   async function applyToCurrentEvent() {
@@ -629,9 +640,11 @@ async function cancel(event){
             <FormDialog
               title={"Edit Age"}
               form={AgeForm}
-              handleProfileSave={handleProfileSave}
+              handleProfileSave={checkAgeValid}
               primaryText={"Age"}
               secondaryText={profile.age} />
+
+            <Typography style={{ fontSize: '13px'}}> {ageMsg} </Typography>
 
             <FormDialog
               title={"Edit Ethnicity"}
