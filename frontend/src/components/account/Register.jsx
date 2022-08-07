@@ -407,8 +407,8 @@ export default function Register() {
         }
         label={
           <div style={{ fontSize: 15 }}>
-            <span>I authorize MLH to send me pre- and post-event informational emails,
-              which contain free credit and opportunities from their partners (optional). </span>
+            <span> (Optional) I authorize MLH to send me pre- and post-event informational emails,
+              which contain free credit and opportunities from their partners. </span>
           </div>
         }
       />
