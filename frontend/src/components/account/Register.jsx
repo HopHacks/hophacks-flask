@@ -146,10 +146,10 @@ export default function Register() {
       return;
     }
 
-    if (!communicationChecked) {
+    /*if (!communicationChecked) {
       setProfileSubmitMsg("* Please check the box for MLH informational emails.")
       return;
-    }
+    }*/
 
     const agere = /^[0-9\b]+$/;
     if (!agere.test(age)) {
@@ -176,6 +176,7 @@ export default function Register() {
         "is_jhu": school === "Johns Hopkins University" ? true : false,
         "grad_month": grad_month,
         "grad_year": grad_year,
+        "mlh_emails": communicationChecked
       }
     }));
 
@@ -284,7 +285,7 @@ export default function Register() {
   };
 
   function openCodeOfConduct() {
-    window.open(CodeOfConduct);
+    window.open("https://static.mlh.io/docs/mlh-code-of-conduct.pdf", "_blank");
   }
   function openPrivacy() {
     window.open("https://mlh.io/privacy", "_blank");
@@ -347,7 +348,7 @@ export default function Register() {
           <div style={{ fontSize: 15 }}>
             <span>* I have read and understand the </span>
             <Link onClick={openCodeOfConduct}>
-              MLH code of conduct
+              MLH Code of Conduct
             </Link>
             <span>.</span>
           </div>
@@ -406,8 +407,8 @@ export default function Register() {
         }
         label={
           <div style={{ fontSize: 15 }}>
-            <span>* I authorize MLH to send me pre- and post-event informational emails,
-              which contain free credit and opportunities from their partners.</span>
+            <span>I authorize MLH to send me pre- and post-event informational emails,
+              which contain free credit and opportunities from their partners (optional). </span>
           </div>
         }
       />
@@ -454,10 +455,12 @@ export default function Register() {
             <TextField
                 required id="standard-basic"
                 variant="standard"
+                type="number"
                 label="Age"
                 onChange={e => setAge(e.target.value)}
                 style={{ minWidth: 145, maxWidth: 145 }}
-                InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
+                InputProps = {{inputProps: {min:0}}}
+                InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label }}}
               />
           </Grid>
 

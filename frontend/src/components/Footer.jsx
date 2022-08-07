@@ -28,6 +28,11 @@ const Footer = function Footer(props) {
                     </Grid>
                     <Grid container><Typography style={{fontFamily: "Inter", fontSize: 18}}>Malone Hall</Typography></Grid>
                     <Grid container><Typography style={{fontFamily: "Inter", fontSize: 18}}>Johns Hopkins University</Typography></Grid>
+                    <Grid container>
+                        <Typography style={{fontFamily: "Inter", fontSize: 18}}>
+                        <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" style = {{textDecoration: 'none', color:'#51A5F7' }}>MLH Code of Conduct</a>
+                        </Typography>
+                    </Grid>
                 </Grid>
                 <Grid item xs={6} sm={2}>
                     <Grid container><Typography style={{fontFamily: "Inter", fontSize: 20}}>Follow Us</Typography></Grid>
