@@ -167,6 +167,21 @@ export default function Faq() {
                                 </Accordion>
                             </Box>
 
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
+                                            <b>What are the COVID-19 policies for this event?</b>
+                                        </Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
+                                    <Typography className={classes.text}>
+                                        Proof of COVID-19 vaccination and booster shot or proof of exemption must be uploaded to your Profile page when you register for HopHacks. No masks are required, unless you are exempt from vaccination.
+                                    </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
+                            </Box>
+
                             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
