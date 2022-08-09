@@ -76,8 +76,6 @@ function MemberItem(props) {
   let github = (null);
   let personal = (null);
 
-
-
   if (props.linkedin) {
     linkedin = <a target="_blank" href={`${props.linkedin}`}><img style={buttons} className="social-icon linkedin" src={img("social/linkedin-white.png")} alt="linkedin" /></a>;
   }
@@ -124,7 +122,10 @@ export default function Team() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    if (!Number.isInteger(newValue)) {
+      newValue = newValue.props.value;
+    }
+    setValue(newValue);    
   };
 
   const classes = useStyles();
@@ -136,6 +137,8 @@ export default function Team() {
         <Tabs
           value={value}
           onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
           indicatorColor="primary"
           textColor="primary"
           centered
