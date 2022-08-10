@@ -1,5 +1,5 @@
 '''
-Endpoints related to creating and managing user accounts
+Endpoints related to creating and managing user accounts.
 '''
 
 from db import db
