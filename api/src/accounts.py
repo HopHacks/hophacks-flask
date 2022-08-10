@@ -405,7 +405,7 @@ def confirm_email_req():
     if (user["email_confirmed"]):
         return jsonify({"msg": "Email already confirmed" }), 400
 
-    confirm_secret = send_confirmation_email(user['username'], user['hashed'], confirm_url)
+    confirm_secret = send_confirmation_email(user['username'], user['hashed'], confirm_url, user['profile']['first_name'])
 
     db.users.update(
         {'_id': ObjectId(id)},
