@@ -132,7 +132,22 @@ export default function Faq() {
                                     </AccordionSummary>
                                     <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
                                         <Typography className={classes.text}>
-                                            HopHacks is held at the Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found <a className="link-text" href="https://www.jhu.edu/assets/uploads/2014/10/homewood_campus_map.pdf" target="_blank">here</a>, and you can navigate to us on <a className="link-text" href="https://www.google.com/maps/place/Johns+Hopkins+University/@39.3299013,-76.6227117,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df8502f88d:0x303d58494fa04c66!8m2!3d39.3299013!4d-76.6205177" target="_blank">Google Maps</a>.
+                                            HopHacks is held at the Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found <a className="link-text" href="https://www.jhu.edu/assets/uploads/2014/10/homewood_campus_map.pdf" target="_blank">here</a>, and you can navigate to us on <a className="link-text" href="https://www.google.com/maps/place/Johns+Hopkins+University/@39.3299013,-76.6227117,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df8502f88d:0x303d58494fa04c66!8m2!3d39.3299013!4d-76.6205177" target="_blank">Google Maps</a>. We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
+                                        </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
+                            </Box>
+
+                            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
+                                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
+                                        <Typography className={classes.text} variant="h6" gutterBottom>
+                                            <b>Is HopHacks in-person or virtual this year?</b>
+                                        </Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
+                                        <Typography className={classes.text}>
+                                        We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
