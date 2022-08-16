@@ -44,7 +44,7 @@ const Footer = function Footer(props) {
                                 <img src={img('linkedin-icon.png')} style={{ width: "40px", margin: "10px 5px 5px" }} alt="linkedin-icon" />
                             </a>
                             <a href="https://www.instagram.com/hophacks/?hl=en" title="Instagram">
-                                <img src={img('linkedin-icon.png')} style={{ width: "40px", margin: "10px 5px 5px" }} alt="linkedin-icon" />
+                                <img src={img('instagram-icon.png')} style={{ width: "40px", margin: "10px 5px 5px" }} alt="linkedin-icon" />
                             </a>
                         </Grid>
                     </Grid>
