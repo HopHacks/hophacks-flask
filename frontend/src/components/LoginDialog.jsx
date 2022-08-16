@@ -19,6 +19,7 @@ function Login(props) {
 
     title: {
       fontFamily: "Inter",
+      color: "white"
     },
 
     closeButton: {
