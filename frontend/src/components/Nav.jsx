@@ -58,8 +58,8 @@ const Nav = function Nav(props) {
   }
 
   const classes = useStyles();
-  // const isMobile = window.innerWidth <= 650;
-  const isMobile = true;
+  const isMobile = window.innerWidth <= 650;
+  // const isMobile = true;
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const handleDrawerClose = () => {
