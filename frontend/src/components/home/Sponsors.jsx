@@ -141,11 +141,11 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                            <SponsorItem imgURL='bloomberg_hori' website='https://www.bloomberg.com/' imgSytle={{ width: windowSize.width * gold, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
+                            <SponsorItem imgURL='bloomberg_hori_brush' website='https://www.bloomberg.com/' imgSytle={{ width: windowSize.width * gold, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
                             <SponsorItem imgURL='it_hori_brush' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
                             <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
-                            <SponsorItem imgURL='digitalocean_hori' website='https://www.digitalocean.com/' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
-                            <SponsorItem imgURL='accenture_hori' website='https://www.accenture.com/us-en' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
+                            <SponsorItem imgURL='digitalocean_hori_brush' website='https://www.digitalocean.com/' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
+                            <SponsorItem imgURL='accenture_hori_brush' website='https://www.accenture.com/us-en' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
                             </Grid>
                         </motion.div>
                         <motion.div class={classes.logos}
