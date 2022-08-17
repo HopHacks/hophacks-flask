@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   drawer: {
     background: "#141230",
     // opacity: 0.9,
-    // width: "15%"
+    width: "100vw"
   },
 
   icon: {
@@ -58,8 +58,8 @@ const Nav = function Nav(props) {
   }
 
   const classes = useStyles();
-  const isMobile = window.innerWidth <= 650;
-  // const isMobile = true;
+  // const isMobile = window.innerWidth <= 650;
+  const isMobile = true;
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const handleDrawerClose = () => {
@@ -83,7 +83,7 @@ const Nav = function Nav(props) {
             </IconButton>
             <section>
               <Button component={Link} to={'/'} color="inherit">
-                <Typography variant="h6" className={classes.title}> Hophacks </Typography>
+                <Typography variant="h5" className={classes.title}> Hophacks </Typography>
               </Button>
               <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} classes={{paper : classes.drawer}} >
                 <div>
@@ -96,7 +96,7 @@ const Nav = function Nav(props) {
               <Button onClick={() => {
                   window.location = "/";
               }} color="inherit">
-                <Typography variant="h6" className={classes.title}> Home </Typography>
+                <Typography variant="h5" className={classes.title}> Home </Typography>
               </Button>
 
               {!props.isLoggedIn && 
@@ -117,20 +117,20 @@ const Nav = function Nav(props) {
                 <Button onClick={() => {
                   window.location = "/profile";
                 }} color="inherit">
-                  <Typography variant="h6" className={classes.title}> Profile </Typography>
+                  <Typography variant="h5" className={classes.title}> Profile </Typography>
                 </Button>
               }
 
               {props.isLoggedIn &&
                 <Button onClick={handleLogout} color="inherit">
-                  <Typography variant="h6" className={classes.title}>Logout</Typography>
+                  <Typography variant="h5" className={classes.title}>Logout</Typography>
                 </Button>
               }
 
               <Button onClick={() => {
                   window.location = "/team";
               }} color="inherit">
-                <Typography variant="h6" className={classes.title}> Team </Typography>
+                <Typography variant="h5" className={classes.title}> Team </Typography>
               </Button>
 
               </Drawer>             
