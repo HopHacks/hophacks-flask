@@ -94,14 +94,13 @@ export default function Home() {
     }, [])
 
     const CoverAnimate = {
-        offscreen: { y: 0, opacity: 0 },
+        offscreen: { y: 0, opacity: 0.7 },
         onscreen: {
             y: 0,
             opacity: 1,
             transition: {
                 type: "spring",
-                bounce: 0.0,
-                duration: 6
+                bounce: 0.0
             }
         }
     }
@@ -160,10 +159,10 @@ export default function Home() {
                         {loading ? (<LoadingAnimation />)
                             : (<Container fixed>
                                 <motion.div class={classes.logos}
-                                    initial={"offscreen"}
-                                    whileInView={"onscreen"}
+                                    initial={"onscreen"}
+                                    whileInView={"offscreen"}
                                     variants={CoverAnimate}
-                                    viewport={{ once: true }}>
+                                    viewport={{ once: false }}>
                                     <Cover />
                                 </motion.div>
                                 <AboutTransition />

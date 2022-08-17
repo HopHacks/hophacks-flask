@@ -4,6 +4,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import { motion, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+
 
 const useStyles = makeStyles({
 
@@ -116,8 +118,31 @@ export default function AboutTransition() {
 
   const xLeft2 = useTransform(scrollY, [800, 0], ["45%", "25vw"]);
 
+
+  const [windowSize, setWindowSize] = useState({
+      width: window.innerWidth,
+      height: window.innerHeight
+  });
+
+  useEffect(() => {
+    function handleWindowResize() {
+        setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+        window.removeEventListener('resize', handleWindowResize);
+
+    };
+
+  }, [])
+
   return (
-    <div style={{ position: "relative", marginTop: "900px"}}>
+    <div style={{ position: "relative", marginTop: windowSize.height*0.9}}>
       <Box className={classes.color} >
         {/* <div className={classes.moveDown}> */}
           <CardMedia
