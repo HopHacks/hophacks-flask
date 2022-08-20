@@ -40,7 +40,6 @@ const useStyles = makeStyles({
 
   drawer: {
     background: "#141230",
-    // opacity: 0.9,
     width: "100vw"
   },
 
@@ -58,8 +57,8 @@ const Nav = function Nav(props) {
   }
 
   const classes = useStyles();
-  // const isMobile = window.innerWidth <= 650;
-  const isMobile = true;
+  const isMobile = window.innerWidth <= 650;
+
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const handleDrawerClose = () => {
