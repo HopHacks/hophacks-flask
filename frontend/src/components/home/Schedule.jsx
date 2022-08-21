@@ -46,13 +46,13 @@ const useStyles = makeStyles({
       color: "rgba(255, 255, 255, 1)",
       fontWeight: "bold",
      },
-     fontSize: '18px',
+     fontSize: '15px',
   },
   divFont: {
     fontFamily: "Inter",
     color: "rgba(255, 255, 255, 1)",
     height: "35px",
-    fontSize: '17px',
+    fontSize: '15px',
     fontWeight: "bold",
   },
   indicator: {
