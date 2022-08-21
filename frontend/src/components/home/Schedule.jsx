@@ -178,6 +178,12 @@ export default function Schedule() {
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
+                  <TableCell width="20%" className={classes.font}>8:00 PM</TableCell>
+                  <TableCell className={classes.font}>Opening Ceremony</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                </TableRow>
+
+                <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>9:00 PM</TableCell>
                   <TableCell className={classes.font}>Team Building</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
@@ -198,8 +204,26 @@ export default function Schedule() {
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
+                  <TableCell width="20%" className={classes.font}>11:00 AM</TableCell>
+                  <TableCell className={classes.font}>DigitalOcean Workshop</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                </TableRow>
+
+                <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>1:00 PM</TableCell>
                   <TableCell className={classes.font}>Lunch</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                </TableRow>
+
+                <TableRow className={classes.bodycolor}>
+                  <TableCell width="20%" className={classes.font}>2:00 PM</TableCell>
+                  <TableCell className={classes.font}>Bloomberg Workshop</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                </TableRow>
+
+                <TableRow className={classes.bodycolor}>
+                  <TableCell width="20%" className={classes.font}>4:15 PM</TableCell>
+                  <TableCell className={classes.font}>Accenture Consulting Workshop</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
@@ -215,6 +239,7 @@ export default function Schedule() {
                   <TableCell width="40%" align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
               </TableBody>}
+              
               {day === "sun" &&<TableBody className={classes.body}>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>8:30 AM</TableCell>
