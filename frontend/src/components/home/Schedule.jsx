@@ -115,7 +115,7 @@ export default function Schedule() {
           </Grid>
           
 
-          <div className={classes.divFont} style={{ color: "#ffffff", fontWeight: "bold", fontSize: "150%", marginTop: "-10%"}} >All times in EDT (GMT-4)</div>
+          <div className={classes.divFont} style={{ color: "#ffffff", fontWeight: "bold", marginTop: "-10%"}} >All times in EDT (GMT-4)</div>
 
           <CardMedia
             component="img"
@@ -154,115 +154,114 @@ export default function Schedule() {
               <TableHead className={classes.schedule}>
                 <TableRow>
                   <TableCell className={classes.font} style={{ backgroundColor:"transparent"}}>Time</TableCell>
-                  <TableCell  className={classes.font}>Event</TableCell>
+                  <TableCell className={classes.font}>Event</TableCell>
                   <TableCell className={classes.font}>Location</TableCell>
                 </TableRow>
               </TableHead>
               {day === "fri" && <TableBody className={classes.body}>
                 <TableRow className={classes.font}>
-                  <TableCell width="40%" className={classes.font}>6:30 PM</TableCell>
+                  <TableCell className={classes.font}>6:30 PM</TableCell>
                   <TableCell className={classes.font}>Check-in Begins </TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>6:30 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>6:30 PM</TableCell>
                   <TableCell className={classes.font}>Dinner</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>7:30 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>7:30 PM</TableCell>
                   <TableCell className={classes.font}>Both Buses Arrive</TableCell>
                   <TableCell align="left" className={classes.font}>Mason Hall Loop</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>9:00 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>9:00 PM</TableCell>
                   <TableCell className={classes.font}>Team Building</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>9:00 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>9:00 PM</TableCell>
                   <TableCell className={classes.font}> Sponsor Hall Opens & Hacking Begins!</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell width="40%" align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
               </TableBody>}
 
               {day === "sat" && <TableBody className={classes.body}>
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>9:00 AM</TableCell>
+                  <TableCell width="20%" className={classes.font}>9:00 AM</TableCell>
                   <TableCell className={classes.font}>Breakfast</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>1:00 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>1:00 PM</TableCell>
                   <TableCell className={classes.font}>Lunch</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>6:00 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>6:00 PM</TableCell>
                   <TableCell className={classes.font}>Dinner</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>9:00 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>9:00 PM</TableCell>
                   <TableCell className={classes.font}>Fun (video game tournament, movie night, etc)</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell width="40%" align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
               </TableBody>}
               {day === "sun" &&<TableBody className={classes.body}>
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>8:30 AM</TableCell>
+                  <TableCell width="20%" className={classes.font}>8:30 AM</TableCell>
                   <TableCell className={classes.font}>Submissions Due</TableCell>
                   <TableCell align="left" className={classes.font}>Devpost</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>9:00 AM</TableCell>
+                  <TableCell width="20%" className={classes.font}>9:00 AM</TableCell>
                   <TableCell className={classes.font}>Breakfast</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>10:00 AM</TableCell>
+                  <TableCell width="20%" className={classes.font}>10:00 AM</TableCell>
                   <TableCell className={classes.font}>Presentations Fair</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>12:00 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>12:00 PM</TableCell>
                   <TableCell className={classes.font}>Lunch</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>12:30 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>12:30 PM</TableCell>
                   <TableCell className={classes.font}>Top 10 Demos & Judging</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
                           
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>1:45 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>1:45 PM</TableCell>
                   <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
-                
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>2:45 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>2:45 PM</TableCell>
                   <TableCell className={classes.font}>Buses Load</TableCell>
                   <TableCell align="left" className={classes.font}>Mason Hall Loop</TableCell>
                 </TableRow>
                 
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="40%" className={classes.font}>3:00 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>3:00 PM</TableCell>
                   <TableCell className={classes.font}>Buses Leave</TableCell>
-                  <TableCell align="left" className={classes.font}>Mason Hall Loop</TableCell>
+                  <TableCell width="40%" align="left" className={classes.font}>Mason Hall Loop</TableCell>
                 </TableRow>
 
               </TableBody>}
