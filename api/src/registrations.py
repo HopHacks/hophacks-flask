@@ -44,7 +44,7 @@ def send_rsvp_info(users):
      with mail.connect() as conn:
         for user in users:
             email = user["username"]
-            subject = "Detailed Guide - Hophacks.com"
+            subject = "RSVP Event Info - Hophacks.com"
             msg = Message(recipients=[email],
                           sender="team@hophacks.com",
                           subject=subject)
