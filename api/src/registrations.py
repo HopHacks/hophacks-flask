@@ -381,6 +381,9 @@ def rsvp_rsvp():
     
     {'$set': {"registrations.$.rsvp":True,
     "registrations.$.status": "rsvped"}})
+    
+    user = db.users.find({'_id' : ObjectId(id)})
+    send_rsvp_info(user)
 
     if (ret.matched_count == 1 and ret.modified_count == 1):
         return jsonify({"msg": "RSPVed successfully"}), 200
@@ -439,6 +442,7 @@ def rsvp_cancel():
 
 @registrations_api.route('/rsvp/info/all', methods = ['POST'])
 #@jwt_required
+#@check_admin
 def rsvp_info_all():
 
     """ Send info email regarding attending the hackathon to all rsvped participants.
@@ -450,8 +454,6 @@ def rsvp_info_all():
     """
 
     rsvpList = [] # list of the events that the user has RSVPed to 
-
-
     for user in db.users.find():
         if (user['is_admin'] == True):
             continue
@@ -464,4 +466,5 @@ def rsvp_info_all():
     if (len(rsvpList) == 0) :
         return jsonify({"msg": "No Rsvped Users"}), 400
     return jsonify({"msg": "Email successfully sent to all rsvped users"}),200
+
 
