@@ -384,8 +384,8 @@ def rsvp_rsvp():
     
 
     # comment out first
-    #user = db.users.find({'_id' : ObjectId(id)})
-    #send_rsvp_info(user)
+    user = db.users.find({'_id' : ObjectId(id)})
+    send_rsvp_info(user)
 
     if (ret.matched_count == 1 and ret.modified_count == 1):
         return jsonify({"msg": "RSPVed successfully"}), 200
