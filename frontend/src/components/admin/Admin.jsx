@@ -54,6 +54,11 @@ const Admin =  function() {
       setusers(response.data.users);
     }
 
+    async function sendAllRsvpEmails(){
+      const response = await axios.post('/api/registrations/rsvp/info/all');
+      alert("All Emails Sent")
+    }
+
     async function acceptUser(id){
       const response = await axios.post('/api/registrations/accept', 
       {
@@ -224,11 +229,14 @@ const Admin =  function() {
         <Box style={{backgroundColor:"white"}}>
 
       <div style = {{ marginBottom : 20 }}>
+      <>
+        <button onClick={() => sendAllRsvpEmails()}>Send Rsvp Email</button>
+      </>
       <SearchBar
-    value={query}
-    onChange={(newValue) => setQuery(newValue)}
-    onRequestSearch={() => getUsers()}
-  />
+        value={query}
+        onChange={(newValue) => setQuery(newValue)}
+        onRequestSearch={() => getUsers()}
+      />
   
       </div>
       {StatusPicker}
