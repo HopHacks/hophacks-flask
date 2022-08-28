@@ -188,9 +188,9 @@ export default function About() {
                   {word.split("").map((character, index) => {
                     return (
                       <Character
-                        aria-hidden="true"
-                        key={index}
-                        variants={characterAnimation}
+                        // aria-hidden="true"
+                        // key={index}
+                        // variants={characterAnimation}
                       >
                         {character}
                       </Character>

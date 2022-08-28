@@ -19,6 +19,7 @@ function Login(props) {
 
     title: {
       fontFamily: "Inter",
+      color: "white"
     },
 
     closeButton: {
@@ -145,7 +146,7 @@ function Login(props) {
     return(
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
-        <Typography variant="h6" className={classes.title}> Login </Typography>
+        <Typography variant="h5" className={classes.title}> Login </Typography>
       </Button>
       {LoginDialog}
     </>);

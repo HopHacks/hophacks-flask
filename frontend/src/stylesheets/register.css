@@ -47,6 +47,15 @@ body {
   min-width: 25rem;
 }
 
+@media (max-width: 650px) {
+  #graphic {
+    min-height: 12rem;
+    min-width: 12rem;
+    display: block;
+    margin: auto;
+  }
+}
+
 #register {
   padding: 10px;
 }

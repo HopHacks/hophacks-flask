@@ -39,7 +39,20 @@ registrations_api = Blueprint('registrations', __name__)
 #             self.mail_pwd = app.config['MAIL_PASSWORD']
 
 # email_client_registrations = email_client()
-        
+ 
+def send_rsvp_info(users):
+     with mail.connect() as conn:
+        for user in users:
+            email = user["username"]
+            subject = "RSVP Event Info - Hophacks.com"
+            msg = Message(recipients=[email],
+                          sender="team@hophacks.com",
+                          subject=subject)
+
+            msg.body = 'Thank you for confirming your spot to attend Hophacks in-person!'
+            msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
+            conn.send(msg)
+
 def send_acceptances(users):
      with mail.connect() as conn:
         for user in users:
@@ -368,6 +381,11 @@ def rsvp_rsvp():
     
     {'$set': {"registrations.$.rsvp":True,
     "registrations.$.status": "rsvped"}})
+    
+
+    # comment out first
+    user = db.users.find({'_id' : ObjectId(id)})
+    send_rsvp_info(user)
 
     if (ret.matched_count == 1 and ret.modified_count == 1):
         return jsonify({"msg": "RSPVed successfully"}), 200
@@ -423,4 +441,32 @@ def rsvp_cancel():
     else:
         return jsonify({"msg": "unknown error"}), 500 
         
+
+@registrations_api.route('/rsvp/info/all', methods = ['POST'])
+@jwt_required
+@check_admin
+def rsvp_info_all():
+
+    """ Send info email regarding attending the hackathon to all rsvped participants.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :status 400: No Rsvped Users exist
+    :status 200: Successful
+    """
+
+    rsvpList = [] # list of the events that the user has RSVPed to 
+    for user in db.users.find():
+        if (user['is_admin'] == True):
+            continue
+        if (user['registrations'] is None or len(list(user['registrations'])) == 0): # No active registrations
+            continue
+        if (user['registrations'][0]['status'] == "rsvped"):
+            rsvpList.append(user)
+    
+    send_rsvp_info(rsvpList)
+    if (len(rsvpList) == 0) :
+        return jsonify({"msg": "No Rsvped Users"}), 400
+    return jsonify({"msg": "Email successfully sent to all rsvped users"}),200
+
 
