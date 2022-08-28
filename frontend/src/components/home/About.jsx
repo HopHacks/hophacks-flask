@@ -87,7 +87,7 @@ const useStyles = makeStyles({
     fontFamily: "Inter",
     fontWeight: '400',
     fontStyle: 'normal',
-    fontSize: '15px',
+    fontSize: '36px',
     lineHeight: '58px',
     textAlign: 'center',
     letterSpacing: "0.11em",
@@ -96,7 +96,7 @@ const useStyles = makeStyles({
 });
 
 const Title = styled.h2`
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 600;
   font-family: Inter;
   color: rgba(255, 255, 255, 0.8);
@@ -159,13 +159,13 @@ export default function About() {
     },
   };
 
-  // const scaleRight = useTransform(scrollY, [0, 500], [2, 1]);
-  // const yRight = useTransform(scrollY, [0, 500], ["25vh", "0vh"]);
-  // const xRight = useTransform(scrollY, [1500, 300], ["15%", "-23vw"]);
+  const scaleRight = useTransform(scrollY, [0, 500], [2, 1]);
+  const yRight = useTransform(scrollY, [0, 500], ["25vh", "0vh"]);
+  const xRight = useTransform(scrollY, [1500, 300], ["15%", "-23vw"]);
 
-  // const xLeft = useTransform(scrollY, [1500, 300], ["-25%", "20vw"]);
+  const xLeft = useTransform(scrollY, [1500, 300], ["-25%", "20vw"]);
 
-  // const xLeft2 = useTransform(scrollY, [1500, 300], ["5%", "100vw"]);
+  const xLeft2 = useTransform(scrollY, [1500, 300], ["5%", "100vw"]);
 
 
   return (
