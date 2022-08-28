@@ -48,6 +48,9 @@ const useStyles = makeStyles({
         flexDirection: "column",
         marginBottom: "0px"
     },
+    link: {
+        color: '#8aecff',
+    },
     MuiAccordionroot: {
         "&.MuiAccordion-root:before": {
           backgroundColor: "#376eea",
@@ -132,7 +135,7 @@ export default function Faq() {
                                     </AccordionSummary>
                                     <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
                                         <Typography className={classes.text}>
-                                            HopHacks is held at the Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found <a className="link-text" href="https://www.jhu.edu/assets/uploads/2014/10/homewood_campus_map.pdf" target="_blank">here</a>, and you can navigate to us on <a className="link-text" href="https://www.google.com/maps/place/Johns+Hopkins+University/@39.3299013,-76.6227117,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df8502f88d:0x303d58494fa04c66!8m2!3d39.3299013!4d-76.6205177" target="_blank">Google Maps</a>. We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
+                                            HopHacks is held at Hodson Hall on the Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found <a className={classes.link} href="https://www.jhu.edu/assets/uploads/2014/10/homewood_campus_map.pdf" target="_blank">here</a>, and you can navigate to us on <a className={classes.link} href="https://www.google.com/maps/place/Johns+Hopkins+University/@39.3299013,-76.6227117,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df8502f88d:0x303d58494fa04c66!8m2!3d39.3299013!4d-76.6205177" target="_blank">Google Maps</a>. We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
@@ -168,10 +171,10 @@ export default function Faq() {
                                         <Typography className={classes.text}>
                                             If none of those options are for you, here are more ways to get to the party:
                                             <ul>
-                                                <li>For students from local Baltimore schools, we recommend the <a className="link-text" href="https://baltimorecollegetown.org/shuttle/" target="_blank">Collegetown Shuttle</a>.</li>
-                                                <li>For students from DC who are not taking our South/DC/Maryland Bus, we recommend taking the <a className="link-text" href="https://www.mta.maryland.gov/schedule?type=marc-train" target="_blank">MARC</a> train to Baltimore Penn Station, and then taking the <a className="link-text" href="https://ts.jhu.edu/Shuttles/" target="_blank">JHMI</a> shuttle or an Uber/Lyft/Taxi to Hopkins (if you do this, be sure to specify that you’re going to the Homewood campus!).</li>
-                                                <li>For other students, we recommend taking the <a className="link-text" href="https://www.flixbus.com/" target="_blank">FlixBus</a>, which stops near Baltimore Penn station so you can take the JHMI or Uber/Lyft/Taxi to Hopkins as stated in the previous bullet.</li>
-                                                <li>Finally, for those of you who are driving, free parking will be available in the <a className="link-text" href="https://www.google.com/maps/place/JHU+South+Garage/@39.3266548,-76.6240642,17z/data=!4m5!3m4!1s0x89c805322769c3db:0x83520ffde4dbcc7!8m2!3d39.325966!4d-76.6221276" target="_blank">South Garage</a>. Come see us in the HQ for a parking pass!</li>
+                                                <li>For students from local Baltimore schools, we recommend the <a className={classes.link} href="https://baltimorecollegetown.org/shuttle/" target="_blank">Collegetown Shuttle</a>.</li>
+                                                <li>For students from DC who are not taking our South/DC/Maryland Bus, we recommend taking the <a className={classes.link} href="https://www.mta.maryland.gov/schedule?type=marc-train" target="_blank">MARC</a> train to Baltimore Penn Station, and then taking the <a className={classes.link} href="https://ts.jhu.edu/Shuttles/" target="_blank">JHMI</a> shuttle or an Uber/Lyft/Taxi to Hopkins (if you do this, be sure to specify that you’re going to the Homewood campus!).</li>
+                                                <li>For other students, we recommend taking the <a className={classes.link} href="https://www.flixbus.com/" target="_blank">FlixBus</a>, which stops near Baltimore Penn station so you can take the JHMI or Uber/Lyft/Taxi to Hopkins as stated in the previous bullet.</li>
+                                                <li>Finally, for those of you who are driving, free parking will be available in the <a className={classes.link} href="https://www.google.com/maps/place/JHU+South+Garage/@39.3266548,-76.6240642,17z/data=!4m5!3m4!1s0x89c805322769c3db:0x83520ffde4dbcc7!8m2!3d39.325966!4d-76.6221276" target="_blank">South Garage</a>. Come see us in Hodson Hall for a parking pass!</li>
                                             </ul>
                                         </Typography>
 
@@ -313,7 +316,7 @@ export default function Faq() {
                                     </AccordionSummary>
                                     <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
                                         <Typography className={classes.text}>
-                                        You can email us at <a className="link-text" href="mailto:hophacks2022@gmail.com">hophacks2022@gmail.com</a>. Alternatively, you can message us at our <a className="link-text" href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. 
+                                        You can email us at <a className={classes.link} href="mailto:hophacks2022@gmail.com">hophacks2022@gmail.com</a>. Alternatively, you can message us at our <a className={classes.link} href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. 
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
