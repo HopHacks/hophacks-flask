@@ -109,7 +109,6 @@ export default function Faq() {
                     <img style={{ marginLeft: "-30%", width: "120%" }} src={img("home_bg/3.png")} />
                 </Grid>
             </Grid>
-
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
                 <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }} >
