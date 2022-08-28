@@ -90,49 +90,55 @@ const Nav = function Nav(props) {
                     <ChevronLeftIcon /> 
                   </IconButton>
                 </div>
-              <Divider />
+                <Divider />
 
-              <Button onClick={() => {
-                  window.location = "/";
-              }} color="inherit">
-                <Typography variant="h5" className={classes.title}> Home </Typography>
-              </Button>
-
-              {!props.isLoggedIn && 
-              <Button onClick={() => {
-                window.location = "/register";
-              }} color="inherit">
-                <Typography variant="h5" className={classes.title}> Register </Typography>
-              </Button>
-              }
-
-              
-              
-
-              {!props.isLoggedIn && <Login />
-              }
-
-              {props.isLoggedIn &&
                 <Button onClick={() => {
-                  window.location = "/profile";
+                    window.location = "/";
                 }} color="inherit">
-                  <Typography variant="h5" className={classes.title}> Profile </Typography>
+                  <Typography variant="h5" className={classes.title}> Home </Typography>
                 </Button>
-              }
 
-              {props.isLoggedIn &&
-                <Button onClick={handleLogout} color="inherit">
-                  <Typography variant="h5" className={classes.title}>Logout</Typography>
+                {!props.isLoggedIn && 
+                <Button onClick={() => {
+                  window.location = "/register";
+                }} color="inherit">
+                  <Typography variant="h5" className={classes.title}> Register </Typography>
                 </Button>
-              }
+                }
 
-              <Button onClick={() => {
-                  window.location = "/team";
-              }} color="inherit">
-                <Typography variant="h5" className={classes.title}> Team </Typography>
-              </Button>
 
-              </Drawer>             
+
+                {!props.isLoggedIn && <Login />
+                }
+
+                {props.isLoggedIn &&
+                  <Button onClick={() => {
+                    window.location = "/profile";
+                  }} color="inherit">
+                    <Typography variant="h5" className={classes.title}> Profile </Typography>
+                  </Button>
+                }
+
+                {props.isLoggedIn &&
+                  <Button onClick={handleLogout} color="inherit">
+                    <Typography variant="h5" className={classes.title}>Logout</Typography>
+                  </Button>
+                }
+
+                <Button onClick={() => {
+                    window.location = "/team";
+                }} color="inherit">
+                  <Typography variant="h5" className={classes.title}> Team </Typography>
+                </Button>
+              </Drawer>    
+
+              <a id="mlh-trust-badge"
+                style={{display: "block", maxWidth: "100px", minWidth: "60px", position: "fixed", right: "50px", top: "0", width: "10%", zIndex: "10000"}}
+                href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
+                target="_blank"
+              >
+                <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg" alt="Major League Hacking 2023 Hackathon Season" style={{ width: "100%" }}></img>
+              </a>
             </section>
           </Toolbar>
         </AppBar>
