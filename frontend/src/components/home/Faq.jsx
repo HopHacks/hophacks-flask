@@ -8,7 +8,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
-import "@fontsource/rosarivo" 
+import "@fontsource/rosarivo"
 import '../../stylesheets/home.css'
 
 const useStyles = makeStyles({
@@ -53,24 +53,24 @@ const useStyles = makeStyles({
     },
     MuiAccordionroot: {
         "&.MuiAccordion-root:before": {
-          backgroundColor: "#376eea",
-          flexDirection: "column",
+            backgroundColor: "#376eea",
+            flexDirection: "column",
         },
         "&.MuiAccordion-root.Mui-expanded:last-child": {
-           marginTop: "1px",
-           marginBottom: "25px",
+            marginTop: "1px",
+            marginBottom: "25px",
         },
         "&.MuiAccordionSummary-content": {
             margin: "0",
         },
-        
+
 
     },
     expanded: {},
     content: {
         '&$expanded': {
-        margin: "0",
-        minHeight: "0",
+            margin: "0",
+            minHeight: "0",
         },
         margin: "0",
     },
@@ -78,47 +78,46 @@ const useStyles = makeStyles({
         padding: "0px 16px 0px",
         flexDirection: "column",
     },
-    expand_icon : {
+    expand_icon: {
         color: "white"
     }
 });
 
 function img(url) {
     return process.env.PUBLIC_URL + '/images/' + url;
-  }
+}
 
 export default function Faq() {
 
     const classes = useStyles();
 
 
-   
+
 
     return (
-        <Box >
-            <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"7%"}}>
+        <Box>
+            <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop: "7%" }}>
                 <Grid item xs={2}>
-                    <img style={{marginLeft: "5%", width: "120%"}} src={img("home_bg/3.png")}/>
+                    <img style={{ marginLeft: "5%", width: "120%" }} src={img("home_bg/3.png")} />
                 </Grid>
                 <Grid item xs={8}>
-                    <Typography className={classes.title} variant="h4" style={{ marginTop:"0%"}} gutterBottom>
+                    <Typography className={classes.title} variant="h4" style={{ marginTop: "0%" }} gutterBottom>
                         Frequently Asked Questions
                     </Typography>
                 </Grid>
                 <Grid item xs={2}>
-                    <img style={{marginLeft: "-30%", width: "120%"}} src={img("home_bg/3.png")}/>
+                    <img style={{ marginLeft: "-30%", width: "120%" }} src={img("home_bg/3.png")} />
                 </Grid>
             </Grid>
-            
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }} >
-                        <Typography className={classes.text} variant="h6" gutterBottom > 
+                        <Typography className={classes.text} variant="h6" gutterBottom >
                             <b> Who can participate? </b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
                         <Typography className={classes.text}>
                             Any <b>university student</b> enrolled in any undergraduate or graduate program may participate. High school students may <b>NOT</b> participate.
                         </Typography>
@@ -127,13 +126,13 @@ export default function Faq() {
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>Where will HopHacks take place?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
                         <Typography className={classes.text}>
                             HopHacks is held at Hodson Hall on the Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found <a className={classes.link} href="https://drive.google.com/file/d/1aEulGqVSH3nPV2BXU90W8V-tDlFH-bRx/view?usp=sharing" target="_blank">here</a>, and you can navigate to us on <a className={classes.link} href="https://www.google.com/maps/place/Hodson+Hall/@39.3275298,-76.6244881,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df19af3e45:0x1e729d07213e16a!8m2!3d39.3275257!4d-76.6222941" target="_blank">Google Maps</a>. We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
                         </Typography>
@@ -142,28 +141,28 @@ export default function Faq() {
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>Is HopHacks in-person or virtual this year?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
                         <Typography className={classes.text}>
-                        We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
+                            We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>How do I get to HopHacks?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}} >
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }} >
                         <Typography className={classes.text}>
                             To get to us, we offer two bus routes. The North Bus will pick up students from New York City, Rutgers, and Philadelphia; the South Bus will pick up students from Georgetown, UMDCP, and UMDBC. More information on the exact pickup locations of these busses will be posted and sent out shortly to those who indicate interest in their registration.
                         </Typography>
@@ -177,99 +176,95 @@ export default function Faq() {
                                 <li>Finally, for those of you who are driving, free parking will be available in the <a className={classes.link} href="https://www.google.com/maps/place/JHU+South+Garage/@39.3266548,-76.6240642,17z/data=!4m5!3m4!1s0x89c805322769c3db:0x83520ffde4dbcc7!8m2!3d39.325966!4d-76.6221276" target="_blank">South Garage</a>. Come see us in Hodson Hall for a parking pass!</li>
                             </ul>
                         </Typography>
-
-                        <Typography className={classes.text}>
-                            <b>Note:</b> We will not be offering individual travel reimbursements.
-                        </Typography>
-                        </AccordionDetails>
+                    </AccordionDetails>
                 </Accordion>
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>What are the COVID-19 policies for this event?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
-                    <Typography className={classes.text}>
-                        Proof of COVID-19 vaccination and booster shot or proof of exemption must be uploaded to your Profile page when you register for HopHacks. No masks are required, unless you are exempt from vaccination.
-                    </Typography>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+                        <Typography className={classes.text}>
+                            Proof of COVID-19 vaccination and booster shot or proof of exemption must be uploaded to your Profile page when you register for HopHacks. No masks are required, unless you are exempt from vaccination.
+                        </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>Who will be there?</b>
                         </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
+                    </AccordionSummary>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
                         <Typography className={classes.text}>
                             In addition to students in attendance, representatives from many of our sponsor companies will be there to mentor the participants.
                         </Typography>
-                        </AccordionDetails>
+                    </AccordionDetails>
                 </Accordion>
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b> Who are the judges? </b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
-                    <Typography className={classes.text}>
-                        The judges will be a mix of local tech professionals and JHU faculty.
-                    </Typography>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+                        <Typography className={classes.text}>
+                            The judges will be a mix of local tech professionals and JHU faculty.
+                        </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>Can I sleep?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
-                    <Typography className={classes.text}>
-                        No. Real hackers are hardcore.
-                    </Typography>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+                        <Typography className={classes.text}>
+                            No. Real hackers are hardcore.
+                        </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>Are you serious?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
-                    <Typography className={classes.text}>
-                        Lol no. Sleeping rooms will be set aside for visiting students, although you should still bring your own blankets/sleeping bags/plushies/etc.
-                        These areas will be specified on our website closer to the event and also denoted with signs. Hopkins students may return to their dorms to sleep,
-                        but may not hack outside of the designated HopHacks buildings.
-                    </Typography>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+                        <Typography className={classes.text}>
+                            Lol no. Sleeping rooms will be set aside for visiting students, although you should still bring your own blankets/sleeping bags/plushies/etc.
+                            These areas will be specified on our website closer to the event and also denoted with signs. Hopkins students may return to their dorms to sleep,
+                            but may not hack outside of the designated HopHacks buildings.
+                        </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>What about the FREE FOOD?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
                         <Typography className={classes.text}>
                             At registration, all participants will be given a wristband which MUST BE VISIBLE when you are getting food. If you do not have your wristband, you will not be able to get food. Also, we do not like people who come to HopHacks for the free food and then leave. We are watching you.
                         </Typography>
@@ -278,51 +273,51 @@ export default function Faq() {
             </Box>
 
             <Box raised="true" border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>When can I pick up parking passes?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
-                    <Typography className={classes.text}>
-                        We will distribute parking passes to participants on the Sunday morning of HopHacks.
-                    </Typography>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+                        <Typography className={classes.text}>
+                            We will distribute parking passes to participants on the Sunday morning of HopHacks.
+                        </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
 
             <Box border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff" >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>Will there be travel reimbursements?</b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
-                    <Typography className={classes.text}>
-                        We will not be offering individual travel reimbursements but are sponsoring other modes of transportation detailed above.
-                    </Typography>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+                        <Typography className={classes.text}>
+                            We will not be offering individual travel reimbursements but are sponsoring other modes of transportation detailed above.
+                        </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
 
-            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" sx={{height: "800px"}} >
-                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{root: classes.MuiAccordionroot}}>
+            <Box raised="true" border={4} borderLeft={0} borderRight={0} borderColor="#ffffff" sx={{ height: "800px" }} >
+                <Accordion className={`${classes.colorBackground} ${classes.text}`} border={0} elevation={0} classes={{ root: classes.MuiAccordionroot }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.expand_icon} />} classes={{ root: classes.content, content: classes.content, expanded: classes.expanded }}>
                         <Typography className={classes.text} variant="h6" gutterBottom>
                             <b>What if I have any other questions? </b>
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
+                    <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
                         <Typography className={classes.text}>
-                        You can email us at <a className={classes.link} href="mailto:hophacks2022@gmail.com">hophacks2022@gmail.com</a>. Alternatively, you can message us at our <a className={classes.link} href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly. 
+                            You can email us at <a className={classes.link} href="mailto:hophacks2022@gmail.com">hophacks2022@gmail.com</a>. Alternatively, you can message us at our <a className={classes.link} href="https://facebook.com/hophacks">Facebook</a> page and one of our team members will respond accordingly.
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
-                
+
             </Box>
-        </Box>
+        </Box >
 
     );
 }
