@@ -135,7 +135,7 @@ export default function Faq() {
                                     </AccordionSummary>
                                     <AccordionDetails classes= {{root: classes.MuiAccordionDetailroot}}>
                                         <Typography className={classes.text}>
-                                            HopHacks is held at Hodson Hall on the Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found <a className={classes.link} href="https://www.jhu.edu/assets/uploads/2014/10/homewood_campus_map.pdf" target="_blank">here</a>, and you can navigate to us on <a className={classes.link} href="https://www.google.com/maps/place/Johns+Hopkins+University/@39.3299013,-76.6227117,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df8502f88d:0x303d58494fa04c66!8m2!3d39.3299013!4d-76.6205177" target="_blank">Google Maps</a>. We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
+                                            HopHacks is held at Hodson Hall on the Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found <a className={classes.link} href="https://drive.google.com/file/d/1aEulGqVSH3nPV2BXU90W8V-tDlFH-bRx/view?usp=sharing" target="_blank">here</a>, and you can navigate to us on <a className={classes.link} href="https://www.google.com/maps/place/Hodson+Hall/@39.3275298,-76.6244881,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df19af3e45:0x1e729d07213e16a!8m2!3d39.3275257!4d-76.6222941" target="_blank">Google Maps</a>. We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to attend virtually.
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
