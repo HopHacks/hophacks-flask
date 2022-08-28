@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import { motion, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
+import Typography from '@material-ui/core/Typography';
 import styled from "styled-components";
 
 const useStyles = makeStyles({
@@ -18,22 +19,23 @@ const useStyles = makeStyles({
     fontFamily: "VCR OSD Mono",
   },
   Media: {
-    width: '65%',
-    marginLeft: '33%',
+    width: '25%',
+    marginLeft: '70%',
+    top: '15%',
     backgroundColor: "transparent",
   },
   font1: {
     position: "absolute",
     width: '1127.38px',
     height: '353.64px',
-    left: '415px',
+    left: '450px',
     top: '110px',
-    color: "rgba(255, 255, 255, 0.6)",
+    color: "rgba(255, 255, 255)",
     backgroundColor: "none",
     fontFamily: "Inter",
     fontWeight: '700',
     fontStyle: 'italic',
-    fontSize: '188px',
+    fontSize: '100px',
     lineHeight: '304px'
 
   },
@@ -105,39 +107,50 @@ export default function AboutTransition() {
   const scaleRight = useTransform(scrollY, [0, 500], [2, 1]);
 
 
-  const xRight = useTransform(scrollY, [800, 0], ["-15%", "23vw"]);
+  // const xRight = useTransform(scrollY, [800, 0], ["-15%", "23vw"]);
 
   const xLeft = useTransform(scrollY, [800, 0], ["25%", "-15vw"]);
 
-  const xLeft2 = useTransform(scrollY, [800, 0], ["45%", "25vw"]);
+  // const xLeft2 = useTransform(scrollY, [800, 0], ["45%", "25vw"]);
+
+
+  const opacity = useTransform(
+    scrollY,
+    // Map x from these values:
+    [800, 0],
+    // Into these values:
+    [0,1]
+  )
 
   return (
     <div style={{position: "relative"}}>
     <Box className={classes.color} >
+        <motion.div>
         <CardMedia
           component="img"
           className={classes.Media}
+          style={{opacity:opacity}}
           image={img('About_Background.png')}
         />
-        <motion.Typography
-          className={classes.font1} style={{
-            x: xLeft,
-          }}>
+        </motion.div>
+        <Typography
+          className={classes.font1} variant="h4" >
 
           About
-        </motion.Typography>
-        <motion.Typography
+        </Typography>
+        {/* <motion.Typography
           className={classes.font2} style={{
             x: xRight,
           }}>
           About
-        </motion.Typography>
-        <motion.Typography
+        </motion.Typography> */}
+        {/* <motion.Typography
           className={classes.font3} style={{
             x: xLeft2,
+            opacity: opacity,
           }}>
           About
-        </motion.Typography>
+        </motion.Typography> */}
     </Box>
     </div >
   );
