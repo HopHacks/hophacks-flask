@@ -47,6 +47,7 @@ export default function Register() {
   const [conductCodeChecked, setConductCodeChecked] = useState(false)
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false)
   const [communicationChecked, setCommunicationChecked] = useState(false)
+  const [enabledButton, setEnabledButton] = useState(true);
 
   // decide which page is actively showing
   const ACCOUNT = 0;
@@ -181,6 +182,7 @@ export default function Register() {
     }));
 
     try {
+      setEnabledButton(false);
       await axios.post('/api/accounts/create', data)
 
       await axios.post('/api/slack/registration', {
@@ -619,6 +621,7 @@ export default function Register() {
             justifyContent="center"
             color="primary"
             size="large"
+            disabled={!enabledButton}
             onClick={() => {
               handleProfileNext();
             }}
