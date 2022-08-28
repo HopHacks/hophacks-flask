@@ -40,7 +40,7 @@ const useStyles = makeStyles({
   font: {
     fontFamily: "Inter",
     color: "rgba(255, 255, 255, 0.8)",
-    backgroundColor: "transparent",
+    backgroundColor:"transparent",
     fontWeight: "bold",
     "&.Mui-selected": {
       color: "rgba(255, 255, 255, 1)",
@@ -56,27 +56,29 @@ const useStyles = makeStyles({
     fontWeight: "bold",
   },
   indicator: {
-    backgroundColor: 'white',
+    backgroundColor : 'white',
   },
   selected: {
     color: "rgba(255, 255, 255, 0.8)",
   },
   Media: {
     position: "absolute",
-    width: '300px',
-    height: '200px',
-    left: '450px',
-    top: '2750px',
+    marginLeft: "15em", 
+    marginTop: "-5em", 
+    width: "25%",
+    maxWidth: '300px',
+    maxHeight: '200px',
     backgroundColor: "transparent",
   },
 
   Media2: {
     position: "absolute",
-    width: '300px',
-    height: '200px',
+    marginLeft: "75em",
+    marginTop: "15em", 
+    width: "17.5%",
+    maxWidth: '300px',
+    maxHeight: '200px',
     backgroundColor: "transparent",
-    left: '1350px',
-    top: '3075px',
   },
 });
 
@@ -101,35 +103,51 @@ export default function Schedule() {
 
   return (
     <Box py={2}>
-      <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop: "15%" }}>
-        <Grid item xs={4}>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography className={classes.title} variant="h4" style={{ marginTop: "-30%" }} gutterBottom>
-            Schedule
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <img style={{ marginLeft: "0%", marginTop: "-60%", width: "60%" }} src={img("home_bg/1_edit.png")} />
-        </Grid>
-      </Grid>
+          <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop:"15%"}}>
+            <Grid item xs={4}>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography className={classes.title} variant="h4" style={{marginTop: "-30%"}} gutterBottom>
+                Schedule
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <img style={{marginLeft: "0%", marginTop: "-60%", width: "60%"}} src={img("home_bg/1_edit.png")}/>
+            </Grid>              
+          </Grid>
+          
 
           <div className={classes.divFont} style={{ color: "#ffffff", fontWeight: "bold", marginTop: "-10%"}} >All times in EDT (GMT-4)</div>
 
-      <div className={classes.divFont} style={{ color: "#ffffff", fontWeight: "bold", fontSize: "150%", marginTop: "-10%" }} >All times in EDT (GMT-4)</div>
+          <CardMedia
+            component="img"
+            className={classes.Media}
+            image={img('schedule_png.png')}
+          />
 
-      <CardMedia
-        component="img"
-        className={classes.Media}
-        image={img('schedule_png.png')}
-      />
+          <CardMedia
+            component="img"
+            className={classes.Media2}
+            image={img('schedule_png_2.png')}
+          />
+          <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"transparent"}} align="center" sx={{ maxHeight: 440 }}>
 
-      <CardMedia
-        component="img"
-        className={classes.Media2}
-        image={img('schedule_png_2.png')}
-      />
-      <TableContainer component={Paper} style={{ width: "100%", backgroundColor: "transparent" }} align="center" sx={{ maxHeight: 440 }}>
+            <Tabs
+              value={day}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              centered
+              fullWidth={true}
+              className={classes.schedule}
+              classes={{indicator: classes.indicator, selected: classes.selected}}
+              style={{ width: "100%", backgroundColor:"transparent", color:"white"}}
+              variant="fullWidth"
+            >
+              <Tab label="Fri September 16th" value="fri" className={classes.font}/>
+              <Tab label="Sat September 17th" value="sat" className={classes.font}/>
+              <Tab label="Sun September 18th" value="sun" className={classes.font}/>
+            </Tabs>
 
             <Table className={classes.table} aria-label="simple table" sx={{
               height: "max-content",
@@ -281,28 +299,9 @@ export default function Schedule() {
                   <TableCell width="40%" align="left" className={classes.font}>Mason Hall Loop</TableCell>
                 </TableRow>
 
-            <TableRow className={classes.bodycolor}>
-              <TableCell width="40%" className={classes.font}>1:45 PM</TableCell>
-              <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
-              <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
-            </TableRow>
-
-
-            <TableRow className={classes.bodycolor}>
-              <TableCell width="40%" className={classes.font}>2:45 PM</TableCell>
-              <TableCell className={classes.font}>Buses Load</TableCell>
-              <TableCell align="left" className={classes.font}>Mason Hall Loop</TableCell>
-            </TableRow>
-
-            <TableRow className={classes.bodycolor}>
-              <TableCell width="40%" className={classes.font}>3:00 PM</TableCell>
-              <TableCell className={classes.font}>Buses Leave</TableCell>
-              <TableCell align="left" className={classes.font}>Mason Hall Loop</TableCell>
-            </TableRow>
-
-          </TableBody>}
-        </Table>
-      </TableContainer>
+              </TableBody>}
+            </Table>
+          </TableContainer>
 
     </Box>
   );
