@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { motion, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
 import Typography from '@material-ui/core/Typography';
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+
 
 const useStyles = makeStyles({
 
@@ -13,6 +15,7 @@ const useStyles = makeStyles({
   },
   color: {
     backgroundColor: "transparent",
+
   },
   title: {
     color: "#7289da",
@@ -23,6 +26,10 @@ const useStyles = makeStyles({
     marginLeft: '70%',
     top: '15%',
     backgroundColor: "transparent",
+
+  },
+  moveDown: {
+    top: 'px',
   },
   font1: {
     position: "absolute",
@@ -122,7 +129,31 @@ export default function AboutTransition() {
     [0,1]
   )
 
+
+  const [windowSize, setWindowSize] = useState({
+      width: window.innerWidth,
+      height: window.innerHeight
+  });
+
+  useEffect(() => {
+    function handleWindowResize() {
+        setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+        window.removeEventListener('resize', handleWindowResize);
+
+    };
+
+  }, [])
+
   return (
+
     <div style={{position: "relative"}}>
     <Box className={classes.color} >
         <motion.div>
@@ -152,6 +183,7 @@ export default function AboutTransition() {
           About
         </motion.Typography> */}
     </Box>
+
     </div >
   );
 }

@@ -65,10 +65,10 @@ export default function Sponsors() {
 
     const classes = useStyles();
 
-    const gold = 0.6;
-    const sable = 0.5;
-    const blue = 0.4;
-    const starter = 0.3;
+    const gold = 0.325;
+    const sable = 0.3;
+    const blue = 0.25;
+    const starter = 0.2;
 
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
@@ -77,18 +77,18 @@ export default function Sponsors() {
 
     useEffect(() => {
         function handleWindowResize() {
-          setWindowSize({
-            width: window.innerWidth,
-            height: window.innerHeight
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
             });
         }
-    
+
         window.addEventListener('resize', handleWindowResize);
-    
+
         return () => {
-          window.removeEventListener('resize', handleWindowResize);
+            window.removeEventListener('resize', handleWindowResize);
         };
-      }, []);
+    }, []);
 
     const textAnimate = {
         offscreen: { y: 0, opacity: 0 },
@@ -136,27 +136,48 @@ export default function Sponsors() {
                             
                             <Divider style={{marginBottom: "3%"}}/>
                         </div>
+
+                        
+                    <Box style={{ marginLeft: "5%", marginRight: "5%"}}>
+                        {/* Gold & Sable */}
                         <motion.div class={classes.logos}
                             initial={"offscreen"}
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                            <SponsorItem imgURL='bloomberg_hori_brush' website='https://www.bloomberg.com/' imgSytle={{ width: windowSize.width * gold, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
-                            <SponsorItem imgURL='it_hori_brush' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
-                            <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
-                            <SponsorItem imgURL='digitalocean_hori_brush' website='https://www.digitalocean.com/' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
-                            <SponsorItem imgURL='accenture_hori_brush' website='https://www.accenture.com/us-en' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "5%", marginBottom: "5%", marginLeft: "5%"}} />
+                                <SponsorItem imgURL='bloomberg_hori_brush' website='https://www.bloomberg.com/' imgSytle={{ width: windowSize.width * gold, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
+                                <SponsorItem imgURL='it_hori_brush' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
                             </Grid>
                         </motion.div>
+
+                        {/* Blue */}
                         <motion.div class={classes.logos}
                             initial={"offscreen"}
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                            <SponsorItem imgURL='wolfram_alpha_brush' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter, maxHeight: "100%", marginTop: "2%"}}/>
-                            <SponsorItem imgURL='google_cloud_brush' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter, maxHeight: "100%", marginTop: "0%", marginLeft: "5%"}}/>
+
+                                    <SponsorItem imgURL='digitalocean_hori_brush' website='https://www.digitalocean.com/' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
+                                
+                                    <SponsorItem imgURL='accenture_hori_brush' website='https://www.accenture.com/us-en' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
+                                
+                                    <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
+                                
                             </Grid>
                         </motion.div>
+
+                        {/* Starter */}
+                        <motion.div class={classes.logos}
+                            initial={"offscreen"}
+                            whileInView={"onscreen"}
+                            variants={imageAnimate}>
+                            <Grid container spacing={2} justify="center" alignItems="center">
+                                <SponsorItem imgURL='wolfram_alpha_brush' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter, maxHeight: "100%", marginTop: "2%"}}/>
+                                <SponsorItem imgURL='google_cloud_brush' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter, maxHeight: "100%", marginTop: "0%", marginLeft: "5%"}}/>
+                            </Grid>
+                        </motion.div>
+                    </Box>
+
                         <Divider style={{marginTop: "3%", marginBottom: "3%"}}/>
                         {/*
                         <motion.div
@@ -256,9 +277,7 @@ export default function Sponsors() {
                         */}
 
             </Box >
-            
         </motion.div>
-        
 
     );
 }
