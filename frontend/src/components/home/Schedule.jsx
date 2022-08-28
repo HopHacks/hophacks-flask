@@ -159,11 +159,13 @@ export default function Schedule() {
                 </TableRow>
               </TableHead>
               {day === "fri" && <TableBody className={classes.body}>
+            
                 <TableRow className={classes.font}>
                   <TableCell className={classes.font}>6:30 PM</TableCell>
                   <TableCell className={classes.font}>Check-in Begins </TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
+                
 
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>6:30 PM</TableCell>
@@ -200,6 +202,12 @@ export default function Schedule() {
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>9:00 AM</TableCell>
                   <TableCell className={classes.font}>Breakfast</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                </TableRow>
+
+                <TableRow className={classes.bodycolor}>
+                  <TableCell width="20%" className={classes.font}>10:00 AM</TableCell>
+                  <TableCell className={classes.font}>Coding Interview Workshop</TableCell>
                   <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
 
