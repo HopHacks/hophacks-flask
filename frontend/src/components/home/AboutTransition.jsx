@@ -142,7 +142,7 @@ export default function AboutTransition() {
   }, [])
 
   return (
-    <div style={{ position: "relative", marginTop: windowSize.height*0.9}}>
+    <div style={{ position: "relative", marginTop: windowSize.height*0.93}}>
       <Box className={classes.color} >
         {/* <div className={classes.moveDown}> */}
           <CardMedia
