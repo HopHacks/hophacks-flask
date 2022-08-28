@@ -8,7 +8,7 @@ import json
 import argparse
 
 '''
-Interactive script that generates configuration for prod or dev environment
+Interactive script that generates configuration for prod or dev environment.
 '''
 
 def setup_admin(mongo_uri):

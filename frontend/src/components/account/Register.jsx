@@ -37,10 +37,13 @@ export default function Register() {
   const [phone_number, setPhone_number] = useState("");
   const [school, setSchool] = useState("");
   const [ethnicity, setEthnicity] = useState("");
+  const [age, setAge] = useState(0);
   const [grad, setGrad] = useState("");
   const [grad_month, setGrad_month] = useState("");
   const [grad_year, setGrad_year] = useState("");
+  const [resumeFile, setResumeFile] = useState("");
   const [profileSubmitMsg, setProfileSubmitMsg] = useState("");
+  const [resumeChecked, setResumeChecked] = useState(false)
   const [conductCodeChecked, setConductCodeChecked] = useState(false)
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false)
   const [communicationChecked, setCommunicationChecked] = useState(false)
@@ -72,6 +75,10 @@ export default function Register() {
   }));
 
   const classes = useStyles();
+
+  function handleResumeFileChange(e) {
+    setResumeFile(e.target.files[0])
+  }
 
   async function handleAccountNext() {
     if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
@@ -124,6 +131,11 @@ export default function Register() {
       return;
     }
 
+    if (!resumeChecked || resumeFile === "") {
+      setProfileSubmitMsg("* Please upload your resume.")
+      return;
+    }
+
     if (!conductCodeChecked) {
       setProfileSubmitMsg("* Please read the MLH Code of Conduct.")
       return;
@@ -134,30 +146,42 @@ export default function Register() {
       return;
     }
 
-    if (!communicationChecked) {
+    /*if (!communicationChecked) {
       setProfileSubmitMsg("* Please check the box for MLH informational emails.")
+      return;
+    }*/
+
+    const agere = /^[0-9\b]+$/;
+    if (!agere.test(age)) {
+      setProfileSubmitMsg("* Age must be an integer value.")
       return;
     }
 
+    const data = new FormData();
+    data.append("file", resumeFile);
+    data.append("json_file", JSON.stringify({
+      "username": username,
+      "password": password,
+      "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email',
+      "profile": {
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender,
+        "age": age,
+        "major": major,
+        "phone_number": phone_number,
+        "school": school,
+        "ethnicity": ethnicity,
+        "grad": grad,
+        "is_jhu": school === "Johns Hopkins University" ? true : false,
+        "grad_month": grad_month,
+        "grad_year": grad_year,
+        "mlh_emails": communicationChecked
+      }
+    }));
+
     try {
-      await axios.post('/api/accounts/create', {
-        "username": username,
-        "password": password,
-        "confirm_url": window.location.protocol + '//' + window.location.host + '/confirm_email',
-        "profile": {
-          "first_name": first_name,
-          "last_name": last_name,
-          "gender": gender,
-          "major": major,
-          "phone_number": phone_number,
-          "school": school,
-          "ethnicity": ethnicity,
-          "grad": grad,
-          "is_jhu": school === "Johns Hopkins University" ? true : false,
-          "grad_month": grad_month,
-          "grad_year": grad_year,
-        }
-      })
+      await axios.post('/api/accounts/create', data)
 
       await axios.post('/api/slack/registration', {
         "first_name": first_name,
@@ -244,6 +268,10 @@ export default function Register() {
       <Grid item xs={0} md={1} lg={1} />
     </Grid>
   );
+  const handleResumeCheckBox = (event) => {
+    setResumeChecked(event.target.checked);
+  };
+
   const handleConductCheckBox = (event) => {
     setConductCodeChecked(event.target.checked);
   };
@@ -257,7 +285,7 @@ export default function Register() {
   };
 
   function openCodeOfConduct() {
-    window.open(CodeOfConduct);
+    window.open("https://static.mlh.io/docs/mlh-code-of-conduct.pdf", "_blank");
   }
   function openPrivacy() {
     window.open("https://mlh.io/privacy", "_blank");
@@ -270,10 +298,43 @@ export default function Register() {
   }
 
 
+  const resume = (
+    <FormGroup style={{ marginTop: 20, display:'initial' }}>
+      <FormControlLabel
+        style={{ display: 'table' }}
+        control={
+          <div style={{ display: 'table-cell' }}>
+          <
+            Checkbox checked={resumeChecked}
+            onChange={handleResumeCheckBox}
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+            color="primary"
+            size="small"
+          />
+          </div>
+        }
+        label={
+          <div style={{ fontSize: 15 }}>
+            <span>* I authorize HopHacks to send my resume to our event sponsors for recruiting purposes.   
+              
+            </span>
+
+            <div>
+                <input accept=".pdf, .doc, .docx" type="file" name="file" onChange={handleResumeFileChange} />
+            </div>
+            
+          </div>
+        }
+      />
+    </FormGroup>
+  )
+
   const codeOfConduct = (
     <FormGroup style={{ marginTop: 20, display:'initial' }}>
       <FormControlLabel
+        style={{ display: 'table' }}
         control={
+          <div style={{ display: 'table-cell' }}>
           <
             Checkbox checked={conductCodeChecked}
             onChange={handleConductCheckBox}
@@ -281,12 +342,13 @@ export default function Register() {
             color="primary"
             size="small"
           />
+          </div>
         }
         label={
           <div style={{ fontSize: 15 }}>
             <span>* I have read and understand the </span>
             <Link onClick={openCodeOfConduct}>
-              MLH code of conduct
+              MLH Code of Conduct
             </Link>
             <span>.</span>
           </div>
@@ -345,8 +407,8 @@ export default function Register() {
         }
         label={
           <div style={{ fontSize: 15 }}>
-            <span>* I authorize MLH to send me pre- and post-event informational emails,
-              which contain free credit and opportunities from their partners.</span>
+            <span> (Optional) I authorize MLH to send me pre- and post-event informational emails,
+              which contain free credit and opportunities from their partners. </span>
           </div>
         }
       />
@@ -388,25 +450,40 @@ export default function Register() {
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
-          <TextField
-            required variant="standard"
-            label="Gender"
-            style={{ minWidth: 300, maxWidth: 300 }}
-            onChange={(e) => {
-              setGender(e.target.value);
-            }}
-            select
-            InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
-          >
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-            <MenuItem value="Non-Binary">Non-Binary</MenuItem>
-            <MenuItem value="Transgender">Transgender</MenuItem>
-            <MenuItem value="Intersex">Intersex</MenuItem>
-            <MenuItem value="Not listed">Not listed</MenuItem>
-            <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-          </TextField>
+        <Grid container item spacing={0} xs={12}>
+          <Grid item xs={5}>
+            <TextField
+                required id="standard-basic"
+                variant="standard"
+                type="number"
+                label="Age"
+                onChange={e => setAge(e.target.value)}
+                style={{ minWidth: 145, maxWidth: 145 }}
+                InputProps = {{inputProps: {min:0}}}
+                InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label }}}
+              />
+          </Grid>
+
+          <Grid item xs={7}>
+            <TextField
+              required variant="standard"
+              label="Gender"
+              style={{ minWidth: 145, maxWidth: 145 }}
+              onChange={(e) => {
+                setGender(e.target.value);
+              }}
+              select
+              InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
+            >
+              <MenuItem value="Male">Male</MenuItem>
+              <MenuItem value="Female">Female</MenuItem>
+              <MenuItem value="Non-Binary">Non-Binary</MenuItem>
+              <MenuItem value="Transgender">Transgender</MenuItem>
+              <MenuItem value="Intersex">Intersex</MenuItem>
+              <MenuItem value="Not listed">Not listed</MenuItem>
+              <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
+            </TextField>
+          </Grid>
         </Grid>
 
         <Grid item xs={12}>
@@ -536,6 +613,7 @@ export default function Register() {
 
       <Grid item xs={12}>
         {busForm}
+        {resume}
         {codeOfConduct}
         {eventLogistics}
         {communication}
