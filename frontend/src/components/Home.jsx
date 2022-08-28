@@ -114,7 +114,7 @@ export default function Home() {
                             <main className="site-wrapper">
                                 <div className="content">
                                     <div className="slide-wrapper">
-                                        <div className="slide-item">
+                                        <div className="slide-item">/images/cover2.png
                                             <img src={img("team-page.png")} className="slide-item__image"></img>
                                         </div>
                                         <div className="slide-item">
@@ -126,7 +126,9 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
+                <Cover />
             </div>
+            
         );
     } else {
         return (
