@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
   title: {
     color: "#7289da",
-    fontFamily: "VCR OSD Mono",
+    fontFamily: "Inter",
   },
 
   team: {
