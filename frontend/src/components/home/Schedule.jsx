@@ -62,11 +62,14 @@ const useStyles = makeStyles({
     color: "rgba(255, 255, 255, 0.8)",
   },
   Media: {
-    position: "absolute",
-    width: '300px',
-    height: '200px',
-    left: '350px',
-    top: '1850px',
+    //position: "absolute",
+    // width: '300px',
+    // height: '200px',
+    // left: '350px',
+    // top: '1850px',
+    marginLeft: "0%", 
+    marginTop: "0%", 
+    width: "25%",
     backgroundColor: "transparent",
   },
 
@@ -117,7 +120,7 @@ export default function Schedule() {
 
           <div className={classes.divFont} style={{ color: "#ffffff", fontWeight: "bold", marginTop: "-10%"}} >All times in EDT (GMT-4)</div>
 
-          <CardMedia
+          {/* <CardMedia
             component="img"
             className={classes.Media}
             image={img('schedule_png.png')}
@@ -127,7 +130,7 @@ export default function Schedule() {
             component="img"
             className={classes.Media2}
             image={img('schedule_png_2.png')}
-          />
+          /> */}
           <TableContainer component={Paper} style={{ width: "100%", backgroundColor:"transparent"}} align="center" sx={{ maxHeight: 440 }}>
 
             <Tabs
