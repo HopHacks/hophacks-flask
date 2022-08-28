@@ -169,36 +169,38 @@ export default function About() {
 
 
   return (
-    <Box className={classes.color} >
-      <Title aria-label={introText} role="heading">
-        {introText.split(" ").map((word, index) => {
-          return (
-            <Word
-              ref={ref}
-              aria-hidden="true"
-              key={index}
-              initial="hidden"
-              animate={ctrls}
-              variants={wordAnimation}
-              transition={{
-                delayChildren: index * 0.03,
-                staggerChildren: 0.05,
-              }}>
-              {word.split("").map((character, index) => {
-                return (
-                  <Character
-                    // aria-hidden="true"
-                    // key={index}
-                    // variants={characterAnimation}
-                  >
-                    {character}
-                  </Character>
-                );
-              })}
-            </Word>
-          );
-        })}
-      </Title>
-    </Box>
+    <div style={{ position: "relative" }}>
+      <Box className={classes.color} >
+          <Title aria-label={introText} role="heading">
+            {introText.split(" ").map((word, index) => {
+              return (
+                <Word
+                  ref={ref}
+                  aria-hidden="true"
+                  key={index}
+                  initial="hidden"
+                  animate={ctrls}
+                  variants={wordAnimation}
+                  transition={{
+                    delayChildren: index * 0.03,
+                    staggerChildren: 0.05,
+                  }}>
+                  {word.split("").map((character, index) => {
+                    return (
+                      <Character
+                        // aria-hidden="true"
+                        // key={index}
+                        // variants={characterAnimation}
+                      >
+                        {character}
+                      </Character>
+                    );
+                  })}
+                </Word>
+              );
+            })}
+          </Title>
+      </Box>
+    </div>
   );
 }

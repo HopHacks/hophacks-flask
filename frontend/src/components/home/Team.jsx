@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
   title: {
     color: "#7289da",
-    fontFamily: "VCR OSD Mono",
+    fontFamily: "Inter",
   },
 
   team: {
@@ -187,6 +187,9 @@ export default function Team() {
         {value === 3 && <Grid className={classes.team} container>
           <div className={classes.teambox}>
             <MemberItem imgURL="ZoeKim" memberName="Zoe Kim" memberTitle="Social/PR Co-Head" linkedin="https://www.linkedin.com/in/kimminjeong/"/>
+          </div>
+          <div className={classes.teambox}>
+            <MemberItem imgURL="LaineWang" memberName="Laine Wang" memberTitle="Social/PR Co-Head" linkedin="https://www.linkedin.com/in/yuelian-wang-9a48b71a4/" github=""/>
           </div>
           <div className={classes.teambox}>
             <MemberItem imgURL="ElizabethHsieh" memberName="Elizabeth Hsieh" memberTitle="Social/PR" linkedin="https://www.linkedin.com/in/elizabeth-hsieh/"/>

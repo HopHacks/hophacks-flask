@@ -221,7 +221,7 @@ export default function Register() {
                 variant="standard"
                 label="Email Address"
                 style={{ minWidth: 275 }}
-                onChange={e => setUsername(e.target.value)}
+                onChange={e => setUsername(e.target.value.toLowerCase())}
                 InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
               />
             </Grid>
@@ -293,10 +293,6 @@ export default function Register() {
   function openTerms() {
     window.open("https://mlh.io/terms", "_blank");
   }
-  function openBusForm() {
-    window.open("https://forms.gle/qiYu547aoQ6SvYKz6", "_blank");
-  }
-
 
   const resume = (
     <FormGroup style={{ marginTop: 20, display:'initial' }}>
@@ -413,14 +409,6 @@ export default function Register() {
         }
       />
     </FormGroup>
-  )
-
-  const busForm = (
-    <div style={{ fontSize: 15, fontWeight: "bold", marginTop: "30px" }}>
-      <span>* Note: If you are interested in taking a bus (limited availability) to Johns Hopkins University, please fill the   
-        <Link onClick={openBusForm}>  Bus RSVP Form  </Link>    
-      </span>
-    </div>  
   )
 
   const personalInfo = (
@@ -612,7 +600,6 @@ export default function Register() {
       </Grid>
 
       <Grid item xs={12}>
-        {busForm}
         {resume}
         {codeOfConduct}
         {eventLogistics}
