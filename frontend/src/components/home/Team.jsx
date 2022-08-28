@@ -194,6 +194,9 @@ export default function Team() {
           <div className={classes.teambox}>
             <MemberItem imgURL="RuoyanShang" memberName="Ruoyan Shang" memberTitle="Social/PR" linkedin="https://www.linkedin.com/in/ruoyan-shang/" github="https://github.com/Elvaaaaaa"/>
           </div>
+          <div className={classes.teambox}>
+            <MemberItem imgURL="LaineWang" memberName="Laine Wang" memberTitle="Social/PR" linkedin="https://www.linkedin.com/in/yuelian-wang-9a48b71a4/" github=""/>
+          </div>
         </Grid>}
         {value === 4 && <Grid className={classes.team} container>
           <div className={classes.teambox}>
