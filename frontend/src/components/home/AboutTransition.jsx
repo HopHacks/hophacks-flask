@@ -4,6 +4,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import { motion, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+
 
 const useStyles = makeStyles({
 
@@ -12,6 +14,7 @@ const useStyles = makeStyles({
   },
   color: {
     backgroundColor: "transparent",
+
   },
   title: {
     color: "#7289da",
@@ -21,6 +24,10 @@ const useStyles = makeStyles({
     width: '65%',
     marginLeft: '33%',
     backgroundColor: "transparent",
+
+  },
+  moveDown: {
+    top: 'px',
   },
   font1: {
     position: "absolute",
@@ -111,34 +118,59 @@ export default function AboutTransition() {
 
   const xLeft2 = useTransform(scrollY, [800, 0], ["45%", "25vw"]);
 
-  return (
-    <div style={{position: "relative"}}>
-    <Box className={classes.color} >
-        <CardMedia
-          component="img"
-          className={classes.Media}
-          image={img('About_Background.png')}
-        />
-        <motion.Typography
-          className={classes.font1} style={{
-            x: xLeft,
-          }}>
 
-          About
-        </motion.Typography>
-        <motion.Typography
-          className={classes.font2} style={{
-            x: xRight,
-          }}>
-          About
-        </motion.Typography>
-        <motion.Typography
-          className={classes.font3} style={{
-            x: xLeft2,
-          }}>
-          About
-        </motion.Typography>
-    </Box>
+  const [windowSize, setWindowSize] = useState({
+      width: window.innerWidth,
+      height: window.innerHeight
+  });
+
+  useEffect(() => {
+    function handleWindowResize() {
+        setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+        window.removeEventListener('resize', handleWindowResize);
+
+    };
+
+  }, [])
+
+  return (
+    <div style={{ position: "relative", marginTop: windowSize.height*0.93}}>
+      <Box className={classes.color} >
+        {/* <div className={classes.moveDown}> */}
+          <CardMedia
+            component="img"
+            className={classes.Media}
+            image={img('About_Background.png')}
+          />
+          <motion.Typography
+            className={classes.font1} style={{
+              x: xLeft,
+            }}>
+
+            About
+          </motion.Typography>
+          <motion.Typography
+            className={classes.font2} style={{
+              x: xRight,
+            }}>
+            About
+          </motion.Typography>
+          <motion.Typography
+            className={classes.font3} style={{
+              x: xLeft2,
+            }}>
+            About
+          </motion.Typography>
+        {/* </div> */}
+      </Box>
     </div >
   );
 }

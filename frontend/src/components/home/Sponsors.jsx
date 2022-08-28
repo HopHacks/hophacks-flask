@@ -77,18 +77,18 @@ export default function Sponsors() {
 
     useEffect(() => {
         function handleWindowResize() {
-          setWindowSize({
-            width: window.innerWidth,
-            height: window.innerHeight
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
             });
         }
-    
+
         window.addEventListener('resize', handleWindowResize);
-    
+
         return () => {
-          window.removeEventListener('resize', handleWindowResize);
+            window.removeEventListener('resize', handleWindowResize);
         };
-      }, []);
+    }, []);
 
     const textAnimate = {
         offscreen: { y: 0, opacity: 0 },
@@ -277,9 +277,7 @@ export default function Sponsors() {
                         */}
 
             </Box >
-            
         </motion.div>
-        
 
     );
 }
