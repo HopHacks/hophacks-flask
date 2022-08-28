@@ -65,10 +65,10 @@ export default function Sponsors() {
 
     const classes = useStyles();
 
-    const gold = 0.35;
-    const sable = 0.325;
-    const blue = 0.3;
-    const starter = 0.275;
+    const gold = 0.325;
+    const sable = 0.3;
+    const blue = 0.25;
+    const starter = 0.2;
 
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
@@ -156,15 +156,13 @@ export default function Sponsors() {
                             whileInView={"onscreen"}
                             variants={imageAnimate}>
                             <Grid container spacing={2} justify="center" alignItems="center">
-                                <Grid item xs={4}>
-                                    <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%", marginLeft: "5%"}} />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <SponsorItem imgURL='digitalocean_hori_brush' website='https://www.digitalocean.com/' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%", marginLeft: "7%"}} />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <SponsorItem imgURL='accenture_hori_brush' website='https://www.accenture.com/us-en' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%", marginLeft: "5%"}} />
-                                </Grid>
+
+                                    <SponsorItem imgURL='digitalocean_hori_brush' website='https://www.digitalocean.com/' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
+                                
+                                    <SponsorItem imgURL='accenture_hori_brush' website='https://www.accenture.com/us-en' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
+                                
+                                    <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
+                                
                             </Grid>
                         </motion.div>
 
