@@ -1,4 +1,5 @@
 from db import db
+import re
 
 from flask import Flask, jsonify, request, Blueprint
 from flask_jwt_extended import (
@@ -57,7 +58,7 @@ def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
 
-    user = db.users.find_one({'username': username})
+    user = db.users.find_one({'username': re.compile('^' + re.escape(username) + '$', re.IGNORECASE)})
     if (user is None):
         return jsonify({'msg': 'Bad username or password'}), 401
 

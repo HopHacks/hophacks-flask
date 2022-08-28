@@ -221,7 +221,7 @@ export default function Register() {
                 variant="standard"
                 label="Email Address"
                 style={{ minWidth: 275 }}
-                onChange={e => setUsername(e.target.value)}
+                onChange={e => setUsername(e.target.value.toLowerCase())}
                 InputLabelProps={{ style: { color: '#000000' }, classes: { root: classes.label } }}
               />
             </Grid>
