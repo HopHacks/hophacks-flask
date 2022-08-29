@@ -105,78 +105,27 @@ export default function Home() {
         }
     }
 
-    if (window.innerWidth <= 650) {
-        return (            
-            <div className={classes.gradient}>
-                <div>
-                    <div id="parallax" className="parallax">
-                        <div className="parallax-body">
-                            <main className="site-wrapper">
-                                <div className="content">
-                                    <div className="slide-wrapper">
-                                        <div className="slide-item">/images/cover2.png
-                                            <img src={img("team-page.png")} className="slide-item__image"></img>
-                                        </div>
-                                        <div className="slide-item">
-                                            <img src={img("transparent.png")} className="slide-item__image"></img>
-                                        </div>
-                                    </div>
-                                </div>
-                            </main>
-                        </div>
-                    </div>
-                </div>
+    return (
+        <div className={classes.gradient}>
+            {loading ? (<LoadingAnimation />)
+                : (<Container fixed>
+                <motion.div class={classes.logos}
+                    initial={"onscreen"}
+                    whileInView={"offscreen"}
+                    variants={CoverAnimate}
+                    viewport={{ once: false }}>
                 <Cover />
-            </div>
-            
-        );
-    } else {
-        return (
-            <div className={classes.gradient}>
-                <div>
-                    <div id="parallax" className="parallax">
-                        <div className="parallax-body">
-                            <main className="site-wrapper">
-                                <div className="content">
-                                    <div className="slide-wrapper">
-                                        <div className="slide-item">
-                                            <img src={img("cover2.png")} className="slide-item__image"></img>
-                                        </div>
-                                        <div className="slide-item">
-                                            <img src={img("transparent.png")} className="slide-item__image"></img>
-                                        </div>
-                                    </div>
-                                </div>
-                            </main>
-                        </div>
-                    </div>
-    
-                    <div>
-                        {loading ? (<LoadingAnimation />)
-                            : (<Container fixed>
-                                <motion.div class={classes.logos}
-                                    initial={"onscreen"}
-                                    whileInView={"offscreen"}
-                                    variants={CoverAnimate}
-                                    viewport={{ once: false }}>
-                                    <Cover />
-                                </motion.div>
-                                <AboutTransition />
-                                <About />
-                                <Schedule />
-                                <Prizes />
-                                <Sponsors />
-                                <Faq />
-                                <span STYLE="font-size:300%" >&nbsp;&nbsp;</span>
-                                {/* <Team /> */}
-                                <Footer />
-                            </Container>)
-                        }
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
+                </motion.div>
+                <AboutTransition />
+                <About />
+                <Schedule />
+                <Prizes />
+                <Sponsors />
+                <Faq />
+                <span STYLE="font-size:300%" >&nbsp;&nbsp;</span>
+                <Footer />
+                </Container>)
+            }
+        </div>
+    );
 }
-
