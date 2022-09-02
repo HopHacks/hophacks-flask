@@ -163,19 +163,10 @@ export default function Sponsors() {
                                 
                                     <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
                                 
-                            </Grid>
-                        </motion.div>
-
-                        <motion.div class={classes.logos}
-                            initial={"offscreen"}
-                            whileInView={"onscreen"}
-                            variants={imageAnimate}>
-                            <Grid container spacing={2} justify="center" alignItems="center">
-
                                     <SponsorItem imgURL='apl_hori_brush' website='https://www.jhuapl.edu' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
-                                
                             </Grid>
                         </motion.div>
+
 
                         {/* Starter */}
                         <motion.div class={classes.logos}
