@@ -162,6 +162,8 @@ export default function Sponsors() {
                                     <SponsorItem imgURL='accenture_hori_brush' website='https://www.accenture.com/us-en' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
                                 
                                     <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
+
+                                    <SponsorItem imgURL='bah_hori_brush' website='https://www.boozallen.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
                                 
                             </Grid>
                         </motion.div>
