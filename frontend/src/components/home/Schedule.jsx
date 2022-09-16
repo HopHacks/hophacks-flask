@@ -148,87 +148,117 @@ export default function Schedule() {
                 <TableRow className={classes.font}>
                   <TableCell className={classes.font}>6:30 PM</TableCell>
                   <TableCell className={classes.font}>Check-in Begins </TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (1st floor lobby)</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>6:30 PM</TableCell>
                   <TableCell className={classes.font}>Dinner</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
-                </TableRow>
-                <TableRow className={classes.bodycolor}>
-                  <TableCell width="20%" className={classes.font}>7:30 PM</TableCell>
-                  <TableCell className={classes.font}>Both Buses Arrive</TableCell>
-                  <TableCell align="left" className={classes.font}>Mason Hall Loop</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (1st floor lobby)</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>8:00 PM</TableCell>
                   <TableCell className={classes.font}>Opening Ceremony</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 110</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>9:00 PM</TableCell>
                   <TableCell className={classes.font}>Team Building</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 203</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>9:00 PM</TableCell>
                   <TableCell className={classes.font}> Sponsor Hall Opens & Hacking Begins!</TableCell>
                   <TableCell width="40%" align="left" className={classes.font}>Hodson Hall</TableCell>
                 </TableRow>
+                <TableRow className={classes.font}>
+                  <TableCell className={classes.font}>10:00 PM - 10:45 PM</TableCell>
+                  <TableCell className={classes.font}>uCredit Workshop </TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 313</TableCell>
+                </TableRow>
+                <TableRow className={classes.font}>
+                  <TableCell className={classes.font}>11:30 PM</TableCell>
+                  <TableCell className={classes.font}>Midnight Pizza </TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (3rd floor lobby)</TableCell>
+                </TableRow>
               </TableBody>}
               {day === "sat" && <TableBody className={classes.body}>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>9:00 AM</TableCell>
                   <TableCell className={classes.font}>Breakfast</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (3rd floor lobby)</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="20%" className={classes.font}>10:00 AM</TableCell>
-                  <TableCell className={classes.font}>Coding Interview Workshop</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell width="20%" className={classes.font}>10:00 AM - 11:00 AM</TableCell>
+                  <TableCell className={classes.font}>HopHacks Coding Interview Workshop</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 316</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="20%" className={classes.font}>11:00 AM</TableCell>
+                  <TableCell width="20%" className={classes.font}>11:00 AM - 11:45 AM</TableCell>
                   <TableCell className={classes.font}>DigitalOcean Workshop</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 313</TableCell>
+                </TableRow>
+                <TableRow className={classes.font}>
+                  <TableCell className={classes.font}>12:00 PM - 12:45 PM</TableCell>
+                  <TableCell className={classes.font}>Booz Allen Hamilton Workshop </TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 316</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>1:00 PM</TableCell>
                   <TableCell className={classes.font}>Lunch</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (3rd floor lobby)</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="20%" className={classes.font}>2:00 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>2:00 PM - 3:30 PM</TableCell>
                   <TableCell className={classes.font}>Bloomberg Workshop</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 110</TableCell>
+                </TableRow>
+                <TableRow className={classes.font}>
+                  <TableCell className={classes.font}>3:30 PM - 4:15 PM</TableCell>
+                  <TableCell className={classes.font}>Quest2Learn Workshop</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 313</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
-                  <TableCell width="20%" className={classes.font}>4:15 PM</TableCell>
+                  <TableCell width="20%" className={classes.font}>4:15 PM - 5:00 PM</TableCell>
                   <TableCell className={classes.font}>Accenture Consulting Workshop</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 316</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>6:00 PM</TableCell>
                   <TableCell className={classes.font}>Dinner</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (3rd floor lobby)</TableCell>
                 </TableRow>
-                <TableRow className={classes.bodycolor}>
-                  <TableCell width="20%" className={classes.font}>9:00 PM</TableCell>
-                  <TableCell className={classes.font}>Fun (video game tournament, movie night, etc)</TableCell>
-                  <TableCell width="40%" align="left" className={classes.font}>Hodson Hall</TableCell>
+                <TableRow className={classes.font}>
+                  <TableCell className={classes.font}>7:00 PM - 8:00 PM</TableCell>
+                  <TableCell className={classes.font}>JHU IT Workshop </TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 313</TableCell>
+                </TableRow>
+                <TableRow className={classes.font}>
+                  <TableCell className={classes.font}>9:00 PM</TableCell>
+                  <TableCell className={classes.font}>MLH Bob Ross Event </TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 110</TableCell>
+                </TableRow>
+                <TableRow className={classes.font}>
+                  <TableCell className={classes.font}>11:30 PM</TableCell>
+                  <TableCell className={classes.font}>Midnight Pizza</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (3rd floor lobby)</TableCell>
                 </TableRow>
               </TableBody>}
               
               {day === "sun" &&<TableBody className={classes.body}>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>8:30 AM</TableCell>
-                  <TableCell className={classes.font}>Submissions Due</TableCell>
+                  <TableCell className={classes.font}>Submissions Due (Soft Deadline)</TableCell>
                   <TableCell align="left" className={classes.font}>Devpost</TableCell>
+                </TableRow>
+                <TableRow className={classes.bodycolor}>
+                  <TableCell width="20%" className={classes.font}>8:45 AM</TableCell>
+                  <TableCell className={classes.font}>All Coding Stops (Hard Deadline)</TableCell>
+                  <TableCell align="left" className={classes.font}>N/A</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>9:00 AM</TableCell>
                   <TableCell className={classes.font}>Breakfast</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (3rd floor lobby)</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>10:00 AM</TableCell>
@@ -238,29 +268,18 @@ export default function Schedule() {
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>12:00 PM</TableCell>
                   <TableCell className={classes.font}>Lunch</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson Hall (1st floor lobby)</TableCell>
                 </TableRow>
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>12:30 PM</TableCell>
                   <TableCell className={classes.font}>Top 10 Demos & Judging</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 110</TableCell>
                 </TableRow>
                           
                 <TableRow className={classes.bodycolor}>
                   <TableCell width="20%" className={classes.font}>1:45 PM</TableCell>
                   <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
-                  <TableCell align="left" className={classes.font}>Hodson Hall</TableCell>
-                </TableRow>
-                <TableRow className={classes.bodycolor}>
-                  <TableCell width="20%" className={classes.font}>2:45 PM</TableCell>
-                  <TableCell className={classes.font}>Buses Load</TableCell>
-                  <TableCell align="left" className={classes.font}>Mason Hall Loop</TableCell>
-                </TableRow>
-                
-                <TableRow className={classes.bodycolor}>
-                  <TableCell width="20%" className={classes.font}>3:00 PM</TableCell>
-                  <TableCell className={classes.font}>Buses Leave</TableCell>
-                  <TableCell width="40%" align="left" className={classes.font}>Mason Hall Loop</TableCell>
+                  <TableCell align="left" className={classes.font}>Hodson 110</TableCell>
                 </TableRow>
               </TableBody>}
             </Table>
