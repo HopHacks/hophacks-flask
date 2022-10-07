@@ -35,7 +35,7 @@ export default function Cover() {
                         color="inherit"
                         style={{ position: "absolute", top: "35%", left: "39.50%", width: "20%", height: "10%" }}
                     >
-                        <img src={img('../register-button.png')}  style = {{width: "150%", height: "150%"}} />
+                        {/* <img src={img('../register-button.png')}  style = {{width: "150%", height: "150%"}} /> */}
                     </Button>
                 </div>
             </div>
