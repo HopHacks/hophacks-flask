@@ -2,7 +2,7 @@ from db import db
 from mail import mail
 from util.decorators import check_admin
 
-from flask import Blueprint, request, Response, render_template, jsonify, Flask
+from flask import Blueprint, request, Response, render_template, jsonify, Flask, flash
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_mail import Message, Mail
 from bson import ObjectId
@@ -348,9 +348,14 @@ def rsvp_status():
 
     return jsonify({"status":"something wrong"}),500 
 
+
+
+
 @registrations_api.route('/rsvp/rsvp', methods = ['POST'])
 @jwt_required
 def rsvp_rsvp():
+
+    flash("We are no longer accepting RSVPs")
     """As a user, RSVP for an event he/she was accepted to
 
     :reqheader Authorization: ``Bearer <JWT Token>``
@@ -367,6 +372,10 @@ def rsvp_rsvp():
     :status 409: User has already RSVPed
     :status 500: Another unknown error
     """
+
+    """
+
+
 
     event = request.json["event"] # name of event
     id = get_jwt_identity()
@@ -395,7 +404,8 @@ def rsvp_rsvp():
         return jsonify({"msg": "no such event exists"}), 400
     else:
         return jsonify({"msg": "unknown error"}), 500 
-
+    """
+    return jsonify({"msg": "no more rsvps"} , 500)
 
 
 @registrations_api.route('/rsvp/cancel', methods = ['POST'])

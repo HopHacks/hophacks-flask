@@ -82,95 +82,16 @@ export default function Home() {
         height: window.innerHeight,
       });
     }
-
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
-
-  const CoverAnimate = {
-    offscreen: { y: 0, opacity: 1 },
-    onscreen: {
-      y: 0,
-      opacity: 0.7,
-      transition: {
-        type: "spring",
-        bounce: 0.0,
-      },
-    },
-  };
-
-  if (window.innerWidth <= 650) {
     return (
-      <div className={classes.gradient}>
-        <div>
-          <div id="parallax" className="parallax">
-            <div className="parallax-body">
-              <main className="site-wrapper">
-                <div className="content">
-                  <div className="slide-wrapper">
-                    <div className="slide-item">
-                      <img
-                        src={img("team-page.png")}
-                        className="slide-item__image"
-                      ></img>
-                    </div>
-                    <div className="slide-item">
-                      <img
-                        src={img("transparent.png")}
-                        className="slide-item__image"
-                      ></img>
-                    </div>
-                  </div>
-                </div>
-              </main>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className={classes.gradient}>
-        <div>
-          <div id="parallax" className="parallax">
-            <div className="parallax-body">
-              <main className="site-wrapper">
-                <div className="content">
-                  <div className="slide-wrapper">
-                    <div className="slide-item">
-                      <img
-                        src={img("cover2.png")}
-                        className="slide-item__image"
-                      ></img>
-                    </div>
-                    <div className="slide-item">
-                      <img
-                        src={img("transparent.png")}
-                        className="slide-item__image"
-                      ></img>
-                    </div>
-                  </div>
-                </div>
-              </main>
-            </div>
-          </div>
-
-          <div>
-            {loading ? (
-              <LoadingAnimation />
-            ) : (
-              <Container fixed>
-                <motion.div
-                  class={classes.logos}
-                  initial={"onscreen"}
-                  whileInView={"offscreen"}
-                  variants={CoverAnimate}
-                  viewport={{ once: false }}
-                >
-                  <Cover />
+        <div className={classes.gradient}>
+            {loading ? (<LoadingAnimation />)
+                : (<Container fixed>
+                <motion.div class={classes.logos}
+                    initial={"onscreen"}
+                    whileInView={"offscreen"}
+                    variants={CoverAnimate}
+                    viewport={{ once: false }}>
+                <Cover />
                 </motion.div>
                 <AboutTransition />
                 <About />
@@ -178,14 +99,10 @@ export default function Home() {
                 <Prizes />
                 <Sponsors />
                 <Faq />
-                <span STYLE="font-size:300%">&nbsp;&nbsp;</span>
-                {/* <Team /> */}
+                <span STYLE="font-size:300%" >&nbsp;&nbsp;</span>
                 <Footer />
-              </Container>
-            )}
-          </div>
+                </Container>)
+            }
         </div>
-      </div>
     );
-  }
 }
