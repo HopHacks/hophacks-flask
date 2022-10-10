@@ -29,14 +29,14 @@ export default function Cover() {
             <div>
                 <div>
                     <img src={img('team-page.png')} style={{ position: "absolute", top: "7.5%", left: "0%", width: "100%" }} />
-                    <Button onClick={() => {
+                    {/* <Button onClick={() => {
                         window.location = "/register";
                     }}
                         color="inherit"
                         style={{ position: "absolute", top: "35%", left: "39.50%", width: "20%", height: "10%" }}
                     >
                         <img src={img('../register-button.png')}  style = {{width: "150%", height: "150%"}} />
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
     
@@ -46,14 +46,14 @@ export default function Cover() {
             <div>
                 <div>
                     <img src={img('cover2.png')} style={{ position: "absolute", top: "0%", left: "0%", width: "100%", height: "100%" }} />
-                    <Button onClick={() => {
+                    {/* <Button onClick={() => {
                         window.location = "/register";
                     }}
                         color="inherit"
                         style={{ position: "absolute", top: "75%", left: "39.50%", width: "20%", height: "10%" }}
                     >
                         <img src={img('../register-button.png')}  style = {{width: "150%", height: "150%"}} />
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
     
