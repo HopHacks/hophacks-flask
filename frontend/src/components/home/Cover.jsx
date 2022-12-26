@@ -39,17 +39,6 @@ export default function Cover() {
               alignItems: "center",
             }}
           >
-            <Button
-              style={{
-                position: "absolute",
-                top: "36%",
-                width: "40%",
-              }}
-            >
-              <a href="https://tinyurl.com/hophacksapp" target="_blank">
-                <img src={img("join_the_team.png")} style={{ width: "100%" }} />
-              </a>
-            </Button>
           </div>
         </div>
       </div>
@@ -75,17 +64,6 @@ export default function Cover() {
               alignItems: "center",
             }}
           >
-            <Button
-              style={{
-                position: "absolute",
-                top: "70%",
-                width: "25%",
-              }}
-            >
-              <a href="https://tinyurl.com/hophacksapp" target="_blank">
-                <img src={img("join_the_team.png")} style={{ width: "100%" }} />
-              </a>
-            </Button>
           </div>
         </div>
       </div>
