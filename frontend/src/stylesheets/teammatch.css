@@ -1,0 +1,64 @@
+.groupCard {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    cursor:pointer;
+  }
+  
+  .groupCard-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+  }
+  
+  .groupCard__image img {
+    position: absolute;
+    border-radius: 10%;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.35s ease-in-out;
+  }
+  
+  .overlay {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: gray;
+    border-radius: 10%;
+  }
+  
+  .groupCard:hover .overlay  {
+    opacity: 0.5;
+    transform: rotateX(7deg) translatey(-6px);
+  }
+  
+  .groupCard-container:hover .groupCard__image img  {
+    transform: rotateX(7deg) translatey(-6px);
+  }
+  
+  .customText {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    text-align: center;
+    visibility: hidden;
+    top: 5%;
+    left: 5%;
+    font-weight: 100;
+    transition: transform 0.35s ease-in-out;
+    overflow-wrap: break-word;
+  }
+  
+  .groupCard:hover .customText {
+    visibility: visible;
+    opacity: 1;
+    z-index: 3;
+    transform: rotateX(7deg) translatey(-6px);
+  
+  }

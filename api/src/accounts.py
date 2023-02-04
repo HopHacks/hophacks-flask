@@ -553,3 +553,31 @@ def get_email_confirmed():
         return jsonify({"msg": "user not found?"}), 404
 
     return jsonify({'email_confirmed': user['email_confirmed']}), 200
+
+
+@accounts_api.route('/profile/getUsername', methods = ['GET'])
+@jwt_required
+def get_username():
+    """ Get own username
+
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :resjson profile: profile information
+
+    Example reponse:
+
+    .. sourcecode:: json
+
+        {
+            username: hophacks@jhu.edu
+        }
+
+    :status 200: Profile retrieved successfully
+    :status 422: Not logged in
+
+    """
+    id = get_jwt_identity()
+    user = db.users.find_one({'_id': ObjectId(id)})
+    if (user is None):
+        return jsonify({"msg": "user not found?"}), 404
+    return jsonify({'username': user['username']}), 200

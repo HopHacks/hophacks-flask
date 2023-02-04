@@ -30,6 +30,7 @@ import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from "./Team"
+import TeamMatch from "./TeamMatch"
 
 export default function App() {
     return (
@@ -87,6 +88,10 @@ export default function App() {
 
                 <Route path="/team">
                   <Team/>
+                </Route>
+
+                <Route path="/teammatch">
+                  <TeamMatch/>
                 </Route>
 
                 <Route path="/">
