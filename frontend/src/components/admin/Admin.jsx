@@ -33,7 +33,12 @@ const Admin =  function() {
     const [users, setusers] = useState([]);
     const [query, setQuery] = useState("");
     const [status, setStatus] = useState("All");
-    
+    const [allUsers, setAllUsers]=useState([])
+    const [alphaOrder, setAlphaOrder]=useState("No")
+    useEffect(() => {
+      getUsers()
+  }, []);
+
     async function handleResumeDownload(userid) {
   
       const response = await axios.get("/api/admin/resume?id=" + userid);
@@ -50,8 +55,10 @@ const Admin =  function() {
 
 
     async function getUsers(){
-      const response = await axios.get('/api/admin/users' + '?query=' + query);
+      const response = await axios.get('/api/admin/users' + '?query=');
+      setAllUsers(response.data.users);
       setusers(response.data.users);
+
     }
 
     // async function sendAllRsvpEmails(){
@@ -92,6 +99,49 @@ const Admin =  function() {
       }
     }
 
+    function handleNewStatus(value)
+    {
+      setStatus(value)
+      performFiltering()
+    }
+
+    function handleNewSort(value)
+    {
+      setAlphaOrder(value)
+      performFiltering()
+    }
+    function newQuery(value)
+    {
+      setQuery(value)
+      performFiltering()
+    }
+
+    function performFiltering()
+    {
+      if(alphaOrder == "Yes") {
+        const sortedUsers=[...allUsers].sort((a,b)=>a.profile.first_name.localeCompare(b.profile.first_name))
+        if(query=="")
+        {
+          setusers(sortedUsers.filter(user=> filterUser(user)))
+        }
+        else{
+          const searchedusers=sortedUsers.filter(user => user.profile.first_name.includes(query))
+          setusers(searchedusers)
+        }
+      }
+      else
+      {
+        if(query=="")
+        {
+          setusers([...allUsers].filter((user)=>filterUser(user)))
+        }
+        else{
+          const searchedusers=[...allUsers].filter(user => user.profile.first_name.includes(query))
+          setusers(searchedusers)
+        }
+      }
+    }
+
     function filterUser(user) {
       if (status == "All") {
         return true
@@ -115,17 +165,17 @@ const Admin =  function() {
         }
         
       }
-
+      
     }
 
     useEffect(() => {
-      getUsers()
-  }, []);
+      performFiltering()
+  }, [alphaOrder, status, query]);
+
 
     function populateUsers() {
       return (
         users
-        .filter( user => filterUser(user))
         .map((user, index) => (
           <TableRow key={index}>
             <TableCell component="th" scope="row">
@@ -185,7 +235,7 @@ const Admin =  function() {
                 <InputLabel >Status</InputLabel>
                 <Select
                   onChange={(e) => {
-                    setStatus(e.target.value);
+                    handleNewStatus(e.target.value);
                   }}
 
                   defaultValue={"All"}
@@ -197,6 +247,22 @@ const Admin =  function() {
                 </Select>
               </FormControl>
           )
+
+    const OrderPicker = (
+            <FormControl variant="outlined" style={{ minWidth: 220 }}>
+                      <InputLabel >Alphabetical Order</InputLabel>
+                      <Select
+                        onChange={(e) => {
+                          handleNewSort(e.target.value);
+                        }}
+      
+                        defaultValue={"No"}
+                      >
+                        <MenuItem value="Yes">Yes</MenuItem>
+                        <MenuItem value="No">No</MenuItem>
+                      </Select>
+                    </FormControl>
+                )
     
     const table = (
       <div>
@@ -234,13 +300,13 @@ const Admin =  function() {
       </> */}
       <SearchBar
         value={query}
-        onChange={(newValue) => setQuery(newValue)}
-        onRequestSearch={() => getUsers()}
+        onChange={(newValue) =>newQuery(newValue)}
+        /*onRequestSearch={() => getUsers()}*/
       />
   
       </div>
       {StatusPicker}
-
+      {OrderPicker}
       <div>
 
       {populateUsers}
