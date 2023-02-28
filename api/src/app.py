@@ -1,7 +1,6 @@
 from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
-from onelogin.saml2.auth import OneLogin_Saml2_Auth
-from onelogin.saml2.utils import OneLogin_Saml2_Utils
+
 from mail import mail
 from db import db
 from slack import slack_client
@@ -28,7 +27,6 @@ def get_req_config(app, config, key):
 
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
-    app.config['SAML_PATH'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saml')
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
@@ -89,8 +87,9 @@ def create_app(config_file='config/config.json'):
     from events import events_api
     from slack import slack_api
     from discord import discord_api
+    from saml import saml_api
 
-    app.register_blueprint(sp.create_blueprint(), url_prefix='/api/saml')
+    app.register_blueprint(saml_api, url_prefix='/api/saml')
     app.register_blueprint(auth_api, url_prefix='/api/auth')
     app.register_blueprint(admin_api, url_prefix='/api/admin')
     app.register_blueprint(accounts_api, url_prefix='/api/accounts')
@@ -109,4 +108,4 @@ def create_app(config_file='config/config.json'):
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(port=443 ,ssl_context=('server.crt', 'server.key'))
+    app.run(port=443 ,ssl_context=('saml/certs/server.crt', 'saml/certs/server.key'))
