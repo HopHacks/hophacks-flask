@@ -162,7 +162,13 @@ def logout():
     unset_refresh_cookies(resp)
     return resp, 200
 
+
 @auth_api.route('/test_protected', methods = ['GET'])
 @jwt_required
 def protected():
     return('logged in')
+
+
+@auth_api.route('/sso/callback', methods = ['POST'])
+def sso_success_call_back():
+    return('logged in with sso!')

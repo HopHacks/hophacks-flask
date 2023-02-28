@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
+from saml import sp, CERTIFICATE, PRIVATE_KEY
 from mail import mail
 from db import db
 from slack import slack_client
@@ -26,6 +27,24 @@ def get_req_config(app, config, key):
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
 
+
+    # app.config['SERVER_NAME'] = 'hophacks.com:5000'
+    app.config['SAML2_SP'] = {
+        'certificate': CERTIFICATE,
+        'private_key': PRIVATE_KEY,
+    }
+
+    app.config['SAML2_IDENTITY_PROVIDERS'] = [
+        {
+            'CLASS': 'flask_saml2.sp.idphandler.IdPHandler',
+            'OPTIONS': {
+                'display_name': 'JHU SSO',
+                'entity_id': 'https://idp.jh.edu/idp/shibboleth',
+                'sso_url': "https://idp.jh.edu/idp/profile/SAML2/Redirect/SSO",
+                # 'certificate': IDP_CERTIFICATE,
+            },
+        },
+    ]
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
@@ -87,7 +106,7 @@ def create_app(config_file='config/config.json'):
     from slack import slack_api
     from discord import discord_api
 
-
+    app.register_blueprint(sp.create_blueprint(), url_prefix='/api/saml')
     app.register_blueprint(auth_api, url_prefix='/api/auth')
     app.register_blueprint(admin_api, url_prefix='/api/admin')
     app.register_blueprint(accounts_api, url_prefix='/api/accounts')
@@ -103,3 +122,7 @@ def create_app(config_file='config/config.json'):
 
 
     return app
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run(port=443 ,ssl_context=('server.crt', 'server.key'))
