@@ -1,12 +1,14 @@
 from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
-from saml import sp, CERTIFICATE, PRIVATE_KEY
+from onelogin.saml2.auth import OneLogin_Saml2_Auth
+from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from mail import mail
 from db import db
 from slack import slack_client
 from discord import discord_client
 
 import json
+import os
 
 class ConfigurationError(Exception):
     """Exception raised for errors in app config
@@ -26,25 +28,7 @@ def get_req_config(app, config, key):
 
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
-
-
-    # app.config['SERVER_NAME'] = 'hophacks.com:5000'
-    app.config['SAML2_SP'] = {
-        'certificate': CERTIFICATE,
-        'private_key': PRIVATE_KEY,
-    }
-
-    app.config['SAML2_IDENTITY_PROVIDERS'] = [
-        {
-            'CLASS': 'flask_saml2.sp.idphandler.IdPHandler',
-            'OPTIONS': {
-                'display_name': 'JHU SSO',
-                'entity_id': 'https://idp.jh.edu/idp/shibboleth',
-                'sso_url': "https://idp.jh.edu/idp/profile/SAML2/Redirect/SSO",
-                # 'certificate': IDP_CERTIFICATE,
-            },
-        },
-    ]
+    app.config['SAML_PATH'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saml')
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
