@@ -1,23 +1,14 @@
-from flask import request, redirect, Blueprint, make_response
-from onelogin.saml2.auth import OneLogin_Saml2_Auth,OneLogin_Saml2_Settings
-from onelogin.saml2.idp_metadata_parser import OneLogin_Saml2_IdPMetadataParser
 import os
+
+from flask import request, redirect, Blueprint, make_response, jsonify
+from db import db
+from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
 saml_api = Blueprint('saml', __name__)
 
 
-def get_idp_metadata():
-    idp_metadata = OneLogin_Saml2_IdPMetadataParser.parse_remote("https://idp.jh.edu/idp/shibboleth")
-
-    # Extract the required configuration parameters from the IDP metadata
-    idp_entity_id = idp_metadata.get('entityId')
-    idp_sso_url = idp_metadata.get('singleSignOnService').get('url')
-    idp_slo_url = idp_metadata.get('singleLogoutService').get('url')
-
-
 def init_saml_auth(req):
-    settings = OneLogin_Saml2_Settings(req, custom_base_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saml'))
-    auth = OneLogin_Saml2_Auth(req)
+    auth = OneLogin_Saml2_Auth(req, custom_base_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saml'))
     return auth
 
 
@@ -42,7 +33,17 @@ def acs():
         if not auth.is_authenticated():
             return 'Not authenticated', 401
         else:
-            return 'Authenticated', 200
+            attributes = auth.get_attributes()
+            email = attributes['EmailAddress']
+            # check if email already exists in database
+            exists = db.users.find_one({'username': email})
+            if exists:
+                pass # log in
+            else:
+                pass
+            # if not, create a new user
+            # if so, log in
+            return jsonify(auth.get_attributes()), 200
     else:
         return 'Error during authentication: {}'.format(', '.join(errors)), 500
 
