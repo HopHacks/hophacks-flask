@@ -13,5 +13,8 @@ node_modules
 # OS generated files #
 .DS_Store
 
-certs/
+# SAML settings
 saml/
+
+# Pycharm
+.idea/
