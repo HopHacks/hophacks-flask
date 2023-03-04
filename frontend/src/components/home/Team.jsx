@@ -214,7 +214,7 @@ export default function Team() {
             <MemberItem imgURL="Dhruv" memberName="Dhruv Dubey" memberTitle="Sponsors" linkedin="https://www.linkedin.com/in/dhruv-dubey-51660b1b7/"/>
           </div>
           <div className={classes.teambox}>
-            <MemberItem imgURL="Sky" memberName="Anthony Sky Ng-Thow-Hing" memberTitle="Sponsors"/>
+            <MemberItem imgURL="Sky" memberName="Anthony Sky Ng-Thow-Hing" memberTitle="Sponsors" linkedin="https://www.linkedin.com/in/anthony-sky-ng-thow-hing-9b1352193/" github="https://github.com/skynth"/>
           </div>
           <div className={classes.teambox}>
             <MemberItem imgURL="Sujin" memberName="Sujin Lee" memberTitle="Sponsors" linkedin="https://www.linkedin.com/in/sujin-lee-6a0766258" github="https://github.com/lsj0232191"/>
