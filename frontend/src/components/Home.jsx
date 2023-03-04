@@ -63,7 +63,7 @@ export default function Home() {
   const classes = useStyles();
 
   function img(url) {
-    return process.env.PUBLIC_URL + "/images/" + url;
+    return "https://hophacks-website.s3.amazonaws.com"+ "/images/" + url;
   }
 
   const [windowSize, setWindowSize] = useState({
@@ -74,7 +74,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 300);
 
     function handleWindowResize() {
       setWindowSize({

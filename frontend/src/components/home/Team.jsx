@@ -64,7 +64,8 @@ const useStyles = makeStyles({
 });
 
 function img(url) {
-  return process.env.PUBLIC_URL + '/images/' + url;
+  //return process.env.PUBLIC_URL + '/images/' + url;
+  return "https://hophacks-website.s3.amazonaws.com/images/" + url 
 }
 
 function MemberItem(props) {

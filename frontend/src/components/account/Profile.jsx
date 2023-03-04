@@ -696,7 +696,7 @@ async function cancel(event){
 
   return (
     <div style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+      backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/2022_theme.png")`,
       backgroundSize: 'cover',
       height: "100%"
     }}>

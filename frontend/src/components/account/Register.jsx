@@ -209,7 +209,7 @@ export default function Register() {
     >
       <Grid item xs={0} md={1} lg={1} />
       <Grid item xs={12} md={5} lg={5} align="center">
-        <img id="graphic" src={`${process.env.PUBLIC_URL}/images/register-graphic.png`} />
+        <img id="graphic" src={`https://hophacks-website.s3.amazonaws.com/images/register-graphic.png`} />
       </Grid>
       <Grid id="register" item xs={12} md={5} lg={5} align="center">
         <Grid container>
@@ -671,7 +671,7 @@ export default function Register() {
 
   return (
     <body style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+      backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/2022_theme.png")`,
       backgroundSize: 'cover',
       height: "100vh"
     }}>

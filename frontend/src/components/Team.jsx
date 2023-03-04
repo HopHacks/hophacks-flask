@@ -50,7 +50,7 @@ export default function TeamPage() {
 
   return (
     <div style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/cover.png")`,
+      backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/cover.png")`,
       backgroundSize: 'cover',
       minHeight: "100vh"
     }}>
