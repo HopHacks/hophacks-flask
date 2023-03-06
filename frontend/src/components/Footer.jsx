@@ -33,10 +33,10 @@ const Footer = function Footer(props) {
             >
               <Typography style={{ fontFamily: "Inter", fontSize: 18 }}>
                 <a
-                  href="mailto:hophacks2022@gmail.com"
+                  href="mailto:hophacks@gmail.com"
                   style={{ textDecoration: "none", color: "white" }}
                 >
-                  hophacks2022@gmail.com
+                  hophacks@gmail.com
                 </a>
               </Typography>
             </Grid>
