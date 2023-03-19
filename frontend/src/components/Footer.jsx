@@ -1,13 +1,13 @@
-import React from "react";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import { Typography } from "@material-ui/core";
-import "./../stylesheets/home.css";
+import React from 'react';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import { Typography } from '@material-ui/core';
+import './../stylesheets/home.css';
 
 const Footer = function Footer(props) {
   function img(url) {
-    return process.env.PUBLIC_URL + "/images/footer/" + url;
+    return process.env.PUBLIC_URL + '/images/footer/' + url;
   }
 
   return (
@@ -21,7 +21,7 @@ const Footer = function Footer(props) {
               alignItems="center"
               justifyContent="center"
             >
-              <img src={img("bluejay-icon.png")} style={{ width: "100px" }} />
+              <img src={img('bluejay-icon.png')} style={{ width: '100px' }} />
             </Grid>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -31,10 +31,10 @@ const Footer = function Footer(props) {
               alignItems="center"
               justifyContent="center"
             >
-              <Typography style={{ fontFamily: "Inter", fontSize: 18 }}>
+              <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 <a
                   href="mailto:hophacks@gmail.com"
-                  style={{ textDecoration: "none", color: "white" }}
+                  style={{ textDecoration: 'none', color: 'white' }}
                 >
                   hophacks@gmail.com
                 </a>
@@ -46,7 +46,7 @@ const Footer = function Footer(props) {
               alignItems="center"
               justifyContent="center"
             >
-              <Typography style={{ fontFamily: "Inter", fontSize: 18 }}>
+              <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 Malone Hall
               </Typography>
             </Grid>
@@ -56,7 +56,7 @@ const Footer = function Footer(props) {
               alignItems="center"
               justifyContent="center"
             >
-              <Typography style={{ fontFamily: "Inter", fontSize: 18 }}>
+              <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 Johns Hopkins University
               </Typography>
             </Grid>
@@ -66,10 +66,10 @@ const Footer = function Footer(props) {
               alignItems="center"
               justifyContent="center"
             >
-              <Typography style={{ fontFamily: "Inter", fontSize: 18 }}>
+              <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 <a
                   href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
-                  style={{ textDecoration: "none", color: "#51A5F7" }}
+                  style={{ textDecoration: 'none', color: '#51A5F7' }}
                 >
                   MLH Code of Conduct
                 </a>
@@ -83,7 +83,7 @@ const Footer = function Footer(props) {
               alignItems="center"
               justifyContent="center"
             >
-              <Typography style={{ fontFamily: "Inter", fontSize: 20 }}>
+              <Typography style={{ fontFamily: 'Inter', fontSize: 20 }}>
                 Follow Us
               </Typography>
             </Grid>
@@ -96,8 +96,8 @@ const Footer = function Footer(props) {
               <Grid item>
                 <a href="https://www.facebook.com/HopHacks" title="Facebook">
                   <img
-                    src={img("fb-icon.png")}
-                    style={{ width: "40px", margin: "10px 5px 5px" }}
+                    src={img('fb-icon.png')}
+                    style={{ width: '40px', margin: '10px 5px 5px' }}
                     alt="fb-icon"
                   />
                 </a>
@@ -106,8 +106,8 @@ const Footer = function Footer(props) {
                   title="LinkedIn"
                 >
                   <img
-                    src={img("linkedin-icon.png")}
-                    style={{ width: "40px", margin: "10px 5px 5px" }}
+                    src={img('linkedin-icon.png')}
+                    style={{ width: '40px', margin: '10px 5px 5px' }}
                     alt="linkedin-icon"
                   />
                 </a>
@@ -116,8 +116,8 @@ const Footer = function Footer(props) {
                   title="Instagram"
                 >
                   <img
-                    src={img("instagram-icon.png")}
-                    style={{ width: "40px", margin: "10px 5px 5px" }}
+                    src={img('instagram-icon.png')}
+                    style={{ width: '40px', margin: '10px 5px 5px' }}
                     alt="linkedin-icon"
                   />
                 </a>

@@ -1,48 +1,48 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import Container from "@material-ui/core/Container";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/core/styles";
-import Team from "./home/Team";
-import Sponsors from "./home/Sponsors";
-import Prizes from "./home/Prizes";
-import Schedule from "./home/Schedule";
-import { ParallaxBanner } from "react-scroll-parallax";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import Container from '@material-ui/core/Container';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import Team from './home/Team';
+import Sponsors from './home/Sponsors';
+import Prizes from './home/Prizes';
+import Schedule from './home/Schedule';
+import { ParallaxBanner } from 'react-scroll-parallax';
 
-import "../stylesheets/home.css";
+import '../stylesheets/home.css';
 
 const useStyles = makeStyles({
   logo: {
-    top: "25%",
-    width: "60vw", // This is centered, 20 - 60 - 20
-    left: "20vw",
-    position: "absolute",
-    textAlign: "center",
+    top: '25%',
+    width: '60vw', // This is centered, 20 - 60 - 20
+    left: '20vw',
+    position: 'absolute',
+    textAlign: 'center',
   },
   margin: {
-    marginBottom: "13px",
+    marginBottom: '13px',
   },
   color: {
-    backgroundColor: "#eef7ff",
+    backgroundColor: '#eef7ff',
   },
   title: {
-    color: "#7289da",
-    fontFamily: "PT Sans",
+    color: '#7289da',
+    fontFamily: 'PT Sans',
   },
 
   button: {
-    backgroundColor: "#FFFFFF",
-    color: "#c8e7fa",
-    width: "50%",
-    minHeight: "50px",
-    border: "4px solid",
-    "&:hover": {
-      backgroundColor: "#c8e7fa",
+    backgroundColor: '#FFFFFF',
+    color: '#c8e7fa',
+    width: '50%',
+    minHeight: '50px',
+    border: '4px solid',
+    '&:hover': {
+      backgroundColor: '#c8e7fa',
     },
   },
 });
@@ -55,14 +55,14 @@ export default function Recruiting() {
       <a
         id="mlh-trust-badge"
         style={{
-          display: "block",
-          maxWidth: "100px",
-          minWidth: "60px",
-          position: "fixed",
-          right: "30px",
-          top: "0",
-          width: "10%",
-          zIndex: "10000",
+          display: 'block',
+          maxWidth: '100px',
+          minWidth: '60px',
+          position: 'fixed',
+          right: '30px',
+          top: '0',
+          width: '10%',
+          zIndex: '10000',
         }}
         href="https://mlh.io/seasons/2022/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2022-season&utm_content=gray"
         target="_blank"
@@ -70,7 +70,7 @@ export default function Recruiting() {
         <img
           src="https://s3.amazonaws.com/logged-assets/trust-badge/2022/mlh-trust-badge-2022-gray.svg"
           alt="Major League Hacking 2022 Hackathon Season"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
         ></img>
       </a>
 
@@ -115,8 +115,8 @@ export default function Recruiting() {
                   There are also industry benefits for being an organizer.
                   You'll get access to a large network of companies for
                   internships and full time jobs, and meet many of our sponsor
-                  representatives during the event. Many of our organizers go on to work at the most respected tech
-                  companies out there.
+                  representatives during the event. Many of our organizers go on
+                  to work at the most respected tech companies out there.
                 </p>
 
                 <p>
@@ -125,22 +125,20 @@ export default function Recruiting() {
                   don't need to be a computer science major to be part of our
                   team!
                 </p>
-
-
               </Typography>
             </CardContent>
 
             <CardContent>
               <Typography className={classes.title} variant="h5" gutterBottom>
-              <a className="link-text" href="https://forms.gle/Znzy2aFq7Bwwx7P4A">Application Form</a>
-               
-                
+                <a
+                  className="link-text"
+                  href="https://forms.gle/Znzy2aFq7Bwwx7P4A"
+                >
+                  Application Form
+                </a>
               </Typography>
-              
             </CardContent>
           </Card>
-
-          
         </Box>
       </Container>
     </div>
