@@ -1,7 +1,7 @@
 html,
 body {
   box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
   color: inherit;
@@ -172,7 +172,7 @@ body {
 
 .PhoneInputCountrySelectArrow {
   display: block;
-  content: "";
+  content: '';
   width: var(--PhoneInputCountrySelectArrow-width);
   height: var(--PhoneInputCountrySelectArrow-width);
   margin-left: var(--PhoneInputCountrySelectArrow-marginLeft);

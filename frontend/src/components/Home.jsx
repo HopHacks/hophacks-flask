@@ -1,59 +1,59 @@
-import React from "react";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import Team from "./home/Team";
-import Sponsors from "./home/Sponsors";
-import Prizes from "./home/Prizes";
-import Schedule from "./home/Schedule";
-import About from "./home/About";
-import Faq from "./home/Faq";
-import Cover from "./home/Cover";
-import LoadingAnimation from "./home/LoadingAnimation";
-import { useState, useEffect } from "react";
-import AboutTransition from "./home/AboutTransition";
-import Footer from "./Footer";
-import { motion, useScroll } from "framer-motion/dist/framer-motion"; // Needs to be added to requirements.txt
+import React from 'react';
+import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+import Team from './home/Team';
+import Sponsors from './home/Sponsors';
+import Prizes from './home/Prizes';
+import Schedule from './home/Schedule';
+import About from './home/About';
+import Faq from './home/Faq';
+import Cover from './home/Cover';
+import LoadingAnimation from './home/LoadingAnimation';
+import { useState, useEffect } from 'react';
+import AboutTransition from './home/AboutTransition';
+import Footer from './Footer';
+import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 
 const useStyles = makeStyles({
   logo: {
-    top: "25%",
-    width: "60vw", // This is centered, 20 - 60 - 20
-    left: "20vw",
-    position: "absolute",
-    textAlign: "center",
+    top: '25%',
+    width: '60vw', // This is centered, 20 - 60 - 20
+    left: '20vw',
+    position: 'absolute',
+    textAlign: 'center',
   },
   margin: {
-    marginBottom: "13px",
+    marginBottom: '13px',
   },
   color: {
     //backgroundColor: "#2195ea",
-    backgroundColor: "#376efa",
+    backgroundColor: '#376efa',
   },
   colorBackground: {
-    backgroundColor: "#376eea",
+    backgroundColor: '#376eea',
   },
   title: {
-    color: "#ffffff",
-    fontFamily: "VCR OSD Mono",
+    color: '#ffffff',
+    fontFamily: 'VCR OSD Mono',
   },
 
   button: {
-    backgroundColor: "#FFFFFF",
-    color: "#c8e7fa",
-    width: "50%",
-    minHeight: "50px",
-    border: "4px solid",
-    "&:hover": {
-      backgroundColor: "#c8e7fa",
+    backgroundColor: '#FFFFFF',
+    color: '#c8e7fa',
+    width: '50%',
+    minHeight: '50px',
+    border: '4px solid',
+    '&:hover': {
+      backgroundColor: '#c8e7fa',
     },
   },
   gradient: {
-    backgroundImage: "linear-gradient(#15ABFB, #f179c8)",
+    backgroundImage: 'linear-gradient(#15ABFB, #f179c8)',
   },
 
   blank: {
-    padding: "30px",
-    backgroundColor: "#c8e7fa",
+    padding: '30px',
+    backgroundColor: '#c8e7fa',
   },
 });
 
@@ -63,7 +63,7 @@ export default function Home() {
   const classes = useStyles();
 
   function img(url) {
-    return process.env.PUBLIC_URL + "/images/" + url;
+    return process.env.PUBLIC_URL + '/images/' + url;
   }
 
   const [windowSize, setWindowSize] = useState({
@@ -83,10 +83,10 @@ export default function Home() {
       });
     }
 
-    window.addEventListener("resize", handleWindowResize);
+    window.addEventListener('resize', handleWindowResize);
 
     return () => {
-      window.removeEventListener("resize", handleWindowResize);
+      window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
 
@@ -96,7 +96,7 @@ export default function Home() {
       y: 0,
       opacity: 0.7,
       transition: {
-        type: "spring",
+        type: 'spring',
         bounce: 0.0,
       },
     },
@@ -110,8 +110,8 @@ export default function Home() {
         <Container fixed>
           <motion.div
             class={classes.logos}
-            initial={"onscreen"}
-            whileInView={"offscreen"}
+            initial={'onscreen'}
+            whileInView={'offscreen'}
             variants={CoverAnimate}
             viewport={{ once: false }}
           >

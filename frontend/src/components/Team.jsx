@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Team from './home/Team';
 
-
 import '../stylesheets/team.css';
 
 export default function TeamPage() {
-
   const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -25,7 +23,7 @@ export default function TeamPage() {
     },
     label: {
       backgroundColor: 'rgb(232, 235, 242)',
-    }
+    },
   }));
 
   const classes = useStyles();
@@ -49,17 +47,16 @@ export default function TeamPage() {
   );
 
   return (
-    <div style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/cover.png")`,
-      backgroundSize: 'cover',
-      minHeight: "100vh"
-    }}>
+    <div
+      style={{
+        backgroundImage: `url("${process.env.PUBLIC_URL}/images/cover.png")`,
+        backgroundSize: 'cover',
+        minHeight: '100vh',
+      }}
+    >
       <div class="container">
-        <div className="register-wrapper">
-          {team}
-        </div>
+        <div className="register-wrapper">{team}</div>
       </div>
     </div>
-
-  )
+  );
 }

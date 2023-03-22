@@ -1,91 +1,91 @@
-import React from "react";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Divider from "@material-ui/core/Divider";
-import "@fontsource/rosarivo";
-import "../../stylesheets/home.css";
+import React from 'react';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
+import '@fontsource/rosarivo';
+import '../../stylesheets/home.css';
 
 const useStyles = makeStyles({
   margin: {
-    borderTop: "1",
-    borderBottom: "1",
+    borderTop: '1',
+    borderBottom: '1',
   },
   marginBot: {
-    borderTop: "1",
-    borderBottom: "20",
+    borderTop: '1',
+    borderBottom: '20',
   },
   color: {
     //backgroundColor: "#2195ea",
-    backgroundColor: "#376eea",
+    backgroundColor: '#376eea',
   },
   colorBackground: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   title: {
-    color: "#ffffff",
-    fontFamily: "Inter",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: "375%",
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: '375%',
   },
 
   button: {
-    backgroundColor: "#FFFFFF",
-    color: "#c8e7fa",
-    width: "50%",
-    minHeight: "50px",
-    border: "4px solid",
-    "&:hover": {
-      backgroundColor: "#c8e7fa",
+    backgroundColor: '#FFFFFF',
+    color: '#c8e7fa',
+    width: '50%',
+    minHeight: '50px',
+    border: '4px solid',
+    '&:hover': {
+      backgroundColor: '#c8e7fa',
     },
   },
   text: {
-    color: "#ffffff",
-    fontFamily: "Inter",
-    flexDirection: "column",
-    marginBottom: "0px",
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    flexDirection: 'column',
+    marginBottom: '0px',
   },
   link: {
-    color: "#8aecff",
+    color: '#8aecff',
   },
   MuiAccordionroot: {
-    "&.MuiAccordion-root:before": {
-      backgroundColor: "#376eea",
-      flexDirection: "column",
+    '&.MuiAccordion-root:before': {
+      backgroundColor: '#376eea',
+      flexDirection: 'column',
     },
-    "&.MuiAccordion-root.Mui-expanded:last-child": {
-      marginTop: "1px",
-      marginBottom: "25px",
+    '&.MuiAccordion-root.Mui-expanded:last-child': {
+      marginTop: '1px',
+      marginBottom: '25px',
     },
-    "&.MuiAccordionSummary-content": {
-      margin: "0",
+    '&.MuiAccordionSummary-content': {
+      margin: '0',
     },
   },
   expanded: {},
   content: {
-    "&$expanded": {
-      margin: "0",
-      minHeight: "0",
+    '&$expanded': {
+      margin: '0',
+      minHeight: '0',
     },
-    margin: "0",
+    margin: '0',
   },
   MuiAccordionDetailroot: {
-    padding: "0px 16px 0px",
-    flexDirection: "column",
+    padding: '0px 16px 0px',
+    flexDirection: 'column',
   },
   expand_icon: {
-    color: "white",
+    color: 'white',
   },
 });
 
 function img(url) {
-  return process.env.PUBLIC_URL + "/images/" + url;
+  return process.env.PUBLIC_URL + '/images/' + url;
 }
 
 export default function Faq() {
@@ -98,19 +98,19 @@ export default function Faq() {
         spacing={2}
         justify="center"
         alignItems="center"
-        style={{ marginTop: "7%" }}
+        style={{ marginTop: '7%' }}
       >
         <Grid item xs={2}>
           <img
-            style={{ marginLeft: "5%", width: "120%" }}
-            src={img("home_bg/3.png")}
+            style={{ marginLeft: '5%', width: '120%' }}
+            src={img('home_bg/3.png')}
           />
         </Grid>
         <Grid item xs={8}>
           <Typography
             className={classes.title}
             variant="h4"
-            style={{ marginTop: "0%" }}
+            style={{ marginTop: '0%' }}
             gutterBottom
           >
             Frequently Asked Questions
@@ -118,8 +118,8 @@ export default function Faq() {
         </Grid>
         <Grid item xs={2}>
           <img
-            style={{ marginLeft: "-30%", width: "120%" }}
-            src={img("home_bg/3.png")}
+            style={{ marginLeft: '-30%', width: '120%' }}
+            src={img('home_bg/3.png')}
           />
         </Grid>
       </Grid>
@@ -152,7 +152,7 @@ export default function Faq() {
           <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
             <Typography className={classes.text}>
               Any <b>university student</b> enrolled in any undergraduate or
-              graduate program may participate. High school students may{" "}
+              graduate program may participate. High school students may{' '}
               <b>NOT</b> participate.
             </Typography>
           </AccordionDetails>
@@ -188,7 +188,7 @@ export default function Faq() {
           <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
             <Typography className={classes.text}>
               HopHacks is held at Hodson Hall on the Johns Hopkins Homewood
-              Campus in Baltimore, MD. A campus map can be found{" "}
+              Campus in Baltimore, MD. A campus map can be found{' '}
               <a
                 className={classes.link}
                 href="https://drive.google.com/file/d/1aEulGqVSH3nPV2BXU90W8V-tDlFH-bRx/view?usp=sharing"
@@ -196,7 +196,7 @@ export default function Faq() {
               >
                 here
               </a>
-              , and you can navigate to us on{" "}
+              , and you can navigate to us on{' '}
               <a
                 className={classes.link}
                 href="https://www.google.com/maps/place/Hodson+Hall/@39.3275298,-76.6244881,17z/data=!3m1!4b1!4m5!3m4!1s0x89c804df19af3e45:0x1e729d07213e16a!8m2!3d39.3275257!4d-76.6222941"
@@ -283,7 +283,7 @@ export default function Faq() {
               the party:
               <ul>
                 <li>
-                  For students from local Baltimore schools, we recommend the{" "}
+                  For students from local Baltimore schools, we recommend the{' '}
                   <a
                     className={classes.link}
                     href="https://baltimorecollegetown.org/shuttle/"
@@ -295,27 +295,27 @@ export default function Faq() {
                 </li>
                 <li>
                   For students from DC who are not taking our South/DC/Maryland
-                  Bus, we recommend taking the{" "}
+                  Bus, we recommend taking the{' '}
                   <a
                     className={classes.link}
                     href="https://www.mta.maryland.gov/schedule?type=marc-train"
                     target="_blank"
                   >
                     MARC
-                  </a>{" "}
-                  train to Baltimore Penn Station, and then taking the{" "}
+                  </a>{' '}
+                  train to Baltimore Penn Station, and then taking the{' '}
                   <a
                     className={classes.link}
                     href="https://ts.jhu.edu/Shuttles/"
                     target="_blank"
                   >
                     JHMI
-                  </a>{" "}
+                  </a>{' '}
                   shuttle or an Uber/Lyft/Taxi to Hopkins (if you do this, be
                   sure to specify that you’re going to the Homewood campus!).
                 </li>
                 <li>
-                  For other students, we recommend taking the{" "}
+                  For other students, we recommend taking the{' '}
                   <a
                     className={classes.link}
                     href="https://www.flixbus.com/"
@@ -329,7 +329,7 @@ export default function Faq() {
                 </li>
                 <li>
                   Finally, for those of you who are driving, free parking will
-                  be available in the{" "}
+                  be available in the{' '}
                   <a
                     className={classes.link}
                     href="https://www.google.com/maps/place/JHU+South+Garage/@39.3266548,-76.6240642,17z/data=!4m5!3m4!1s0x89c805322769c3db:0x83520ffde4dbcc7!8m2!3d39.325966!4d-76.6221276"
@@ -638,7 +638,7 @@ export default function Faq() {
         borderLeft={0}
         borderRight={0}
         borderColor="#ffffff"
-        sx={{ height: "800px" }}
+        sx={{ height: '800px' }}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -660,17 +660,17 @@ export default function Faq() {
           </AccordionSummary>
           <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
             <Typography className={classes.text}>
-              You can email us at{" "}
+              You can email us at{' '}
               <a className={classes.link} href="mailto:hophacks@gmail.com">
                 hophacks@gmail.com
               </a>
-              . Alternatively, you can message us at our{" "}
+              . Alternatively, you can message us at our{' '}
               <a
                 className={classes.link}
                 href="https://www.instagram.com/hophacks/"
               >
                 Instagram
-              </a>{" "}
+              </a>{' '}
               page and one of our team members will respond accordingly.
             </Typography>
           </AccordionDetails>
