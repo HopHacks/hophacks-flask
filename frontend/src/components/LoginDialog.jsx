@@ -83,6 +83,10 @@ function Login(props) {
     }
   }
 
+  function handleJHUSSO() {
+    window.location.href = "/api/saml/login";
+  }
+
   function handleLoginClose() {
     setLoginDialogOpen(false);
   }
@@ -143,6 +147,7 @@ function Login(props) {
       <Button onClick={handleLogin} className={classes.loginButton}>
         Login
       </Button>
+      <Button onClick={handleJHUSSO}>Continue with JHU</Button>
       <Typography display="inline" className={classes.dialogPad}>
         <Link
           to={'/register'}
