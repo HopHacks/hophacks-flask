@@ -83,9 +83,17 @@ def create_sso_user(attributes):
     profile = {
         'first_name': attributes.get('FirstName', '')[0],
         'last_name': attributes.get('LastName', '')[0],
+        "gender": "",
+        "major": "",
+        "phone_number": "",
+        "school": "Johns Hopkins University",
+        "ethnicity": "",
+        "grad": "",
+        "grad_month": "",
+        "grad_year": "",
         'is_jhu': True,
     }
-
+    print(profile)
     db.users.insert_one({
         'username': attributes['EmailAddress'][0],
         'hashed': '',
