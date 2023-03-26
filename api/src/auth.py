@@ -167,8 +167,3 @@ def logout():
 @jwt_required
 def protected():
     return('logged in')
-
-
-@auth_api.route('/sso/callback', methods = ['POST'])
-def sso_success_call_back():
-    return('logged in with sso!')

@@ -1,6 +1,11 @@
 import os
+import re
 
 from flask import request, redirect, Blueprint, make_response, jsonify
+from flask_jwt_extended import create_access_token, create_refresh_token, set_refresh_cookies, get_jti
+from bson.objectid import ObjectId
+
+from auth import MAX_TOKENS
 from db import db
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 
@@ -34,16 +39,13 @@ def acs():
             return 'Not authenticated', 401
         else:
             attributes = auth.get_attributes()
-            email = attributes['EmailAddress']
+            email = attributes['EmailAddress'][0]
             # check if email already exists in database
             exists = db.users.find_one({'username': email})
-            if exists:
-                pass # log in
-            else:
-                pass
-            # if not, create a new user
-            # if so, log in
-            return jsonify(auth.get_attributes()), 200
+            if not exists:
+                # create new user
+                create_sso_user(attributes)
+            return sso_login(email)
     else:
         return 'Error during authentication: {}'.format(', '.join(errors)), 500
 
@@ -75,3 +77,42 @@ def metadata():
     else:
         resp = make_response(', '.join(errors), 500)
     return resp
+
+
+def create_sso_user(attributes):
+    profile = {
+        'first_name': attributes.get('FirstName', '')[0],
+        'last_name': attributes.get('LastName', '')[0],
+        'is_jhu': True,
+    }
+
+    db.users.insert_one({
+        'username': attributes['EmailAddress'][0],
+        'hashed': '',
+        'refresh_tokens': [],
+        'profile': profile,
+        'email_confirmed': True,  # SSO users are automatically confirmed
+        'confirm_secret': '',
+        'reset_secret': '',
+        'is_admin': False,
+        'registrations': [],
+        'resume': ''
+    })
+
+
+def sso_login(username):
+    user = db.users.find_one({'username': re.compile('^' + re.escape(username) + '$', re.IGNORECASE)})
+    user_id = str(user['_id'])
+    refresh_token = create_refresh_token(identity=user_id)
+    db.users.update_one(
+        {'_id': ObjectId(user_id)},
+        {'$push': {
+            'refresh_tokens': {
+                '$each': [get_jti(refresh_token)],
+                '$slice': -MAX_TOKENS
+            }
+        }}
+    )
+    res = make_response(redirect('/'))
+    set_refresh_cookies(res, refresh_token)
+    return res
