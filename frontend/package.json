@@ -26,6 +26,9 @@
     "react-use": "^17.4.0",
     "serve": "^11.3.2",
     "styled-components": "^5.3.5"
+  },  
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "scripts": {
     "start": "react-scripts start",
