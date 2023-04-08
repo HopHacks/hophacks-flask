@@ -17,4 +17,5 @@ jobs:
       - name: Install Dependencies
         run: npm install -g prettier
       - name: Run Prettier
-        run: npx prettier "frontend/**/*.{js,jsx,ts,tsx}" --check
+        working-directory: ./frontend
+        run: npx prettier "**/*.{js,jsx,ts,tsx}" --check
