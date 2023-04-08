@@ -11,8 +11,8 @@ import datetime
 
 registrations_api = Blueprint('registrations', __name__)
 
-app = Flask(__name__)
-app.config.from_json("config/config.json")
+# app = Flask(__name__)
+# app.config.from_json("config/config.json")
 # mail = Mail(app)
 
 
@@ -32,97 +32,103 @@ app.config.from_json("config/config.json")
 
 # email_client_registrations = email_client()
 
-SSL_HOST = app.config['SSL_HOST']
-SSL_PORT = app.config['SSL_PORT']
-SSL_SENDER = app.config['SSL_SENDER']
-SSL_PWD = app.config['SSL_PASSWORD']
+# This is for alternative email service
+# SSL_HOST = app.config['SSL_HOST']
+# SSL_PORT = app.config['SSL_PORT']
+# SSL_SENDER = app.config['SSL_SENDER']
+# SSL_PWD = app.config['SSL_PASSWORD']
 
-@registrations_api.route('/send', methods = ['POST'])            
-def send_acceptances_trial():
-    smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
-    smtpObj.login(SSL_SENDER, SSL_PWD)
-    receiver = 'szeng10@jhu.edu'
-    subject = "Acceptance Letter - Hophacks.com"
-    msg = Message(recipients=[receiver], sender=SSL_SENDER, subject=subject)
-    msg.body = 'Congrats on being accepted to HopHacks!'
-    msg.html = render_template('email_acceptance.html', first_name="Akhil") 
-    smtpObj.sendmail(SSL_SENDER, receiver, msg.as_string())
-    return "Sent"
+# @registrations_api.route('/send', methods = ['POST'])            
+# def send_acceptances_trial():
+#     smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
+#     smtpObj.login(SSL_SENDER, SSL_PWD)
+#     receiver = 'szeng10@jhu.edu'
+#     subject = "Acceptance Letter - Hophacks.com"
+#     msg = Message(recipients=[receiver], sender=SSL_SENDER, subject=subject)
+#     msg.body = 'Congrats on being accepted to HopHacks!'
+#     msg.html = render_template('email_acceptance.html', first_name="Akhil") 
+#     smtpObj.sendmail(SSL_SENDER, receiver, msg.as_string())
+#     return "Sent"
 
  
-# def send_rsvp_info(users):
-#      with mail.connect() as conn:
-#         for user in users:
-#             email = user["username"]
-#             subject = "RSVP Event Info - Hophacks.com"
-#             msg = Message(recipients=[email],
-#                           sender="team@hophacks.com",
-#                           subject=subject)
-
-#             msg.body = 'Thank you for confirming your spot to attend Hophacks in-person!'
-#             msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
-#             conn.send(msg)
-
 def send_rsvp_info(users):
-    smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
-    smtpObj.login(SSL_SENDER, SSL_PWD)
-    for user in users:
-        email = user["username"]
-        subject = "RSVP Event Info - Hophacks.com"
-        msg = Message(recipients=[email],
-                        sender=SSL_SENDER,
-                        subject=subject)
+     with mail.connect() as conn:
+        for user in users:
+            email = user["username"]
+            subject = "RSVP Event Info - Hophacks.com"
+            msg = Message(recipients=[email],
+                          sender="team@hophacks.com",
+                          subject=subject)
 
-        msg.body = 'Thank you for confirming your spot to attend Hophacks in-person!'
-        msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
-        smtpObj.sendmail(SSL_SENDER, email, msg.as_string())
+            msg.body = 'Thank you for confirming your spot to attend Hophacks in-person!'
+            msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
+            conn.send(msg)
 
-# def send_acceptances(users):
-#      with mail.connect() as conn:
-#         for user in users:
-#             email = user["username"]
-#             subject = "Acceptance Letter - Hophacks.com"
-#             msg = Message(recipients=[email],
-#                           sender="team@hophacks.com",
-#                           subject=subject)
+# This is for alternative email service
+# def send_rsvp_info(users):
+#     smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
+#     smtpObj.login(SSL_SENDER, SSL_PWD)
+#     for user in users:
+#         email = user["username"]
+#         subject = "RSVP Event Info - Hophacks.com"
+#         msg = Message(recipients=[email],
+#                         sender=SSL_SENDER,
+#                         subject=subject)
 
-#             msg.body = 'Congrats on being accepted to HopHacks!'
-#             msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
-#             conn.send(msg)
+#         msg.body = 'Thank you for confirming your spot to attend Hophacks in-person!'
+#         msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
+#         smtpObj.sendmail(SSL_SENDER, email, msg.as_string())
+
 
 def send_acceptances(users):
-    smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
-    smtpObj.login(SSL_SENDER, SSL_PWD)
-    for user in users:
-        email = user["username"]
-        subject = "Acceptance Letter - Hophacks.com"
-        msg = Message(recipients=[email],
-                        sender=SSL_SENDER,
-                        subject=subject)
+     with mail.connect() as conn:
+        for user in users:
+            email = user["username"]
+            subject = "Acceptance Letter - Hophacks.com"
+            msg = Message(recipients=[email],
+                          sender="team@hophacks.com",
+                          subject=subject)
 
-        msg.body = 'Congrats on being accepted to HopHacks!'
-        msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
-        smtpObj.sendmail(SSL_SENDER, email, msg.as_string())
+            msg.body = 'Congrats on being accepted to HopHacks!'
+            msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
+            conn.send(msg)
 
-# def send_apply_confirm(email, name):
-#     msg = Message("Received Application - HopHacks.com",
-#     sender="team@hophacks.com",
-#     recipients=[email])
+# This is for alternative email service
+# def send_acceptances(users):
+#     smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
+#     smtpObj.login(SSL_SENDER, SSL_PWD)
+#     for user in users:
+#         email = user["username"]
+#         subject = "Acceptance Letter - Hophacks.com"
+#         msg = Message(recipients=[email],
+#                         sender=SSL_SENDER,
+#                         subject=subject)
 
-#     msg.body = 'Thanks for applying to hophacks!'
-#     msg.html = render_template('email_apply_confirm.html', first_name=name)
-#     mail.send(msg)
+#         msg.body = 'Congrats on being accepted to HopHacks!'
+#         msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
+#         smtpObj.sendmail(SSL_SENDER, email, msg.as_string())
+
 
 def send_apply_confirm(email, name):
-    smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
-    smtpObj.login(SSL_SENDER, SSL_PWD)
     msg = Message("Received Application - HopHacks.com",
-    sender=SSL_SENDER,
+    sender="team@hophacks.com",
     recipients=[email])
 
     msg.body = 'Thanks for applying to hophacks!'
     msg.html = render_template('email_apply_confirm.html', first_name=name)
-    smtpObj.sendmail(SSL_SENDER, email, msg.as_string())
+    mail.send(msg)
+
+# This is for alternative email service
+# def send_apply_confirm(email, name):
+#     smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
+#     smtpObj.login(SSL_SENDER, SSL_PWD)
+#     msg = Message("Received Application - HopHacks.com",
+#     sender=SSL_SENDER,
+#     recipients=[email])
+
+#     msg.body = 'Thanks for applying to hophacks!'
+#     msg.html = render_template('email_apply_confirm.html', first_name=name)
+#     smtpObj.sendmail(SSL_SENDER, email, msg.as_string())
 
 @registrations_api.route('/get', methods = ['GET'])
 @jwt_required
