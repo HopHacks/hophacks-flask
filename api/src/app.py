@@ -105,8 +105,3 @@ def create_app(config_file='config/config.json'):
 
 
     return app
-
-if __name__ == '__main__':
-    app = create_app()
-    # app.run(port=443 ,ssl_context=('saml/certs/server.crt', 'saml/certs/server.key'))
-    app.run(port=443, ssl_context = 'adhoc')

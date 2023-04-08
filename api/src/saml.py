@@ -93,7 +93,6 @@ def create_sso_user(attributes):
         "grad_year": "",
         'is_jhu': True,
     }
-    print(profile)
     db.users.insert_one({
         'username': attributes['EmailAddress'][0],
         'hashed': '',
