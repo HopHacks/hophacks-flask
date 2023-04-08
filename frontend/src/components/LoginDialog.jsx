@@ -147,7 +147,7 @@ function Login(props) {
       <Button onClick={handleLogin} className={classes.loginButton}>
         Login
       </Button>
-      <Button onClick={handleJHUSSO}>Continue with JHU</Button>
+      <Button onClick={handleJHUSSO} className={classes.loginButton}>Continue with JHU</Button>
       <Typography display="inline" className={classes.dialogPad}>
         <Link
           to={'/register'}
