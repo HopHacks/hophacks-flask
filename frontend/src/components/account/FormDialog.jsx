@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { withAuthCheck } from "../../util/auth.jsx";
+import React, { useState } from 'react';
+import { withAuthCheck } from '../../util/auth.jsx';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,50 +17,48 @@ const FormDialog = function FormDialog({
   form,
   handleProfileSave,
   primaryText,
-  secondaryText,
-}){
-    const [dialogopen, setdialogOpen] = useState(false);
+  secondaryText
+}) {
+  const [dialogopen, setdialogOpen] = useState(false);
 
-    const handleClickOpen = () => {
-      setdialogOpen(true);
-    };
+  const handleClickOpen = () => {
+    setdialogOpen(true);
+  };
 
-    const handleClose = () => {
-      setdialogOpen(false);
-    };
-    return (
-        <div>
-          <Divider variant="inset" component="li" />
-            <ListItem button>
-
-              <ListItemText primary={primaryText} secondary={secondaryText} />
-              <CardActions>
-                <IconButton>
-                <EditIcon fontSize="small" color="primary" onClick={handleClickOpen} />
-          <Dialog open={dialogopen} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-            <DialogContent>
-                {form}
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Cancel
-                  </Button>
-              <Button onClick={() => {
-                handleProfileSave();
-                handleClose();
-              }}
-                color="primary">
-                Save
-                  </Button>
-            </DialogActions>
-          </Dialog>
-                </IconButton>
-              </CardActions>
-            </ListItem>
-          
-        </div>
-      );
-}
+  const handleClose = () => {
+    setdialogOpen(false);
+  };
+  return (
+    <div>
+      <Divider variant="inset" component="li" />
+      <ListItem button>
+        <ListItemText primary={primaryText} secondary={secondaryText} />
+        <CardActions>
+          <IconButton>
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen} />
+            <Dialog open={dialogopen} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+              <DialogContent>{form}</DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleProfileSave();
+                    handleClose();
+                  }}
+                  color="primary"
+                >
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </IconButton>
+        </CardActions>
+      </ListItem>
+    </div>
+  );
+};
 
 export default withAuthCheck(FormDialog);

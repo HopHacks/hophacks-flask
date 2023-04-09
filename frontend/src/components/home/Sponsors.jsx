@@ -1,189 +1,260 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { motion } from 'framer-motion/dist/framer-motion'// Needs to be added to requirements.txt
-
-
-const config = { mass: 2, tension: 2000, friction: 200 };
+import { motion } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 
 const useStyles = makeStyles({
-
-    title: {
-        color: "#ffffff",
-        fontFamily: "Inter",
-        fontWeight: "bold",
-        textAlign: "center",
-        fontSize: "375%"
-    },
-    contact: {
-        color: "#ffffff",
-        fontFamily: "Inter",
-        fontWeight: "bold",
-        textAlign: "center",
-        fontSize: "100%"
-    },
-    minititle: {
-        color: "#ffffff",
-        fontFamily: "Inter",
-        fontWeight: "bold",
-        textAlign: "center",
-        fontSize: "300%",
-        alignItems: "center",
-        justifyItems: "center"
-    },
-    logos: {
-        color: "#ffffff",
-        fontFamily: "Inter",
-        fontWeight: "bold",
-        textAlign: "center",
-        fontSize: "250%",
-        alignItems: "center",
-        justifyItems: "center"
-
-    },
-    card: {
-        backgroundColor: "#278be2",
-    },
+  title: {
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: '375%'
+  },
+  contact: {
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: '100%'
+  },
+  minititle: {
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: '300%',
+    alignItems: 'center',
+    justifyItems: 'center'
+  },
+  logos: {
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: '250%',
+    alignItems: 'center',
+    justifyItems: 'center'
+  },
+  card: {
+    backgroundColor: '#278be2'
+  }
 });
 
 function img(url) {
-    return process.env.PUBLIC_URL + '/images/' + url;
+  return process.env.PUBLIC_URL + '/images/' + url;
 }
 
 function SponsorItem(props) {
-    return (
-        <a href={`${props.website}`}><img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} /></a>
-    );
+  return (
+    <a href={`${props.website}`}>
+      <img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} />
+    </a>
+  );
 }
 
 export default function Sponsors() {
+  const classes = useStyles();
 
+  const gold = 0.325;
+  const sable = 0.3;
+  const blue = 0.25;
+  const starter = 0.2;
 
-    const classes = useStyles();
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
 
-    const gold = 0.325;
-    const sable = 0.3;
-    const blue = 0.25;
-    const starter = 0.2;
-
-    const [windowSize, setWindowSize] = useState({
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight
-    });
-
-    useEffect(() => {
-        function handleWindowResize() {
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight
-            });
-        }
-
-        window.addEventListener('resize', handleWindowResize);
-
-        return () => {
-            window.removeEventListener('resize', handleWindowResize);
-        };
-    }, []);
-
-    const textAnimate = {
-        offscreen: { y: 0, opacity: 0 },
-        onscreen: {
-            y: 0,
-            opacity: 1,
-            duration: 3,
-            transition: {
-                type: "spring",
-                bounce: 0.0,
-                duration: 6
-            }
-        }
+      });
     }
 
-    const imageAnimate = {
-        offscreen: { x: -50, opacity: 0 },
-        onscreen: {
-            x: 0,
-            opacity: 1,
-            duration: 3,
-            transition: {
-                type: "spring",
-                bounce: 0.0,
-                duration: 4
-            }
-        }
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  const imageAnimate = {
+    offscreen: { x: -50, opacity: 0 },
+    onscreen: {
+      x: 0,
+      opacity: 1,
+      duration: 3,
+      transition: {
+        type: 'spring',
+        bounce: 0.0,
+        duration: 4
+      }
     }
+  };
 
-    return (
-        <motion.div>
-            <Box py={2} style={{ marginTop: -30}}>
+  return (
+    <motion.div>
+      <Box py={2} style={{ marginTop: -30 }}>
+        <div>
+          <Grid container spacing={2} justify="center" alignItems="center">
+            <Grid item xs={4}>
+              <img
+                style={{ marginLeft: '40%', marginBottom: '0%', width: '60%' }}
+                src={img('home_bg/4_edit.png')}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <h4 className={classes.title} style={{ marginTop: '30%' }}>
+                Sponsors
+              </h4>
+              <h5 className={classes.contact}>
+                Interested in sponsoring us? Email us at{' '}
+                {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}
+              </h5>
+            </Grid>
+            <Grid item xs={4}></Grid>
+          </Grid>
 
-                        <div>
-                            <Grid container spacing={2} justify="center" alignItems="center">
-                                <Grid item xs={4}>
-                                    <img style={{marginLeft: "40%", marginBottom: "0%", width: "60%"}} src={img("home_bg/4_edit.png")}/>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <h4 className={classes.title} style={{ marginTop:"30%"}} >Sponsors</h4>
-                                    <h5 className={classes.contact} gutterBottom>Interested in sponsoring us? Email us at {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}</h5>
-                                </Grid>
-                                <Grid item xs={4}></Grid>
-                            </Grid>
-                            
-                            <Divider style={{marginBottom: "3%"}}/>
-                        </div>
+          <Divider style={{ marginBottom: '3%' }} />
+        </div>
 
-                        
-                    <Box style={{ marginLeft: "5%", marginRight: "5%"}}>
-                        {/* Gold & Sable */}
-                        <motion.div class={classes.logos}
-                            initial={"offscreen"}
-                            whileInView={"onscreen"}
-                            variants={imageAnimate}>
-                            <Grid container spacing={2} justify="center" alignItems="center">
-                                <SponsorItem imgURL='bloomberg_hori_brush' website='https://www.bloomberg.com/' imgSytle={{ width: windowSize.width * gold, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
-                                <SponsorItem imgURL='it_hori_brush' website='https://it.johnshopkins.edu/' imgSytle={{ width: windowSize.width * sable, maxHeight: "100%", marginTop: "5%" , marginBottom: "5%"}} />
-                            </Grid>
-                        </motion.div>
+        <Box style={{ marginLeft: '5%', marginRight: '5%' }}>
+          {/* Gold & Sable */}
+          <motion.div
+            class={classes.logos}
+            initial={'offscreen'}
+            whileInView={'onscreen'}
+            variants={imageAnimate}
+          >
+            <Grid container spacing={2} justify="center" alignItems="center">
+              <SponsorItem
+                imgURL="bloomberg_hori_brush"
+                website="https://www.bloomberg.com/"
+                imgSytle={{
+                  width: windowSize.width * gold,
+                  maxHeight: '100%',
+                  marginTop: '5%',
+                  marginBottom: '5%'
+                }}
+              />
+              <SponsorItem
+                imgURL="it_hori_brush"
+                website="https://it.johnshopkins.edu/"
+                imgSytle={{
+                  width: windowSize.width * sable,
+                  maxHeight: '100%',
+                  marginTop: '5%',
+                  marginBottom: '5%'
+                }}
+              />
+            </Grid>
+          </motion.div>
 
-                        {/* Blue */}
-                        <motion.div class={classes.logos}
-                            initial={"offscreen"}
-                            whileInView={"onscreen"}
-                            variants={imageAnimate}>
-                            <Grid container spacing={2} justify="center" alignItems="center">
+          {/* Blue */}
+          <motion.div
+            class={classes.logos}
+            initial={'offscreen'}
+            whileInView={'onscreen'}
+            variants={imageAnimate}
+          >
+            <Grid container spacing={2} justify="center" alignItems="center">
+              <SponsorItem
+                imgURL="digitalocean_hori_brush"
+                website="https://www.digitalocean.com/"
+                imgSytle={{
+                  width: windowSize.width * blue,
+                  maxHeight: '100%',
+                  marginTop: '0%',
+                  marginBottom: '5%'
+                }}
+              />
 
-                                    <SponsorItem imgURL='digitalocean_hori_brush' website='https://www.digitalocean.com/' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
-                                
-                                    <SponsorItem imgURL='accenture_hori_brush' website='https://www.accenture.com/us-en' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
-                                
-                                    <SponsorItem imgURL='scm_hori_brush' website='https://www.scm-lp.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
+              <SponsorItem
+                imgURL="accenture_hori_brush"
+                website="https://www.accenture.com/us-en"
+                imgSytle={{
+                  width: windowSize.width * blue,
+                  maxHeight: '100%',
+                  marginTop: '0%',
+                  marginBottom: '5%'
+                }}
+              />
 
-                                    <SponsorItem imgURL='bah_hori_brush' website='https://www.boozallen.com' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
-                                
-                                    <SponsorItem imgURL='apl_hori_brush' website='https://www.jhuapl.edu' imgSytle={{ width: windowSize.width * blue, maxHeight: "100%", marginTop: "0%", marginBottom: "5%"}} />
-                            </Grid>
-                        </motion.div>
+              <SponsorItem
+                imgURL="scm_hori_brush"
+                website="https://www.scm-lp.com"
+                imgSytle={{
+                  width: windowSize.width * blue,
+                  maxHeight: '100%',
+                  marginTop: '0%',
+                  marginBottom: '5%'
+                }}
+              />
 
+              <SponsorItem
+                imgURL="bah_hori_brush"
+                website="https://www.boozallen.com"
+                imgSytle={{
+                  width: windowSize.width * blue,
+                  maxHeight: '100%',
+                  marginTop: '0%',
+                  marginBottom: '5%'
+                }}
+              />
 
-                        {/* Starter */}
-                        <motion.div class={classes.logos}
-                            initial={"offscreen"}
-                            whileInView={"onscreen"}
-                            variants={imageAnimate}>
-                            <Grid container spacing={2} justify="center" alignItems="center">
-                                <SponsorItem imgURL='wolfram_alpha_brush' website='https://www.wolframalpha.com/' imgSytle={{width: windowSize.width * starter, maxHeight: "100%", marginTop: "2%"}}/>
-                                <SponsorItem imgURL='google_cloud_brush' website='https://cloud.google.com/' imgSytle={{width: windowSize.width * starter, maxHeight: "100%", marginTop: "0%", marginLeft: "5%"}}/>
-                            </Grid>
-                        </motion.div>
-                    </Box>
+              <SponsorItem
+                imgURL="apl_hori_brush"
+                website="https://www.jhuapl.edu"
+                imgSytle={{
+                  width: windowSize.width * blue,
+                  maxHeight: '100%',
+                  marginTop: '0%',
+                  marginBottom: '5%'
+                }}
+              />
+            </Grid>
+          </motion.div>
 
-                        <Divider style={{marginTop: "3%", marginBottom: "3%"}}/>
-                        {/*
+          {/* Starter */}
+          <motion.div
+            class={classes.logos}
+            initial={'offscreen'}
+            whileInView={'onscreen'}
+            variants={imageAnimate}
+          >
+            <Grid container spacing={2} justify="center" alignItems="center">
+              <SponsorItem
+                imgURL="wolfram_alpha_brush"
+                website="https://www.wolframalpha.com/"
+                imgSytle={{
+                  width: windowSize.width * starter,
+                  maxHeight: '100%',
+                  marginTop: '2%'
+                }}
+              />
+              <SponsorItem
+                imgURL="google_cloud_brush"
+                website="https://cloud.google.com/"
+                imgSytle={{
+                  width: windowSize.width * starter,
+                  maxHeight: '100%',
+                  marginTop: '0%',
+                  marginLeft: '5%'
+                }}
+              />
+            </Grid>
+          </motion.div>
+        </Box>
+
+        <Divider style={{ marginTop: '3%', marginBottom: '3%' }} />
+        {/*
                         <motion.div
                             initial={"offscreen"}
                             whileInView={"onscreen"}
@@ -279,9 +350,7 @@ export default function Sponsors() {
                             <br></br>
                         </motion.div>
                         */}
-
-            </Box >
-        </motion.div>
-
-    );
+      </Box>
+    </motion.div>
+  );
 }

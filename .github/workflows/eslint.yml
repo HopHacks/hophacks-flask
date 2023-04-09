@@ -1,0 +1,25 @@
+name: ESLint
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+    types: [opened, reopened]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm install -g eslint
+      - name: Run ESLint
+        working-directory: ./frontend
+        run: |
+          npm install @babel/preset-react --save-dev
+          eslint "src/**/*.{js,jsx,ts,tsx,md,json}" --max-warnings 0

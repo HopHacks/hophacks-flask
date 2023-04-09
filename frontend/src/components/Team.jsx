@@ -1,35 +1,10 @@
-import React, { useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Team from './home/Team';
-
 
 import '../stylesheets/team.css';
 
 export default function TeamPage() {
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-    },
-    button: {
-      marginTop: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      fontSize: 'min(max(calc(6px + 1.25vw), 3vw), 25px)',
-    },
-    actionsContainer: {
-      marginBottom: theme.spacing(2),
-    },
-    resetContainer: {
-      padding: theme.spacing(3),
-    },
-    label: {
-      backgroundColor: 'rgb(232, 235, 242)',
-    }
-  }));
-
-  const classes = useStyles();
-
   const team = (
     <Grid
       container
@@ -49,17 +24,16 @@ export default function TeamPage() {
   );
 
   return (
-    <div style={{
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/cover.png")`,
-      backgroundSize: 'cover',
-      minHeight: "100vh"
-    }}>
-      <div class="container">
-        <div className="register-wrapper">
-          {team}
-        </div>
+    <div
+      style={{
+        backgroundImage: `url("${process.env.PUBLIC_URL}/images/cover.png")`,
+        backgroundSize: 'cover',
+        minHeight: '100vh'
+      }}
+    >
+      <div className="container">
+        <div className="register-wrapper">{team}</div>
       </div>
     </div>
-
-  )
+  );
 }
