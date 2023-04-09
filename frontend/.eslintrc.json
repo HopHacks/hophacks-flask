@@ -13,9 +13,12 @@
     },
     "ecmaVersion": 12,
     "sourceType": "module",
-    "requireConfigFile": false
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
   },
-  "plugins": ["react", "prettier", "@babel", "typescript", "jsx"],
+  "plugins": ["react", "prettier", "typescript", "jsx", "@babel"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": ["error"],
