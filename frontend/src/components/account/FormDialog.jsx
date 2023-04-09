@@ -17,7 +17,7 @@ const FormDialog = function FormDialog({
   form,
   handleProfileSave,
   primaryText,
-  secondaryText,
+  secondaryText
 }) {
   const [dialogopen, setdialogOpen] = useState(false);
 
@@ -35,16 +35,8 @@ const FormDialog = function FormDialog({
         <ListItemText primary={primaryText} secondary={secondaryText} />
         <CardActions>
           <IconButton>
-            <EditIcon
-              fontSize="small"
-              color="primary"
-              onClick={handleClickOpen}
-            />
-            <Dialog
-              open={dialogopen}
-              onClose={handleClose}
-              aria-labelledby="form-dialog-title"
-            >
+            <EditIcon fontSize="small" color="primary" onClick={handleClickOpen} />
+            <Dialog open={dialogopen} onClose={handleClose} aria-labelledby="form-dialog-title">
               <DialogTitle id="form-dialog-title">{title}</DialogTitle>
               <DialogContent>{form}</DialogContent>
               <DialogActions>

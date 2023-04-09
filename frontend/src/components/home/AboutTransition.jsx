@@ -2,32 +2,27 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  motion,
-  useTransform,
-  useViewportScroll,
-} from 'framer-motion/dist/framer-motion';
-import styled from 'styled-components';
+import { motion, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
 import { useState, useEffect } from 'react';
 
 const useStyles = makeStyles({
   margin: {
-    marginBottom: '13px',
+    marginBottom: '13px'
   },
   color: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   title: {
     color: '#7289da',
-    fontFamily: 'VCR OSD Mono',
+    fontFamily: 'VCR OSD Mono'
   },
   Media: {
     width: '65%',
     marginLeft: '33%',
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   moveDown: {
-    top: 'px',
+    top: 'px'
   },
   font1: {
     position: 'absolute',
@@ -41,7 +36,7 @@ const useStyles = makeStyles({
     fontWeight: '700',
     fontStyle: 'italic',
     fontSize: '188px',
-    lineHeight: '304px',
+    lineHeight: '304px'
   },
 
   font2: {
@@ -56,7 +51,7 @@ const useStyles = makeStyles({
     fontWeight: '700',
     fontStyle: 'italic',
     fontSize: '188px',
-    lineHeight: '304px',
+    lineHeight: '304px'
   },
 
   font3: {
@@ -71,28 +66,9 @@ const useStyles = makeStyles({
     fontWeight: '700',
     fontStyle: 'italic',
     fontSize: '188px',
-    lineHeight: '304px',
-  },
+    lineHeight: '304px'
+  }
 });
-
-const Title = styled.h2`
-  font-size: 3rem;
-  font-weight: 600;
-  font-family: Inter;
-  color: rgba(255, 255, 255, 0.8);
-  text-align: center;
-`;
-
-const Word = styled(motion.span)`
-  display: inline-block;
-  margin-right: 0.25em;
-  white-space: nowrap;
-`;
-
-const Character = styled(motion.span)`
-  display: inline-block;
-  margin-right: -0.05em;
-`;
 
 export default function AboutTransition() {
   const classes = useStyles();
@@ -100,8 +76,6 @@ export default function AboutTransition() {
     return process.env.PUBLIC_URL + '/images/' + url;
   }
   const { scrollY } = useViewportScroll();
-
-  const scaleRight = useTransform(scrollY, [0, 500], [2, 1]);
 
   const xRight = useTransform(scrollY, [800, 0], ['-15%', '23vw']);
 
@@ -111,14 +85,14 @@ export default function AboutTransition() {
 
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: window.innerHeight
   });
 
   useEffect(() => {
     function handleWindowResize() {
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight
       });
     }
 
@@ -133,15 +107,11 @@ export default function AboutTransition() {
     <div style={{ position: 'relative', marginTop: windowSize.height * 0.93 }}>
       <Box className={classes.color}>
         {/* <div className={classes.moveDown}> */}
-        <CardMedia
-          component="img"
-          className={classes.Media}
-          image={img('About_Background.png')}
-        />
+        <CardMedia component="img" className={classes.Media} image={img('About_Background.png')} />
         <motion.Typography
           className={classes.font1}
           style={{
-            x: xLeft,
+            x: xLeft
           }}
         >
           About
@@ -149,7 +119,7 @@ export default function AboutTransition() {
         <motion.Typography
           className={classes.font2}
           style={{
-            x: xRight,
+            x: xRight
           }}
         >
           About
@@ -157,7 +127,7 @@ export default function AboutTransition() {
         <motion.Typography
           className={classes.font3}
           style={{
-            x: xLeft2,
+            x: xLeft2
           }}
         >
           About

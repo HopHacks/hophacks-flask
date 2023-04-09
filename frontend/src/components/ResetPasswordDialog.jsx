@@ -11,14 +11,14 @@ import { withAuthProps } from '../util/auth';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-function ResetPassword(props) {
+function ResetPassword() {
   const useStyles = makeStyles({
     linkColor: {
       color: '#1890ff',
       '&:hover': {
-        color: '#18baff',
-      },
-    },
+        color: '#18baff'
+      }
+    }
   });
 
   const classes = useStyles();
@@ -30,17 +30,10 @@ function ResetPassword(props) {
     event.preventDefault();
     // TODO alert?
     try {
-      const response = await axios.post(
-        '/api/accounts/reset_password/request',
-        {
-          username: resetEmail,
-          reset_url:
-            window.location.protocol +
-            '//' +
-            window.location.host +
-            '/reset_password',
-        },
-      );
+      await axios.post('/api/accounts/reset_password/request', {
+        username: resetEmail,
+        reset_url: window.location.protocol + '//' + window.location.host + '/reset_password'
+      });
       alert('An email has been sent (if the account exists)!');
       handleResetClose();
     } catch {

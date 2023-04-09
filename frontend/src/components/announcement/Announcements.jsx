@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   title: {
     color: '#7289da',
     fontFamily: 'VCR OSD Mono',
-    marginLeft: '20px',
+    marginLeft: '20px'
   },
 
   titlebox: {
@@ -39,35 +39,34 @@ const useStyles = makeStyles({
     marginBottom: '20px',
     marginLeft: '10px',
     marginRight: '10px',
-    marginBottom: '20px',
-    textAlign: 'left',
+    textAlign: 'left'
   },
 
   announcementPic: {
     width: '150px',
-    height: '150px',
+    height: '150px'
   },
 
   imAnnouncementPic: {
     width: '60%',
     height: '60%',
     marginLeft: '20%',
-    marginRight: '20%',
+    marginRight: '20%'
   },
 
   pagination: {
     display: 'flex',
     justifyContent: 'center',
     marginTop: 15,
-    marginBottom: 10,
+    marginBottom: 10
   },
 
   card: {
-    padding: 12,
+    padding: 12
   },
 
   container: {
-    maxWidth: '55%',
+    maxWidth: '55%'
   },
 
   topAnnouncementContent: {
@@ -75,7 +74,7 @@ const useStyles = makeStyles({
     boxOrient: 'vertical',
     lineClamp: 3,
     wordBreak: 'break-all',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
 
   recentFourAnnouncementContent: {
@@ -83,7 +82,7 @@ const useStyles = makeStyles({
     boxOrient: 'vertical',
     lineClamp: 2,
     wordBreak: 'break-all',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
 
   historyAnnouncementContent: {
@@ -92,8 +91,8 @@ const useStyles = makeStyles({
     lineClamp: 1,
     wordBreak: 'break-all',
     overflow: 'hidden',
-    maxWidth: '500px',
-  },
+    maxWidth: '500px'
+  }
 });
 
 export default function Announcements() {
@@ -103,14 +102,11 @@ export default function Announcements() {
   const [historyAnnouncements, setHistoryAnnouncements] = useState([]);
   const [topAnnouncement, setTopAnnouncement] = useState({});
   const [recentFourAnnouncements, setRecentFourAnnouncements] = useState([]);
-  const [query, setQuery] = useState('');
-  const [event, setEvent] = useState('Fall 2022');
+  const [event] = useState('Fall 2022');
 
   async function getTopAnnouncement() {
     try {
-      const response = await axios.get(
-        '/api/announcements/important' + '?event=' + event,
-      );
+      const response = await axios.get('/api/announcements/important' + '?event=' + event);
       setTopAnnouncement(response.data);
     } catch (ex) {
       console.log('Unable to get top announcement');
@@ -119,9 +115,7 @@ export default function Announcements() {
 
   async function getRecentFourAnnouncements() {
     try {
-      const response = await axios.get(
-        '/api/announcements/recent' + '?event=' + event,
-      );
+      const response = await axios.get('/api/announcements/recent' + '?event=' + event);
       setRecentFourAnnouncements(response.data.announcements);
     } catch (ex) {
       console.log('Unable to get recent four announcements');
@@ -130,9 +124,7 @@ export default function Announcements() {
 
   async function getHistoryAnnouncements() {
     try {
-      const response = await axios.get(
-        '/api/announcements/history' + '?event=' + event,
-      );
+      const response = await axios.get('/api/announcements/history' + '?event=' + event);
       setHistoryAnnouncements(response.data.announcements);
     } catch (ex) {
       console.log('Unable to get history announcements');
@@ -158,9 +150,7 @@ export default function Announcements() {
 
   function populateAnnouncements() {
     return historyAnnouncements
-      .filter(
-        (announcement, index) => index >= page * 10 - 10 && index < page * 10,
-      )
+      .filter((announcement, index) => index >= page * 10 - 10 && index < page * 10)
       .map((announcement, index) => (
         <TableRow key={index}>
           <TableCell component="th" scope="row">
@@ -175,7 +165,7 @@ export default function Announcements() {
               <Link
                 to={{
                   pathname: `/announcements/detail/${announcement.title}`,
-                  state: announcement,
+                  state: announcement
                 }}
               >
                 [more]
@@ -240,7 +230,7 @@ export default function Announcements() {
             <Link
               to={{
                 pathname: `/announcements/detail/${topAnnouncement.title}`,
-                state: topAnnouncement,
+                state: topAnnouncement
               }}
             >
               Learn More
@@ -272,7 +262,7 @@ export default function Announcements() {
             <Link
               to={{
                 pathname: `/announcements/detail/${announcement.title}`,
-                state: announcement,
+                state: announcement
               }}
             >
               Learn More
@@ -287,7 +277,7 @@ export default function Announcements() {
     return (
       <Grid container spacing={2}>
         {recentFourAnnouncements.map((announcement, index) => (
-          <Grid item xs={6}>
+          <Grid item xs={6} key={index}>
             {RecentEvent(announcement)}
           </Grid>
         ))}
@@ -307,7 +297,7 @@ export default function Announcements() {
       style={{
         backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
         backgroundSize: 'cover',
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <Container fixed className={classes.container}>

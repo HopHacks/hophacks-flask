@@ -11,7 +11,7 @@ class Upload extends Component {
     judgesFile: null,
     submissionsFile: null,
     roomsFile: null,
-    number: 0,
+    number: 0
   };
 
   componentDidMount() {
@@ -70,12 +70,7 @@ class Upload extends Component {
     return (
       <Container fixed>
         <Card style={{ backgroundColor: '#d1e9ff' }}>
-          <Form
-            action=""
-            name="form"
-            encType="multipart/form-data"
-            onSubmit={this.onFileUpload}
-          >
+          <Form action="" name="form" encType="multipart/form-data" onSubmit={this.onFileUpload}>
             <h2>Submissions (.csv)</h2>
             <Form.File
               name="sfile"

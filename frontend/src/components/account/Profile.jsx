@@ -21,9 +21,7 @@ import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
 
 const Profile = function Profile(props) {
-  const [status, setStatus] = useState(
-    'Application not complete: confirm email',
-  );
+  const [status, setStatus] = useState('Application not complete: confirm email');
   const [resumeFile, setResumeFile] = useState('');
   const [vaccinationFile, setVaccinationFile] = useState('');
   const [oldResumeName, setOldResumeName] = useState('');
@@ -44,17 +42,14 @@ const Profile = function Profile(props) {
   const [grad_year, setGrad_year] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState('');
-  const [resumeMsg, setResumeMsg] = useState(
-    'Acceptable format: *.pdf, *.doc, *.docx',
-  );
+  const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
   const [vaccinationMsg, setVaccinationMsg] = useState(
-    'Acceptable format: *.pdf, *.png, *.jpeg, *.jpg, *.heic',
+    'Acceptable format: *.pdf, *.png, *.jpeg, *.jpg, *.heic'
   );
   const [ageMsg, setAgeMsg] = useState('');
 
   const currentEvent = 'Fall 2022';
-  const rsvpStatus =
-    "RSVPed! You're all set; you can also cancel your RSVP anytime.";
+  const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
   const acceptedStatus =
     'You have been accepted to HopHacks. Please RSVP if you plan on participating!';
   const appCompleteStatus = 'Application complete!';
@@ -62,18 +57,18 @@ const Profile = function Profile(props) {
   const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 120,
+      minWidth: 120
     },
 
     root: {
       marginLeft: '25%',
       width: '50%',
-      minWidth: '450px',
+      minWidth: '450px'
     },
 
     title: {
-      fontSize: 80,
-    },
+      fontSize: 80
+    }
   }));
   const classes = useStyles();
 
@@ -115,7 +110,7 @@ const Profile = function Profile(props) {
     data.append('file', resumeFile);
 
     try {
-      const response = await axios.post('/api/resumes/', data);
+      await axios.post('/api/resumes/', data);
       setResumeMsg('Resume has been successfully uploaded');
     } catch (e) {
       setResumeMsg('Failed to upload resume. Please try again.');
@@ -130,7 +125,7 @@ const Profile = function Profile(props) {
     data.append('file', vaccinationFile);
 
     try {
-      const response = await axios.post('/api/vaccination/', data);
+      await axios.post('/api/vaccination/', data);
       setVaccinationMsg('Vaccination card has been successfully uploaded');
     } catch (e) {
       setVaccinationMsg('Failed to upload vaccination card. Please try again.');
@@ -199,7 +194,7 @@ const Profile = function Profile(props) {
     profile.age = age;
     try {
       await axios.post('/api/accounts/profile/update', {
-        profile: profile,
+        profile: profile
       });
       getProfile();
     } catch (e) {
@@ -207,7 +202,7 @@ const Profile = function Profile(props) {
     }
   }
 
-  const checkAgeValid = (e) => {
+  const checkAgeValid = () => {
     const agere = /^[0-9\b]+$/;
     if (!agere.test(age)) {
       setAgeMsg('* Age must be an integer value. Please try again.');
@@ -216,17 +211,6 @@ const Profile = function Profile(props) {
     setAgeMsg('');
     handleProfileSave();
   };
-
-  async function applyToCurrentEvent() {
-    if (!props.isLoggedIn) return;
-    if (status === 'Application not complete: confirm email') {
-      const res = await axios.post('/api/registrations/apply', {
-        event: currentEvent,
-        details: 'none',
-      });
-      getStatus();
-    }
-  }
 
   async function getEmailConfirmStatus() {
     if (!props.isLoggedIn) return;
@@ -247,11 +231,7 @@ const Profile = function Profile(props) {
   async function sendConfirmationEmail() {
     try {
       await axios.post('/api/accounts/confirm_email/request', {
-        confirm_url:
-          window.location.protocol +
-          '//' +
-          window.location.host +
-          '/confirm_email',
+        confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email'
       });
       setSendConfimationMsg('Sent confirmation email successfully!');
     } catch (e) {
@@ -290,17 +270,15 @@ const Profile = function Profile(props) {
     if (!confirmed) {
       return (
         <>
-          <button onClick={sendConfirmationEmail}>
-            Request Email Confirmation
-          </button>
+          <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
           <p>{sendConfimationMsg}</p>
         </>
       );
     } else if (confirmed && status === appCompleteStatus) {
       return (
         <p>
-          You have successfully applied to HopHacks. Please be patient while we
-          process your application :)
+          You have successfully applied to HopHacks. Please be patient while we process your
+          application :)
         </p>
       );
     } else if (status === acceptedStatus) {
@@ -321,16 +299,12 @@ const Profile = function Profile(props) {
   const appStatus = (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography
-          className={classes.title}
-          gutterBottom
-          style={{ fontSize: '30px' }}
-        >
+        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
           Application
         </Typography>
         <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-          You need to confirm your email before applying to the current event.
-          Once you are accepted to the event, you can RSVP to the event.
+          You need to confirm your email before applying to the current event. Once you are accepted
+          to the event, you can RSVP to the event.
         </Typography>
         <Table>
           <TableHead>
@@ -353,17 +327,12 @@ const Profile = function Profile(props) {
   const resume = (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography
-          className={classes.title}
-          gutterBottom
-          style={{ fontSize: '30px' }}
-        >
+        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
           Resume
         </Typography>
         <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-          You can replace your resume by clicking on “Choose File” above and
-          selecting a new file. You can have only one resume attached to your
-          profile.
+          You can replace your resume by clicking on “Choose File” above and selecting a new file.
+          You can have only one resume attached to your profile.
         </Typography>
         <Table>
           <TableHead>
@@ -374,27 +343,17 @@ const Profile = function Profile(props) {
           <TableRow>
             <TableCell>{oldResumeName}</TableCell>
             <TableCell>
-              <Link
-                onClick={handleResumeDownload}
-                style={{ fontSize: '15px', color: 'blue' }}
-              >
+              <Link onClick={handleResumeDownload} style={{ fontSize: '15px', color: 'blue' }}>
                 Download
               </Link>
             </TableCell>
             <TableCell>
               <form onSubmit={handleResumeSubmit}>
                 <div>
-                  <input
-                    type="file"
-                    name="file"
-                    onChange={handleResumeFileChange}
-                  />
+                  <input type="file" name="file" onChange={handleResumeFileChange} />
                 </div>
                 <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}>
-                  {' '}
-                  {resumeMsg}{' '}
-                </Typography>
+                <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
               </form>
             </TableCell>
           </TableRow>
@@ -406,18 +365,13 @@ const Profile = function Profile(props) {
   const vaccination = (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography
-          className={classes.title}
-          gutterBottom
-          style={{ fontSize: '30px' }}
-        >
+        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
           Vaccination
         </Typography>
         <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-          In response to the current administrative policy, this year's
-          participants are required to be fully vaccinated or follow the indoor
-          mask policy. Please upload a picture of your vaccination card if you
-          are fully vaccinated.
+          In response to the current administrative policy, this year&apos;s participants are
+          required to be fully vaccinated or follow the indoor mask policy. Please upload a picture
+          of your vaccination card if you are fully vaccinated.
         </Typography>
         <Table>
           <TableHead>
@@ -428,27 +382,17 @@ const Profile = function Profile(props) {
           <TableRow>
             <TableCell>{oldVaccinationName}</TableCell>
             <TableCell>
-              <Link
-                onClick={handleVaccinationDownload}
-                style={{ fontSize: '15px', color: 'blue' }}
-              >
+              <Link onClick={handleVaccinationDownload} style={{ fontSize: '15px', color: 'blue' }}>
                 Download
               </Link>
             </TableCell>
             <TableCell>
               <form onSubmit={handleVaccinationSubmit}>
                 <div>
-                  <input
-                    type="file"
-                    name="file"
-                    onChange={handleVaccinationFileChange}
-                  />
+                  <input type="file" name="file" onChange={handleVaccinationFileChange} />
                 </div>
                 <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}>
-                  {' '}
-                  {vaccinationMsg}{' '}
-                </Typography>
+                <Typography style={{ fontSize: '13px' }}> {vaccinationMsg} </Typography>
               </form>
             </TableCell>
           </TableRow>
@@ -495,9 +439,7 @@ const Profile = function Profile(props) {
           <MenuItem value="Male">Male</MenuItem>
           <MenuItem value="Female">Female</MenuItem>
           <MenuItem value="Non-Binary">Non-Binary</MenuItem>
-          <MenuItem value="Prefer not to disclose">
-            Prefer not to disclose
-          </MenuItem>
+          <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
         </Select>
       </FormControl>
     </form>
@@ -533,9 +475,7 @@ const Profile = function Profile(props) {
             American Indian or Alaska Native
           </MenuItem>
           <MenuItem value="Asian">Asian</MenuItem>
-          <MenuItem value="Black or African American">
-            Black or African American
-          </MenuItem>
+          <MenuItem value="Black or African American">Black or African American</MenuItem>
           <MenuItem value="Hispanic, Latino or Spanish Origin">
             Hispanic, Latino or Spanish Origin
           </MenuItem>
@@ -547,9 +487,7 @@ const Profile = function Profile(props) {
           </MenuItem>
           <MenuItem value="White">White</MenuItem>
           <MenuItem value="Multiethnic">Multiethnic</MenuItem>
-          <MenuItem value="Prefer not to disclose">
-            Prefer not to disclose
-          </MenuItem>
+          <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
         </Select>
       </FormControl>
     </form>
@@ -654,11 +592,7 @@ const Profile = function Profile(props) {
   const ProfileCard = (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography
-          className={classes.title}
-          gutterBottom
-          style={{ fontSize: '30px' }}
-        >
+        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
           Profile
         </Typography>
 
@@ -746,7 +680,7 @@ const Profile = function Profile(props) {
       style={{
         backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
         backgroundSize: 'cover',
-        height: '100%',
+        height: '100%'
       }}
     >
       <div>{appStatus}</div>

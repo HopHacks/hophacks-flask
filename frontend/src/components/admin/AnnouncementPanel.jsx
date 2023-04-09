@@ -25,39 +25,39 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: 15,
-    marginBottom: 10,
+    marginBottom: 10
   },
   title: {
     color: 'white',
     fontWeight: 'bold',
-    marginBottom: 25,
+    marginBottom: 25
   },
   table: {
     width: '50%',
-    marginTop: '2.5%',
+    marginTop: '2.5%'
   },
   cell: {
-    minWidth: '800',
+    minWidth: '800'
   },
   root: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '32ch',
+    width: '32ch'
   },
   verticalCenter: {
     position: 'flex',
     marginTop: '-2.5%',
-    marginLeft: '36.5%',
+    marginLeft: '36.5%'
   },
   cssLabel: {
-    color: 'black',
+    color: 'black'
   },
   panel: {
-    marginTop: 50,
+    marginTop: 50
   },
   left: {
     backgroundColor: 'white',
@@ -69,22 +69,22 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 30,
     paddingRight: 25,
     margin: 'auto',
-    marginBottom: 50,
+    marginBottom: 50
   },
   right: {
     maxHeight: 325,
     minWidth: 500,
     margin: 'auto',
-    marginTop: 0,
+    marginTop: 0
   },
   button: {
-    marginLeft: 35,
+    marginLeft: 35
   },
   createUpdateTitle: {
     fontWeight: 'bold',
     marginLeft: 10,
-    marginBottom: 30,
-  },
+    marginBottom: 30
+  }
 }));
 const Panel = function () {
   const classes = useStyles();
@@ -94,7 +94,7 @@ const Panel = function () {
   const [deleteTitle, setdeleteTitle] = useState('');
   const [updatedFilter, setUpdatedFilter] = useState({
     creator: '',
-    created_time: '',
+    created_time: ''
   });
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -113,16 +113,10 @@ const Panel = function () {
   }
   function populateAnnouncements(page) {
     return announcements
-      ?.filter(
-        (announc, index) => index >= page.page * 5 - 5 && index < page.page * 5,
-      )
+      ?.filter((announc, index) => index >= page.page * 5 - 5 && index < page.page * 5)
       .map((announc, index) => (
         <TableRow key={index}>
-          <TableCell
-            className={classes.cell}
-            style={{ width: '1000%' }}
-            scope="row"
-          >
+          <TableCell className={classes.cell} style={{ width: '1000%' }} scope="row">
             <Grid container>
               <Grid item xs={8} lg={10}>
                 {announc.title}
@@ -135,7 +129,7 @@ const Panel = function () {
                   onClick={() => {
                     setUpdatedFilter({
                       creator: announc['creator'],
-                      created_time: announc.created_time,
+                      created_time: announc.created_time
                     });
                     setTitle(announc.title);
                     setContent(announc.content);
@@ -165,9 +159,7 @@ const Panel = function () {
             onClose={handleCloseDeleteDialog}
             aria-describedby="alert-dialog-slide-description"
           >
-            <DialogTitle>
-              {'You are going to delete the announcement'}
-            </DialogTitle>
+            <DialogTitle>{'You are going to delete the announcement'}</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
                 <p>Title: {deleteTitle}</p>
@@ -189,24 +181,14 @@ const Panel = function () {
     if (isCreating) {
       return <DialogTitle>{'Please Confirm The New Announcement'}</DialogTitle>;
     } else {
-      return (
-        <DialogTitle>{'Please Confirm The Updated Announcement'}</DialogTitle>
-      );
+      return <DialogTitle>{'Please Confirm The Updated Announcement'}</DialogTitle>;
     }
   }
   function panelTitle() {
     if (isCreating) {
-      return (
-        <Typography className={classes.createUpdateTitle}>
-          Create Announcement
-        </Typography>
-      );
+      return <Typography className={classes.createUpdateTitle}>Create Announcement</Typography>;
     } else {
-      return (
-        <Typography className={classes.createUpdateTitle}>
-          Update Announcement
-        </Typography>
-      );
+      return <Typography className={classes.createUpdateTitle}>Update Announcement</Typography>;
     }
   }
   function makeAnnouncement() {
@@ -252,15 +234,15 @@ const Panel = function () {
                 InputLabelProps={{
                   classes: {
                     root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
+                    focused: classes.cssFocused
+                  }
                 }}
                 InputProps={{
                   classes: {
                     root: classes.cssOutlinedInput,
                     focused: classes.cssFocused,
-                    notchedOutline: classes.notchedOutline,
-                  },
+                    notchedOutline: classes.notchedOutline
+                  }
                 }}
                 onChange={handleTitleChange}
               />
@@ -276,15 +258,15 @@ const Panel = function () {
                 InputLabelProps={{
                   classes: {
                     root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
+                    focused: classes.cssFocused
+                  }
                 }}
                 InputProps={{
                   classes: {
                     root: classes.cssOutlinedInput,
                     focused: classes.cssFocused,
-                    notchedOutline: classes.notchedOutline,
-                  },
+                    notchedOutline: classes.notchedOutline
+                  }
                 }}
                 onChange={handleContentChange}
               />
@@ -298,21 +280,21 @@ const Panel = function () {
                   InputLabelProps={{
                     classes: {
                       root: classes.cssLabel,
-                      focused: classes.cssFocused,
-                    },
+                      focused: classes.cssFocused
+                    }
                   }}
                   InputProps={{
                     classes: {
                       root: classes.cssOutlinedInput,
                       focused: classes.cssFocused,
-                      notchedOutline: classes.notchedOutline,
-                    },
+                      notchedOutline: classes.notchedOutline
+                    }
                   }}
                   SelectProps={{
                     MenuProps: {
                       anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
-                      getContentAnchorEl: null,
-                    },
+                      getContentAnchorEl: null
+                    }
                   }}
                   value={event}
                   onChange={handleEventChange}
@@ -330,14 +312,14 @@ const Panel = function () {
                     classes: {
                       root: classes.cssOutlinedInput,
                       focused: classes.cssFocused,
-                      notchedOutline: classes.notchedOutline,
-                    },
+                      notchedOutline: classes.notchedOutline
+                    }
                   }}
                   SelectProps={{
                     MenuProps: {
                       anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
-                      getContentAnchorEl: null,
-                    },
+                      getContentAnchorEl: null
+                    }
                   }}
                   value={priority}
                   onChange={handlePriorityChange}
@@ -418,7 +400,7 @@ const Panel = function () {
         title: title,
         content: content,
         event: event,
-        importance: priority,
+        importance: priority
       });
       window.location.reload();
       setIsCreating(true);
@@ -433,7 +415,7 @@ const Panel = function () {
         title: title,
         content: content,
         event: event,
-        importance: priority,
+        importance: priority
       });
       window.location.reload();
       setIsCreating(true);
@@ -469,7 +451,7 @@ const Panel = function () {
   async function deleteAnnouncement() {
     try {
       await axios.delete('/api/announcements/', {
-        data: { title: deleteTitle },
+        data: { title: deleteTitle }
       });
       setIsCreating(true);
       window.location.reload();

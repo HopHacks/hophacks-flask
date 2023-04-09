@@ -13,12 +13,11 @@ export default function PasswordReset(props) {
   async function reset_password(event) {
     event.preventDefault();
 
-    const passwordre =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {
       setMessage(
-        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.',
+        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
       );
       return;
     }
@@ -29,15 +28,13 @@ export default function PasswordReset(props) {
     }
 
     try {
-      const response = await axios.post('/api/accounts/reset_password', {
+      await axios.post('/api/accounts/reset_password', {
         reset_token: props.match.params.token,
-        password: password,
+        password: password
       });
       setMessage('Password reset successfully!');
     } catch (e) {
-      setMessage(
-        'Unable to reset password. Password may have already been changed!',
-      );
+      setMessage('Unable to reset password. Password may have already been changed!');
     }
     setAttempted(true);
   }
@@ -47,20 +44,20 @@ export default function PasswordReset(props) {
       style={{
         backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
         backgroundSize: 'cover',
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <Container
         fixed
         style={{
-          paddingTop: '100px',
+          paddingTop: '100px'
         }}
       >
         <Card style={{ backgroundColor: '#d1e9ff' }}>
           <br></br>
           <div>
             {attempted || (
-              <form onSubmit={reset_password} align="center">
+              <form onSubmit={reset_password}>
                 <label>
                   New Password:
                   <input
@@ -79,16 +76,10 @@ export default function PasswordReset(props) {
                     style={{ marginLeft: '5px' }}
                   />
                 </label>
-                <input
-                  type="submit"
-                  value="Submit"
-                  style={{ marginLeft: '30px' }}
-                />
+                <input type="submit" value="Submit" style={{ marginLeft: '30px' }} />
               </form>
             )}
-            <p style={{ color: 'red' }} align="center">
-              {message}
-            </p>
+            <p style={{ color: 'red' }}>{message}</p>
           </div>
         </Card>
       </Container>

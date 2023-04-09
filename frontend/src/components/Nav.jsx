@@ -9,9 +9,6 @@ import Drawer from '@material-ui/core/Drawer';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { withAuthProps } from '../util/auth';
@@ -23,26 +20,26 @@ const useStyles = makeStyles({
     fontFamily: 'Inter',
     flexGrow: 1,
     textAlign: 'center',
-    color: 'white',
+    color: 'white'
   },
 
   hophacksButton: {
     marginLeft: 20,
-    marginRight: 20,
+    marginRight: 20
   },
 
   otherButton: {
-    marginLeft: 'auto',
+    marginLeft: 'auto'
   },
 
   drawer: {
     background: '#141230',
-    width: '100vw',
+    width: '100vw'
   },
 
   icon: {
-    color: 'white',
-  },
+    color: 'white'
+  }
 });
 
 const Nav = function Nav(props) {
@@ -64,9 +61,7 @@ const Nav = function Nav(props) {
     return (
       <div>
         <AppBar position="sticky">
-          <Toolbar
-            style={{ flexDirection: 'row', justifyContent: 'flex-start' }}
-          >
+          <Toolbar style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <IconButton
               edge="start"
               color="inherit"
@@ -88,10 +83,7 @@ const Nav = function Nav(props) {
                 classes={{ paper: classes.drawer }}
               >
                 <div>
-                  <IconButton
-                    onClick={handleDrawerClose}
-                    className={classes.icon}
-                  >
+                  <IconButton onClick={handleDrawerClose} className={classes.icon}>
                     <ChevronLeftIcon />
                   </IconButton>
                 </div>
@@ -164,10 +156,11 @@ const Nav = function Nav(props) {
                   right: '50px',
                   top: '0',
                   width: '10%',
-                  zIndex: '10000',
+                  zIndex: '10000'
                 }}
                 href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
                 target="_blank"
+                rel="noreferrer"
               >
                 <img
                   src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg"
@@ -188,15 +181,10 @@ const Nav = function Nav(props) {
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-end',
-          marginRight: '8rem',
+          marginRight: '8rem'
         }}
       >
-        <Button
-          component={Link}
-          to={'/'}
-          color="inherit"
-          className={classes.hophacksButton}
-        >
+        <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
           <Typography variant="h4" className={classes.title}>
             {' '}
             HopHacks{' '}
@@ -264,10 +252,11 @@ const Nav = function Nav(props) {
               right: '50px',
               top: '0',
               width: '10%',
-              zIndex: '10000',
+              zIndex: '10000'
             }}
             href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
             target="_blank"
+            rel="noreferrer"
           >
             <img
               src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg"

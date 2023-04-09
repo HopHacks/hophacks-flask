@@ -7,22 +7,20 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { motion } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 
-const config = { mass: 2, tension: 2000, friction: 200 };
-
 const useStyles = makeStyles({
   title: {
     color: '#ffffff',
     fontFamily: 'Inter',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: '375%',
+    fontSize: '375%'
   },
   contact: {
     color: '#ffffff',
     fontFamily: 'Inter',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: '100%',
+    fontSize: '100%'
   },
   minititle: {
     color: '#ffffff',
@@ -31,7 +29,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontSize: '300%',
     alignItems: 'center',
-    justifyItems: 'center',
+    justifyItems: 'center'
   },
   logos: {
     color: '#ffffff',
@@ -40,11 +38,11 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontSize: '250%',
     alignItems: 'center',
-    justifyItems: 'center',
+    justifyItems: 'center'
   },
   card: {
-    backgroundColor: '#278be2',
-  },
+    backgroundColor: '#278be2'
+  }
 });
 
 function img(url) {
@@ -54,10 +52,7 @@ function img(url) {
 function SponsorItem(props) {
   return (
     <a href={`${props.website}`}>
-      <img
-        srcSet={img(`sponsor/png/${props.imgURL}.png`)}
-        style={props.imgSytle}
-      />
+      <img srcSet={img(`sponsor/png/${props.imgURL}.png`)} style={props.imgSytle} />
     </a>
   );
 }
@@ -72,14 +67,14 @@ export default function Sponsors() {
 
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: window.innerHeight
   });
 
   useEffect(() => {
     function handleWindowResize() {
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight
       });
     }
 
@@ -90,20 +85,6 @@ export default function Sponsors() {
     };
   }, []);
 
-  const textAnimate = {
-    offscreen: { y: 0, opacity: 0 },
-    onscreen: {
-      y: 0,
-      opacity: 1,
-      duration: 3,
-      transition: {
-        type: 'spring',
-        bounce: 0.0,
-        duration: 6,
-      },
-    },
-  };
-
   const imageAnimate = {
     offscreen: { x: -50, opacity: 0 },
     onscreen: {
@@ -113,9 +94,9 @@ export default function Sponsors() {
       transition: {
         type: 'spring',
         bounce: 0.0,
-        duration: 4,
-      },
-    },
+        duration: 4
+      }
+    }
   };
 
   return (
@@ -133,13 +114,9 @@ export default function Sponsors() {
               <h4 className={classes.title} style={{ marginTop: '30%' }}>
                 Sponsors
               </h4>
-              <h5 className={classes.contact} gutterBottom>
+              <h5 className={classes.contact}>
                 Interested in sponsoring us? Email us at{' '}
-                {
-                  <a href={`mailto:hophacks.sponsors@gmail.com`}>
-                    hophacks.sponsors@gmail.com
-                  </a>
-                }
+                {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}
               </h5>
             </Grid>
             <Grid item xs={4}></Grid>
@@ -164,7 +141,7 @@ export default function Sponsors() {
                   width: windowSize.width * gold,
                   maxHeight: '100%',
                   marginTop: '5%',
-                  marginBottom: '5%',
+                  marginBottom: '5%'
                 }}
               />
               <SponsorItem
@@ -174,7 +151,7 @@ export default function Sponsors() {
                   width: windowSize.width * sable,
                   maxHeight: '100%',
                   marginTop: '5%',
-                  marginBottom: '5%',
+                  marginBottom: '5%'
                 }}
               />
             </Grid>
@@ -195,7 +172,7 @@ export default function Sponsors() {
                   width: windowSize.width * blue,
                   maxHeight: '100%',
                   marginTop: '0%',
-                  marginBottom: '5%',
+                  marginBottom: '5%'
                 }}
               />
 
@@ -206,7 +183,7 @@ export default function Sponsors() {
                   width: windowSize.width * blue,
                   maxHeight: '100%',
                   marginTop: '0%',
-                  marginBottom: '5%',
+                  marginBottom: '5%'
                 }}
               />
 
@@ -217,7 +194,7 @@ export default function Sponsors() {
                   width: windowSize.width * blue,
                   maxHeight: '100%',
                   marginTop: '0%',
-                  marginBottom: '5%',
+                  marginBottom: '5%'
                 }}
               />
 
@@ -228,7 +205,7 @@ export default function Sponsors() {
                   width: windowSize.width * blue,
                   maxHeight: '100%',
                   marginTop: '0%',
-                  marginBottom: '5%',
+                  marginBottom: '5%'
                 }}
               />
 
@@ -239,7 +216,7 @@ export default function Sponsors() {
                   width: windowSize.width * blue,
                   maxHeight: '100%',
                   marginTop: '0%',
-                  marginBottom: '5%',
+                  marginBottom: '5%'
                 }}
               />
             </Grid>
@@ -259,7 +236,7 @@ export default function Sponsors() {
                 imgSytle={{
                   width: windowSize.width * starter,
                   maxHeight: '100%',
-                  marginTop: '2%',
+                  marginTop: '2%'
                 }}
               />
               <SponsorItem
@@ -269,7 +246,7 @@ export default function Sponsors() {
                   width: windowSize.width * starter,
                   maxHeight: '100%',
                   marginTop: '0%',
-                  marginLeft: '5%',
+                  marginLeft: '5%'
                 }}
               />
             </Grid>

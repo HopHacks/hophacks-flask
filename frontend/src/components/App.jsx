@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { ParallaxProvider } from 'react-scroll-parallax';
@@ -77,14 +77,8 @@ export default function App() {
                   <Route path="/rsvp">
                     <RSVP />
                   </Route>
-                  <Route
-                    path="/reset_password/:token"
-                    component={PasswordReset}
-                  />
-                  <Route
-                    path="/confirm_email/:token"
-                    component={EmailConfirmation}
-                  />
+                  <Route path="/reset_password/:token" component={PasswordReset} />
+                  <Route path="/confirm_email/:token" component={EmailConfirmation} />
 
                   <Route path="/team">
                     <Team />

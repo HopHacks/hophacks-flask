@@ -10,11 +10,11 @@ import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles({
   margin: {
-    marginBottom: '13px',
+    marginBottom: '13px'
   },
 
   color: {
-    backgroundColor: '#d1e9ff',
+    backgroundColor: '#d1e9ff'
   },
 
   bodycolor: {},
@@ -25,17 +25,17 @@ const useStyles = makeStyles({
   // },
 
   picture: {
-    height: '300px',
+    height: '300px'
   },
 
   card: {
     marginLeft: '22.5%',
     maxWidth: '55%',
-    padding: 12,
-  },
+    padding: 12
+  }
 });
 
-export default function AnnouncementDetails(props) {
+export default function AnnouncementDetails() {
   const classes = useStyles();
   const location = useLocation();
   const announcement = location.state;
@@ -44,16 +44,12 @@ export default function AnnouncementDetails(props) {
   const time = announcement.created_time.substring(0, 10);
   const content = announcement.content;
 
-  function img(url) {
-    return process.env.PUBLIC_URL + '/images/' + url;
-  }
-
   return (
     <div
       style={{
         backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
         backgroundSize: 'cover',
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <Box py={2}>

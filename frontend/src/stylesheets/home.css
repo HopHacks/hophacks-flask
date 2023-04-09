@@ -111,8 +111,7 @@ canvas {
 
 @font-face {
   font-family: vcrOsdMono;
-  src: local('vcrOsdMono'),
-    url(./../fonts/VCR_OSD_MONO_1.001.ttf) format('truetype');
+  src: local('vcrOsdMono'), url(./../fonts/VCR_OSD_MONO_1.001.ttf) format('truetype');
 }
 
 /* TODO: These are leftoever from old site Move to inline? */
