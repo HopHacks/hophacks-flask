@@ -15,7 +15,8 @@
     "sourceType": "module",
     "requireConfigFile": false,
     "babelOptions": {
-      "presets": ["@babel/preset-react"]
+      "presets": ["@babel/preset-react"],
+      "configFile": "./babelrc"
     }
   },
   "plugins": ["react", "prettier", "typescript", "jsx", "@babel"],
