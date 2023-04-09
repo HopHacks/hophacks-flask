@@ -20,6 +20,4 @@ jobs:
           npm install -g eslint
       - name: Run ESLint
         working-directory: ./frontend
-        run: |
-          npm install @babel/preset-react --save-dev
-          eslint "src/**/*.{js,jsx,ts,tsx,md,json}" --max-warnings 0
+        run: eslint "src/**/*.{js,jsx,ts,tsx,md,json}" --max-warnings 0
