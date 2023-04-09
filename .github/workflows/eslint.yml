@@ -20,4 +20,4 @@ jobs:
           npm install -g eslint
       - name: Run ESLint
         working-directory: ./frontend
-        run: eslint ./src --ext .js,.jsx,.ts,.tsx --max-warnings 0
+        run: eslint "src/**/*.{js,jsx,ts,tsx,md,json}" --max-warnings 0

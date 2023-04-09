@@ -32,9 +32,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx,md,json}\"",
     "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx,md,json}\" --fix",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,md,json}\""
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,md,json}\""
   },
   "browserslist": {
     "production": [
