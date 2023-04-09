@@ -13,10 +13,12 @@
     },
     "ecmaVersion": 12,
     "sourceType": "module",
-    "requireConfigFile": true,
+    "requireConfigFile": false,
     "babelOptions": {
       "presets": ["@babel/preset-react"],
-      "configFile": "./babelrc"
+      "plugins": [
+        "@babel/plugin-proposal-class-properties"
+      ]
     }
   },
   "plugins": ["react", "prettier", "typescript", "jsx", "@babel"],
