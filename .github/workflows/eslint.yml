@@ -18,7 +18,8 @@ jobs:
         run: |
           npm install
           npm install -g eslint
-          npm install @babel/eslint-parser --save-dev
       - name: Run ESLint
         working-directory: ./frontend
-        run: eslint "src/**/*.{js,jsx,ts,tsx,md,json}" --max-warnings 0
+        run: |
+          npm install @babel/preset-react --save-dev
+          eslint "src/**/*.{js,jsx,ts,tsx,md,json}" --max-warnings 0
