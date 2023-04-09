@@ -21,7 +21,7 @@
       ]
     }
   },
-  "plugins": ["react", "prettier", "typescript", "jsx", "@babel"],
+  "plugins": ["react", "prettier", "@babel"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": ["error"],
