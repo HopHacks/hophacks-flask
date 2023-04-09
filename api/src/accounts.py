@@ -21,13 +21,21 @@ import pytz
 
 import boto3
 from werkzeug.utils import secure_filename
+# This is for alternative email service
+# import smtplib
 
 
 accounts_api = Blueprint('accounts', __name__)
+# This is for alternative email service
 # app = Flask(__name__)
 # app.config.from_json("config/config.json")
 # mail = Mail(app)
 # email_client_accounts = email_client()
+
+# SSL_HOST = app.config['SSL_HOST']
+# SSL_PORT = app.config['SSL_PORT']
+# SSL_SENDER = app.config['SSL_SENDER']
+# SSL_PWD = app.config['SSL_PASSWORD']
 
 profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
 "ethnicity", "grad", "is_jhu", "grad_month", "grad_year"]
@@ -61,6 +69,27 @@ def send_reset_email(email, hashed, base_url):
 
     return secret
 
+# This is for alternative email service
+# def send_reset_email(email, hashed, base_url):
+#     smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
+#     smtpObj.login(SSL_SENDER, SSL_PWD)
+#     eastern = pytz.timezone("America/New_York")
+#     secret = hashed.decode('utf-8') + '-' + str(pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern).timestamp())
+#     token = create_reset_token(email, secret)
+#     link = base_url + "/" + token.decode('utf-8')
+
+#     msg = Message("Reset Your Password - HopHacks.com",
+#       sender=SSL_SENDER,
+#       recipients=[email])
+
+#     msg.body = 'Hello,\nYou or someone else has requested that a new password'\
+#                'be generated for your account. If you made this request, then '\
+#                'please follow this link: ' + link
+#     msg.html = render_template('email_reset.html', link=link)
+#     smtpObj.sendmail(SSL_SENDER, email, msg.as_string())
+
+#     return secret
+
 # Sends confirmation email with JWT-Token in URL for verification, returns the secret key used
 def send_confirmation_email(email, hashed, base_url, firstName):
     eastern = pytz.timezone("America/New_York")
@@ -77,6 +106,25 @@ def send_confirmation_email(email, hashed, base_url, firstName):
     mail.send(msg)
 
     return confirm_secret
+
+# This is for alternative email service
+# def send_confirmation_email(email, hashed, base_url, firstName):
+#     smtpObj = smtplib.SMTP_SSL(SSL_HOST, SSL_PORT)
+#     smtpObj.login(SSL_SENDER, SSL_PWD)
+#     eastern = pytz.timezone("America/New_York")
+#     confirm_secret = hashed.decode('utf-8') + '-' + str(pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern).timestamp())
+#     token = create_confirm_token(email, confirm_secret)
+#     link = base_url + "/" + token.decode('utf-8')
+
+#     msg = Message("Confirm your Email - HopHacks.com",
+#       sender=SSL_SENDER,
+#       recipients=[email])
+
+#     msg.body = 'Hello,\nClick the following link to confirm your email ' + link
+#     msg.html = render_template('email_confirmation.html', link=link, first_name=firstName)
+#     smtpObj.sendmail(SSL_SENDER, email, msg.as_string())
+
+#     return confirm_secret
 
 # validate profile information
 def validate_profile(request):
