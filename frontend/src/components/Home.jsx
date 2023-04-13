@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import AboutTransition from "./home/AboutTransition";
 import Footer from "./Footer";
 import { motion, useScroll } from "framer-motion/dist/framer-motion"; // Needs to be added to requirements.txt
-
+// import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 const useStyles = makeStyles({
   logo: {
     top: "25%",
@@ -58,8 +58,10 @@ const useStyles = makeStyles({
 });
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
+  function img(url) {
+    return "https://hophacks-website.s3.amazonaws.com" + "/images/" + url;
+  }
   const classes = useStyles();
 
   function img(url) {
@@ -90,17 +92,17 @@ export default function Home() {
     };
   }, []);
 
-  const CoverAnimate = {
-    offscreen: { y: 0, opacity: 1 },
-    onscreen: {
-      y: 0,
-      opacity: 0.7,
-      transition: {
-        type: "spring",
-        bounce: 0.0,
-      },
-    },
-  };
+  // const CoverAnimate = {
+  //   offscreen: { y: 0, opacity: 1 },
+  //   onscreen: {
+  //     y: 0,
+  //     opacity: 0.7,
+  //     transition: {
+  //       type: "spring",
+  //       bounce: 0.0,
+  //     },
+  //   },
+  // };
 
   return (
     <div className={classes.gradient}>
@@ -108,21 +110,32 @@ export default function Home() {
         <LoadingAnimation />
       ) : (
         <Container fixed>
-          <motion.div
+          
+          {/* <motion.div
             class={classes.logos}
             initial={"onscreen"}
             whileInView={"offscreen"}
             variants={CoverAnimate}
             viewport={{ once: false }}
-          >
-            <Cover />
-          </motion.div>
+          ></motion.div> */}
+          {/* <Parallax >
+            <ParallaxLayer offset={0}
+            style={{
+              backgroundImage:img("2023_theme.png")
+            }}>
+              
+            </ParallaxLayer>
+          </Parallax> */}
+          {/* </Container></motion.div> */}
+          <Cover/>
           <AboutTransition />
-          <About />
-          <Schedule />
-          <Prizes />
-          <Sponsors />
-          <Faq />
+          <section id="about"><About/></section>
+          <section id="schedule"><Schedule/></section> 
+          <section id="prizes"><Prizes/></section> 
+          <section id="sponsors"><Sponsors/></section> 
+          <section id="faq"><Faq/></section> 
+          
+          
           <span STYLE="font-size:300%">&nbsp;&nbsp;</span>
           <Footer />
         </Container>
