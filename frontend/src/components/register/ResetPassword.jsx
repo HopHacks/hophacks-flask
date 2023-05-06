@@ -44,14 +44,22 @@ export default function PasswordReset(props) {
     }
 
     try {
-      // const response = await axios.post('/api/accounts/reset_password', {
-      //   reset_token: props.match.params.token,
-      //   password: password,
-      // });
-      setMessage('Password reset successfully!');
+      //TODO: need email verification
+      const response = await axios.post(
+        '/api/accounts/reset_password/request',
+        {
+          username: email,
+          reset_url:
+            window.location.protocol +
+            '//' +
+            window.location.host +
+            '/reset_password',
+        },
+      );
+      setMessage('An email has been sent (if the account exists)!');
     } catch (e) {
       setMessage(
-        'Unable to reset password. Password may have already been changed!',
+        'Error requesting password reset'
       );
     }
     setAttempted(true);
