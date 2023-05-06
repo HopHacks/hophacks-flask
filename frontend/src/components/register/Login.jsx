@@ -19,13 +19,6 @@ import { useEffect } from 'react';
 
 
 export default function Login(props) {
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            width: '100%',
-            backgroundImage: "https://hophacks-image.s3.amazonaws.com/login_background.jpg",
-        }
-    }));
-    const classes = useStyles();
 
     const isMobile = props.isMobile;
 
