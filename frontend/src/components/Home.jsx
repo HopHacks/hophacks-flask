@@ -128,8 +128,8 @@ export default function Home() {
           </Parallax> */}
           {/* </Container></motion.div> */}
           <Cover/>
-          <AboutTransition />
-          <section id="about"><About/></section>
+          {<section ><AboutTransition /> </section>}
+          <section id="about"><About style={{marginTop:"50px"}}/></section>
           <section id="schedule"><Schedule/></section> 
           <section id="prizes"><Prizes/></section> 
           <section id="sponsors"><Sponsors/></section> 

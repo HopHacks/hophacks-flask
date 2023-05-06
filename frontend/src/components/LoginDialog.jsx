@@ -19,7 +19,7 @@ function Login(props) {
 
     title: {
       fontFamily: "Inter",
-      color: "white"
+      color: "#B4E3F7"
     },
 
     closeButton: {
@@ -101,7 +101,7 @@ function Login(props) {
       open={loginDialogOpen}
       onClose={handleLoginClose}
       PaperProps={{ classes: { root: classes.dialogBox } }}>
-      <DialogTitle id="form-dialog-title" > <Typography variant="h5" className={classes.title}>  LOGIN </Typography><IconButton aria-label="close" className={classes.closeButton} onClick={handleLoginClose}> <CloseIcon />
+      <DialogTitle id="form-dialog-title" > <Typography variant="h5" className={classes.title}> Register </Typography><IconButton aria-label="close" className={classes.closeButton} onClick={handleLoginClose}> <CloseIcon />
       </IconButton>
       </DialogTitle>
       <DialogActions>
@@ -146,7 +146,7 @@ function Login(props) {
     return(
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
-        <Typography variant="h5" className={classes.title}> Login </Typography>
+        <Typography variant="h5" className={classes.title}> Register </Typography>
       </Button>
       {LoginDialog}
     </>);
@@ -155,7 +155,7 @@ function Login(props) {
   return (
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
-        <Typography variant="h5" className={classes.title}> Login </Typography>
+        <Typography variant="h5" className={classes.title}> Register </Typography>
       </Button>
       {LoginDialog}
     </>

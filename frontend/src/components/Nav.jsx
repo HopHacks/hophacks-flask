@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
+
 import { useHistory } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -24,8 +26,11 @@ const useStyles = makeStyles({
   title: {
     fontFamily: "Inter",
     flexGrow: 1,
-    textAlign: 'center',
-    color: 'white'
+    //textAlign: 'center',
+    color: '#B4E3F7',
+    marginLeft: 10,
+    marginRight: 10,
+    
   },
 
 
@@ -34,9 +39,6 @@ const useStyles = makeStyles({
     marginRight: 20,
   },
 
-  otherButton: {
-    marginLeft: "auto",
-  },
 
   drawer: {
     background: "#141230",
@@ -45,6 +47,20 @@ const useStyles = makeStyles({
 
   icon: {
     color: "white"
+  },
+
+  textButton:{
+    marginLeft: 10,
+  },
+
+  birdButton:
+  {
+      marginRight:'auto'
+  },
+
+  birdIcon: {
+    width: "5vh",
+    height:"5vh",
   }
 
 });
@@ -64,6 +80,9 @@ const Nav = function Nav(props) {
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
   };
+  function img(url) {
+    return "https://hophacks-website.s3.amazonaws.com"+ "/images/" + url;
+  }
 
   if (isMobile) {
     return (
@@ -71,7 +90,7 @@ const Nav = function Nav(props) {
 
 
         <AppBar position="sticky">
-          <Toolbar style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+          <Toolbar style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
             <IconButton
               edge="start"
               color="inherit"
@@ -81,8 +100,9 @@ const Nav = function Nav(props) {
               <MenuIcon />
             </IconButton>
             <section>
+
               <Button component={Link} to={'/'} color="inherit">
-                <Typography variant="h5" className={classes.title}> Hophacks </Typography>
+                <img src={img("logo2022.png")} class={classes.birdIcon}/>
               </Button>
               <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} classes={{paper : classes.drawer}} >
                 <div>
@@ -92,12 +112,36 @@ const Nav = function Nav(props) {
                 </div>
                 <Divider />
 
+                
+
+                <Button onClick={() => {
+                    window.location = "/#about";
+                }} color="inherit">
+                  <Typography variant="h5" className={classes.title}> About </Typography>
+                </Button>
                 <Button onClick={() => {
                     window.location = "/";
                 }} color="inherit">
-                  <Typography variant="h5" className={classes.title}> Home </Typography>
+                  <Typography variant="h5" className={classes.title}> Schedule </Typography>
                 </Button>
 
+                <Button onClick={() => {
+                    window.location = "/";
+                }} color="inherit">
+                  <Typography variant="h5" className={classes.title}> Sponsors </Typography>
+                </Button>
+
+                <Button onClick={() => {
+                    window.location = "/";
+                }} color="inherit">
+                  <Typography variant="h5" className={classes.title}> FAQ</Typography>
+                </Button>
+
+                <Button onClick={() => {
+                    window.location = "/team";
+                }} color="inherit">
+                  <Typography variant="h5" className={classes.title}> Team </Typography>
+                </Button>
                 {/* {!props.isLoggedIn && 
                 <Button onClick={() => {
                   window.location = "/register";
@@ -105,8 +149,6 @@ const Nav = function Nav(props) {
                   <Typography variant="h5" className={classes.title}> Register </Typography>
                 </Button>
                 } */}
-
-
 
                 {!props.isLoggedIn && <Login />
                 }
@@ -125,11 +167,7 @@ const Nav = function Nav(props) {
                   </Button>
                 }
 
-                <Button onClick={() => {
-                    window.location = "/team";
-                }} color="inherit">
-                  <Typography variant="h5" className={classes.title}> Team </Typography>
-                </Button>
+                
               </Drawer>    
 
               <a id="mlh-trust-badge"
@@ -150,15 +188,30 @@ const Nav = function Nav(props) {
   }
 
   return (
-    <AppBar position="sticky">
-      <Toolbar style={{ flexDirection: 'row', justifyContent: 'flex-end', marginRight: '8rem' }}>
-        <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
-          <Typography variant="h4" className={classes.title}> HopHacks </Typography>
-        </Button>
+    <AppBar position="sticky" >
+      <Toolbar style={{ flexDirection: 'row', justifyContent: 'center', background:'#141230'}}>
+        
+      <Button component={HashLink} smooth to={'/#home'} color="inherit" className={classes.birdButton} >
+        <img src={img("logo2022.png")} className={classes.birdIcon}/>
+      </Button>
+      <section className={classes.textButton}>
+          <Button component={HashLink} smooth to={'/#about'} color="inherit" >
+            <Typography variant="h5" className={classes.title}> About </Typography>
+          </Button>
 
-        <section className={classes.otherButton}>
-          <Button component={Link} to={'/'} color="inherit">
-            <Typography variant="h5" className={classes.title}> Home </Typography>
+          <Button component={HashLink} smooth to={'/#schedule'} color="inherit" >
+            <Typography variant="h5" className={classes.title}> Schedule </Typography>
+          </Button>
+
+          <Button component={HashLink} smooth to={'/#prizes'} color="inherit" >
+            <Typography variant="h5" className={classes.title}> Prizes</Typography>
+          </Button>
+          <Button component={HashLink} smooth to={'/#sponsors'} color="inherit">
+            <Typography variant="h5" className={classes.title}> Sponsors </Typography>
+          </Button>
+
+          <Button component={HashLink} smooth to={'/#faq'} color="inherit">
+            <Typography variant="h5" className={classes.title}> FAQ </Typography>
           </Button>
 
           <Button onClick={() => {
@@ -173,9 +226,6 @@ const Nav = function Nav(props) {
             <Typography variant="h5" className={classes.title}> Register </Typography>
           </Button>
               } */}
-
-
-
           {!props.isLoggedIn && <Login />
           }
 
@@ -192,7 +242,7 @@ const Nav = function Nav(props) {
               <Typography variant="h5" className={classes.title}>Logout</Typography>
             </Button>
           }
-
+        </section>
           <a id="mlh-trust-badge"
             style={{display: "block", maxWidth: "100px", minWidth: "60px", position: "fixed", right: "50px", top: "0", width: "10%", zIndex: "10000"}}
             href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
@@ -200,7 +250,6 @@ const Nav = function Nav(props) {
           >
             <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg" alt="Major League Hacking 2023 Hackathon Season" style={{ width: "100%" }}></img>
           </a>
-        </section>
       </Toolbar>
     </AppBar>
   );

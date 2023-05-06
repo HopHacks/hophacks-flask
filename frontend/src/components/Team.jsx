@@ -33,10 +33,11 @@ export default function TeamPage() {
   const team = (
     <Grid
       container
-      spacing={4}
+      spacing={3}
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: '37.5rem' }}
+      style={{ minHeight: '30.5rem',
+    }}
     >
       <Grid item xs={0} md={1} lg={1} />
       <Grid id="register" item xs={12} align="center">

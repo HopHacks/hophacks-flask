@@ -78,6 +78,7 @@ const useStyles = makeStyles({
   },
 });
 export default function Schedule() {
+  
   function img(url) {
     return "https://hophacks-website.s3.amazonaws.com" + '/images/' + url;
   }
