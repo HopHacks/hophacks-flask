@@ -118,7 +118,19 @@ const Nav = function Nav(props) {
                 </Button>
                 } */}
 
-                {!props.isLoggedIn && <LoginDialog />}
+                {!props.isLoggedIn && 
+                  <Button
+                    onClick={() => {
+                      window.location = '/register/login';
+                    }}
+                    color="inherit"
+                  >
+                    <Typography variant="h5" className={classes.title}>
+                      {' '}
+                      Register{' '}
+                    </Typography>
+                  </Button>
+                }
 
                 {props.isLoggedIn && (
                   <Button
@@ -151,18 +163,6 @@ const Nav = function Nav(props) {
                   <Typography variant="h5" className={classes.title}>
                     {' '}
                     Team{' '}
-                  </Typography>
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    window.location = '/register/login';
-                  }}
-                  color="inherit"
-                >
-                  <Typography variant="h5" className={classes.title}>
-                    {' '}
-                    Register{' '}
                   </Typography>
                 </Button>
 
@@ -237,18 +237,6 @@ const Nav = function Nav(props) {
             </Typography>
           </Button>
 
-          <Button
-            onClick={() => {
-              window.location = '/register/login';
-            }}
-            color="inherit"
-          >
-            <Typography variant="h5" className={classes.title}>
-              {' '}
-              Register{' '}
-            </Typography>
-          </Button>
-
           {/* {!props.isLoggedIn && <Button onClick={() => {
             window.location = "/register";
           }} color="inherit">
@@ -256,7 +244,19 @@ const Nav = function Nav(props) {
           </Button>
               } */}
 
-          {!props.isLoggedIn && <LoginDialog />}
+          {!props.isLoggedIn && 
+            <Button
+              onClick={() => {
+                window.location = '/register/login';
+              }}
+              color="inherit"
+            >
+              <Typography variant="h5" className={classes.title}>
+                {' '}
+                Register{' '}
+              </Typography>
+            </Button>
+          }
 
           {props.isLoggedIn && (
             <Button

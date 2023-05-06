@@ -29,6 +29,10 @@ function Login(props) {
 
     let history = useHistory();
 
+    useEffect(() => {
+        setEmail(props.email);
+    }, [props.email]);
+
     async function handleLogin(event) {
         event.preventDefault();
         try {
@@ -201,6 +205,15 @@ function Login(props) {
             </Typography>
         </div>
     );
+    
+    // check login status
+    if (props.isLoggedIn) {
+        if (email === 'admin') {
+            history.push('/admin');
+        } else {
+            history.push('/profile');
+        }
+    }
         
     if (isMobile) {
         return (

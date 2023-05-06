@@ -742,13 +742,7 @@ const Profile = function Profile(props) {
   );
 
   return (
-    <div
-      style={{
-        backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
-        backgroundSize: 'cover',
-        height: '100%',
-      }}
-    >
+    <div>
       <div>{appStatus}</div>
       <div>{resume}</div>
       <div>{vaccination}</div>
