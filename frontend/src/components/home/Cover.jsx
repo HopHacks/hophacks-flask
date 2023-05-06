@@ -114,7 +114,7 @@ export default function Cover() {
               left: "0%",
               width: "100%",
             }}
-            alt="hello"
+            alt="image_could_not_load"
           />
           <img
             src={img("demo_stage.png")}
@@ -125,7 +125,7 @@ export default function Cover() {
               left: "0%",
               width: "100%",
             }}
-            alt="hello"
+            alt="image_could_not_load"
           />
           <img
             src={img("demo_crowds.png")}
@@ -136,7 +136,7 @@ export default function Cover() {
               left: "0%",
               width: "100%",
             }}
-            alt="hello"
+            alt="image_could_not_load"
           />
           <img
             src={img("demo_foreground.png")}
@@ -146,7 +146,7 @@ export default function Cover() {
               left: "0%",
               width: "100%",
             }}
-            alt="hello"
+            alt="image_could_not_load"
           />
           
           <div

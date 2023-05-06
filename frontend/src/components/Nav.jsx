@@ -33,7 +33,6 @@ const useStyles = makeStyles({
     
   },
 
-
   hophacksButton: {
     marginLeft: 20,
     marginRight: 20,
