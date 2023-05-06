@@ -12,17 +12,18 @@ import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
+import { withAuthProps } from '../../util/auth';
 
 import '../../stylesheets/register.css';
 import { useEffect } from 'react';
 
 
-
-export default function Login(props) {
+function Login(props) {
 
     const isMobile = props.isMobile;
 
-    const [email, setEmail] = useState('');
+    /* State for handling login */
+    const [email, setEmail] = useState(props.email);
     const [password, setPassword] = useState('');
     const [attempted, setAttempted] = useState(false);
 
@@ -223,3 +224,5 @@ export default function Login(props) {
         </div>
     );
 }
+
+export default withAuthProps(Login);
