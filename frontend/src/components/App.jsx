@@ -30,10 +30,10 @@ import Login from './register/Login';
 import SignUp from './register/signup/SignUp';
 import ResetPassword from './register/ResetPassword';
 
-import { useMediaQuery } from 'usehooks-ts'
+import { useMediaQuery } from 'usehooks-ts';
 
 export default function App() {
-  const isMobile = useMediaQuery("(max-width: 48em)");
+  const isMobile = useMediaQuery('(max-width: 48em)');
 
   return (
     <>
@@ -97,11 +97,11 @@ export default function App() {
                     <Team />
                   </Route>
 
-                  <Route path="/register/login" >
+                  <Route path="/register/login">
                     <Login isMobile={isMobile} />
                   </Route>
 
-                  <Route path="/register/signup" >
+                  <Route path="/register/signup">
                     <SignUp isMobile={isMobile} />
                   </Route>
 

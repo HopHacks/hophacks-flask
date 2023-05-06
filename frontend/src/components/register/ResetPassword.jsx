@@ -17,7 +17,6 @@ import '../../stylesheets/register.css';
 import { useEffect } from 'react';
 
 export default function PasswordReset(props) {
-
   const isMobile = props.isMobile;
 
   const [email, setEmail] = useState('');
@@ -60,198 +59,191 @@ export default function PasswordReset(props) {
 
   const findPwdCardDesktop = (
     <Card class="card">
-        <CardContent>
-        <Typography class="card-title">
-            Reset Password
-        </Typography>
+      <CardContent>
+        <Typography class="card-title">Reset Password</Typography>
         <TextField
-            // TODO: make the border white
-            required
-            variant="standard"
-            label="Email Address"
-            style={{ width:"80%" }}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}                InputLabelProps={{
-                style: { color: '#ffffff' },
-            }}
-            InputProps={{
-                style: { color: '#ffffff' },
-            }}
-            />
-            <TextField
-                // TODO: make the border white
-                type={'password'}
-                required
-                variant="standard"
-                label="New Password"
-                value={password}
-                style={{width:"80%", marginTop: "15%"}}
-                onChange={(e) => setPassword(e.target.value)}
-                InputLabelProps={{
-                style: { color: '#ffffff' },
-                }}
-                InputProps={{
-                style: { color: '#ffffff' },
-                }}
-            />
-
-            <TextField
-                // TODO: make the border white
-                type={'password'}
-                required
-                variant="standard"
-                label="Confirm New Password"
-                value={confirmPassword}
-                style={{width:"80%", marginTop: "15%"}}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                InputLabelProps={{
-                style: { color: '#ffffff' },
-                }}
-                InputProps={{
-                style: { color: '#ffffff' },
-                }}
-            />
-
-            <Button
-                class="card-button"
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={() => {
-                    
-                }}
-            >
-                Reset Password
-            </Button>
-            <Link
-                to={'/register/login'}
-            > 
-                <Typography class="card-text"> Back to Sign in?  </Typography>
-            </Link>
-        </CardContent>
-    </Card>
-    )
-
-const findPwdCardMobile = (
-<Card class="card">
-    <CardContent style={{marginTop:"-10%"}}>
-    <Typography class="card-title" style={{fontSize: "2rem"}}>
-        Reset Password
-    </Typography>
-    <TextField
-        // TODO: make the border white
-        required
-        variant="standard"
-        label="Email Address"
-        style={{ width:"80%" }}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}                InputLabelProps={{
+          // TODO: make the border white
+          required
+          variant="standard"
+          label="Email Address"
+          style={{ width: '80%' }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          InputLabelProps={{
             style: { color: '#ffffff' },
-        }}
-        InputProps={{
+          }}
+          InputProps={{
             style: { color: '#ffffff' },
-        }}
+          }}
         />
         <TextField
-            // TODO: make the border white
-            type={'password'}
-            required
-            variant="standard"
-            label="New Password"
-            value={password}
-            style={{width:"80%", marginTop: "15%"}}
-            onChange={(e) => setPassword(e.target.value)}
-            InputLabelProps={{
+          // TODO: make the border white
+          type={'password'}
+          required
+          variant="standard"
+          label="New Password"
+          value={password}
+          style={{ width: '80%', marginTop: '15%' }}
+          onChange={(e) => setPassword(e.target.value)}
+          InputLabelProps={{
             style: { color: '#ffffff' },
-            }}
-            InputProps={{
+          }}
+          InputProps={{
             style: { color: '#ffffff' },
-            }}
+          }}
         />
 
         <TextField
-            // TODO: make the border white
-            type={'password'}
-            required
-            variant="standard"
-            label="Confirm New Password"
-            value={confirmPassword}
-            style={{width:"80%", marginTop: "15%"}}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            InputLabelProps={{
+          // TODO: make the border white
+          type={'password'}
+          required
+          variant="standard"
+          label="Confirm New Password"
+          value={confirmPassword}
+          style={{ width: '80%', marginTop: '15%' }}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          InputLabelProps={{
             style: { color: '#ffffff' },
-            }}
-            InputProps={{
+          }}
+          InputProps={{
             style: { color: '#ffffff' },
-            }}
+          }}
         />
 
         <Button
-            class="card-button"
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{fontSize: "1.2rem", height: "3rem", marginTop: "15%"}}
-            onClick={() => {
-            }}
+          class="card-button"
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={() => {}}
         >
-            Reset Password
+          Reset Password
         </Button>
-    </CardContent>
-</Card>
-)
+        <Link to={'/register/login'}>
+          <Typography class="card-text"> Back to Sign in? </Typography>
+        </Link>
+      </CardContent>
+    </Card>
+  );
 
-const mottoDesktop = (
-    <div style={{marginTop:"30%", marginRight:"-20%"}}>
-        <div>
-            <Typography class="motto-text">
-                Hack Your Passion Into Reality
-            </Typography>
-            <Typography class="motto-text" align='left'>
-                HopHacks
-            </Typography>
-        </div>
-        <div style={{marginTop:"15%"}}>
-            <Typography class="motto-subtext">
-                Innovate | Collaborate | Dominate
-            </Typography>
-        </div>
-    </div>
-);
+  const findPwdCardMobile = (
+    <Card class="card">
+      <CardContent style={{ marginTop: '-10%' }}>
+        <Typography class="card-title" style={{ fontSize: '2rem' }}>
+          Reset Password
+        </Typography>
+        <TextField
+          // TODO: make the border white
+          required
+          variant="standard"
+          label="Email Address"
+          style={{ width: '80%' }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          InputLabelProps={{
+            style: { color: '#ffffff' },
+          }}
+          InputProps={{
+            style: { color: '#ffffff' },
+          }}
+        />
+        <TextField
+          // TODO: make the border white
+          type={'password'}
+          required
+          variant="standard"
+          label="New Password"
+          value={password}
+          style={{ width: '80%', marginTop: '15%' }}
+          onChange={(e) => setPassword(e.target.value)}
+          InputLabelProps={{
+            style: { color: '#ffffff' },
+          }}
+          InputProps={{
+            style: { color: '#ffffff' },
+          }}
+        />
 
-const mottoMobile = (
-    <div style={{marginTop:"10%"}}>
-        <Typography class="mobile-header">
-            HOPHACKS
+        <TextField
+          // TODO: make the border white
+          type={'password'}
+          required
+          variant="standard"
+          label="Confirm New Password"
+          value={confirmPassword}
+          style={{ width: '80%', marginTop: '15%' }}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          InputLabelProps={{
+            style: { color: '#ffffff' },
+          }}
+          InputProps={{
+            style: { color: '#ffffff' },
+          }}
+        />
+
+        <Button
+          class="card-button"
+          variant="contained"
+          color="primary"
+          size="large"
+          style={{ fontSize: '1.2rem', height: '3rem', marginTop: '15%' }}
+          onClick={() => {}}
+        >
+          Reset Password
+        </Button>
+      </CardContent>
+    </Card>
+  );
+
+  const mottoDesktop = (
+    <div style={{ marginTop: '30%', marginRight: '-20%' }}>
+      <div>
+        <Typography class="motto-text">
+          Hack Your Passion Into Reality
         </Typography>
-        <Typography class="mobile-motto-text" style={{marginTop:"15%"}}>
-            Hack Your Passion Into Reality
+        <Typography class="motto-text" align="left">
+          HopHacks
         </Typography>
-        <Typography class="mobile-motto-subtext" style={{marginTop:"-3%"}}>
-            Innovate | Collaborate | Dominate
+      </div>
+      <div style={{ marginTop: '15%' }}>
+        <Typography class="motto-subtext">
+          Innovate | Collaborate | Dominate
         </Typography>
+      </div>
     </div>
-);
-    
-if (isMobile) {
+  );
+
+  const mottoMobile = (
+    <div style={{ marginTop: '10%' }}>
+      <Typography class="mobile-header">HOPHACKS</Typography>
+      <Typography class="mobile-motto-text" style={{ marginTop: '15%' }}>
+        Hack Your Passion Into Reality
+      </Typography>
+      <Typography class="mobile-motto-subtext" style={{ marginTop: '-3%' }}>
+        Innovate | Collaborate | Dominate
+      </Typography>
+    </div>
+  );
+
+  if (isMobile) {
     return (
-        <div class="root">
-            {mottoMobile}
-            {findPwdCardMobile}
-        </div>
+      <div class="root">
+        {mottoMobile}
+        {findPwdCardMobile}
+      </div>
     );
-}
+  }
 
-return (
+  return (
     <div class="root">
-        <Grid container >
-            <Grid item xs={5}>
-                {findPwdCardDesktop}
-            </Grid>
-            <Grid item xs={5}>
-                {mottoDesktop}
-            </Grid>
-        </Grid>            
+      <Grid container>
+        <Grid item xs={5}>
+          {findPwdCardDesktop}
+        </Grid>
+        <Grid item xs={5}>
+          {mottoDesktop}
+        </Grid>
+      </Grid>
     </div>
-);
+  );
 }

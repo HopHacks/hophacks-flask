@@ -6,7 +6,7 @@ const phoneInput = (props, ref) => {
   return (
     <TextField
       {...props}
-      style={{ width:"100%" }}
+      style={{ width: '100%' }}
       inputRef={ref}
       fullWidth
       required

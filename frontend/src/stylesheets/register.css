@@ -12,7 +12,7 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 100% 100%;
-  background-image:url("https://hophacks-image.s3.amazonaws.com/login_background.jpg");
+  background-image: url('https://hophacks-image.s3.amazonaws.com/login_background.jpg');
   background-attachment: fixed;
 }
 
@@ -23,7 +23,7 @@ body {
   background-position: center;
 } */
 
-.card{
+.card {
   margin-top: 10%;
   margin-right: auto;
   margin-left: auto;
@@ -47,7 +47,7 @@ body {
   font-style: italic;
   font-size: 2.5rem;
   color: #fff;
-  margin-top: "10%";
+  margin-top: '10%';
   margin-right: auto;
   margin-left: auto;
 }

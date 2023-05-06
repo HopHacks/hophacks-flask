@@ -118,7 +118,7 @@ const Nav = function Nav(props) {
                 </Button>
                 } */}
 
-                {!props.isLoggedIn && 
+                {!props.isLoggedIn && (
                   <Button
                     onClick={() => {
                       window.location = '/register/login';
@@ -130,7 +130,7 @@ const Nav = function Nav(props) {
                       Register{' '}
                     </Typography>
                   </Button>
-                }
+                )}
 
                 {props.isLoggedIn && (
                   <Button
@@ -165,7 +165,6 @@ const Nav = function Nav(props) {
                     Team{' '}
                   </Typography>
                 </Button>
-
               </Drawer>
 
               <a
@@ -244,7 +243,7 @@ const Nav = function Nav(props) {
           </Button>
               } */}
 
-          {!props.isLoggedIn && 
+          {!props.isLoggedIn && (
             <Button
               onClick={() => {
                 window.location = '/register/login';
@@ -256,7 +255,7 @@ const Nav = function Nav(props) {
                 Register{' '}
               </Typography>
             </Button>
-          }
+          )}
 
           {props.isLoggedIn && (
             <Button

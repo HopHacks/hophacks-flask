@@ -40,7 +40,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
   return (
     <Autocomplete
       id="schools"
-      style={{ width: "100%"}}
+      style={{ width: '100%' }}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -64,7 +64,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
           value={school}
           InputProps={{
             ...params.InputProps,
-            style: { color: '#ffffff'},
+            style: { color: '#ffffff' },
             endAdornment: (
               <React.Fragment>
                 {loading ? (
