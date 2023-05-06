@@ -108,31 +108,31 @@ export default function AboutTransition() {
       <Box className={classes.color}>
         {/* <div className={classes.moveDown}> */}
         <CardMedia component="img" className={classes.Media} image={img('About_Background.png')} />
-        <motion.Typography
-          className={classes.font1}
-          style={{
-            x: xLeft
-          }}
-        >
-          About
-        </motion.Typography>
-        <motion.Typography
-          className={classes.font2}
-          style={{
-            x: xRight
-          }}
-        >
-          About
-        </motion.Typography>
-        <motion.Typography
-          className={classes.font3}
-          style={{
-            x: xLeft2
-          }}
-        >
-          About
-        </motion.Typography>
-        {/* </div> */}
+        {/*<motion.Typography*/}
+        {/*  className={classes.font1}*/}
+        {/*  style={{*/}
+        {/*    x: xLeft*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  About*/}
+        {/*</motion.Typography>*/}
+        {/*<motion.Typography*/}
+        {/*  className={classes.font2}*/}
+        {/*  style={{*/}
+        {/*    x: xRight*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  About*/}
+        {/*</motion.Typography>*/}
+        {/*<motion.Typography*/}
+        {/*  className={classes.font3}*/}
+        {/*  style={{*/}
+        {/*    x: xLeft2*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  About*/}
+        {/*</motion.Typography>*/}
+        {/*/!* </div> *!/*/}
       </Box>
     </div>
   );

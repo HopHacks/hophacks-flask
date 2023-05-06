@@ -9,7 +9,7 @@ import Faq from './home/Faq';
 import Cover from './home/Cover';
 import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
-import AboutTransition from './home/AboutTransition';
+// import AboutTransition from './home/AboutTransition';
 import Footer from './Footer';
 import { motion } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
     }
   },
   gradient: {
-    backgroundImage: 'linear-gradient(#15ABFB, #f179c8)'
+    backgroundImage: 'linear-gradient(#172759, #172759)'
   },
 
   blank: {
@@ -112,13 +112,13 @@ export default function Home() {
           >
             <Cover />
           </motion.div>
-          <AboutTransition />
+          {/*<AboutTransition />*/}
           <About />
           <Schedule />
           <Prizes />
           <Sponsors />
           <Faq />
-          <span style="font-size:300%">&nbsp;&nbsp;</span>
+          {/*<span style="font-size:300%">&nbsp;&nbsp;</span>*/}
           <Footer />
         </Container>
       )}
