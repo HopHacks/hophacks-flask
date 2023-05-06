@@ -15,7 +15,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { withAuthProps } from '../util/auth';
-import Login from './LoginDialog';
+import LoginDialog from './LoginDialog';
+import Login from './register/Login';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -117,7 +118,7 @@ const Nav = function Nav(props) {
                 </Button>
                 } */}
 
-                {!props.isLoggedIn && <Login />}
+                {!props.isLoggedIn && <LoginDialog />}
 
                 {props.isLoggedIn && (
                   <Button
@@ -152,6 +153,19 @@ const Nav = function Nav(props) {
                     Team{' '}
                   </Typography>
                 </Button>
+
+                <Button
+                  onClick={() => {
+                    window.location = '/register/login';
+                  }}
+                  color="inherit"
+                >
+                  <Typography variant="h5" className={classes.title}>
+                    {' '}
+                    Register{' '}
+                  </Typography>
+                </Button>
+
               </Drawer>
 
               <a
@@ -223,6 +237,18 @@ const Nav = function Nav(props) {
             </Typography>
           </Button>
 
+          <Button
+            onClick={() => {
+              window.location = '/register/login';
+            }}
+            color="inherit"
+          >
+            <Typography variant="h5" className={classes.title}>
+              {' '}
+              Register{' '}
+            </Typography>
+          </Button>
+
           {/* {!props.isLoggedIn && <Button onClick={() => {
             window.location = "/register";
           }} color="inherit">
@@ -230,7 +256,7 @@ const Nav = function Nav(props) {
           </Button>
               } */}
 
-          {!props.isLoggedIn && <Login />}
+          {!props.isLoggedIn && <LoginDialog />}
 
           {props.isLoggedIn && (
             <Button
