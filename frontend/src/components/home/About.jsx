@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { motion, useAnimation } from 'framer-motion/dist/framer-motion';
+import { useAnimation } from 'framer-motion/dist/framer-motion';
 import { useInView } from 'react-intersection-observer';
-import styled from 'styled-components';
-import {Typography} from "@material-ui/core";
+// import styled from 'styled-components';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
   margin: {
@@ -91,13 +91,13 @@ const useStyles = makeStyles({
   }
 });
 
-const Title = styled.h2`
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: Inter;
-  color: rgba(255, 255, 255, 0.8);
-  text-align: center;
-`;
+// const Title = styled.h2`
+//   font-size: 1rem;
+//   font-weight: 600;
+//   font-family: Inter;
+//   color: rgba(255, 255, 255, 0.8);
+//   text-align: center;
+// `;
 
 function img(url) {
   return process.env.PUBLIC_URL + '/images/' + url;
@@ -117,24 +117,24 @@ function AboutLogo(props) {
   );
 }
 
-const Word = styled(motion.span)`
-  display: inline-block;
-  margin-right: 0.25em;
-  white-space: nowrap;
-`;
+// const Word = styled(motion.span)`
+//   display: inline-block;
+//   margin-right: 0.25em;
+//   white-space: nowrap;
+// `;
 
-const Character = styled(motion.span)`
-  display: inline-block;
-  margin-right: -0.05em;
-`;
+// const Character = styled(motion.span)`
+//   display: inline-block;
+//   margin-right: -0.05em;
+// `;
 
 export default function About() {
   const classes = useStyles();
 
-  const introText =
-    'HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!';
+  // const introText =
+  // 'HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!';
   const ctrls = useAnimation();
-  const { ref, inView } = useInView({
+  const { inView } = useInView({
     threshold: 0.6,
     triggerOnce: false
   });
@@ -148,10 +148,10 @@ export default function About() {
     }
   }, [ctrls, inView]);
 
-  const wordAnimation = {
-    hidden: {},
-    visible: {}
-  };
+  // const wordAnimation = {
+  //   hidden: {},
+  //   visible: {}
+  // };
 
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -196,20 +196,26 @@ export default function About() {
         >
           <Grid item xs={12}>
             <AboutLogo
-                imgURL="hoplogo"
-                imgSytle={{
-                  maxHeight: '20%',
-                  maxWidth: '20%'
-                }}
+              imgURL="hoplogo"
+              imgSytle={{
+                maxHeight: '20%',
+                maxWidth: '20%'
+              }}
             />
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h3" style={{ color: 'white', marginBottom: '20px'}}>About</Typography>
+            <Typography variant="h3" style={{ color: 'white', marginBottom: '20px' }}>
+              About
+            </Typography>
             <Typography variant="body1" paragraph style={{ color: 'white' }}>
-              HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications.
-              <br/>
-              <br/>
-              Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!
+              HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that
+              encourages engineers, designers, and entrepreneurs to explore new ideas and create new
+              applications.
+              <br />
+              <br />
+              Teams of up to 4 university students work on projects from scratch. At the end of the
+              hackathon, teams present their projects to judges and compete for prizes ($1024, $512,
+              $256 for top 3 winners and sponsor specific prizes)!
             </Typography>
             {/*<Title aria-label={introText} role="heading">*/}
             {/*  {introText.split(' ').map((word, index) => {*/}
@@ -239,8 +245,7 @@ export default function About() {
               imgURL="AkhilDeo"
               imgSytle={{
                 maxHeight: '85%',
-                maxWidth: '85%',
-
+                maxWidth: '85%'
               }}
             />
           </Grid>

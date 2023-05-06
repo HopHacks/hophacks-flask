@@ -62,7 +62,7 @@ export default function Sponsors() {
 
   const gold = 0.325;
   const sable = 0.3;
-  const blue = 0.25;
+  // const blue = 0.25;
   const starter = 0.2;
 
   const [windowSize, setWindowSize] = useState({
@@ -173,22 +173,12 @@ export default function Sponsors() {
                     variants={imageAnimate}
                   >
                     <Grid container spacing={2} justify="center" alignItems="center">
-                      <Grid item xs={6}>
+                      <Grid item xs={6}></Grid>
+                      <Grid item xs={6}></Grid>
+                      <Grid item xs={6}></Grid>
+                      <Grid item xs={6}></Grid>
 
-                      </Grid>
-                      <Grid item xs={6}>
-
-                      </Grid>
-                      <Grid item xs={6}>
-
-                      </Grid>
-                      <Grid item xs={6}>
-
-                      </Grid>
-
-                      <Grid item xs={6}>
-
-                      </Grid>
+                      <Grid item xs={6}></Grid>
                     </Grid>
                   </motion.div>
 
