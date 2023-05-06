@@ -40,7 +40,8 @@ export default function SignUpAccount(props) {
                 label="Email Address"
                 style={{ width:"80%" }}
                 value={username}
-                onChange={(e) => setUsername(e.target.value.toLowerCase())}                InputLabelProps={{
+                onChange={(e) => setUsername(e.target.value.toLowerCase())}                
+                InputLabelProps={{
                     style: { color: '#ffffff' },
                 }}
                 InputProps={{

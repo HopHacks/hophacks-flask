@@ -63,7 +63,7 @@ export default function SignUp(props) {
     const ACCOUNT = 0;
     const PROFILE = 1;
     const CONFIRMATION = 2;
-    const [activePage, setActivePage] = useState(ACCOUNT);
+    const [activePage, setActivePage] = useState(PROFILE);
 
     // functions for account page
     async function handleAccountNext() {
@@ -233,139 +233,6 @@ export default function SignUp(props) {
         setCommunicationChecked(event.target.checked);
     };
 
-    function openCodeOfConduct() {
-        window.open('https://static.mlh.io/docs/mlh-code-of-conduct.pdf', '_blank');
-    }
-    function openPrivacy() {
-        window.open('https://mlh.io/privacy', '_blank');
-    }
-    function openTerms() {
-        window.open('https://mlh.io/terms', '_blank');
-    }
-
-    const resume = (
-        <FormGroup style={{ marginTop: 20, display: 'initial' }}>
-          <FormControlLabel
-            style={{ display: 'table' }}
-            control={
-              <div style={{ display: 'table-cell' }}>
-                <Checkbox
-                  checked={resumeChecked}
-                  onChange={handleResumeCheckBox}
-                  inputProps={{ 'aria-label': 'primary checkbox' }}
-                  color="primary"
-                  size="small"
-                />
-              </div>
-            }
-            label={
-              <div style={{ fontSize: 15 }}>
-                <span>
-                  * I authorize HopHacks to send my resume to our event sponsors for
-                  recruiting purposes.
-                </span>
-    
-                <div>
-                  <input
-                    accept=".pdf, .doc, .docx"
-                    type="file"
-                    name="file"
-                    onChange={handleResumeFileChange}
-                  />
-                </div>
-              </div>
-            }
-          />
-        </FormGroup>
-    );
-    
-    const codeOfConduct = (
-    <FormGroup style={{ marginTop: 20, display: 'initial' }}>
-        <FormControlLabel
-        style={{ display: 'table' }}
-        control={
-            <div style={{ display: 'table-cell' }}>
-            <Checkbox
-                checked={conductCodeChecked}
-                onChange={handleConductCheckBox}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-                color="primary"
-                size="small"
-            />
-            </div>
-        }
-        label={
-            <div style={{ fontSize: 15 }}>
-            <span>* I have read and understand the </span>
-            <Link onClick={openCodeOfConduct}>MLH Code of Conduct</Link>
-            <span>.</span>
-            </div>
-        }
-        />
-    </FormGroup>
-    );
-
-    const eventLogistics = (
-    <FormGroup style={{ marginTop: -10, display: 'initial' }}>
-        <FormControlLabel
-        style={{ display: 'table' }}
-        control={
-            <div style={{ display: 'table-cell' }}>
-            <Checkbox
-                checked={eventLogisticsChecked}
-                onChange={handleLogisticsCheckBox}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-                color="primary"
-                size="small"
-            />
-            </div>
-        }
-        label={
-            <div style={{ fontSize: 15 }}>
-            <span>
-                * I authorize you to share my application/registration information
-                with Major League Hacking for event administration, ranking, and
-                MLH administration in-line with the{' '}
-            </span>
-            <Link onClick={openPrivacy}>MLH Privacy Policy</Link>
-            <span>. I further agree to the </span>
-            <Link onClick={openTerms}>MLH Terms and Conditions</Link>
-            <span>.</span>
-            </div>
-        }
-        />
-    </FormGroup>
-    );
-    
-    const communication = (
-    <FormGroup style={{ marginTop: -10, marginBottom: 25, display: 'initial' }}>
-        <FormControlLabel
-        style={{ display: 'table' }}
-        control={
-            <div style={{ display: 'table-cell' }}>
-            <Checkbox
-                checked={communicationChecked}
-                onChange={handleCommunicationCheckBox}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-                color="primary"
-                size="small"
-            />
-            </div>
-        }
-        label={
-            <div style={{ fontSize: 15 }}>
-            <span>
-                {' '}
-                (Optional) I authorize MLH to send me pre- and post-event
-                informational emails, which contain free credit and opportunities
-                from their partners.{' '}
-            </span>
-            </div>
-        }
-        />
-    </FormGroup>
-    );
-
     function selectPage() {
         if (activePage === ACCOUNT) {
             console.log("account page");
@@ -401,14 +268,18 @@ export default function SignUp(props) {
                     setGrad={setGrad}
                     setGrad_month={setGrad_month}
                     setGrad_year={setGrad_year}
-                    resume={resume}
-                    codeOfConduct={codeOfConduct}
-                    eventLogistics={eventLogistics}
-                    communication={communication}
+                    resumeChecked={resumeChecked}
+                    conductCodeChecked={conductCodeChecked}
+                    eventLogisticsChecked={eventLogisticsChecked}
+                    communicationChecked={communicationChecked}
                     profileSubmitMsg={profileSubmitMsg}
                     enabledButton={enabledButton}
-                    setEnabledButton={setEnabledButton}
                     handleProfileNext={handleProfileNext}
+                    handleResumeFileChange={handleResumeFileChange}
+                    handleResumeCheckBox={handleResumeCheckBox}
+                    handleConductCheckBox={handleConductCheckBox}
+                    handleLogisticsCheckBox={handleLogisticsCheckBox}
+                    handleCommunicationCheckBox={handleCommunicationCheckBox}
                 />
             );
         } else {
