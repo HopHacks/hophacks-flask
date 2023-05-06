@@ -10,7 +10,7 @@ from util.decorators import check_admin
 from flask import Blueprint, request, Response, current_app, render_template, jsonify, Flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_mail import Message, Mail
-from registrations import send_apply_confirm
+from registrations import send_apply_confirm, email_client
 
 import bcrypt
 import jwt
@@ -27,10 +27,10 @@ from werkzeug.utils import secure_filename
 
 accounts_api = Blueprint('accounts', __name__)
 # This is for alternative email service
-# app = Flask(__name__)
-# app.config.from_json("config/config.json")
-# mail = Mail(app)
-# email_client_accounts = email_client()
+app = Flask(__name__)
+app.config.from_json("config/config.json")
+mail = Mail(app)
+email_client_accounts = email_client()
 
 # SSL_HOST = app.config['SSL_HOST']
 # SSL_PORT = app.config['SSL_PORT']
@@ -58,7 +58,7 @@ def send_reset_email(email, hashed, base_url):
     link = base_url + "/" + token.decode('utf-8')
 
     msg = Message("Reset Your Password - HopHacks.com",
-      sender="team@hophacks.com",
+      sender="hophacks.team@gmail.com",
       recipients=[email])
 
     msg.body = 'Hello,\nYou or someone else has requested that a new password'\
@@ -98,7 +98,7 @@ def send_confirmation_email(email, hashed, base_url, firstName):
     link = base_url + "/" + token.decode('utf-8')
 
     msg = Message("Confirm your Email - HopHacks.com",
-      sender="team@hophacks.com",
+      sender="hophacks.team@gmail.com",
       recipients=[email])
 
     msg.body = 'Hello,\nClick the following link to confirm your email ' + link

@@ -11,26 +11,26 @@ import datetime
 
 registrations_api = Blueprint('registrations', __name__)
 
-# app = Flask(__name__)
-# app.config.from_json("config/config.json")
-# mail = Mail(app)
+app = Flask(__name__)
+app.config.from_json("config/config.json")
+mail = Mail(app)
 
 
-# class email_client():
-#     def __init__(self):
-#         self.mail_port = None
-#         self.mail_pwd = None
+class email_client():
+    def __init__(self):
+        self.mail_port = None
+        self.mail_pwd = None
 
-#     def init_app(self, app):
-#         if app.config['MAIL_SUPPRESS_SEND']:
-#             self.mail_port = None
-#             self.mail_pwd = None
-#         else:
-#             self.mail_port = app.config['MAIL_PORT']
-#             self.mail_pwd = app.config['MAIL_PASSWORD']
+    def init_app(self, app):
+        if app.config['MAIL_SUPPRESS_SEND']:
+            self.mail_port = None
+            self.mail_pwd = None
+        else:
+            self.mail_port = app.config['MAIL_PORT']
+            self.mail_pwd = app.config['MAIL_PASSWORD']
 
 
-# email_client_registrations = email_client()
+email_client_registrations = email_client()
 
 # This is for alternative email service
 # SSL_HOST = app.config['SSL_HOST']
@@ -81,17 +81,13 @@ def send_rsvp_info(users):
 
 
 def send_acceptances(users):
-     with mail.connect() as conn:
-        for user in users:
-            email = user["username"]
-            subject = "Acceptance Letter - Hophacks.com"
-            msg = Message(recipients=[email],
-                          sender="team@hophacks.com",
-                          subject=subject)
-
-            msg.body = 'Congrats on being accepted to HopHacks!'
-            msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
-            conn.send(msg)
+    for user in users:
+        email = user["username"]
+        subject = "Acceptance Letter - Hophacks.com"
+        msg = Message(recipients=[email], sender="hophacks.team@gmail.com", subject=subject)
+        msg.body = 'Congrats on being accepted to HopHacks!'
+        msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
+        mail.send(msg)
 
 # This is for alternative email service
 # def send_acceptances(users):
@@ -111,7 +107,7 @@ def send_acceptances(users):
 
 def send_apply_confirm(email, name):
     msg = Message("Received Application - HopHacks.com",
-    sender="team@hophacks.com",
+    sender="hophacks.team@gmail.com",
     recipients=[email])
 
     msg.body = 'Thanks for applying to hophacks!'
