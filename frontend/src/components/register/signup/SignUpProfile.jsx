@@ -313,9 +313,9 @@ export default function SignUpProfile(props) {
                     <PhoneInput
                       international
                       withCountryCallingCode
-                      defaultCountry="US"
                       onChange={setPhone_number}
                       inputComponent={PhoneNumber}
+                      value={phone_number}
                     />
                   </Grid>
                   <Grid item xs={isMobile? 12:6}>
@@ -332,7 +332,6 @@ export default function SignUpProfile(props) {
                   </Grid>
                   <Grid item xs={isMobile? 12:6}>
                     <MajorAutocomplete 
-                      
                       major={major} 
                       setMajor={setMajor} 
                     />

@@ -63,7 +63,7 @@ export default function SignUp(props) {
     const ACCOUNT = 0;
     const PROFILE = 1;
     const CONFIRMATION = 2;
-    const [activePage, setActivePage] = useState(PROFILE);
+    const [activePage, setActivePage] = useState(ACCOUNT);
 
     // functions for account page
     async function handleAccountNext() {
@@ -200,11 +200,11 @@ export default function SignUp(props) {
           setEnabledButton(false);
           await axios.post('/api/accounts/create', data);
     
-          await axios.post('/api/slack/registration', {
-            first_name: first_name,
-            last_name: last_name,
-            school: school,
-          });
+        //   await axios.post('/api/slack/registration', {
+        //     first_name: first_name,
+        //     last_name: last_name,
+        //     school: school,
+        //   });
         } catch (e) {
           return;
         }
