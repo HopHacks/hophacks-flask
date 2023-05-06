@@ -5,7 +5,7 @@ import Divider from '@material-ui/core/Divider';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { motion } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
+// import { motion } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 
 const useStyles = makeStyles({
   title: {
@@ -85,138 +85,138 @@ export default function Sponsors() {
     };
   }, []);
 
-  const imageAnimate = {
-    offscreen: { x: -50, opacity: 0 },
-    onscreen: {
-      x: 0,
-      opacity: 1,
-      duration: 3,
-      transition: {
-        type: 'spring',
-        bounce: 0.0,
-        duration: 4
-      }
-    }
-  };
+  // const imageAnimate = {
+  //   offscreen: { x: -50, opacity: 0 },
+  //   onscreen: {
+  //     x: 0,
+  //     opacity: 1,
+  //     duration: 3,
+  //     transition: {
+  //       type: 'spring',
+  //       bounce: 0.0,
+  //       duration: 4
+  //     }
+  //   }
+  // };
 
   return (
-    <motion.div>
-      <Box style={{ marginTop: -30 }}>
-        <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
-          <Grid item xs={2}>
-            {/*<img*/}
-            {/*  style={{ marginLeft: '0%', marginRight: '0%', width: '60%' }}*/}
-            {/*  src={img('home_bg/4_edit.png')}*/}
-            {/*/>*/}
-            <h4 className={classes.title} style={{ marginTop: '30%' }}>
-              Sponsors
-            </h4>
-            <h5 className={classes.contact}>
-              Interested in sponsoring us? Email us at{' '}
-              {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}
-            </h5>
-          </Grid>
-          {/*<Grid item xs={2}>*/}
-          {/*  <h4 className={classes.title} style={{ marginTop: '30%' }}>*/}
-          {/*    Sponsors*/}
-          {/*  </h4>*/}
-          {/*  <h5 className={classes.contact}>*/}
-          {/*    Interested in sponsoring us? Email us at{' '}*/}
-          {/*    {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}*/}
-          {/*  </h5>*/}
-          {/*</Grid>*/}
-          {/*<Grid item xs={2}></Grid>*/}
-          <div>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={6}>
-                <Box style={{ marginLeft: '50%', marginRight: '0%' }}>
-                  {/* Gold & Sable */}
-                  <motion.div
-                    class={classes.logos}
-                    initial={'offscreen'}
-                    whileInView={'onscreen'}
-                    variants={imageAnimate}
-                  >
-                    <Grid container spacing={2} justify="flex-end" alignItems="center">
-                      <Grid item xs={6}>
-                        <SponsorItem
-                          imgURL="bloomberg_hori_brush"
-                          website="https://www.bloomberg.com/"
-                          imgSytle={{
-                            width: windowSize.width * gold,
-                            maxHeight: '100%',
-                            marginTop: '5%',
-                            marginBottom: '5%'
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <SponsorItem
-                          imgURL="it_hori_brush"
-                          website="https://it.johnshopkins.edu/"
-                          imgSytle={{
-                            width: windowSize.width * sable,
-                            maxHeight: '100%',
-                            marginTop: '5%',
-                            marginBottom: '5%'
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                  </motion.div>
+    // <motion.div>
+    <Box style={{ marginTop: -30 }}>
+      <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
+        <Grid item xs={2}>
+          {/*<img*/}
+          {/*  style={{ marginLeft: '0%', marginRight: '0%', width: '60%' }}*/}
+          {/*  src={img('home_bg/4_edit.png')}*/}
+          {/*/>*/}
+          <h4 className={classes.title} style={{ marginTop: '30%' }}>
+            Sponsors
+          </h4>
+          <h5 className={classes.contact}>
+            Interested in sponsoring us? Email us at{' '}
+            {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}
+          </h5>
+        </Grid>
+        {/*<Grid item xs={2}>*/}
+        {/*  <h4 className={classes.title} style={{ marginTop: '30%' }}>*/}
+        {/*    Sponsors*/}
+        {/*  </h4>*/}
+        {/*  <h5 className={classes.contact}>*/}
+        {/*    Interested in sponsoring us? Email us at{' '}*/}
+        {/*    {<a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>}*/}
+        {/*  </h5>*/}
+        {/*</Grid>*/}
+        {/*<Grid item xs={2}></Grid>*/}
+        <div>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={6}>
+              <Box style={{ marginLeft: '50%', marginRight: '0%' }}>
+                {/* Gold & Sable */}
+                {/* <motion.div
+                  class={classes.logos}
+                  initial={'offscreen'}
+                  whileInView={'onscreen'}
+                  variants={imageAnimate}
+                > */}
+                <Grid container spacing={2} justify="flex-end" alignItems="center">
+                  <Grid item xs={6}>
+                    <SponsorItem
+                      imgURL="bloomberg_hori_brush"
+                      website="https://www.bloomberg.com/"
+                      imgSytle={{
+                        width: windowSize.width * gold,
+                        maxHeight: '100%',
+                        marginTop: '5%',
+                        marginBottom: '5%'
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <SponsorItem
+                      imgURL="it_hori_brush"
+                      website="https://it.johnshopkins.edu/"
+                      imgSytle={{
+                        width: windowSize.width * sable,
+                        maxHeight: '100%',
+                        marginTop: '5%',
+                        marginBottom: '5%'
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                {/* </motion.div> */}
 
-                  {/* Blue */}
-                  <motion.div
-                    class={classes.logos}
-                    initial={'offscreen'}
-                    whileInView={'onscreen'}
-                    variants={imageAnimate}
-                  >
-                    <Grid container spacing={2} justify="center" alignItems="center">
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}></Grid>
+                {/* Blue */}
+                {/* <motion.div
+                  class={classes.logos}
+                  initial={'offscreen'}
+                  whileInView={'onscreen'}
+                  variants={imageAnimate}
+                > */}
+                <Grid container spacing={2} justify="center" alignItems="center">
+                  <Grid item xs={6}></Grid>
+                  <Grid item xs={6}></Grid>
+                  <Grid item xs={6}></Grid>
+                  <Grid item xs={6}></Grid>
 
-                      <Grid item xs={6}></Grid>
-                    </Grid>
-                  </motion.div>
+                  <Grid item xs={6}></Grid>
+                </Grid>
+                {/* </motion.div> */}
 
-                  {/* Starter */}
-                  <motion.div
-                    class={classes.logos}
-                    initial={'offscreen'}
-                    whileInView={'onscreen'}
-                    variants={imageAnimate}
-                  >
-                    <Grid container spacing={2} justify="center" alignItems="center">
-                      <SponsorItem
-                        imgURL="wolfram_alpha_brush"
-                        website="https://www.wolframalpha.com/"
-                        imgSytle={{
-                          width: windowSize.width * starter,
-                          maxHeight: '100%',
-                          marginTop: '2%'
-                        }}
-                      />
-                      <SponsorItem
-                        imgURL="google_cloud_brush"
-                        website="https://cloud.google.com/"
-                        imgSytle={{
-                          width: windowSize.width * starter,
-                          maxHeight: '100%',
-                          marginTop: '0%',
-                          marginLeft: '5%'
-                        }}
-                      />
-                    </Grid>
-                  </motion.div>
-                </Box>
-              </Grid>
+                {/* Starter */}
+                {/* <motion.div
+                  class={classes.logos}
+                  initial={'offscreen'}
+                  whileInView={'onscreen'}
+                  variants={imageAnimate}
+                > */}
+                <Grid container spacing={2} justify="center" alignItems="center">
+                  <SponsorItem
+                    imgURL="wolfram_alpha_brush"
+                    website="https://www.wolframalpha.com/"
+                    imgSytle={{
+                      width: windowSize.width * starter,
+                      maxHeight: '100%',
+                      marginTop: '2%'
+                    }}
+                  />
+                  <SponsorItem
+                    imgURL="google_cloud_brush"
+                    website="https://cloud.google.com/"
+                    imgSytle={{
+                      width: windowSize.width * starter,
+                      maxHeight: '100%',
+                      marginTop: '0%',
+                      marginLeft: '5%'
+                    }}
+                  />
+                </Grid>
+                {/* </motion.div> */}
+              </Box>
             </Grid>
-          </div>
-          <Divider style={{ marginTop: '3%', marginBottom: '3%' }} />
-          {/*
+          </Grid>
+        </div>
+        <Divider style={{ marginTop: '3%', marginBottom: '3%' }} />
+        {/*
                         <motion.div
                             initial={"offscreen"}
                             whileInView={"onscreen"}
@@ -312,8 +312,8 @@ export default function Sponsors() {
                             <br></br>
                         </motion.div>
                         */}
-        </Grid>
-      </Box>
-    </motion.div>
+      </Grid>
+    </Box>
+    // </motion.div>
   );
 }
