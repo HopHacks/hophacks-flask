@@ -16,13 +16,6 @@ body {
   background-attachment: fixed;
 }
 
-/* .root {
-  background-image:url("https://hophacks-image.s3.amazonaws.com/login_background.jpg");
-  background-size: 100% 100rem;
-  background-repeat: no-repeat;
-  background-position: center;
-} */
-
 .card {
   margin-top: 10%;
   margin-right: auto;

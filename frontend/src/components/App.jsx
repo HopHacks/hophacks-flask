@@ -61,7 +61,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/profile">
-                    <Profile />
+                    <Profile isMobile={isMobile} />
                   </Route>
 
                   <Route path="/announcements/detail">

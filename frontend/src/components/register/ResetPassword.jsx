@@ -58,9 +58,7 @@ export default function PasswordReset(props) {
       );
       setMessage('An email has been sent (if the account exists)!');
     } catch (e) {
-      setMessage(
-        'Error requesting password reset'
-      );
+      setMessage('Error requesting password reset');
     }
     setAttempted(true);
   }
