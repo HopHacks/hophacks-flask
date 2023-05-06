@@ -13,24 +13,19 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 
-import '../../stylesheets/register.css';
+import '../../../stylesheets/register.css';
 import { useEffect } from 'react';
 
-export default function SignUp(props) {
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            width: '100%',
-        }
-    }));
-    const classes = useStyles();
-
+export default function SignUpAccount(props) {
     const isMobile = props.isMobile;
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
-
-    let history = useHistory();
+    const username = props.username;
+    const setUsername = props.setUsername;
+    const password = props.password;
+    const setPassword = props.setPassword;
+    const passwordConfirm = props.passwordConfirm;
+    const setPasswordConfirm = props.setPasswordConfirm;
+    const confirmMsg = props.confirmMsg;
+    const handleAccountNext = props.handleAccountNext;
 
     const signUpCardDesktop = (
         <Card class="card">
@@ -44,8 +39,8 @@ export default function SignUp(props) {
                 variant="standard"
                 label="Email Address"
                 style={{ width:"80%" }}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}                InputLabelProps={{
+                value={username}
+                onChange={(e) => setUsername(e.target.value.toLowerCase())}                InputLabelProps={{
                     style: { color: '#ffffff' },
                 }}
                 InputProps={{
@@ -85,32 +80,21 @@ export default function SignUp(props) {
                     style: { color: '#ffffff' },
                     }}
                 />
-    
+
+                <Typography class="card-text-red">
+                    {confirmMsg}
+                </Typography>
+                
                 <Button
                     class="card-button"
                     variant="contained"
                     color="primary"
                     size="large"
                     onClick={() => {
-                        if (password !== passwordConfirm) {
-                            alert("Passwords do not match");
-                        } else {
-                            axios.post('/api/auth/signup', {
-                                email: email,
-                                password: password,
-                            }).then((res) => {
-                                if (res.status === 200) {
-                                    history.push('/login');
-                                } else {
-                                    alert("Error signing up");
-                                }
-                            }).catch((err) => {
-                                alert("Error signing up");
-                            });
-                        }
+                        handleAccountNext();
                     }}
                 >
-                    Sign Up
+                    Next
                 </Button>
                 <Link
                     to={'/register/login'}
@@ -133,8 +117,8 @@ export default function SignUp(props) {
             variant="standard"
             label="Email Address"
             style={{ width:"80%" }}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}                InputLabelProps={{
+            value={username}
+            onChange={(e) => setUsername(e.target.value.toLowerCase())}                InputLabelProps={{
                 style: { color: '#ffffff' },
             }}
             InputProps={{
@@ -175,6 +159,10 @@ export default function SignUp(props) {
                 }}
             />
 
+            <Typography class="card-text-red">
+                {confirmMsg}
+            </Typography>
+
             <Button
                 class="card-button"
                 variant="contained"
@@ -182,25 +170,10 @@ export default function SignUp(props) {
                 size="large"
                 style={{fontSize: "1.2rem", height: "3rem", marginTop: "15%"}}
                 onClick={() => {
-                    if (password !== passwordConfirm) {
-                        alert("Passwords do not match");
-                    } else {
-                        axios.post('/api/auth/signup', {
-                            email: email,
-                            password: password,
-                        }).then((res) => {
-                            if (res.status === 200) {
-                                history.push('/login');
-                            } else {
-                                alert("Error signing up");
-                            }
-                        }).catch((err) => {
-                            alert("Error signing up");
-                        });
-                    }
+                    handleAccountNext();
                 }}
             >
-                Sign Up
+                Next
             </Button>
         </CardContent>
     </Card>

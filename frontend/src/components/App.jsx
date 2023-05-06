@@ -27,7 +27,7 @@ import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
 import Login from './register/Login';
-import SignUp from './register/SignUp';
+import SignUp from './register/signup/SignUp';
 import ResetPassword from './register/ResetPassword';
 
 import { useMediaQuery } from 'usehooks-ts'

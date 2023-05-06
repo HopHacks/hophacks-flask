@@ -233,30 +233,6 @@ export default function Register(props) {
   }
 
   function account () {
-
-    if (isMobile) {
-      return (
-        <Card>
-          <CardContent>
-            <Typography variant="h5" component="h2">
-              Welcome!
-            </Typography>
-            <TextField
-              id="username"
-              label="Email"
-              variant="outlined"
-              fullWidth
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </CardContent>
-        </Card>
-      )
-    } else {
-      return (
-        {signInCard}
-      )
-    }
   return (
     <Grid
       container
@@ -342,62 +318,6 @@ export default function Register(props) {
     </Grid>
     );
   }
-
-  const signInCard = (
-      <Card class="card">
-        <CardContent>
-          <Typography class="card-title">
-            Welcome!
-          </Typography>
-          <TextField
-              // TODO: make the border white
-              required
-              variant="standard"
-              label="Email Address"
-              style={{ minWidth: 275 }}
-              onChange={(e) => setUsername(e.target.value.toLowerCase())}
-              InputLabelProps={{
-                style: { color: '#ffffff' },
-              }}
-              InputProps={{
-                style: { color: '#ffffff' },
-              }}
-            />
-            <TextField
-                // TODO: make the border white
-                type={'password'}
-                required
-                variant="standard"
-                label="Password"
-                style={{ minWidth: 275, marginTop: "15%"}}
-                onChange={(e) => setPassword(e.target.value)}
-                InputLabelProps={{
-                  style: { color: '#ffffff' },
-                }}
-                InputProps={{
-                  style: { color: '#ffffff' },
-                }}
-              />
-
-              {/* TODO: link forgot password to a reset password page */}
-              <Typography class="card-text" > Forgot Password? </Typography>
-
-              <Button
-                class="card-button"
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={() => {
-                  handleAccountNext();
-                }}
-              >
-                Sign In
-              </Button>
-
-              <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
-        </CardContent>
-      </Card>
-    )
 
   const handleResumeCheckBox = (event) => {
     setResumeChecked(event.target.checked);
@@ -866,7 +786,7 @@ export default function Register(props) {
 
   function selectPage() {
     if (activePage === ACCOUNT) {
-      return <>{signInCard}</>;
+      // account page
     } else if (activePage === PROFILE) {
       return (
         <>
