@@ -268,6 +268,7 @@ export default function SignUp(props) {
                     setGrad={setGrad}
                     setGrad_month={setGrad_month}
                     setGrad_year={setGrad_year}
+                    resumeFile={resumeFile}
                     resumeChecked={resumeChecked}
                     conductCodeChecked={conductCodeChecked}
                     eventLogisticsChecked={eventLogisticsChecked}

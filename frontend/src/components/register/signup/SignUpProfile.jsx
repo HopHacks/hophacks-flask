@@ -48,6 +48,7 @@ export default function SignUpProfile(props) {
     const setGrad_month = props.setGrad_month;
     const setGrad_year = props.setGrad_year;
     
+    const resumeFile = props.resumeFile;
     const resumeChecked = props.resumeChecked;
     const conductCodeChecked = props.conductCodeChecked;
     const eventLogisticsChecked = props.eventLogisticsChecked;
@@ -193,7 +194,7 @@ export default function SignUpProfile(props) {
                     Create Profile
                 </Typography>
                 
-                <Grid container spacing={5}>
+                <Grid container spacing={isMobile?2:5}>
                   <Grid item xs={isMobile? 12:5}>
                     <TextField
                       required
@@ -418,7 +419,7 @@ export default function SignUpProfile(props) {
                       <MenuItem value="2028">2028</MenuItem>
                     </TextField>
                   </Grid>
-                  <Grid item xs={12} style={{textAlign:"left"}}>
+                  <Grid item xs={12} style={{textAlign:isMobile?"center":"left"}}>
                     <label htmlFor="upload-resume">
                       <input
                         style={{ display: 'none' }}
@@ -431,6 +432,8 @@ export default function SignUpProfile(props) {
                       <Button variant="outlined" style={{color:'white'}} component="span">
                         Upload Resume*
                       </Button>
+                      {isMobile?<br/>:null}
+                      {resumeFile!==undefined&&<text class="card-text" style={{marginLeft:isMobile?"0rem":"1rem"}}>{"Uploaded:"+resumeFile.name}</text>}
                     </label>
                   </Grid>
                   <Grid item xs={12}>
@@ -440,6 +443,8 @@ export default function SignUpProfile(props) {
                     {communication}
                   </Grid>
                 </Grid>
+
+                <Typography class="card-text-red">{profileSubmitMsg}</Typography>
 
                 <Button
                   class="card-button"
