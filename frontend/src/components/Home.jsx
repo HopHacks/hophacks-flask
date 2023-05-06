@@ -102,25 +102,29 @@ export default function Home() {
       {loading ? (
         <LoadingAnimation />
       ) : (
-        <Container fixed>
-          <motion.div
-            class={classes.logos}
-            initial={'onscreen'}
-            whileInView={'offscreen'}
-            variants={CoverAnimate}
-            viewport={{ once: false }}
-          >
-            <Cover />
-          </motion.div>
-          <AboutTransition />
-          <About />
-          <Schedule />
-          <Prizes />
-          <Sponsors />
-          <Faq />
-          <span style="font-size:300%">&nbsp;&nbsp;</span>
+        <div>
+          <Container fixed>
+            <motion.div
+              class={classes.logos}
+              initial={'onscreen'}
+              whileInView={'offscreen'}
+              variants={CoverAnimate}
+              viewport={{ once: false }}
+            >
+              <Cover />
+            </motion.div>
+            <AboutTransition />
+            <About />
+            <Schedule />
+            <Prizes />
+            <Sponsors />
+            <Faq />
+          </Container>
+          <br></br>
+          <br></br>
+          <br></br>
           <Footer />
-        </Container>
+        </div>
       )}
     </div>
   );
