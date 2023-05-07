@@ -107,12 +107,7 @@ export default function Prizes() {
       <Grid container spacing={2} alignItems="center" style={{ marginTop: '14%' }}>
         <Grid item xs={4}></Grid>
         <Grid item xs={4}>
-          <Typography
-            className={classes.title}
-            variant="h4"
-            style={{ marginTop: '-18%', marginBottom: '0' }}
-            gutterBottom
-          >
+          <Typography variant="h3" style={{ color: 'white', marginBottom: '20px' }}>
             Prizes
           </Typography>
         </Grid>

@@ -91,12 +91,7 @@ export default function Schedule() {
       <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop: '15%' }}>
         <Grid item xs={4}></Grid>
         <Grid item xs={4}>
-          <Typography
-            className={classes.title}
-            variant="h4"
-            style={{ marginTop: '-30%' }}
-            gutterBottom
-          >
+          <Typography variant="h3" style={{ color: 'white', marginBottom: '50px' }}>
             Schedule
           </Typography>
         </Grid>

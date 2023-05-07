@@ -99,7 +99,7 @@ export default function Faq() {
         <Grid item xs={8}>
           <Typography
             className={classes.title}
-            variant="h4"
+            variant="h5"
             style={{ marginTop: '0%' }}
             gutterBottom
           >
