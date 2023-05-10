@@ -25,12 +25,20 @@ const useStyles = makeStyles({
 
   title: {
     fontFamily: "Inter",
-    flexGrow: 1,
-    //textAlign: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
     color: '#B4E3F7',
-    marginLeft: 10,
-    marginRight: 10,
-    
+    marginLeft: 20,
+  },
+
+  rightTitle: {
+    fontFamily: "Inter",
+    textAlign: 'center',
+    justifyContent: 'center',
+    color: '#B4E3F7',
+    marginRight: "13vw",
+    marginLeft: 20,
+
   },
 
   hophacksButton: {
@@ -89,7 +97,7 @@ const Nav = function Nav(props) {
 
 
         <AppBar position="sticky">
-          <Toolbar style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <Toolbar style={{ justifyContent: 'center' }}>
             <IconButton
               edge="start"
               color="inherit"
@@ -162,7 +170,7 @@ const Nav = function Nav(props) {
 
                 {props.isLoggedIn &&
                   <Button onClick={handleLogout} color="inherit">
-                    <Typography variant="h5" className={classes.title}>Logout</Typography>
+                    <Typography variant="h5" className={classes.leftTitle}>Logout</Typography>
                   </Button>
                 }
 
@@ -238,7 +246,7 @@ const Nav = function Nav(props) {
 
           {props.isLoggedIn &&
             <Button onClick={handleLogout} color="inherit">
-              <Typography variant="h5" className={classes.title}>Logout</Typography>
+              <Typography variant="h5" className={classes.rightTitle}>Logout</Typography>
             </Button>
           }
         </section>

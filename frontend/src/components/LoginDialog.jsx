@@ -19,7 +19,11 @@ function Login(props) {
 
     title: {
       fontFamily: "Inter",
-      color: "#B4E3F7"
+      textAlign: 'center',
+      justifyContent: 'center',
+      color: '#B4E3F7',
+      marginRight: "17vw",
+      marginLeft:20,
     },
 
     closeButton: {
