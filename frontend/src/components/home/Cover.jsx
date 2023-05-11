@@ -1,7 +1,8 @@
 import React from 'react';
 
-function img(url) {
-  return process.env.PUBLIC_URL + '/images/' + url;
+function img() {
+  // TODO: replace with animated
+  return 'https://hophacks-website.s3.amazonaws.com/images/homepage-desktop.png';
 }
 
 export default function Cover() {
@@ -9,7 +10,7 @@ export default function Cover() {
     <div>
       <div>
         <img
-          src={img('cover2.png')}
+          src={img()}
           style={{
             width: '100vw'
           }}
