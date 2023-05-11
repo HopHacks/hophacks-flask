@@ -175,6 +175,22 @@ canvas {
   right: 20%;
 }
 
+.about-flex {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 768px) {
+  .about-flex {
+    flex-direction: column;
+  }
+}
+
+.title-align {
+  justify-content: center;
+  align-items: center;
+}
+
 @font-face {
   font-family: 'VCR OSD Mono';
   src: url('./VCR_OSD_MONO_1.001.ttf') format('truetype');

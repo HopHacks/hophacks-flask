@@ -1,164 +1,72 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
-import { motion, useAnimation } from 'framer-motion/dist/framer-motion';
-import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
-
-const useStyles = makeStyles({
-  margin: {
-    marginBottom: '13px'
-  },
-  color: {
-    backgroundColor: 'transparent'
-  },
-  title: {
-    color: '#7289da',
-    fontFamily: 'VCR OSD Mono'
-  },
-  Media: {
-    // comment
-    // height: '50%',
-    // width: '55%',
-    // objectFit: 'cover',
-    // justifyContent:'center'
-    width: '65%',
-    marginLeft: '33%',
-    backgroundColor: '#278be2'
-  },
-  font1: {
-    position: 'absolute',
-    width: '1127.38px',
-    height: '353.64px',
-    left: '415px',
-    top: '110px',
-    color: 'rgba(255, 255, 255, 0.6)',
-    backgroundColor: 'none',
-    fontFamily: 'Inter',
-    fontWeight: '700',
-    fontStyle: 'italic',
-    fontSize: '251.02px',
-    lineHeight: '304px'
-  },
-
-  font2: {
-    position: 'absolute',
-    width: '1127.38px',
-    height: '353.64px',
-    left: '200px',
-    top: '400px',
-    color: 'rgba(255, 255, 255)',
-    backgroundColor: 'none',
-    fontFamily: 'Inter',
-    fontWeight: '700',
-    fontStyle: 'italic',
-    fontSize: '251.02px',
-    lineHeight: '304px'
-  },
-
-  font3: {
-    position: 'absolute',
-    width: '1127.38px',
-    height: '353.64px',
-    left: '0px',
-    top: '690px',
-    color: 'rgba(255, 255, 255, 0.6)',
-    backgroundColor: 'none',
-    fontFamily: 'Inter',
-    fontWeight: '700',
-    fontStyle: 'italic',
-    fontSize: '251.02px',
-    lineHeight: '304px'
-  },
-
-  intro: {
-    // position: "absolute",
-    // width: '1127.38px',
-    // height: '353.64px',
-    left: '58px',
-    top: '1407px',
-    color: 'rgba(255, 255, 255, 0.8)',
-    backgroundColor: 'none',
-    fontFamily: 'Inter',
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontSize: '36px',
-    lineHeight: '58px',
-    textAlign: 'center',
-    letterSpacing: '0.11em'
-  }
-});
 
 const Title = styled.h2`
   font-size: 3rem;
   font-weight: 600;
-  font-family: Inter;
+  color: rgba(255, 255, 255);
+`;
+
+const AboutText = styled.p`
+  font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.8);
-  text-align: center;
 `;
 
-const Word = styled(motion.span)`
-  display: inline-block;
-  margin-right: 0.25em;
-  white-space: nowrap;
+const Highlight = styled.span`
+  color: rgb(181, 227, 247);
+  font-weight: 800;
 `;
 
-const Character = styled(motion.span)`
-  display: inline-block;
-  margin-right: -0.05em;
+const PlaceHolderWhiteBox = styled.div`
+  background-color: white;
+  width: 80%;
+  height: 400px;
+  margin: auto;
 `;
+
+function img(url) {
+  return process.env.PUBLIC_URL + '/images/' + url;
+}
 
 export default function About() {
-  const classes = useStyles();
+  const introTextP1 = (
+    <AboutText>
+      HopHacks is a <Highlight>36-hour biannual Hackathon</Highlight> held at the Johns Hopkins
+      University that encourages engineers, designers, and entrepreneurs to explore new ideas and
+      create new applications.
+    </AboutText>
+  );
 
-  const introText =
-    'HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!';
-  const ctrls = useAnimation();
-  const { ref, inView } = useInView({
-    threshold: 0.6,
-    triggerOnce: false
-  });
-
-  useEffect(() => {
-    if (inView) {
-      ctrls.start('visible');
-    }
-    if (!inView) {
-      ctrls.start('hidden');
-    }
-  }, [ctrls, inView]);
-
-  const wordAnimation = {
-    hidden: {},
-    visible: {}
-  };
+  const introTextP2 = (
+    <AboutText>
+      Teams of up to <Highlight>4 university students</Highlight> work on projects from scratch.At
+      the end of the hackathon, teams present their projects to judges and compete for prizes($1024,
+      $512, $256 for top 3 winners and sponsor specific prizes) !
+    </AboutText>
+  );
 
   return (
-    <div style={{ position: 'relative' }}>
-      <Box className={classes.color}>
-        <Title aria-label={introText} role="heading">
-          {introText.split(' ').map((word, index) => {
-            return (
-              <Word
-                ref={ref}
-                aria-hidden="true"
-                key={index}
-                initial="hidden"
-                animate={ctrls}
-                variants={wordAnimation}
-                transition={{
-                  delayChildren: index * 0.03,
-                  staggerChildren: 0.05
-                }}
-              >
-                {word.split('').map((character, index) => {
-                  return <Character key={index}>{character}</Character>;
-                })}
-              </Word>
-            );
-          })}
-        </Title>
-      </Box>
+    <div>
+      <div className="about-flex title-align">
+        <Box flex={1}>
+          <Title>About</Title>
+        </Box>
+        <Box>
+          <img src={img('logo2023.png')} width={'160px'} />
+        </Box>
+        <Box flex={1}></Box>
+      </div>
+      <div className="about-flex">
+        <Box flex={1}>
+          {introTextP1}
+          <Box height={20}></Box>
+          {introTextP2}
+        </Box>
+        <Box flex={1}>
+          <PlaceHolderWhiteBox />
+        </Box>
+      </div>
     </div>
   );
 }
