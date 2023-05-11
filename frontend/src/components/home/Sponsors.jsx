@@ -101,7 +101,7 @@ export default function Sponsors() {
 
   return (
     <motion.div>
-      <Box py={2} style={{ marginTop: -30 }}>
+      <Box py={2} style={{ marginTop: -30 }} id="sponsors">
         <div>
           <Grid container spacing={2} justify="center" alignItems="center">
             <Grid item xs={4}>

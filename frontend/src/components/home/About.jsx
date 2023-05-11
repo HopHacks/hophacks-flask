@@ -47,7 +47,7 @@ export default function About() {
   );
 
   return (
-    <div>
+    <div id="about">
       <div className="about-flex title-align">
         <Box flex={1}>
           <Title>About</Title>

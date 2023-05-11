@@ -91,7 +91,7 @@ export default function Faq() {
   const classes = useStyles();
 
   return (
-    <Box>
+    <Box id="faq">
       <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop: '7%' }}>
         <Grid item xs={2}>
           <img style={{ marginLeft: '5%', width: '120%' }} src={img('home_bg/3.png')} />

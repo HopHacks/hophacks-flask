@@ -174,9 +174,14 @@ function Login(props) {
   return (
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
-        <Typography variant="h5" className={classes.title}>
-          {' '}
-          Login{' '}
+        <Typography
+          variant="h5"
+          className={classes.title}
+          style={{
+            textTransform: 'none'
+          }}
+        >
+          Register
         </Typography>
       </Button>
       {LoginDialog}

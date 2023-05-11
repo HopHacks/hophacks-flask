@@ -32,8 +32,13 @@ const useStyles = makeStyles({
     marginLeft: 'auto'
   },
 
+  navBtn: {
+    textTransform: 'none',
+    marginRight: '3rem'
+  },
+
   drawer: {
-    background: '#141230',
+    background: '#33073E',
     width: '100vw'
   },
 
@@ -41,6 +46,10 @@ const useStyles = makeStyles({
     color: 'white'
   }
 });
+
+function img(url) {
+  return process.env.PUBLIC_URL + '/images/' + url;
+}
 
 const Nav = function Nav(props) {
   let history = useHistory();
@@ -176,7 +185,7 @@ const Nav = function Nav(props) {
   }
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" className={classes.drawer}>
       <Toolbar
         style={{
           flexDirection: 'row',
@@ -184,18 +193,63 @@ const Nav = function Nav(props) {
           marginRight: '8rem'
         }}
       >
-        <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
+        <Button
+          component={Link}
+          onClick={() => (window.location = '/')}
+          color="inherit"
+          className={classes.hophacksButton}
+        >
+          <img src={img('logo2023.png')} width={'55px'} />
           <Typography variant="h4" className={classes.title}>
-            {' '}
-            HopHacks{' '}
+            HopHacks
           </Typography>
         </Button>
 
-        <section className={classes.otherButton}>
-          <Button component={Link} to={'/'} color="inherit">
+        <section
+          className={classes.otherButton}
+          style={{
+            margin: 'auto'
+          }}
+        >
+          <Button
+            component={Link}
+            onClick={() => (window.location = '#about')}
+            color="inherit"
+            className={classes.navBtn}
+          >
             <Typography variant="h5" className={classes.title}>
-              {' '}
-              Home{' '}
+              About
+            </Typography>
+          </Button>
+
+          <Button
+            component={Link}
+            onClick={() => (window.location = '#schedule')}
+            color="inherit"
+            className={classes.navBtn}
+          >
+            <Typography variant="h5" className={classes.title}>
+              Schedule
+            </Typography>
+          </Button>
+          <Button
+            component={Link}
+            onClick={() => (window.location = '#sponsors')}
+            color="inherit"
+            className={classes.navBtn}
+          >
+            <Typography variant="h5" className={classes.title}>
+              Sponsors
+            </Typography>
+          </Button>
+          <Button
+            component={Link}
+            onClick={() => (window.location = '#faq')}
+            color="inherit"
+            className={classes.navBtn}
+          >
+            <Typography variant="h5" className={classes.title}>
+              FAQ
             </Typography>
           </Button>
 
@@ -203,11 +257,11 @@ const Nav = function Nav(props) {
             onClick={() => {
               window.location = '/team';
             }}
+            className={classes.navBtn}
             color="inherit"
           >
             <Typography variant="h5" className={classes.title}>
-              {' '}
-              Team{' '}
+              Team
             </Typography>
           </Button>
 
@@ -259,7 +313,7 @@ const Nav = function Nav(props) {
             rel="noreferrer"
           >
             <img
-              src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg"
+              src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-white.svg"
               alt="Major League Hacking 2023 Hackathon Season"
               style={{ width: '100%' }}
             ></img>

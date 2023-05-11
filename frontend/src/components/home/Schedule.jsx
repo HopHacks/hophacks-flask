@@ -87,7 +87,7 @@ export default function Schedule() {
     setDay(newDay);
   };
   return (
-    <Box py={2}>
+    <Box py={2} id="schedule">
       <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop: '15%' }}>
         <Grid item xs={4}></Grid>
         <Grid item xs={4}>
