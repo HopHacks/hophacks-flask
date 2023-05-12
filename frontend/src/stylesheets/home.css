@@ -175,6 +175,96 @@ canvas {
   right: 20%;
 }
 
+.about-flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.sponsor-light {
+  background: #d9d9d9;
+  border: 3px solid #76879b;
+}
+
+.sponsor-dark {
+  background: #76879b;
+  border: 3px solid #d9d9d9;
+}
+
+.sponsor-xl {
+  width: 350px;
+  height: 350px;
+}
+
+.sponsor-large {
+  width: 350px;
+  height: 250px;
+}
+
+.sponsor-medium {
+  width: 225px;
+  height: 175px;
+}
+
+.sponsor-small {
+  width: 165px;
+  height: 165px;
+}
+
+.sponsor-foreground {
+  position: relative;
+  border-radius: 30px 30px 0px 30px;
+}
+
+.sponsor-background {
+  position: absolute;
+  top: 0.5rem;
+  left: 10px;
+  border-radius: 30px 30px 0px 30px;
+  z-index: -1;
+}
+
+.sponsor-wrapper {
+  position: relative;
+  z-index: 10;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  margin: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .about-flex {
+    flex-direction: column;
+  }
+
+  .sponsor-container {
+    flex-direction: column;
+  }
+
+  .medium-container {
+    flex-wrap: wrap;
+  }
+
+  .sponsor-xl {
+    width: 100%;
+    height: 350px;
+  }
+
+  .sponsor-large {
+    width: 100%;
+    height: 150px;
+  }
+
+  .sponsor-medium {
+    width: 210px;
+    height: 150px;
+  }
+}
+
+.title-align {
+  justify-content: center;
+  align-items: center;
+}
+
 @font-face {
   font-family: 'VCR OSD Mono';
   src: url('./VCR_OSD_MONO_1.001.ttf') format('truetype');

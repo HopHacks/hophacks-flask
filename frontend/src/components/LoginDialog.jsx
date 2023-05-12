@@ -17,11 +17,7 @@ function Login(props) {
   const useStyles = makeStyles({
     title: {
       fontFamily: 'Inter',
-      textAlign: 'center',
-      justifyContent: 'center',
-      color: '#B4E3F7',
-      marginRight: '17vw',
-      marginLeft: 20
+      color: 'white'
     },
 
     closeButton: {
@@ -107,7 +103,7 @@ function Login(props) {
         {' '}
         <Typography variant="h5" className={classes.title}>
           {' '}
-          Register{' '}
+          LOGIN{' '}
         </Typography>
         <IconButton aria-label="close" className={classes.closeButton} onClick={handleLoginClose}>
           {' '}
@@ -167,7 +163,7 @@ function Login(props) {
         <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
           <Typography variant="h5" className={classes.title}>
             {' '}
-            Register{' '}
+            Login{' '}
           </Typography>
         </Button>
         {LoginDialog}
@@ -178,9 +174,14 @@ function Login(props) {
   return (
     <>
       <Button onClick={() => setLoginDialogOpen(true)} color="inherit">
-        <Typography variant="h5" className={classes.title}>
-          {' '}
-          Register{' '}
+        <Typography
+          variant="h5"
+          className={classes.title}
+          style={{
+            textTransform: 'none'
+          }}
+        >
+          Register
         </Typography>
       </Button>
       {LoginDialog}

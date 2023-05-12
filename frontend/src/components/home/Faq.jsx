@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
@@ -27,11 +26,10 @@ const useStyles = makeStyles({
     backgroundColor: 'transparent'
   },
   title: {
+    fontSize: '2rem',
     color: '#ffffff',
     fontFamily: 'Inter',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: '375%'
+    marginBottom: '2rem'
   },
 
   button: {
@@ -83,33 +81,14 @@ const useStyles = makeStyles({
   }
 });
 
-function img(url) {
-  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-}
-
 export default function Faq() {
   const classes = useStyles();
 
   return (
-    <Box>
-      <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop: '7%' }}>
-        <Grid item xs={2}>
-          <img style={{ marginLeft: '5%', width: '120%' }} src={img('home_bg/3.png')} />
-        </Grid>
-        <Grid item xs={8}>
-          <Typography
-            className={classes.title}
-            variant="h4"
-            style={{ marginTop: '0%' }}
-            gutterBottom
-          >
-            Frequently Asked Questions
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <img style={{ marginLeft: '-30%', width: '120%' }} src={img('home_bg/3.png')} />
-        </Grid>
-      </Grid>
+    <Box id="faq" marginTop={'10rem'}>
+      <Typography className={classes.title} variant="h4" style={{ marginTop: '0%' }} gutterBottom>
+        Frequently Asked Questions
+      </Typography>
       <Box
         raised="true"
         border={4}

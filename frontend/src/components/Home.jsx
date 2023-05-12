@@ -3,14 +3,12 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Sponsors from './home/Sponsors';
-import Prizes from './home/Prizes';
 import Schedule from './home/Schedule';
 import About from './home/About';
 import Faq from './home/Faq';
 import Cover from './home/Cover';
 import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
-import AboutTransition from './home/AboutTransition';
 import Footer from './Footer';
 // import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 // import { Parallax, ParallaxLayer } from "@react-spring/parallax";
@@ -25,12 +23,8 @@ const useStyles = makeStyles({
   margin: {
     marginBottom: '13px'
   },
-  color: {
-    //backgroundColor: "#2195ea",
-    backgroundColor: '#376efa'
-  },
   colorBackground: {
-    backgroundColor: '#376eea'
+    backgroundColor: '#350225'
   },
   title: {
     color: '#ffffff',
@@ -47,10 +41,6 @@ const useStyles = makeStyles({
       backgroundColor: '#c8e7fa'
     }
   },
-  gradient: {
-    backgroundImage: 'linear-gradient(#15ABFB, #f179c8)'
-  },
-
   blank: {
     padding: '30px',
     backgroundColor: '#c8e7fa'
@@ -72,7 +62,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 0);
 
     function handleWindowResize() {
       setWindowSize({
@@ -99,54 +89,24 @@ export default function Home() {
   //     },
   //   },
   // };
-
   return (
-    <div className={classes.gradient}>
+    <div className={classes.colorBackground}>
       {loading ? (
         <LoadingAnimation />
       ) : (
-        <Container fixed>
-          {/* <motion.div
-            class={classes.logos}
-            initial={"onscreen"}
-            whileInView={"offscreen"}
-            variants={CoverAnimate}
-            viewport={{ once: false }}
-          ></motion.div> */}
-          {/* <Parallax >
-            <ParallaxLayer offset={0}
-            style={{
-              backgroundImage:img("2023_theme.png")
-            }}>
-              
-            </ParallaxLayer>
-          </Parallax> */}
-          {/* </Container></motion.div> */}
+        <div>
           <Cover />
-          {
-            <section>
-              <AboutTransition />{' '}
-            </section>
-          }
-          <section id="about">
-            <About style={{ marginTop: '50px' }} />
-          </section>
-          <section id="schedule">
+          <Container fixed>
+            <About />
             <Schedule />
-          </section>
-          <section id="prizes">
-            <Prizes />
-          </section>
-          <section id="sponsors">
             <Sponsors />
-          </section>
-          <section id="faq">
             <Faq />
-          </section>
-
-          <span STYLE="font-size:300%">&nbsp;&nbsp;</span>
+          </Container>
+          <br></br>
+          <br></br>
+          <br></br>
           <Footer />
-        </Container>
+        </div>
       )}
     </div>
   );

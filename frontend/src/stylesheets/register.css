@@ -35,7 +35,7 @@ body {
   max-width: 50rem;
   margin: auto;
   border-radius: 5px;
-  box-shadow: 50px 50px 50px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   background-color: rgb(232, 235, 242);
 }
