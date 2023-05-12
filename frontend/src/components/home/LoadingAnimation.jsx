@@ -2,7 +2,7 @@ import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 function img(url) {
-  return process.env.PUBLIC_URL + '/images/' + url;
+  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
 }
 
 export default function LoadingAnimation() {
