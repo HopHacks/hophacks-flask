@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import React from 'react';
+// import { makeStyles } from '@material-ui/core/styles';
+// import Button from '@material-ui/core/Button';
 //import { motion, useScroll } from "framer-motion/dist/framer-motion"; // Needs to be added to requirements.txt
-import { motion, useViewportScroll, useTransform } from "framer-motion/dist/framer-motion";
+// import { motion, useViewportScroll, useTransform } from 'framer-motion/dist/framer-motion';
 
-const useStyles = makeStyles({});
+// const useStyles = makeStyles({});
 
 function img(url) {
-  return "https://hophacks-website.s3.amazonaws.com" + "/images/" + url;
+  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
 }
 export default function Cover() {
   if (window.innerWidth <= 650) {
@@ -74,7 +74,6 @@ export default function Cover() {
 //     setTimeout(() => setPulsing(false), 600);
 //   };
 
-
 //   const classes = useStyles();
 //   if (window.innerWidth <= 650) {
 //     return (
@@ -130,7 +129,7 @@ export default function Cover() {
 //             }}
 //             alt="hello"
 //           />
-          
+
 //           <div
 //             style={{
 //               display: "flex",
@@ -197,7 +196,7 @@ export default function Cover() {
 //             }}
 //             alt="image_could_not_load"
 //           />
-          
+
 //           <div
 //             style={{
 //               display: "flex",

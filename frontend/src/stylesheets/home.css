@@ -111,15 +111,14 @@ canvas {
 
 @font-face {
   font-family: vcrOsdMono;
-  src: local("vcrOsdMono"),
-    url(./../fonts/VCR_OSD_MONO_1.001.ttf) format("truetype");
+  src: local('vcrOsdMono'), url(./../fonts/VCR_OSD_MONO_1.001.ttf) format('truetype');
 }
 
 /* TODO: These are leftoever from old site Move to inline? */
 .grid-item {
   text-align: center;
   width: 100%;
-  font-family: "Seravek", sans-serif;
+  font-family: 'Seravek', sans-serif;
   font-size: 1.17em;
   line-height: 1.5;
   margin-left: auto !important;
@@ -177,18 +176,18 @@ canvas {
 }
 
 @font-face {
-  font-family: "VCR OSD Mono";
-  src: url("./VCR_OSD_MONO_1.001.ttf") format("truetype");
+  font-family: 'VCR OSD Mono';
+  src: url('./VCR_OSD_MONO_1.001.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "PT Sans";
-  src: url("./PT_Sans-Web-Regular.ttf") format("truetype");
+  font-family: 'PT Sans';
+  src: url('./PT_Sans-Web-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("./Inter-Medium.ttf") format("truetype");
+  font-family: 'Inter';
+  src: url('./Inter-Medium.ttf') format('truetype');
 }
 
 /* @font-face {
