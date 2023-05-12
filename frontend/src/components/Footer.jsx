@@ -7,7 +7,7 @@ import './../stylesheets/home.css';
 
 const Footer = function Footer() {
   function img(url) {
-    return process.env.PUBLIC_URL + '/images/footer/' + url;
+    return 'https://hophacks-website.s3.amazonaws.com' + '/images/footer/' + url;
   }
 
   return (

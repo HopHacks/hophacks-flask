@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,8 +12,8 @@ import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
 import AboutTransition from './home/AboutTransition';
 import Footer from './Footer';
-import { motion } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
-
+// import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
+// import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 const useStyles = makeStyles({
   logo: {
     top: '25%',
@@ -57,8 +58,10 @@ const useStyles = makeStyles({
 });
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
+  // function img(url) {
+  //   return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+  // }
   const classes = useStyles();
 
   const [, setWindowSize] = useState({
@@ -69,7 +72,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 300);
 
     function handleWindowResize() {
       setWindowSize({
@@ -85,46 +88,65 @@ export default function Home() {
     };
   }, []);
 
-  const CoverAnimate = {
-    offscreen: { y: 0, opacity: 1 },
-    onscreen: {
-      y: 0,
-      opacity: 0.7,
-      transition: {
-        type: 'spring',
-        bounce: 0.0
-      }
-    }
-  };
+  // const CoverAnimate = {
+  //   offscreen: { y: 0, opacity: 1 },
+  //   onscreen: {
+  //     y: 0,
+  //     opacity: 0.7,
+  //     transition: {
+  //       type: "spring",
+  //       bounce: 0.0,
+  //     },
+  //   },
+  // };
 
   return (
     <div className={classes.gradient}>
       {loading ? (
         <LoadingAnimation />
       ) : (
-        <div>
-          <Container fixed>
-            <motion.div
-              class={classes.logos}
-              initial={'onscreen'}
-              whileInView={'offscreen'}
-              variants={CoverAnimate}
-              viewport={{ once: false }}
-            >
-              <Cover />
-            </motion.div>
-            <AboutTransition />
-            <About />
+        <Container fixed>
+          {/* <motion.div
+            class={classes.logos}
+            initial={"onscreen"}
+            whileInView={"offscreen"}
+            variants={CoverAnimate}
+            viewport={{ once: false }}
+          ></motion.div> */}
+          {/* <Parallax >
+            <ParallaxLayer offset={0}
+            style={{
+              backgroundImage:img("2023_theme.png")
+            }}>
+              
+            </ParallaxLayer>
+          </Parallax> */}
+          {/* </Container></motion.div> */}
+          <Cover />
+          {
+            <section>
+              <AboutTransition />{' '}
+            </section>
+          }
+          <section id="about">
+            <About style={{ marginTop: '50px' }} />
+          </section>
+          <section id="schedule">
             <Schedule />
+          </section>
+          <section id="prizes">
             <Prizes />
+          </section>
+          <section id="sponsors">
             <Sponsors />
+          </section>
+          <section id="faq">
             <Faq />
-          </Container>
-          <br></br>
-          <br></br>
-          <br></br>
+          </section>
+
+          <span STYLE="font-size:300%">&nbsp;&nbsp;</span>
           <Footer />
-        </div>
+        </Container>
       )}
     </div>
   );

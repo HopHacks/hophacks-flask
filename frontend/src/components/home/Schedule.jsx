@@ -79,7 +79,7 @@ const useStyles = makeStyles({
 });
 export default function Schedule() {
   function img(url) {
-    return process.env.PUBLIC_URL + '/images/' + url;
+    return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
   }
   const classes = useStyles();
   const [day, setDay] = React.useState('fri');
