@@ -80,7 +80,7 @@ const Profile = function Profile(props) {
     data.append('file', resumeFile);
 
     try {
-      const response = await axios.post('/api/resumes/', data);
+      await axios.post('/api/resumes/', data);
       setResumeMsg('Resume has been successfully uploaded');
     } catch (e) {
       setResumeMsg('Failed to upload resume. Please try again.');
@@ -141,7 +141,7 @@ const Profile = function Profile(props) {
     profile.age = age;
     try {
       await axios.post('/api/accounts/profile/update', {
-        profile: profile,
+        profile: profile
       });
       getProfile();
     } catch (e) {
@@ -149,7 +149,7 @@ const Profile = function Profile(props) {
     }
   }
 
-  const checkAgeValid = (e) => {
+  const checkAgeValid = () => {
     const agere = /^[0-9\b]+$/;
     if (!agere.test(age)) {
       setAgeMsg('* Age must be an integer value. Please try again.');
@@ -158,17 +158,6 @@ const Profile = function Profile(props) {
     setAgeMsg('');
     handleProfileSave();
   };
-
-  async function applyToCurrentEvent() {
-    if (!props.isLoggedIn) return;
-    if (status === 'Application not complete: confirm email') {
-      const res = await axios.post('/api/registrations/apply', {
-        event: currentEvent,
-        details: 'none',
-      });
-      getStatus();
-    }
-  }
 
   async function getEmailConfirmStatus() {
     if (!props.isLoggedIn) return;
@@ -189,11 +178,7 @@ const Profile = function Profile(props) {
   async function sendConfirmationEmail() {
     try {
       await axios.post('/api/accounts/confirm_email/request', {
-        confirm_url:
-          window.location.protocol +
-          '//' +
-          window.location.host +
-          '/confirm_email',
+        confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email'
       });
       setSendConfimationMsg('Sent confirmation email successfully!');
     } catch (e) {
@@ -231,17 +216,15 @@ const Profile = function Profile(props) {
     if (!confirmed) {
       return (
         <>
-          <button onClick={sendConfirmationEmail}>
-            Request Email Confirmation
-          </button>
+          <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
           <p>{sendConfimationMsg}</p>
         </>
       );
     } else if (confirmed && status === appCompleteStatus) {
       return (
         <p>
-          You have successfully applied to HopHacks. Please be patient while we
-          process your application :)
+          You have successfully applied to HopHacks. Please be patient while we process your
+          application :)
         </p>
       );
     } else if (status === acceptedStatus) {
@@ -352,27 +335,17 @@ const Profile = function Profile(props) {
           <TableRow>
             <TableCell>{oldResumeName}</TableCell>
             <TableCell>
-              <Link
-                onClick={handleResumeDownload}
-                style={{ fontSize: '15px', color: 'blue' }}
-              >
+              <Link onClick={handleResumeDownload} style={{ fontSize: '15px', color: 'blue' }}>
                 Download
               </Link>
             </TableCell>
             <TableCell>
               <form onSubmit={handleResumeSubmit}>
                 <div>
-                  <input
-                    type="file"
-                    name="file"
-                    onChange={handleResumeFileChange}
-                  />
+                  <input type="file" name="file" onChange={handleResumeFileChange} />
                 </div>
                 <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}>
-                  {' '}
-                  {resumeMsg}{' '}
-                </Typography>
+                <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
               </form>
             </TableCell>
           </TableRow>
@@ -419,9 +392,7 @@ const Profile = function Profile(props) {
           <MenuItem value="Male">Male</MenuItem>
           <MenuItem value="Female">Female</MenuItem>
           <MenuItem value="Non-Binary">Non-Binary</MenuItem>
-          <MenuItem value="Prefer not to disclose">
-            Prefer not to disclose
-          </MenuItem>
+          <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
         </Select>
       </FormControl>
     </form>
@@ -457,9 +428,7 @@ const Profile = function Profile(props) {
             American Indian or Alaska Native
           </MenuItem>
           <MenuItem value="Asian">Asian</MenuItem>
-          <MenuItem value="Black or African American">
-            Black or African American
-          </MenuItem>
+          <MenuItem value="Black or African American">Black or African American</MenuItem>
           <MenuItem value="Hispanic, Latino or Spanish Origin">
             Hispanic, Latino or Spanish Origin
           </MenuItem>
@@ -471,9 +440,7 @@ const Profile = function Profile(props) {
           </MenuItem>
           <MenuItem value="White">White</MenuItem>
           <MenuItem value="Multiethnic">Multiethnic</MenuItem>
-          <MenuItem value="Prefer not to disclose">
-            Prefer not to disclose
-          </MenuItem>
+          <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
         </Select>
       </FormControl>
     </form>

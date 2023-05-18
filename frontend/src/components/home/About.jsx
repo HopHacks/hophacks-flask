@@ -1,25 +1,20 @@
 import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  motion,
-  useTransform,
-  useViewportScroll,
-  useAnimation,
-} from 'framer-motion/dist/framer-motion';
+import { motion, useAnimation } from 'framer-motion/dist/framer-motion';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
 
 const useStyles = makeStyles({
   margin: {
-    marginBottom: '13px',
+    marginBottom: '13px'
   },
   color: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   title: {
     color: '#7289da',
-    fontFamily: 'VCR OSD Mono',
+    fontFamily: 'VCR OSD Mono'
   },
   Media: {
     // comment
@@ -29,7 +24,7 @@ const useStyles = makeStyles({
     // justifyContent:'center'
     width: '65%',
     marginLeft: '33%',
-    backgroundColor: '#278be2',
+    backgroundColor: '#278be2'
   },
   font1: {
     position: 'absolute',
@@ -43,7 +38,7 @@ const useStyles = makeStyles({
     fontWeight: '700',
     fontStyle: 'italic',
     fontSize: '251.02px',
-    lineHeight: '304px',
+    lineHeight: '304px'
   },
 
   font2: {
@@ -58,7 +53,7 @@ const useStyles = makeStyles({
     fontWeight: '700',
     fontStyle: 'italic',
     fontSize: '251.02px',
-    lineHeight: '304px',
+    lineHeight: '304px'
   },
 
   font3: {
@@ -73,7 +68,7 @@ const useStyles = makeStyles({
     fontWeight: '700',
     fontStyle: 'italic',
     fontSize: '251.02px',
-    lineHeight: '304px',
+    lineHeight: '304px'
   },
 
   intro: {
@@ -90,8 +85,8 @@ const useStyles = makeStyles({
     fontSize: '36px',
     lineHeight: '58px',
     textAlign: 'center',
-    letterSpacing: '0.11em',
-  },
+    letterSpacing: '0.11em'
+  }
 });
 
 const Title = styled.h2`
@@ -115,17 +110,13 @@ const Character = styled(motion.span)`
 
 export default function About() {
   const classes = useStyles();
-  function img(url) {
-    return process.env.PUBLIC_URL + '/images/' + url;
-  }
-  const { scrollY } = useViewportScroll();
 
   const introText =
     'HopHacks is a 36-hour biannual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications. Teams of up to 4 university students work on projects from scratch. At the end of the hackathon, teams present their projects to judges and compete for prizes ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!';
   const ctrls = useAnimation();
   const { ref, inView } = useInView({
     threshold: 0.6,
-    triggerOnce: false,
+    triggerOnce: false
   });
 
   useEffect(() => {
@@ -139,31 +130,8 @@ export default function About() {
 
   const wordAnimation = {
     hidden: {},
-    visible: {},
+    visible: {}
   };
-
-  const characterAnimation = {
-    hidden: {
-      opacity: 0,
-      y: `0.25em`,
-    },
-    visible: {
-      opacity: 1,
-      y: `0em`,
-      transition: {
-        duration: 1,
-        ease: [0.2, 0.65, 0.3, 0.9],
-      },
-    },
-  };
-
-  const scaleRight = useTransform(scrollY, [0, 500], [2, 1]);
-  const yRight = useTransform(scrollY, [0, 500], ['25vh', '0vh']);
-  const xRight = useTransform(scrollY, [1500, 300], ['15%', '-23vw']);
-
-  const xLeft = useTransform(scrollY, [1500, 300], ['-25%', '20vw']);
-
-  const xLeft2 = useTransform(scrollY, [1500, 300], ['5%', '100vw']);
 
   return (
     <div style={{ position: 'relative' }}>
@@ -180,19 +148,11 @@ export default function About() {
                 variants={wordAnimation}
                 transition={{
                   delayChildren: index * 0.03,
-                  staggerChildren: 0.05,
+                  staggerChildren: 0.05
                 }}
               >
                 {word.split('').map((character, index) => {
-                  return (
-                    <Character
-                    // aria-hidden="true"
-                    // key={index}
-                    // variants={characterAnimation}
-                    >
-                      {character}
-                    </Character>
-                  );
+                  return <Character key={index}>{character}</Character>;
                 })}
               </Word>
             );

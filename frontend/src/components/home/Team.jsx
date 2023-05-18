@@ -12,24 +12,24 @@ import Tab from '@material-ui/core/Tab';
 
 const useStyles = makeStyles({
   box: {
-    width: '100%',
+    width: '100%'
   },
 
   root: {
     flexGrow: 1,
-    backgroundColor: '#eef7ff',
+    backgroundColor: '#eef7ff'
   },
 
   title: {
     color: '#7289da',
-    fontFamily: 'Inter',
+    fontFamily: 'Inter'
   },
 
   team: {
     display: 'flex',
     flexWrap: 'wrap',
     padding: '10px',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   teambox: {
@@ -42,13 +42,13 @@ const useStyles = makeStyles({
     margin: '10px',
     padding: '2.5px 20px',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   memberPic: {
     width: '210px',
     height: '210px',
-    borderRadius: '10px',
+    borderRadius: '10px'
   },
 
   memberBg: {
@@ -57,8 +57,8 @@ const useStyles = makeStyles({
     borderRadius: '10px',
     backgroundColor: 'black',
     textAlign: 'right',
-    position: 'relative',
-  },
+    position: 'relative'
+  }
 });
 
 function img(url) {
@@ -76,7 +76,7 @@ function MemberItem(props) {
 
   if (props.linkedin) {
     linkedin = (
-      <a target="_blank" href={`${props.linkedin}`}>
+      <a target="_blank" href={`${props.linkedin}`} rel="noreferrer">
         <img
           style={buttons}
           className="social-icon linkedin"
@@ -89,7 +89,7 @@ function MemberItem(props) {
 
   if (props.github) {
     github = (
-      <a target="_blank" href={`${props.github}`}>
+      <a target="_blank" href={`${props.github}`} rel="noreferrer">
         <img
           style={buttons}
           className="social-icon github"
@@ -102,7 +102,7 @@ function MemberItem(props) {
 
   if (props.personal) {
     personal = (
-      <a target="_blank" href={`${props.personal}`}>
+      <a target="_blank" href={`${props.personal}`} rel="noreferrer">
         <img
           style={buttons}
           className="social-icon personal"
@@ -116,11 +116,11 @@ function MemberItem(props) {
   return (
     <Grid item>
       <div
-        onMouseEnter={(e) => {
+        onMouseEnter={() => {
           setButtons({ display: '' });
           setBackground({ opacity: 0.7 });
         }}
-        onMouseLeave={(e) => {
+        onMouseLeave={() => {
           setButtons({ display: 'none' });
           setBackground({ opacity: 1 });
         }}
@@ -396,11 +396,7 @@ export default function Team() {
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="alison_headshot"
-                memberName="Alison Lee"
-                memberTitle="Meta"
-              />
+              <MemberItem imgURL="alison_headshot" memberName="Alison Lee" memberTitle="Meta" />
             </div>
             <div className={classes.teambox}>
               <MemberItem

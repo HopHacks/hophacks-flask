@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import { Typography } from '@material-ui/core';
 import './../stylesheets/home.css';
 
-const Footer = function Footer(props) {
+const Footer = function Footer() {
   function img(url) {
     return process.env.PUBLIC_URL + '/images/footer/' + url;
   }
@@ -15,22 +15,12 @@ const Footer = function Footer(props) {
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
+            <Grid container direction="column" alignItems="center" justifyContent="center">
               <img src={img('bluejay-icon.png')} style={{ width: '100px' }} />
             </Grid>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
+            <Grid container direction="column" alignItems="center" justifyContent="center">
               <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 <a
                   href="mailto:hophacks@gmail.com"
@@ -40,32 +30,15 @@ const Footer = function Footer(props) {
                 </a>
               </Typography>
             </Grid>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
-                Malone Hall
-              </Typography>
+            <Grid container direction="column" alignItems="center" justifyContent="center">
+              <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>Malone Hall</Typography>
             </Grid>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
+            <Grid container direction="column" alignItems="center" justifyContent="center">
               <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 Johns Hopkins University
               </Typography>
             </Grid>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
+            <Grid container direction="column" alignItems="center" justifyContent="center">
               <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 <a
                   href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
@@ -77,22 +50,10 @@ const Footer = function Footer(props) {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography style={{ fontFamily: 'Inter', fontSize: 20 }}>
-                Follow Us
-              </Typography>
+            <Grid container direction="column" alignItems="center" justifyContent="center">
+              <Typography style={{ fontFamily: 'Inter', fontSize: 20 }}>Follow Us</Typography>
             </Grid>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
+            <Grid container direction="column" alignItems="center" justifyContent="center">
               <Grid item>
                 <a href="https://www.facebook.com/HopHacks" title="Facebook">
                   <img
@@ -101,20 +62,14 @@ const Footer = function Footer(props) {
                     alt="fb-icon"
                   />
                 </a>
-                <a
-                  href="https://www.linkedin.com/company/hophacks/"
-                  title="LinkedIn"
-                >
+                <a href="https://www.linkedin.com/company/hophacks/" title="LinkedIn">
                   <img
                     src={img('linkedin-icon.png')}
                     style={{ width: '40px', margin: '10px 5px 5px' }}
                     alt="linkedin-icon"
                   />
                 </a>
-                <a
-                  href="https://www.instagram.com/hophacks/?hl=en"
-                  title="Instagram"
-                >
+                <a href="https://www.instagram.com/hophacks/?hl=en" title="Instagram">
                   <img
                     src={img('instagram-icon.png')}
                     style={{ width: '40px', margin: '10px 5px 5px' }}

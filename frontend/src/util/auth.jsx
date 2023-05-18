@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const AuthContext = React.createContext();
@@ -9,7 +8,7 @@ const AuthContext = React.createContext();
 function AuthProvider(props) {
   const { children } = props;
 
-  const [token, setToken] = useState('');
+  const [, setToken] = useState('');
 
   // Can be null (haven't tried logging in with refreshToken yet)
   const [isLoggedIn, setLoggedIn] = useState(null);
@@ -38,7 +37,7 @@ function AuthProvider(props) {
   async function login(email, password) {
     const response = await axios.post('/api/auth/login', {
       username: email,
-      password: password,
+      password: password
     });
 
     const tok = response.data['access_token'];
@@ -71,9 +70,7 @@ function AuthProvider(props) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>{children}</AuthContext.Provider>
   );
 }
 
@@ -81,11 +78,11 @@ function AuthProvider(props) {
 
 /* Inserts functions/state related to auth into props of wrapped components */
 function withAuthProps(WrappedComponent) {
-  return function (props) {
+  return function insertToComponents(props) {
     return (
       <AuthContext.Consumer>
         {(auth) => {
-          const { isLoggedIn, login, logout } = auth;
+          const { isLoggedIn } = auth;
 
           return (
             <WrappedComponent

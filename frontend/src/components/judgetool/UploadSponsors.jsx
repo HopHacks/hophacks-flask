@@ -8,7 +8,7 @@ import { Container } from '@material-ui/core';
 
 class UploadSponsors extends Component {
   state = {
-    file: null,
+    file: null
   };
 
   componentDidMount() {
@@ -40,12 +40,7 @@ class UploadSponsors extends Component {
     return (
       <Container fixed>
         <Card style={{ backgroundColor: '#d1e9ff' }}>
-          <Form
-            action=""
-            name="form"
-            encType="multipart/form-data"
-            onSubmit={this.onFileUpload}
-          >
+          <Form action="" name="form" encType="multipart/form-data" onSubmit={this.onFileUpload}>
             <h2>Sponsor prizes (.csv)</h2>
             <Form.File
               name="sponsors_file"

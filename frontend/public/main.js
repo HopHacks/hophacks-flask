@@ -7,31 +7,19 @@
     //  OPTIONS
     /// ---------------------------
     options = options || {};
-    options.stageWidth = options.hasOwnProperty('stageWidth')
-      ? options.stageWidth
-      : 1920;
+    options.stageWidth = options.hasOwnProperty('stageWidth') ? options.stageWidth : 1920;
     if (window.innerWidth <= 650) {
-      options.stageHeight = options.hasOwnProperty('stageHeight')
-        ? options.stageHeight
-        : 950;
+      options.stageHeight = options.hasOwnProperty('stageHeight') ? options.stageHeight : 950;
     } else {
-      options.stageHeight = options.hasOwnProperty('stageHeight')
-        ? options.stageHeight
-        : 1080;
+      options.stageHeight = options.hasOwnProperty('stageHeight') ? options.stageHeight : 1080;
     }
-    options.pixiSprites = options.hasOwnProperty('sprites')
-      ? options.sprites
-      : [];
+    options.pixiSprites = options.hasOwnProperty('sprites') ? options.sprites : [];
     options.texts = options.hasOwnProperty('texts') ? options.texts : [];
-    options.autoPlay = options.hasOwnProperty('autoPlay')
-      ? options.autoPlay
-      : false;
+    options.autoPlay = options.hasOwnProperty('autoPlay') ? options.autoPlay : false;
     options.autoPlaySpeed = options.hasOwnProperty('autoPlaySpeed')
       ? options.autoPlaySpeed
       : [10, 3];
-    options.fullScreen = options.hasOwnProperty('fullScreen')
-      ? options.fullScreen
-      : true;
+    options.fullScreen = options.hasOwnProperty('fullScreen') ? options.fullScreen : true;
     options.displaceScale = options.hasOwnProperty('displaceScale')
       ? options.displaceScale
       : [200, 70];
@@ -45,13 +33,9 @@
       ? options.displaceAutoFit
       : false;
     options.wacky = options.hasOwnProperty('wacky') ? options.wacky : false;
-    options.interactive = options.hasOwnProperty('interactive')
-      ? options.interactive
-      : false;
+    options.interactive = options.hasOwnProperty('interactive') ? options.interactive : false;
     options.displaceScaleTo = options.autoPlay === false ? [0, 0] : [20, 20];
-    options.textColor = options.hasOwnProperty('textColor')
-      ? options.textColor
-      : '#fff';
+    options.textColor = options.hasOwnProperty('textColor') ? options.textColor : '#fff';
     options.displacementCenter = options.hasOwnProperty('displacementCenter')
       ? options.displacementCenter
       : false;
@@ -61,19 +45,13 @@
 
     //  PIXI VARIABLES
     /// ---------------------------
-    var renderer = new PIXI.autoDetectRenderer(
-      options.stageWidth,
-      options.stageHeight,
-      { transparent: true },
-    );
+    var renderer = new PIXI.autoDetectRenderer(options.stageWidth, options.stageHeight, {
+      transparent: true
+    });
     var stage = new PIXI.Container();
     var slidesContainer = new PIXI.Container();
-    var displacementSprite = new PIXI.Sprite.fromImage(
-      options.displacementImage,
-    );
-    var displacementFilter = new PIXI.filters.DisplacementFilter(
-      displacementSprite,
-    );
+    var displacementSprite = new PIXI.Sprite.fromImage(options.displacementImage);
+    var displacementFilter = new PIXI.filters.DisplacementFilter(displacementSprite);
 
     //  TEXTS
     /// ---------------------------
@@ -82,7 +60,7 @@
       wordWrap: true,
       wordWrapWidth: 400,
       letterSpacing: 20,
-      fontSize: 14,
+      fontSize: 14
     });
 
     //  SLIDES ARRAY INDEX
@@ -106,8 +84,7 @@
         renderer.view.style.height = '100%';
         renderer.view.style.top = '50%';
         renderer.view.style.left = '50%';
-        renderer.view.style.webkitTransform =
-          'translate( -50%, -50% ) scale(1.2)';
+        renderer.view.style.webkitTransform = 'translate( -50%, -50% ) scale(1.2)';
         renderer.view.style.transform = 'translate( -50%, -50% ) scale(1.2)';
       } else {
         renderer.view.style.maxWidth = '100%';
@@ -261,7 +238,7 @@
             displacementSprite.rotation += baseTimeline.progress() * 0.02;
             displacementSprite.scale.set(baseTimeline.progress() * 3);
           }
-        },
+        }
       });
 
       baseTimeline.clear();
@@ -273,20 +250,10 @@
       baseTimeline
         .to(displacementFilter.scale, 1, {
           y: '+=' + 1280 + '',
-          ease: Power3.easeOut,
+          ease: Power3.easeOut
         })
-        .to(
-          slideImages[that.currentIndex],
-          0.5,
-          { alpha: 0, ease: Power3.easeOut },
-          0.4,
-        )
-        .to(
-          slideImages[newIndex],
-          0.5,
-          { alpha: 1, ease: Power3.easeInOut },
-          0.7,
-        )
+        .to(slideImages[that.currentIndex], 0.5, { alpha: 0, ease: Power3.easeOut }, 0.4)
+        .to(slideImages[newIndex], 0.5, { alpha: 1, ease: Power3.easeInOut }, 0.7)
         .to(displacementFilter.scale, 1, { y: 20, ease: Power3.easeOut }, 1);
     };
 

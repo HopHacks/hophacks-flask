@@ -7,14 +7,13 @@ export default function EmailConfirmation(props) {
   const [message, setMessage] = useState('Confirming Email...');
   const [email, setEmail] = useState('');
   let attempted = false;
-  const emailConfirmed =
-    'Email confirmed! You have applied to this event successfully!';
+  const emailConfirmed = 'Email confirmed! You have applied to this event successfully!';
   const attemptedMsg = 'Maybe the link is old? Try logging in.';
 
   async function confirm_email() {
     try {
       const response = await axios.post('/api/accounts/confirm_email', {
-        confirm_token: props.match.params.token,
+        confirm_token: props.match.params.token
       });
       setEmail(response.data.email);
       setMessage(emailConfirmed);
@@ -36,19 +35,15 @@ export default function EmailConfirmation(props) {
   } else if (message === attemptedMsg) {
     return (
       <div
-        class="container-email"
+        className="container-email"
         style={{
           backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
           backgroundSize: 'cover',
-          height: '100vh',
+          height: '100vh'
         }}
       >
         <div className="wrapper-email">
-          <img
-            id="graphic"
-            src={`${process.env.PUBLIC_URL}/images/hoplogo.png`}
-            width="100%"
-          />
+          <img id="graphic" src={`${process.env.PUBLIC_URL}/images/hoplogo.png`} width="100%" />
           <h1>Oh no!</h1>
           <h3>Sorry, something went wrong :(</h3>
           <h6>{message}</h6>
@@ -58,11 +53,11 @@ export default function EmailConfirmation(props) {
   }
   return (
     <div
-      class="container-email"
+      className="container-email"
       style={{
         backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
         backgroundSize: 'cover',
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <div className="wrapper-email">

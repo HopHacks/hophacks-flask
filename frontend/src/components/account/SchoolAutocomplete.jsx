@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import axios from 'axios';
-import list from './list.json';
 const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -67,12 +65,10 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
             style: { color: '#ffffff' },
             endAdornment: (
               <React.Fragment>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
                 {params.InputProps.endAdornment}
               </React.Fragment>
-            ),
+            )
           }}
           InputLabelProps={{ style: { color: '#ffffff' } }}
         />

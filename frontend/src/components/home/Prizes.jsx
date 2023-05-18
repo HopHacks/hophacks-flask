@@ -3,16 +3,9 @@ import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  motion,
-  useTransform,
-  useViewportScroll,
-  useAnimation,
-} from 'framer-motion/dist/framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion/dist/framer-motion';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
@@ -21,18 +14,18 @@ const useStyles = makeStyles({
     fontFamily: 'Inter',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: '375%',
+    fontSize: '375%'
   },
 
   color: {
-    backgroundColor: '#d1e9ff',
+    backgroundColor: '#d1e9ff'
   },
 
   birds: {
     backgroundColor: 'transparent',
     width: '80%',
     left: '10%',
-    position: 'relative',
+    position: 'relative'
   },
 
   card: {
@@ -40,7 +33,7 @@ const useStyles = makeStyles({
     border: 'none',
     boxShadow: 'none',
     backgroundColor: 'transparent',
-    left: '-22px',
+    left: '-22px'
   },
 
   chatBox1: {
@@ -48,7 +41,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     top: '25%',
     left: '25%',
-    width: '15.5%',
+    width: '15.5%'
   },
 
   chatBox2: {
@@ -56,7 +49,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     top: '4%',
     left: '43.7%',
-    width: '15.5%',
+    width: '15.5%'
   },
 
   chatBox3: {
@@ -64,8 +57,8 @@ const useStyles = makeStyles({
     position: 'absolute',
     top: '33%',
     left: '60%',
-    width: '15.5%',
-  },
+    width: '15.5%'
+  }
 });
 
 function img(url) {
@@ -73,16 +66,16 @@ function img(url) {
 }
 
 export default function Prizes() {
-  const [windowSize, setWindowSize] = useState({
+  const [, setWindowSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: window.innerHeight
   });
 
   useEffect(() => {
     function handleWindowResize() {
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight
       });
     }
 
@@ -102,21 +95,16 @@ export default function Prizes() {
       transition: {
         type: 'spring',
         bounce: 0.3,
-        duration: 3,
-      },
-    },
+        duration: 3
+      }
+    }
   };
 
   const classes = useStyles();
 
   return (
     <Box py={1}>
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        style={{ marginTop: '14%' }}
-      >
+      <Grid container spacing={2} alignItems="center" style={{ marginTop: '14%' }}>
         <Grid item xs={4}></Grid>
         <Grid item xs={4}>
           <Typography
@@ -130,16 +118,8 @@ export default function Prizes() {
         </Grid>
       </Grid>
       <Card className={classes.card}>
-        <motion.div
-          initial={'offscreen'}
-          whileInView={'onscreen'}
-          variants={imageAnimate}
-        >
-          <CardMedia
-            component="img"
-            className={classes.birds}
-            image={img('Birds.png')}
-          />
+        <motion.div initial={'offscreen'} whileInView={'onscreen'} variants={imageAnimate}>
+          <CardMedia component="img" className={classes.birds} image={img('Birds.png')} />
 
           <div>
             <CardMedia

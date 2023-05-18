@@ -19,11 +19,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   pagination: {
     marginTop: '3%',
-    marginLeft: '40%',
-  },
+    marginLeft: '40%'
+  }
 }));
 
 const Admin = function () {
@@ -61,23 +61,23 @@ const Admin = function () {
   // }
 
   async function acceptUser(id) {
-    const response = await axios.post('/api/registrations/accept', {
+    await axios.post('/api/registrations/accept', {
       users: [id],
-      event: 'Fall 2022',
+      event: 'Fall 2022'
     });
   }
 
   async function rejectUser(id) {
-    const response = await axios.post('/api/registrations/reject', {
+    await axios.post('/api/registrations/reject', {
       user: id,
-      event: 'Fall 2022',
+      event: 'Fall 2022'
     });
   }
 
   async function checkInUser(id) {
-    const response = await axios.post('/api/registrations/check_in', {
+    await axios.post('/api/registrations/check_in', {
       user: id,
-      event: 'Fall 2022',
+      event: 'Fall 2022'
     });
   }
 
@@ -106,14 +106,12 @@ const Admin = function () {
   function performFiltering() {
     if (alphaOrder == 'Yes') {
       const sortedUsers = [...allUsers].sort((a, b) =>
-        a.profile.first_name.localeCompare(b.profile.first_name),
+        a.profile.first_name.localeCompare(b.profile.first_name)
       );
       if (query == '') {
         setusers(sortedUsers.filter((user) => filterUser(user)));
       } else {
-        const searchedusers = sortedUsers.filter((user) =>
-          user.profile.first_name.includes(query),
-        );
+        const searchedusers = sortedUsers.filter((user) => user.profile.first_name.includes(query));
         setusers(searchedusers);
       }
     } else {
@@ -121,7 +119,7 @@ const Admin = function () {
         setusers([...allUsers].filter((user) => filterUser(user)));
       } else {
         const searchedusers = [...allUsers].filter((user) =>
-          user.profile.first_name.includes(query),
+          user.profile.first_name.includes(query)
         );
         setusers(searchedusers);
       }

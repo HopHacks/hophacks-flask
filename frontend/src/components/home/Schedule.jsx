@@ -15,24 +15,24 @@ import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 const useStyles = makeStyles({
   margin: {
-    marginBottom: '13px',
+    marginBottom: '13px'
   },
   color: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   body: {
     maxHeight: '150px',
-    overflow: 'auto',
+    overflow: 'auto'
   },
   title: {
     color: '#ffffff',
     fontFamily: 'Inter',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: '375%',
+    fontSize: '375%'
   },
   schedule: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   font: {
     fontFamily: 'Inter',
@@ -41,22 +41,22 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
     '&.Mui-selected': {
       color: 'rgba(255, 255, 255, 1)',
-      fontWeight: 'bold',
+      fontWeight: 'bold'
     },
-    fontSize: '15px',
+    fontSize: '15px'
   },
   divFont: {
     fontFamily: 'Inter',
     color: 'rgba(255, 255, 255, 1)',
     height: '35px',
     fontSize: '15px',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   indicator: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   selected: {
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: 'rgba(255, 255, 255, 0.8)'
   },
   Media: {
     position: 'absolute',
@@ -65,7 +65,7 @@ const useStyles = makeStyles({
     width: '25%',
     maxWidth: '300px',
     maxHeight: '200px',
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   Media2: {
     position: 'absolute',
@@ -74,8 +74,8 @@ const useStyles = makeStyles({
     width: '17.5%',
     maxWidth: '300px',
     maxHeight: '200px',
-    backgroundColor: 'transparent',
-  },
+    backgroundColor: 'transparent'
+  }
 });
 export default function Schedule() {
   function img(url) {
@@ -83,21 +83,12 @@ export default function Schedule() {
   }
   const classes = useStyles();
   const [day, setDay] = React.useState('fri');
-  function img(url) {
-    return process.env.PUBLIC_URL + '/images/' + url;
-  }
   const handleChange = (event, newDay) => {
     setDay(newDay);
   };
   return (
     <Box py={2}>
-      <Grid
-        container
-        spacing={2}
-        justify="center"
-        alignItems="center"
-        style={{ marginTop: '15%' }}
-      >
+      <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop: '15%' }}>
         <Grid item xs={4}></Grid>
         <Grid item xs={4}>
           <Typography
@@ -123,16 +114,8 @@ export default function Schedule() {
       >
         All times in EDT (GMT-4)
       </div>
-      <CardMedia
-        component="img"
-        className={classes.Media}
-        image={img('schedule_png.png')}
-      />
-      <CardMedia
-        component="img"
-        className={classes.Media2}
-        image={img('schedule_png_2.png')}
-      />
+      <CardMedia component="img" className={classes.Media} image={img('schedule_png.png')} />
+      <CardMedia component="img" className={classes.Media2} image={img('schedule_png_2.png')} />
 
       <TableContainer
         component={Paper}
@@ -152,40 +135,25 @@ export default function Schedule() {
           style={{
             width: '100%',
             backgroundColor: 'transparent',
-            color: 'white',
+            color: 'white'
           }}
           variant="fullWidth"
         >
-          <Tab
-            label="Fri September 16th"
-            value="fri"
-            className={classes.font}
-          />
-          <Tab
-            label="Sat September 17th"
-            value="sat"
-            className={classes.font}
-          />
-          <Tab
-            label="Sun September 18th"
-            value="sun"
-            className={classes.font}
-          />
+          <Tab label="Fri September 16th" value="fri" className={classes.font} />
+          <Tab label="Sat September 17th" value="sat" className={classes.font} />
+          <Tab label="Sun September 18th" value="sun" className={classes.font} />
         </Tabs>
         <Table
           className={classes.table}
           aria-label="simple table"
           sx={{
             height: 'max-content',
-            backgroundColor: 'transparent',
+            backgroundColor: 'transparent'
           }}
         >
           <TableHead className={classes.schedule}>
             <TableRow>
-              <TableCell
-                className={classes.font}
-                style={{ backgroundColor: 'transparent' }}
-              >
+              <TableCell className={classes.font} style={{ backgroundColor: 'transparent' }}>
                 Time
               </TableCell>
               <TableCell className={classes.font}>Event</TableCell>
@@ -241,12 +209,8 @@ export default function Schedule() {
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
-                <TableCell className={classes.font}>
-                  10:00 PM - 10:45 PM
-                </TableCell>
-                <TableCell className={classes.font}>
-                  uCredit Workshop{' '}
-                </TableCell>
+                <TableCell className={classes.font}>10:00 PM - 10:45 PM</TableCell>
+                <TableCell className={classes.font}>uCredit Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 313
                 </TableCell>
@@ -275,9 +239,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   10:00 AM - 11:00 AM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  HopHacks Coding Interview Workshop
-                </TableCell>
+                <TableCell className={classes.font}>HopHacks Coding Interview Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
@@ -286,20 +248,14 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   11:00 AM - 11:45 AM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  DigitalOcean Workshop
-                </TableCell>
+                <TableCell className={classes.font}>DigitalOcean Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 313
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
-                <TableCell className={classes.font}>
-                  12:00 PM - 12:45 PM
-                </TableCell>
-                <TableCell className={classes.font}>
-                  Booz Allen Hamilton Workshop{' '}
-                </TableCell>
+                <TableCell className={classes.font}>12:00 PM - 12:45 PM</TableCell>
+                <TableCell className={classes.font}>Booz Allen Hamilton Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
@@ -317,20 +273,14 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   2:00 PM - 3:30 PM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  Bloomberg Workshop
-                </TableCell>
+                <TableCell className={classes.font}>Bloomberg Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
-                <TableCell className={classes.font}>
-                  3:30 PM - 4:15 PM
-                </TableCell>
-                <TableCell className={classes.font}>
-                  Quest2Learn Workshop
-                </TableCell>
+                <TableCell className={classes.font}>3:30 PM - 4:15 PM</TableCell>
+                <TableCell className={classes.font}>Quest2Learn Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 313
                 </TableCell>
@@ -339,9 +289,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   4:15 PM - 5:00 PM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  Accenture Consulting Workshop
-                </TableCell>
+                <TableCell className={classes.font}>Accenture Consulting Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
@@ -356,9 +304,7 @@ export default function Schedule() {
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
-                <TableCell className={classes.font}>
-                  7:00 PM - 8:00 PM
-                </TableCell>
+                <TableCell className={classes.font}>7:00 PM - 8:00 PM</TableCell>
                 <TableCell className={classes.font}>JHU IT Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 313
@@ -366,9 +312,7 @@ export default function Schedule() {
               </TableRow>
               <TableRow className={classes.font}>
                 <TableCell className={classes.font}>9:00 PM</TableCell>
-                <TableCell className={classes.font}>
-                  MLH Bob Ross Event{' '}
-                </TableCell>
+                <TableCell className={classes.font}>MLH Bob Ross Event </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 110
                 </TableCell>
@@ -389,9 +333,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   8:30 AM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  Submissions Due (Soft Deadline)
-                </TableCell>
+                <TableCell className={classes.font}>Submissions Due (Soft Deadline)</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Devpost
                 </TableCell>
@@ -400,9 +342,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   8:45 AM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  All Coding Stops (Hard Deadline)
-                </TableCell>
+                <TableCell className={classes.font}>All Coding Stops (Hard Deadline)</TableCell>
                 <TableCell align="left" className={classes.font}>
                   N/A
                 </TableCell>
@@ -420,9 +360,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   10:00 AM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  Presentations Fair
-                </TableCell>
+                <TableCell className={classes.font}>Presentations Fair</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson Hall
                 </TableCell>
@@ -440,9 +378,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   12:30 PM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  Top 10 Demos & Judging
-                </TableCell>
+                <TableCell className={classes.font}>Top 10 Demos & Judging</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 110
                 </TableCell>
@@ -452,9 +388,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   1:45 PM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  Awards & Closing Ceremony
-                </TableCell>
+                <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 110
                 </TableCell>

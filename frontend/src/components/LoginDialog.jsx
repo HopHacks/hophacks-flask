@@ -17,41 +17,41 @@ function Login(props) {
   const useStyles = makeStyles({
     title: {
       fontFamily: 'Inter',
-      color: 'white',
+      color: 'white'
     },
 
     closeButton: {
       position: 'absolute',
       right: '8px',
       top: '8px',
-      color: 'black',
+      color: 'black'
     },
 
     dialogPad: {
       padding: '5px',
-      paddingLeft: '10px',
+      paddingLeft: '10px'
     },
 
     dialogBox: {
       backgroundColor: '#eef7ff',
-      padding: '8px',
+      padding: '8px'
     },
 
     loginButton: {
       backgroundColor: '#1890ff',
       '&:hover': {
-        backgroundColor: '#18baff',
+        backgroundColor: '#18baff'
       },
       color: 'white',
-      margin: '10px',
+      margin: '10px'
     },
 
     linkColor: {
       color: '#1890ff',
       '&:hover': {
-        color: '#18baff',
-      },
-    },
+        color: '#18baff'
+      }
+    }
   });
   const classes = useStyles();
   /* State for handling login */
@@ -60,9 +60,7 @@ function Login(props) {
   const [attempted, setAttempted] = useState(false);
 
   /* State for handling login modal */
-  const [loginDialogOpen, setLoginDialogOpen] = useState(
-    props.fromConfirmEmail ? true : false,
-  );
+  const [loginDialogOpen, setLoginDialogOpen] = useState(props.fromConfirmEmail ? true : false);
 
   let history = useHistory();
 
@@ -107,11 +105,7 @@ function Login(props) {
           {' '}
           LOGIN{' '}
         </Typography>
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={handleLoginClose}
-        >
+        <IconButton aria-label="close" className={classes.closeButton} onClick={handleLoginClose}>
           {' '}
           <CloseIcon />
         </IconButton>

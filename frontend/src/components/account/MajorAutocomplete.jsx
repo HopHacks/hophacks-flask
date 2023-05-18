@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const MajorAutocomplete = function MajorAutocomplete({ major, setMajor }) {
+const MajorAutocomplete = function MajorAutocomplete({ setMajor }) {
   const majors = [
     'Africana Studies',
     'Anthropology',
@@ -55,7 +55,7 @@ const MajorAutocomplete = function MajorAutocomplete({ major, setMajor }) {
     'Sociology',
     'Spanish',
     'Writing Seminars',
-    'Other Majors',
+    'Other Majors'
   ];
 
   return (

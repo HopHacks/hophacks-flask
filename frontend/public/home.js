@@ -19,5 +19,5 @@ var initCanvasSlideshow = new CanvasSlideshow({
   texts: texts,
   displacementImage: 'img/dmaps/2048x2048/ripple.jpg',
   fullScreen: true,
-  centerSprites: false,
+  centerSprites: false
 });

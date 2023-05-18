@@ -13,7 +13,6 @@ import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
-import CodeOfConduct from '../../doc/mlh-code-of-conduct.pdf';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import FormGroup from '@material-ui/core/FormGroup';
@@ -21,7 +20,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PhoneInput from 'react-phone-number-input';
-import { isPossiblePhoneNumber } from 'react-phone-number-input';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import PhoneNumber from './PhoneNumber';
 
@@ -62,22 +60,22 @@ export default function Register(props) {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      width: '100%',
+      width: '100%'
     },
     button: {
       marginTop: theme.spacing(1),
       marginRight: theme.spacing(1),
-      fontSize: 'min(max(calc(6px + 1.25vw), 3vw), 25px)',
+      fontSize: 'min(max(calc(6px + 1.25vw), 3vw), 25px)'
     },
     actionsContainer: {
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(2)
     },
     resetContainer: {
-      padding: theme.spacing(3),
+      padding: theme.spacing(3)
     },
     label: {
-      backgroundColor: 'rgb(232, 235, 242)',
-    },
+      backgroundColor: 'rgb(232, 235, 242)'
+    }
   }));
 
   const classes = useStyles();
@@ -87,11 +85,7 @@ export default function Register(props) {
   }
 
   async function handleAccountNext() {
-    if (
-      password.length === 0 ||
-      passwordConfirm.length === 0 ||
-      username.length === 0
-    ) {
+    if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
       setConfirmMsg('* Required field cannot be empty');
       return;
     }
@@ -109,12 +103,11 @@ export default function Register(props) {
       return;
     }
 
-    const passwordre =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {
       setConfirmMsg(
-        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.',
+        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
       );
       return;
     }
@@ -168,9 +161,7 @@ export default function Register(props) {
     }
 
     if (!eventLogisticsChecked) {
-      setProfileSubmitMsg(
-        '* Please read the MLH Terms and Conditions and Privacy Policy.',
-      );
+      setProfileSubmitMsg('* Please read the MLH Terms and Conditions and Privacy Policy.');
       return;
     }
 
@@ -192,11 +183,7 @@ export default function Register(props) {
       JSON.stringify({
         username: username,
         password: password,
-        confirm_url:
-          window.location.protocol +
-          '//' +
-          window.location.host +
-          '/confirm_email',
+        confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email',
         profile: {
           first_name: first_name,
           last_name: last_name,
@@ -210,9 +197,9 @@ export default function Register(props) {
           is_jhu: school === 'Johns Hopkins University' ? true : false,
           grad_month: grad_month,
           grad_year: grad_year,
-          mlh_emails: communicationChecked,
-        },
-      }),
+          mlh_emails: communicationChecked
+        }
+      })
     );
 
     try {
@@ -222,7 +209,7 @@ export default function Register(props) {
       await axios.post('/api/slack/registration', {
         first_name: first_name,
         last_name: last_name,
-        school: school,
+        school: school
       });
     } catch (e) {
       return;
@@ -363,8 +350,8 @@ export default function Register(props) {
         label={
           <div style={{ fontSize: 15 }}>
             <span>
-              * I authorize HopHacks to send my resume to our event sponsors for
-              recruiting purposes.
+              * I authorize HopHacks to send my resume to our event sponsors for recruiting
+              purposes.
             </span>
 
             <div>
@@ -425,9 +412,8 @@ export default function Register(props) {
         label={
           <div style={{ fontSize: 15 }}>
             <span>
-              * I authorize you to share my application/registration information
-              with Major League Hacking for event administration, ranking, and
-              MLH administration in-line with the{' '}
+              * I authorize you to share my application/registration information with Major League
+              Hacking for event administration, ranking, and MLH administration in-line with the{' '}
             </span>
             <Link onClick={openPrivacy}>MLH Privacy Policy</Link>
             <span>. I further agree to the </span>
@@ -457,9 +443,8 @@ export default function Register(props) {
           <div style={{ fontSize: 15 }}>
             <span>
               {' '}
-              (Optional) I authorize MLH to send me pre- and post-event
-              informational emails, which contain free credit and opportunities
-              from their partners.{' '}
+              (Optional) I authorize MLH to send me pre- and post-event informational emails, which
+              contain free credit and opportunities from their partners.{' '}
             </span>
           </div>
         }
@@ -490,7 +475,7 @@ export default function Register(props) {
               style={{ minWidth: 145, maxWidth: 145 }}
               InputLabelProps={{
                 style: { color: '#000000' },
-                classes: { root: classes.label },
+                classes: { root: classes.label }
               }}
             />
           </Grid>
@@ -505,7 +490,7 @@ export default function Register(props) {
               style={{ minWidth: 145, maxWidth: 145 }}
               InputLabelProps={{
                 style: { color: '#000000' },
-                classes: { root: classes.label },
+                classes: { root: classes.label }
               }}
             />
           </Grid>
@@ -524,7 +509,7 @@ export default function Register(props) {
               InputProps={{ inputProps: { min: 0 } }}
               InputLabelProps={{
                 style: { color: '#000000' },
-                classes: { root: classes.label },
+                classes: { root: classes.label }
               }}
             />
           </Grid>
@@ -541,7 +526,7 @@ export default function Register(props) {
               select
               InputLabelProps={{
                 style: { color: '#000000' },
-                classes: { root: classes.label },
+                classes: { root: classes.label }
               }}
             >
               <MenuItem value="Male">Male</MenuItem>
@@ -550,9 +535,7 @@ export default function Register(props) {
               <MenuItem value="Transgender">Transgender</MenuItem>
               <MenuItem value="Intersex">Intersex</MenuItem>
               <MenuItem value="Not listed">Not listed</MenuItem>
-              <MenuItem value="Prefer not to disclose">
-                Prefer not to disclose
-              </MenuItem>
+              <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
             </TextField>
           </Grid>
         </Grid>
@@ -569,16 +552,14 @@ export default function Register(props) {
             select
             InputLabelProps={{
               style: { color: '#000000' },
-              classes: { root: classes.label },
+              classes: { root: classes.label }
             }}
           >
             <MenuItem value="American Indian or Alaska Native">
               American Indian or Alaska Native
             </MenuItem>
             <MenuItem value="Asian">Asian</MenuItem>
-            <MenuItem value="Black or African American">
-              Black or African American
-            </MenuItem>
+            <MenuItem value="Black or African American">Black or African American</MenuItem>
             <MenuItem value="Hispanic, Latino or Spanish Origin">
               Hispanic, Latino or Spanish Origin
             </MenuItem>
@@ -590,9 +571,7 @@ export default function Register(props) {
             </MenuItem>
             <MenuItem value="White">White</MenuItem>
             <MenuItem value="Multiethnic">Multiethnic</MenuItem>
-            <MenuItem value="Prefer not to disclose">
-              Prefer not to disclose
-            </MenuItem>
+            <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
           </TextField>
         </Grid>
 
@@ -617,22 +596,18 @@ export default function Register(props) {
         justify="center"
       >
         <Grid item xs={12}>
-          <FormControl
-            required
-            variant="standard"
-            style={{ minWidth: 300, maxWidth: 300 }}
-          >
+          <FormControl required variant="standard" style={{ minWidth: 300, maxWidth: 300 }}>
             <SchoolAutocomplete school={school} setSchool={setSchool} />
           </FormControl>
           <FormHelperText style={{ fontSize: 9, color: 'black', width: 300 }}>
-            * If your school is not in the list, choose 'other schools'
+            * If your school is not in the list, choose &apos;other schools&apos;
           </FormHelperText>
         </Grid>
 
         <Grid item xs={12}>
           <MajorAutocomplete major={major} setMajor={setMajor} />
           <FormHelperText style={{ fontSize: 9, color: 'black', width: 300 }}>
-            * If your major is not in the list, choose 'other majors'
+            * If your major is not in the list, choose &apos;other majors&apos;
           </FormHelperText>
         </Grid>
 
@@ -648,7 +623,7 @@ export default function Register(props) {
             select
             InputLabelProps={{
               style: { color: '#000000' },
-              classes: { root: classes.label },
+              classes: { root: classes.label }
             }}
           >
             <MenuItem value="Undergraduate">Undergraduate</MenuItem>
@@ -657,14 +632,7 @@ export default function Register(props) {
           </TextField>
         </Grid>
 
-        <Grid
-          container
-          item
-          xs={12}
-          direction="row"
-          alignItems="center"
-          justify="center"
-        >
+        <Grid container item xs={12} direction="row" alignItems="center" justify="center">
           <Grid item xs={11} md={7}>
             <TextField
               required
@@ -674,7 +642,7 @@ export default function Register(props) {
                 minWidth: 145,
                 marginTop: 10,
                 maxWidth: 145,
-                marginBottom: -3,
+                marginBottom: -3
               }}
               onChange={(e) => {
                 setGrad_month(e.target.value);
@@ -682,7 +650,7 @@ export default function Register(props) {
               select
               InputLabelProps={{
                 style: { color: '#000000' },
-                classes: { root: classes.label },
+                classes: { root: classes.label }
               }}
             >
               <MenuItem value="01">01</MenuItem>
@@ -710,7 +678,7 @@ export default function Register(props) {
                 marginLeft: -12,
                 marginTop: 10,
                 maxWidth: 145,
-                marginBottom: -3,
+                marginBottom: -3
               }}
               onChange={(e) => {
                 setGrad_year(e.target.value);
@@ -718,7 +686,7 @@ export default function Register(props) {
               select
               InputLabelProps={{
                 style: { color: '#000000' },
-                classes: { root: classes.label },
+                classes: { root: classes.label }
               }}
             >
               <MenuItem value="2022">2022</MenuItem>
@@ -740,14 +708,7 @@ export default function Register(props) {
         {communication}
       </Grid>
 
-      <Grid
-        item
-        container
-        xs={12}
-        direction="column"
-        alignItems="center"
-        justify="center"
-      >
+      <Grid item container xs={12} direction="column" alignItems="center" justify="center">
         <Grid item>
           <Typography style={{ color: 'red' }}>{profileSubmitMsg}</Typography>
         </Grid>
@@ -775,8 +736,7 @@ export default function Register(props) {
       <h1>Thank you!</h1>
       <h3>A confirmation has been sent to your email.</h3>
       <Typography>
-        Please check your inbox (and spam) and click the link to confirm your
-        email address.
+        Please check your inbox (and spam) and click the link to confirm your email address.
       </Typography>
       <Typography>
         Your application to HopHacks will be complete after email confirmation!
@@ -790,14 +750,14 @@ export default function Register(props) {
     } else if (activePage === PROFILE) {
       return (
         <>
-          <div class="personal-wrapper">{personalInfo}</div>
+          <div className="personal-wrapper">{personalInfo}</div>
         </>
       );
     } else {
       // confirmation page
       return (
         <>
-          <div class="confirm-wrapper">{confirmation}</div>
+          <div className="confirm-wrapper">{confirmation}</div>
         </>
       );
     }
@@ -808,7 +768,7 @@ export default function Register(props) {
       style={{
         backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
         backgroundSize: 'cover',
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <div class="container">
