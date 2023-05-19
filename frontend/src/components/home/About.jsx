@@ -48,13 +48,13 @@ export default function About() {
       <Box flex={1} align="center">
         <Title>About</Title>
       </Box>
-      <div className="about-flex">
-        <Box flex={1}>
+      <Box flex={1} align="center">
+        <Box flex={1} width={'80%'}>
           {introTextP1}
-          <Box height={10}></Box>
+          <Box height={5}></Box>
           {introTextP2}
         </Box>
-      </div>
+      </Box>
     </div>
   );
 }
