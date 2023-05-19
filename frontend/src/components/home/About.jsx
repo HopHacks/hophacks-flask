@@ -11,18 +11,12 @@ const Title = styled.h2`
 const AboutText = styled.p`
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.8);
+  text-align: ${(props) => props.align || 'center'};
 `;
 
 const Highlight = styled.span`
-  color: rgb(181, 227, 247);
+  color: rgb(204, 107, 163);
   font-weight: 800;
-`;
-
-const PlaceHolderWhiteBox = styled.div`
-  background-color: white;
-  width: 80%;
-  height: 400px;
-  margin: auto;
 `;
 
 function img(url) {
@@ -32,7 +26,7 @@ function img(url) {
 export default function About() {
   const introTextP1 = (
     <AboutText>
-      HopHacks is a <Highlight>36-hour biannual Hackathon</Highlight> held at the Johns Hopkins
+      HopHacks is a <Highlight>36-hour annual Hackathon</Highlight> held at the Johns Hopkins
       University that encourages engineers, designers, and entrepreneurs to explore new ideas and
       create new applications.
     </AboutText>
@@ -41,30 +35,24 @@ export default function About() {
   const introTextP2 = (
     <AboutText>
       Teams of up to <Highlight>4 university students</Highlight> work on projects from scratch.At
-      the end of the hackathon, teams present their projects to judges and compete for prizes($1024,
-      $512, $256 for top 3 winners and sponsor specific prizes) !
+      the end of the hackathon, teams present their projects to judges and compete for prizes
+      ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!
     </AboutText>
   );
 
   return (
     <div id="about">
-      <div className="about-flex title-align">
-        <Box flex={1}>
-          <Title>About</Title>
-        </Box>
-        <Box>
-          <img src={img('logo2023.png')} width={'160px'} />
-        </Box>
-        <Box flex={1}></Box>
-      </div>
+      <Box align="center">
+        <img src={img('logo2023.png')} width={'160px'} />
+      </Box>
+      <Box flex={1} align="center">
+        <Title>About</Title>
+      </Box>
       <div className="about-flex">
         <Box flex={1}>
           {introTextP1}
-          <Box height={20}></Box>
+          <Box height={10}></Box>
           {introTextP2}
-        </Box>
-        <Box flex={1}>
-          <PlaceHolderWhiteBox />
         </Box>
       </div>
     </div>
