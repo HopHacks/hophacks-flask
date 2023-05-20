@@ -42,6 +42,17 @@ const useStyles = makeStyles({
     },
     fontSize: '15px'
   },
+  titleFont: {
+    fontFamily: 'Inter',
+    color: 'rgba(255, 255, 255, 1)',
+    backgroundColor: 'transparent',
+    fontWeight: 'bolder',
+    '&.Mui-selected': {
+      color: 'rgba(255, 255, 255, 1)',
+      fontWeight: 'bolder'
+    },
+    fontSize: '15px'
+  },
   divFont: {
     fontFamily: 'Inter',
     color: 'rgba(255, 255, 255, 1)',
@@ -128,9 +139,9 @@ export default function Schedule() {
         >
           <TableHead className={classes.schedule}>
             <TableRow>
-              <TableCell className={classes.font}>Time</TableCell>
-              <TableCell className={classes.font}>Event</TableCell>
-              <TableCell className={classes.font}>Location</TableCell>
+              <TableCell className={classes.titleFont}>Time</TableCell>
+              <TableCell className={classes.titleFont}>Event</TableCell>
+              <TableCell className={classes.titleFont}>Location</TableCell>
             </TableRow>
           </TableHead>
           {day === 'fri' && (
