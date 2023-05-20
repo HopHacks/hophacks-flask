@@ -196,8 +196,8 @@ const Nav = function Nav(props) {
                 rel="noreferrer"
               >
                 <img
-                  src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-white.svg"
-                  alt="Major League Hacking 2023 Hackathon Season"
+                  src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-white-2024.svg"
+                  alt="Major League Hacking 2024 Hackathon Season"
                   style={{ width: '100%' }}
                 ></img>
               </a>
@@ -254,7 +254,7 @@ const Nav = function Nav(props) {
             rel="noreferrer"
           >
             <img
-              src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-white.svg"
+              src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-white-2024.svg"
               alt="Major League Hacking 2023 Hackathon Season"
               style={{ width: '100%' }}
             ></img>
