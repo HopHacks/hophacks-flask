@@ -23,10 +23,10 @@ import PhoneNumber from './PhoneNumber';
 import '../../stylesheets/register.css';
 
 export default function Register(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [confirmMsg, setConfirmMsg] = useState('');
+  const [username] = useState('');
+  const [password] = useState('');
+  // const [passwordConfirm, setPasswordConfirm] = useState('');
+  // const [confirmMsg, setConfirmMsg] = useState('');
   const [first_name, setFirst_name] = useState('');
   const [last_name, setLast_name] = useState('');
   const [gender, setGender] = useState('');
@@ -78,42 +78,42 @@ export default function Register(props) {
     setResumeFile(e.target.files[0]);
   }
 
-  async function handleAccountNext() {
-    if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
-      setConfirmMsg('* Required field cannot be empty');
-      return;
-    }
+  // async function handleAccountNext() {
+  //   if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
+  //     setConfirmMsg('* Required field cannot be empty');
+  //     return;
+  //   }
 
-    const emailre =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!emailre.test(String(username).toLowerCase())) {
-      setConfirmMsg('Please enter a valid email address.');
-      return;
-    }
+  //   const emailre =
+  //     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //   if (!emailre.test(String(username).toLowerCase())) {
+  //     setConfirmMsg('Please enter a valid email address.');
+  //     return;
+  //   }
 
-    const response = await axios.get('/api/accounts/check/' + username);
-    if (response.data.exist) {
-      setConfirmMsg('Email is already in use.');
-      return;
-    }
+  //   const response = await axios.get('/api/accounts/check/' + username);
+  //   if (response.data.exist) {
+  //     setConfirmMsg('Email is already in use.');
+  //     return;
+  //   }
 
-    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+  //   const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
-    if (!password.match(passwordre)) {
-      setConfirmMsg(
-        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
-      );
-      return;
-    }
+  //   if (!password.match(passwordre)) {
+  //     setConfirmMsg(
+  //       'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
+  //     );
+  //     return;
+  //   }
 
-    if (password !== passwordConfirm) {
-      setConfirmMsg('Confirm password must match with the password.');
-      return;
-    }
+  //   if (password !== passwordConfirm) {
+  //     setConfirmMsg('Confirm password must match with the password.');
+  //     return;
+  //   }
 
-    // Go to the profile page
-    setActivePage(PROFILE);
-  }
+  //   // Go to the profile page
+  //   setActivePage(PROFILE);
+  // }
 
   function isEmpty() {
     return (
