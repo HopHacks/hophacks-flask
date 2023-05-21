@@ -45,7 +45,7 @@ export default function About() {
       <Box align="center">
         <img src={img('logo2023.png')} width={'160px'} />
       </Box>
-      <Box flex={1} align="center">
+      <Box flex={1} marginTop={'-4rem'} align="center">
         <Title>About</Title>
       </Box>
       <Box flex={1} align="center">
