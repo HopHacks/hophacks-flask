@@ -22,7 +22,7 @@ import PhoneNumber from './PhoneNumber';
 
 import '../../stylesheets/register.css';
 
-export default function Register(props) {
+export default function Register() {
   const [username] = useState('');
   const [password] = useState('');
   // const [passwordConfirm, setPasswordConfirm] = useState('');
