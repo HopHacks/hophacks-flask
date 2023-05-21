@@ -67,11 +67,7 @@ export default function SignUp(props) {
 
   // functions for account page
   async function handleAccountNext() {
-    if (
-      password.length === 0 ||
-      passwordConfirm.length === 0 ||
-      username.length === 0
-    ) {
+    if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
       setConfirmMsg('* Required field cannot be empty');
       return;
     }
@@ -89,12 +85,11 @@ export default function SignUp(props) {
       return;
     }
 
-    const passwordre =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {
       setConfirmMsg(
-        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.',
+        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
       );
       return;
     }
@@ -149,9 +144,7 @@ export default function SignUp(props) {
     }
 
     if (!eventLogisticsChecked) {
-      setProfileSubmitMsg(
-        '* Please read the MLH Terms and Conditions and Privacy Policy.',
-      );
+      setProfileSubmitMsg('* Please read the MLH Terms and Conditions and Privacy Policy.');
       return;
     }
 
@@ -173,11 +166,7 @@ export default function SignUp(props) {
       JSON.stringify({
         username: username,
         password: password,
-        confirm_url:
-          window.location.protocol +
-          '//' +
-          window.location.host +
-          '/confirm_email',
+        confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email',
         profile: {
           first_name: first_name,
           last_name: last_name,
@@ -191,9 +180,9 @@ export default function SignUp(props) {
           is_jhu: school === 'Johns Hopkins University' ? true : false,
           grad_month: grad_month,
           grad_year: grad_year,
-          mlh_emails: communicationChecked,
-        },
-      }),
+          mlh_emails: communicationChecked
+        }
+      })
     );
 
     try {

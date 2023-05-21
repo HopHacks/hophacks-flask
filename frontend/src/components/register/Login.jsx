@@ -59,10 +59,10 @@ function Login(props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
         <TextField
@@ -75,19 +75,17 @@ function Login(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
         <Link to={'/register/resetpassword'}>
           <Typography class="card-text"> Forgot Password? </Typography>
         </Link>
-        {attempted && (
-          <Typography color="error">Incorrect Username or Password</Typography>
-        )}
+        {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
 
         <Button
           class="card-button"
@@ -100,10 +98,7 @@ function Login(props) {
         </Button>
 
         <Link to={'/register/signup'}>
-          <Typography class="card-text">
-            {' '}
-            New To HopHacks? Sign Up Now!{' '}
-          </Typography>
+          <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
         </Link>
       </CardContent>
     </Card>
@@ -122,10 +117,10 @@ function Login(props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
         <TextField
@@ -138,19 +133,17 @@ function Login(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
         <Link to={'/register/resetpassword'}>
           <Typography class="card-text"> Forgot Password? </Typography>
         </Link>
-        {attempted && (
-          <Typography color="error">Incorrect Username or Password</Typography>
-        )}
+        {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
 
         <Button
           class="card-button"
@@ -163,10 +156,7 @@ function Login(props) {
         </Button>
 
         <Link to={'/register/signup'}>
-          <Typography class="card-text">
-            {' '}
-            New To HopHacks? Sign Up Now!{' '}
-          </Typography>
+          <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
         </Link>
       </CardContent>
     </Card>
@@ -175,17 +165,13 @@ function Login(props) {
   const mottoDesktop = (
     <div style={{ marginTop: '30%', marginRight: '-20%' }}>
       <div>
-        <Typography class="motto-text">
-          Hack Your Passion Into Reality
-        </Typography>
+        <Typography class="motto-text">Hack Your Passion Into Reality</Typography>
         <Typography class="motto-text" align="left">
           HopHacks
         </Typography>
       </div>
       <div style={{ marginTop: '15%' }}>
-        <Typography class="motto-subtext">
-          Innovate | Collaborate | Dominate
-        </Typography>
+        <Typography class="motto-subtext">Innovate | Collaborate | Dominate</Typography>
       </div>
     </div>
   );

@@ -28,12 +28,11 @@ export default function PasswordReset(props) {
   async function reset_password(event) {
     event.preventDefault();
 
-    const passwordre =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {
       setMessage(
-        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.',
+        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
       );
       return;
     }
@@ -45,17 +44,10 @@ export default function PasswordReset(props) {
 
     try {
       //TODO: need email verification
-      const response = await axios.post(
-        '/api/accounts/reset_password/request',
-        {
-          username: email,
-          reset_url:
-            window.location.protocol +
-            '//' +
-            window.location.host +
-            '/reset_password',
-        },
-      );
+      const response = await axios.post('/api/accounts/reset_password/request', {
+        username: email,
+        reset_url: window.location.protocol + '//' + window.location.host + '/reset_password'
+      });
       setMessage('An email has been sent (if the account exists)!');
     } catch (e) {
       setMessage('Error requesting password reset');
@@ -76,10 +68,10 @@ export default function PasswordReset(props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
         <TextField
@@ -92,10 +84,10 @@ export default function PasswordReset(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
@@ -109,10 +101,10 @@ export default function PasswordReset(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setConfirmPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
@@ -147,10 +139,10 @@ export default function PasswordReset(props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
         <TextField
@@ -163,10 +155,10 @@ export default function PasswordReset(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
@@ -180,10 +172,10 @@ export default function PasswordReset(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setConfirmPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
@@ -204,17 +196,13 @@ export default function PasswordReset(props) {
   const mottoDesktop = (
     <div style={{ marginTop: '30%', marginRight: '-20%' }}>
       <div>
-        <Typography class="motto-text">
-          Hack Your Passion Into Reality
-        </Typography>
+        <Typography class="motto-text">Hack Your Passion Into Reality</Typography>
         <Typography class="motto-text" align="left">
           HopHacks
         </Typography>
       </div>
       <div style={{ marginTop: '15%' }}>
-        <Typography class="motto-subtext">
-          Innovate | Collaborate | Dominate
-        </Typography>
+        <Typography class="motto-subtext">Innovate | Collaborate | Dominate</Typography>
       </div>
     </div>
   );

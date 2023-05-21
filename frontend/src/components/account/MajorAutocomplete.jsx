@@ -77,7 +77,7 @@ const MajorAutocomplete = function MajorAutocomplete({ setMajor }) {
           InputLabelProps={{ style: { color: '#ffffff' } }}
           InputProps={{
             ...params.InputProps,
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
       )}

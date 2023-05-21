@@ -39,8 +39,7 @@ export default function SignUpConfirmation(props) {
           Account Created
         </Typography>
         <Typography class="mobile-motto-subtext">
-          Thank you for signing up. We are excited to have you joining our
-          event!
+          Thank you for signing up. We are excited to have you joining our event!
         </Typography>
         <Link to="/register/login" style={{ width: '100%' }}>
           <Button

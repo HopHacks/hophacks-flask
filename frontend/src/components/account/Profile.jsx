@@ -25,9 +25,7 @@ import { Divider } from '@material-ui/core';
 const Profile = function Profile(props) {
   const isMobile = props.isMobile;
 
-  const [status, setStatus] = useState(
-    'Application not complete: confirm email',
-  );
+  const [status, setStatus] = useState('Application not complete: confirm email');
   const [resumeFile, setResumeFile] = useState('');
   const [oldResumeName, setOldResumeName] = useState('');
   //display database
@@ -46,14 +44,11 @@ const Profile = function Profile(props) {
   const [grad_year, setGrad_year] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState('');
-  const [resumeMsg, setResumeMsg] = useState(
-    'Acceptable format: *.pdf, *.doc, *.docx',
-  );
+  const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
   const [ageMsg, setAgeMsg] = useState('');
 
   const currentEvent = 'Fall 2023';
-  const rsvpStatus =
-    "RSVPed! You're all set; you can also cancel your RSVP anytime.";
+  const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
   const acceptedStatus =
     'You have been accepted to HopHacks. Please RSVP if you plan on participating!';
   const appCompleteStatus = 'Application complete!';
@@ -248,8 +243,8 @@ const Profile = function Profile(props) {
         Application
       </Typography>
       <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-        You need to confirm your email before applying to the current event.
-        Once you are accepted to the event, you can RSVP to the event.
+        You need to confirm your email before applying to the current event. Once you are accepted
+        to the event, you can RSVP to the event.
       </Typography>
 
       {isMobile ? (
@@ -288,18 +283,13 @@ const Profile = function Profile(props) {
         Resume
       </Typography>
       <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-        You can replace your resume by clicking on “Choose File” above and
-        selecting a new file. You can have only one resume attached to your
-        profile.
+        You can replace your resume by clicking on “Choose File” above and selecting a new file. You
+        can have only one resume attached to your profile.
       </Typography>
       {isMobile ? (
         <div class="table">
           <text class="table-header">Current Resume:</text>
-          <Link
-            class="table-body"
-            onClick={handleResumeDownload}
-            style={{ color: 'blue' }}
-          >
+          <Link class="table-body" onClick={handleResumeDownload} style={{ color: 'blue' }}>
             {' ' + oldResumeName}
           </Link>
           <br />
@@ -310,17 +300,10 @@ const Profile = function Profile(props) {
             <Grid item>
               <form onSubmit={handleResumeSubmit}>
                 <div>
-                  <input
-                    type="file"
-                    name="file"
-                    onChange={handleResumeFileChange}
-                  />
+                  <input type="file" name="file" onChange={handleResumeFileChange} />
                 </div>
                 <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}>
-                  {' '}
-                  {resumeMsg}{' '}
-                </Typography>
+                <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
               </form>
             </Grid>
           </Grid>

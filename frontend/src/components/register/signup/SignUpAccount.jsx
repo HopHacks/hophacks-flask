@@ -40,10 +40,10 @@ export default function SignUpAccount(props) {
           value={username}
           onChange={(e) => setUsername(e.target.value.toLowerCase())}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
         <TextField
@@ -56,10 +56,10 @@ export default function SignUpAccount(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
@@ -73,10 +73,10 @@ export default function SignUpAccount(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPasswordConfirm(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
@@ -115,10 +115,10 @@ export default function SignUpAccount(props) {
           value={username}
           onChange={(e) => setUsername(e.target.value.toLowerCase())}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
         <TextField
@@ -131,10 +131,10 @@ export default function SignUpAccount(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
@@ -148,10 +148,10 @@ export default function SignUpAccount(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPasswordConfirm(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
           InputProps={{
-            style: { color: '#ffffff' },
+            style: { color: '#ffffff' }
           }}
         />
 
@@ -176,17 +176,13 @@ export default function SignUpAccount(props) {
   const mottoDesktop = (
     <div style={{ marginTop: '30%', marginRight: '-20%' }}>
       <div>
-        <Typography class="motto-text">
-          Hack Your Passion Into Reality
-        </Typography>
+        <Typography class="motto-text">Hack Your Passion Into Reality</Typography>
         <Typography class="motto-text" align="left">
           HopHacks
         </Typography>
       </div>
       <div style={{ marginTop: '15%' }}>
-        <Typography class="motto-subtext">
-          Innovate | Collaborate | Dominate
-        </Typography>
+        <Typography class="motto-subtext">Innovate | Collaborate | Dominate</Typography>
       </div>
     </div>
   );

@@ -91,8 +91,8 @@ export default function SignUpProfile(props) {
         label={
           <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
             <span>
-              * I authorize HopHacks to send my resume to our event sponsors for
-              recruiting purposes.
+              * I authorize HopHacks to send my resume to our event sponsors for recruiting
+              purposes.
             </span>
           </div>
         }
@@ -144,9 +144,8 @@ export default function SignUpProfile(props) {
         label={
           <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
             <span>
-              * I authorize you to share my application/registration information
-              with Major League Hacking for event administration, ranking, and
-              MLH administration in-line with the{' '}
+              * I authorize you to share my application/registration information with Major League
+              Hacking for event administration, ranking, and MLH administration in-line with the{' '}
             </span>
             <Link onClick={openPrivacy}>MLH Privacy Policy</Link>
             <span>. I further agree to the </span>
@@ -177,9 +176,8 @@ export default function SignUpProfile(props) {
           <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
             <span>
               {' '}
-              (Optional) I authorize MLH to send me pre- and post-event
-              informational emails, which contain free credit and opportunities
-              from their partners.{' '}
+              (Optional) I authorize MLH to send me pre- and post-event informational emails, which
+              contain free credit and opportunities from their partners.{' '}
             </span>
           </div>
         }
@@ -190,9 +188,7 @@ export default function SignUpProfile(props) {
   const profileCard = (
     <Card class="card">
       <CardContent>
-        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>
-          Create Profile
-        </Typography>
+        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>Create Profile</Typography>
 
         <Grid container spacing={isMobile ? 2 : 5}>
           <Grid item xs={isMobile ? 12 : 5}>
@@ -203,10 +199,10 @@ export default function SignUpProfile(props) {
               style={{ width: '100%' }}
               onChange={(e) => setFirst_name(e.target.value)}
               InputLabelProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
               InputProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
             />
           </Grid>
@@ -218,10 +214,10 @@ export default function SignUpProfile(props) {
               style={{ width: '100%' }}
               onChange={(e) => setLast_name(e.target.value)}
               InputLabelProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
               InputProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
             />
           </Grid>
@@ -234,11 +230,11 @@ export default function SignUpProfile(props) {
               style={{ width: '100%' }}
               onChange={(e) => setAge(e.target.value)}
               InputLabelProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
               InputProps={{
                 style: { color: '#ffffff' },
-                inputProps: { min: 0 },
+                inputProps: { min: 0 }
               }}
             />
           </Grid>
@@ -253,10 +249,10 @@ export default function SignUpProfile(props) {
               }}
               select
               InputLabelProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
               InputProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
             >
               <MenuItem value="Male">Male</MenuItem>
@@ -265,9 +261,7 @@ export default function SignUpProfile(props) {
               <MenuItem value="Transgender">Transgender</MenuItem>
               <MenuItem value="Intersex">Intersex</MenuItem>
               <MenuItem value="Not listed">Not listed</MenuItem>
-              <MenuItem value="Prefer not to disclose">
-                Prefer not to disclose
-              </MenuItem>
+              <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
@@ -281,19 +275,17 @@ export default function SignUpProfile(props) {
               }}
               select
               InputLabelProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
               InputProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
             >
               <MenuItem value="American Indian or Alaska Native">
                 American Indian or Alaska Native
               </MenuItem>
               <MenuItem value="Asian">Asian</MenuItem>
-              <MenuItem value="Black or African American">
-                Black or African American
-              </MenuItem>
+              <MenuItem value="Black or African American">Black or African American</MenuItem>
               <MenuItem value="Hispanic, Latino or Spanish Origin">
                 Hispanic, Latino or Spanish Origin
               </MenuItem>
@@ -305,9 +297,7 @@ export default function SignUpProfile(props) {
               </MenuItem>
               <MenuItem value="White">White</MenuItem>
               <MenuItem value="Multiethnic">Multiethnic</MenuItem>
-              <MenuItem value="Prefer not to disclose">
-                Prefer not to disclose
-              </MenuItem>
+              <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
@@ -323,17 +313,13 @@ export default function SignUpProfile(props) {
             <FormControl required variant="standard" style={{ width: '100%' }}>
               <SchoolAutocomplete school={school} setSchool={setSchool} />
             </FormControl>
-            <FormHelperText
-              style={{ fontSize: 9, color: 'white', width: '100%' }}
-            >
+            <FormHelperText style={{ fontSize: 9, color: 'white', width: '100%' }}>
               * If your school is not in the list, choose 'other schools'
             </FormHelperText>
           </Grid>
           <Grid item xs={isMobile ? 12 : 6}>
             <MajorAutocomplete major={major} setMajor={setMajor} />
-            <FormHelperText
-              style={{ fontSize: 9, color: 'white', width: '100%' }}
-            >
+            <FormHelperText style={{ fontSize: 9, color: 'white', width: '100%' }}>
               * If your major is not in the list, choose 'other majors'
             </FormHelperText>
           </Grid>
@@ -348,10 +334,10 @@ export default function SignUpProfile(props) {
               }}
               select
               InputLabelProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
               InputProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
             >
               <MenuItem value="Undergraduate">Undergraduate</MenuItem>
@@ -370,10 +356,10 @@ export default function SignUpProfile(props) {
               }}
               select
               InputLabelProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
               InputProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
             >
               <MenuItem value="01">01</MenuItem>
@@ -401,10 +387,10 @@ export default function SignUpProfile(props) {
               }}
               select
               InputLabelProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
               InputProps={{
-                style: { color: '#ffffff' },
+                style: { color: '#ffffff' }
               }}
             >
               <MenuItem value="2022">2022</MenuItem>
@@ -416,11 +402,7 @@ export default function SignUpProfile(props) {
               <MenuItem value="2028">2028</MenuItem>
             </TextField>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{ textAlign: isMobile ? 'center' : 'left' }}
-          >
+          <Grid item xs={12} style={{ textAlign: isMobile ? 'center' : 'left' }}>
             <label htmlFor="upload-resume">
               <input
                 style={{ display: 'none' }}
@@ -430,19 +412,12 @@ export default function SignUpProfile(props) {
                 name="upload-resume"
                 onChange={handleResumeFileChange}
               />
-              <Button
-                variant="outlined"
-                style={{ color: 'white' }}
-                component="span"
-              >
+              <Button variant="outlined" style={{ color: 'white' }} component="span">
                 Upload Resume*
               </Button>
               {isMobile ? <br /> : null}
               {resumeFile !== undefined && (
-                <text
-                  class="card-text"
-                  style={{ marginLeft: isMobile ? '0rem' : '1rem' }}
-                >
+                <text class="card-text" style={{ marginLeft: isMobile ? '0rem' : '1rem' }}>
                   {'Uploaded:' + resumeFile.name}
                 </text>
               )}
@@ -468,7 +443,7 @@ export default function SignUpProfile(props) {
             fontSize: '1.5rem',
             width: isMobile ? '10rem' : '15rem',
             height: isMobile ? '3rem' : '4rem',
-            marginTop: isMobile ? '10%' : '5%',
+            marginTop: isMobile ? '10%' : '5%'
           }}
           onClick={() => {
             handleProfileNext();
