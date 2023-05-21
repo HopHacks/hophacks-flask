@@ -3,9 +3,9 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Sponsors from './home/Sponsors';
-import Schedule from './home/Schedule';
+// import Schedule from './home/Schedule';
 import About from './home/About';
-import Faq from './home/Faq';
+// import Faq from './home/Faq';
 import Cover from './home/Cover';
 import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
@@ -98,9 +98,9 @@ export default function Home() {
           <Cover />
           <Container fixed>
             <About />
-            <Schedule />
+            {/* <Schedule /> */}
             <Sponsors />
-            <Faq />
+            {/* <Faq /> */}
           </Container>
           <br></br>
           <br></br>
