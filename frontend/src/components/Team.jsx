@@ -8,10 +8,10 @@ export default function TeamPage() {
   const team = (
     <Grid
       container
-      spacing={4}
+      spacing={3}
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: '37.5rem' }}
+      style={{ minHeight: '30.5rem' }}
     >
       <Grid item xs={0} md={1} lg={1} />
       <Grid id="register" item xs={12} align="center">
@@ -26,7 +26,7 @@ export default function TeamPage() {
   return (
     <div
       style={{
-        backgroundImage: `url("${process.env.PUBLIC_URL}/images/cover.png")`,
+        backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/cover.png")`,
         backgroundSize: 'cover',
         minHeight: '100vh'
       }}

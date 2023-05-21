@@ -7,16 +7,16 @@ import './../stylesheets/home.css';
 
 const Footer = function Footer() {
   function img(url) {
-    return process.env.PUBLIC_URL + '/images/footer/' + url;
+    return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
   }
 
   return (
-    <Box pt={5} bgcolor="#FFC0CB" color="white">
+    <Box pt={5} bgcolor="#33073E" color="white">
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <Grid container direction="column" alignItems="center" justifyContent="center">
-              <img src={img('bluejay-icon.png')} style={{ width: '100px' }} />
+              <img src={img('logo2023.png')} style={{ width: '100px' }} />
             </Grid>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -57,21 +57,21 @@ const Footer = function Footer() {
               <Grid item>
                 <a href="https://www.facebook.com/HopHacks" title="Facebook">
                   <img
-                    src={img('fb-icon.png')}
+                    src={img('footer/fb-icon.png')}
                     style={{ width: '40px', margin: '10px 5px 5px' }}
                     alt="fb-icon"
                   />
                 </a>
                 <a href="https://www.linkedin.com/company/hophacks/" title="LinkedIn">
                   <img
-                    src={img('linkedin-icon.png')}
+                    src={img('footer/linkedin-icon.png')}
                     style={{ width: '40px', margin: '10px 5px 5px' }}
                     alt="linkedin-icon"
                   />
                 </a>
                 <a href="https://www.instagram.com/hophacks/?hl=en" title="Instagram">
                   <img
-                    src={img('instagram-icon.png')}
+                    src={img('footer/instagram-icon.png')}
                     style={{ width: '40px', margin: '10px 5px 5px' }}
                     alt="linkedin-icon"
                   />

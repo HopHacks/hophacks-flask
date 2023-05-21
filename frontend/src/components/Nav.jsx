@@ -33,8 +33,13 @@ const useStyles = makeStyles({
     marginLeft: 'auto'
   },
 
+  navBtn: {
+    textTransform: 'none',
+    margin: '0 1.5rem'
+  },
+
   drawer: {
-    background: '#141230',
+    background: '#33073E',
     width: '100vw'
   },
 
@@ -42,6 +47,10 @@ const useStyles = makeStyles({
     color: 'white'
   }
 });
+
+function img(url) {
+  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+}
 
 const Nav = function Nav(props) {
   let history = useHistory();
@@ -51,33 +60,111 @@ const Nav = function Nav(props) {
   }
 
   const classes = useStyles();
-  const isMobile = window.innerWidth <= 650;
+  const isMobile = window.innerWidth <= 800;
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
   };
 
+  const navItem = (
+    <>
+      <Button
+        component={Link}
+        onClick={() => (window.location = '/#about')}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          About
+        </Typography>
+      </Button>
+
+      <Button
+        component={Link}
+        onClick={() => (window.location = '/#schedule')}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Schedule
+        </Typography>
+      </Button>
+      <Button
+        component={Link}
+        onClick={() => (window.location = '/#sponsors')}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Sponsors
+        </Typography>
+      </Button>
+      <Button
+        component={Link}
+        onClick={() => (window.location = '/#faq')}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          FAQ
+        </Typography>
+      </Button>
+      <Button
+        component={Link}
+        onClick={() => {
+          history.push('/team');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Team
+        </Typography>
+      </Button>
+      {!props.isLoggedIn && <Login />}
+
+      {props.isLoggedIn && (
+        <Button
+          onClick={() => {
+            window.location = '/profile';
+          }}
+          color="inherit"
+          className={classes.navBtn}
+        >
+          <Typography variant="h5" className={classes.title}>
+            Profile
+          </Typography>
+        </Button>
+      )}
+
+      {props.isLoggedIn && (
+        <Button onClick={handleLogout} color="inherit" className={classes.navBtn}>
+          <Typography variant="h5" className={classes.title}>
+            Logout
+          </Typography>
+        </Button>
+      )}
+    </>
+  );
+
   if (isMobile) {
     return (
       <div>
-        <AppBar position="sticky">
+        <AppBar position="sticky" className={classes.drawer}>
           <Toolbar style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setIsDrawerOpen(true)}
-            >
-              <MenuIcon />
-            </IconButton>
             <section>
               <Button component={Link} to={'/'} color="inherit">
-                <Typography variant="h5" className={classes.title}>
-                  {' '}
-                  Hophacks{' '}
-                </Typography>
+                <img src={img('logo2023.png')} width={'55px'} />
               </Button>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={() => setIsDrawerOpen(true)}
+              >
+                <MenuIcon />
+              </IconButton>
               <Drawer
                 open={isDrawerOpen}
                 onClose={() => setIsDrawerOpen(false)}
@@ -90,73 +177,7 @@ const Nav = function Nav(props) {
                 </div>
                 <Divider />
 
-                <Button
-                  onClick={() => {
-                    window.location = '/';
-                  }}
-                  color="inherit"
-                >
-                  <Typography variant="h5" className={classes.title}>
-                    {' '}
-                    Home{' '}
-                  </Typography>
-                </Button>
-
-                {/* {!props.isLoggedIn && 
-                <Button onClick={() => {
-                  window.location = "/register";
-                }} color="inherit">
-                  <Typography variant="h5" className={classes.title}> Register </Typography>
-                </Button>
-                } */}
-
-                {!props.isLoggedIn && (
-                  <Button
-                    onClick={() => {
-                      window.location = '/register/login';
-                    }}
-                    color="inherit"
-                  >
-                    <Typography variant="h5" className={classes.title}>
-                      {' '}
-                      Register{' '}
-                    </Typography>
-                  </Button>
-                )}
-
-                {props.isLoggedIn && (
-                  <Button
-                    onClick={() => {
-                      window.location = '/profile';
-                    }}
-                    color="inherit"
-                  >
-                    <Typography variant="h5" className={classes.title}>
-                      {' '}
-                      Profile{' '}
-                    </Typography>
-                  </Button>
-                )}
-
-                {props.isLoggedIn && (
-                  <Button onClick={handleLogout} color="inherit">
-                    <Typography variant="h5" className={classes.title}>
-                      Logout
-                    </Typography>
-                  </Button>
-                )}
-
-                <Button
-                  onClick={() => {
-                    window.location = '/team';
-                  }}
-                  color="inherit"
-                >
-                  <Typography variant="h5" className={classes.title}>
-                    {' '}
-                    Team{' '}
-                  </Typography>
-                </Button>
+                {navItem}
               </Drawer>
 
               <a
@@ -176,7 +197,7 @@ const Nav = function Nav(props) {
                 rel="noreferrer"
               >
                 <img
-                  src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg"
+                  src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-white.svg"
                   alt="Major League Hacking 2023 Hackathon Season"
                   style={{ width: '100%' }}
                 ></img>
@@ -189,7 +210,7 @@ const Nav = function Nav(props) {
   }
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" className={classes.drawer}>
       <Toolbar
         style={{
           flexDirection: 'row',
@@ -197,75 +218,25 @@ const Nav = function Nav(props) {
           marginRight: '8rem'
         }}
       >
-        <Button component={Link} to={'/'} color="inherit" className={classes.hophacksButton}>
+        <Button
+          component={Link}
+          onClick={() => (window.location = '/')}
+          color="inherit"
+          className={classes.hophacksButton}
+        >
+          <img src={img('logo2023.png')} width={'55px'} />
           <Typography variant="h4" className={classes.title}>
-            {' '}
-            HopHacks{' '}
+            HopHacks
           </Typography>
         </Button>
 
-        <section className={classes.otherButton}>
-          <Button component={Link} to={'/'} color="inherit">
-            <Typography variant="h5" className={classes.title}>
-              {' '}
-              Home{' '}
-            </Typography>
-          </Button>
-
-          <Button
-            onClick={() => {
-              window.location = '/team';
-            }}
-            color="inherit"
-          >
-            <Typography variant="h5" className={classes.title}>
-              {' '}
-              Team{' '}
-            </Typography>
-          </Button>
-
-          {/* {!props.isLoggedIn && <Button onClick={() => {
-            window.location = "/register";
-          }} color="inherit">
-            <Typography variant="h5" className={classes.title}> Register </Typography>
-          </Button>
-              } */}
-
-          {!props.isLoggedIn && (
-            <Button
-              onClick={() => {
-                window.location = '/register/login';
-              }}
-              color="inherit"
-            >
-              <Typography variant="h5" className={classes.title}>
-                {' '}
-                Register{' '}
-              </Typography>
-            </Button>
-          )}
-
-          {props.isLoggedIn && (
-            <Button
-              onClick={() => {
-                window.location = '/profile';
-              }}
-              color="inherit"
-            >
-              <Typography variant="h5" className={classes.title}>
-                {' '}
-                Profile{' '}
-              </Typography>
-            </Button>
-          )}
-
-          {props.isLoggedIn && (
-            <Button onClick={handleLogout} color="inherit">
-              <Typography variant="h5" className={classes.title}>
-                Logout
-              </Typography>
-            </Button>
-          )}
+        <section
+          className={classes.otherButton}
+          style={{
+            margin: 'auto'
+          }}
+        >
+          {navItem}
 
           <a
             id="mlh-trust-badge"
@@ -284,7 +255,7 @@ const Nav = function Nav(props) {
             rel="noreferrer"
           >
             <img
-              src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-gray.svg"
+              src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-white.svg"
               alt="Major League Hacking 2023 Hackathon Season"
               style={{ width: '100%' }}
             ></img>

@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -12,7 +11,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Grid from '@material-ui/core/Grid';
 const useStyles = makeStyles({
   margin: {
     marginBottom: '13px'
@@ -25,11 +23,10 @@ const useStyles = makeStyles({
     overflow: 'auto'
   },
   title: {
+    fontSize: '3rem',
     color: '#ffffff',
     fontFamily: 'Inter',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: '375%'
+    fontWeight: 'bold'
   },
   schedule: {
     backgroundColor: 'transparent'
@@ -57,65 +54,25 @@ const useStyles = makeStyles({
   },
   selected: {
     color: 'rgba(255, 255, 255, 0.8)'
-  },
-  Media: {
-    position: 'absolute',
-    marginLeft: '15em',
-    marginTop: '-5em',
-    width: '25%',
-    maxWidth: '300px',
-    maxHeight: '200px',
-    backgroundColor: 'transparent'
-  },
-  Media2: {
-    position: 'absolute',
-    marginLeft: '75em',
-    marginTop: '15em',
-    width: '17.5%',
-    maxWidth: '300px',
-    maxHeight: '200px',
-    backgroundColor: 'transparent'
   }
 });
 export default function Schedule() {
-  function img(url) {
-    return process.env.PUBLIC_URL + '/images/' + url;
-  }
   const classes = useStyles();
   const [day, setDay] = React.useState('fri');
   const handleChange = (event, newDay) => {
     setDay(newDay);
   };
   return (
-    <Box py={2}>
-      <Grid container spacing={2} justify="center" alignItems="center" style={{ marginTop: '15%' }}>
-        <Grid item xs={4}></Grid>
-        <Grid item xs={4}>
-          <Typography
-            className={classes.title}
-            variant="h4"
-            style={{ marginTop: '-30%' }}
-            gutterBottom
-          >
-            Schedule
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <img
-            style={{ marginLeft: '0%', marginTop: '-60%', width: '60%' }}
-            src={img('home_bg/1_edit.png')}
-          />
-        </Grid>
-      </Grid>
-
-      <div
+    <Box py={2} id="schedule" marginTop={'10rem'}>
+      <Typography className={classes.title} variant="h4" gutterBottom>
+        Schedule
+      </Typography>
+      <Typography
         className={classes.divFont}
-        style={{ color: '#ffffff', fontWeight: 'bold', marginTop: '-10%' }}
+        style={{ color: 'rgba(255, 255, 255, 0.8)', fontWeight: 'bold', fontStyle: 'italic' }}
       >
         All times in EDT (GMT-4)
-      </div>
-      <CardMedia component="img" className={classes.Media} image={img('schedule_png.png')} />
-      <CardMedia component="img" className={classes.Media2} image={img('schedule_png_2.png')} />
+      </Typography>
 
       <TableContainer
         component={Paper}
@@ -139,23 +96,39 @@ export default function Schedule() {
           }}
           variant="fullWidth"
         >
-          <Tab label="Fri September 16th" value="fri" className={classes.font} />
-          <Tab label="Sat September 17th" value="sat" className={classes.font} />
-          <Tab label="Sun September 18th" value="sun" className={classes.font} />
+          <Tab
+            label="Fri., Sept 16th"
+            value="fri"
+            className={classes.font}
+            style={{
+              textTransform: 'none'
+            }}
+          />
+          <Tab
+            label="Sat., Sept 17th"
+            value="sat"
+            className={classes.font}
+            style={{
+              textTransform: 'none'
+            }}
+          />
+          <Tab
+            label="Sun., Sept 18th"
+            value="sun"
+            className={classes.font}
+            style={{
+              textTransform: 'none'
+            }}
+          />
         </Tabs>
         <Table
           className={classes.table}
           aria-label="simple table"
-          sx={{
-            height: 'max-content',
-            backgroundColor: 'transparent'
-          }}
+          style={{ backgroundColor: 'rgba(217, 217, 217, 0.1)' }}
         >
           <TableHead className={classes.schedule}>
             <TableRow>
-              <TableCell className={classes.font} style={{ backgroundColor: 'transparent' }}>
-                Time
-              </TableCell>
+              <TableCell className={classes.font}>Time</TableCell>
               <TableCell className={classes.font}>Event</TableCell>
               <TableCell className={classes.font}>Location</TableCell>
             </TableRow>
