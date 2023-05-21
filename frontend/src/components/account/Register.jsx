@@ -7,9 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
@@ -24,7 +21,6 @@ import { isValidPhoneNumber } from 'react-phone-number-input';
 import PhoneNumber from './PhoneNumber';
 
 import '../../stylesheets/register.css';
-import { useEffect } from 'react';
 
 export default function Register(props) {
   const [username, setUsername] = useState('');
@@ -50,13 +46,11 @@ export default function Register(props) {
   const [communicationChecked, setCommunicationChecked] = useState(false);
   const [enabledButton, setEnabledButton] = useState(true);
 
-  const isMobile = props.isMobile;
-
   // decide which page is actively showing
   const ACCOUNT = 0;
   const PROFILE = 1;
   const CONFIRMATION = 2;
-  const [activePage, setActivePage] = useState(PROFILE);
+  const [activePage, setActivePage] = useState(ACCOUNT);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -219,90 +213,90 @@ export default function Register(props) {
     setActivePage(CONFIRMATION);
   }
 
-  const account = (
-    <Grid
-      container
-      spacing={4}
-      alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: '35rem' }}
-    >
-      <Grid item xs={0} md={1} lg={1} />
-      <Grid item xs={12} md={5} lg={5} align="center">
-        <img
-          id="graphic"
-          src={`https://hophacks-website.s3.amazonaws.com/images/register-graphic.png`}
-        />
-      </Grid>
-      <Grid id="register" item xs={12} md={5} lg={5} align="center">
-        <Grid container>
-          <Grid item xs={12}>
-            <h4 style={{ marginBottom: 15 }}>Register</h4>
-          </Grid>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="standard-basic"
-                variant="standard"
-                label="Email Address"
-                style={{ minWidth: 275 }}
-                onChange={(e) => setUsername(e.target.value.toLowerCase())}
-                InputLabelProps={{
-                  style: { color: '#000000' },
-                  classes: { root: classes.label }
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type={'password'}
-                required
-                id="standard-basic"
-                variant="standard"
-                label="Password"
-                style={{ minWidth: 275 }}
-                onChange={(e) => setPassword(e.target.value)}
-                InputLabelProps={{
-                  style: { color: '#000000' },
-                  classes: { root: classes.label }
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type={'password'}
-                required
-                id="standard-basic"
-                variant="standard"
-                label="Confirm Password"
-                style={{ minWidth: 275, marginBottom: 25 }}
-                onChange={(e) => setPasswordConfirm(e.target.value)}
-                InputLabelProps={{
-                  style: { color: '#000000' },
-                  classes: { root: classes.label }
-                }}
-              />
-              <Typography style={{ color: 'red' }}>{confirmMsg}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={() => {
-                  handleAccountNext();
-                }}
-              >
-                Next
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={0} md={1} lg={1} />
-    </Grid>
-  );
+  // const account = (
+  //   <Grid
+  //     container
+  //     spacing={4}
+  //     alignItems="center"
+  //     justifyContent="center"
+  //     style={{ minHeight: '35rem' }}
+  //   >
+  //     <Grid item xs={0} md={1} lg={1} />
+  //     <Grid item xs={12} md={5} lg={5} align="center">
+  //       <img
+  //         id="graphic"
+  //         src={`https://hophacks-website.s3.amazonaws.com/images/register-graphic.png`}
+  //       />
+  //     </Grid>
+  //     <Grid id="register" item xs={12} md={5} lg={5} align="center">
+  //       <Grid container>
+  //         <Grid item xs={12}>
+  //           <h4 style={{ marginBottom: 15 }}>Register</h4>
+  //         </Grid>
+  //         <Grid container spacing={1}>
+  //           <Grid item xs={12}>
+  //             <TextField
+  //               required
+  //               id="standard-basic"
+  //               variant="standard"
+  //               label="Email Address"
+  //               style={{ minWidth: 275 }}
+  //               onChange={(e) => setUsername(e.target.value.toLowerCase())}
+  //               InputLabelProps={{
+  //                 style: { color: '#000000' },
+  //                 classes: { root: classes.label }
+  //               }}
+  //             />
+  //           </Grid>
+  //           <Grid item xs={12}>
+  //             <TextField
+  //               type={'password'}
+  //               required
+  //               id="standard-basic"
+  //               variant="standard"
+  //               label="Password"
+  //               style={{ minWidth: 275 }}
+  //               onChange={(e) => setPassword(e.target.value)}
+  //               InputLabelProps={{
+  //                 style: { color: '#000000' },
+  //                 classes: { root: classes.label }
+  //               }}
+  //             />
+  //           </Grid>
+  //           <Grid item xs={12}>
+  //             <TextField
+  //               type={'password'}
+  //               required
+  //               id="standard-basic"
+  //               variant="standard"
+  //               label="Confirm Password"
+  //               style={{ minWidth: 275, marginBottom: 25 }}
+  //               onChange={(e) => setPasswordConfirm(e.target.value)}
+  //               InputLabelProps={{
+  //                 style: { color: '#000000' },
+  //                 classes: { root: classes.label }
+  //               }}
+  //             />
+  //             <Typography style={{ color: 'red' }}>{confirmMsg}</Typography>
+  //           </Grid>
+  //           <Grid item xs={12}>
+  //             <Button
+  //               variant="contained"
+  //               color="primary"
+  //               size="large"
+  //               onClick={() => {
+  //                 handleAccountNext();
+  //               }}
+  //             >
+  //               Next
+  //             </Button>
+  //           </Grid>
+  //         </Grid>
+  //       </Grid>
+  //     </Grid>
+  //     <Grid item xs={0} md={1} lg={1} />
+  //   </Grid>
+  // );
   const handleResumeCheckBox = (event) => {
     setResumeChecked(event.target.checked);
   };
@@ -768,7 +762,7 @@ export default function Register(props) {
         height: '100vh'
       }}
     >
-      <div class="container">
+      <div className="container">
         {/* <div className="register-wrapper">{selectPage()}</div> */}
         {selectPage()}
       </div>

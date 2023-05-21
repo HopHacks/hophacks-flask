@@ -9,7 +9,6 @@ import { withAuthCheck } from '../../util/auth.jsx';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,7 +19,6 @@ import FormDialog from './FormDialog';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
 import '../../stylesheets/profile.css';
-import { Divider } from '@material-ui/core';
 
 const Profile = function Profile(props) {
   const isMobile = props.isMobile;
@@ -248,14 +246,14 @@ const Profile = function Profile(props) {
       </Typography>
 
       {isMobile ? (
-        <div class="table">
-          <text class="table-header">Current Event:</text>
-          <text class="table-body">{' ' + currentEvent}</text>
+        <div className="table">
+          <text className="table-header">Current Event:</text>
+          <text className="table-body">{' ' + currentEvent}</text>
           <br />
-          <text class="table-header">Application Status:</text>
-          <text class="table-body">{' ' + status}</text>
+          <text className="table-header">Application Status:</text>
+          <text className="table-body">{' ' + status}</text>
           <br />
-          <text class="table-header">Action Items:</text>
+          <text className="table-header">Action Items:</text>
           {ActionItems()}
         </div>
       ) : (
@@ -287,15 +285,15 @@ const Profile = function Profile(props) {
         can have only one resume attached to your profile.
       </Typography>
       {isMobile ? (
-        <div class="table">
-          <text class="table-header">Current Resume:</text>
+        <div className="table">
+          <text className="table-header">Current Resume:</text>
           <Link class="table-body" onClick={handleResumeDownload} style={{ color: 'blue' }}>
             {' ' + oldResumeName}
           </Link>
           <br />
           <Grid container>
             <Grid item>
-              <text class="table-header">Upload New Resume:</text>
+              <text className="table-header">Upload New Resume:</text>
             </Grid>
             <Grid item>
               <form onSubmit={handleResumeSubmit}>
@@ -531,7 +529,7 @@ const Profile = function Profile(props) {
         Profile
       </Typography>
 
-      <List className="list">
+      <List class="list">
         <FormDialog
           title={'Edit Name'}
           form={NameForm}
@@ -611,11 +609,11 @@ const Profile = function Profile(props) {
 
   return (
     <Card class="profile">
-      <div class="section">{appStatus}</div>
-      <div class="section" style={{ marginTop: '7%' }}>
+      <div className="section">{appStatus}</div>
+      <div className="section" style={{ marginTop: '7%' }}>
         {resume}
       </div>
-      <div class="section" style={{ marginTop: '7%' }}>
+      <div className="section" style={{ marginTop: '7%' }}>
         {ProfileCard}
       </div>
     </Card>

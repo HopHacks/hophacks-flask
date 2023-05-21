@@ -1,59 +1,52 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
 
 import '../../stylesheets/register.css';
-import { useEffect } from 'react';
 
 export default function PasswordReset(props) {
   const isMobile = props.isMobile;
 
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [attempted, setAttempted] = useState(false);
+  // const [message, setMessage] = useState('');
+  // const [attempted, setAttempted] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  async function reset_password(event) {
-    event.preventDefault();
+  // async function reset_password(event) {
+  //   event.preventDefault();
 
-    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+  //   const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
-    if (!password.match(passwordre)) {
-      setMessage(
-        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
-      );
-      return;
-    }
+  //   if (!password.match(passwordre)) {
+  //     setMessage(
+  //       'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
+  //     );
+  //     return;
+  //   }
 
-    if (password != confirmPassword) {
-      setMessage('Confirm password must match with the password');
-      return;
-    }
+  //   if (password != confirmPassword) {
+  //     setMessage('Confirm password must match with the password');
+  //     return;
+  //   }
 
-    try {
-      //TODO: need email verification
-      const response = await axios.post('/api/accounts/reset_password/request', {
-        username: email,
-        reset_url: window.location.protocol + '//' + window.location.host + '/reset_password'
-      });
-      setMessage('An email has been sent (if the account exists)!');
-    } catch (e) {
-      setMessage('Error requesting password reset');
-    }
-    setAttempted(true);
-  }
+  //   try {
+  //     //TODO: need email verification
+  //     const response = await axios.post('/api/accounts/reset_password/request', {
+  //       username: email,
+  //       reset_url: window.location.protocol + '//' + window.location.host + '/reset_password'
+  //     });
+  //     setMessage('An email has been sent (if the account exists)!');
+  //   } catch (e) {
+  //     setMessage('Error requesting password reset');
+  //   }
+  //   setAttempted(true);
+  // }
 
   const findPwdCardDesktop = (
     <Card class="card">
@@ -221,7 +214,7 @@ export default function PasswordReset(props) {
 
   if (isMobile) {
     return (
-      <div class="root">
+      <div className="root">
         {mottoMobile}
         {findPwdCardMobile}
       </div>
@@ -229,7 +222,7 @@ export default function PasswordReset(props) {
   }
 
   return (
-    <div class="root">
+    <div className="root">
       <Grid container>
         <Grid item xs={5}>
           {findPwdCardDesktop}
