@@ -6,7 +6,7 @@ const phoneInput = (props, ref) => {
   return (
     <TextField
       {...props}
-      style={{ maxWidth: 245 }}
+      style={{ width: '100%' }}
       inputRef={ref}
       fullWidth
       required
@@ -14,7 +14,8 @@ const phoneInput = (props, ref) => {
       label="Phone Number"
       variant="standard"
       name="phone"
-      InputLabelProps={{ style: { color: '#000000' } }}
+      InputLabelProps={{ style: { color: '#ffffff' } }}
+      InputProps={{ style: { color: '#ffffff' } }}
     />
   );
 };

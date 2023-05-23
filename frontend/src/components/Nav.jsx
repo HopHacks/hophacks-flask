@@ -12,7 +12,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { withAuthProps } from '../util/auth';
-import Login from './LoginDialog';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -34,7 +33,7 @@ const useStyles = makeStyles({
 
   navBtn: {
     textTransform: 'none',
-    margin: '0 1.5rem'
+    margin: '0 1rem'
   },
 
   drawer: {
@@ -121,7 +120,19 @@ const Nav = function Nav(props) {
           Team
         </Typography>
       </Button>
-      {!props.isLoggedIn && <Login />}
+      {!props.isLoggedIn && (
+        <Button
+          onClick={() => {
+            window.location = '/register/login';
+          }}
+          color="inherit"
+          className={classes.navBtn}
+        >
+          <Typography variant="h5" className={classes.title}>
+            Login
+          </Typography>
+        </Button>
+      )}
 
       {props.isLoggedIn && (
         <Button
