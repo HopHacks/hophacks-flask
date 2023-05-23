@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
