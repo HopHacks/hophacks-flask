@@ -18,12 +18,12 @@ const Highlight = styled.span`
   font-weight: 800;
 `;
 
-const PlaceHolderWhiteBox = styled.div`
-  background-color: white;
-  width: 80%;
-  height: 400px;
-  margin: auto;
-`;
+// const PlaceHolderWhiteBox = styled.div`
+//   background-color: white;
+//   width: 80%;
+//   height: 400px;
+//   margin: auto;
+// `;
 
 function img(url) {
   return process.env.PUBLIC_URL + '/images/' + url;
