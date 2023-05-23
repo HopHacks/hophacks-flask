@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Team from './home/Team';
+
 import '../stylesheets/team.css';
 
 export default function TeamPage() {

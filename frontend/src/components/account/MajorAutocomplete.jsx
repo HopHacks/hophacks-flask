@@ -84,5 +84,4 @@ const MajorAutocomplete = function MajorAutocomplete({ setMajor }) {
     />
   );
 };
-
 export default MajorAutocomplete;
