@@ -10,6 +10,7 @@ import Cover from './home/Cover';
 import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
 import Footer from './Footer';
+import AboutSeparation from './home/AboutSeparation';
 // import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 // import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 const useStyles = makeStyles({
@@ -98,6 +99,7 @@ export default function Home() {
           <Cover />
           <Container fixed>
             <About />
+            <AboutSeparation />
             {/* <Schedule /> */}
             <Sponsors />
             {/* <Faq /> */}

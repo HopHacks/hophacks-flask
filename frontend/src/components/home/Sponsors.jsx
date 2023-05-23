@@ -37,7 +37,7 @@ export default function Sponsors() {
   return (
     <Box
       display="flex"
-      marginTop={'7.5rem'}
+      marginTop={'5rem'}
       justifyContent="center"
       className="sponsor-container"
       id="sponsors"
