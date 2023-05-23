@@ -32,7 +32,7 @@ export default function TeamPage() {
       }}
     >
       <div className="container">
-        <div className="register-wrapper">{team}</div>
+        <div className="team-register-wrapper">{team}</div>
       </div>
     </div>
   );
