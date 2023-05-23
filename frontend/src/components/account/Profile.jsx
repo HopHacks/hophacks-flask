@@ -26,6 +26,7 @@ const Profile = function Profile(props) {
   const [status, setStatus] = useState('Application not complete: confirm email');
   const [resumeFile, setResumeFile] = useState('');
   const [oldResumeName, setOldResumeName] = useState('');
+  
   //display database
   const [profile, setProfile] = useState([]);
   //edit
