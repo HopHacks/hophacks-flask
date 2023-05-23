@@ -13,7 +13,13 @@ export default function AboutSeparation() {
 
   return (
     <div id="about">
-      <Box display="flex" flexDirection="column" align="center" position={'relative'}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        align="center"
+        position={'absolute'}
+        marginTop={'-2rem'}
+      >
         <Container maxWidth="lg">
           <img src={img('clouds.png')} width={'100%'} />
         </Container>

@@ -99,7 +99,7 @@ const Nav = function Nav(props) {
           Sponsors
         </Typography>
       </Button>
-      {/* <Button
+      <Button
         component={Link}
         onClick={() => (window.location = '/#faq')}
         color="inherit"
@@ -108,7 +108,7 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           FAQ
         </Typography>
-      </Button> */}
+      </Button>
       <Button
         component={Link}
         onClick={() => {
