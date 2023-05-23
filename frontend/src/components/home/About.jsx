@@ -63,9 +63,9 @@ export default function About() {
           <Box height={20}></Box>
           {introTextP2}
         </Box>
-        <Box flex={1}>
+        {/* <Box flex={1}>
           <PlaceHolderWhiteBox />
-        </Box>
+        </Box> */}
       </div>
     </div>
   );
