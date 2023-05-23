@@ -63,7 +63,7 @@ const MajorAutocomplete = function MajorAutocomplete({ setMajor }) {
       id="majors"
       options={majors}
       // defaultValue={major}
-      style={{ width: 300, marginTop: -6.5 }}
+      style={{ width: '100%' }}
       onChange={(event, newValue) => {
         setMajor(newValue);
       }}
@@ -73,7 +73,12 @@ const MajorAutocomplete = function MajorAutocomplete({ setMajor }) {
           {...params}
           label="Major"
           variant="standard"
-          InputLabelProps={{ style: { color: '#000000' } }}
+          style={{ width: '100%' }}
+          InputLabelProps={{ style: { color: '#ffffff' } }}
+          InputProps={{
+            ...params.InputProps,
+            style: { color: '#ffffff' }
+          }}
         />
       )}
     />
