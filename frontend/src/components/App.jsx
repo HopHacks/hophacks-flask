@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { ParallaxProvider } from 'react-scroll-parallax';
+
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -17,7 +18,6 @@ import Nav from './Nav';
 import EmailConfirmation from './EmailConfirmation';
 import PasswordReset from './PasswordReset';
 import RSVP from './RSVP';
-import Register from './account/Register';
 import Assignments from './judgetool/Assignments.jsx';
 import Upload from './judgetool/Upload.jsx';
 import UploadSponsors from './judgetool/UploadSponsors.jsx';
@@ -26,15 +26,21 @@ import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
+import Login from './register/Login';
+import SignUp from './register/signup/SignUp';
+import ResetPassword from './register/ResetPassword';
+
+import { useMediaQuery } from 'usehooks-ts';
 
 export default function App() {
+  const isMobile = useMediaQuery('(max-width: 48em)');
+
   return (
     <>
       <ParallaxProvider>
         <MuiThemeProvider theme={theme}>
           <AuthProvider>
             <CssBaseline />
-
             <Router>
               <div>
                 <Nav />
@@ -55,7 +61,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/profile">
-                    <Profile />
+                    <Profile isMobile={isMobile} />
                   </Route>
 
                   <Route path="/announcements/detail">
@@ -66,9 +72,10 @@ export default function App() {
                     <Announcements />
                   </Route>
 
-                  <Route path="/register">
-                    <Register />
-                  </Route>
+                  {/* TODO: replace this with new register page */}
+                  {/* <Route path="/register">
+                    <Register isMobile ={isMobile}/>
+                  </Route> */}
 
                   <Route path="/recruiting">
                     <Recruiting />
@@ -82,6 +89,18 @@ export default function App() {
 
                   <Route path="/team">
                     <Team />
+                  </Route>
+
+                  <Route path="/register/login">
+                    <Login isMobile={isMobile} />
+                  </Route>
+
+                  <Route path="/register/signup">
+                    <SignUp isMobile={isMobile} />
+                  </Route>
+
+                  <Route path="/register/resetpassword">
+                    <ResetPassword isMobile={isMobile} />
                   </Route>
 
                   <Route path="/">
