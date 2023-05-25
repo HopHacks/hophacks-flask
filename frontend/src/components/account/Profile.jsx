@@ -5,27 +5,27 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import { withAuthCheck } from '../../util/auth.jsx';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Grid from '@material-ui/core/Grid';
 import FormDialog from './FormDialog';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
+import '../../stylesheets/profile.css';
 
 const Profile = function Profile(props) {
+  const isMobile = props.isMobile;
+
   const [status, setStatus] = useState('Application not complete: confirm email');
   const [resumeFile, setResumeFile] = useState('');
-  const [vaccinationFile, setVaccinationFile] = useState('');
   const [oldResumeName, setOldResumeName] = useState('');
-  const [oldVaccinationName, setOldVaccinationName] = useState('');
   //display database
   const [profile, setProfile] = useState([]);
   //edit
@@ -43,34 +43,13 @@ const Profile = function Profile(props) {
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState('');
   const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
-  const [vaccinationMsg, setVaccinationMsg] = useState(
-    'Acceptable format: *.pdf, *.png, *.jpeg, *.jpg, *.heic'
-  );
   const [ageMsg, setAgeMsg] = useState('');
 
-  const currentEvent = 'Fall 2022';
+  const currentEvent = 'Fall 2023';
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
   const acceptedStatus =
     'You have been accepted to HopHacks. Please RSVP if you plan on participating!';
   const appCompleteStatus = 'Application complete!';
-
-  const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120
-    },
-
-    root: {
-      marginLeft: '25%',
-      width: '50%',
-      minWidth: '450px'
-    },
-
-    title: {
-      fontSize: 80
-    }
-  }));
-  const classes = useStyles();
 
   async function getResumeFileName() {
     /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
@@ -84,24 +63,8 @@ const Profile = function Profile(props) {
     }
   }
 
-  async function getVaccinationFileName() {
-    /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
-    if (!props.isLoggedIn) return;
-
-    try {
-      const response = await axios.get('/api/vaccination/filename');
-      setOldVaccinationName(response.data['filename']);
-    } catch (e) {
-      setOldVaccinationName('');
-    }
-  }
-
   function handleResumeFileChange(e) {
     setResumeFile(e.target.files[0]);
-  }
-
-  function handleVaccinationFileChange(e) {
-    setVaccinationFile(e.target.files[0]);
   }
 
   async function handleResumeSubmit(e) {
@@ -119,33 +82,10 @@ const Profile = function Profile(props) {
     // TODO handle error!
   }
 
-  async function handleVaccinationSubmit(e) {
-    e.preventDefault();
-    const data = new FormData();
-    data.append('file', vaccinationFile);
-
-    try {
-      await axios.post('/api/vaccination/', data);
-      setVaccinationMsg('Vaccination card has been successfully uploaded');
-    } catch (e) {
-      setVaccinationMsg('Failed to upload vaccination card. Please try again.');
-    }
-
-    // TODO handle error!
-  }
-
   async function handleResumeDownload(e) {
     e.preventDefault();
 
     const response = await axios.get('/api/resumes/');
-    const url = response.data['url'];
-    window.open(url, '_blank');
-  }
-
-  async function handleVaccinationDownload(e) {
-    e.preventDefault();
-
-    const response = await axios.get('/api/vaccination/');
     const url = response.data['url'];
     window.open(url, '_blank');
   }
@@ -262,7 +202,6 @@ const Profile = function Profile(props) {
     getStatus();
     getProfile();
     getResumeFileName();
-    getVaccinationFileName();
     getEmailConfirmStatus();
   }, [props.isLoggedIn]);
 
@@ -297,15 +236,27 @@ const Profile = function Profile(props) {
   }
 
   const appStatus = (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
-          Application
-        </Typography>
-        <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-          You need to confirm your email before applying to the current event. Once you are accepted
-          to the event, you can RSVP to the event.
-        </Typography>
+    <div>
+      <Typography class="section-header" gutterBottom>
+        Application
+      </Typography>
+      <Typography color="textSecondary" style={{ fontSize: '15px' }}>
+        You need to confirm your email before applying to the current event. Once you are accepted
+        to the event, you can RSVP to the event.
+      </Typography>
+
+      {isMobile ? (
+        <div className="table">
+          <text className="table-header">Current Event:</text>
+          <text className="table-body">{' ' + currentEvent}</text>
+          <br />
+          <text className="table-header">Application Status:</text>
+          <text className="table-body">{' ' + status}</text>
+          <br />
+          <text className="table-header">Action Items:</text>
+          {ActionItems()}
+        </div>
+      ) : (
         <Table>
           <TableHead>
             <TableCell>Current Event</TableCell>
@@ -320,20 +271,42 @@ const Profile = function Profile(props) {
             </TableCell>
           </TableRow>
         </Table>
-      </CardContent>
-    </Card>
+      )}
+    </div>
   );
 
   const resume = (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
-          Resume
-        </Typography>
-        <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-          You can replace your resume by clicking on “Choose File” above and selecting a new file.
-          You can have only one resume attached to your profile.
-        </Typography>
+    <div>
+      <Typography class="section-header" gutterBottom>
+        Resume
+      </Typography>
+      <Typography color="textSecondary" style={{ fontSize: '15px' }}>
+        You can replace your resume by clicking on “Choose File” above and selecting a new file. You
+        can have only one resume attached to your profile.
+      </Typography>
+      {isMobile ? (
+        <div className="table">
+          <text className="table-header">Current Resume:</text>
+          <Link class="table-body" onClick={handleResumeDownload} style={{ color: 'blue' }}>
+            {' ' + oldResumeName}
+          </Link>
+          <br />
+          <Grid container>
+            <Grid item>
+              <text className="table-header">Upload New Resume:</text>
+            </Grid>
+            <Grid item>
+              <form onSubmit={handleResumeSubmit}>
+                <div>
+                  <input type="file" name="file" onChange={handleResumeFileChange} />
+                </div>
+                <input type="submit" value="Submit" />
+                <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
+              </form>
+            </Grid>
+          </Grid>
+        </div>
+      ) : (
         <Table>
           <TableHead>
             <TableCell>File Name</TableCell>
@@ -358,47 +331,8 @@ const Profile = function Profile(props) {
             </TableCell>
           </TableRow>
         </Table>
-      </CardContent>
-    </Card>
-  );
-
-  const vaccination = (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
-          Vaccination
-        </Typography>
-        <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-          In response to the current administrative policy, this year&apos;s participants are
-          required to be fully vaccinated or follow the indoor mask policy. Please upload a picture
-          of your vaccination card if you are fully vaccinated.
-        </Typography>
-        <Table>
-          <TableHead>
-            <TableCell>File Name</TableCell>
-            <TableCell>Action</TableCell>
-            <TableCell>Upload Vaccination Card</TableCell>
-          </TableHead>
-          <TableRow>
-            <TableCell>{oldVaccinationName}</TableCell>
-            <TableCell>
-              <Link onClick={handleVaccinationDownload} style={{ fontSize: '15px', color: 'blue' }}>
-                Download
-              </Link>
-            </TableCell>
-            <TableCell>
-              <form onSubmit={handleVaccinationSubmit}>
-                <div>
-                  <input type="file" name="file" onChange={handleVaccinationFileChange} />
-                </div>
-                <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}> {vaccinationMsg} </Typography>
-              </form>
-            </TableCell>
-          </TableRow>
-        </Table>
-      </CardContent>
-    </Card>
+      )}
+    </div>
   );
 
   const NameForm = (
@@ -426,7 +360,7 @@ const Profile = function Profile(props) {
 
   const GenderForm = (
     <form>
-      <FormControl className={classes.formControl}>
+      <FormControl>
         <InputLabel id="demo-simple-select-label">Gender</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -461,7 +395,7 @@ const Profile = function Profile(props) {
 
   const EthnicityForm = (
     <form>
-      <FormControl className={classes.formControl}>
+      <FormControl>
         <InputLabel id="demo-simple-select-label">Ethnicity</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -507,7 +441,7 @@ const Profile = function Profile(props) {
 
   const ProgramForm = (
     <form>
-      <FormControl className={classes.formControl}>
+      <FormControl>
         <InputLabel id="demo-simple-select-label">Program</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -540,7 +474,7 @@ const Profile = function Profile(props) {
   const GraduationForm = (
     <div>
       <form>
-        <FormControl className={classes.formControl}>
+        <FormControl>
           <InputLabel id="demo-simple-select-label">Month</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -567,7 +501,7 @@ const Profile = function Profile(props) {
       </form>
 
       <form>
-        <FormControl className={classes.formControl}>
+        <FormControl>
           <InputLabel id="demo-simple-select-label">Year</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -590,104 +524,99 @@ const Profile = function Profile(props) {
   );
 
   const ProfileCard = (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} gutterBottom style={{ fontSize: '30px' }}>
-          Profile
-        </Typography>
+    <div>
+      <Typography class="section-header" gutterBottom>
+        Profile
+      </Typography>
 
-        <List className="list">
-          <FormDialog
-            title={'Edit Name'}
-            form={NameForm}
-            handleProfileSave={handleProfileSave}
-            primaryText={'Name'}
-            secondaryText={profile.first_name + ' ' + profile.last_name}
-          />
+      <List class="list">
+        <FormDialog
+          title={'Edit Name'}
+          form={NameForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Name'}
+          secondaryText={profile.first_name + ' ' + profile.last_name}
+        />
 
-          <FormDialog
-            title={'Edit Gender'}
-            form={GenderForm}
-            handleProfileSave={handleProfileSave}
-            primaryText={'Gender'}
-            secondaryText={profile.gender}
-          />
+        <FormDialog
+          title={'Edit Gender'}
+          form={GenderForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Gender'}
+          secondaryText={profile.gender}
+        />
 
-          <FormDialog
-            title={'Edit Age'}
-            form={AgeForm}
-            handleProfileSave={checkAgeValid}
-            primaryText={'Age'}
-            secondaryText={profile.age}
-          />
+        <FormDialog
+          title={'Edit Age'}
+          form={AgeForm}
+          handleProfileSave={checkAgeValid}
+          primaryText={'Age'}
+          secondaryText={profile.age}
+        />
 
-          <Typography style={{ fontSize: '13px' }}> {ageMsg} </Typography>
+        <Typography style={{ fontSize: '13px' }}> {ageMsg} </Typography>
 
-          <FormDialog
-            title={'Edit Ethnicity'}
-            form={EthnicityForm}
-            handleProfileSave={handleProfileSave}
-            primaryText={'Ethnicity'}
-            secondaryText={profile.ethnicity}
-          />
+        <FormDialog
+          title={'Edit Ethnicity'}
+          form={EthnicityForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Ethnicity'}
+          secondaryText={profile.ethnicity}
+        />
 
-          <FormDialog
-            title={'Edit School'}
-            form={SchoolForm}
-            handleProfileSave={handleProfileSave}
-            primaryText={'School'}
-            secondaryText={profile.school}
-          />
+        <FormDialog
+          title={'Edit School'}
+          form={SchoolForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'School'}
+          secondaryText={profile.school}
+        />
 
-          <FormDialog
-            title={'Edit Major'}
-            form={MajorForm}
-            handleProfileSave={handleProfileSave}
-            primaryText={'Major'}
-            secondaryText={profile.major}
-          />
+        <FormDialog
+          title={'Edit Major'}
+          form={MajorForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Major'}
+          secondaryText={profile.major}
+        />
 
-          <FormDialog
-            title={'Edit Program'}
-            form={ProgramForm}
-            handleProfileSave={handleProfileSave}
-            primaryText={'Program'}
-            secondaryText={profile.grad}
-          />
+        <FormDialog
+          title={'Edit Program'}
+          form={ProgramForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Program'}
+          secondaryText={profile.grad}
+        />
 
-          <FormDialog
-            title={'Edit Expected Graduation Date'}
-            form={GraduationForm}
-            handleProfileSave={handleProfileSave}
-            primaryText={'Expected Graduation Date'}
-            secondaryText={profile.grad_month + ' ' + profile.grad_year}
-          />
+        <FormDialog
+          title={'Edit Expected Graduation Date'}
+          form={GraduationForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Expected Graduation Date'}
+          secondaryText={profile.grad_month + ' ' + profile.grad_year}
+        />
 
-          <FormDialog
-            title={'Edit Phone Number'}
-            form={PhoneNumberForm}
-            handleProfileSave={handleProfileSave}
-            primaryText={'Phone Number'}
-            secondaryText={profile.phone_number}
-          />
-        </List>
-      </CardContent>
-    </Card>
+        <FormDialog
+          title={'Edit Phone Number'}
+          form={PhoneNumberForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Phone Number'}
+          secondaryText={profile.phone_number}
+        />
+      </List>
+    </div>
   );
 
   return (
-    <div
-      style={{
-        backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/2022_theme.png")`,
-        backgroundSize: 'cover',
-        height: '100%'
-      }}
-    >
-      <div>{appStatus}</div>
-      <div>{resume}</div>
-      <div>{vaccination}</div>
-      <div>{ProfileCard}</div>
-    </div>
+    <Card class="profile">
+      <div className="section">{appStatus}</div>
+      <div className="section" style={{ marginTop: '7%' }}>
+        {resume}
+      </div>
+      <div className="section" style={{ marginTop: '7%' }}>
+        {ProfileCard}
+      </div>
+    </Card>
   );
 };
 

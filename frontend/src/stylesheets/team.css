@@ -21,7 +21,7 @@ body {
   font-size: min(max(calc(12px + 1.25vw), 4vw), 30px);
 }
 
-.register-wrapper {
+.team-register-wrapper {
   height: auto;
   width: 70vw;
   max-width: 100rem;
