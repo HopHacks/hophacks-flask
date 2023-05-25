@@ -162,6 +162,7 @@ def logout():
     unset_refresh_cookies(resp)
     return resp, 200
 
+
 @auth_api.route('/test_protected', methods = ['GET'])
 @jwt_required
 def protected():

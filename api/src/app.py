@@ -1,11 +1,13 @@
 from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
+
 from mail import mail
 from db import db
 from slack import slack_client
 from discord import discord_client
 
 import json
+import os
 
 class ConfigurationError(Exception):
     """Exception raised for errors in app config
@@ -25,7 +27,6 @@ def get_req_config(app, config, key):
 
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
-
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
@@ -86,8 +87,9 @@ def create_app(config_file='config/config.json'):
     from events import events_api
     from slack import slack_api
     from discord import discord_api
+    from saml import saml_api
 
-
+    app.register_blueprint(saml_api, url_prefix='/api/saml')
     app.register_blueprint(auth_api, url_prefix='/api/auth')
     app.register_blueprint(admin_api, url_prefix='/api/admin')
     app.register_blueprint(accounts_api, url_prefix='/api/accounts')

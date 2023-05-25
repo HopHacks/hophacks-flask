@@ -1,11 +1,11 @@
 flask==1.1.2
 pymongo==3.11.2
-pyjwt==1.7.1
+python3-saml==1.15.0
 flask_jwt_extended==3.25.0
 
 Flask-Mail==0.9.1
 boto3==1.13.18
-
+python3-saml==1.15.0
 bcrypt==3.2.0
 
 pytest==5.4.2
