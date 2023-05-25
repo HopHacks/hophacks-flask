@@ -42,6 +42,17 @@ const useStyles = makeStyles({
     },
     fontSize: '15px'
   },
+  titleFont: {
+    fontFamily: 'Inter',
+    color: 'rgba(255, 255, 255, 1)',
+    backgroundColor: 'transparent',
+    fontWeight: 'bolder',
+    '&.Mui-selected': {
+      color: 'rgba(255, 255, 255, 1)',
+      fontWeight: 'bolder'
+    },
+    fontSize: '15px'
+  },
   divFont: {
     fontFamily: 'Inter',
     color: 'rgba(255, 255, 255, 1)',
@@ -97,7 +108,7 @@ export default function Schedule() {
           variant="fullWidth"
         >
           <Tab
-            label="Fri., Sept 16th"
+            label="Fri., Sept 15th"
             value="fri"
             className={classes.font}
             style={{
@@ -105,7 +116,7 @@ export default function Schedule() {
             }}
           />
           <Tab
-            label="Sat., Sept 17th"
+            label="Sat., Sept 16th"
             value="sat"
             className={classes.font}
             style={{
@@ -113,7 +124,7 @@ export default function Schedule() {
             }}
           />
           <Tab
-            label="Sun., Sept 18th"
+            label="Sun., Sept 17th"
             value="sun"
             className={classes.font}
             style={{
@@ -128,18 +139,18 @@ export default function Schedule() {
         >
           <TableHead className={classes.schedule}>
             <TableRow>
-              <TableCell className={classes.font}>Time</TableCell>
-              <TableCell className={classes.font}>Event</TableCell>
-              <TableCell className={classes.font}>Location</TableCell>
+              <TableCell className={classes.titleFont}>Time</TableCell>
+              <TableCell className={classes.titleFont}>Event</TableCell>
+              <TableCell className={classes.titleFont}>Location</TableCell>
             </TableRow>
           </TableHead>
           {day === 'fri' && (
             <TableBody className={classes.body}>
-              <TableRow className={classes.font}>
+              <TableRow className={classes.bodycolor}>
                 <TableCell className={classes.font}>6:30 PM</TableCell>
                 <TableCell className={classes.font}>Check-in Begins </TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (1st floor lobby)
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -148,7 +159,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Dinner</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (1st floor lobby)
+                  {/* Hodson Hall (1st floor lobby) */}
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -157,7 +169,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Opening Ceremony</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 110
+                  {/* Hodson 110 */}
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -166,7 +179,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Team Building</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 203
+                  {/* Hodson 203 */}
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -178,10 +192,11 @@ export default function Schedule() {
                   Sponsor Hall Opens & Hacking Begins!
                 </TableCell>
                 <TableCell width="40%" align="left" className={classes.font}>
-                  Hodson Hall
+                  {/* Hodson Hall */}
+                  TBD
                 </TableCell>
               </TableRow>
-              <TableRow className={classes.font}>
+              {/* <TableRow className={classes.font}>
                 <TableCell className={classes.font}>10:00 PM - 10:45 PM</TableCell>
                 <TableCell className={classes.font}>uCredit Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
@@ -194,7 +209,7 @@ export default function Schedule() {
                 <TableCell align="left" className={classes.font}>
                   Hodson Hall (3rd floor lobby)
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           )}
           {day === 'sat' && (
@@ -205,7 +220,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Breakfast</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+                  {/* Hodson Hall (3rd floor lobby) */}
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -214,10 +230,11 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>HopHacks Coding Interview Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 316
+                  {/* Hodson 316 */}
+                  TBD
                 </TableCell>
               </TableRow>
-              <TableRow className={classes.bodycolor}>
+              {/* <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
                   11:00 AM - 11:45 AM
                 </TableCell>
@@ -225,24 +242,25 @@ export default function Schedule() {
                 <TableCell align="left" className={classes.font}>
                   Hodson 313
                 </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
+              </TableRow> */}
+              {/* <TableRow className={classes.font}>
                 <TableCell className={classes.font}>12:00 PM - 12:45 PM</TableCell>
                 <TableCell className={classes.font}>Booz Allen Hamilton Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
                   1:00 PM
                 </TableCell>
                 <TableCell className={classes.font}>Lunch</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+                  {/* Hodson Hall (3rd floor lobby) */}
+                  TBD
                 </TableCell>
               </TableRow>
-              <TableRow className={classes.bodycolor}>
+              {/* <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
                   2:00 PM - 3:30 PM
                 </TableCell>
@@ -266,37 +284,38 @@ export default function Schedule() {
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
                   6:00 PM
                 </TableCell>
                 <TableCell className={classes.font}>Dinner</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+                  {/* Hodson Hall (3rd floor lobby) */}
+                  TBD
                 </TableCell>
               </TableRow>
-              <TableRow className={classes.font}>
+              {/* <TableRow className={classes.font}>
                 <TableCell className={classes.font}>7:00 PM - 8:00 PM</TableCell>
                 <TableCell className={classes.font}>JHU IT Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 313
                 </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
+              </TableRow> */}
+              {/* <TableRow className={classes.font}>
                 <TableCell className={classes.font}>9:00 PM</TableCell>
                 <TableCell className={classes.font}>MLH Bob Ross Event </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 110
                 </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
+              </TableRow> */}
+              {/* <TableRow className={classes.font}>
                 <TableCell className={classes.font}>11:30 PM</TableCell>
                 <TableCell className={classes.font}>Midnight Pizza</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson Hall (3rd floor lobby)
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           )}
 
@@ -326,7 +345,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Breakfast</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+                  {/* Hodson Hall (3rd floor lobby) */}
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -335,7 +355,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Presentations Fair</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall
+                  {/* Hodson Hall */}
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -344,7 +365,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Lunch</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (1st floor lobby)
+                  {/* Hodson Hall (1st floor lobby) */}
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -353,7 +375,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Top 10 Demos & Judging</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 110
+                  {/* Hodson 110 */}
+                  TBD
                 </TableCell>
               </TableRow>
 
@@ -363,7 +386,8 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 110
+                  {/* Hodson 110 */}
+                  TBD
                 </TableCell>
               </TableRow>
             </TableBody>
