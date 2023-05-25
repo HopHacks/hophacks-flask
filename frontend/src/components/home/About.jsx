@@ -34,7 +34,7 @@ export default function About() {
 
   const introTextP2 = (
     <AboutText>
-      Teams of up to <Highlight>4 university students</Highlight> work on projects from scratch.At
+      Teams of up to <Highlight>4 university students</Highlight> work on projects from scratch. At
       the end of the hackathon, teams present their projects to judges and compete for prizes
       ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!
     </AboutText>
