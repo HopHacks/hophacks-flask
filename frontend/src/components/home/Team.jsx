@@ -291,7 +291,7 @@ export default function Team() {
             </div>
             {
               <div className={classes.teambox}>
-                <MemberItem imgURL="Quinyue" memberName="Quinyue Huang" memberTitle="Design" />
+                <MemberItem imgURL="Quinyue" memberName="Qinyue Huang" memberTitle="Design" />
               </div>
             }
           </Grid>
