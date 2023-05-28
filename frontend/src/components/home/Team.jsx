@@ -458,7 +458,7 @@ export default function Team() {
               <MemberItem
                 imgURL="ElizabethCho"
                 memberName="Elizabeth Cho"
-                memberTitle="Design"
+                memberTitle="Capital One"
                 linkedin="https://www.linkedin.com/in/elizabeth-c-cho/"
                 github="https://github.com/Elizabeth-Cho"
                 personal="https://elizabeth-cho.github.io/"
