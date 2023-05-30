@@ -237,15 +237,7 @@ export default function Faq() {
           </AccordionSummary>
           <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
             <Typography className={classes.text}>
-              To get to us, we offer two bus routes. The North Bus will pick up students from New
-              York City, Rutgers, and Philadelphia; the South Bus will pick up students from
-              Georgetown, UMDCP, and UMDBC. More information on the exact pickup locations of these
-              busses will be posted and sent out shortly to those who indicate interest in their
-              registration.
-            </Typography>
-            <br></br>
-            <Typography className={classes.text}>
-              If none of those options are for you, here are more ways to get to the party:
+              Here are some ways to get to the party:
               <ul>
                 <li>
                   For students from local Baltimore schools, we recommend the{' '}
@@ -260,8 +252,7 @@ export default function Faq() {
                   .
                 </li>
                 <li>
-                  For students from DC who are not taking our South/DC/Maryland Bus, we recommend
-                  taking the{' '}
+                  For students from DC, we recommend taking the{' '}
                   <a
                     className={classes.link}
                     href="https://www.mta.maryland.gov/schedule?type=marc-train"
