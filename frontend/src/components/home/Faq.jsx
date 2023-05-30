@@ -313,7 +313,7 @@ export default function Faq() {
         </Accordion>
       </Box>
 
-      {/* <Box
+      <Box
         raised="true"
         border={4}
         borderLeft={0}
@@ -347,7 +347,7 @@ export default function Faq() {
             </Typography>
           </AccordionDetails>
         </Accordion>
-      </Box> */}
+      </Box>
 
       <Box
         raised="true"
