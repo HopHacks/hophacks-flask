@@ -334,7 +334,7 @@ export default function Faq() {
             <Typography className={classes.text}>
               Proof of COVID-19 vaccination and booster shot or proof of exemption must be uploaded
               to your Profile page when you register for HopHacks. No masks are required, unless you
-              are exempt from vaccination. 
+              are exempt from vaccination.
             </Typography>
           </AccordionDetails>
         </Accordion>
