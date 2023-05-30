@@ -37,7 +37,7 @@ export default function Sponsors() {
   return (
     <Box
       display="flex"
-      marginTop={'10rem'}
+      marginTop={'30rem'}
       justifyContent="center"
       className="sponsor-container"
       id="sponsors"
@@ -49,7 +49,13 @@ export default function Sponsors() {
           Email us at <a href={`mailto:hophacks.sponsors@gmail.com`}>hophacks.sponsors@gmail.com</a>
         </div>
       </SponsorItem>
-      <Box display="flex" flexDirection="column">
+      <img
+        id="hop-logo"
+        src={`https://hophacks-website.s3.amazonaws.com/images/logo-artists.PNG`}
+        width="40%"
+      />
+      {/* logo-artists.PNG */}
+      {/* <Box display="flex" flexDirection="column">
         <Box display="flex" justifyContent="space-between" className="sponsor-container">
           <SponsorItem size="large" foreground="light" background="dark"></SponsorItem>
           <SponsorItem size="large" foreground="dark" background="light"></SponsorItem>
@@ -65,7 +71,7 @@ export default function Sponsors() {
           <SponsorItem size="small" foreground="light" background="dark"></SponsorItem>
           <SponsorItem size="small" foreground="dark" background="light"></SponsorItem>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 }

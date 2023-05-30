@@ -8,7 +8,6 @@ import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { withAuthProps } from '../../util/auth';
-
 import '../../stylesheets/register.css';
 import { useEffect } from 'react';
 

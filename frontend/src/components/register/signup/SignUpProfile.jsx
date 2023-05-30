@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import MajorAutocomplete from '../../account/MajorAutocomplete';
 import SchoolAutocomplete from '../../account/SchoolAutocomplete';
 import Checkbox from '@material-ui/core/Checkbox';
-
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
