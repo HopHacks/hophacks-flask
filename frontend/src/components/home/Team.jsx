@@ -270,15 +270,7 @@ export default function Team() {
         {value === 1 && (
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Elizabeth"
-                memberName="Elizabeth Hsieh"
-                memberTitle="Design Head"
-                linkedin="https://www.linkedin.com/in/elizabeth-hsieh/"
-              />
-            </div>
-            <div className={classes.teambox}>
-              <MemberItem imgURL="Miranda" memberName="Miranda Bian" memberTitle="Design" />
+              <MemberItem imgURL="Miranda" memberName="Miranda Bian" memberTitle="Design Head" />
             </div>
             <div className={classes.teambox}>
               <MemberItem
@@ -374,15 +366,6 @@ export default function Team() {
                 memberName="Dhruv Dubey"
                 memberTitle="Sponsors"
                 linkedin="https://www.linkedin.com/in/dhruv-dubey-51660b1b7/"
-              />
-            </div>
-            <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Sky"
-                memberName="Anthony Sky Ng-Thow-Hing"
-                memberTitle="Sponsors"
-                linkedin="https://www.linkedin.com/in/anthony-sky-ng-thow-hing-9b1352193/"
-                github="https://github.com/skynth"
               />
             </div>
             <div className={classes.teambox}>
@@ -512,7 +495,7 @@ export default function Team() {
                 imgURL="NicholasBowen"
                 memberName="Nicolas Bowen"
                 memberTitle="Palantir"
-                linkedin="https://www.linkedin.com/in/stella-li-1106/"
+                linkedin="https://www.linkedin.com/in/nicholas-bowen24/"
               />
             </div>
             <div className={classes.teambox}>
