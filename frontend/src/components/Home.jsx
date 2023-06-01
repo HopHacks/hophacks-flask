@@ -1,9 +1,7 @@
-/* eslint-disable react/no-unknown-property */
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Sponsors from './home/Sponsors';
-// import Schedule from './home/Schedule';
 import About from './home/About';
 import Faq from './home/Faq';
 import Cover from './home/Cover';
@@ -11,8 +9,6 @@ import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import AboutSeparation from './home/AboutSeparation';
-// import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
-// import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 const useStyles = makeStyles({
   logo: {
     top: '25%',
@@ -49,10 +45,7 @@ const useStyles = makeStyles({
 });
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  // function img(url) {
-  //   return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-  // }
+  const [loading, setLoading] = useState(true);
   const classes = useStyles();
 
   const [, setWindowSize] = useState({
@@ -63,7 +56,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 0);
+    }, 2000);
 
     function handleWindowResize() {
       setWindowSize({
@@ -79,17 +72,6 @@ export default function Home() {
     };
   }, []);
 
-  // const CoverAnimate = {
-  //   offscreen: { y: 0, opacity: 1 },
-  //   onscreen: {
-  //     y: 0,
-  //     opacity: 0.7,
-  //     transition: {
-  //       type: "spring",
-  //       bounce: 0.0,
-  //     },
-  //   },
-  // };
   return (
     <div className={classes.colorBackground}>
       {loading ? (
