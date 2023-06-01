@@ -259,11 +259,7 @@ export default function Team() {
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="kelly"
-                memberName="Kelly Culotta"
-                memberTitle="Admin Coordinator"
-              />
+              <MemberItem imgURL="lyn" memberName="Lyn Doan" memberTitle="Admin Coordinator" />
             </div>
           </Grid>
         )}
@@ -431,10 +427,9 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="LaurenBack"
-                memberName="Lauren Back"
-                memberTitle=""
-                linkedin="https://www.linkedin.com/in/backs/"
+                imgURL="kelly"
+                memberName="Kelly Culotta"
+                memberTitle="Admin Coordinator"
               />
             </div>
             <div className={classes.teambox}>
@@ -445,6 +440,14 @@ export default function Team() {
                 linkedin="https://www.linkedin.com/in/elizabeth-c-cho/"
                 github="https://github.com/Elizabeth-Cho"
                 personal="https://elizabeth-cho.github.io/"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="LaurenBack"
+                memberName="Lauren Back"
+                memberTitle=""
+                linkedin="https://www.linkedin.com/in/backs/"
               />
             </div>
             <div className={classes.teambox}>
