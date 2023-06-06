@@ -47,7 +47,7 @@ export default function Cover() {
   const opacity = useTransform(scrollYProgress, [0, 0.08, 0.08], [1, 1, 0]);
   const mobileScale = useTransform(scrollYProgress, [0, 0.02], [10, 3.4]);
   const mobileOpacity = useTransform(scrollYProgress, [0, 0.02, 0.03], [1, 1, 0]);
-  //const yRight = useTransform(scrollYProgress, [0, 0.08], ['-70vh', '0vh']);
+  const yRight = useTransform(scrollYProgress, [0, 0.08], ['0vh', '70vh']);
   //const centerString = center.current + 'vw';
   // const imageLoaded = () => {
   //   setImageLoading(false);
@@ -127,8 +127,8 @@ export default function Cover() {
           <motion.div
             style={{
               scale,
-              opacity
-              //top: yRight
+              opacity,
+              y: yRight
             }}
           >
             <img
