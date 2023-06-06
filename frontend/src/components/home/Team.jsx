@@ -259,26 +259,14 @@ export default function Team() {
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="kelly"
-                memberName="Kelly Culotta"
-                memberTitle="Admin Coordinator"
-              />
+              <MemberItem imgURL="lyn" memberName="Lyn Doan" memberTitle="Admin Coordinator" />
             </div>
           </Grid>
         )}
         {value === 1 && (
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Elizabeth"
-                memberName="Elizabeth Hsieh"
-                memberTitle="Design Head"
-                linkedin="https://www.linkedin.com/in/elizabeth-hsieh/"
-              />
-            </div>
-            <div className={classes.teambox}>
-              <MemberItem imgURL="Miranda" memberName="Miranda Bian" memberTitle="Design" />
+              <MemberItem imgURL="Miranda" memberName="Miranda Bian" memberTitle="Design Head" />
             </div>
             <div className={classes.teambox}>
               <MemberItem
@@ -291,7 +279,7 @@ export default function Team() {
             </div>
             {
               <div className={classes.teambox}>
-                <MemberItem imgURL="Quinyue" memberName="Quinyue Huang" memberTitle="Design" />
+                <MemberItem imgURL="Quinyue" memberName="Qinyue Huang" memberTitle="Design" />
               </div>
             }
           </Grid>
@@ -378,15 +366,6 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="Sky"
-                memberName="Anthony Sky Ng-Thow-Hing"
-                memberTitle="Sponsors"
-                linkedin="https://www.linkedin.com/in/anthony-sky-ng-thow-hing-9b1352193/"
-                github="https://github.com/skynth"
-              />
-            </div>
-            <div className={classes.teambox}>
-              <MemberItem
                 imgURL="Sujin"
                 memberName="Sujin Lee"
                 memberTitle="Sponsors"
@@ -448,20 +427,27 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="LaurenBack"
-                memberName="Lauren Back"
-                memberTitle=""
-                linkedin="https://www.linkedin.com/in/backs/"
+                imgURL="kelly"
+                memberName="Kelly Culotta"
+                memberTitle="Admin Coordinator"
               />
             </div>
             <div className={classes.teambox}>
               <MemberItem
                 imgURL="ElizabethCho"
                 memberName="Elizabeth Cho"
-                memberTitle="Design"
+                memberTitle="Capital One"
                 linkedin="https://www.linkedin.com/in/elizabeth-c-cho/"
                 github="https://github.com/Elizabeth-Cho"
                 personal="https://elizabeth-cho.github.io/"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="LaurenBack"
+                memberName="Lauren Back"
+                memberTitle=""
+                linkedin="https://www.linkedin.com/in/backs/"
               />
             </div>
             <div className={classes.teambox}>
@@ -512,7 +498,7 @@ export default function Team() {
                 imgURL="NicholasBowen"
                 memberName="Nicolas Bowen"
                 memberTitle="Palantir"
-                linkedin="https://www.linkedin.com/in/stella-li-1106/"
+                linkedin="https://www.linkedin.com/in/nicholas-bowen24/"
               />
             </div>
             <div className={classes.teambox}>

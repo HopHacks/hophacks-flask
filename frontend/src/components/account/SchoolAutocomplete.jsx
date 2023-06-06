@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -38,7 +39,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
   return (
     <Autocomplete
       id="schools"
-      style={{ width: 300, marginTop: -3 }}
+      style={{ width: '100%' }}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -62,6 +63,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
           value={school}
           InputProps={{
             ...params.InputProps,
+            style: { color: '#ffffff' },
             endAdornment: (
               <React.Fragment>
                 {loading ? <CircularProgress color="inherit" size={20} /> : null}
@@ -69,7 +71,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
               </React.Fragment>
             )
           }}
-          InputLabelProps={{ style: { color: '#000000' } }}
+          InputLabelProps={{ style: { color: '#ffffff' } }}
         />
       )}
     />

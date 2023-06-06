@@ -6,13 +6,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { withAuthProps } from '../util/auth';
-import Login from './LoginDialog';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -34,7 +32,7 @@ const useStyles = makeStyles({
 
   navBtn: {
     textTransform: 'none',
-    margin: '0 1.5rem'
+    margin: '0 1rem'
   },
 
   drawer: {
@@ -79,7 +77,7 @@ const Nav = function Nav(props) {
         </Typography>
       </Button>
 
-      <Button
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#schedule')}
         color="inherit"
@@ -88,7 +86,7 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Schedule
         </Typography>
-      </Button>
+      </Button> */}
       <Button
         component={Link}
         onClick={() => (window.location = '/#sponsors')}
@@ -121,7 +119,19 @@ const Nav = function Nav(props) {
           Team
         </Typography>
       </Button>
-      {!props.isLoggedIn && <Login />}
+      {!props.isLoggedIn && (
+        <Button
+          onClick={() => {
+            window.location = '/register/login';
+          }}
+          color="inherit"
+          className={classes.navBtn}
+        >
+          <Typography variant="h5" className={classes.title}>
+            Login
+          </Typography>
+        </Button>
+      )}
 
       {props.isLoggedIn && (
         <Button
@@ -196,8 +206,8 @@ const Nav = function Nav(props) {
                 rel="noreferrer"
               >
                 <img
-                  src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-white.svg"
-                  alt="Major League Hacking 2023 Hackathon Season"
+                  src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-white-2024.svg"
+                  alt="Major League Hacking 2024 Hackathon Season"
                   style={{ width: '100%' }}
                 ></img>
               </a>
@@ -254,7 +264,7 @@ const Nav = function Nav(props) {
             rel="noreferrer"
           >
             <img
-              src="https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-white.svg"
+              src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-white-2024.svg"
               alt="Major League Hacking 2023 Hackathon Season"
               style={{ width: '100%' }}
             ></img>
