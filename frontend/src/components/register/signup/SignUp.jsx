@@ -167,6 +167,11 @@ export default function SignUp(props) {
       //     last_name: last_name,
       //     school: school,
       //   });
+      await axios.post('/api/slack/registration', {
+        first_name: first_name,
+        last_name: last_name,
+        school: school
+      });
     } catch (e) {
       return;
     }
