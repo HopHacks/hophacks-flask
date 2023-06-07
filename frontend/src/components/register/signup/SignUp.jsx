@@ -172,7 +172,6 @@ export default function SignUp(props) {
         last_name: last_name,
         school: school
       });
-      
     } catch (e) {
       return;
     }
