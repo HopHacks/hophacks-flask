@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 //import Button from '@material-ui/core/Button';
 //import { motion, useScroll } from "framer-motion/dist/framer-motion"; // Needs to be added to requirements.txt
-import { motion, useViewportScroll, useTransform } from 'framer-motion/dist/framer-motion';
+import { motion, useViewportScroll, useTransform } from 'framer-motion';
 
 const useStyles = makeStyles({
   images: {
@@ -43,72 +43,81 @@ export default function Cover() {
   //const [pulsing, setPulsing] = useState(true);
   const { scrollYProgress } = useViewportScroll();
   //fit to screen size:1.165
-  const scale = useTransform(scrollYProgress, [0, 0.08], [4, 1.165]);
-  const opacity = useTransform(scrollYProgress, [0, 0.08, 0.08], [1, 1, 0]);
-  const mobileScale = useTransform(scrollYProgress, [0, 0.02], [10, 3.4]);
-  const mobileOpacity = useTransform(scrollYProgress, [0, 0.02, 0.03], [1, 1, 0]);
-  const yRight = useTransform(scrollYProgress, [0, 0.08], ['0vh', '70vh']);
-  //const centerString = center.current + 'vw';
-  // const imageLoaded = () => {
-  //   setImageLoading(false);
-  //   setTimeout(() => setPulsing(false), 600);
-  // };
+  const scale = useTransform(scrollYProgress, [0, 0.08], [4, 1]);
+  const registerScale = useTransform(
+    scrollYProgress,
+    [0, 0.02, 0.04, 0.08],
+    [0.13, 0.2, 0.24, 0.5]
+  );
+  const opacity = useTransform(scrollYProgress, [0, 0.08, 0.16, 0.3], [1, 1, 1, 0]);
+  const yRight = useTransform(scrollYProgress, [0, 0.08], ['10em', '50em']);
+  const registerYRight = useTransform(
+    scrollYProgress,
+    [0, 0.02, 0.04, 0.08],
+    ['0.5em', '-2.5em', '-4.5em', '-15em']
+  );
+
+  const mobileScale = useTransform(scrollYProgress, [0, 0.02], [10, 3]);
+  const mobileRegisterScale = useTransform(scrollYProgress, [0, 0.02], [0.13, 0.3]);
+  const mobileOpacity = useTransform(scrollYProgress, [0, 0.02, 0.025, 0.06], [1, 1, 1, 0]);
+  const mobileYRight = useTransform(scrollYProgress, [0, 0.02], ['20em', '40em']);
+  const mobileRegisterYRight = useTransform(scrollYProgress, [0, 0.02], ['0em', '-3em']);
 
   const classes = useStyles();
   if (window.innerWidth <= 650) {
     return (
-      <div style={{}}>
+      <div style={{ marginBottom: '800px' }}>
         <div>
           <motion.div
             style={{
               scale: mobileScale,
-              opacity: mobileOpacity
+              opacity: mobileOpacity,
+              y: mobileYRight,
+              x: 0
             }}
           >
             <img
-              src={img('demo_sky.png')}
-              style={{
-                position: 'absolute',
-                overflow: 'hidden',
-                top: '0vw',
-                left: '0%',
-                width: '100%'
-              }}
-              alt="hello"
+              src={img('sky.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
             />
             <img
-              src={img('demo_stage.png')}
-              style={{
-                position: 'absolute',
-                overflow: 'hidden',
-                top: '0vw',
-                left: '0%',
-                width: '100%'
-              }}
-              alt="hello"
+              src={img('stage0530.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
             />
             <img
-              src={img('demo_crowds.png')}
-              style={{
-                position: 'absolute',
-                overflow: 'hidden',
-                top: '0vw',
-                left: '0%',
-                width: '100%'
-              }}
-              alt="hello"
+              src={img('crowd0530.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
             />
             <img
-              src={img('demo_foreground.png')}
-              style={{
-                position: 'absolute',
-                top: '0vw',
-                left: '0%',
-                width: '100%'
-              }}
-              alt="hello"
+              src={img('foreground-2.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
             />
-
+            <motion.div
+              style={{
+                scale: mobileRegisterScale,
+                opacity: mobileOpacity,
+                y: mobileRegisterYRight,
+                x: 0
+              }}
+            >
+              <img
+                src={img('register.png')}
+                //style={{ top: center(scale.current) }}
+                className={classes.images}
+                alt="image_could_not_load"
+                onClick={() => {
+                  window.location = '/register/login';
+                }}
+              />
+            </motion.div>
             <div
               style={{
                 display: 'flex',
@@ -122,13 +131,14 @@ export default function Cover() {
     );
   } else {
     return (
-      <div style={{}}>
+      <div style={{ marginBottom: '800px' }}>
         <div>
           <motion.div
             style={{
               scale,
               opacity,
-              y: yRight
+              y: yRight,
+              x: 0
             }}
           >
             <img
@@ -138,24 +148,41 @@ export default function Cover() {
               alt="image_could_not_load"
             />
             <img
-              src={img('stage.png')}
+              src={img('stage0530.png')}
               //style={{ top: center(scale.current) }}
               className={classes.images}
               alt="image_could_not_load"
             />
             <img
-              src={img('crowds.png')}
+              src={img('crowd0530.png')}
               //style={{ top: center(scale.current) }}
               className={classes.images}
               alt="image_could_not_load"
             />
             <img
-              src={img('foreground.png')}
+              src={img('foreground-2.png')}
               //style={{ top: center(scale.current) }}
               className={classes.images}
               alt="image_could_not_load"
             />
-
+            <motion.div
+              style={{
+                scale: registerScale,
+                opacity,
+                y: registerYRight,
+                x: 0
+              }}
+            >
+              <img
+                src={img('register.png')}
+                //style={{ top: center(scale.current) }}
+                className={classes.images}
+                alt="image_could_not_load"
+                onClick={() => {
+                  window.location = '/register/login';
+                }}
+              />
+            </motion.div>
             <div
               style={{
                 display: 'flex',

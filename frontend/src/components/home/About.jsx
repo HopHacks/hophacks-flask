@@ -41,7 +41,7 @@ export default function About() {
   );
 
   return (
-    <div id="about">
+    <div id="about" style={{}}>
       <Box align="center">
         <img src={img('logo2023.png')} width={'160px'} />
       </Box>
