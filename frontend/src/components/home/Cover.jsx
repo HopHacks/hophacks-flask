@@ -6,9 +6,16 @@ import { motion, useViewportScroll, useTransform } from 'framer-motion';
 
 const useStyles = makeStyles({
   images: {
-    position: 'fixed',
+    position: 'absolute',
     overflow: 'hidden',
     top: '-40vw',
+    left: '0%',
+    width: '100%'
+  },
+  mobileImages: {
+    position: 'absolute',
+    overflow: 'hidden',
+    //top: '-40vw',
     left: '0%',
     width: '100%'
   }
@@ -50,25 +57,75 @@ export default function Cover() {
     [0.13, 0.2, 0.24, 0.5]
   );
   const opacity = useTransform(scrollYProgress, [0, 0.08, 0.16, 0.3], [1, 1, 1, 0]);
-  const yRight = useTransform(scrollYProgress, [0, 0.08], ['10em', '50em']);
+  const yRight = useTransform(scrollYProgress, [0, 0.08], ['10em', '55em']);
   const registerYRight = useTransform(
     scrollYProgress,
     [0, 0.02, 0.04, 0.08],
-    ['0.5em', '-2.5em', '-4.5em', '-15em']
+    ['0.3em', '-2em', '-4.5em', '-15em']
   );
 
-  const mobileScale = useTransform(scrollYProgress, [0, 0.02], [10, 3]);
-  const mobileRegisterScale = useTransform(scrollYProgress, [0, 0.02], [0.13, 0.3]);
-  const mobileOpacity = useTransform(scrollYProgress, [0, 0.02, 0.025, 0.06], [1, 1, 1, 0]);
-  const mobileYRight = useTransform(scrollYProgress, [0, 0.02], ['20em', '40em']);
-  const mobileRegisterYRight = useTransform(scrollYProgress, [0, 0.02], ['0em', '-3em']);
+  const mobileScale = useTransform(scrollYProgress, [0, 0.02], [0.4, 0.4]);
+  //const mobileScale = useTransform(scrollYProgress, [0, 0.02], [10, 3]);
+
+  // const mobileRegisterScale = useTransform(scrollYProgress, [0, 0.02], [0.13, 0.3]);
+  //const mobileOpacity = useTransform(scrollYProgress, [0, 0.02, 0.025, 0.06], [1, 1, 1, 0]);
+  // const mobileYRight = useTransform(scrollYProgress, [0, 0.02], ['20em', '40em']);
+  // const mobileRegisterYRight = useTransform(scrollYProgress, [0, 0.02], ['0em', '-3em']);
 
   const classes = useStyles();
   if (window.innerWidth <= 650) {
     return (
-      <div style={{ marginBottom: '800px' }}>
-        <div>
+      <div>
+        <div style={{}}>
+          <img
+            src={img('homepage-desktop.png')}
+            style={{
+              width: '100vw'
+            }}
+          />
+          {/* <motion.div style={{ opacity: mobileOpacity }}>
+            <img
+              src={img('sky.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.mobileImages}
+              alt="image_could_not_load"
+            />
+            <img
+              src={img('stage0530.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.mobileImages}
+              alt="image_could_not_load"
+            />
+            <img
+              src={img('crowd0530.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.mobileImages}
+              alt="image_could_not_load"
+            />
+            <img
+              src={img('foreground-2.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.mobileImages}
+              alt="image_could_not_load"
+            /> */}
           <motion.div
+            style={{
+              scale: mobileScale
+            }}
+          >
+            <img
+              src={img('register.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+              onClick={() => {
+                window.location = '/register/login';
+              }}
+              style={{ top: '-550px' }}
+            />
+          </motion.div>
+
+          {/* <motion.div
             style={{
               scale: mobileScale,
               opacity: mobileOpacity,
@@ -125,13 +182,13 @@ export default function Cover() {
                 alignItems: 'center'
               }}
             ></div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     );
   } else {
     return (
-      <div style={{ marginBottom: '800px' }}>
+      <div>
         <div>
           <motion.div
             style={{
