@@ -11,6 +11,7 @@ import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import AboutSeparation from './home/AboutSeparation';
+import Prizes from './home/Prizes';
 // import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 // import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 const useStyles = makeStyles({
@@ -100,6 +101,7 @@ export default function Home() {
           <Container fixed>
             <About />
             <AboutSeparation />
+            <Prizes />
             {/* <Schedule /> */}
             <Sponsors />
             <Faq />
