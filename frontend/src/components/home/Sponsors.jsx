@@ -70,7 +70,7 @@ export default function Sponsors() {
       <Box display="flex" flexDirection="column">
         <Box display="flex" justifyContent="space-between" className="sponsor-container">
           <SponsorItem size="large">
-            <img src={img('it_bg.png')} style={{ width: '280px' }} className="sponsor-img" />
+            <img src={img('it_bg.png')} style={{ width: '270px' }} className="sponsor-img" />
           </SponsorItem>
           <SponsorItem size="large">
             <img src={img('PaitentSafety.gif')} style={{ width: '320px' }} />
@@ -83,10 +83,10 @@ export default function Sponsors() {
         </Box> */}
         <Box display="flex" className="medium-container">
           <SponsorItem size="small">
-            <img src={img('stickerMule.jpg')} style={{ width: '140px' }} className="sponsor-img" />
+            <img src={img('stickerMule.jpg')} style={{ width: '130px' }} className="sponsor-img" />
           </SponsorItem>
           <SponsorItem size="small">
-            <img src={img('echo3D.webp')} style={{ width: '140px' }} className="sponsor-img" />
+            <img src={img('echo3D.webp')} style={{ width: '130px' }} className="sponsor-img" />
           </SponsorItem>
           {/* <SponsorItem size="small"></SponsorItem>
           <SponsorItem size="small"></SponsorItem> */}
