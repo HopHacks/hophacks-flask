@@ -17,13 +17,21 @@ export default function SignUpConfirmation(props) {
         <Typography class="mobile-motto-subtext">
           Thank you for signing up. We are excited to have you joining our event!
         </Typography>
+        <Typography class="mobile-motto-subtext">
+          For next step, please sign in and confirm your email in the profile page.
+        </Typography>
         <Link to="/register/login" style={{ width: '100%' }}>
           <Button
             variant="contained"
             class="card-button"
             style={{ width: isMobile ? '80%' : '40%', height: '3rem' }}
           >
-            <Typography class="mobile-motto-text">Back to Sign in</Typography>
+            <Typography
+              class="mobile-motto-text"
+              style={{ marginTop: isMobile ? '7%' : '3%', marginBottom: isMobile ? '7%' : '3%' }}
+            >
+              Back to Sign in
+            </Typography>
           </Button>
         </Link>
       </CardContent>

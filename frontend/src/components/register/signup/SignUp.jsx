@@ -40,8 +40,16 @@ export default function SignUp(props) {
 
   // functions for account page
   async function handleAccountNext() {
-    if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
-      setConfirmMsg('* Required field cannot be empty');
+    if (username.length === 0) {
+      setConfirmMsg('* Email cannot be empty');
+      return;
+    }
+    if (password.length === 0) {
+      setConfirmMsg('* Password cannot be empty');
+      return;
+    }
+    if (passwordConfirm.length === 0) {
+      setConfirmMsg('* Confirmed Password cannot be empty');
       return;
     }
 
@@ -76,59 +84,74 @@ export default function SignUp(props) {
     setActivePage(PROFILE);
   }
 
-  // functions for profile page
-  function isEmpty() {
-    return (
-      username.length === 0 ||
-      password.length === 0 ||
-      first_name.length === 0 ||
-      last_name.length === 0 ||
-      gender.length === 0 ||
-      major.length === 0 ||
-      school.length === 0 ||
-      ethnicity.length === 0 ||
-      phone_number === undefined ||
-      phone_number.length === 0 ||
-      grad.length === 0 ||
-      grad_month === 0 ||
-      grad_year === 0
-    );
-  }
-
   async function handleProfileNext() {
-    if (isEmpty()) {
-      setProfileSubmitMsg('* Required field cannot be empty.');
+    if (first_name.length === 0) {
+      setProfileSubmitMsg('* First name cannot be empty.');
       return;
     }
-
+    if (last_name.length === 0) {
+      setProfileSubmitMsg('* Last name cannot be empty.');
+      return;
+    }
+    if (age.length === 0 || age === 0) {
+      setProfileSubmitMsg('* Age cannot be empty.');
+      return;
+    }
+    const agere = /^[0-9\b]+$/;
+    if (!agere.test(age)) {
+      setProfileSubmitMsg('* Age must be an integer value.');
+      return;
+    }
+    if (gender.length === 0) {
+      setProfileSubmitMsg('* Gender cannot be empty.');
+      return;
+    }
+    if (ethnicity.length === 0) {
+      setProfileSubmitMsg('* Ethnicity cannot be empty.');
+      return;
+    }
+    if (phone_number === undefined || phone_number.length === 0) {
+      setProfileSubmitMsg('* Phone number cannot be empty.');
+      return;
+    }
     if (!isValidPhoneNumber(phone_number)) {
       setProfileSubmitMsg('* Please enter a valid phone number.');
       return;
     }
-
-    if (!resumeChecked || resumeFile === '') {
+    if (school.length === 0) {
+      setProfileSubmitMsg('* School cannot be empty.');
+      return;
+    }
+    if (major.length === 0) {
+      setProfileSubmitMsg('* Major cannot be empty.');
+      return;
+    }
+    if (grad.length === 0) {
+      setProfileSubmitMsg('* Program cannot be empty.');
+      return;
+    }
+    if (grad_month.length === 0) {
+      setProfileSubmitMsg('* Grad month cannot be empty.');
+      return;
+    }
+    if (grad_year.length === 0) {
+      setProfileSubmitMsg('* Grad year cannot be empty.');
+      return;
+    }
+    if (resumeFile === '') {
       setProfileSubmitMsg('* Please upload your resume.');
       return;
     }
-
+    if (!resumeChecked) {
+      setProfileSubmitMsg('* Please read the HopHacks Resume Authorization.');
+      return;
+    }
     if (!conductCodeChecked) {
       setProfileSubmitMsg('* Please read the MLH Code of Conduct.');
       return;
     }
-
     if (!eventLogisticsChecked) {
       setProfileSubmitMsg('* Please read the MLH Terms and Conditions and Privacy Policy.');
-      return;
-    }
-
-    /*if (!communicationChecked) {
-          setProfileSubmitMsg("* Please check the box for MLH informational emails.")
-          return;
-        }*/
-
-    const agere = /^[0-9\b]+$/;
-    if (!agere.test(age)) {
-      setProfileSubmitMsg('* Age must be an integer value.');
       return;
     }
 
@@ -161,7 +184,6 @@ export default function SignUp(props) {
     try {
       setEnabledButton(false);
       await axios.post('/api/accounts/create', data);
-
       //   await axios.post('/api/slack/registration', {
       //     first_name: first_name,
       //     last_name: last_name,

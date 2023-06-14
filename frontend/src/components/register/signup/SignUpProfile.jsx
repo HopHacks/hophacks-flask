@@ -406,7 +406,11 @@ export default function SignUpProfile(props) {
                 Upload Resume*
               </Button>
               {isMobile ? <br /> : null}
-              {resumeFile !== undefined && (
+              {resumeFile === '' ? (
+                <text style={{ marginLeft: isMobile ? '0rem' : '1rem', color: 'white' }}>
+                  {'No File Uploaded'}
+                </text>
+              ) : (
                 <text style={{ marginLeft: isMobile ? '0rem' : '1rem', color: 'white' }}>
                   {'Uploaded:' + resumeFile.name}
                 </text>
