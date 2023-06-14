@@ -27,14 +27,16 @@ const useStyles = makeStyles({
   }
 });
 
-function SponsorItem({ size, children }) {
+function SponsorItem({ size, children, link = '#sponsors' }) {
   return (
-    <div className="sponsor-wrapper">
-      <div className={`sponsor-foreground sponsor-${size} sponsor-children`}>
-        {children}
-        <div className={`sponsor-background sponsor-${size}`}></div>
+    <a style={{ display: 'table-cell', textDecoration: 'none' }} href={link}>
+      <div className="sponsor-wrapper">
+        <div className={`sponsor-foreground sponsor-${size} sponsor-children`}>
+          {children}
+          <div className={`sponsor-background sponsor-${size}`}></div>
+        </div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -66,13 +68,12 @@ export default function Sponsors() {
         src={`https://hophacks-website.s3.amazonaws.com/images/logo-artists.PNG`}
         width="40%"
       /> */}
-      {/* logo-artists.PNG */}
       <Box display="flex" flexDirection="column">
         <Box display="flex" justifyContent="space-between" className="sponsor-container">
-          <SponsorItem size="large">
+          <SponsorItem size="large" link="https://it.johnshopkins.edu/">
             <img src={img('it.png')} style={{ width: '280px' }} className="sponsor-img" />
           </SponsorItem>
-          <SponsorItem size="large">
+          <SponsorItem size="large" link="https://www.patientsafetytech.com/">
             <img
               src={img('PaitentSafety.gif')}
               style={{ width: '320px' }}
@@ -86,10 +87,13 @@ export default function Sponsors() {
           <SponsorItem size="medium"></SponsorItem>
         </Box> */}
         <Box display="flex" className="medium-container">
-          <SponsorItem size="small">
+          <SponsorItem
+            size="small"
+            link="https://www.stickermule.com/uses/laptop-stickers?utm_source=referral_us&utm_medium=sponsorships_us&utm_campaign=hophacks2023"
+          >
             <img src={img('stickerMule.png')} style={{ width: '130px' }} className="sponsor-img" />
           </SponsorItem>
-          <SponsorItem size="small">
+          <SponsorItem size="small" link="https://www.echo3d.com/">
             <img src={img('echo3D.webp')} style={{ width: '130px' }} className="sponsor-img" />
           </SponsorItem>
           {/* <SponsorItem size="small"></SponsorItem>
