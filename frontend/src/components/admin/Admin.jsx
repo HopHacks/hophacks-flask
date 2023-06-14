@@ -63,21 +63,21 @@ const Admin = function () {
   async function acceptUser(id) {
     await axios.post('/api/registrations/accept', {
       users: [id],
-      event: 'Fall 2022'
+      event: 'Fall 2023'
     });
   }
 
   async function rejectUser(id) {
     await axios.post('/api/registrations/reject', {
       user: id,
-      event: 'Fall 2022'
+      event: 'Fall 2023'
     });
   }
 
   async function checkInUser(id) {
     await axios.post('/api/registrations/check_in', {
       user: id,
-      event: 'Fall 2022'
+      event: 'Fall 2023'
     });
   }
 
