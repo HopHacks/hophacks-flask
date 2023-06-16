@@ -42,7 +42,7 @@ export default function Cover() {
   // const mobileRegisterYRight = useTransform(scrollYProgress, [0, 0.02], ['0em', '-3em']);
 
   const classes = useStyles();
-  if (window.innerWidth <= 650) {
+  if (window.innerWidth <= 850) {
     const scale = useTransform(scrollYProgress, [0, 0.08], [3.7, 1.9]);
     const registerScale = useTransform(
       scrollYProgress,
@@ -99,7 +99,118 @@ export default function Cover() {
         </div>
       </div>
     );
-  } else if (window.innerWidth <= 1250) {
+  } else if (window.innerWidth <= 920) {
+    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.7423]);
+    const registerScale = useTransform(scrollYProgress, [0, 0.08], [0.3, 0.3]);
+
+    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1.3]);
+
+    // const registerScale = useTransform(
+    //   scrollYProgress,
+    //   [0, 0.02, 0.04, 0.08],
+    //   [0.13, 0.2, 0.24, 0.5]
+    // );
+    const opacity = useTransform(scrollYProgress, [0, 0.08, 0.16, 0.3], [1, 1, 1, 0]);
+    const backGroundOpacity = useTransform(scrollYProgress, [0, 0.04, 0.041, 0.3], [1, 1, 0, 0]);
+
+    const registerOpacity = useTransform(
+      scrollYProgress,
+      [0, 0.08, 0.082, 0.16, 0.3],
+      [0, 0, 1, 1, 0]
+    );
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['16vw', '83vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['94vw', '94vw']);
+    //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
+
+    // const registerYRight = useTransform(
+    //   scrollYProgress,
+    //   [0, 0.02, 0.04, 0.08],
+    //   ['0.3em', '-2em', '-4.5em', '-15em']
+    // );
+
+    return (
+      <div>
+        <div>
+          <motion.div
+            style={{
+              scale: backgroundScale,
+              opacity: opacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('zoomedouteverything0614.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale,
+              opacity: backGroundOpacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('zoomedineverything0614.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.imagesNew}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale: backgroundScale,
+              opacity: opacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('foreground-2.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale: registerScale,
+              opacity: registerOpacity,
+              y: registerYRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('register_button_alone.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          {/* <img
+                src={img('register.png')}
+                //style={{ top: center(scale.current) }}
+                className={classes.images}
+                alt="image_could_not_load"
+                onClick={() => {
+                  window.location = '/register/login';
+                }}
+              /> */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          ></div>
+        </div>
+      </div>
+    );
+  } else if (window.innerWidth <= 1000) {
     const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.571]);
     const registerScale = useTransform(scrollYProgress, [0, 0.08], [0.3, 0.3]);
 
@@ -115,11 +226,234 @@ export default function Cover() {
 
     const registerOpacity = useTransform(
       scrollYProgress,
-      [0, 0.08, 0.085, 0.16, 0.3],
+      [0, 0.08, 0.082, 0.16, 0.3],
       [0, 0, 1, 1, 0]
     );
-    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '58vw']);
-    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['69vw', '69vw']);
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['14vw', '73vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['84vw', '84vw']);
+    //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
+
+    // const registerYRight = useTransform(
+    //   scrollYProgress,
+    //   [0, 0.02, 0.04, 0.08],
+    //   ['0.3em', '-2em', '-4.5em', '-15em']
+    // );
+
+    return (
+      <div>
+        <div>
+          <motion.div
+            style={{
+              scale: backgroundScale,
+              opacity: opacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('zoomedouteverything0614.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale,
+              opacity: backGroundOpacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('zoomedineverything0614.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.imagesNew}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale: backgroundScale,
+              opacity: opacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('foreground-2.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale: registerScale,
+              opacity: registerOpacity,
+              y: registerYRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('register_button_alone.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          {/* <img
+                src={img('register.png')}
+                //style={{ top: center(scale.current) }}
+                className={classes.images}
+                alt="image_could_not_load"
+                onClick={() => {
+                  window.location = '/register/login';
+                }}
+              /> */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          ></div>
+        </div>
+      </div>
+    );
+  } else if (window.innerWidth <= 1090) {
+    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.571]);
+    const registerScale = useTransform(scrollYProgress, [0, 0.08], [0.3, 0.3]);
+
+    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1]);
+
+    // const registerScale = useTransform(
+    //   scrollYProgress,
+    //   [0, 0.02, 0.04, 0.08],
+    //   [0.13, 0.2, 0.24, 0.5]
+    // );
+    const opacity = useTransform(scrollYProgress, [0, 0.08, 0.16, 0.3], [1, 1, 1, 0]);
+    const backGroundOpacity = useTransform(scrollYProgress, [0, 0.04, 0.041, 0.3], [1, 1, 0, 0]);
+
+    const registerOpacity = useTransform(
+      scrollYProgress,
+      [0, 0.08, 0.082, 0.16, 0.3],
+      [0, 0, 1, 1, 0]
+    );
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '70vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['81vw', '81vw']);
+
+    //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
+
+    // const registerYRight = useTransform(
+    //   scrollYProgress,
+    //   [0, 0.02, 0.04, 0.08],
+    //   ['0.3em', '-2em', '-4.5em', '-15em']
+    // );
+
+    return (
+      <div>
+        <div>
+          <motion.div
+            style={{
+              scale: backgroundScale,
+              opacity: opacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('zoomedouteverything0614.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale,
+              opacity: backGroundOpacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('zoomedineverything0614.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.imagesNew}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale: backgroundScale,
+              opacity: opacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('foreground-2.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale: registerScale,
+              opacity: registerOpacity,
+              y: registerYRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('register_button_alone.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          {/* <img
+                src={img('register.png')}
+                //style={{ top: center(scale.current) }}
+                className={classes.images}
+                alt="image_could_not_load"
+                onClick={() => {
+                  window.location = '/register/login';
+                }}
+              /> */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          ></div>
+        </div>
+      </div>
+    );
+  } else if (window.innerWidth <= 1200) {
+    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.571]);
+    const registerScale = useTransform(scrollYProgress, [0, 0.08], [0.3, 0.3]);
+
+    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1]);
+
+    // const registerScale = useTransform(
+    //   scrollYProgress,
+    //   [0, 0.02, 0.04, 0.08],
+    //   [0.13, 0.2, 0.24, 0.5]
+    // );
+    const opacity = useTransform(scrollYProgress, [0, 0.08, 0.16, 0.3], [1, 1, 1, 0]);
+    const backGroundOpacity = useTransform(scrollYProgress, [0, 0.04, 0.041, 0.3], [1, 1, 0, 0]);
+
+    const registerOpacity = useTransform(
+      scrollYProgress,
+      [0, 0.08, 0.082, 0.16, 0.3],
+      [0, 0, 1, 1, 0]
+    );
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '65vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['75vw', '75vw']);
 
     //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
 
@@ -227,12 +561,12 @@ export default function Cover() {
 
     const registerOpacity = useTransform(
       scrollYProgress,
-      [0, 0.08, 0.085, 0.16, 0.3],
+      [0, 0.08, 0.082, 0.16, 0.3],
       [0, 0, 1, 1, 0]
     );
     const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '58vw']);
     const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['69vw', '69vw']);
-
+    //const pos = useTransform(scrollYProgress, [0, 0.08, 0.16], ['fixed', 'fixed', 'absolute']);
     //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
 
     // const registerYRight = useTransform(
