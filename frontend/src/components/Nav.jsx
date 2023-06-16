@@ -89,6 +89,16 @@ const Nav = function Nav(props) {
       </Button> */}
       <Button
         component={Link}
+        onClick={() => (window.location = '/#prizes')}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Prizes
+        </Typography>
+      </Button>
+      <Button
+        component={Link}
         onClick={() => (window.location = '/#sponsors')}
         color="inherit"
         className={classes.navBtn}

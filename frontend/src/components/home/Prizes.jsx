@@ -37,7 +37,7 @@ export default function Prizes() {
   const classes = useStyles();
 
   return (
-    <Grid container spacing={2} alignItems="center">
+    <Grid container spacing={2} alignItems="center" id="prizes">
       <Typography className={classes.title} variant="h4" gutterBottom>
         Prizes
       </Typography>
