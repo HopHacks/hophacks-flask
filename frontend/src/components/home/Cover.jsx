@@ -189,6 +189,9 @@ export default function Cover() {
               //style={{ top: center(scale.current) }}
               className={classes.images}
               alt="image_could_not_load"
+              onClick={() => {
+                  window.location = '/register/login';
+                }}
             />
           </motion.div>
           {/* <img
@@ -300,6 +303,9 @@ export default function Cover() {
               //style={{ top: center(scale.current) }}
               className={classes.images}
               alt="image_could_not_load"
+              onClick={() => {
+                window.location = '/register/login';
+              }}
             />
           </motion.div>
           {/* <img
@@ -412,6 +418,9 @@ export default function Cover() {
               //style={{ top: center(scale.current) }}
               className={classes.images}
               alt="image_could_not_load"
+              onClick={() => {
+                window.location = '/register/login';
+              }}
             />
           </motion.div>
           {/* <img
@@ -524,6 +533,9 @@ export default function Cover() {
               //style={{ top: center(scale.current) }}
               className={classes.images}
               alt="image_could_not_load"
+              onClick={() => {
+                window.location = '/register/login';
+              }}
             />
           </motion.div>
           {/* <img
@@ -636,6 +648,9 @@ export default function Cover() {
               //style={{ top: center(scale.current) }}
               className={classes.images}
               alt="image_could_not_load"
+              onClick={() => {
+                window.location = '/register/login';
+              }}
             />
           </motion.div>
           {/* <img

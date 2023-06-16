@@ -1,6 +1,6 @@
 import React from 'react';
 export default function RandomSpace() {
-  if (window.innerWidth <= 650) {
+  if (window.innerWidth <= 850) {
     return (
       <div>
         {/* <br></br>
