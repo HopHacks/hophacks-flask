@@ -190,8 +190,8 @@ export default function Cover() {
               className={classes.images}
               alt="image_could_not_load"
               onClick={() => {
-                  window.location = '/register/login';
-                }}
+                window.location = '/register/login';
+              }}
             />
           </motion.div>
           {/* <img
