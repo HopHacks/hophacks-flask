@@ -46,7 +46,7 @@ export default function Sponsors() {
   return (
     <Box
       display="flex"
-      marginTop={'10rem'}
+      marginTop={'20rem'}
       justifyContent="center"
       className="sponsor-container"
       id="sponsors"
@@ -75,7 +75,7 @@ export default function Sponsors() {
           </SponsorItem>
           <SponsorItem size="large" link="https://www.patientsafetytech.com/">
             <img
-              src={img('PaitentSafety.gif')}
+              src={img('PaitentSafety.png')}
               style={{ width: '320px' }}
               className="sponsor-img"
             />
