@@ -29,6 +29,7 @@ import Team from './Team';
 import Login from './register/Login';
 import SignUp from './register/signup/SignUp';
 import ResetPassword from './register/ResetPassword';
+import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -101,6 +102,10 @@ export default function App() {
 
                   <Route path="/register/resetpassword">
                     <ResetPassword isMobile={isMobile} />
+                  </Route>
+
+                  <Route path="/teamMatching" isMobile={isMobile}>
+                    <TeamMatchingPage isMobile={isMobile} />
                   </Route>
 
                   <Route path="/">
