@@ -44,9 +44,19 @@ const useStyles = makeStyles({
   },
   teamsContainer: props => ({
     display: 'flex',
-    flexDirection: props.isMobile ? 'column' : 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
     width: props.isMobile ? '90vw' : '75vw',
+  }),
+
+  teamRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: '20px',
+  },
+  
+  cardContainer: props => ({
+    width: props.isMobile ? '100%' : 'calc(50% - 10px)',
   }),
 });
 
@@ -54,42 +64,85 @@ export default function TeamMatchingPage({ isMobile }) {
   const classes = useStyles({ isMobile });
 
   const sampleData = [
+    // ... your sample data
     {
-      teamName: 'Team Alpha',
-      intro: "Intro of Team Alpha...",
-      lookingFor: 'We are looking for a full-stack developer.',
-      recruit_info: "Recruitment info for Team Alpha...",
-      tags: ['Full-stack', 'React', 'Python'],
-    },
-    {
-      teamName: 'Team Alpha',
-      intro: "Intro of Team Alpha...",
-      lookingFor: 'We are looking for a full-stack developer.',
-      recruit_info: "Recruitment info for Team Alpha...",
-      tags: ['Full-stack', 'React', 'Python'],
-    },
-    {
-      teamName: 'Team Alpha',
-      intro: "Intro of Team Alpha...",
-      lookingFor: 'We are looking for a full-stack developer.',
-      recruit_info: "Recruitment info for Team Alpha...",
-      tags: ['Full-stack', 'React', 'Python'],
-    },
-    // ... add 4 more sample teams
+        teamName: 'Team Alpha',
+        intro: "Intro of Team Alpha...",
+        lookingFor: 'We are looking for a full-stack developer.',
+        recruit_info: "Recruitment info for Team Alpha...",
+        tags: ['Full-stack', 'React', 'Python'],
+      },
+      {
+        teamName: 'Team Alpha',
+        intro: "Intro of Team Alpha...",
+        lookingFor: 'We are looking for a full-stack developer.',
+        recruit_info: "Recruitment info for Team Alpha...",
+        tags: ['Full-stack', 'React', 'Python'],
+      },
+      {
+          teamName: 'Team Alpha',
+          intro: "Intro of Team Alpha...",
+          lookingFor: 'We are looking for a full-stack developer.',
+          recruit_info: "Recruitment info for Team Alpha...",
+          tags: ['Full-stack', 'React', 'Python'],
+        },
+        {
+        teamName: 'Team Alpha',
+        intro: "Intro of Team Alpha...",
+        lookingFor: 'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
+        recruit_info: "Recruitment info for Team Alpha...",
+        tags: ['Full-stack', 'React', 'Python'],
+      },
+      {
+        teamName: 'Team Alpha',
+        intro: "Intro of Team Alpha...",
+        lookingFor: 'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
+        recruit_info: "Recruitment info for Team Alpha...",
+        tags: ['Full-stack', 'React', 'Python'],
+      },
+      {
+        teamName: 'Team Alpha',
+        intro: "Intro of Team Alpha...",
+        lookingFor: 'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
+        recruit_info: "Recruitment info for Team Alpha...",
+        tags: ['Full-stack', 'React', 'Python'],
+      },
+  
   ];
 
   const [teams, setTeams] = useState(sampleData);
 
   useEffect(() => {
-    // axios.get('your-endpoint-url')
-    //   .then(res => {
-    //     const data = res.data;
-    //     setTeams(data);
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
+    // your axios request
   }, []);
+
+  const teamRows = [];
+  if(isMobile) {
+    for(let i = 0; i < teams.length; i++) {
+      teamRows.push(
+        <Box className={classes.teamRow} key={i}>
+          <Box className={classes.cardContainer}>
+            <TeamCard {...teams[i]} />
+          </Box>
+        </Box>
+      );
+    }
+  } else {
+    for(let i = 0; i < teams.length; i += 2) {
+      teamRows.push(
+        <Box className={classes.teamRow} key={i}>
+          <Box className={classes.cardContainer}>
+            <TeamCard {...teams[i]} />
+          </Box>
+          {teams[i + 1] && (
+            <Box className={classes.cardContainer}>
+              <TeamCard {...teams[i + 1]} />
+            </Box>
+          )}
+        </Box>
+      );
+    }
+  }
 
   return (
     <Box className={classes.container}>
@@ -118,18 +171,11 @@ export default function TeamMatchingPage({ isMobile }) {
         </Toolbar>
       </AppBar>
       <Box className={classes.teamsContainer}>
-        {teams.map((team, index) => (
-          <>
-            <TeamCard key={index} {...team} />
-            {!isMobile && index < teams.length - 1 && <Box width="20px" />}
-          </>
-        ))}
+        {teamRows}
       </Box>
     </Box>
   );
 }
-
-
 
 
 

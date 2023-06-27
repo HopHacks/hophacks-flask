@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     borderRadius: '10px',
     marginBottom: '2em',
     boxSizing: 'border-box',
-    width: 'calc(50% - 10px)',  // 50% to have two cards in a row, subtract the half of gap
+    width: '100%',
     minWidth: '300px',  // setting a minimum width for smaller screens
   },
   title: {
@@ -51,6 +51,7 @@ export default function TeamCard({ teamName, intro, lookingFor, recruit_info, ta
     </Card>
   );
 }
+
 
 
 
