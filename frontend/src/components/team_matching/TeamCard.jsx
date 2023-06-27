@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles({
   card: {
     backgroundColor: '#F3F6FB',
-    padding: '1em',
+    padding: '3em',
     borderRadius: '10px',
     marginBottom: '2em',
     boxSizing: 'border-box',
@@ -17,13 +17,15 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
     fontSize: '32px',
     color: '#122f4c',
-    marginBottom: '1em',
+    marginBottom: '0.5em',
+    
   },
   content: {
     fontFamily: 'Proxima Nova',
     fontSize: '28px',
     color: '#122f4c',
     marginBottom: '1em',
+    marginBottom: '2em',
   },
   tag: {
     backgroundColor: '#B4E3F7',

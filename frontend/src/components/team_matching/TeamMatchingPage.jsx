@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '5% 0',
+    padding: '2% 0',
     backgroundImage: `url(${img('team_matching_bkg.jpg')})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -27,7 +27,8 @@ const useStyles = makeStyles({
     fontSize: '48px',
     fontWeight: 'bold',
     alignSelf: 'flex-start',
-    marginBottom: '2em',
+    marginBottom: '1em', // or whatever value you see fit to bring it closer to the search bar
+    marginLeft: '5%', // adjust this value to move the title to the left as needed
   },
   searchBar: props => ({
     backgroundColor: '#F3F6FB',
@@ -89,15 +90,15 @@ export default function TeamMatchingPage({ isMobile }) {
         {
         teamName: 'Team Alpha',
         intro: "Intro of Team Alpha...",
-        lookingFor: 'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
-        recruit_info: "Recruitment info for Team Alpha...",
+        lookingFor: 'We are looking for a full-stack developer',
+        recruit_info: "Recruitment info for Team Alpha....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
         tags: ['Full-stack', 'React', 'Python'],
       },
       {
         teamName: 'Team Alpha',
         intro: "Intro of Team Alpha...",
-        lookingFor: 'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
-        recruit_info: "Recruitment info for Team Alpha...",
+        lookingFor: 'We are looking for a full-stack developer',
+        recruit_info: "Recruitment info for Team Alpha....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
         tags: ['Full-stack', 'React', 'Python'],
       },
       {
