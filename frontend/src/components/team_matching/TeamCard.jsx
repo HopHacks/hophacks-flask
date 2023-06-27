@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   }),
   content: (props) => ({
     fontFamily: 'Proxima Nova',
-    fontSize: props.isMobile ? '18px' : '28px',
+    fontSize: props.isMobile ? '18px' : '26px',
     color: '#122f4c',
     marginBottom: '1em',
     textAlign: 'center',

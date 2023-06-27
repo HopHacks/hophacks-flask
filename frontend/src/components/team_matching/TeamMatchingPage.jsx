@@ -72,7 +72,6 @@ export default function TeamMatchingPage() {
   }, []);
 
   const sampleData = [
-    // ... your sample data
     {
         teamName: 'Team Alpha',
         intro: "Intro of Team Alpha...",
@@ -127,7 +126,13 @@ export default function TeamMatchingPage() {
   const [teams, setTeams] = useState(sampleData);
 
   useEffect(() => {
-    // your axios request
+    // axios.get('https://your-api-url.com/api/teams')
+    //     .then(response => {
+    //         setTeams(response.data);
+    //     })
+    //     .catch(error => {
+    //         console.error('There was an error!', error);
+    //     });
   }, []);
 
   const teamRows = [];
@@ -136,7 +141,7 @@ export default function TeamMatchingPage() {
       teamRows.push(
         <Box className={classes.teamRow} key={i}>
           <Box className={classes.cardContainer}>
-            <TeamCard {...teams[i]} />
+            <TeamCard {...teams[i]} isMobile={isMobile}/>
           </Box>
         </Box>
       );
@@ -150,7 +155,7 @@ export default function TeamMatchingPage() {
           </Box>
           {teams[i + 1] && (
             <Box className={classes.cardContainer}>
-              <TeamCard {...teams[i + 1]} />
+              <TeamCard {...teams[i + 1]} isMobile={isMobile}/>
             </Box>
           )}
         </Box>
