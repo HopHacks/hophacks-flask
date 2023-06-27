@@ -18,14 +18,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: props.isMobile ? '24px' : '32px',
     color: '#122f4c',
     marginBottom: '1em',
-    textAlign: 'center',
   }),
   content: (props) => ({
     fontFamily: 'Proxima Nova',
     fontSize: props.isMobile ? '18px' : '26px',
     color: '#122f4c',
-    marginBottom: '1em',
-    textAlign: 'center',
+    marginBottom: '2em',
   }),
   tag: {
     backgroundColor: '#B4E3F7',
