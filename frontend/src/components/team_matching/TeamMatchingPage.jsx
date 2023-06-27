@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { AppBar, Toolbar, TextField, IconButton, Select, MenuItem, Typography, InputLabel, FormControl, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import TeamCard from './TeamCard';
 import '../../stylesheets/teammatch.css';
 
-function img(url) {
-  return 'https://hophacks-website.s3.amazonaws.com/images/' + url;
-}
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     width: '100vw',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     padding: '2% 0',
-    backgroundImage: `url(${img('team_matching_bkg.jpg')})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
-  title: {
+  title: (props) => ({
     fontFamily: 'Proxima Nova',
     color: '#F3F6FB',
-    fontSize: '48px',
+    fontSize: props.isMobile ? '24px' : '48px',
     fontWeight: 'bold',
     alignSelf: 'flex-start',
-    marginBottom: '1em', // or whatever value you see fit to bring it closer to the search bar
-    marginLeft: '5%', // adjust this value to move the title to the left as needed
-  },
-  searchBar: props => ({
+    marginBottom: '1em',
+    marginLeft: '5%',
+  }),
+  searchBar: (props) => ({
     backgroundColor: '#F3F6FB',
     marginBottom: '2em',
     padding: '1em',
@@ -43,26 +37,39 @@ const useStyles = makeStyles({
     marginLeft: '1em',
     minWidth: 120,
   },
-  teamsContainer: props => ({
+  teamsContainer: (props) => ({
     display: 'flex',
     flexDirection: 'column',
     width: props.isMobile ? '90vw' : '75vw',
   }),
-
   teamRow: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: '20px',
   },
-  
-  cardContainer: props => ({
+  cardContainer: (props) => ({
     width: props.isMobile ? '100%' : 'calc(50% - 10px)',
   }),
-});
+}));
 
-export default function TeamMatchingPage({ isMobile }) {
+export default function TeamMatchingPage() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [searchBarVisible, setSearchBarVisible] = useState(true);
   const classes = useStyles({ isMobile });
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const sampleData = [
     // ... your sample data
@@ -72,6 +79,7 @@ export default function TeamMatchingPage({ isMobile }) {
         lookingFor: 'We are looking for a full-stack developer.',
         recruit_info: "Recruitment info for Team Alpha...",
         tags: ['Full-stack', 'React', 'Python'],
+        status: "open",
       },
       {
         teamName: 'Team Alpha',
@@ -79,6 +87,7 @@ export default function TeamMatchingPage({ isMobile }) {
         lookingFor: 'We are looking for a full-stack developer.',
         recruit_info: "Recruitment info for Team Alpha...",
         tags: ['Full-stack', 'React', 'Python'],
+        status: "open",
       },
       {
           teamName: 'Team Alpha',
@@ -86,6 +95,7 @@ export default function TeamMatchingPage({ isMobile }) {
           lookingFor: 'We are looking for a full-stack developer.',
           recruit_info: "Recruitment info for Team Alpha...",
           tags: ['Full-stack', 'React', 'Python'],
+          status: "open",
         },
         {
         teamName: 'Team Alpha',
@@ -93,6 +103,7 @@ export default function TeamMatchingPage({ isMobile }) {
         lookingFor: 'We are looking for a full-stack developer',
         recruit_info: "Recruitment info for Team Alpha....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
         tags: ['Full-stack', 'React', 'Python'],
+        status: "open",
       },
       {
         teamName: 'Team Alpha',
@@ -100,6 +111,7 @@ export default function TeamMatchingPage({ isMobile }) {
         lookingFor: 'We are looking for a full-stack developer',
         recruit_info: "Recruitment info for Team Alpha....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
         tags: ['Full-stack', 'React', 'Python'],
+        status: "open",
       },
       {
         teamName: 'Team Alpha',
@@ -107,6 +119,7 @@ export default function TeamMatchingPage({ isMobile }) {
         lookingFor: 'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
         recruit_info: "Recruitment info for Team Alpha...",
         tags: ['Full-stack', 'React', 'Python'],
+        status: "open",
       },
   
   ];

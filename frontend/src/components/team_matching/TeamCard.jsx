@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   card: {
     backgroundColor: '#F3F6FB',
     padding: '3em',
@@ -10,23 +10,23 @@ const useStyles = makeStyles({
     marginBottom: '2em',
     boxSizing: 'border-box',
     width: '100%',
-    minWidth: '300px',  // setting a minimum width for smaller screens
+    minWidth: '300px',
   },
-  title: {
+  title: (props) => ({
     fontFamily: 'Proxima Nova',
     fontWeight: 'bold',
-    fontSize: '32px',
-    color: '#122f4c',
-    marginBottom: '0.5em',
-    
-  },
-  content: {
-    fontFamily: 'Proxima Nova',
-    fontSize: '28px',
+    fontSize: props.isMobile ? '24px' : '32px',
     color: '#122f4c',
     marginBottom: '1em',
-    marginBottom: '2em',
-  },
+    textAlign: 'center',
+  }),
+  content: (props) => ({
+    fontFamily: 'Proxima Nova',
+    fontSize: props.isMobile ? '18px' : '28px',
+    color: '#122f4c',
+    marginBottom: '1em',
+    textAlign: 'center',
+  }),
   tag: {
     backgroundColor: '#B4E3F7',
     color: '#122f4c',
@@ -36,10 +36,28 @@ const useStyles = makeStyles({
     display: 'inline-block',
     marginRight: '0.5em',
   },
-});
+  statusOpen: {
+    backgroundColor: 'green',
+    color: '#FFFFFF',
+    borderRadius: '8px',
+    padding: '0.5em',
+    marginTop: '1em',
+    display: 'inline-block',
+    marginRight: '0.5em',
+  },
+  statusClosed: {
+    backgroundColor: 'red',
+    color: '#FFFFFF',
+    borderRadius: '8px',
+    padding: '0.5em',
+    marginTop: '1em',
+    display: 'inline-block',
+    marginRight: '0.5em',
+  },
+}));
 
-export default function TeamCard({ teamName, intro, lookingFor, recruit_info, tags }) {
-  const classes = useStyles();
+export default function TeamCard({ teamName, intro, lookingFor, recruit_info, tags, isMobile, status }) {
+  const classes = useStyles({ isMobile });
 
   return (
     <Card className={classes.card}>
@@ -50,9 +68,11 @@ export default function TeamCard({ teamName, intro, lookingFor, recruit_info, ta
       {tags.map((tag, index) => (
         <Box key={index} className={classes.tag}>{tag}</Box>
       ))}
+      <Box className={status === 'open' ? classes.statusOpen : classes.statusClosed}>{status}</Box>
     </Card>
   );
 }
+
 
 
 
