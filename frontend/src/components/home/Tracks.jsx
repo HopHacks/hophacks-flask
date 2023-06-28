@@ -12,7 +12,7 @@ function img(url) {
 
 const Tracks = () => {
   return (
-    <div className="tracks">
+    <div className="tracks" id="tracks">
       <div className="text-container">
         <Box flex={1} align="center">
           <Title>Tracks</Title>
@@ -28,7 +28,7 @@ const Tracks = () => {
         <div className="patient-track">
           <img
             src={img('sponsor/png/PaitentSafety.png')}
-            style={{ width: '320px' }}
+            style={{ width: '360px' }}
             className="sponsor-img"
           />
           <div className="body">
