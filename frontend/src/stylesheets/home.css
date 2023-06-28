@@ -285,12 +285,95 @@ canvas {
   src: url('./Inter-Medium.ttf') format('truetype');
 }
 
-/* @font-face {
-  font-family: "Inter Light";
-  src: url("./Inter-Light.ttf") format("truetype");
-} */
+.tracks {
+  position: relative;
+  width: 100vw;
+  left: calc(-50vw + 50%);
+}
 
-/* @font-face {
-  font-family: "Inter Medium";
-  src: url("./Inter-Medium.ttf") format("truetype");
-} */
+.tracks > .text-container {
+  width: 80%;
+  margin: auto;
+}
+
+.general-track {
+  width: 50%;
+}
+
+.general-track > .title {
+  color: var(--secondarypurple, #cc6ba3);
+  text-align: left;
+  font: 700 40px/64px 'Raleway', sans-serif;
+  position: relative;
+  width: 269.65px;
+}
+
+.general-track > .body {
+  color: var(--lightpurple, #f7f3ff);
+  text-align: left;
+  font: 200 20px/32px 'Raleway', sans-serif;
+}
+
+.tracks .keyboard {
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  width: 1500px;
+  overflow: hidden;
+}
+
+.patient-track {
+  width: 50%;
+  margin-left: auto;
+  margin-top: 350px;
+  text-align: right;
+}
+
+.patient-track > .body {
+  color: var(--lightpurple, #f7f3ff);
+  text-align: right;
+  font: 200 20px/32px 'Raleway', sans-serif;
+}
+
+.tracks .guitar {
+  position: absolute;
+  right: 0;
+  top: 650px;
+  width: 1500px;
+}
+
+@media (max-width: 768px) {
+  .general-track {
+    width: 100%;
+    text-align: center;
+  }
+  .general-track > .title {
+    width: 100%;
+    text-align: center;
+  }
+  .patient-track {
+    width: 100%;
+    text-align: center;
+    margin-top: 150px;
+  }
+  .patient-track > .body {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tracks .keyboard {
+    position: absolute;
+    top: 20rem;
+    left: 0px;
+    width: 100%;
+    rotate: 16deg;
+  }
+
+  .tracks .guitar {
+    position: absolute;
+    right: -10px;
+    top: 1100px;
+    width: 100%;
+    rotate: -14deg;
+  }
+}

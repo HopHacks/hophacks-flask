@@ -13,6 +13,7 @@ import Footer from './Footer';
 import AboutSeparation from './home/AboutSeparation';
 import RandomSpace from './home/RandomSpace';
 import Prizes from './home/Prizes';
+import Tracks from './home/Tracks';
 // import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 // import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 const useStyles = makeStyles({
@@ -105,6 +106,7 @@ export default function Home() {
             <AboutSeparation />
             <Prizes />
             {/* <Schedule /> */}
+            <Tracks />
             <Sponsors />
             <Faq />
           </Container>
