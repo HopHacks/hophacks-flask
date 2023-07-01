@@ -114,23 +114,23 @@ export default function Register() {
   //   setActivePage(PROFILE);
   // }
 
-  function isEmpty() {
-    return (
-      username.length === 0 ||
-      password.length === 0 ||
-      first_name.length === 0 ||
-      last_name.length === 0 ||
-      gender.length === 0 ||
-      major.length === 0 ||
-      school.length === 0 ||
-      ethnicity.length === 0 ||
-      phone_number === undefined ||
-      phone_number.length === 0 ||
-      grad.length === 0 ||
-      grad_month === 0 ||
-      grad_year === 0
-    );
-  }
+  // function isEmpty() {
+  //   return (
+  //     username.length === 0 ||
+  //     password.length === 0 ||
+  //     first_name.length === 0 ||
+  //     last_name.length === 0 ||
+  //     gender.length === 0 ||
+  //     major.length === 0 ||
+  //     school.length === 0 ||
+  //     ethnicity.length === 0 ||
+  //     phone_number === undefined ||
+  //     phone_number.length === 0 ||
+  //     grad.length === 0 ||
+  //     grad_month === 0 ||
+  //     grad_year === 0
+  //   );
+  // }
 
   async function handleProfileNext() {
     if (username.length === 0) {
