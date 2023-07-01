@@ -133,50 +133,50 @@ export default function Register() {
   }
 
   async function handleProfileNext() {
-    if(username.length === 0) {
+    if (username.length === 0) {
       setProfileSubmitMsg('* Please enter a valid username.');
       return;
     }
-    if(password.length === 0) {
+    if (password.length === 0) {
       setProfileSubmitMsg('* Please enter a valid password.');
       return;
     }
-    if(first_name.length === 0) {
+    if (first_name.length === 0) {
       setProfileSubmitMsg('* Please enter a valid first name.');
       return;
     }
-    if(last_name.length === 0) {
+    if (last_name.length === 0) {
       setProfileSubmitMsg('* Please enter a valid last name.');
       return;
     }
-    if(gender.length === 0) {
+    if (gender.length === 0) {
       setProfileSubmitMsg('* Please select a gender.');
       return;
     }
-    if(major.length === 0) {
+    if (major.length === 0) {
       setProfileSubmitMsg('* Please select a major.');
     }
-    if(school.length === 0) {
+    if (school.length === 0) {
       setProfileSubmitMsg('* Please select a school.');
       return;
     }
-    if(ethnicity.length === 0) {
+    if (ethnicity.length === 0) {
       setProfileSubmitMsg('* Please select an ethnicity.');
       return;
     }
-    if(phone_number === undefined || phone_number.length === 0) {
+    if (phone_number === undefined || phone_number.length === 0) {
       setProfileSubmitMsg('* Please enter a valid phone number.');
       return;
     }
-    if(grad.length === 0) {
+    if (grad.length === 0) {
       setProfileSubmitMsg('* Please select a valid graduation program.');
       return;
     }
-    if(grad_month.length === 0) {
+    if (grad_month.length === 0) {
       setProfileSubmitMsg('* Please select a valid graduation month.');
       return;
     }
-    if(grad_year.length === 0) {
+    if (grad_year.length === 0) {
       setProfileSubmitMsg('* Please select a valid graduation year.');
       return;
     }
