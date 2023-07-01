@@ -37,35 +37,85 @@ export default function EmailConfirmation(props) {
   if (message === emailConfirmed) {
     return <Login fromConfirmEmail={true} email={email} />;
   } else if (message === attemptedMsg) {
-    return (
-      <div
-      //className="container-email"
-      // style={{
-      //   backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/404.png")`,
-      //   //backgroundSize: 'cover',
-      //   width: '100vw'
-      // }}
-      >
-        <img
-          src={img('404.png')}
-          //style={{ top: center(scale.current) }}
-          style={{
-            //backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/404.png")`,
-            //backgroundSize: 'cover',
-            //height: '100vh',
-            position: 'absolute',
-            width: '100vw'
-          }}
-          alt="image_could_not_load"
-        />
-        <div style={{ width: '50%', marginLeft: '55%', marginTop: '18%', position: 'absolute' }}>
-          <h1 style={{ textAlign: 'left' }}>OOPS 404!</h1>
-          <h3 style={{ textAlign: 'left' }}>Lost in the Hackathon Maze!</h3>
-          <h3 style={{ textAlign: 'left' }}>Seems like the guitar strings got tangled!</h3>
-          <h3 style={{ textAlign: 'left' }}>try logging in once more</h3>
+    if (window.innerWidth <= 850) {
+      return (
+        <div>
+          <img
+            src={img('404.png')}
+            //style={{ top: center(scale.current) }}
+            style={{
+              //backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/404.png")`,
+              //backgroundSize: 'cover',
+              //height: '100vh',
+              position: 'absolute',
+              width: '100vw'
+            }}
+            alt="image_could_not_load"
+          />
+          <div style={{ width: '50%', marginLeft: '55%', marginTop: '12%', position: 'absolute' }}>
+            <h1
+              style={{
+                textAlign: 'left',
+                font: 'inter',
+                fontSize: '30px',
+                fontWeight: 'bold',
+                fontStyle: 'italic'
+              }}
+            >
+              {'OOPS 404...'}
+            </h1>
+            <p style={{ textAlign: 'left', font: 'inter', fontSize: '15px', fontStyle: 'italic' }}>
+              Lost in the Hackathon Maze!
+            </p>
+            <p style={{ textAlign: 'left', font: 'inter', fontSize: '15px', fontStyle: 'italic' }}>
+              Seems like the guitar strings got tangled
+            </p>
+            <p style={{ textAlign: 'left', font: 'inter', fontSize: '15px', fontStyle: 'italic' }}>
+              Try logging in once more!
+            </p>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <img
+            src={img('404.png')}
+            //style={{ top: center(scale.current) }}
+            style={{
+              //backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/404.png")`,
+              //backgroundSize: 'cover',
+              //height: '100vh',
+              position: 'absolute',
+              width: '100vw'
+            }}
+            alt="image_could_not_load"
+          />
+          <div style={{ width: '50%', marginLeft: '55%', marginTop: '18%', position: 'absolute' }}>
+            <h1
+              style={{
+                textAlign: 'left',
+                font: 'inter',
+                fontSize: '50px',
+                fontWeight: 'bold',
+                fontStyle: 'italic'
+              }}
+            >
+              {'OOPS 404...'}
+            </h1>
+            <p style={{ textAlign: 'left', font: 'inter', fontSize: '25px', fontStyle: 'italic' }}>
+              Lost in the Hackathon Maze!
+            </p>
+            <p style={{ textAlign: 'left', font: 'inter', fontSize: '25px', fontStyle: 'italic' }}>
+              Seems like the guitar strings got tangled
+            </p>
+            <p style={{ textAlign: 'left', font: 'inter', fontSize: '25px', fontStyle: 'italic' }}>
+              Try logging in once more!
+            </p>
+          </div>
+        </div>
+      );
+    }
   }
   return (
     <div
@@ -77,10 +127,26 @@ export default function EmailConfirmation(props) {
       }}
     >
       <div style={{ width: '50%', float: 'right', top: '30%' }}>
-        <h1 style={{ textAlign: 'left' }}>OOPS 404!</h1>
-        <h3 style={{ textAlign: 'left' }}>Lost in the Hackathon Maze!</h3>
-        <h3 style={{ textAlign: 'left' }}>Seems like the guitar strings got tangled!</h3>
-        <h3 style={{ textAlign: 'left' }}>try logging in once more</h3>
+        <h1
+          style={{
+            textAlign: 'left',
+            font: 'inter',
+            fontSize: '50px',
+            fontWeight: 'bold',
+            fontStyle: 'italic'
+          }}
+        >
+          {'OOPS 404...'}
+        </h1>
+        <p style={{ textAlign: 'left', font: 'inter', fontSize: '25px', fontStyle: 'italic' }}>
+          Lost in the Hackathon Maze!
+        </p>
+        <p style={{ textAlign: 'left', font: 'inter', fontSize: '25px', fontStyle: 'italic' }}>
+          Seems like the guitar strings got tangled
+        </p>
+        <p style={{ textAlign: 'left', font: 'inter', fontSize: '25px', fontStyle: 'italic' }}>
+          Try logging in once more!
+        </p>
       </div>
     </div>
   );
