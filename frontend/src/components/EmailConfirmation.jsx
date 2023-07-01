@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Login from './LoginDialog';
+import Login from './register/Login';
 import '../stylesheets/email_confirm.css';
+
+function img(url) {
+  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+}
 
 export default function EmailConfirmation(props) {
   const [message, setMessage] = useState('Confirming Email...');
@@ -35,40 +39,30 @@ export default function EmailConfirmation(props) {
   } else if (message === attemptedMsg) {
     return (
       <div
-        className="container-email"
-        style={{
-          backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/2022_theme.png")`,
-          backgroundSize: 'cover',
-          height: '100vh'
-        }}
+      //className="container-email"
+      // style={{
+      //   backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/404.png")`,
+      //   //backgroundSize: 'cover',
+      //   width: '100vw'
+      // }}
       >
-        <div className="wrapper-email">
-          <img
-            id="graphic"
-            src={`https://hophacks-website.s3.amazonaws.com/images/hoplogo.png`}
-            width="100%"
-          />
-          <h1>Oh no!</h1>
-          <h3>Sorry, something went wrong :(</h3>
-          <h6>{message}</h6>
-        </div>
-      </div>
-    );
-  }
-  if (message === emailConfirmed) {
-    return <Login fromConfirmEmail={true} email={email} />;
-  } else if (message === attemptedMsg) {
-    return (
-      <div
-        className="container-email"
-        style={{
-          backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/2022_theme.png")`,
-          backgroundSize: 'cover',
-          height: '100vh'
-        }}
-      >
-        <div className="wrapper-email">
-          <h5>{message}</h5>
+        <img
+          src={img('404.png')}
+          //style={{ top: center(scale.current) }}
+          style={{
+            //backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/404.png")`,
+            //backgroundSize: 'cover',
+            //height: '100vh',
+            position: 'absolute',
+            width: '100vw'
+          }}
+          alt="image_could_not_load"
+        />
+        <div style={{ width: '50%', marginLeft: '55%', marginTop: '18%', position: 'absolute' }}>
+          <h1 style={{ textAlign: 'left' }}>OOPS 404!</h1>
+          <h3 style={{ textAlign: 'left' }}>Lost in the Hackathon Maze!</h3>
+          <h3 style={{ textAlign: 'left' }}>Seems like the guitar strings got tangled!</h3>
+          <h3 style={{ textAlign: 'left' }}>try logging in once more</h3>
         </div>
       </div>
     );
@@ -77,13 +71,16 @@ export default function EmailConfirmation(props) {
     <div
       className="container-email"
       style={{
-        backgroundImage: `url("${process.env.PUBLIC_URL}/images/2022_theme.png")`,
+        backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/404.png")`,
         backgroundSize: 'cover',
         height: '100vh'
       }}
     >
-      <div className="wrapper-email">
-        <h5>{message}</h5>
+      <div style={{ width: '50%', float: 'right', top: '30%' }}>
+        <h1 style={{ textAlign: 'left' }}>OOPS 404!</h1>
+        <h3 style={{ textAlign: 'left' }}>Lost in the Hackathon Maze!</h3>
+        <h3 style={{ textAlign: 'left' }}>Seems like the guitar strings got tangled!</h3>
+        <h3 style={{ textAlign: 'left' }}>try logging in once more</h3>
       </div>
     </div>
   );

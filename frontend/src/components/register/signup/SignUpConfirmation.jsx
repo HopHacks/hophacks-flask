@@ -23,7 +23,7 @@ export default function SignUpConfirmation(props) {
             class="card-button"
             style={{ width: isMobile ? '80%' : '40%', height: '3rem' }}
           >
-            <Typography class="mobile-motto-text">Back to Sign in</Typography>
+            <Typography class="returnToLoginButtonText">Back to Sign in</Typography>
           </Button>
         </Link>
       </CardContent>
