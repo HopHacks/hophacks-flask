@@ -101,7 +101,7 @@ export default function Announcements() {
   const [historyAnnouncements, setHistoryAnnouncements] = useState([]);
   const [topAnnouncement, setTopAnnouncement] = useState({});
   const [recentFourAnnouncements, setRecentFourAnnouncements] = useState([]);
-  const [event] = useState('Fall 2022');
+  const [event] = useState('Fall 2023');
 
   async function getTopAnnouncement() {
     try {
