@@ -33,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     flex: 1,
   },
-  formControl: {
+  formControl: (props) => ({
     marginLeft: '1em',
     minWidth: 120,
-  },
+    width: props.isMobile ? '45%' : 'auto',
+    flex: props.isMobile ? 1 : 0.5,
+  }),
   teamsContainer: (props) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -167,29 +169,30 @@ export default function TeamMatchingPage() {
     <Box className={classes.container}>
       <Typography className={classes.title}>Find Your Team(mates)!</Typography>
       <AppBar position="static" color="transparent" className={classes.searchBar}>
-        <Toolbar style={{flexDirection: isMobile ? 'column' : 'row'}}>
-        <TextField 
-          className={classes.textField}
-          label="Search"
-          variant="outlined"
-          fullWidth
-          style={{ flex: 3 }}
-          InputProps={{
-            endAdornment: (
-        <InputAdornment position="end">
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
-        </InputAdornment>
-        )}}/>
-          <FormControl variant="outlined" className={classes.formControl} style={{ flex: 0.5 }}>
+        <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row'}}>
+          <TextField 
+            className={classes.textField}
+            label="Search"
+            variant="outlined"
+            fullWidth
+            style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+          )}}/>
+        <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between', flex: isMobile ? 'auto' : 1}}>
+          <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel>Sort</InputLabel>
             <Select>
               <MenuItem value="az">A-Z</MenuItem>
               <MenuItem value="za">Z-A</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="outlined" className={classes.formControl} style={{ flex: 0.5 }}>
+          <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel>Status</InputLabel>
             <Select>
               <MenuItem value="all">All</MenuItem>
@@ -197,8 +200,9 @@ export default function TeamMatchingPage() {
               <MenuItem value="closed">Closed</MenuItem>
             </Select>
           </FormControl>
-        </Toolbar>
-      </AppBar>
+        </div>
+      </Toolbar>
+  </AppBar>
       <Box className={classes.teamsContainer}>
         {teamRows}
       </Box>
