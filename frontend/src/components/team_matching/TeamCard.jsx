@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     backgroundColor: '#F3F6FB',
     padding: '3em',
-    borderRadius: '10px',
+    borderRadius: '40px 40px 0 40px',
     marginBottom: '2em',
     boxSizing: 'border-box',
     width: '100%',

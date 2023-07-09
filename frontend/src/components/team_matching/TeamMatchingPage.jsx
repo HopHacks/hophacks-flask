@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, TextField, IconButton, Select, MenuItem, Typography, InputLabel, FormControl, Box } from '@material-ui/core';
+import { AppBar, Toolbar, TextField, IconButton, Select, MenuItem, Typography, InputLabel, FormControl, Box, InputAdornment } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import TeamCard from './TeamCard';
@@ -168,18 +168,28 @@ export default function TeamMatchingPage() {
       <Typography className={classes.title}>Find Your Team(mates)!</Typography>
       <AppBar position="static" color="transparent" className={classes.searchBar}>
         <Toolbar style={{flexDirection: isMobile ? 'column' : 'row'}}>
-          <TextField className={classes.textField} label="Search" variant="outlined" fullWidth />
+        <TextField 
+          className={classes.textField}
+          label="Search"
+          variant="outlined"
+          fullWidth
+          style={{ flex: 3 }}
+          InputProps={{
+            endAdornment: (
+        <InputAdornment position="end">
           <IconButton>
             <SearchIcon />
           </IconButton>
-          <FormControl variant="outlined" className={classes.formControl}>
+        </InputAdornment>
+        )}}/>
+          <FormControl variant="outlined" className={classes.formControl} style={{ flex: 0.5 }}>
             <InputLabel>Sort</InputLabel>
             <Select>
               <MenuItem value="az">A-Z</MenuItem>
               <MenuItem value="za">Z-A</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="outlined" className={classes.formControl}>
+          <FormControl variant="outlined" className={classes.formControl} style={{ flex: 0.5 }}>
             <InputLabel>Status</InputLabel>
             <Select>
               <MenuItem value="all">All</MenuItem>
