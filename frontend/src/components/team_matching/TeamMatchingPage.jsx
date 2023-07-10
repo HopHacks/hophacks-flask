@@ -22,22 +22,69 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     alignSelf: 'flex-start',
     marginBottom: '1em',
+    marginTop: props.isMobile ? '3em' : '0', // Add marginTop here
     marginLeft: '5%',
   }),
-  searchBar: (props) => ({
-    backgroundColor: '#F3F6FB',
+  appBar: (props) => ({
+    backgroundColor: props.isMobile ? 'transparent' : '#F3F6FB',
+    boxShadow: props.isMobile ? 'none' : undefined,
     marginBottom: '2em',
     padding: '1em',
     width: props.isMobile ? '90vw' : '75vw',
   }),
-  textField: {
-    flex: 1,
-  },
+  searchBar: (props) => ({
+    backgroundColor: props.isMobile ? 'transparent' : '#F3F6FB',
+    marginBottom: '2em',
+    padding: '1em',
+    width: props.isMobile ? '90vw' : '75vw',
+    alignSelf: props.isMobile ? 'center' : 'auto',
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '20px 20px 0 20px',
+      backgroundColor: props.isMobile ? 'white' : '#F3F6FB',
+      '& fieldset': {
+        borderColor: props.isMobile ? 'transparent' : 'default',
+      },
+      '&:hover fieldset': {
+        borderColor: props.isMobile ? 'transparent' : 'default',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: props.isMobile ? 'transparent' : 'default',
+      },
+    },
+    '& .MuiOutlinedInput-input': props.isMobile ? {
+      height: '2em',
+      padding: '10px 14px',
+      color: 'black', // set the text color here
+    } : {},
+  }),
   formControl: (props) => ({
     marginLeft: '1em',
     minWidth: 120,
     width: props.isMobile ? '45%' : 'auto',
     flex: props.isMobile ? 1 : 0.5,
+    alignSelf: props.isMobile ? 'center' : 'auto',
+    backgroundColor: props.isMobile ? 'white' : 'transparent',
+    borderRadius: '20px 20px 0 20px',
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '20px 20px 0 20px',
+      '& fieldset': {
+        borderColor: props.isMobile ? 'transparent' : 'default',
+      },
+      '&:hover fieldset': {
+        borderColor: props.isMobile ? 'transparent' : 'default',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: props.isMobile ? 'transparent' : 'default',
+      },
+    },
+    '& .MuiOutlinedInput-input': props.isMobile ? {
+      height: '2em',
+      padding: '10px 14px',
+      color: 'black', // set the text color here
+    } : {},
+    '& .MuiSelect-icon': props.isMobile ? {
+      color: 'black', // set the dropdown icon color here
+    } : {},
   }),
   teamsContainer: (props) => ({
     display: 'flex',
@@ -168,22 +215,22 @@ export default function TeamMatchingPage() {
   return (
     <Box className={classes.container}>
       <Typography className={classes.title}>Find Your Team(mates)!</Typography>
-      <AppBar position="static" color="transparent" className={classes.searchBar}>
-        <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row'}}>
-          <TextField 
-            className={classes.textField}
-            label="Search"
-            variant="outlined"
-            fullWidth
-            style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-          )}}/>
+      <AppBar position="static" className={classes.appBar}>
+    <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row'}}>
+    <TextField 
+  className={classes.searchBar}
+  label="Search"
+  variant="outlined"
+  fullWidth
+  style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
+  InputProps={{
+    endAdornment: (
+      <InputAdornment position="end">
+        <IconButton>
+          <SearchIcon />
+        </IconButton>
+      </InputAdornment>
+    )}}/>
         <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between', flex: isMobile ? 'auto' : 1}}>
           <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel>Sort</InputLabel>
@@ -201,7 +248,7 @@ export default function TeamMatchingPage() {
             </Select>
           </FormControl>
         </div>
-      </Toolbar>
+    </Toolbar>
   </AppBar>
       <Box className={classes.teamsContainer}>
         {teamRows}
