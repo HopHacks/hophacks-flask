@@ -122,60 +122,60 @@ export default function TeamMatchingPage() {
 
   const sampleData = [
     {
-        teamName: 'Team Alpha',
-        intro: "Intro of Team Alpha...",
-        lookingFor: 'We are looking for a full-stack developer.',
-        recruit_info: "Recruitment info for Team Alpha...",
-        tags: ['Full-stack', 'React', 'Python'],
-        status: "open",
-      },
-      {
-        teamName: 'Team Alpha',
-        intro: "Intro of Team Alpha...",
-        lookingFor: 'We are looking for a full-stack developer.',
-        recruit_info: "Recruitment info for Team Alpha...",
-        tags: ['Full-stack', 'React', 'Python'],
-        status: "open",
-      },
-      {
-          teamName: 'Team Alpha',
-          intro: "Intro of Team Alpha...",
-          lookingFor: 'We are looking for a full-stack developer.',
-          recruit_info: "Recruitment info for Team Alpha...",
-          tags: ['Full-stack', 'React', 'Python'],
-          status: "open",
-        },
-        {
-        teamName: 'Team Alpha',
-        intro: "Intro of Team Alpha...",
-        lookingFor: 'We are looking for a full-stack developer',
-        recruit_info: "Recruitment info for Team Alpha....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
-        tags: ['Full-stack', 'React', 'Python'],
-        status: "open",
-      },
-      {
-        teamName: 'Team Alpha',
-        intro: "Intro of Team Alpha...",
-        lookingFor: 'We are looking for a full-stack developer',
-        recruit_info: "Recruitment info for Team Alpha....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
-        tags: ['Full-stack', 'React', 'Python'],
-        status: "open",
-      },
-      {
-        teamName: 'Team Alpha',
-        intro: "Intro of Team Alpha...",
-        lookingFor: 'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
-        recruit_info: "Recruitment info for Team Alpha...",
-        tags: ['Full-stack', 'React', 'Python'],
-        status: "open",
-      },
+      "teamTitle": "Team Alpha",
+      "contentOne": "Intro of Team Alpha...",
+      "lookingFor": "We are looking for a full-stack developer.",
+      "contentTwo": "Recruitment info for Team Alpha...",
+      "tags": ["Full-stack", "React", "Python"],
+      "status": "open"
+    },
+    {
+      "teamTitle": "Team Beta",
+      "contentOne": "Intro of Team Beta...",
+      "lookingFor": "We are looking for a full-stack developer.",
+      "contentTwo": "Recruitment info for Team Beta...",
+      "tags": ["Full-stack", "React", "Python"],
+      "status": "open"
+    },
+    {
+      "teamTitle": "Team Gamma",
+      "contentOne": "Intro of Team Gamma...",
+      "lookingFor": "We are looking for a full-stack developer.",
+      "contentTwo": "Recruitment info for Team Gamma...",
+      "tags": ["Full-stack", "React", "Python"],
+      "status": "open"
+    },
+    {
+      "teamTitle": "Team Delta",
+      "contentOne": "Intro of Team Delta...",
+      "lookingFor": "We are looking for a full-stack developer.",
+      "contentTwo": "Recruitment info for Team Delta....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
+      "tags": ["Full-stack", "React", "Python"],
+      "status": "open"
+    },
+    {
+      "teamTitle": "Team Epsilon",
+      "contentOne": "Intro of Team Epsilon...",
+      "lookingFor": "We are looking for a full-stack developer.",
+      "contentTwo": "Recruitment info for Team Epsilon....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
+      "tags": ["Full-stack", "React", "Python"],
+      "status": "open"
+    },
+    {
+      "teamTitle": "Team Zeta",
+      "contentOne": "Intro of Team Zeta...",
+      "lookingFor": "We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
+      "contentTwo": "Recruitment info for Team Zeta...",
+      "tags": ["Full-stack", "React", "Python"],
+      "status": "open"
+    },
   
   ];
 
   const [teams, setTeams] = useState(sampleData);
 
   useEffect(() => {
-    // axios.get('https://your-api-url.com/api/teams')
+    // axios.get('/api/teammatch')
     //     .then(response => {
     //         setTeams(response.data);
     //     })
