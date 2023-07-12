@@ -10,20 +10,20 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '2em',
     boxSizing: 'border-box',
     width: '100%',
-    minWidth: '300px',
+    minWidth: '300px'
   },
   title: (props) => ({
     fontFamily: 'Proxima Nova',
     fontWeight: 'bold',
     fontSize: props.isMobile ? '24px' : '32px',
     color: '#122f4c',
-    marginBottom: '1em',
+    marginBottom: '1em'
   }),
   content: (props) => ({
     fontFamily: 'Proxima Nova',
     fontSize: props.isMobile ? '18px' : '26px',
     color: '#122f4c',
-    marginBottom: '2em',
+    marginBottom: '2em'
   }),
   tag: {
     backgroundColor: '#B4E3F7',
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0.5em',
     marginTop: '1em',
     display: 'inline-block',
-    marginRight: '0.5em',
+    marginRight: '0.5em'
   },
   statusOpen: {
     backgroundColor: 'green',
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0.5em',
     marginTop: '1em',
     display: 'inline-block',
-    marginRight: '0.5em',
+    marginRight: '0.5em'
   },
   statusClosed: {
     backgroundColor: 'red',
@@ -50,11 +50,19 @@ const useStyles = makeStyles((theme) => ({
     padding: '0.5em',
     marginTop: '1em',
     display: 'inline-block',
-    marginRight: '0.5em',
-  },
+    marginRight: '0.5em'
+  }
 }));
 
-export default function TeamCard({ teamTitle, contentOne, lookingFor, contentTwo, tags, isMobile, status }) {
+export default function TeamCard({
+  teamTitle,
+  contentOne,
+  lookingFor,
+  contentTwo,
+  tags,
+  isMobile,
+  status
+}) {
   const classes = useStyles({ isMobile });
 
   return (
@@ -64,14 +72,11 @@ export default function TeamCard({ teamTitle, contentOne, lookingFor, contentTwo
       <Typography className={classes.title}>{lookingFor}</Typography>
       <Typography className={classes.content}>{contentTwo}</Typography>
       {tags.map((tag, index) => (
-        <Box key={index} className={classes.tag}>{tag}</Box>
+        <Box key={index} className={classes.tag}>
+          {tag}
+        </Box>
       ))}
       <Box className={status === 'open' ? classes.statusOpen : classes.statusClosed}>{status}</Box>
     </Card>
   );
 }
-
-
-
-
-

@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, TextField, IconButton, Select, MenuItem, Typography, InputLabel, FormControl, Box, InputAdornment } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  TextField,
+  IconButton,
+  Select,
+  MenuItem,
+  Typography,
+  InputLabel,
+  FormControl,
+  Box,
+  InputAdornment
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import TeamCard from './TeamCard';
@@ -13,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: '2% 0',
     backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    backgroundPosition: 'center'
   },
   title: (props) => ({
     fontFamily: 'Proxima Nova',
@@ -23,14 +35,14 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'flex-start',
     marginBottom: '1em',
     marginTop: props.isMobile ? '3em' : '0', // Add marginTop here
-    marginLeft: '5%',
+    marginLeft: '5%'
   }),
   appBar: (props) => ({
     backgroundColor: props.isMobile ? 'transparent' : '#F3F6FB',
     boxShadow: props.isMobile ? 'none' : undefined,
     marginBottom: '2em',
     padding: '1em',
-    width: props.isMobile ? '90vw' : '75vw',
+    width: props.isMobile ? '90vw' : '75vw'
   }),
   searchBar: (props) => ({
     backgroundColor: props.isMobile ? 'transparent' : '#F3F6FB',
@@ -42,20 +54,22 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: '20px 20px 0 20px',
       backgroundColor: props.isMobile ? 'white' : '#F3F6FB',
       '& fieldset': {
-        borderColor: props.isMobile ? 'transparent' : 'default',
+        borderColor: props.isMobile ? 'transparent' : 'default'
       },
       '&:hover fieldset': {
-        borderColor: props.isMobile ? 'transparent' : 'default',
+        borderColor: props.isMobile ? 'transparent' : 'default'
       },
       '&.Mui-focused fieldset': {
-        borderColor: props.isMobile ? 'transparent' : 'default',
-      },
+        borderColor: props.isMobile ? 'transparent' : 'default'
+      }
     },
-    '& .MuiOutlinedInput-input': props.isMobile ? {
-      height: '2em',
-      padding: '10px 14px',
-      color: 'black', // set the text color here
-    } : {},
+    '& .MuiOutlinedInput-input': props.isMobile
+      ? {
+          height: '2em',
+          padding: '10px 14px',
+          color: 'black' // set the text color here
+        }
+      : {}
   }),
   formControl: (props) => ({
     marginLeft: '1em',
@@ -68,38 +82,42 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiOutlinedInput-root': {
       borderRadius: '20px 20px 0 20px',
       '& fieldset': {
-        borderColor: props.isMobile ? 'transparent' : 'default',
+        borderColor: props.isMobile ? 'transparent' : 'default'
       },
       '&:hover fieldset': {
-        borderColor: props.isMobile ? 'transparent' : 'default',
+        borderColor: props.isMobile ? 'transparent' : 'default'
       },
       '&.Mui-focused fieldset': {
-        borderColor: props.isMobile ? 'transparent' : 'default',
-      },
+        borderColor: props.isMobile ? 'transparent' : 'default'
+      }
     },
-    '& .MuiOutlinedInput-input': props.isMobile ? {
-      height: '2em',
-      padding: '10px 14px',
-      color: 'black', // set the text color here
-    } : {},
-    '& .MuiSelect-icon': props.isMobile ? {
-      color: 'black', // set the dropdown icon color here
-    } : {},
+    '& .MuiOutlinedInput-input': props.isMobile
+      ? {
+          height: '2em',
+          padding: '10px 14px',
+          color: 'black' // set the text color here
+        }
+      : {},
+    '& .MuiSelect-icon': props.isMobile
+      ? {
+          color: 'black' // set the dropdown icon color here
+        }
+      : {}
   }),
   teamsContainer: (props) => ({
     display: 'flex',
     flexDirection: 'column',
-    width: props.isMobile ? '90vw' : '75vw',
+    width: props.isMobile ? '90vw' : '75vw'
   }),
   teamRow: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '20px',
+    marginBottom: '20px'
   },
   cardContainer: (props) => ({
-    width: props.isMobile ? '100%' : 'calc(50% - 10px)',
-  }),
+    width: props.isMobile ? '100%' : 'calc(50% - 10px)'
+  })
 }));
 
 export default function TeamMatchingPage() {
@@ -107,14 +125,13 @@ export default function TeamMatchingPage() {
   const [searchBarVisible, setSearchBarVisible] = useState(true);
   const classes = useStyles({ isMobile });
 
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-  
+
     window.addEventListener('resize', handleResize);
-  
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -122,54 +139,56 @@ export default function TeamMatchingPage() {
 
   const sampleData = [
     {
-      "teamTitle": "Team Alpha",
-      "contentOne": "Intro of Team Alpha...",
-      "lookingFor": "We are looking for a full-stack developer.",
-      "contentTwo": "Recruitment info for Team Alpha...",
-      "tags": ["Full-stack", "React", "Python"],
-      "status": "open"
+      teamTitle: 'Team Alpha',
+      contentOne: 'Intro of Team Alpha...',
+      lookingFor: 'We are looking for a full-stack developer.',
+      contentTwo: 'Recruitment info for Team Alpha...',
+      tags: ['Full-stack', 'React', 'Python'],
+      status: 'open'
     },
     {
-      "teamTitle": "Team Beta",
-      "contentOne": "Intro of Team Beta...",
-      "lookingFor": "We are looking for a full-stack developer.",
-      "contentTwo": "Recruitment info for Team Beta...",
-      "tags": ["Full-stack", "React", "Python"],
-      "status": "open"
+      teamTitle: 'Team Beta',
+      contentOne: 'Intro of Team Beta...',
+      lookingFor: 'We are looking for a full-stack developer.',
+      contentTwo: 'Recruitment info for Team Beta...',
+      tags: ['Full-stack', 'React', 'Python'],
+      status: 'open'
     },
     {
-      "teamTitle": "Team Gamma",
-      "contentOne": "Intro of Team Gamma...",
-      "lookingFor": "We are looking for a full-stack developer.",
-      "contentTwo": "Recruitment info for Team Gamma...",
-      "tags": ["Full-stack", "React", "Python"],
-      "status": "open"
+      teamTitle: 'Team Gamma',
+      contentOne: 'Intro of Team Gamma...',
+      lookingFor: 'We are looking for a full-stack developer.',
+      contentTwo: 'Recruitment info for Team Gamma...',
+      tags: ['Full-stack', 'React', 'Python'],
+      status: 'open'
     },
     {
-      "teamTitle": "Team Delta",
-      "contentOne": "Intro of Team Delta...",
-      "lookingFor": "We are looking for a full-stack developer.",
-      "contentTwo": "Recruitment info for Team Delta....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
-      "tags": ["Full-stack", "React", "Python"],
-      "status": "open"
+      teamTitle: 'Team Delta',
+      contentOne: 'Intro of Team Delta...',
+      lookingFor: 'We are looking for a full-stack developer.',
+      contentTwo:
+        'Recruitment info for Team Delta....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
+      tags: ['Full-stack', 'React', 'Python'],
+      status: 'open'
     },
     {
-      "teamTitle": "Team Epsilon",
-      "contentOne": "Intro of Team Epsilon...",
-      "lookingFor": "We are looking for a full-stack developer.",
-      "contentTwo": "Recruitment info for Team Epsilon....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
-      "tags": ["Full-stack", "React", "Python"],
-      "status": "open"
+      teamTitle: 'Team Epsilon',
+      contentOne: 'Intro of Team Epsilon...',
+      lookingFor: 'We are looking for a full-stack developer.',
+      contentTwo:
+        'Recruitment info for Team Epsilon....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
+      tags: ['Full-stack', 'React', 'Python'],
+      status: 'open'
     },
     {
-      "teamTitle": "Team Zeta",
-      "contentOne": "Intro of Team Zeta...",
-      "lookingFor": "We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.",
-      "contentTwo": "Recruitment info for Team Zeta...",
-      "tags": ["Full-stack", "React", "Python"],
-      "status": "open"
-    },
-  
+      teamTitle: 'Team Zeta',
+      contentOne: 'Intro of Team Zeta...',
+      lookingFor:
+        'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
+      contentTwo: 'Recruitment info for Team Zeta...',
+      tags: ['Full-stack', 'React', 'Python'],
+      status: 'open'
+    }
   ];
 
   const [teams, setTeams] = useState(sampleData);
@@ -185,18 +204,18 @@ export default function TeamMatchingPage() {
   }, []);
 
   const teamRows = [];
-  if(isMobile) {
-    for(let i = 0; i < teams.length; i++) {
+  if (isMobile) {
+    for (let i = 0; i < teams.length; i++) {
       teamRows.push(
         <Box className={classes.teamRow} key={i}>
           <Box className={classes.cardContainer}>
-            <TeamCard {...teams[i]} isMobile={isMobile}/>
+            <TeamCard {...teams[i]} isMobile={isMobile} />
           </Box>
         </Box>
       );
     }
   } else {
-    for(let i = 0; i < teams.length; i += 2) {
+    for (let i = 0; i < teams.length; i += 2) {
       teamRows.push(
         <Box className={classes.teamRow} key={i}>
           <Box className={classes.cardContainer}>
@@ -204,7 +223,7 @@ export default function TeamMatchingPage() {
           </Box>
           {teams[i + 1] && (
             <Box className={classes.cardContainer}>
-              <TeamCard {...teams[i + 1]} isMobile={isMobile}/>
+              <TeamCard {...teams[i + 1]} isMobile={isMobile} />
             </Box>
           )}
         </Box>
@@ -216,46 +235,51 @@ export default function TeamMatchingPage() {
     <Box className={classes.container}>
       <Typography className={classes.title}>Find Your Team(mates)!</Typography>
       <AppBar position="static" className={classes.appBar}>
-    <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row'}}>
-    <TextField 
-  className={classes.searchBar}
-  label="Search"
-  variant="outlined"
-  fullWidth
-  style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
-  InputProps={{
-    endAdornment: (
-      <InputAdornment position="end">
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-      </InputAdornment>
-    )}}/>
-        <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between', flex: isMobile ? 'auto' : 1}}>
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel>Sort</InputLabel>
-            <Select>
-              <MenuItem value="az">A-Z</MenuItem>
-              <MenuItem value="za">Z-A</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel>Status</InputLabel>
-            <Select>
-              <MenuItem value="all">All</MenuItem>
-              <MenuItem value="open">Open</MenuItem>
-              <MenuItem value="closed">Closed</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-    </Toolbar>
-  </AppBar>
-      <Box className={classes.teamsContainer}>
-        {teamRows}
-      </Box>
+        <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+          <TextField
+            className={classes.searchBar}
+            label="Search"
+            variant="outlined"
+            fullWidth
+            style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-between',
+              flex: isMobile ? 'auto' : 1
+            }}
+          >
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel>Sort</InputLabel>
+              <Select>
+                <MenuItem value="az">A-Z</MenuItem>
+                <MenuItem value="za">Z-A</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel>Status</InputLabel>
+              <Select>
+                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="open">Open</MenuItem>
+                <MenuItem value="closed">Closed</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <Box className={classes.teamsContainer}>{teamRows}</Box>
     </Box>
   );
 }
-
-
-
