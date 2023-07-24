@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: props.isMobile ? 'center' : 'auto',
     '& .MuiOutlinedInput-root': {
       borderRadius: '20px 20px 0 20px',
-      backgroundColor: props.isMobile ? 'white' : '#F3F6FB',
+      backgroundColor: 'rgba(219, 226, 237, 0.5)',
       '& fieldset': {
         borderColor: props.isMobile ? 'transparent' : 'default'
       },
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     width: props.isMobile ? '45%' : 'auto',
     flex: props.isMobile ? 1 : 0.5,
     alignSelf: props.isMobile ? 'center' : 'auto',
-    backgroundColor: props.isMobile ? 'white' : 'transparent',
+    backgroundColor: 'rgba(219, 226, 237, 0.5)',
     borderRadius: '20px 20px 0 20px',
     '& .MuiOutlinedInput-root': {
       borderRadius: '20px 20px 0 20px',
@@ -94,13 +94,22 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiOutlinedInput-input': props.isMobile
       ? {
           height: '2em',
-          padding: '10px 14px',
-          color: 'black' // set the text color here
+          padding: '10px 10px',
+          color: 'black',
+          textAlign: 'center' // centering the text
+        }
+      : {},
+    alignSelf: 'center', // centering in flex container
+    justifySelf: 'center',
+    '& .MuiInputLabel-outlined.MuiInputLabel-shrink': props.isMobile
+      ? {
+          transform: 'translate(12px, -5px) scale(0.75)' // adjusting label positioning
         }
       : {},
     '& .MuiSelect-icon': props.isMobile
       ? {
-          color: 'black' // set the dropdown icon color here
+          color: 'black',
+          top: 'calc(50% - 10px)' // centering the dropdown icon
         }
       : {}
   }),

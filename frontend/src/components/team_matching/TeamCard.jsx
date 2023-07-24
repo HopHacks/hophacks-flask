@@ -2,9 +2,9 @@ import React from 'react';
 import { Card, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   card: {
-    backgroundColor: '#F3F6FB',
+    backgroundColor: 'rgba(53, 2, 37, 0.8)',
     padding: '3em',
     borderRadius: '40px 40px 0 40px',
     marginBottom: '2em',
@@ -16,18 +16,18 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Proxima Nova',
     fontWeight: 'bold',
     fontSize: props.isMobile ? '24px' : '32px',
-    color: '#122f4c',
-    marginBottom: '1em'
+    marginBottom: '1em',
+    color: '#FFFFFF'
   }),
   content: (props) => ({
     fontFamily: 'Proxima Nova',
     fontSize: props.isMobile ? '18px' : '26px',
-    color: '#122f4c',
-    marginBottom: '2em'
+    marginBottom: '2em',
+    color: '#FFFFFF'
   }),
   tag: {
-    backgroundColor: '#B4E3F7',
-    color: '#122f4c',
+    backgroundColor: '#CC6BA3',
+    color: '#FFFFFF',
     borderRadius: '8px',
     padding: '0.5em',
     marginTop: '1em',
