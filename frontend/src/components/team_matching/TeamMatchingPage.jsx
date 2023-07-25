@@ -16,6 +16,13 @@ import { makeStyles } from '@material-ui/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import TeamCard from './TeamCard';
 import '../../stylesheets/teammatch.css';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CloseIcon from '@material-ui/icons/Close';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -71,6 +78,15 @@ const useStyles = makeStyles((theme) => ({
         }
       : {}
   }),
+  postButton: (props) => ({
+    marginLeft: '1em',
+    backgroundColor: 'rgba(219, 226, 237, 0.5)',
+    borderRadius: '20px 20px 0 20px',
+    color: 'black',
+    '&:hover': {
+      backgroundColor: 'rgba(219, 226, 237, 0.7)'
+    }
+  }),
   formControl: (props) => ({
     marginLeft: '1em',
     minWidth: 120,
@@ -118,6 +134,130 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: props.isMobile ? '90vw' : '75vw'
   }),
+  dialogContainer: {
+    backgroundColor: 'rgba(53, 2, 37, 0.8)',
+    borderRadius: '40px 40px 0 40px',
+    padding: '2em',
+    boxSizing: 'border-box',
+    minWidth: '300px',
+    width: '80vw', // 50% of viewport width
+    height: '80vh' // 50% of viewport height
+  },
+  dialogTitle: {
+    fontFamily: 'Proxima Nova',
+    fontWeight: 'bold',
+    fontSize: (props) => (props.isMobile ? '48px' : '32px'),
+    color: '#FFFFFF'
+  },
+  dialogTagInput: {
+    color: '#FFFFFF',
+    borderColor: 'white',
+    '& label.Mui-focused': {
+      color: 'white'
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white'
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white'
+      },
+      '&:hover fieldset': {
+        borderColor: 'white'
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white'
+      }
+    }
+  },
+  addTagButton: {
+    color: '#FFFFFF', // This ensures the text color is white
+    backgroundColor: 'transparent',
+    border: '1px solid #FFFFFF', // This makes the border white
+    borderRadius: '8px',
+    padding: '0.5em 1em',
+    marginLeft: '1em',
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.1)'
+    }
+  },
+  tag: {
+    backgroundColor: '#CC6BA3',
+    color: '#FFFFFF',
+    borderRadius: '8px',
+    padding: '0.5em',
+    marginTop: '1em',
+    display: 'inline-block',
+    marginRight: '0.5em'
+  },
+
+  dialogInputLabel: {
+    color: 'white !important', // Default state
+    '&.Mui-focused': {
+      color: 'white !important' // Focused state
+    },
+    fontSize: (props) => (props.isMobile ? '10px' : '20px')
+  },
+  dialogTextField: {
+    '& label.MuiInputLabel-outlined': {
+      color: 'white'
+    },
+    '& label.MuiInputLabel-outlined.Mui-focused': {
+      color: 'white'
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white'
+    },
+    '& label.Mui-focused': {
+      color: 'white'
+    },
+    '& .MuiInputLabel-shrink': {
+      color: 'white'
+    },
+    '& label.MuiInputLabel-shrink': {
+      color: 'white !important'
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white'
+      },
+      '&:hover fieldset': {
+        borderColor: 'white'
+      },
+      '&.Mui-focused fieldset': {
+        color: 'white'
+      }
+    },
+    color: '#FFFFFF',
+    fontFamily: 'Proxima Nova',
+    fontSize: (props) => (props.isMobile ? '16px' : '20px')
+  },
+  cancelButton: {
+    fontFamily: 'Proxima Nova',
+    fontSize: (props) => (props.isMobile ? '18px' : '26px'),
+    color: '#FFFFFF',
+    backgroundColor: '#CC6BA3',
+    borderRadius: '8px',
+    padding: '0.5em',
+    margin: '0.5em',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: 'rgba(53, 2, 37, 0.8)'
+    }
+  },
+  submitButton: {
+    fontFamily: 'Proxima Nova',
+    fontSize: (props) => (props.isMobile ? '18px' : '26px'),
+    color: '#FFFFFF',
+    backgroundColor: 'green',
+    borderRadius: '8px',
+    padding: '0.5em',
+    margin: '0.5em',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: 'rgba(53, 2, 37, 0.8)'
+    }
+  },
   teamRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -133,6 +273,44 @@ export default function TeamMatchingPage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [searchBarVisible, setSearchBarVisible] = useState(true);
   const classes = useStyles({ isMobile });
+  const [text, setText] = useState('');
+  const [open, setOpen] = useState(false);
+  const [tagInput, setTagInput] = useState(''); // for the tag input field
+  const [tags, setTags] = useState([]); // for the list of tags
+  const handleTagInputKeyDown = (event) => {
+    if (event.key === 'Enter' && tagInput.trim() !== '') {
+      setTags([...tags, tagInput]);
+      setTagInput('');
+    }
+  };
+
+  const addTag = () => {
+    if (tagInput.trim() !== '') {
+      setTags([...tags, tagInput]);
+      setTagInput('');
+    }
+  };
+
+  const removeTag = (index) => {
+    const newTags = [...tags];
+    newTags.splice(index, 1);
+    setTags(newTags);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = () => {
+    // Handle the submission logic here
+    // e.g., save the text to your backend
+    console.log(text);
+    setText(''); // Clear the input after submission
+    handleClose(); // Close the dialog
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -267,6 +445,7 @@ export default function TeamMatchingPage() {
               flexDirection: 'row',
               width: '100%',
               justifyContent: 'space-between',
+              alignItems: 'center', // align items in the center
               flex: isMobile ? 'auto' : 1
             }}
           >
@@ -285,10 +464,118 @@ export default function TeamMatchingPage() {
                 <MenuItem value="closed">Closed</MenuItem>
               </Select>
             </FormControl>
+            <Button onClick={handleOpen} className={classes.postButton}>
+              Create Post
+            </Button>{' '}
+            {/* Add the button here */}
           </div>
         </Toolbar>
       </AppBar>
+
       <Box className={classes.teamsContainer}>{teamRows}</Box>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          className: classes.dialogContainer
+        }}
+      >
+        <DialogTitle className={classes.dialogTitle}>Post Your Team Card</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Team Name"
+            type="text"
+            fullWidth
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            InputProps={{
+              className: classes.dialogTextField
+            }}
+            InputLabelProps={{
+              className: classes.dialogInputLabel
+            }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Team Introduction"
+            type="text"
+            fullWidth
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            InputProps={{
+              className: classes.dialogTextField
+            }}
+            InputLabelProps={{
+              className: classes.dialogInputLabel
+            }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Looking For"
+            type="text"
+            fullWidth
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            InputProps={{
+              className: classes.dialogTextField
+            }}
+            InputLabelProps={{
+              className: classes.dialogInputLabel
+            }}
+          />
+
+          {/* Tags Input */}
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '1em' }}>
+            <TextField
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              onKeyDown={handleTagInputKeyDown}
+              className={classes.dialogTagInput}
+              placeholder="Enter a tag and press Enter"
+              InputProps={{
+                className: classes.dialogTextField
+              }}
+              InputLabelProps={{
+                className: classes.dialogInputLabel
+              }}
+            />
+            <IconButton size="small" className={classes.addTagButton} onClick={addTag}>
+              <AddIcon />
+            </IconButton>
+          </div>
+
+          {/* Display the tags */}
+          <div>
+            {tags.map((tag, index) => (
+              <span key={index} className={classes.tag}>
+                {tag}
+                <IconButton
+                  size="small"
+                  className={classes.tagCloseIcon}
+                  onClick={() => removeTag(index)}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </span>
+            ))}
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} className={classes.cancelButton}>
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} className={classes.submitButton}>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
