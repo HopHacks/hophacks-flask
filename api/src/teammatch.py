@@ -21,8 +21,16 @@ def get_teams():
     teams = db.teammatch.find()
     response = []
     for team in teams:
-        team['_id'] = str(team['_id'])  # Convert ObjectId to string
-        response.append(team)
+        # Convert ObjectId to string
+        team_data = {
+            'teamTitle': team['teamTitle'],
+            'teamIntro': team.get('teamIntro', None),  # Using .get() to ensure no KeyError if the field is missing
+            'lookingFor': team.get('lookingFor', None),
+            'tags': team.get('tags', []),
+            'status': team.get('status', None),
+            'id': str(team['_id'])   # Adding ID in response
+        }
+        response.append(team_data)
     return jsonify(response), 200
 
 
@@ -31,9 +39,8 @@ def create_team():
     """Create a new team.
 
     :reqjson teamTitle: Title of the team
-    :reqjson contentOne: First content of the team
+    :reqjson teamIntro: First content of the team
     :reqjson lookingFor: Skills the team is looking for
-    :reqjson contentTwo: Second content of the team
     :reqjson tags: A list of tags for the team
     :reqjson status: The team's status
 
@@ -43,15 +50,14 @@ def create_team():
     if not request.json:
         return Response('Data not in json format', status=400)
 
-    required_fields = ['teamTitle', 'contentOne', 'lookingFor', 'contentTwo', 'tags', 'status']
+    required_fields = ['teamTitle', 'teamIntro', 'lookingFor', 'tags', 'status']
     if not all(field in request.json for field in required_fields):
         return Response('Missing required field', status=400)
 
     team = {
         'teamTitle': request.json['teamTitle'],
-        'contentOne': request.json['contentOne'],
+        'teamIntro': request.json['teamIntro'],
         'lookingFor': request.json['lookingFor'],
-        'contentTwo': request.json['contentTwo'],
         'tags': request.json['tags'],
         'status': request.json['status']
     }

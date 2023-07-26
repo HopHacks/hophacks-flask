@@ -54,23 +54,15 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export default function TeamCard({
-  teamTitle,
-  contentOne,
-  lookingFor,
-  contentTwo,
-  tags,
-  isMobile,
-  status
-}) {
+export default function TeamCard({ teamTitle, teamIntro, lookingFor, tags, isMobile, status }) {
   const classes = useStyles({ isMobile });
 
   return (
     <Card className={classes.card}>
       <Typography className={classes.title}>{teamTitle}</Typography>
-      <Typography className={classes.content}>{contentOne}</Typography>
-      <Typography className={classes.title}>{lookingFor}</Typography>
-      <Typography className={classes.content}>{contentTwo}</Typography>
+      <Typography className={classes.content}>{teamIntro}</Typography>
+      <Typography className={classes.title}>Looking For:</Typography>
+      <Typography className={classes.content}>{lookingFor}</Typography>
       {tags.map((tag, index) => (
         <Box key={index} className={classes.tag}>
           {tag}

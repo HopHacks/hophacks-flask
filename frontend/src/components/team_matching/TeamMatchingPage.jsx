@@ -23,8 +23,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
+import axios from 'axios';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     width: '100vw',
     display: 'flex',
@@ -78,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
         }
       : {}
   }),
-  postButton: (props) => ({
+  postButton: {
     marginLeft: '1em',
     backgroundColor: 'rgba(219, 226, 237, 0.5)',
     borderRadius: '20px 20px 0 20px',
@@ -86,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: 'rgba(219, 226, 237, 0.7)'
     }
-  }),
+  },
   formControl: (props) => ({
     marginLeft: '1em',
     minWidth: 120,
@@ -115,7 +116,6 @@ const useStyles = makeStyles((theme) => ({
           textAlign: 'center' // centering the text
         }
       : {},
-    alignSelf: 'center', // centering in flex container
     justifySelf: 'center',
     '& .MuiInputLabel-outlined.MuiInputLabel-shrink': props.isMobile
       ? {
@@ -140,8 +140,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '2em',
     boxSizing: 'border-box',
     minWidth: '300px',
-    width: '80vw', // 50% of viewport width
-    height: '80vh' // 50% of viewport height
+    width: '80vw',
+    height: '80vh'
   },
   dialogTitle: {
     fontFamily: 'Proxima Nova',
@@ -271,12 +271,38 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TeamMatchingPage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [searchBarVisible, setSearchBarVisible] = useState(true);
   const classes = useStyles({ isMobile });
-  const [text, setText] = useState('');
+  const [teamTitle, setTeamTitle] = useState('');
+  const [teamIntro, setTeamIntro] = useState('');
+  const [lookingFor, setLookingFor] = useState('');
   const [open, setOpen] = useState(false);
   const [tagInput, setTagInput] = useState(''); // for the tag input field
   const [tags, setTags] = useState([]); // for the list of tags
+  const [filteredTeams, setFilteredTeams] = useState([]);
+
+  const handleSortChange = (event) => {
+    const sortType = event.target.value;
+    const sortedTeams = [...teams]; // Create a copy of originalTeams to sort
+
+    if (sortType === 'az') {
+      sortedTeams.sort((a, b) => a.teamTitle.localeCompare(b.teamTitle));
+    } else {
+      sortedTeams.sort((a, b) => b.teamTitle.localeCompare(a.teamTitle));
+    }
+
+    setFilteredTeams(sortedTeams);
+  };
+
+  const handleFilterChange = (event) => {
+    const filterType = event.target.value;
+
+    if (filterType !== 'all') {
+      setFilteredTeams(teams.filter((team) => team.status === filterType));
+    } else {
+      setFilteredTeams(teams); // Reset to show all teams
+    }
+  };
+
   const handleTagInputKeyDown = (event) => {
     if (event.key === 'Enter' && tagInput.trim() !== '') {
       setTags([...tags, tagInput]);
@@ -304,12 +330,31 @@ export default function TeamMatchingPage() {
     setOpen(false);
   };
 
-  const handleSubmit = () => {
-    // Handle the submission logic here
-    // e.g., save the text to your backend
-    console.log(text);
-    setText(''); // Clear the input after submission
-    handleClose(); // Close the dialog
+  const handleSubmit = async () => {
+    const teamData = {
+      teamTitle: teamTitle,
+      teamIntro: teamIntro,
+      lookingFor: lookingFor,
+      tags: tags,
+      status: 'open'
+    };
+    console.log(teamData);
+    try {
+      // The URL of your Flask endpoint
+      const url = '/api/teammatch/';
+
+      const response = await axios.post(url, teamData);
+
+      if (response.status === 201) {
+        console.log('Team created successfully', response.data);
+      } else {
+        console.error('Error creating team', response.data);
+      }
+    } catch (error) {
+      console.error('Error creating team', error.response ? error.response.data : error.message);
+    }
+    window.location.reload();
+    handleClose();
   };
 
   useEffect(() => {
@@ -324,93 +369,41 @@ export default function TeamMatchingPage() {
     };
   }, []);
 
-  const sampleData = [
-    {
-      teamTitle: 'Team Alpha',
-      contentOne: 'Intro of Team Alpha...',
-      lookingFor: 'We are looking for a full-stack developer.',
-      contentTwo: 'Recruitment info for Team Alpha...',
-      tags: ['Full-stack', 'React', 'Python'],
-      status: 'open'
-    },
-    {
-      teamTitle: 'Team Beta',
-      contentOne: 'Intro of Team Beta...',
-      lookingFor: 'We are looking for a full-stack developer.',
-      contentTwo: 'Recruitment info for Team Beta...',
-      tags: ['Full-stack', 'React', 'Python'],
-      status: 'open'
-    },
-    {
-      teamTitle: 'Team Gamma',
-      contentOne: 'Intro of Team Gamma...',
-      lookingFor: 'We are looking for a full-stack developer.',
-      contentTwo: 'Recruitment info for Team Gamma...',
-      tags: ['Full-stack', 'React', 'Python'],
-      status: 'open'
-    },
-    {
-      teamTitle: 'Team Delta',
-      contentOne: 'Intro of Team Delta...',
-      lookingFor: 'We are looking for a full-stack developer.',
-      contentTwo:
-        'Recruitment info for Team Delta....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
-      tags: ['Full-stack', 'React', 'Python'],
-      status: 'open'
-    },
-    {
-      teamTitle: 'Team Epsilon',
-      contentOne: 'Intro of Team Epsilon...',
-      lookingFor: 'We are looking for a full-stack developer.',
-      contentTwo:
-        'Recruitment info for Team Epsilon....We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
-      tags: ['Full-stack', 'React', 'Python'],
-      status: 'open'
-    },
-    {
-      teamTitle: 'Team Zeta',
-      contentOne: 'Intro of Team Zeta...',
-      lookingFor:
-        'We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.We are looking for a full-stack developer.',
-      contentTwo: 'Recruitment info for Team Zeta...',
-      tags: ['Full-stack', 'React', 'Python'],
-      status: 'open'
-    }
-  ];
-
-  const [teams, setTeams] = useState(sampleData);
+  const [teams, setTeams] = useState();
 
   useEffect(() => {
-    // axios.get('/api/teammatch')
-    //     .then(response => {
-    //         setTeams(response.data);
-    //     })
-    //     .catch(error => {
-    //         console.error('There was an error!', error);
-    //     });
+    axios
+      .get('/api/teammatch/')
+      .then((response) => {
+        setTeams(response.data);
+        setFilteredTeams(response.data);
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+      });
   }, []);
 
   const teamRows = [];
-  if (isMobile) {
-    for (let i = 0; i < teams.length; i++) {
+  if (isMobile && filteredTeams) {
+    for (let i = 0; i < filteredTeams.length; i++) {
       teamRows.push(
         <Box className={classes.teamRow} key={i}>
           <Box className={classes.cardContainer}>
-            <TeamCard {...teams[i]} isMobile={isMobile} />
+            <TeamCard {...filteredTeams[i]} isMobile={isMobile} />
           </Box>
         </Box>
       );
     }
-  } else {
-    for (let i = 0; i < teams.length; i += 2) {
+  } else if (!isMobile && filteredTeams) {
+    for (let i = 0; i < filteredTeams.length; i += 2) {
       teamRows.push(
         <Box className={classes.teamRow} key={i}>
           <Box className={classes.cardContainer}>
-            <TeamCard {...teams[i]} />
+            <TeamCard {...filteredTeams[i]} />
           </Box>
           {teams[i + 1] && (
             <Box className={classes.cardContainer}>
-              <TeamCard {...teams[i + 1]} isMobile={isMobile} />
+              <TeamCard {...filteredTeams[i + 1]} isMobile={isMobile} />
             </Box>
           )}
         </Box>
@@ -422,54 +415,109 @@ export default function TeamMatchingPage() {
     <Box className={classes.container}>
       <Typography className={classes.title}>Find Your Team(mates)!</Typography>
       <AppBar position="static" className={classes.appBar}>
-        <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row' }}>
-          <TextField
-            className={classes.searchBar}
-            label="Search"
-            variant="outlined"
-            fullWidth
-            style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '100%',
-              justifyContent: 'space-between',
-              alignItems: 'center', // align items in the center
-              flex: isMobile ? 'auto' : 1
-            }}
-          >
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel>Sort</InputLabel>
-              <Select>
-                <MenuItem value="az">A-Z</MenuItem>
-                <MenuItem value="za">Z-A</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel>Status</InputLabel>
-              <Select>
-                <MenuItem value="all">All</MenuItem>
-                <MenuItem value="open">Open</MenuItem>
-                <MenuItem value="closed">Closed</MenuItem>
-              </Select>
-            </FormControl>
-            <Button onClick={handleOpen} className={classes.postButton}>
-              Create Post
-            </Button>{' '}
-            {/* Add the button here */}
-          </div>
-        </Toolbar>
+        {!isMobile && (
+          <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+            <TextField
+              className={classes.searchBar}
+              label="Search"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                justifyContent: 'flex-start',
+                alignItems: 'center', // align items in the center
+                flex: isMobile ? 'auto' : 1,
+                flexWrap: 'nowrap' // Add this property to prevent wrapping
+              }}
+            >
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>Sort</InputLabel>
+                <Select onChange={handleSortChange}>
+                  <MenuItem value="az">A-Z</MenuItem>
+                  <MenuItem value="za">Z-A</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>Status</InputLabel>
+                <Select onChange={handleFilterChange}>
+                  <MenuItem value="all">All</MenuItem>
+                  <MenuItem value="open">Open</MenuItem>
+                  <MenuItem value="closed">Closed</MenuItem>
+                </Select>
+              </FormControl>
+              <Button onClick={handleOpen} className={classes.postButton}>
+                Create Post
+              </Button>{' '}
+              {/* Add the button here */}
+            </div>
+          </Toolbar>
+        )}
+        {isMobile && (
+          <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+            <TextField
+              className={classes.searchBar}
+              label="Search"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                justifyContent: 'flex-start',
+                alignItems: 'center', // align items in the center
+                flex: isMobile ? 'auto' : 1,
+                flexWrap: 'nowrap' // Add this property to prevent wrapping
+              }}
+            >
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>Sort</InputLabel>
+                <Select onChange={handleSortChange}>
+                  <MenuItem value="az">A-Z</MenuItem>
+                  <MenuItem value="za">Z-A</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>Status</InputLabel>
+                <Select onChange={handleFilterChange}>
+                  <MenuItem value="all">All</MenuItem>
+                  <MenuItem value="open">Open</MenuItem>
+                  <MenuItem value="closed">Closed</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <Button onClick={handleOpen} className={classes.postButton}>
+                Create Post
+              </Button>
+            </div>
+          </Toolbar>
+        )}
       </AppBar>
 
       <Box className={classes.teamsContainer}>{teamRows}</Box>
@@ -489,8 +537,8 @@ export default function TeamMatchingPage() {
             label="Team Name"
             type="text"
             fullWidth
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={teamTitle}
+            onChange={(e) => setTeamTitle(e.target.value)}
             InputProps={{
               className: classes.dialogTextField
             }}
@@ -505,8 +553,8 @@ export default function TeamMatchingPage() {
             label="Team Introduction"
             type="text"
             fullWidth
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={teamIntro}
+            onChange={(e) => setTeamIntro(e.target.value)}
             InputProps={{
               className: classes.dialogTextField
             }}
@@ -521,8 +569,8 @@ export default function TeamMatchingPage() {
             label="Looking For"
             type="text"
             fullWidth
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={lookingFor}
+            onChange={(e) => setLookingFor(e.target.value)}
             InputProps={{
               className: classes.dialogTextField
             }}
@@ -532,7 +580,7 @@ export default function TeamMatchingPage() {
           />
 
           {/* Tags Input */}
-          <div style={{ display: 'flex', alignItems: 'center', marginTop: '1em' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '1em', width: '100%' }}>
             <TextField
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
@@ -545,6 +593,7 @@ export default function TeamMatchingPage() {
               InputLabelProps={{
                 className: classes.dialogInputLabel
               }}
+              style={{ width: '90%', marginRight: '1%' }}
             />
             <IconButton size="small" className={classes.addTagButton} onClick={addTag}>
               <AddIcon />
