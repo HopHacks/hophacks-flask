@@ -87,6 +87,12 @@ export default function Sponsors() {
         />
 
         <SponsorItem logo="echo3D.webp" size="inkind" link="https://www.echo3d.com/" />
+        <SponsorItem
+          logo="leading_learners.jpeg"
+          size="inkind"
+          link="https://www.leading-learners.com/"
+          width="40%"
+        />
       </div>
     </Box>
   );
