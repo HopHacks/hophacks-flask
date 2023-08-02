@@ -40,6 +40,9 @@ const Profile = function Profile(props) {
   const [grad, setGrad] = useState('');
   const [grad_month, setGrad_month] = useState('');
   const [grad_year, setGrad_year] = useState('');
+  const [first_hackathon, setFirst_hackathon] = useState('');
+  const [first_hophacks, setFirst_hophacks] = useState('');
+  const [learn_about_us, setLearn_about_us] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState('');
   const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
@@ -106,6 +109,10 @@ const Profile = function Profile(props) {
     setGrad_month(response.data.profile.grad_month);
     setGrad_year(response.data.profile.grad_year);
     setAge(response.data.profile.age);
+    setFirst_hackathon(response.data.profile.first_hackathon);
+    setFirst_hophacks(response.data.profile.first_hophacks);
+    setLearn_about_us(response.data.profile.learn_about_us);
+
   }
 
   async function getStatus() {
@@ -132,6 +139,9 @@ const Profile = function Profile(props) {
     profile.grad_month = grad_month;
     profile.grad_year = grad_year;
     profile.age = age;
+    profile.first_hackathon = first_hackathon;
+    profile.first_hophacks = first_hophacks;
+    profile.learn_about_us = learn_about_us;
     try {
       await axios.post('/api/accounts/profile/update', {
         profile: profile
@@ -523,6 +533,69 @@ const Profile = function Profile(props) {
     </div>
   );
 
+  const first_hackathonForm = (
+    <form>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label">Is this your first Hackathon?</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={first_hackathon}
+          onChange={(e) => {
+            setFirst_hackathon(e.target.value);
+          }}
+        >
+          <MenuItem value="Yes">Yes</MenuItem>
+          <MenuItem value="No">No</MenuItem>
+        </Select>
+      </FormControl>
+    </form>
+  );
+
+  const first_hophacksForm = (
+    <form>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label">Is this your first time attending HopHacks?</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={first_hophacks}
+          onChange={(e) => {
+            setFirst_hophacks(e.target.value);
+          }}
+        >
+          <MenuItem value="Yes">Yes</MenuItem>
+          <MenuItem value="No">No</MenuItem>
+        </Select>
+      </FormControl>
+    </form>
+  );
+
+  const learn_about_usForm = (
+    <form>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label"> How did you hear about us?</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={learn_about_us}
+          onChange={(e) => {
+            setLearn_about_us(e.target.value);
+          }}
+        >
+          <MenuItem value="Instagram">Instagram</MenuItem>
+          <MenuItem value="Facebook">Facebook</MenuItem>
+          <MenuItem value="Linkedin">Linkedin</MenuItem>
+          <MenuItem value="Google">Google</MenuItem>
+          <MenuItem value="Major League Hacking">Major League Hacking</MenuItem>
+          <MenuItem value="Email Listerv">Email Listerv</MenuItem>
+          <MenuItem value="Friend">Friend</MenuItem>
+          <MenuItem value="Other">Other</MenuItem>
+        </Select>
+      </FormControl>
+    </form>
+  );
+
   const ProfileCard = (
     <div>
       <Typography class="section-header" gutterBottom>
@@ -603,6 +676,28 @@ const Profile = function Profile(props) {
           primaryText={'Phone Number'}
           secondaryText={profile.phone_number}
         />
+        <FormDialog
+          title={'Is this your first time attending a hackathon?'}
+          form={first_hackathonForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Is this your first time attending a hackathon?'}
+          secondaryText={profile.first_hackathon}
+        />
+        <FormDialog
+          title={'Is this your first time attending Hophacks?'}
+          form={first_hophacksForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Is this your first time attending Hophacks?'}
+          secondaryText={profile.first_hackathon}
+        />
+        <FormDialog
+          title={'How did you hear about us?'}
+          form={learn_about_usForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'How did you hear about us?'}
+          secondaryText={profile.learn_about_us}
+        />
+
       </List>
     </div>
   );
