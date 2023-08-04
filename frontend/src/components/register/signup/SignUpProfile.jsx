@@ -37,6 +37,9 @@ export default function SignUpProfile(props) {
   const setGrad = props.setGrad;
   const setGrad_month = props.setGrad_month;
   const setGrad_year = props.setGrad_year;
+  const setFirst_hackathon = props.setFirst_hackathon;
+  const setFirst_hophacks = props.setFirst_hophacks;
+  const setLearn_about_us = props.setLearn_about_us;
 
   const resumeFile = props.resumeFile;
   const resumeChecked = props.resumeChecked;
@@ -390,6 +393,79 @@ export default function SignUpProfile(props) {
               <MenuItem value="2026">2026</MenuItem>
               <MenuItem value="2027">2027</MenuItem>
               <MenuItem value="2028">2028</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={isMobile ? 12 : 4}>
+            <span style={{ color: '#ffffff', float: 'left' }}>
+              Is this your first time attending a hackathon?
+            </span>
+            <TextField
+              required
+              variant="standard"
+              style={{ width: '100%' }}
+              onChange={(e) => {
+                setFirst_hackathon(e.target.value);
+              }}
+              select
+              InputLabelProps={{
+                style: { color: '#ffffff' }
+              }}
+              InputProps={{
+                style: { color: '#ffffff' }
+              }}
+            >
+              <MenuItem value="Yes">Yes</MenuItem>
+              <MenuItem value="No">No</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={isMobile ? 12 : 4}>
+            <span style={{ color: '#ffffff', float: 'left' }}>
+              Is this your first time attending HopHacks?
+            </span>
+            <TextField
+              required
+              variant="standard"
+              style={{ width: '100%' }}
+              onChange={(e) => {
+                setFirst_hophacks(e.target.value);
+              }}
+              select
+              InputLabelProps={{
+                style: { color: '#ffffff' }
+              }}
+              InputProps={{
+                style: { color: '#ffffff' }
+              }}
+            >
+              <MenuItem value="Yes">Yes</MenuItem>
+              <MenuItem value="No">No</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={isMobile ? 12 : 4}>
+            <span style={{ color: '#ffffff', float: 'left' }}> How did you learn about us?</span>
+            <TextField
+              required
+              variant="standard"
+              style={{ width: '100%' }}
+              onChange={(e) => {
+                setLearn_about_us(e.target.value);
+              }}
+              select
+              InputLabelProps={{
+                style: { color: '#ffffff' }
+              }}
+              InputProps={{
+                style: { color: '#ffffff' }
+              }}
+            >
+              <MenuItem value="Instagram">Instagram</MenuItem>
+              <MenuItem value="Facebook">Facebook</MenuItem>
+              <MenuItem value="Linkedin">Linkedin</MenuItem>
+              <MenuItem value="Google">Google</MenuItem>
+              <MenuItem value="Major League Hacking">Major League Hacking</MenuItem>
+              <MenuItem value="Email Listerv">Email Listerv</MenuItem>
+              <MenuItem value="Friend">Friend</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} style={{ textAlign: isMobile ? 'center' : 'left' }}>

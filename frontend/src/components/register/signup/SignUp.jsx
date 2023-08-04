@@ -22,6 +22,10 @@ export default function SignUp(props) {
   const [grad, setGrad] = useState('');
   const [grad_month, setGrad_month] = useState('');
   const [grad_year, setGrad_year] = useState('');
+  const [first_hackathon, setFirst_hackathon] = useState('');
+  const [first_hophacks, setFirst_hophacks] = useState('');
+  const [learn_about_us, setLearn_about_us] = useState('');
+
   const [resumeFile, setResumeFile] = useState('');
   const [profileSubmitMsg, setProfileSubmitMsg] = useState('');
   const [resumeChecked, setResumeChecked] = useState(false);
@@ -144,6 +148,21 @@ export default function SignUp(props) {
       return;
     }
 
+    if (first_hackathon === 0) {
+      setProfileSubmitMsg('* Please select if this is your first hackathon.');
+      return;
+    }
+
+    if (first_hophacks === 0) {
+      setProfileSubmitMsg('* Please select if this is your first time at hophacks.');
+      return;
+    }
+
+    if (learn_about_us === 0) {
+      setProfileSubmitMsg('* Please select how you heard about us.');
+      return;
+    }
+
     if (!isValidPhoneNumber(phone_number)) {
       setProfileSubmitMsg('* Please enter a valid phone number.');
       return;
@@ -196,7 +215,10 @@ export default function SignUp(props) {
           is_jhu: school === 'Johns Hopkins University' ? true : false,
           grad_month: grad_month,
           grad_year: grad_year,
-          mlh_emails: communicationChecked
+          mlh_emails: communicationChecked,
+          first_hackathon: first_hackathon,
+          first_hophacks: first_hophacks,
+          learn_about_us: learn_about_us
         }
       })
     );
@@ -278,6 +300,9 @@ export default function SignUp(props) {
           setGrad={setGrad}
           setGrad_month={setGrad_month}
           setGrad_year={setGrad_year}
+          setFirst_hackathon={setFirst_hackathon}
+          setFirst_hophacks={setFirst_hophacks}
+          setLearn_about_us={setLearn_about_us}
           resumeFile={resumeFile}
           resumeChecked={resumeChecked}
           conductCodeChecked={conductCodeChecked}

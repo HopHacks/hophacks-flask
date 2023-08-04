@@ -125,6 +125,9 @@ def create():
                 "is_jhu": false,
                 "grad_month": "05",
                 "grad_year": "2022"
+                "first_hackathon": "yes"
+                "first_hophacks": "yes"
+                "learn_about_us": "friend"
             }
         }
 
@@ -175,7 +178,7 @@ def create():
 
             s3 = boto3.client('s3')
 
-            object_name = 'Fall-2022/{}-{}'.format(id, file_name)
+            object_name = 'Fall-2023/{}-{}'.format(id, file_name)
             s3.upload_fileobj(file, BUCKET, object_name)
 
             resume_link = file_name
@@ -259,6 +262,9 @@ def get_profile():
                 "is_jhu": false,
                 "grad_month": "05",
                 "grad_year": "2022"
+                "first_hackathon": "yes"
+                "first_hophacks": "yes"
+                "learn_about_us": "friend"
             }
         }
 
@@ -299,6 +305,9 @@ def update_profile():
                 "is_jhu": false,
                 "grad_month": "05",
                 "grad_year": "2022"
+                "first_hackathon": "yes"
+                "first_hophacks": "yes"
+                "learn_about_us": "friend"
             }
         }
 

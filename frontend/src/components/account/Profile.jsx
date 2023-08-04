@@ -26,6 +26,12 @@ const Profile = function Profile(props) {
   const [status, setStatus] = useState('Application not complete: confirm email');
   const [resumeFile, setResumeFile] = useState('');
   const [oldResumeName, setOldResumeName] = useState('');
+  const [oldVaccinationName, setOldVaccinationName] = useState('');
+  const [vaccinationFile, setVaccinationFile] = useState('');
+  const [vaccinationMsg, setVaccinationMsg] = useState(
+    'Acceptable format: *.pdf, *.png, *.jpeg, *.jpg, *.heic'
+  );
+
   //display database
   const [profile, setProfile] = useState([]);
   //edit
@@ -40,6 +46,9 @@ const Profile = function Profile(props) {
   const [grad, setGrad] = useState('');
   const [grad_month, setGrad_month] = useState('');
   const [grad_year, setGrad_year] = useState('');
+  const [first_hackathon, setFirst_hackathon] = useState('');
+  const [first_hophacks, setFirst_hophacks] = useState('');
+  const [learn_about_us, setLearn_about_us] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState('');
   const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
@@ -90,6 +99,44 @@ const Profile = function Profile(props) {
     window.open(url, '_blank');
   }
 
+  async function getVaccinationFileName() {
+    /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
+    if (!props.isLoggedIn) return;
+
+    try {
+      const response = await axios.get('/api/vaccination/filename');
+      setOldVaccinationName(response.data['filename']);
+    } catch (e) {
+      setOldVaccinationName('');
+    }
+  }
+
+  function handleVaccinationFileChange(e) {
+    setVaccinationFile(e.target.files[0]);
+  }
+
+  async function handleVaccinationSubmit(e) {
+    e.preventDefault();
+    const data = new FormData();
+    data.append('file', vaccinationFile);
+
+    try {
+      await axios.post('/api/vaccination/', data);
+      setVaccinationMsg('Vaccination card has been successfully uploaded');
+    } catch (e) {
+      setVaccinationMsg('Failed to upload vaccination card. Please try again.');
+    }
+    // TODO handle error!
+  }
+
+  async function handleVaccinationDownload(e) {
+    e.preventDefault();
+
+    const response = await axios.get('/api/vaccination/');
+    const url = response.data['url'];
+    window.open(url, '_blank');
+  }
+
   async function getProfile() {
     if (!props.isLoggedIn) return;
     const response = await axios.get('/api/accounts/profile/get');
@@ -106,6 +153,9 @@ const Profile = function Profile(props) {
     setGrad_month(response.data.profile.grad_month);
     setGrad_year(response.data.profile.grad_year);
     setAge(response.data.profile.age);
+    setFirst_hackathon(response.data.profile.first_hackathon);
+    setFirst_hophacks(response.data.profile.first_hophacks);
+    setLearn_about_us(response.data.profile.learn_about_us);
   }
 
   async function getStatus() {
@@ -132,6 +182,9 @@ const Profile = function Profile(props) {
     profile.grad_month = grad_month;
     profile.grad_year = grad_year;
     profile.age = age;
+    profile.first_hackathon = first_hackathon;
+    profile.first_hophacks = first_hophacks;
+    profile.learn_about_us = learn_about_us;
     try {
       await axios.post('/api/accounts/profile/update', {
         profile: profile
@@ -202,6 +255,7 @@ const Profile = function Profile(props) {
     getStatus();
     getProfile();
     getResumeFileName();
+    getVaccinationFileName();
     getEmailConfirmStatus();
   }, [props.isLoggedIn]);
 
@@ -327,6 +381,67 @@ const Profile = function Profile(props) {
                 </div>
                 <input type="submit" value="Submit" />
                 <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
+              </form>
+            </TableCell>
+          </TableRow>
+        </Table>
+      )}
+    </div>
+  );
+
+  const vaccination = (
+    <div>
+      <Typography class="section-header" gutterBottom>
+        Vaccination
+      </Typography>
+      <Typography color="textSecondary" style={{ fontSize: '15px' }}>
+        {
+          "In response to the current administrative policy, this year's participants are required to be fully vaccinated or follow the indoor mask policy. Please upload a picture of your vaccination card if you are fully vaccinated."
+        }
+      </Typography>
+      {isMobile ? (
+        <div className="table">
+          <text className="table-header">Current Vaccination Card:</text>
+          <Link class="table-body" onClick={handleVaccinationDownload} style={{ color: 'blue' }}>
+            {' ' + oldVaccinationName}
+          </Link>
+          <br />
+          <Grid container>
+            <Grid item>
+              <text className="table-header">Upload New Vaccination Card:</text>
+            </Grid>
+            <Grid item>
+              <form onSubmit={handleVaccinationSubmit}>
+                <div>
+                  <input type="file" name="file" onChange={handleVaccinationFileChange} />
+                </div>
+                <input type="submit" value="Submit" />
+                <Typography style={{ fontSize: '13px' }}> {vaccinationMsg} </Typography>
+              </form>
+            </Grid>
+          </Grid>
+        </div>
+      ) : (
+        <Table>
+          <TableHead>
+            <TableCell>Vaccination</TableCell>
+            <TableCell>Action</TableCell>
+            <TableCell>Upload Vaccination Card</TableCell>
+          </TableHead>
+          <TableRow>
+            <TableCell>{oldVaccinationName}</TableCell>
+            <TableCell>
+              <Link onClick={handleVaccinationDownload} style={{ fontSize: '15px', color: 'blue' }}>
+                Download
+              </Link>
+            </TableCell>
+            <TableCell>
+              <form onSubmit={handleVaccinationSubmit}>
+                <div>
+                  <input type="file" name="file" onChange={handleVaccinationFileChange} />
+                </div>
+                <input type="submit" value="Submit" />
+                <Typography style={{ fontSize: '13px' }}> {vaccinationMsg} </Typography>
               </form>
             </TableCell>
           </TableRow>
@@ -523,6 +638,71 @@ const Profile = function Profile(props) {
     </div>
   );
 
+  const first_hackathonForm = (
+    <form>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label">Is this your first Hackathon?</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={first_hackathon}
+          onChange={(e) => {
+            setFirst_hackathon(e.target.value);
+          }}
+        >
+          <MenuItem value="Yes">Yes</MenuItem>
+          <MenuItem value="No">No</MenuItem>
+        </Select>
+      </FormControl>
+    </form>
+  );
+
+  const first_hophacksForm = (
+    <form>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label">
+          Is this your first time attending HopHacks?
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={first_hophacks}
+          onChange={(e) => {
+            setFirst_hophacks(e.target.value);
+          }}
+        >
+          <MenuItem value="Yes">Yes</MenuItem>
+          <MenuItem value="No">No</MenuItem>
+        </Select>
+      </FormControl>
+    </form>
+  );
+
+  const learn_about_usForm = (
+    <form>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label"> How did you hear about us?</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={learn_about_us}
+          onChange={(e) => {
+            setLearn_about_us(e.target.value);
+          }}
+        >
+          <MenuItem value="Instagram">Instagram</MenuItem>
+          <MenuItem value="Facebook">Facebook</MenuItem>
+          <MenuItem value="Linkedin">Linkedin</MenuItem>
+          <MenuItem value="Google">Google</MenuItem>
+          <MenuItem value="Major League Hacking">Major League Hacking</MenuItem>
+          <MenuItem value="Email Listerv">Email Listerv</MenuItem>
+          <MenuItem value="Friend">Friend</MenuItem>
+          <MenuItem value="Other">Other</MenuItem>
+        </Select>
+      </FormControl>
+    </form>
+  );
+
   const ProfileCard = (
     <div>
       <Typography class="section-header" gutterBottom>
@@ -603,6 +783,27 @@ const Profile = function Profile(props) {
           primaryText={'Phone Number'}
           secondaryText={profile.phone_number}
         />
+        <FormDialog
+          title={'Is this your first time attending a hackathon?'}
+          form={first_hackathonForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Is this your first time attending a hackathon?'}
+          secondaryText={profile.first_hackathon}
+        />
+        <FormDialog
+          title={'Is this your first time attending Hophacks?'}
+          form={first_hophacksForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'Is this your first time attending Hophacks?'}
+          secondaryText={profile.first_hackathon}
+        />
+        <FormDialog
+          title={'How did you hear about us?'}
+          form={learn_about_usForm}
+          handleProfileSave={handleProfileSave}
+          primaryText={'How did you hear about us?'}
+          secondaryText={profile.learn_about_us}
+        />
       </List>
     </div>
   );
@@ -612,6 +813,9 @@ const Profile = function Profile(props) {
       <div className="section">{appStatus}</div>
       <div className="section" style={{ marginTop: '7%' }}>
         {resume}
+      </div>
+      <div className="section" style={{ marginTop: '7%' }}>
+        {vaccination}
       </div>
       <div className="section" style={{ marginTop: '7%' }}>
         {ProfileCard}
