@@ -121,7 +121,7 @@ const Profile = function Profile(props) {
     data.append('file', vaccinationFile);
 
     try {
-      const response = await axios.post('/api/vaccination/', data);
+      await axios.post('/api/vaccination/', data);
       setVaccinationMsg('Vaccination card has been successfully uploaded');
     } catch (e) {
       setVaccinationMsg('Failed to upload vaccination card. Please try again.');
@@ -395,9 +395,9 @@ const Profile = function Profile(props) {
         Vaccination
       </Typography>
       <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-        In response to the current administrative policy, this year's participants are required to
-        be fully vaccinated or follow the indoor mask policy. Please upload a picture of your
-        vaccination card if you are fully vaccinated.
+        {
+          "In response to the current administrative policy, this year's participants are required to be fully vaccinated or follow the indoor mask policy. Please upload a picture of your vaccination card if you are fully vaccinated."
+        }
       </Typography>
       {isMobile ? (
         <div className="table">
