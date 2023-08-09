@@ -163,7 +163,7 @@ def create():
     confirm_secret = send_confirmation_email(username, hashed, confirm_url, profile["first_name"])
 
     resume_link = ''
-
+    id = get_jwt_identity()
     if 'file' in request.files:
         
         file = request.files['file']
