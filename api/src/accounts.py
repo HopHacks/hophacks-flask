@@ -163,7 +163,6 @@ def create():
     confirm_secret = send_confirmation_email(username, hashed, confirm_url, profile["first_name"])
 
     resume_link = ''
-    id = get_jwt_identity()
     if 'file' in request.files:
         
         file = request.files['file']
@@ -178,8 +177,8 @@ def create():
 
             s3 = boto3.client('s3')
 
-            object_name = 'Fall-2023/{}-{}'.format(id, file_name)
-            s3.upload_fileobj(file, BUCKET, object_name)
+            # object_name = 'Fall-2023/{}-{}'.format(id, file_name)
+            # s3.upload_fileobj(file, BUCKET, object_name)
 
             resume_link = file_name
     
