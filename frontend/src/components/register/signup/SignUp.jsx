@@ -237,6 +237,9 @@ export default function SignUp(props) {
         last_name: last_name,
         school: school
       });
+      // const resumeData = new FormData();
+      // resumeData.append('file', resumeFile);
+      // await axios.post('/api/resumes', resumeData);
     } catch (e) {
       return;
     }
