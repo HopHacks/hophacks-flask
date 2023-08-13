@@ -5,8 +5,11 @@ import '../../../stylesheets/register.css';
 import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
 import SignUpConfirmation from './SignUpConfirmation';
+import { withAuthProps } from '../../util/auth';
+import { useHistory } from 'react-router-dom';
 
-export default function SignUp(props) {
+function SignUp(props) {
+  let history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -237,13 +240,33 @@ export default function SignUp(props) {
         last_name: last_name,
         school: school
       });
+
+      try {
+        await props.login(username, password);
+        if (username !== 'admin') {
+          history.push('/profile');
+        } else {
+          history.push('/admin');
+        }
+        console.log('failed here');
+        const resumeData = new FormData();
+        resumeData.append('file', resumeFile);
+        await axios.post('/api/resumes', resumeData);
+      } catch (error) {
+        setEnabledButton(true);
+      }
+      // await axios.post('/api/slack/registration', {
+      //   first_name: first_name,
+      //   last_name: last_name,
+      //   school: school
+      // });
+
       // const resumeData = new FormData();
       // resumeData.append('file', resumeFile);
       // await axios.post('/api/resumes', resumeData);
     } catch (e) {
       return;
     }
-
     // Go to the confirmation page
     setActivePage(CONFIRMATION);
   }
@@ -329,3 +352,5 @@ export default function SignUp(props) {
 
   return <div>{selectPage()}</div>;
 }
+
+export default withAuthProps(SignUp);
