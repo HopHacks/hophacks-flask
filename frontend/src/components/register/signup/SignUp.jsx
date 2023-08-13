@@ -6,6 +6,7 @@ import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../util/auth';
+import { useHistory } from 'react-router-dom';
 
 function SignUp(props) {
   let history = useHistory();
@@ -242,7 +243,7 @@ function SignUp(props) {
 
       try {
         await props.login(username, password);
-        if (email !== 'admin') {
+        if (username !== 'admin') {
           history.push('/profile');
         } else {
           history.push('/admin');
@@ -251,8 +252,7 @@ function SignUp(props) {
         const resumeData = new FormData();
         resumeData.append('file', resumeFile);
         await axios.post('/api/resumes', resumeData);
-
-      } catch(error) {
+      } catch (error) {
         setEnabledButton(true);
       }
       // await axios.post('/api/slack/registration', {
@@ -353,4 +353,4 @@ function SignUp(props) {
   return <div>{selectPage()}</div>;
 }
 
-export default withAuthProps(SignUp)
+export default withAuthProps(SignUp);
