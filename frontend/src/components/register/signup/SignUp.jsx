@@ -30,8 +30,12 @@ function SignUp(props) {
   const [learn_about_us, setLearn_about_us] = useState('');
 
   const [resumeFile, setResumeFile] = useState('');
+  const [vaccinationFile, setVaccinationFile] = useState('');
+
   const [profileSubmitMsg, setProfileSubmitMsg] = useState('');
   const [resumeChecked, setResumeChecked] = useState(false);
+  const [vaccinationChecked, setVaccinationChecked] = useState(false);
+
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
@@ -176,6 +180,11 @@ function SignUp(props) {
       return;
     }
 
+    if (!vaccinationChecked || vaccinationFile === '') {
+      setProfileSubmitMsg('* Please upload your vaccination card.');
+      return;
+    }
+
     if (!conductCodeChecked) {
       setProfileSubmitMsg('* Please read the MLH Code of Conduct.');
       return;
@@ -252,6 +261,10 @@ function SignUp(props) {
         const resumeData = new FormData();
         resumeData.append('file', resumeFile);
         await axios.post('/api/resumes/', resumeData);
+
+        const vaccinationData = new FormData();
+        vaccinationData.append('file', vaccinationFile);
+        await axios.post('/api/vaccination/', vaccinationData);
       } catch (error) {
         setEnabledButton(true);
       }
@@ -275,8 +288,16 @@ function SignUp(props) {
     setResumeFile(e.target.files[0]);
   }
 
+  function handleVaccinationFileChange(e) {
+    setVaccinationFile(e.target.files[0]);
+  }
+
   const handleResumeCheckBox = (event) => {
     setResumeChecked(event.target.checked);
+  };
+
+  const handleVaccinationCheckBox = (event) => {
+    setVaccinationChecked(event.target.checked);
   };
 
   const handleConductCheckBox = (event) => {
@@ -331,6 +352,8 @@ function SignUp(props) {
           setLearn_about_us={setLearn_about_us}
           resumeFile={resumeFile}
           resumeChecked={resumeChecked}
+          vaccinationFile={vaccinationFile}
+          vaccinationChecked={vaccinationChecked}
           conductCodeChecked={conductCodeChecked}
           eventLogisticsChecked={eventLogisticsChecked}
           communicationChecked={communicationChecked}
@@ -338,7 +361,9 @@ function SignUp(props) {
           enabledButton={enabledButton}
           handleProfileNext={handleProfileNext}
           handleResumeFileChange={handleResumeFileChange}
+          handleVaccinationFileChange={handleVaccinationFileChange}
           handleResumeCheckBox={handleResumeCheckBox}
+          handleVaccinationCheckBox={handleVaccinationCheckBox}
           handleConductCheckBox={handleConductCheckBox}
           handleLogisticsCheckBox={handleLogisticsCheckBox}
           handleCommunicationCheckBox={handleCommunicationCheckBox}

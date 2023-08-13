@@ -43,6 +43,8 @@ export default function SignUpProfile(props) {
 
   const resumeFile = props.resumeFile;
   const resumeChecked = props.resumeChecked;
+  const vaccinationFile = props.vaccinationFile;
+  const vaccinationChecked = props.vaccinationChecked;
   const conductCodeChecked = props.conductCodeChecked;
   const eventLogisticsChecked = props.eventLogisticsChecked;
   const communicationChecked = props.communicationChecked;
@@ -51,6 +53,8 @@ export default function SignUpProfile(props) {
 
   const handleProfileNext = props.handleProfileNext;
   const handleResumeFileChange = props.handleResumeFileChange;
+  const handleVaccinationCheckBox = props.handleVaccinationCheckBox;
+  const handleVaccinationFileChange = props.handleVaccinationFileChange;
   const handleResumeCheckBox = props.handleResumeCheckBox;
   const handleConductCheckBox = props.handleConductCheckBox;
   const handleLogisticsCheckBox = props.handleLogisticsCheckBox;
@@ -87,6 +91,30 @@ export default function SignUpProfile(props) {
               * I authorize HopHacks to send my resume to our event sponsors for recruiting
               purposes.
             </span>
+          </div>
+        }
+      />
+    </FormGroup>
+  );
+
+  const vaccination = (
+    <FormGroup style={{ display: 'initial' }}>
+      <FormControlLabel
+        style={{ display: 'table' }}
+        control={
+          <div style={{ display: 'table-cell' }}>
+            <Checkbox
+              checked={vaccinationChecked}
+              onChange={handleVaccinationCheckBox}
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+              color="white"
+              size="small"
+            />
+          </div>
+        }
+        label={
+          <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
+            <span>* I authorize HopHacks to verify my vaccination card for safety purposes.</span>
           </div>
         }
       />
@@ -397,7 +425,7 @@ export default function SignUpProfile(props) {
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
             <span style={{ color: '#ffffff', float: 'left' }}>
-              Is this your first time attending a hackathon?
+              Is this your first time attending a hackathon?*
             </span>
             <TextField
               required
@@ -420,7 +448,7 @@ export default function SignUpProfile(props) {
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
             <span style={{ color: '#ffffff', float: 'left' }}>
-              Is this your first time attending HopHacks?
+              Is this your first time attending HopHacks?*
             </span>
             <TextField
               required
@@ -442,7 +470,7 @@ export default function SignUpProfile(props) {
             </TextField>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <span style={{ color: '#ffffff', float: 'left' }}> How did you learn about us?</span>
+            <span style={{ color: '#ffffff', float: 'left' }}> How did you learn about us?*</span>
             <TextField
               required
               variant="standard"
@@ -489,8 +517,30 @@ export default function SignUpProfile(props) {
               )}
             </label>
           </Grid>
+          <Grid item xs={12} style={{ textAlign: isMobile ? 'center' : 'left' }}>
+            <label htmlFor="upload-vaccination">
+              <input
+                style={{ display: 'none' }}
+                accept=".pdf, .doc, .docx"
+                id="upload-vaccination"
+                type="file"
+                name="upload-vaccination"
+                onChange={handleVaccinationFileChange}
+              />
+              <Button variant="outlined" style={{ color: 'white' }} component="span">
+                Upload Vaccination Card*
+              </Button>
+              {isMobile ? <br /> : null}
+              {vaccinationFile !== undefined && (
+                <text style={{ marginLeft: isMobile ? '0rem' : '1rem', color: 'white' }}>
+                  {'Uploaded:' + vaccinationFile.name}
+                </text>
+              )}
+            </label>
+          </Grid>
           <Grid item xs={12}>
             {resume}
+            {vaccination}
             {codeOfConduct}
             {eventLogistics}
             {communication}
