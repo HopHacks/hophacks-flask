@@ -5,8 +5,8 @@ import '../../../stylesheets/register.css';
 import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
 import SignUpConfirmation from './SignUpConfirmation';
-import { withAuthProps } from '../../util/auth';
-import { useHistory } from 'react-router-dom';
+// import { withAuthProps } from '../../util/auth';
+// import { useHistory } from 'react-router-dom';
 
 export default function SignUp(props) {
   // let history = useHistory();
