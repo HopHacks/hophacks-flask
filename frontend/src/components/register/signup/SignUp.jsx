@@ -6,10 +6,10 @@ import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 function SignUp(props) {
-  let history = useHistory();
+  // let history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -243,11 +243,11 @@ function SignUp(props) {
 
       try {
         await props.login(username, password);
-        if (username !== 'admin') {
-          history.push('/profile');
-        } else {
-          history.push('/admin');
-        }
+        // if (username !== 'admin') {
+        //   history.push('/profile');
+        // } else {
+        //   history.push('/admin');
+        // }
         console.log('failed here');
         const resumeData = new FormData();
         resumeData.append('file', resumeFile);
