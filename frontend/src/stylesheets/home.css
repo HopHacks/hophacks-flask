@@ -326,6 +326,14 @@ canvas {
   overflow: hidden;
 }
 
+.tracks .bass {
+  position: absolute;
+  top: 1600px;
+  left: 0px;
+  width: 1200px;
+  overflow: hidden;
+}
+
 .patient-track {
   width: 50%;
   margin-left: auto;
@@ -336,6 +344,19 @@ canvas {
 .patient-track > .body {
   color: var(--lightpurple, #f7f3ff);
   text-align: right;
+  font: 200 20px/32px 'Raleway', sans-serif;
+}
+
+.jhuiaa-track {
+  width: 50%;
+  margin-right: auto;
+  margin-top: 350px;
+  text-align: left;
+}
+
+.jhuiaa-track > .body {
+  color: var(--lightpurple, #f7f3ff);
+  text-align: left;
   font: 200 20px/32px 'Raleway', sans-serif;
 }
 
@@ -355,12 +376,14 @@ canvas {
     width: 100%;
     text-align: center;
   }
-  .patient-track {
+  .patient-track,
+  .jhuiaa-track {
     width: 100%;
     text-align: center;
     margin-top: 150px;
   }
-  .patient-track > .body {
+  .patient-track > .body,
+  .jhuiaa-track > .body {
     width: 100%;
     text-align: center;
   }
@@ -368,6 +391,14 @@ canvas {
   .tracks .keyboard {
     position: absolute;
     top: 20rem;
+    left: 0px;
+    width: 100%;
+    rotate: 16deg;
+  }
+
+  .tracks .bass {
+    position: absolute;
+    top: 105rem;
     left: 0px;
     width: 100%;
     rotate: 16deg;
