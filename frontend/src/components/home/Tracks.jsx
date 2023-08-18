@@ -68,7 +68,7 @@ const Tracks = () => {
               autonomous systems into society.
               <br />
               <br />
-              The challenge prompt from IAA will be released soon!
+              The challenge prompt from IAA will be released when the hackathon starts!
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@ const Tracks = () => {
               <br />
               <br />
               BGB Group challenges hackers to bring their ideas to life using a challenge prompt
-              that will be released soon!
+              that will be released when the hackathon starts!
             </div>
           </div>
         </div>
