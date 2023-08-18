@@ -44,7 +44,7 @@ export default function Sponsors() {
   const classes = useStyles();
 
   return (
-    <Box marginTop={'20rem'} justifyContent="center" className="sponsor-container" id="sponsors">
+    <Box marginTop={'10rem'} justifyContent="center" className="sponsor-container" id="sponsors">
       <Box display="flex" className="sponsor-title">
         <div className={classes.title}>Sponsors</div>
         <div className={classes.contact}>
