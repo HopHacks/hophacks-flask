@@ -44,7 +44,7 @@ export default function Sponsors() {
   const classes = useStyles();
 
   return (
-    <Box marginTop={'20rem'} justifyContent="center" className="sponsor-container" id="sponsors">
+    <Box marginTop={'10rem'} justifyContent="center" className="sponsor-container" id="sponsors">
       <Box display="flex" className="sponsor-title">
         <div className={classes.title}>Sponsors</div>
         <div className={classes.contact}>
@@ -57,9 +57,9 @@ export default function Sponsors() {
       <div className="sponsor-row">
         <SponsorItem logo="it.png" size="sable" link="https://it.johnshopkins.edu/" />
         <SponsorItem
-          logo="bgb-white.png"
+          logo="bloomberg_hori.png"
           size="gold"
-          link="https://www.bgbgroup.com/"
+          link="https://www.bloomberg.com/company/"
           width="95%"
         />
         <SponsorItem
@@ -70,10 +70,16 @@ export default function Sponsors() {
       </div>
       <div className="sponsor-row">
         <SponsorItem logo="twilio.png" size="sable" link="https://www.twilio.com/en-us" />
+        <SponsorItem
+          logo="bgb-white.png"
+          size="gold"
+          link="https://www.bgbgroup.com/"
+          width="95%"
+        />
         <SponsorItem logo="scm.svg" size="sable" link="https://www.scm-lp.com/" />
-        <SponsorItem logo="cbid.png" size="lab" link="https://cbid.bme.jhu.edu/" />
       </div>
       <div className="sponsor-row">
+        <SponsorItem logo="cbid.png" size="lab" link="https://cbid.bme.jhu.edu/" />
         <SponsorItem logo="jhuiaa.webp" size="lab" link="https://iaa.jhu.edu/" />
         <SponsorItem
           logo="jhmi_tic.png"
@@ -82,17 +88,17 @@ export default function Sponsors() {
           width="70%"
         />
         <SponsorItem logo="jhucs.png" size="blue" link="https://www.cs.jhu.edu/" width="80%" />
-
-        <SponsorItem logo="jhume.jpg" size="blue" link="https://me.jhu.edu/" width="94%" />
       </div>
       <div className="sponsor-row">
+        <SponsorItem logo="jhume.jpg" size="blue" link="https://me.jhu.edu/" width="94%" />
+
         <SponsorItem logo="tunnel.svg" size="blue" link="https://tunnel.dev/" width="85%" />
         <SponsorItem logo="jhuapl.png" size="blue" link="https://www.jhuapl.edu/" width="120%" />
-
-        <SponsorItem logo="GCP.png" size="inkind" link="https://cloud.google.com" width="60%" />
-        <SponsorItem logo="wolfram.png" size="inkind" link="https://www.wolframalpha.com/" />
+        <SponsorItem logo="jhfcu.png" size="custom" link="https://www.jhfcu.org/" width="90%" />
       </div>
       <div className="sponsor-row">
+        <SponsorItem logo="GCP.png" size="inkind" link="https://cloud.google.com" width="60%" />
+        <SponsorItem logo="wolfram.png" size="inkind" link="https://www.wolframalpha.com/" />
         <SponsorItem
           logo="stickerMule.png"
           size="inkind"
@@ -105,6 +111,8 @@ export default function Sponsors() {
           width="40%"
         />
         <SponsorItem logo="verbwire.svg" size="inkind" link="https://www.verbwire.com/" />
+      </div>
+      <div className="sponsor-row">
         <SponsorItem logo="echo3D.webp" size="inkind" link="https://www.echo3d.com/" />
         <SponsorItem
           logo="ffu.png"

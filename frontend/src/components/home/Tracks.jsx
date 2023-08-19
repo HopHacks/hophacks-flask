@@ -54,6 +54,43 @@ const Tracks = () => {
           </div>
         </div>
         <img className="guitar" src={img('guitar.png')} />
+        <div className="jhuiaa-track">
+          <img
+            src={img('sponsor/png/jhuiaa.webp')}
+            style={{ width: '300px' }}
+            className="sponsor-img"
+          />
+          <div className="body">
+            <div>
+              <br />
+              JHU’s Institute for Assured Autonomy is a national center of excellence, ensuring the
+              safe, secure, reliable, and predictable integration of artificial intelligence and
+              autonomous systems into society.
+              <br />
+              <br />
+              The challenge prompt from IAA will be released when the hackathon starts!
+            </div>
+          </div>
+        </div>
+        <img className="bass" src={img('bass.png')} />
+        <div className="patient-track">
+          <img
+            src={img('sponsor/png/bgb-white.png')}
+            style={{ width: '300px' }}
+            className="sponsor-img"
+          />
+          <div className="body" style={{ textAlign: 'center' }}>
+            <div>
+              BGB Group is a healthcare communications agency partnering with biopharmaceutical
+              clients, creating opportunities to share compelling and credible stories of
+              transformative science.
+              <br />
+              <br />
+              BGB Group challenges hackers to bring their ideas to life using a challenge prompt
+              that will be released when the hackathon starts!
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
