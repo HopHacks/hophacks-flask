@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
 import '../../stylesheets/register.css';
+import axios from 'axios';
 
 export default function PasswordReset(props) {
   const isMobile = props.isMobile;
@@ -17,9 +18,7 @@ export default function PasswordReset(props) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  async function reset_password(event) {
-    event.preventDefault();
-
+  async function reset_password() {
     const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {
@@ -44,7 +43,6 @@ export default function PasswordReset(props) {
     } catch (e) {
       setMessage('Error requesting password reset');
     }
-    setAttempted(true);
   }
 
   const findPwdCardDesktop = (
@@ -99,16 +97,20 @@ export default function PasswordReset(props) {
             style: { color: '#ffffff' }
           }}
         />
+        <Typography class="card-text-red">{message}</Typography>
 
         <Button
           class="card-button"
           variant="contained"
           color="primary"
           size="large"
-          onClick={() => {}}
+          onClick={() => {
+            reset_password();
+          }}
         >
           Reset Password
         </Button>
+
         <Link to={'/register/login'}>
           <Typography class="card-text"> Back to Sign in? </Typography>
         </Link>
