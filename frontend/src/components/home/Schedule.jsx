@@ -84,6 +84,12 @@ export default function Schedule() {
       >
         All times in EDT (GMT-4)
       </Typography>
+      <Typography
+        className={classes.divFont}
+        style={{ color: 'rgba(255, 255, 255, 0.8)', fontWeight: 'bold', fontStyle: 'italic' }}
+      >
+        Workshop information coming soon!
+      </Typography>
 
       <TableContainer
         component={Paper}
@@ -226,14 +232,24 @@ export default function Schedule() {
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
+                  10:00 AM to 1:00 PM
+                </TableCell>
+                <TableCell className={classes.font}>Workshops</TableCell>
+                <TableCell align="left" className={classes.font}>
+                  {/* Hodson Hall (3rd floor lobby) */}
+                  TBD
+                </TableCell>
+              </TableRow>
+              {/* <TableRow className={classes.bodycolor}>
+                <TableCell width="20%" className={classes.font}>
                   10:00 AM - 11:00 AM
                 </TableCell>
                 <TableCell className={classes.font}>HopHacks Coding Interview Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   {/* Hodson 316 */}
-                  TBD
-                </TableCell>
-              </TableRow>
+              {/* TBD */}
+              {/* </TableCell> */}
+              {/* // </TableRow> */}
               {/* <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
                   11:00 AM - 11:45 AM
@@ -255,6 +271,16 @@ export default function Schedule() {
                   1:00 PM
                 </TableCell>
                 <TableCell className={classes.font}>Lunch</TableCell>
+                <TableCell align="left" className={classes.font}>
+                  {/* Hodson Hall (3rd floor lobby) */}
+                  TBD
+                </TableCell>
+              </TableRow>
+              <TableRow className={classes.bodycolor}>
+                <TableCell width="20%" className={classes.font}>
+                  2:00 PM to 6:00 PM
+                </TableCell>
+                <TableCell className={classes.font}>Workshops</TableCell>
                 <TableCell align="left" className={classes.font}>
                   {/* Hodson Hall (3rd floor lobby) */}
                   TBD
@@ -290,6 +316,16 @@ export default function Schedule() {
                   6:00 PM
                 </TableCell>
                 <TableCell className={classes.font}>Dinner</TableCell>
+                <TableCell align="left" className={classes.font}>
+                  {/* Hodson Hall (3rd floor lobby) */}
+                  TBD
+                </TableCell>
+              </TableRow>
+              <TableRow className={classes.bodycolor}>
+                <TableCell width="20%" className={classes.font}>
+                  7:00 PM to 9:00 PM
+                </TableCell>
+                <TableCell className={classes.font}>Workshops</TableCell>
                 <TableCell align="left" className={classes.font}>
                   {/* Hodson Hall (3rd floor lobby) */}
                   TBD
