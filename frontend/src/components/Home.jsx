@@ -3,7 +3,7 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Sponsors from './home/Sponsors';
-// import Schedule from './home/Schedule';
+import Schedule from './home/Schedule';
 import About from './home/About';
 import Faq from './home/Faq';
 import Cover from './home/Cover';
@@ -105,7 +105,7 @@ export default function Home() {
             <About />
             <AboutSeparation />
             <Prizes />
-            {/* <Schedule /> */}
+            <Schedule />
             <Tracks />
             <Sponsors />
             <Faq />
