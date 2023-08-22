@@ -87,14 +87,14 @@ export default function Sponsors() {
           link="https://www.hopkinsmedicine.org/technology_innovation/"
           width="70%"
         />
-        <SponsorItem logo="jhucs.png" size="blue" link="https://www.cs.jhu.edu/" width="80%" />
+        <SponsorItem logo="jhu_cs.png" size="blue" link="https://www.cs.jhu.edu/" width="120%" />
       </div>
       <div className="sponsor-row">
         <SponsorItem logo="jhume.jpg" size="blue" link="https://me.jhu.edu/" width="94%" />
 
         <SponsorItem logo="tunnel.svg" size="blue" link="https://tunnel.dev/" width="85%" />
         <SponsorItem logo="jhuapl.png" size="blue" link="https://www.jhuapl.edu/" width="120%" />
-        <SponsorItem logo="jhfcu.png" size="custom" link="https://www.jhfcu.org/" width="90%" />
+        <SponsorItem logo="jhfcu_2.png" size="custom" link="https://www.jhfcu.org/" width="95%" />
       </div>
       <div className="sponsor-row">
         <SponsorItem logo="GCP.png" size="inkind" link="https://cloud.google.com" width="60%" />
