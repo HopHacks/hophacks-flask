@@ -24,6 +24,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
+import { withAuthCheck } from '../../util/auth.jsx';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -269,7 +270,7 @@ const useStyles = makeStyles(() => ({
   })
 }));
 
-export default function TeamMatchingPage() {
+function TeamMatchingPage(props) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const classes = useStyles({ isMobile });
   const [teamTitle, setTeamTitle] = useState('');
@@ -363,7 +364,6 @@ export default function TeamMatchingPage() {
     };
 
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -414,217 +414,230 @@ export default function TeamMatchingPage() {
   return (
     <Box className={classes.container}>
       <Typography className={classes.title}>Find Your Team(mates)!</Typography>
-      <AppBar position="static" className={classes.appBar}>
-        {!isMobile && (
-          <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row' }}>
-            <TextField
-              className={classes.searchBar}
-              label="Search"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
-            />
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'flex-start',
-                alignItems: 'center', // align items in the center
-                flex: isMobile ? 'auto' : 1,
-                flexWrap: 'nowrap' // Add this property to prevent wrapping
-              }}
-            >
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>Sort</InputLabel>
-                <Select onChange={handleSortChange}>
-                  <MenuItem value="az">A-Z</MenuItem>
-                  <MenuItem value="za">Z-A</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>Status</InputLabel>
-                <Select onChange={handleFilterChange}>
-                  <MenuItem value="all">All</MenuItem>
-                  <MenuItem value="open">Open</MenuItem>
-                  <MenuItem value="closed">Closed</MenuItem>
-                </Select>
-              </FormControl>
-              <Button onClick={handleOpen} className={classes.postButton}>
-                Create Post
-              </Button>{' '}
-              {/* Add the button here */}
-            </div>
-          </Toolbar>
-        )}
-        {isMobile && (
-          <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row' }}>
-            <TextField
-              className={classes.searchBar}
-              label="Search"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
-            />
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'flex-start',
-                alignItems: 'center', // align items in the center
-                flex: isMobile ? 'auto' : 1,
-                flexWrap: 'nowrap' // Add this property to prevent wrapping
-              }}
-            >
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>Sort</InputLabel>
-                <Select onChange={handleSortChange}>
-                  <MenuItem value="az">A-Z</MenuItem>
-                  <MenuItem value="za">Z-A</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>Status</InputLabel>
-                <Select onChange={handleFilterChange}>
-                  <MenuItem value="all">All</MenuItem>
-                  <MenuItem value="open">Open</MenuItem>
-                  <MenuItem value="closed">Closed</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div style={{ marginTop: '20px' }}>
-              <Button onClick={handleOpen} className={classes.postButton}>
-                Create Post
-              </Button>
-            </div>
-          </Toolbar>
-        )}
-      </AppBar>
-
-      <Box className={classes.teamsContainer}>{teamRows}</Box>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          className: classes.dialogContainer
-        }}
-      >
-        <DialogTitle className={classes.dialogTitle}>Post Your Team Card</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Team Name"
-            type="text"
-            fullWidth
-            value={teamTitle}
-            onChange={(e) => setTeamTitle(e.target.value)}
-            InputProps={{
-              className: classes.dialogTextField
-            }}
-            InputLabelProps={{
-              className: classes.dialogInputLabel
-            }}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Team Introduction"
-            type="text"
-            fullWidth
-            value={teamIntro}
-            onChange={(e) => setTeamIntro(e.target.value)}
-            InputProps={{
-              className: classes.dialogTextField
-            }}
-            InputLabelProps={{
-              className: classes.dialogInputLabel
-            }}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Looking For"
-            type="text"
-            fullWidth
-            value={lookingFor}
-            onChange={(e) => setLookingFor(e.target.value)}
-            InputProps={{
-              className: classes.dialogTextField
-            }}
-            InputLabelProps={{
-              className: classes.dialogInputLabel
-            }}
-          />
-
-          {/* Tags Input */}
-          <div style={{ display: 'flex', alignItems: 'center', marginTop: '1em', width: '100%' }}>
-            <TextField
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-              onKeyDown={handleTagInputKeyDown}
-              className={classes.dialogTagInput}
-              placeholder="Enter a tag and press Enter"
-              InputProps={{
-                className: classes.dialogTextField
-              }}
-              InputLabelProps={{
-                className: classes.dialogInputLabel
-              }}
-              style={{ width: '90%', marginRight: '1%' }}
-            />
-            <IconButton size="small" className={classes.addTagButton} onClick={addTag}>
-              <AddIcon />
-            </IconButton>
-          </div>
-
-          {/* Display the tags */}
-          <div>
-            {tags.map((tag, index) => (
-              <span key={index} className={classes.tag}>
-                {tag}
-                <IconButton
-                  size="small"
-                  className={classes.tagCloseIcon}
-                  onClick={() => removeTag(index)}
+      {!props.isLoggedIn ? (
+        // All the components and layout for logged-in users
+        <>
+          <Typography className={classes.title}>Please login first</Typography>
+        </>
+      ) : (
+        <>
+          <AppBar position="static" className={classes.appBar}>
+            {!isMobile && (
+              <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+                <TextField
+                  className={classes.searchBar}
+                  label="Search"
+                  variant="outlined"
+                  fullWidth
+                  style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton>
+                          <SearchIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '100%',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center', // align items in the center
+                    flex: isMobile ? 'auto' : 1,
+                    flexWrap: 'nowrap' // Add this property to prevent wrapping
+                  }}
                 >
-                  <CloseIcon />
+                  <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel>Sort</InputLabel>
+                    <Select onChange={handleSortChange}>
+                      <MenuItem value="az">A-Z</MenuItem>
+                      <MenuItem value="za">Z-A</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel>Status</InputLabel>
+                    <Select onChange={handleFilterChange}>
+                      <MenuItem value="all">All</MenuItem>
+                      <MenuItem value="open">Open</MenuItem>
+                      <MenuItem value="closed">Closed</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <Button onClick={handleOpen} className={classes.postButton}>
+                    Create Post
+                  </Button>{' '}
+                  {/* Add the button here */}
+                </div>
+              </Toolbar>
+            )}
+            {isMobile && (
+              <Toolbar style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+                <TextField
+                  className={classes.searchBar}
+                  label="Search"
+                  variant="outlined"
+                  fullWidth
+                  style={{ marginBottom: isMobile ? '1em' : '0', flex: isMobile ? 'auto' : 2 }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton>
+                          <SearchIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '100%',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center', // align items in the center
+                    flex: isMobile ? 'auto' : 1,
+                    flexWrap: 'nowrap' // Add this property to prevent wrapping
+                  }}
+                >
+                  <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel>Sort</InputLabel>
+                    <Select onChange={handleSortChange}>
+                      <MenuItem value="az">A-Z</MenuItem>
+                      <MenuItem value="za">Z-A</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel>Status</InputLabel>
+                    <Select onChange={handleFilterChange}>
+                      <MenuItem value="all">All</MenuItem>
+                      <MenuItem value="open">Open</MenuItem>
+                      <MenuItem value="closed">Closed</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div style={{ marginTop: '20px' }}>
+                  <Button onClick={handleOpen} className={classes.postButton}>
+                    Create Post
+                  </Button>
+                </div>
+              </Toolbar>
+            )}
+          </AppBar>
+
+          <Box className={classes.teamsContainer}>{teamRows}</Box>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              className: classes.dialogContainer
+            }}
+          >
+            <DialogTitle className={classes.dialogTitle}>Post Your Team Card</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Team Name"
+                type="text"
+                fullWidth
+                value={teamTitle}
+                onChange={(e) => setTeamTitle(e.target.value)}
+                InputProps={{
+                  className: classes.dialogTextField
+                }}
+                InputLabelProps={{
+                  className: classes.dialogInputLabel
+                }}
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Team Introduction"
+                type="text"
+                fullWidth
+                value={teamIntro}
+                onChange={(e) => setTeamIntro(e.target.value)}
+                InputProps={{
+                  className: classes.dialogTextField
+                }}
+                InputLabelProps={{
+                  className: classes.dialogInputLabel
+                }}
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Looking For"
+                type="text"
+                fullWidth
+                value={lookingFor}
+                onChange={(e) => setLookingFor(e.target.value)}
+                InputProps={{
+                  className: classes.dialogTextField
+                }}
+                InputLabelProps={{
+                  className: classes.dialogInputLabel
+                }}
+              />
+
+              {/* Tags Input */}
+              <div
+                style={{ display: 'flex', alignItems: 'center', marginTop: '1em', width: '100%' }}
+              >
+                <TextField
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={handleTagInputKeyDown}
+                  className={classes.dialogTagInput}
+                  placeholder="Enter a tag and press Enter"
+                  InputProps={{
+                    className: classes.dialogTextField
+                  }}
+                  InputLabelProps={{
+                    className: classes.dialogInputLabel
+                  }}
+                  style={{ width: '90%', marginRight: '1%' }}
+                />
+                <IconButton size="small" className={classes.addTagButton} onClick={addTag}>
+                  <AddIcon />
                 </IconButton>
-              </span>
-            ))}
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} className={classes.cancelButton}>
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} className={classes.submitButton}>
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
+              </div>
+
+              {/* Display the tags */}
+              <div>
+                {tags.map((tag, index) => (
+                  <span key={index} className={classes.tag}>
+                    {tag}
+                    <IconButton
+                      size="small"
+                      className={classes.tagCloseIcon}
+                      onClick={() => removeTag(index)}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </span>
+                ))}
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} className={classes.cancelButton}>
+                Cancel
+              </Button>
+              <Button onClick={handleSubmit} className={classes.submitButton}>
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )}
     </Box>
   );
 }
+
+export default withAuthCheck(TeamMatchingPage);
