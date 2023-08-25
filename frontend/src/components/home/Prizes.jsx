@@ -15,17 +15,7 @@ const useStyles = makeStyles({
   },
   platform: {
     margin: 'auto',
-    width: '90%'
-  },
-  prizeStampDiv: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    margin: 'auto'
-  },
-  prizeStamp: {
-    width: '33.33%',
-    padding: '5px'
+    width: '70%'
   }
 });
 
@@ -37,16 +27,31 @@ export default function Prizes() {
   const classes = useStyles();
 
   return (
-    <Grid container spacing={2} alignItems="center" id="prizes">
-      <Typography className={classes.title} variant="h4" gutterBottom>
-        Prizes
-      </Typography>
-      <img src={img('prize2023Fall.PNG')} className={classes.platform} />
-      <div className={classes.prizeStampDiv}>
-        <img className={classes.prizeStamp} src={img('firstPlace.png')} />
-        <img className={classes.prizeStamp} src={img('secondPlace.png')} />
-        <img className={classes.prizeStamp} src={img('thirdPlace.png')} />
+    <>
+      <Grid container spacing={2} alignItems="center" id="prizes">
+        <Typography className={classes.title} variant="h3" gutterBottom>
+          Prizes
+        </Typography>
+        <div style={{ textAlign: 'center' }}>
+          <img src={img('prize2023Fall.PNG')} className={classes.platform} />
+        </div>
+        <div className="prizeStampDiv">
+          <img className="prizeStamp" src={img('1st.svg')} />
+          <img className="prizeStamp" src={img('2nd.svg')} />
+          <img className="prizeStamp" src={img('3rd.svg')} />
+        </div>
+      </Grid>
+      <div>
+        <div className="prizeTrackDiv">
+          <img className="prizeTrackStamp" src={img('ffuventure1st.svg')} />
+          <img className="prizeTrackStamp" src={img('ffuventure2nd.svg')} />
+          <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
+          <img className="prizeTrackStamp" src={img('pstcwinner.svg')} />
+          <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
+          <img className="prizeTrackStamp" src={img('ffudesign1st.svg')} />
+          <img className="prizeTrackStamp" src={img('ffudesign2nd.svg')} />
+        </div>
       </div>
-    </Grid>
+    </>
   );
 }
