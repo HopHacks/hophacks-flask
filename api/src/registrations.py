@@ -355,7 +355,7 @@ def rsvp_status():
 @jwt_required
 def rsvp_rsvp():
 
-    flash("We are no longer accepting RSVPs")
+    # flash("We are no longer accepting RSVPs")
     """As a user, RSVP for an event he/she was accepted to
 
     :reqheader Authorization: ``Bearer <JWT Token>``
@@ -373,7 +373,6 @@ def rsvp_rsvp():
     :status 500: Another unknown error
     """
 
-    """
 
 
 
@@ -404,8 +403,7 @@ def rsvp_rsvp():
         return jsonify({"msg": "no such event exists"}), 400
     else:
         return jsonify({"msg": "unknown error"}), 500 
-    """
-    return jsonify({"msg": "no more rsvps"} , 500)
+    # return jsonify({"msg": "no more rsvps"} , 500)
 
 
 @registrations_api.route('/rsvp/cancel', methods = ['POST'])
