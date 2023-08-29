@@ -200,7 +200,7 @@ export default function Schedule() {
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
-                <TableCell className={classes.font}>9:00 PM - 10:00 PM</TableCell>
+                <TableCell className={classes.font}>9:00 PM</TableCell>
                 <TableCell className={classes.font}>
                   Patient Safety Technology Challenge Workshop
                 </TableCell>
