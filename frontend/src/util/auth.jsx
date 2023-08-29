@@ -107,7 +107,7 @@ function withAuthCheck(WrappedComponent) {
         {props.isLoggedIn === null ? (
           <p>Checking login...</p>
         ) : props.isLoggedIn === false ? (
-          <Redirect to="/login" />
+          <Redirect to="/register/login" />
         ) : (
           <WrappedComponent {...props} />
         )}

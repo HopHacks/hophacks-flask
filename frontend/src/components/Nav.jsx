@@ -139,6 +139,16 @@ const Nav = function Nav(props) {
           Team
         </Typography>
       </Button>
+      <Button
+        component={Link}
+        onClick={() => (window.location = '/teamMatching')}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Team Match
+        </Typography>
+      </Button>
       {!props.isLoggedIn && (
         <Button
           onClick={() => {
