@@ -14,8 +14,8 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: '3rem',
-    margin: '2rem',
-    color: 'rgba(247, 243, 255, 1)'
+    color: 'rgba(247, 243, 255, 1)',
+    margin: '0 2rem'
   },
   contact: {
     fontFamily: 'Inter',
@@ -23,16 +23,16 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontSize: '1rem',
     margin: '0.5rem',
-    color: 'rgba(247, 243, 255, 1)'
+    color: '#F7F3FF'
   }
 });
 
-function SponsorItem({ size, children, link = '#sponsors' }) {
+function SponsorItem({ size, logo, width = '85%', link = '#sponsors' }) {
   return (
     <a style={{ display: 'table-cell', textDecoration: 'none' }} href={link}>
       <div className="sponsor-wrapper">
         <div className={`sponsor-foreground sponsor-${size} sponsor-children`}>
-          {children}
+          <img src={img(logo)} style={{ width }} className="sponsor-img" />
           <div className={`sponsor-background sponsor-${size}`}></div>
         </div>
       </div>
@@ -44,62 +44,82 @@ export default function Sponsors() {
   const classes = useStyles();
 
   return (
-    <Box
-      display="flex"
-      marginTop={'10rem'}
-      justifyContent="center"
-      className="sponsor-container"
-      id="sponsors"
-    >
-      <SponsorItem size="xl">
-        <div style={{ paddingTop: '15px' }}>
-          <div className={classes.title}>Sponsors</div>
-          <div className={classes.contact}>Interested in sponsoring us?</div>
-          <div className={classes.contact}>Email us at </div>
-          <div className={classes.contact}>
-            <a className={classes.contact} href={`mailto:hophacks.sponsors@gmail.com`}>
-              hophacks.sponsors@gmail.com
-            </a>
-          </div>
+    <Box marginTop={'10rem'} justifyContent="center" className="sponsor-container" id="sponsors">
+      <Box display="flex" className="sponsor-title">
+        <div className={classes.title}>Sponsors</div>
+        <div className={classes.contact}>
+          Interested in sponsoring us? Email us at
+          <a className={classes.contact} href={`mailto:hophacks.sponsors@gmail.com`}>
+            hophacks.sponsors@gmail.com
+          </a>
         </div>
-      </SponsorItem>
-      {/* <img
-        id="hop-logo"
-        src={`https://hophacks-website.s3.amazonaws.com/images/logo-artists.PNG`}
-        width="40%"
-      /> */}
-      <Box display="flex" flexDirection="column">
-        <Box display="flex" justifyContent="space-between" className="sponsor-container">
-          <SponsorItem size="large" link="https://it.johnshopkins.edu/">
-            <img src={img('it.png')} style={{ width: '280px' }} className="sponsor-img" />
-          </SponsorItem>
-          <SponsorItem size="large" link="https://www.patientsafetytech.com/">
-            <img
-              src={img('PaitentSafety.gif')}
-              style={{ width: '320px' }}
-              className="sponsor-img"
-            />
-          </SponsorItem>
-        </Box>
-        {/* <Box display="flex" justifyContent="space-between" className="medium-container">
-          <SponsorItem size="medium"></SponsorItem>
-          <SponsorItem size="medium"></SponsorItem>
-          <SponsorItem size="medium"></SponsorItem>
-        </Box> */}
-        <Box display="flex" className="medium-container">
-          <SponsorItem
-            size="small"
-            link="https://www.stickermule.com/uses/laptop-stickers?utm_source=referral_us&utm_medium=sponsorships_us&utm_campaign=hophacks2023"
-          >
-            <img src={img('stickerMule.png')} style={{ width: '130px' }} className="sponsor-img" />
-          </SponsorItem>
-          <SponsorItem size="small" link="https://www.echo3d.com/">
-            <img src={img('echo3D.webp')} style={{ width: '130px' }} className="sponsor-img" />
-          </SponsorItem>
-          {/* <SponsorItem size="small"></SponsorItem>
-          <SponsorItem size="small"></SponsorItem> */}
-        </Box>
       </Box>
+      <div className="sponsor-row">
+        <SponsorItem logo="it.png" size="sable" link="https://it.johnshopkins.edu/" />
+        <SponsorItem
+          logo="bloomberg_hori.png"
+          size="gold"
+          link="https://www.bloomberg.com/company/"
+          width="95%"
+        />
+        <SponsorItem
+          logo="PatientSafety.png"
+          size="sable"
+          link="https://www.patientsafetytech.com/"
+        />
+      </div>
+      <div className="sponsor-row">
+        <SponsorItem logo="twilio.png" size="sable" link="https://www.twilio.com/en-us" />
+        <SponsorItem
+          logo="bgb-white.png"
+          size="gold"
+          link="https://www.bgbgroup.com/"
+          width="95%"
+        />
+        <SponsorItem logo="scm.svg" size="sable" link="https://www.scm-lp.com/" />
+      </div>
+      <div className="sponsor-row">
+        <SponsorItem logo="cbid.png" size="lab" link="https://cbid.bme.jhu.edu/" />
+        <SponsorItem logo="jhuiaa.webp" size="lab" link="https://iaa.jhu.edu/" />
+        <SponsorItem
+          logo="jhmi_tic.png"
+          size="blue"
+          link="https://www.hopkinsmedicine.org/technology_innovation/"
+          width="70%"
+        />
+        <SponsorItem logo="jhu_cs.png" size="blue" link="https://www.cs.jhu.edu/" width="120%" />
+      </div>
+      <div className="sponsor-row">
+        <SponsorItem logo="jhume.jpg" size="blue" link="https://me.jhu.edu/" width="94%" />
+
+        <SponsorItem logo="tunnel.svg" size="blue" link="https://tunnel.dev/" width="85%" />
+        <SponsorItem logo="jhuapl.png" size="blue" link="https://www.jhuapl.edu/" width="120%" />
+        <SponsorItem logo="jhfcu_2.png" size="custom" link="https://www.jhfcu.org/" width="95%" />
+      </div>
+      <div className="sponsor-row">
+        <SponsorItem logo="GCP.png" size="inkind" link="https://cloud.google.com" width="60%" />
+        <SponsorItem logo="wolfram.png" size="inkind" link="https://www.wolframalpha.com/" />
+        <SponsorItem
+          logo="stickerMule.png"
+          size="inkind"
+          link="https://www.stickermule.com/uses/laptop-stickers?utm_source=referral_us&utm_medium=sponsorships_us&utm_campaign=hophacks2023"
+        />
+        <SponsorItem
+          logo="leading_learners.jpeg"
+          size="inkind"
+          link="https://www.leading-learners.com/"
+          width="40%"
+        />
+        <SponsorItem logo="verbwire.svg" size="inkind" link="https://www.verbwire.com/" />
+      </div>
+      <div className="sponsor-row">
+        <SponsorItem logo="echo3D.webp" size="inkind" link="https://www.echo3d.com/" />
+        <SponsorItem
+          logo="ffu.png"
+          size="inkind"
+          link="https://ventures.jhu.edu/programs-services/fastforward-u/"
+        />
+      </div>
     </Box>
   );
 }

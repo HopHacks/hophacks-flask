@@ -77,7 +77,7 @@ const Nav = function Nav(props) {
         </Typography>
       </Button>
 
-      {/* <Button
+      <Button
         component={Link}
         onClick={() => (window.location = '/#schedule')}
         color="inherit"
@@ -86,7 +86,7 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Schedule
         </Typography>
-      </Button> */}
+      </Button>
       <Button
         component={Link}
         onClick={() => (window.location = '/#prizes')}
@@ -95,6 +95,16 @@ const Nav = function Nav(props) {
       >
         <Typography variant="h5" className={classes.title}>
           Prizes
+        </Typography>
+      </Button>
+      <Button
+        component={Link}
+        onClick={() => (window.location = '/#tracks')}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Tracks
         </Typography>
       </Button>
       <Button

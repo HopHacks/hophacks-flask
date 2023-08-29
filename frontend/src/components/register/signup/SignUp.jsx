@@ -5,8 +5,11 @@ import '../../../stylesheets/register.css';
 import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
 import SignUpConfirmation from './SignUpConfirmation';
+import { withAuthProps } from '../../../util/auth';
+// import { useHistory } from 'react-router-dom';
 
-export default function SignUp(props) {
+function SignUp(props) {
+  // let history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -22,9 +25,17 @@ export default function SignUp(props) {
   const [grad, setGrad] = useState('');
   const [grad_month, setGrad_month] = useState('');
   const [grad_year, setGrad_year] = useState('');
+  const [first_hackathon, setFirst_hackathon] = useState('');
+  const [first_hophacks, setFirst_hophacks] = useState('');
+  const [learn_about_us, setLearn_about_us] = useState('');
+
   const [resumeFile, setResumeFile] = useState('');
+  const [vaccinationFile, setVaccinationFile] = useState('');
+
   const [profileSubmitMsg, setProfileSubmitMsg] = useState('');
   const [resumeChecked, setResumeChecked] = useState(false);
+  const [vaccinationChecked, setVaccinationChecked] = useState(false);
+
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
@@ -77,27 +88,85 @@ export default function SignUp(props) {
   }
 
   // functions for profile page
-  function isEmpty() {
-    return (
-      username.length === 0 ||
-      password.length === 0 ||
-      first_name.length === 0 ||
-      last_name.length === 0 ||
-      gender.length === 0 ||
-      major.length === 0 ||
-      school.length === 0 ||
-      ethnicity.length === 0 ||
-      phone_number === undefined ||
-      phone_number.length === 0 ||
-      grad.length === 0 ||
-      grad_month === 0 ||
-      grad_year === 0
-    );
-  }
+  // function isEmpty() {
+  //   return (
+  //     username.length === 0 ||
+  //     password.length === 0 ||
+  //     first_name.length === 0 ||
+  //     last_name.length === 0 ||
+  //     gender.length === 0 ||
+  //     major.length === 0 ||
+  //     school.length === 0 ||
+  //     ethnicity.length === 0 ||
+  //     phone_number === undefined ||
+  //     phone_number.length === 0 ||
+  //     grad.length === 0 ||
+  //     grad_month === 0 ||
+  //     grad_year === 0
+  //   );
+  // }
 
   async function handleProfileNext() {
-    if (isEmpty()) {
-      setProfileSubmitMsg('* Required field cannot be empty.');
+    if (username.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid username.');
+      return;
+    }
+    if (password.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid password.');
+      return;
+    }
+    if (first_name.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid first name.');
+      return;
+    }
+    if (last_name.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid last name.');
+      return;
+    }
+    if (gender.length === 0) {
+      setProfileSubmitMsg('* Please select a gender.');
+      return;
+    }
+    if (major.length === 0) {
+      setProfileSubmitMsg('* Please select a major.');
+    }
+    if (school.length === 0) {
+      setProfileSubmitMsg('* Please select a school.');
+      return;
+    }
+    if (ethnicity.length === 0) {
+      setProfileSubmitMsg('* Please select an ethnicity.');
+      return;
+    }
+    if (phone_number === undefined || phone_number.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid phone number.');
+      return;
+    }
+    if (grad.length === 0) {
+      setProfileSubmitMsg('* Please select a valid graduation program.');
+      return;
+    }
+    if (grad_month.length === 0) {
+      setProfileSubmitMsg('* Please select a valid graduation month.');
+      return;
+    }
+    if (grad_year.length === 0) {
+      setProfileSubmitMsg('* Please select a valid graduation year.');
+      return;
+    }
+
+    if (first_hackathon === 0) {
+      setProfileSubmitMsg('* Please select if this is your first hackathon.');
+      return;
+    }
+
+    if (first_hophacks === 0) {
+      setProfileSubmitMsg('* Please select if this is your first time at hophacks.');
+      return;
+    }
+
+    if (learn_about_us === 0) {
+      setProfileSubmitMsg('* Please select how you heard about us.');
       return;
     }
 
@@ -108,6 +177,11 @@ export default function SignUp(props) {
 
     if (!resumeChecked || resumeFile === '') {
       setProfileSubmitMsg('* Please upload your resume.');
+      return;
+    }
+
+    if (!vaccinationChecked || vaccinationFile === '') {
+      setProfileSubmitMsg('* Please upload your vaccination card.');
       return;
     }
 
@@ -153,7 +227,10 @@ export default function SignUp(props) {
           is_jhu: school === 'Johns Hopkins University' ? true : false,
           grad_month: grad_month,
           grad_year: grad_year,
-          mlh_emails: communicationChecked
+          mlh_emails: communicationChecked,
+          first_hackathon: first_hackathon,
+          first_hophacks: first_hophacks,
+          learn_about_us: learn_about_us
         }
       })
     );
@@ -172,10 +249,37 @@ export default function SignUp(props) {
         last_name: last_name,
         school: school
       });
+
+      try {
+        await props.login(username, password);
+        // if (username !== 'admin') {
+        //   history.push('/profile');
+        // } else {
+        //   history.push('/admin');
+        // }
+        console.log('failed here');
+        const resumeData = new FormData();
+        resumeData.append('file', resumeFile);
+        await axios.post('/api/resumes/', resumeData);
+
+        const vaccinationData = new FormData();
+        vaccinationData.append('file', vaccinationFile);
+        await axios.post('/api/vaccination/', vaccinationData);
+      } catch (error) {
+        setEnabledButton(true);
+      }
+      // await axios.post('/api/slack/registration', {
+      //   first_name: first_name,
+      //   last_name: last_name,
+      //   school: school
+      // });
+
+      // const resumeData = new FormData();
+      // resumeData.append('file', resumeFile);
+      // await axios.post('/api/resumes', resumeData);
     } catch (e) {
       return;
     }
-
     // Go to the confirmation page
     setActivePage(CONFIRMATION);
   }
@@ -184,8 +288,16 @@ export default function SignUp(props) {
     setResumeFile(e.target.files[0]);
   }
 
+  function handleVaccinationFileChange(e) {
+    setVaccinationFile(e.target.files[0]);
+  }
+
   const handleResumeCheckBox = (event) => {
     setResumeChecked(event.target.checked);
+  };
+
+  const handleVaccinationCheckBox = (event) => {
+    setVaccinationChecked(event.target.checked);
   };
 
   const handleConductCheckBox = (event) => {
@@ -235,8 +347,13 @@ export default function SignUp(props) {
           setGrad={setGrad}
           setGrad_month={setGrad_month}
           setGrad_year={setGrad_year}
+          setFirst_hackathon={setFirst_hackathon}
+          setFirst_hophacks={setFirst_hophacks}
+          setLearn_about_us={setLearn_about_us}
           resumeFile={resumeFile}
           resumeChecked={resumeChecked}
+          vaccinationFile={vaccinationFile}
+          vaccinationChecked={vaccinationChecked}
           conductCodeChecked={conductCodeChecked}
           eventLogisticsChecked={eventLogisticsChecked}
           communicationChecked={communicationChecked}
@@ -244,7 +361,9 @@ export default function SignUp(props) {
           enabledButton={enabledButton}
           handleProfileNext={handleProfileNext}
           handleResumeFileChange={handleResumeFileChange}
+          handleVaccinationFileChange={handleVaccinationFileChange}
           handleResumeCheckBox={handleResumeCheckBox}
+          handleVaccinationCheckBox={handleVaccinationCheckBox}
           handleConductCheckBox={handleConductCheckBox}
           handleLogisticsCheckBox={handleLogisticsCheckBox}
           handleCommunicationCheckBox={handleCommunicationCheckBox}
@@ -258,3 +377,5 @@ export default function SignUp(props) {
 
   return <div>{selectPage()}</div>;
 }
+
+export default withAuthProps(SignUp);

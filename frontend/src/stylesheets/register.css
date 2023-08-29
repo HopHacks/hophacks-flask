@@ -120,6 +120,16 @@ body {
   margin-top: 7%;
 }
 
+.returnToLoginButtonText {
+  font-family: proxima-nova, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.3rem;
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+}
+
 .mobile-motto-subtext {
   font-family: proxima-nova, sans-serif;
   font-weight: 700;

@@ -50,7 +50,7 @@ def get_resume():
         return jsonify({'msg': 'no resume uploaded!'}, 404)
 
     s3 = boto3.client('s3')
-    object_name = 'Fall-2022/{}-{}'.format(id, user['resume'])
+    object_name = 'Fall-2023/{}-{}'.format(id, user['resume'])
 
     url = s3.generate_presigned_url('get_object',
                                      Params={'Bucket': 'hophacks-resume', 'Key': object_name},
@@ -71,7 +71,7 @@ def get_vac():
         return jsonify({'msg': 'no vaccination card uploaded!'}, 404)
 
     s3 = boto3.client('s3')
-    object_name = 'Fall-2022/{}-{}'.format(id, user['vaccination'])
+    object_name = 'Fall-2023/{}-{}'.format(id, user['vaccination'])
 
     url = s3.generate_presigned_url('get_object',
                                      Params={'Bucket': 'hophacks-vaccinations', 'Key': object_name},

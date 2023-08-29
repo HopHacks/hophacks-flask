@@ -3,7 +3,7 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Sponsors from './home/Sponsors';
-// import Schedule from './home/Schedule';
+import Schedule from './home/Schedule';
 import About from './home/About';
 import Faq from './home/Faq';
 import Cover from './home/Cover';
@@ -13,6 +13,7 @@ import Footer from './Footer';
 import AboutSeparation from './home/AboutSeparation';
 import RandomSpace from './home/RandomSpace';
 import Prizes from './home/Prizes';
+import Tracks from './home/Tracks';
 // import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 // import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 const useStyles = makeStyles({
@@ -104,7 +105,8 @@ export default function Home() {
             <About />
             <AboutSeparation />
             <Prizes />
-            {/* <Schedule /> */}
+            <Schedule />
+            <Tracks />
             <Sponsors />
             <Faq />
           </Container>
