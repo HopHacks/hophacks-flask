@@ -57,10 +57,10 @@ export default function Sponsors() {
       <div className="sponsor-row">
         <SponsorItem logo="it.png" size="sable" link="https://it.johnshopkins.edu/" />
         <SponsorItem
-          logo="bloomberg_hori.png"
+          logo="bloomberg23.png"
           size="gold"
           link="https://www.bloomberg.com/company/"
-          width="95%"
+          width="85%"
         />
         <SponsorItem
           logo="PatientSafety.png"
