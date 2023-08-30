@@ -269,7 +269,9 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   12:00 PM
                 </TableCell>
-                <TableCell className={classes.font}>Bloomberg Workshop</TableCell>
+                <TableCell className={classes.font}>
+                  Bloomberg Technical Interview Workshop
+                </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
