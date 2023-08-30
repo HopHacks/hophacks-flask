@@ -377,13 +377,6 @@ export default function Schedule() {
                   Hodson 110
                 </TableCell>
               </TableRow>
-              {/* {/* <TableRow className={classes.font}>
-                <TableCell className={classes.font}>11:30 PM</TableCell>
-                <TableCell className={classes.font}>Midnight Pizza</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
-                </TableCell>
-              </TableRow>   */}
             </TableBody>
           )}
 
