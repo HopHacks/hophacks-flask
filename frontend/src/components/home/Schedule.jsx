@@ -327,7 +327,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Resume Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 313
+                  Hodson 316
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -336,7 +336,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Mock Interview Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 316
+                  Hodson 313
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
