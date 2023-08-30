@@ -316,7 +316,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   3:00 PM
                 </TableCell>
-                <TableCell className={classes.font}>LDL HopHacks on a Resume</TableCell>
+                <TableCell className={classes.font}>LDL HopHacks on a Resume Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 313
                 </TableCell>
@@ -334,7 +334,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   5:00 PM
                 </TableCell>
-                <TableCell className={classes.font}>Mock Interview Workshop</TableCell>
+                <TableCell className={classes.font}>HopHacks Mock Interview Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 313
                 </TableCell>
