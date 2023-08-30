@@ -267,6 +267,15 @@ export default function Schedule() {
               </TableRow> */}
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
+                  12:00 PM
+                </TableCell>
+                <TableCell className={classes.font}>Bloomberg Workshop</TableCell>
+                <TableCell align="left" className={classes.font}>
+                  Hodson 316
+                </TableCell>
+              </TableRow>
+              <TableRow className={classes.bodycolor}>
+                <TableCell width="20%" className={classes.font}>
                   1:00 PM
                 </TableCell>
                 <TableCell className={classes.font}>Lunch</TableCell>
@@ -285,16 +294,7 @@ export default function Schedule() {
                   TBD
                 </TableCell>
               </TableRow>
-              {/* <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  2:00 PM - 3:30 PM
-                </TableCell>
-                <TableCell className={classes.font}>Bloomberg Workshop</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 316
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
+              {/*<TableRow className={classes.font}>
                 <TableCell className={classes.font}>3:30 PM - 4:15 PM</TableCell>
                 <TableCell className={classes.font}>Quest2Learn Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
