@@ -119,6 +119,12 @@ export default function Sponsors() {
           size="inkind"
           link="https://ventures.jhu.edu/programs-services/fastforward-u/"
         />
+        <SponsorItem
+          logo="nord-security.png"
+          size="inkind"
+          link="https://ventures.jhu.edu/programs-services/fastforward-u/"
+          width="100%"
+        />
       </div>
     </Box>
   );
