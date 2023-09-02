@@ -91,6 +91,26 @@ const Tracks = () => {
             </div>
           </div>
         </div>
+        <img className="guitar-2" src={img('guitar.png')} />
+        <div className="jhuiaa-track">
+          <img
+            src={img('sponsor/png/cbid_track.png')}
+            style={{ width: '300px' }}
+            className="sponsor-img"
+          />
+          <div className="body">
+            <div>
+              <br />
+              The Johns Hopkins Center for Bioengineering Innovation & Design aims to create and
+              develop solutions for major challenges to human health, focusing on translational
+              engineering in healthcare tech.
+              <br />
+              <br />
+              CBID will challenge participants to follow a project prompt that will be released
+              soon!
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

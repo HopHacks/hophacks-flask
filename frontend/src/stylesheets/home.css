@@ -399,6 +399,9 @@ canvas {
   padding: 5px;
   visibility: hidden;
 }
+.tracks .guitar-2 {
+  display: none;
+}
 @media (max-width: 1200px) {
   .prizeTrackDiv,
   .prizeStampDiv {
@@ -455,5 +458,14 @@ canvas {
     top: 1100px;
     width: 100%;
     rotate: -14deg;
+  }
+
+  .tracks .guitar-2 {
+    position: absolute;
+    right: -10px;
+    top: 2270px;
+    width: 100%;
+    rotate: -14deg;
+    display: block;
   }
 }
