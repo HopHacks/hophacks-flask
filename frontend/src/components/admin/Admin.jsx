@@ -49,6 +49,7 @@ const Admin = function () {
   const [alphaOrder, setAlphaOrder] = useState('No');
   useEffect(() => {
     getUsers();
+    //performFiltering();
   }, []);
 
   async function handleResumeDownload(userid) {
@@ -79,7 +80,8 @@ const Admin = function () {
   async function getUsers() {
     const response = await axios.get('/api/admin/users' + '?query=');
     setAllUsers(response.data.users);
-    setusers(response.data.users);
+    setusers(performFiltering2(response.data.users));
+    //setusers(response.data.users);
   }
 
   // async function sendAllRsvpEmails(){
@@ -149,6 +151,29 @@ const Admin = function () {
           user.profile.first_name.includes(query)
         );
         setusers(searchedusers);
+      }
+    }
+  }
+
+  function performFiltering2(allUsersInput) {
+    if (alphaOrder == 'Yes') {
+      const sortedUsers = [...allUsersInput].sort((a, b) =>
+        a.profile.first_name.localeCompare(b.profile.first_name)
+      );
+      if (query == '') {
+        return sortedUsers.filter((user) => filterUser(user));
+      } else {
+        const searchedusers = sortedUsers.filter((user) => user.profile.first_name.includes(query));
+        return searchedusers;
+      }
+    } else {
+      if (query == '') {
+        return [...allUsersInput].filter((user) => filterUser(user));
+      } else {
+        const searchedusers = [...allUsers].filter((user) =>
+          user.profile.first_name.includes(query)
+        );
+        return searchedusers;
       }
     }
   }
@@ -266,12 +291,13 @@ const Admin = function () {
         }}
       >
         <MenuItem value="All">All</MenuItem>
+        <MenuItem value="applied">Applied</MenuItem>
+        <MenuItem value="accepted">Accepted</MenuItem>
         <MenuItem value="not">Not checked in</MenuItem>
         <MenuItem value="checked_in">Checked in</MenuItem>
         <MenuItem value="email not confirmed">Email not Confirmed</MenuItem>
         <MenuItem value="rsvped">Rsvped</MenuItem>
         <MenuItem value="rejected">Rejected</MenuItem>
-        <MenuItem value="accepted">Accepted</MenuItem>
       </Select>
     </FormControl>
   );
