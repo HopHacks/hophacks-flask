@@ -60,7 +60,7 @@ const Admin = function () {
   async function handleRSVPResumeDownload() {
     users.forEach(async (user) => {
       if (user.email_confirmed && user.registrations[0].status == 'rsvped') {
-        await axios.get('/api/admin/resume?id=' + user.id);
+        const response = await axios.get('/api/admin/resume?id=' + user.id);
         const url = response.data['url'];
         window.open(url, '_blank');
       }
