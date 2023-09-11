@@ -29,7 +29,12 @@ const useStyles = makeStyles({
 
 function SponsorItem({ size, logo, width = '85%', link = '#sponsors' }) {
   return (
-    <a style={{ display: 'table-cell', textDecoration: 'none' }} href={link}>
+    <a
+      style={{ display: 'table-cell', textDecoration: 'none' }}
+      href={link}
+      target={'_blank'}
+      rel={'noreferrer'}
+    >
       <div className="sponsor-wrapper">
         <div className={`sponsor-foreground sponsor-${size} sponsor-children`}>
           <img src={img(logo)} style={{ width }} className="sponsor-img" />
@@ -122,7 +127,7 @@ export default function Sponsors() {
         <SponsorItem
           logo="nord-security.png"
           size="inkind"
-          link="https://ventures.jhu.edu/programs-services/fastforward-u/"
+          link="https://nordsecurity.com/"
           width="100%"
         />
       </div>
