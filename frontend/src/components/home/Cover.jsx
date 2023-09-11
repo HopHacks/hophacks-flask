@@ -100,10 +100,10 @@ export default function Cover() {
       </div>
     );
   } else if (window.innerWidth <= 920) {
-    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.7423]);
+    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.85]);
     const registerScale = useTransform(scrollYProgress, [0, 0.08], [0.3, 0.3]);
 
-    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1.3]);
+    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1.455]);
 
     // const registerScale = useTransform(
     //   scrollYProgress,
@@ -118,8 +118,8 @@ export default function Cover() {
       [0, 0.08, 0.082, 0.16, 0.3],
       [0, 0, 1, 1, 0]
     );
-    const yRight = useTransform(scrollYProgress, [0, 0.08], ['16vw', '83vw']);
-    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['94vw', '94vw']);
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['16vw', '185vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['195vw', '195vw']);
     //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
 
     // const registerYRight = useTransform(
@@ -214,10 +214,10 @@ export default function Cover() {
       </div>
     );
   } else if (window.innerWidth <= 1000) {
-    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.571]);
+    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.75]);
     const registerScale = useTransform(scrollYProgress, [0, 0.08], [0.3, 0.3]);
 
-    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1]);
+    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1.291]);
 
     // const registerScale = useTransform(
     //   scrollYProgress,
@@ -232,8 +232,8 @@ export default function Cover() {
       [0, 0.08, 0.082, 0.16, 0.3],
       [0, 0, 1, 1, 0]
     );
-    const yRight = useTransform(scrollYProgress, [0, 0.08], ['14vw', '73vw']);
-    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['84vw', '84vw']);
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['14vw', '170vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['180vw', '180vw']);
     //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
 
     // const registerYRight = useTransform(
@@ -328,10 +328,10 @@ export default function Cover() {
       </div>
     );
   } else if (window.innerWidth <= 1090) {
-    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.571]);
+    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.7]);
     const registerScale = useTransform(scrollYProgress, [0, 0.08], [0.3, 0.3]);
 
-    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1]);
+    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1.21]);
 
     // const registerScale = useTransform(
     //   scrollYProgress,
@@ -346,8 +346,8 @@ export default function Cover() {
       [0, 0.08, 0.082, 0.16, 0.3],
       [0, 0, 1, 1, 0]
     );
-    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '70vw']);
-    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['81vw', '81vw']);
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '155vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['165vw', '165vw']);
 
     //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
 
@@ -461,9 +461,116 @@ export default function Cover() {
       [0, 0.08, 0.082, 0.16, 0.3],
       [0, 0, 1, 1, 0]
     );
-    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '65vw']);
-    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['75vw', '75vw']);
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '139vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['150vw', '150vw']);
 
+    return (
+      <div>
+        <div>
+          <motion.div
+            style={{
+              scale: backgroundScale,
+              opacity: opacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('zoomedouteverything0614.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale,
+              opacity: backGroundOpacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('zoomedineverything0614.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.imagesNew}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale: backgroundScale,
+              opacity: opacity,
+              y: yRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('foreground-2.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+            />
+          </motion.div>
+          <motion.div
+            style={{
+              scale: registerScale,
+              opacity: registerOpacity,
+              y: registerYRight,
+              x: 0
+            }}
+          >
+            <img
+              src={img('register_button_alone.png')}
+              //style={{ top: center(scale.current) }}
+              className={classes.images}
+              alt="image_could_not_load"
+              onClick={() => {
+                window.location = '/register/login';
+              }}
+            />
+          </motion.div>
+          {/* <img
+                src={img('register.png')}
+                //style={{ top: center(scale.current) }}
+                className={classes.images}
+                alt="image_could_not_load"
+                onClick={() => {
+                  window.location = '/register/login';
+                }}
+              /> */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          ></div>
+        </div>
+      </div>
+    );
+  } else if (window.innerWidth < 1320) {
+    const scale = useTransform(scrollYProgress, [0, 0.08], [1.7, 0.571]);
+    const registerScale = useTransform(scrollYProgress, [0, 0.08], [0.3, 0.3]);
+
+    const backgroundScale = useTransform(scrollYProgress, [0, 0.08], [2.841, 1]);
+
+    // const registerScale = useTransform(
+    //   scrollYProgress,
+    //   [0, 0.02, 0.04, 0.08],
+    //   [0.13, 0.2, 0.24, 0.5]
+    // );
+    const opacity = useTransform(scrollYProgress, [0, 0.08, 0.16, 0.3], [1, 1, 1, 0]);
+    const backGroundOpacity = useTransform(scrollYProgress, [0, 0.04, 0.041, 0.3], [1, 1, 0, 0]);
+
+    const registerOpacity = useTransform(
+      scrollYProgress,
+      [0, 0.08, 0.082, 0.16, 0.3],
+      [0, 0, 1, 1, 0]
+    );
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '93vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['103vw', '103vw']);
+    //const pos = useTransform(scrollYProgress, [0, 0.08, 0.16], ['fixed', 'fixed', 'absolute']);
     //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
 
     // const registerYRight = useTransform(
@@ -576,8 +683,8 @@ export default function Cover() {
       [0, 0.08, 0.082, 0.16, 0.3],
       [0, 0, 1, 1, 0]
     );
-    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '58vw']);
-    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['69vw', '69vw']);
+    const yRight = useTransform(scrollYProgress, [0, 0.08], ['11vw', '86vw']);
+    const registerYRight = useTransform(scrollYProgress, [0, 0.08], ['97vw', '97vw']);
     //const pos = useTransform(scrollYProgress, [0, 0.08, 0.16], ['fixed', 'fixed', 'absolute']);
     //const backgroundYRight = useTransform(scrollYProgress, [0.04, 0.08], ['10vw', '40vw']);
 
