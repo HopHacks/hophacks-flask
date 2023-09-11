@@ -59,7 +59,10 @@ const Admin = function () {
 
   async function handleRSVPAndAcceptedResumeDownload() {
     users.forEach(async (user) => {
-      if (user.email_confirmed && ( user.registrations[0].status == 'rsvped' || user.registrations[0].status == 'accepted')) {
+      if (
+        user.email_confirmed &&
+        (user.registrations[0].status == 'rsvped' || user.registrations[0].status == 'accepted')
+      ) {
         const response = await axios.get('/api/admin/resume?id=' + user.id);
         const url = response.data['url'];
         window.open(url, '_blank');
@@ -341,7 +344,9 @@ const Admin = function () {
       </> */}
         {
           <>
-            <button onClick={() => handleRSVPAndAcceptedResumeDownload()}>Download Accepted and RSVP resumes</button>
+            <button onClick={() => handleRSVPAndAcceptedResumeDownload()}>
+              Download Accepted and RSVP resumes
+            </button>
           </>
         }
         Number of users: {users.length}
