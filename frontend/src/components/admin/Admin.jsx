@@ -343,6 +343,7 @@ const Admin = function () {
             <button onClick={() => handleRSVPResumeDownload()}>Download RSVP resumes</button>
           </>
         }
+        Number of users: {users.length}
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <TextField
             value={query}
@@ -371,7 +372,6 @@ const Admin = function () {
           {StatusPicker}
         </Box>
         <div>{populateUsers}</div>
-
         {table}
       </Box>
     </Container>
