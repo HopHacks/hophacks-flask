@@ -371,6 +371,12 @@ canvas {
   top: 650px;
   width: 1500px;
 }
+.tracks .guitar2 {
+  position: absolute;
+  right: 0;
+  top: 2100px;
+  width: 1500px;
+}
 
 .prizeTrackDiv {
   display: flex;

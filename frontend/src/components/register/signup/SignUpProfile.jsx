@@ -493,6 +493,8 @@ export default function SignUpProfile(props) {
               <MenuItem value="Major League Hacking">Major League Hacking</MenuItem>
               <MenuItem value="Email Listerv">Email Listerv</MenuItem>
               <MenuItem value="Friend">Friend</MenuItem>
+              <MenuItem value="On Campus Flyers">On Campus Flyers</MenuItem>
+              <MenuItem value="In Class Promotion">In Class Promotion</MenuItem>
               <MenuItem value="Other">Other</MenuItem>
             </TextField>
           </Grid>

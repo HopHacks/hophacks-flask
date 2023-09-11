@@ -91,7 +91,7 @@ const Tracks = () => {
             </div>
           </div>
         </div>
-        <img className="guitar-2" src={img('guitar.png')} />
+        <img className="guitar2" src={img('guitar.png')} />
         <div className="jhuiaa-track">
           <img
             src={img('sponsor/png/cbid_track.png')}

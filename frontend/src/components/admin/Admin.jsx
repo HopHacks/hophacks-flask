@@ -57,6 +57,15 @@ const Admin = function () {
     window.open(url, '_blank');
   }
 
+  async function handleRSVPResumeDownload() {
+    users.forEach(async (user) => {
+      if (user.email_confirmed && user.registrations[0].status == 'rsvped') {
+        await axios.get('/api/admin/resume?id=' + user.id);
+        //const url = response.data['url'];
+      }
+    });
+  }
+
   async function handleVaccinationDownload(userid) {
     const response = await axios.get('/api/admin/vaccination?id=' + userid);
     const url = response.data['url'];
@@ -149,9 +158,11 @@ const Admin = function () {
       } else {
         return true;
       }
+    } else if (status == 'email not confirmed') {
+      return !user.email_confirmed;
     } else {
       if (user.email_confirmed) {
-        return user.registrations[0].status == 'checked_in';
+        return user.registrations[0].status == status;
       } else {
         return false;
       }
@@ -253,6 +264,10 @@ const Admin = function () {
         <MenuItem value="All">All</MenuItem>
         <MenuItem value="not">Not checked in</MenuItem>
         <MenuItem value="checked_in">Checked in</MenuItem>
+        <MenuItem value="email not confirmed">Email not Confirmed</MenuItem>
+        <MenuItem value="rsvped">Rsvped</MenuItem>
+        <MenuItem value="rejected">Rejected</MenuItem>
+        <MenuItem value="accepted">Accepted</MenuItem>
       </Select>
     </FormControl>
   );
@@ -323,6 +338,12 @@ const Admin = function () {
         {/* <>
         <button onClick={() => sendAllRsvpEmails()}>Send Rsvp Email</button>
       </> */}
+        {
+          <>
+            <button onClick={() => handleRSVPResumeDownload()}>Download RSVP resumes</button>
+          </>
+        }
+        Number of users: {users.length}
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <TextField
             value={query}
@@ -351,7 +372,6 @@ const Admin = function () {
           {StatusPicker}
         </Box>
         <div>{populateUsers}</div>
-
         {table}
       </Box>
     </Container>
