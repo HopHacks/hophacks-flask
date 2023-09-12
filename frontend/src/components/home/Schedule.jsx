@@ -317,7 +317,7 @@ export default function Schedule() {
               </TableRow>
               <TableRow className={classes.font}>
                 <TableCell className={classes.font}>7:00 PM</TableCell>
-                <TableCell className={classes.font}>JHU IT Workshop </TableCell>
+                <TableCell className={classes.font}>JHU IT Agile Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
