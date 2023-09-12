@@ -42,6 +42,8 @@ def get_rooms():
 
 
 def assign_tables(submissions):
+    # print("submissions")
+    # print(submissions)
     tables = {}
     i = 1
     for x in submissions:
@@ -71,18 +73,25 @@ def assign_rooms(room_file):
     counter = 1
     end = False
     for room in rooms:
-        print(room)
+        # print(room)
         cap = int(rooms[room])
         teams = int(cap/4)
         i = 0
-        print(room)
+        # print(room)
         assignments[room] = []
+        # print("tables")
+        # print(tables)
+        # print("assignments")
+        # print(assignments)
         while i < int(teams*.8):
             if counter == len(tables) + 1:
                 end = True
                 break
-            print(room)
-            print(counter)
+            # print("room")
+            # print(room)
+            # print("counter")
+            # print(counter)
+            # if counter in tables :
             assignments[room].append(tables[counter])
             i += 1
             counter += 1
@@ -146,6 +155,8 @@ def assignments():
         sub_dicts = [{k: v for k, v in row.items()} for row \
                      in csv.DictReader(sub_string)]
         submissions = []
+        print("hello")
+        print(sub_dicts)
         for x in sub_dicts:
             submissions.append(x['Submission Title'])
         random.Random(0).shuffle(submissions)
@@ -181,10 +192,14 @@ def sponsor_prizes():
         dicts = [{k: v for k, v in row.items()} for row \
                      in csv.DictReader(file_string)]
         prizes = {}
+        print("dicts")
+        print(dicts[1])
         for i in dicts:
-            if i['Opt-in prize'] not in prizes:
-                prizes[i['Opt-in prize']] = []
-            prizes[i['Opt-in prize']].append(i['Submission Title'])
+            print(i)
+            for j in i['Opt-In Prizes'].split(","):
+                if j not in prizes:
+                    prizes[j] = []                
+                prizes[j].append(i['Submission Title'])
 
         db.sponsor.replace_one({}, prizes, upsert=True)
 
