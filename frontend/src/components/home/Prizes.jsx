@@ -60,7 +60,7 @@ export default function Prizes() {
           <img className="prizeTrackStamp" src={img('IAA1.png')} />
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
           <img className="prizeTrackStamp" src={img('BGB1.png')} />
-          <img className="prizeTrackStamp" src={img('BGB1.png')} />
+          <img className="prizeTrackStamp" src={img('BGB2.png')} />
         </div>
       </div>
     </>
