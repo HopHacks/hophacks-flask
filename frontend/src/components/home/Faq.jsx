@@ -571,8 +571,7 @@ export default function Faq() {
           </AccordionSummary>
           <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
             <Typography className={classes.text}>
-              We will not be offering individual travel reimbursements but are sponsoring other
-              modes of transportation detailed above.
+              We will not be offering individual travel reimbursements.
             </Typography>
           </AccordionDetails>
         </Accordion>
