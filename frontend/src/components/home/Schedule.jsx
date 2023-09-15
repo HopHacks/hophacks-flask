@@ -217,6 +217,13 @@ export default function Schedule() {
                   Hodson 313
                 </TableCell>
               </TableRow>
+              <TableRow className={classes.font}>
+                <TableCell className={classes.font}>9:30 PM</TableCell>
+                <TableCell className={classes.font}>JHUXplore Workshop</TableCell>
+                <TableCell align="left" className={classes.font}>
+                  Hodson 110
+                </TableCell>
+              </TableRow>
               {/* <TableRow className={classes.font}>
                 <TableCell className={classes.font}>11:30 PM</TableCell>
                 <TableCell className={classes.font}>Midnight Pizza </TableCell>
@@ -318,20 +325,6 @@ export default function Schedule() {
               <TableRow className={classes.font}>
                 <TableCell className={classes.font}>7:00 PM</TableCell>
                 <TableCell className={classes.font}>JHU IT Agile Workshop </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 316
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>8:00 PM</TableCell>
-                <TableCell className={classes.font}>HopAI Workshop</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 313
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>8:30 PM</TableCell>
-                <TableCell className={classes.font}>JHUXplore Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
