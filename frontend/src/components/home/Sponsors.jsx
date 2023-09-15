@@ -125,10 +125,10 @@ export default function Sponsors() {
           link="https://ventures.jhu.edu/programs-services/fastforward-u/"
         />
         <SponsorItem
-          logo="nord-security.png"
+          logo="incogniblack.png"
           size="inkind"
-          link="https://nordsecurity.com/"
-          width="100%"
+          link="https://incogni.com/ "
+          width="80%"
         />
       </div>
     </Box>
