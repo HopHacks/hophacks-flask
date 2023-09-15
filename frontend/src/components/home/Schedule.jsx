@@ -183,8 +183,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Team Formation</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  {/* Hodson 203 */}
-                  TBD
+                  Hodson 203
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -217,13 +216,15 @@ export default function Schedule() {
                   Hodson 313
                 </TableCell>
               </TableRow>
-              {/* <TableRow className={classes.font}>
-                <TableCell className={classes.font}>11:30 PM</TableCell>
-                <TableCell className={classes.font}>Midnight Pizza </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+              <TableRow className={classes.font}>
+                <TableCell className={classes.font}>9:30 PM</TableCell>
+                <TableCell className={classes.font}>
+                  JHUXplore Intro to Figma: Design-Dev Workshop
                 </TableCell>
-              </TableRow> */}
+                <TableCell align="left" className={classes.font}>
+                  Hodson 110
+                </TableCell>
+              </TableRow>
             </TableBody>
           )}
           {day === 'sat' && (
@@ -318,20 +319,6 @@ export default function Schedule() {
               <TableRow className={classes.font}>
                 <TableCell className={classes.font}>7:00 PM</TableCell>
                 <TableCell className={classes.font}>JHU IT Agile Workshop </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 316
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>8:00 PM</TableCell>
-                <TableCell className={classes.font}>HopAI Workshop</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 313
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>8:30 PM</TableCell>
-                <TableCell className={classes.font}>JHUXplore Workshop</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
