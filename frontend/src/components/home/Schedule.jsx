@@ -183,8 +183,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Team Formation</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  {/* Hodson 203 */}
-                  TBD
+                  Hodson 203
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -219,18 +218,13 @@ export default function Schedule() {
               </TableRow>
               <TableRow className={classes.font}>
                 <TableCell className={classes.font}>9:30 PM</TableCell>
-                <TableCell className={classes.font}>JHUXplore Workshop</TableCell>
+                <TableCell className={classes.font}>
+                  JHUXplore Intro to Figma: Design-Dev Workshop
+                </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 110
                 </TableCell>
               </TableRow>
-              {/* <TableRow className={classes.font}>
-                <TableCell className={classes.font}>11:30 PM</TableCell>
-                <TableCell className={classes.font}>Midnight Pizza </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
-                </TableCell>
-              </TableRow> */}
             </TableBody>
           )}
           {day === 'sat' && (
