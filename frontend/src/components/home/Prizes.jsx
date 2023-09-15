@@ -58,17 +58,11 @@ export default function Prizes() {
           <img className="prizeTrackStamp" src={img('PSW.png')} />
           <img className="prizeTrackStamp" src={img('IAA1.png')} />
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
-<<<<<<< HEAD
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
-
           <img className="prizeTrackStamp" src={img('FFU1.png')} />
           {/* <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} /> */}
           <img className="prizeTrackStamp" src={img('FFU2.png')} />
           <img className="prizeTrackStamp" src={img('FFU3.png')} />
-=======
-          <img className="prizeTrackStamp" src={img('BGB1.png')} />
-          <img className="prizeTrackStamp" src={img('BGB2.png')} />
->>>>>>> a95030a809a2d44a4fdb5aaec50a1824b60e676a
         </div>
       </div>
     </>
