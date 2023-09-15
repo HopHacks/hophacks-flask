@@ -397,11 +397,11 @@ canvas {
   padding: 5px;
 }
 .prizeTrackStamp {
-  width: 250px;
+  width: 18%;
   padding: 5px;
 }
 .prizeTrackStampHidden {
-  width: 90px;
+  width: 50px;
   padding: 5px;
   visibility: hidden;
 }

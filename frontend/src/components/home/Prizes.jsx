@@ -43,24 +43,27 @@ export default function Prizes() {
       </Grid>
       <div>
         <div className="prizeTrackDiv">
-          <img className="prizeTrackStamp" src={img('ffuventure1st.svg')} />
-          <img className="prizeTrackStamp" src={img('ffuventure2nd.svg')} />
+          <img className="prizeTrackStamp" src={img('FFUNV1.png')} />
+          <img className="prizeTrackStamp" src={img('FFUNV2.png')} />
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
-          <img className="prizeTrackStamp" src={img('pstcwinner.svg')} />
+          <img className="prizeTrackStamp" src={img('BGBTrack1.png')} />
+          <img className="prizeTrackStamp" src={img('BGBTrack2.png')} />
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
-          <img className="prizeTrackStamp" src={img('ffudesign1st.svg')} />
-          <img className="prizeTrackStamp" src={img('ffudesign2nd.svg')} />
+          <img className="prizeTrackStamp" src={img('CBID1.png')} />
+          <img className="prizeTrackStamp" src={img('CBID2.png')} />
         </div>
       </div>
       <div>
         <div className="prizeTrackDiv">
-          <img className="prizeTrackStamp" src={img('CBID1.png')} />
-          <img className="prizeTrackStamp" src={img('CBID2.png')} />
-          <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
+          <img className="prizeTrackStamp" src={img('PSW.png')} />
           <img className="prizeTrackStamp" src={img('IAA1.png')} />
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
-          <img className="prizeTrackStamp" src={img('BGB1.png')} />
-          <img className="prizeTrackStamp" src={img('BGB1.png')} />
+          <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
+
+          <img className="prizeTrackStamp" src={img('FFU1.png')} />
+          {/* <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} /> */}
+          <img className="prizeTrackStamp" src={img('FFU2.png')} />
+          <img className="prizeTrackStamp" src={img('FFU3.png')} />
         </div>
       </div>
     </>
