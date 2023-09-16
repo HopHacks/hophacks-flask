@@ -340,7 +340,7 @@ canvas {
 }
 
 .patient-track {
-  width: 50%;
+  width: 70%;
   margin-left: auto;
   margin-top: 350px;
   text-align: right;
@@ -374,7 +374,7 @@ canvas {
 .tracks .guitar2 {
   position: absolute;
   right: 0;
-  top: 2100px;
+  top: 2400px;
   width: 1500px;
 }
 

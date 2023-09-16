@@ -68,7 +68,8 @@ const Tracks = () => {
               autonomous systems into society.
               <br />
               <br />
-              The challenge prompt from IAA will be released when the hackathon starts!
+              Prompt: Create a generative AI-based grading system for detecting lies and
+              mis/disinformation
             </div>
           </div>
         </div>
@@ -86,8 +87,23 @@ const Tracks = () => {
               transformative science.
               <br />
               <br />
-              BGB Group challenges hackers to bring their ideas to life using a challenge prompt
-              that will be released when the hackathon starts!
+              Prompt 1: Optimally implementing health equity into clinical trials:
+              <br />
+              Identify a way to increase clinical trial recruitment from these under-presented
+              populations (self sign up or through a doctors office) and a coordinated process to
+              get patients to the centers.
+              <br />
+              Identify a way to help community centers managed increased patient flow
+              <br />
+              <br />
+              Prompt 2: Support improved patient/HCP discussions
+              <br />
+              Create a software approach that allows patients to have a simulated conversation with
+              doctor’s to gain confidence prior to a live doctors visit. Incorporate public data
+              available that can help build the patient’s most accurate personna. Include the
+              ability to record live in office conversations that can then be transcribed into
+              laymen’s terms (vs heavy medical terminology). Integrate with calendars for upcoming
+              appointments, treatment reminders, etc.
             </div>
           </div>
         </div>
@@ -106,8 +122,9 @@ const Tracks = () => {
               engineering in healthcare tech.
               <br />
               <br />
-              CBID will challenge participants to follow a project prompt that will be released
-              soon!
+              Prompt: Integrate ML and CV into skills assessment of videos of laparoscopic surgery
+              training, which will take the assessment burden off of mentors and allow trainees to
+              hone their skills at a pace that matches their dedication to improvement.
             </div>
           </div>
         </div>
