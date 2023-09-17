@@ -68,36 +68,48 @@ def assign_rooms(room_file):
     total = 0
     for room in rooms:
         total += int(rooms[room])
-
     assignments = {}
     counter = 1
     end = False
     for room in rooms:
-        # print(room)
-        cap = int(rooms[room])
-        teams = int(cap/4)
-        i = 0
-        # print(room)
-        assignments[room] = []
-        # print("tables")
-        # print(tables)
-        # print("assignments")
-        # print(assignments)
-        while i < int(teams*.8):
-            if counter == len(tables) + 1:
-                end = True
+        assignments[room]= []
+    currCap = 0
+    i = 1
+    while i <= len(tables):
+        currCap += 4
+        for room in rooms:
+            if currCap > float(rooms[room]) * 0.8:
+                continue
+            assignments[room].append(tables[i])
+            i = i + 1
+            if i > len(tables):
                 break
-            # print("room")
-            # print(room)
-            # print("counter")
-            # print(counter)
-            # if counter in tables :
-            assignments[room].append(tables[counter])
-            i += 1
-            counter += 1
-        if end:
-            break
-
+    # for room in rooms:
+    #     # print(room)
+    #     cap = int(rooms[room])
+    #     teams = int(cap/4)
+    #     i = 0
+    #     # print(room)
+    #     assignments[room] = []
+    #     # print("tables")
+    #     # print(tables)
+    #     # print("assignments")
+    #     # print(assignments)
+    #     while i < int(teams*.8):
+    #         if counter == len(tables) + 1:
+    #             end = True
+    #             break
+    #         print("room")
+    #         print(room)
+    #         print("counter")
+    #         print(counter)
+    #         # if counter in tables :
+    #         assignments[room].append(tables[counter])
+    #         i += 1
+    #         counter += 1
+    #     if end:
+    #         break
+    # print(tables)
     db.room.replace_one({}, assignments, upsert=True)
 
 
