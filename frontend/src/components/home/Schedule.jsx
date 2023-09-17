@@ -375,7 +375,7 @@ export default function Schedule() {
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
-                  12:30 PM
+                  1:15 PM
                 </TableCell>
                 <TableCell className={classes.font}>Top 10 Demos & Judging</TableCell>
                 <TableCell align="left" className={classes.font}>
@@ -385,7 +385,7 @@ export default function Schedule() {
 
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
-                  1:45 PM
+                  2:30 PM
                 </TableCell>
                 <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
                 <TableCell align="left" className={classes.font}>
