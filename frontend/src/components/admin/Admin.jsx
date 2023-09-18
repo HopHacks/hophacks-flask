@@ -71,6 +71,16 @@ const Admin = function () {
     });
   }
 
+  async function handleCheckedInDownload() {
+    users.forEach(async (user) => {
+      if (user.email_confirmed && user.registrations[0].status == 'checked_in') {
+        const response = await axios.get('/api/admin/resume?id=' + user.id);
+        const url = response.data['url'];
+        window.open(url, '_blank');
+      }
+    });
+  }
+
   async function handleVaccinationDownload(userid) {
     const response = await axios.get('/api/admin/vaccination?id=' + userid);
     const url = response.data['url'];
@@ -373,6 +383,11 @@ const Admin = function () {
             <button onClick={() => handleRSVPAndAcceptedResumeDownload()}>
               Download Accepted and RSVP resumes
             </button>
+          </>
+        }
+        {
+          <>
+            <button onClick={() => handleCheckedInDownload()}>Download Checked in resumes</button>
           </>
         }
         Number of users: {users.length}
