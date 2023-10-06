@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   title: {
-    fontFamily: 'Inter',
+    fontFamily: 'PT Sans',
     flexGrow: 1,
     textAlign: 'center',
     color: 'white'
@@ -63,6 +63,98 @@ const Nav = function Nav(props) {
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
   };
+
+  const navItemRecruit = (
+    <>
+      <Button
+        component={Link}
+        onClick={() => {
+          history.push('/recruiting');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Recruiting
+        </Typography>
+      </Button>
+      <Button
+        component={Link}
+        onClick={() => {
+          history.push('/team');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Team
+        </Typography>
+      </Button>
+    </>
+  );
+
+  if (props.mode === 'recruiting') {
+    if (isMobile) {
+      return (
+        <div>
+          <AppBar position="sticky" className={classes.drawer}>
+            <Toolbar style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+              <section>
+                <Button component={Link} to={'/'} color="inherit">
+                  <img src={img('logo2023.png')} width={'55px'} />
+                </Button>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={() => setIsDrawerOpen(true)}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Drawer
+                  open={isDrawerOpen}
+                  onClose={() => setIsDrawerOpen(false)}
+                  classes={{ paper: classes.drawer }}
+                >
+                  <div>
+                    <IconButton onClick={handleDrawerClose} className={classes.icon}>
+                      <ChevronLeftIcon />
+                    </IconButton>
+                  </div>
+                  <Divider />
+                  {navItemRecruit}
+                </Drawer>
+              </section>
+            </Toolbar>
+          </AppBar>
+        </div>
+      );
+    }
+    return (
+      <AppBar position="sticky" className={classes.drawer}>
+        <Toolbar
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex',
+            marginRight: '8rem'
+          }}
+        >
+          <Button
+            component={Link}
+            onClick={() => (window.location = '/')}
+            color="inherit"
+            className={classes.hophacksButton}
+          >
+            <img src={img('logo2023.png')} width={'55px'} />
+            <Typography variant="h4" className={classes.title}>
+              HopHacks
+            </Typography>
+          </Button>
+          {navItemRecruit}
+        </Toolbar>
+      </AppBar>
+    );
+  }
 
   const navItem = (
     <>
