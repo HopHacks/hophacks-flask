@@ -112,7 +112,7 @@ export default function Recruiting() {
           </Grid>
           <Grid item xs={12} align="center">
             <img
-              src={'https://hophacks-image.s3.amazonaws.com/hopline1.png'}
+              src={'https://hophacks-image.s3.amazonaws.com/HOPHACKS_2024.png'}
               width="70%"
               style={{ marginBottom: '5%' }}
             />
@@ -154,7 +154,7 @@ export default function Recruiting() {
         </Grid>
         <Grid item xs={4}>
           <img
-            src={'https://hophacks-image.s3.amazonaws.com/hopline1.png'}
+            src={'https://hophacks-image.s3.amazonaws.com/HOPHACKS_2024.png'}
             width="70%"
             style={{ marginBottom: '5%' }}
           />
