@@ -32,6 +32,7 @@ function img(url) {
 export default function Cover() {
   //const [imageLoading, setImageLoading] = useState(true);
   //const [pulsing, setPulsing] = useState(true);
+  // test
   const { scrollYProgress } = useViewportScroll();
 
   const mobileScale = useTransform(scrollYProgress, [0, 0.02], [0.35, 0.35]);
