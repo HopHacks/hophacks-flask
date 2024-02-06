@@ -13,6 +13,8 @@ import Recruiting from './Recruiting';
 import Admin from './admin/Admin';
 import Nav from './Nav';
 import Team from './Team';
+import LandingPage from './LandingPage';
+import PrizeHighlight from './PrizeHighlight';
 /**
 import Home from './Home';
 import Profile from './account/Profile';
@@ -45,7 +47,7 @@ export default function App() {
             <CssBaseline />
             <Router>
               <div>
-                <Nav mode="recruiting" />
+                <Nav mode="/landingpage" />
 
                 <Switch>
                   <Route exact path="/admin">
@@ -60,8 +62,16 @@ export default function App() {
                     <Team />
                   </Route>
 
+                  <Route path="/landingpage">
+                    <LandingPage />
+                  </Route>
+
+                  <Route path="/prizehighlight">
+                    <PrizeHighlight />
+                  </Route>
+
                   <Route path="/">
-                    <Recruiting />
+                    <LandingPage />
                   </Route>
                 </Switch>
               </div>
