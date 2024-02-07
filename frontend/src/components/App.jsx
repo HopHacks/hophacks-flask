@@ -23,7 +23,7 @@ import Upload from './judgetool/Upload.jsx';
 import UploadSponsors from './judgetool/UploadSponsors.jsx';
 import SponsorPrizes from './judgetool/SponsorPrizes.jsx';
 import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
-import Announcements from './announcement/Announcements.jsx';
+// import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
 import Login from './register/Login';
@@ -33,6 +33,9 @@ import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
 import { useMediaQuery } from 'usehooks-ts';
 import Sponsors from './postEvents/Sponsors.jsx';
+import Title from './postEvents/Title.jsx';
+import Stats from './postEvents/Stats.jsx';
+import Winner from './postEvents/Winner.jsx';
 
 export default function App() {
   const isMobile = useMediaQuery('(max-width: 48em)');
@@ -70,8 +73,17 @@ export default function App() {
                     <AnnouncementDetails />
                   </Route>
 
-                  <Route path="/postevents">
+                  <Route path="/postevents/sponsors">
                     <Sponsors />
+                  </Route>
+                  <Route path="/postevents/title">
+                    <Title />
+                  </Route>
+                  <Route path="/postevents/stats">
+                    <Stats />
+                  </Route>
+                  <Route path="/postevents/winners">
+                    <Winner />
                   </Route>
 
                   {/* TODO: replace this with new register page */}
