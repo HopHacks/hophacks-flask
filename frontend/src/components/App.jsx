@@ -48,7 +48,7 @@ export default function App() {
             <CssBaseline />
             <Router>
               <div>
-                <Nav />
+                {/* <Nav /> */}
 
                 <Switch>
                   <Route path="/assignments" component={Assignments} />
