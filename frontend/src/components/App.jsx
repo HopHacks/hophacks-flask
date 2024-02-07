@@ -32,6 +32,7 @@ import ResetPassword from './register/ResetPassword';
 import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
 import { useMediaQuery } from 'usehooks-ts';
+import Sponsors from './postEvents/Sponsors.jsx';
 
 export default function App() {
   const isMobile = useMediaQuery('(max-width: 48em)');
@@ -69,8 +70,8 @@ export default function App() {
                     <AnnouncementDetails />
                   </Route>
 
-                  <Route path="/announcements">
-                    <Announcements />
+                  <Route path="/postevents">
+                    <Sponsors />
                   </Route>
 
                   {/* TODO: replace this with new register page */}
