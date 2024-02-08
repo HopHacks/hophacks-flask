@@ -17,7 +17,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --legacy-peer-deps
-          npm install -g eslint
+          npm install -g eslint --legacy-peer-deps
       - name: Run ESLint
         working-directory: ./frontend
         run: |
