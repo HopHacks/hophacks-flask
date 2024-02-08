@@ -16,10 +16,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: |
-          npm install
-          npm install -g eslint
+          npm install --legacy-peer-deps
+          npm install -g eslint --legacy-peer-deps
       - name: Run ESLint
         working-directory: ./frontend
         run: |
-          npm install @babel/preset-react --save-dev
+          npm install @babel/preset-react --save-dev --legacy-peer-deps
           eslint "src/**/*.{js,jsx,ts,tsx,md,json}" --max-warnings 0
