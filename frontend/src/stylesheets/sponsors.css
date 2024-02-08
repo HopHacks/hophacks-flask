@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+.page {
+    background-color: #350225;
+    width: 100%;
+    min-height: 100vh;
+    font-family: "Abel";
+}
