@@ -21,5 +21,5 @@ jobs:
       - name: Run ESLint
         working-directory: ./frontend
         run: |
-          npm install @babel/preset-react --save-dev
+          npm install @babel/preset-react --save-dev --legacy-peer-deps
           eslint "src/**/*.{js,jsx,ts,tsx,md,json}" --max-warnings 0
