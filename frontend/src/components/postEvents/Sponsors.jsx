@@ -33,7 +33,6 @@ const Sponsors = () => {
             textIndent: '30px',
             paddingTop: "20px"
         }}>
-            and most importantly, we want to thank...
         </div>
         <Box marginTop={'2rem'} justifyContent="center" className="sponsor-container" id="sponsors">
             <div className="sponsor-row">
