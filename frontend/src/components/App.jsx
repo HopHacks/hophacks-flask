@@ -36,6 +36,7 @@ import Sponsors from './postEvents/Sponsors.jsx';
 import Title from './postEvents/Title.jsx';
 import Stats from './postEvents/Stats.jsx';
 import Winner from './postEvents/Winner.jsx';
+import Main from './postEvents/Main.jsx';
 
 export default function App() {
   const isMobile = useMediaQuery('(max-width: 48em)');
@@ -71,6 +72,10 @@ export default function App() {
 
                   <Route path="/announcements/detail">
                     <AnnouncementDetails />
+                  </Route>
+
+                  <Route path="/postevents">
+                    <Main />
                   </Route>
 
                   <Route path="/postevents/sponsors">
