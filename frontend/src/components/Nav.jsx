@@ -265,7 +265,7 @@ const Nav = function Nav(props) {
         >
           <img src={img('logo2023.png')} width={'55px'} />
           <Typography variant="h4" className={classes.title}>
-            HopHacks
+            HopHack
           </Typography>
         </Button>
 
