@@ -8,7 +8,7 @@ const Main = () => {
   return (
     <>
     {/* up button */}
-    {activeLoc != 0 ? (
+    {activeLoc != 1 ? (
           <div className="up">
             <button
               style={{ rotate: "180deg" }}
@@ -32,13 +32,13 @@ const Main = () => {
         {/*content*/}
 
         {/* <Origin /> */}
-        <PageBox num="1"/>
-        <PageBox num="2"/>
-        <PageBox num="3"/>
+        <PageBox activeLoc={activeLoc} num="1"/>
+        <PageBox activeLoc={activeLoc} num="2"/>
+        <PageBox activeLoc={activeLoc} num="3"/>
 
-        <PageBox num="4" text='just some cool things about this year '/>
-        <PageBox num="5" text='here are the spectacular projects that won ! '/>
-        <PageBox num="6" text='and most importantly, we want to thank...'/>
+        <PageBox activeLoc={activeLoc} num="4" text='just some cool things about this year '/>
+        <PageBox activeLoc={activeLoc} num="5" text='here are the spectacular projects that won ! '/>
+        <PageBox activeLoc={activeLoc} num="6" text='and most importantly, we want to thank...'/>
 
         {/*down button*/}
         {activeLoc != 6 ? (

@@ -14,7 +14,7 @@ function SponsorItem({ size, logo, width = '85%', link = '#sponsors' }) {
         target={'_blank'}
         rel={'noreferrer'}
       >
-        <div id="6"  className="sponsor-wrapper">
+        <div className="sponsor-wrapper">
           <div className={`sponsor-foreground sponsor-${size} sponsor-children`}>
             <img src={img(logo)} style={{ width }} className="sponsor-img" />
             <div className={`sponsor-background sponsor-${size}`}></div>

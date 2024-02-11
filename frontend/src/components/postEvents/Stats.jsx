@@ -3,7 +3,7 @@ import '../../stylesheets/stats.css';
 
 const Stats = () => {
   return (
-    <div id="4" className='main'>
+    <div className='mainstat'>
       <div className='column'>
         <div className='horiBox final mainStat bgOpacity' style={{backgroundImage: "url('/images/merch.jpeg')", backgroundPositionY: "top"}}><h2 className='statText'><span style={{fontStyle: "italic"}}>beautiful</span><br />merch</h2></div>
         <div className='horiBox final' style={{flexBasis: 2, flexGrow: 2}}><h2 className='statText'><span className='number'>$3000</span><br /> in prizes</h2></div>
@@ -21,7 +21,7 @@ const Stats = () => {
         <div className='horiBox final'><h2 className='statText'><span className='number'>12</span><br />winners</h2></div>
         <div className='horiBox' style={{flexBasis: 2, flexGrow: 6}}>
             <div className='final' style={{flexBasis: 1, flexGrow: 1}}><h2 className='statText'><span className='number'>4</span><br />states</h2></div>
-            <div className='final mainStat bgOpacityLess' style={{backgroundImage: "url('/images/smile.jpeg')", backgroundPositionX: "bottom", flexBasis: 1, flexGrow: 1}}><h2 className='statText'><br /><br />infinite <br />smiles :D</h2></div>
+            <div className='final mainStat bgOpacityLess' style={{backgroundImage: "url('/images/smile.jpeg')", backgroundPositionX: "bottom", flexBasis: 1, flexGrow: 1}}><h2 className='statText'><br /><br /> <br />smiles :D</h2></div>
         </div>
       </div>
     </div>

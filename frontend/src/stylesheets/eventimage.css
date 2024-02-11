@@ -9,16 +9,14 @@
 }
 
 .left {
-    background-color: aquamarine;
     display: flex;
     flex-direction: column;
     align-items:flex-start;
     justify-content: space-evenly;
-    width: 50%;
+    width: 60%;
     height: 100%;
 }
 .right {
-    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -29,18 +27,21 @@
     object-fit: contain;
     height: 25%;
     max-width: 50%;
+    opacity: 0;
 }
 
 .memories {
-    /* margin-top: 80%; */
     font-size: 70px;
     font-weight: normal;
+    margin-left: 200px;
 }
+
 .img1 {
 }
 
 .img2 {
     height: 37.5%;
+    margin-left: 50%;
     width: auto;
 }
 
