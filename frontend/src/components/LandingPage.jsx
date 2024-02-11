@@ -55,17 +55,30 @@ export default function LandingPage1() {
   );
 
   const year2023 = (
-    <Button variant="contained" style={{ height: '100px', width: '250px' }} color="blue">
+    <Button
+      variant="contained"
+      style={{ height: '100px', width: '250px', backgroundColor: '#34b4eb' }}
+    >
       <Typography variant="h3">2023</Typography>
     </Button>
   );
   const year2022 = (
-    <Button variant="contained" style={{ height: '100px', width: '250px' }} color="blue">
-      <Typography variant="h3">2022</Typography>
+    <Button
+      variant="contained"
+      style={{ height: '100px', width: '250px', backgroundColor: '#34b4eb' }}
+      color="blue"
+    >
+      <Typography variant="h3" color="blue">
+        2022
+      </Typography>
     </Button>
   );
   const year2021 = (
-    <Button variant="contained" style={{ height: '100px', width: '250px' }} color="blue">
+    <Button
+      variant="contained"
+      style={{ height: '100px', width: '250px', backgroundColor: '#34b4eb' }}
+      color="blue"
+    >
       <Typography variant="h3">2021</Typography>
     </Button>
   );
