@@ -1,0 +1,44 @@
+.title {
+    background-color: #725268;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.centered-number-outline {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 256px;
+    font-family: 'Inter', sans-serif;
+    color: #3A0026;
+    font-weight: bold;
+    text-align: center;
+}
+
+.centered-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 256px;
+    font-family: 'Inter', sans-serif;
+    color: #CBCBCB;
+    text-align: center;
+}
