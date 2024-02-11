@@ -1,0 +1,50 @@
+.main {
+    background-color: #350225;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 50px;
+}
+
+.left {
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    justify-content: space-evenly;
+    width: 50%;
+    height: 100%;
+}
+.right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+}
+
+.eventimg1 {
+    object-fit: contain;
+    height: 25%;
+    max-width: 50%;
+}
+
+.memories {
+    /* margin-top: 80%; */
+    font-size: 70px;
+    font-weight: normal;
+}
+.img1 {
+}
+
+.img2 {
+    height: 37.5%;
+    width: auto;
+}
+
+.img3 {
+
+    height: 37.5%;
+}

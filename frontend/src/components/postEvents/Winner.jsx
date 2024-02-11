@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Winner = () => {
-  return <div>Winner</div>;
+  return <div id="5"  >Winner</div>;
 };
 
 export default Winner;

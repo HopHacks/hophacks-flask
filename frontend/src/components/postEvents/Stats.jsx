@@ -3,7 +3,7 @@ import '../../stylesheets/stats.css';
 
 const Stats = () => {
   return (
-    <div className='main'>
+    <div id="4" className='main'>
       <div className='column'>
         <div className='horiBox final mainStat bgOpacity' style={{backgroundImage: "url('/images/merch.jpeg')", backgroundPositionY: "top"}}><h2 className='statText'><span style={{fontStyle: "italic"}}>beautiful</span><br />merch</h2></div>
         <div className='horiBox final' style={{flexBasis: 2, flexGrow: 2}}><h2 className='statText'><span className='number'>$3000</span><br /> in prizes</h2></div>
