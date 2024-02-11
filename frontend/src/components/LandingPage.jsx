@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid } from '@material-ui/core';
 import Footer from './Footer';
+import PrizeHighlight from './PrizeHighlight';
 
 const useStyles = makeStyles({
   margin: {
@@ -134,13 +135,20 @@ export default function LandingPage1() {
           </Grid>
         </Grid>
       </div>
-      <div className="2023">
-        <h1>HOPHACKS 2023</h1>
+      <div className="2023" style={{ display: 'flex', flexDirection: 'column' }}>
+        <h1 style={{ fontSize: '48px' }}>HOPHACKS 2023</h1>
         <h1>SEPTEMBER 15-17</h1>
         <a href="https://hophacks.devpost.com">
           <h3>View the Devpost</h3>
         </a>
       </div>
+      <div className="stats" style={{ display: 'flex', justifyContent: 'center' }}>
+        <img
+          src={'https://hophacks-website.s3.amazonaws.com/images/stats2023.png'}
+          style={{ width: '1000px' }}
+        />
+      </div>
+      <PrizeHighlight />
       <Footer />
     </div>
   );
