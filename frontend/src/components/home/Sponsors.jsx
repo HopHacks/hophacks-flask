@@ -65,7 +65,6 @@ export default function Sponsors() {
           logo="bloomberg23.png"
           size="gold"
           link="https://www.bloomberg.com/company/"
-          width="85%"
         />
         <SponsorItem
           logo="PatientSafety.png"
