@@ -71,7 +71,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/">
-                    <LandingPage />
+                    <PrizeHighlight />
                   </Route>
                 </Switch>
               </div>

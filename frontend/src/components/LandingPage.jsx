@@ -137,7 +137,9 @@ export default function LandingPage1() {
       <div className="2023">
         <h1>HOPHACKS 2023</h1>
         <h1>SEPTEMBER 15-17</h1>
-        <a href="https://hophacks.devpost.com"><h3>View the Devpost</h3></a>
+        <a href="https://hophacks.devpost.com">
+          <h3>View the Devpost</h3>
+        </a>
       </div>
       <Footer />
     </div>
