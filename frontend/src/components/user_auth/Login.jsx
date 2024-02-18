@@ -43,12 +43,12 @@ function Login(props) {
   const signInCardDesktop = (
     <Card class="card">
       <CardContent>
-        <Typography class="card-title">Welcome!</Typography>
+        <Typography class="card-title">LOGIN</Typography>
         <TextField
           // TODO: make the border white
           required
           variant="standard"
-          label="Email Address"
+          label="email address"
           style={{ width: '80%' }}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -64,7 +64,7 @@ function Login(props) {
           type={'password'}
           required
           variant="standard"
-          label="Password"
+          label="password"
           value={password}
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPassword(e.target.value)}
@@ -76,10 +76,12 @@ function Login(props) {
           }}
         />
 
-        <Link to={'/user_auth/resetpassword'}>
-          <Typography class="card-text"> Forgot Password? </Typography>
-        </Link>
-        {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
+        <div style={{ textAlign: 'right' }}>
+          <Link to={'/user_auth/resetpassword'}>
+            <Typography class="card-text"> forgot password? </Typography>
+          </Link>
+          {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
+        </div>
 
         <Button
           class="card-button"
@@ -88,11 +90,22 @@ function Login(props) {
           size="large"
           onClick={handleLogin}
         >
-          Sign In
+          sign in
+        </Button>
+
+        {/* TODO: link user JHED */}
+        <Button
+          class="card-button"
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={handleLogin}
+        >
+          use JHED
         </Button>
 
         <Link to={'/user_auth/signup'}>
-          <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
+          <Typography class="card-text"> need a profile? </Typography>
         </Link>
       </CardContent>
     </Card>
@@ -101,7 +114,7 @@ function Login(props) {
   const signInCardMobile = (
     <Card class="card">
       <CardContent>
-        <Typography class="card-title">Welcome!</Typography>
+        <Typography class="card-title">LOGIN</Typography>
         <TextField
           // TODO: make the border white
           required
@@ -135,7 +148,7 @@ function Login(props) {
         />
 
         <Link to={'/user_auth/resetpassword'}>
-          <Typography class="card-text"> Forgot Password? </Typography>
+          <Typography class="card-text"> forgot password? </Typography>
         </Link>
         {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
 
@@ -146,7 +159,7 @@ function Login(props) {
           size="large"
           onClick={handleLogin}
         >
-          Sign In
+          sign in
         </Button>
 
         <Link to={'/user_auth/signup'}>
@@ -202,12 +215,10 @@ function Login(props) {
 
   return (
     <div className="root">
-      <Grid container>
+      {signInCardDesktop}
+      <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={5}>
-          {signInCardDesktop}
-        </Grid>
-        <Grid item xs={5}>
-          {/* {mottoDesktop} */}
+          {/*signInCardDesktop*/}
         </Grid>
       </Grid>
     </div>
