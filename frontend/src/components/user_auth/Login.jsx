@@ -156,19 +156,19 @@ function Login(props) {
     </Card>
   );
 
-  const mottoDesktop = (
-    <div style={{ marginTop: '30%', marginRight: '-20%' }}>
-      <div>
-        <Typography class="motto-text">New Page</Typography>
-        <Typography class="motto-text" align="left">
-          HopHacks
-        </Typography>
-      </div>
-      <div style={{ marginTop: '15%' }}>
-        <Typography class="motto-subtext">New Motto</Typography>
-      </div>
-    </div>
-  );
+  // const mottoDesktop = (
+  //   <div style={{ marginTop: '30%', marginRight: '-20%' }}>
+  //     <div>
+  //       <Typography class="motto-text">New Page</Typography>
+  //       <Typography class="motto-text" align="left">
+  //         HopHacks
+  //       </Typography>
+  //     </div>
+  //     <div style={{ marginTop: '15%' }}>
+  //       <Typography class="motto-subtext">New Motto</Typography>
+  //     </div>
+  //   </div>
+  // );
 
   const mottoMobile = (
     <div style={{ marginTop: '10%' }}>
@@ -207,7 +207,7 @@ function Login(props) {
           {signInCardDesktop}
         </Grid>
         <Grid item xs={5}>
-          {mottoDesktop}
+          {/* {mottoDesktop} */}
         </Grid>
       </Grid>
     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Login from './register/Login';
+import Login from './user_auth/Login';
 import '../stylesheets/email_confirm.css';
 
 function img(url) {

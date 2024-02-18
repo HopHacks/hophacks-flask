@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
-import '../../../stylesheets/register.css';
+import '../../../stylesheets/user_auth.css';
 
 export default function SignUpAccount(props) {
   const isMobile = props.isMobile;
@@ -85,8 +85,8 @@ export default function SignUpAccount(props) {
         >
           Next
         </Button>
-        <Link to={'/register/login'}>
-          <Typography class="card-text"> Back to Sign in? </Typography>
+        <Link to={'/user_auth/login'}>
+          <Typography class="card-text"> Go to Sign in? </Typography>
         </Link>
       </CardContent>
     </Card>

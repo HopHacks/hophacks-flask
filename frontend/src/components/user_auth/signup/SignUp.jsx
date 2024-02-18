@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { isValidPhoneNumber } from 'react-phone-number-input';
-import '../../../stylesheets/register.css';
+import '../../../stylesheets/user_auth.css';
 import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
 import SignUpConfirmation from './SignUpConfirmation';

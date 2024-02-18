@@ -18,7 +18,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import PhoneInput from 'react-phone-number-input';
 import PhoneNumber from '../../account/PhoneNumber';
 
-import '../../../stylesheets/register.css';
+import '../../../stylesheets/user_auth.css';
 
 export default function SignUpProfile(props) {
   const isMobile = props.isMobile;

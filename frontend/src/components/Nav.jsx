@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   },
 
   drawer: {
-    background: '#33073E',
+    background: '#157145',
     width: '100vw'
   },
 

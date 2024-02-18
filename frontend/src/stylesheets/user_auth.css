@@ -12,7 +12,7 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 100% 100%;
-  background-image: url('https://cdn.arstechnica.net/wp-content/uploads/2019/09/Screenshot-898.png');
+  background-image: url('https://hophacks-website.s3.amazonaws.com/images/goose_background.png');
   background-attachment: fixed;
 }
 
@@ -52,7 +52,7 @@ body {
   width: 60%;
   height: 60px;
   border-radius: 15px;
-  background-color: #b8b3d8;
+  background-color: #2D99E0;
   color: #fff;
   font-size: 1.5rem;
   font-weight: 700;

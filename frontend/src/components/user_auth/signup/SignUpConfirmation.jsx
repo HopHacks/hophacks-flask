@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
-import '../../../stylesheets/register.css';
+import '../../../stylesheets/user_auth.css';
 
 export default function SignUpConfirmation(props) {
   const isMobile = props.isMobile;
@@ -17,7 +17,7 @@ export default function SignUpConfirmation(props) {
         <Typography class="mobile-motto-subtext">
           Thank you for signing up. We are excited to have you joining our event!
         </Typography>
-        <Link to="/register/login" style={{ width: '100%' }}>
+        <Link to="/user_auth/login" style={{ width: '100%' }}>
           <Button
             variant="contained"
             class="card-button"

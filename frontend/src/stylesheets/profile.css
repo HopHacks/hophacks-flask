@@ -12,7 +12,7 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 100% 100%;
-  background-image: url('https://hophacks-image.s3.amazonaws.com/login_background.jpg');
+  background-image: url('https://hophacks-website.s3.amazonaws.com/images/goose_background.png'); /* updated image */
   background-attachment: fixed;
 }
 
