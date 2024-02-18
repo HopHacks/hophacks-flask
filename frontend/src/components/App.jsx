@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../util/theme';
 import { AuthProvider } from '../util/auth';
 
-import Home from './Home';
+//import Home from './Home'; //temporarily took out home page
 import Recruiting from './Recruiting';
 import Profile from './account/Profile';
 import Admin from './admin/Admin';
@@ -26,9 +26,9 @@ import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
-import Login from './register/Login';
-import SignUp from './register/signup/SignUp';
-import ResetPassword from './register/ResetPassword';
+import Login from './user_auth/Login'; //adjusted to be new path
+import SignUp from './user_auth/signup/SignUp';
+import ResetPassword from './user_auth/ResetPassword';
 import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
 import { useMediaQuery } from 'usehooks-ts';
@@ -92,15 +92,15 @@ export default function App() {
                     <Team />
                   </Route>
 
-                  <Route path="/register/login">
+                  <Route path="/user_auth/login">
                     <Login isMobile={isMobile} />
                   </Route>
 
-                  <Route path="/register/signup">
+                  <Route path="/user_auth/signup">
                     <SignUp isMobile={isMobile} />
                   </Route>
 
-                  <Route path="/register/resetpassword">
+                  <Route path="/user_auth/resetpassword">
                     <ResetPassword isMobile={isMobile} />
                   </Route>
 
@@ -109,7 +109,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/">
-                    <Home />
+                    <SignUp />
                   </Route>
                 </Switch>
               </div>
