@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import '../../../stylesheets/user_auth.css';
 import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
+import SignUpChecks from './SignUpChecks'; //added check page
+import SignUpImage from './SignUpImage'; //added image page
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
 // import { useHistory } from 'react-router-dom';
@@ -39,14 +41,17 @@ function SignUp(props) {
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
-  const [enabledButton, setEnabledButton] = useState(true);
+  const [enabledButton] = useState(true); //TMP get rid of setEnabledButton
+  //const [enabledButton, setEnabledButton] = useState(true); //ORIGINAL
 
   const isMobile = props.isMobile;
 
   // decide which page is actively showing
   const ACCOUNT = 0;
   const PROFILE = 1;
-  const CONFIRMATION = 2;
+  const CHECKS = 2; //changed this to be 2
+  const IMAGE = 3; //changed this to be 3
+  const CONFIRMATION = 4;
   const [activePage, setActivePage] = useState(ACCOUNT);
 
   // functions for account page
@@ -87,6 +92,16 @@ function SignUp(props) {
     setActivePage(PROFILE);
   }
 
+  // TODO: need to figure this out
+  // async function handleAccountBack() {
+  //   setActivePage();
+  // }
+
+  //TODO: Configure this user flow
+  // async function handleProfileBack() {
+  //   setActivePage(Login);
+  // }
+
   // functions for profile page
   // function isEmpty() {
   //   return (
@@ -106,15 +121,8 @@ function SignUp(props) {
   //   );
   // }
 
+  //handles the user flow of the login
   async function handleProfileNext() {
-    if (username.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid username.');
-      return;
-    }
-    if (password.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid password.');
-      return;
-    }
     if (first_name.length === 0) {
       setProfileSubmitMsg('* Please enter a valid first name.');
       return;
@@ -138,7 +146,12 @@ function SignUp(props) {
       setProfileSubmitMsg('* Please select an ethnicity.');
       return;
     }
+    //TODO: not sure why there are two phone number checks
     if (phone_number === undefined || phone_number.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid phone number.');
+      return;
+    }
+    if (!isValidPhoneNumber(phone_number)) {
       setProfileSubmitMsg('* Please enter a valid phone number.');
       return;
     }
@@ -155,6 +168,15 @@ function SignUp(props) {
       return;
     }
 
+    // Go to the confirmation page
+    setActivePage(CHECKS);
+  }
+
+  async function handleProfileBack() {
+    setActivePage(ACCOUNT);
+  }
+
+  async function handleChecksNext() {
     if (first_hackathon === 0) {
       setProfileSubmitMsg('* Please select if this is your first hackathon.');
       return;
@@ -167,11 +189,6 @@ function SignUp(props) {
 
     if (learn_about_us === 0) {
       setProfileSubmitMsg('* Please select how you heard about us.');
-      return;
-    }
-
-    if (!isValidPhoneNumber(phone_number)) {
-      setProfileSubmitMsg('* Please enter a valid phone number.');
       return;
     }
 
@@ -206,86 +223,94 @@ function SignUp(props) {
       return;
     }
 
+    //TODO: uncomment for actual testing
     const data = new FormData();
     data.append('file', resumeFile);
-    data.append(
-      'json_file',
-      JSON.stringify({
-        username: username,
-        password: password,
-        confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email',
-        profile: {
-          first_name: first_name,
-          last_name: last_name,
-          gender: gender,
-          age: age,
-          major: major,
-          phone_number: phone_number,
-          school: school,
-          ethnicity: ethnicity,
-          grad: grad,
-          is_jhu: school === 'Johns Hopkins University' ? true : false,
-          grad_month: grad_month,
-          grad_year: grad_year,
-          mlh_emails: communicationChecked,
-          first_hackathon: first_hackathon,
-          first_hophacks: first_hophacks,
-          learn_about_us: learn_about_us
-        }
-      })
-    );
+    // data.append(
+    //   'json_file',
+    //   JSON.stringify({
+    //     username: username,
+    //     password: password,
+    //     confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email',
+    //     profile: {
+    //       first_name: first_name,
+    //       last_name: last_name,
+    //       gender: gender,
+    //       age: age,
+    //       major: major,
+    //       phone_number: phone_number,
+    //       school: school,
+    //       ethnicity: ethnicity,
+    //       grad: grad,
+    //       is_jhu: school === 'Johns Hopkins University' ? true : false,
+    //       grad_month: grad_month,
+    //       grad_year: grad_year,
+    //       mlh_emails: communicationChecked,
+    //       first_hackathon: first_hackathon,
+    //       first_hophacks: first_hophacks,
+    //       learn_about_us: learn_about_us
+    //     }
+    //   })
+    // );
 
-    try {
-      setEnabledButton(false);
-      await axios.post('/api/accounts/create', data);
+    // try {
+    //   setEnabledButton(false);
+    //   await axios.post('/api/accounts/create', data);
 
-      //   await axios.post('/api/slack/registration', {
-      //     first_name: first_name,
-      //     last_name: last_name,
-      //     school: school,
-      //   });
-      await axios.post('/api/slack/registration', {
-        first_name: first_name,
-        last_name: last_name,
-        school: school
-      });
+    //   //   await axios.post('/api/slack/registration', {
+    //   //     first_name: first_name,
+    //   //     last_name: last_name,
+    //   //     school: school,
+    //   //   });
+    //   await axios.post('/api/slack/registration', {
+    //     first_name: first_name,
+    //     last_name: last_name,
+    //     school: school
+    //   });
 
-      try {
-        await props.login(username, password);
-        // if (username !== 'admin') {
-        //   history.push('/profile');
-        // } else {
-        //   history.push('/admin');
-        // }
-        console.log('failed here');
-        const resumeData = new FormData();
-        resumeData.append('file', resumeFile);
-        await axios.post('/api/resumes/', resumeData);
+    //   try {
+    //     await props.login(username, password);
+    //     // if (username !== 'admin') {
+    //     //   history.push('/profile');
+    //     // } else {
+    //     //   history.push('/admin');
+    //     // }
+    //     console.log('failed here');
+    //     const resumeData = new FormData();
+    //     resumeData.append('file', resumeFile);
+    //     await axios.post('/api/resumes/', resumeData);
 
-        const vaccinationData = new FormData();
-        vaccinationData.append('file', vaccinationFile);
-        await axios.post('/api/vaccination/', vaccinationData);
-      } catch (error) {
-        setEnabledButton(true);
-      }
-      // await axios.post('/api/slack/registration', {
-      //   first_name: first_name,
-      //   last_name: last_name,
-      //   school: school
-      // });
+    //     const vaccinationData = new FormData();
+    //     vaccinationData.append('file', vaccinationFile);
+    //     await axios.post('/api/vaccination/', vaccinationData);
+    //   } catch (error) {
+    //     setEnabledButton(true);
+    //   }
+    //   // await axios.post('/api/slack/registration', {
+    //   //   first_name: first_name,
+    //   //   last_name: last_name,
+    //   //   school: school
+    //   // });
 
-      // const resumeData = new FormData();
-      // resumeData.append('file', resumeFile);
-      // await axios.post('/api/resumes', resumeData);
-    } catch (e) {
-      return;
-    }
-    // Go to the confirmation page
+    //   // const resumeData = new FormData();
+    //   // resumeData.append('file', resumeFile);
+    //   // await axios.post('/api/resumes', resumeData);
+    // } catch (e) {
+    //   return;
+    // }
+    setActivePage(IMAGE);
+  }
+
+  async function handleChecksBack() {
+    setActivePage(PROFILE);
+  }
+
+  async function handleImageNext() {
     setActivePage(CONFIRMATION);
   }
 
-  async function handleProfileBack() {
-    setActivePage(ACCOUNT);
+  async function handleImageBack() {
+    setActivePage(CHECKS);
   }
 
   function handleResumeFileChange(e) {
@@ -333,6 +358,7 @@ function SignUp(props) {
         />
       );
     } else if (activePage === PROFILE) {
+      //TODO: need to divide this up
       console.log('profile page');
       return (
         <SignUpProfile
@@ -351,6 +377,48 @@ function SignUp(props) {
           setGrad={setGrad}
           setGrad_month={setGrad_month}
           setGrad_year={setGrad_year}
+          // setFirst_hackathon={setFirst_hackathon}
+          // setFirst_hophacks={setFirst_hophacks}
+          // setLearn_about_us={setLearn_about_us}
+          // resumeFile={resumeFile}
+          // resumeChecked={resumeChecked}
+          // vaccinationFile={vaccinationFile}
+          // vaccinationChecked={vaccinationChecked}
+          // conductCodeChecked={conductCodeChecked}
+          // eventLogisticsChecked={eventLogisticsChecked}
+          // communicationChecked={communicationChecked}
+          profileSubmitMsg={profileSubmitMsg}
+          enabledButton={enabledButton}
+          handleProfileNext={handleProfileNext}
+          handleProfileBack={handleProfileBack}
+          // handleResumeFileChange={handleResumeFileChange}
+          // handleVaccinationFileChange={handleVaccinationFileChange}
+          // handleResumeCheckBox={handleResumeCheckBox}
+          // handleVaccinationCheckBox={handleVaccinationCheckBox}
+          // handleConductCheckBox={handleConductCheckBox}
+          // handleLogisticsCheckBox={handleLogisticsCheckBox}
+          // handleCommunicationCheckBox={handleCommunicationCheckBox}
+        />
+      );
+    } else if (activePage == CHECKS) {
+      console.log('checks page');
+      return (
+        <SignUpChecks
+          isMobile={isMobile}
+          // setFirst_name={setFirst_name}
+          // setLast_name={setLast_name}
+          // setAge={setAge}
+          // setGender={setGender}
+          // setEthnicity={setEthnicity}
+          // phone_number={phone_number}
+          // setPhone_number={setPhone_number}
+          // school={school}
+          // setSchool={setSchool}
+          // major={major}
+          // setMajor={setMajor}
+          // setGrad={setGrad}
+          // setGrad_month={setGrad_month}
+          // setGrad_year={setGrad_year}
           setFirst_hackathon={setFirst_hackathon}
           setFirst_hophacks={setFirst_hophacks}
           setLearn_about_us={setLearn_about_us}
@@ -363,8 +431,8 @@ function SignUp(props) {
           communicationChecked={communicationChecked}
           profileSubmitMsg={profileSubmitMsg}
           enabledButton={enabledButton}
-          handleProfileNext={handleProfileNext}
-          handleProfileBack={handleProfileBack}
+          handleChecksNext={handleChecksNext}
+          handleChecksBack={handleChecksBack}
           handleResumeFileChange={handleResumeFileChange}
           handleVaccinationFileChange={handleVaccinationFileChange}
           handleResumeCheckBox={handleResumeCheckBox}
@@ -372,6 +440,17 @@ function SignUp(props) {
           handleConductCheckBox={handleConductCheckBox}
           handleLogisticsCheckBox={handleLogisticsCheckBox}
           handleCommunicationCheckBox={handleCommunicationCheckBox}
+        />
+      );
+    } else if (activePage == IMAGE) {
+      console.log('image page');
+      return (
+        <SignUpImage
+          isMobile={isMobile}
+          profileSubmitMsg={profileSubmitMsg}
+          enabledButton={enabledButton}
+          handleImageNext={handleImageNext}
+          handleImageBack={handleImageBack}
         />
       );
     } else {

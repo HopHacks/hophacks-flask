@@ -25,11 +25,14 @@ export default function SignUpAccount(props) {
     borderRadius: '4px',
     marginBottom: '10px'
   };
+  //const handleAccountBack = props.handleAccountBack;
 
   const signUpCardDesktop = (
     <Card class="card">
       <CardContent>
-        <Typography class="card-title">Sign Up</Typography>
+        <Typography class="card-title">CREATE A PROFILE</Typography>
+        <Typography class="card-subtitle">step 0: email info</Typography>
+        <Typography class="card-infoline">link your account!</Typography>
         <div style={grayWrapperStyle}>
           <TextField
             // TODO: make the border white
@@ -91,6 +94,17 @@ export default function SignUpAccount(props) {
             Back
           </Button>
         </Link>
+        <Button
+          class="card-button"
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={() => {
+            handleAccountNext(); //TODO: need to update the flow of this
+          }}
+        >
+          Back
+        </Button>
 
         <Button
           class="card-button"
@@ -103,6 +117,10 @@ export default function SignUpAccount(props) {
         >
           Next
         </Button>
+        <Link to={'/user_auth/login'}>
+          <Typography class="card-text"> Go to Sign in? </Typography>
+          {/* TODO: change/remove this message now that we have a back button */}
+        </Link>
       </CardContent>
     </Card>
   );
@@ -184,39 +202,8 @@ export default function SignUpAccount(props) {
     </Card>
   );
 
-  // const mottoDesktop = (
-  //   <div style={{ marginTop: '30%', marginRight: '-20%' }}>
-  //     <div>
-  //       <Typography class="motto-text">Hack Your Passion Into Reality</Typography>
-  //       <Typography class="motto-text" align="left">
-  //         HopHacks
-  //       </Typography>
-  //     </div>
-  //     <div style={{ marginTop: '15%' }}>
-  //       <Typography class="motto-subtext">Innovate | Collaborate | Dominate</Typography>
-  //     </div>
-  //   </div>
-  // );
-
-  const mottoMobile = (
-    <div style={{ marginTop: '10%' }}>
-      <Typography class="mobile-header">HOPHACKS</Typography>
-      <Typography class="mobile-motto-text" style={{ marginTop: '15%' }}>
-        Hack Your Passion Into Reality
-      </Typography>
-      <Typography class="mobile-motto-subtext" style={{ marginTop: '-3%' }}>
-        Innovate | Collaborate | Dominate
-      </Typography>
-    </div>
-  );
-
   if (isMobile) {
-    return (
-      <div className="root">
-        {mottoMobile}
-        {signUpCardMobile}
-      </div>
-    );
+    return <div className="root">{signUpCardMobile}</div>;
   }
 
   const containerStyle = {

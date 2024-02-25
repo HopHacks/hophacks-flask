@@ -45,6 +45,24 @@ body {
   margin-left: auto;
 }
 
+.card-subtitle {
+  font-family: proxima-nova, sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.card-infoline {
+  font-family: proxima-nova, sans-serif;
+  font-weight: 700;
+  font-size: 1.0rem;
+  color: #fff;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .card-button {
   margin-top: 10%;
   margin-right: auto;
@@ -105,6 +123,27 @@ body {
   font-weight: 700;
   font-style: normal;
   font-size: 2rem;
+  color: #fff;
+  text-align: center;
+  margin-top: 5%;
+}
+
+/* TODO: may need to check these styles further */
+.mobile-subheader {
+  font-family: proxima-nova, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1rem;
+  color: #fff;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.mobile-infoline {
+  font-family: proxima-nova, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 0.5rem;
   color: #fff;
   text-align: center;
   margin-top: 5%;
