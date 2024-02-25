@@ -149,6 +149,10 @@ export default function SignUpAccount(props) {
 
         <Typography class="card-text-red">{confirmMsg}</Typography>
 
+        <Link to={'/user_auth/login'}>
+          <Typography class="card-text"> Back </Typography>
+        </Link>
+
         <Button
           class="card-button"
           variant="contained"
@@ -165,19 +169,19 @@ export default function SignUpAccount(props) {
     </Card>
   );
 
-  const mottoDesktop = (
-    <div style={{ marginTop: '30%', marginRight: '-20%' }}>
-      <div>
-        <Typography class="motto-text">Hack Your Passion Into Reality</Typography>
-        <Typography class="motto-text" align="left">
-          HopHacks
-        </Typography>
-      </div>
-      <div style={{ marginTop: '15%' }}>
-        <Typography class="motto-subtext">Innovate | Collaborate | Dominate</Typography>
-      </div>
-    </div>
-  );
+  // const mottoDesktop = (
+  //   <div style={{ marginTop: '30%', marginRight: '-20%' }}>
+  //     <div>
+  //       <Typography class="motto-text">Hack Your Passion Into Reality</Typography>
+  //       <Typography class="motto-text" align="left">
+  //         HopHacks
+  //       </Typography>
+  //     </div>
+  //     <div style={{ marginTop: '15%' }}>
+  //       <Typography class="motto-subtext">Innovate | Collaborate | Dominate</Typography>
+  //     </div>
+  //   </div>
+  // );
 
   const mottoMobile = (
     <div style={{ marginTop: '10%' }}>
@@ -202,12 +206,13 @@ export default function SignUpAccount(props) {
 
   return (
     <div className="root">
+      {signUpCardDesktop}
       <Grid container>
         <Grid item xs={5}>
-          {signUpCardDesktop}
+          {/* {signUpCardDesktop} */}
         </Grid>
         <Grid item xs={5}>
-          {mottoDesktop}
+          {/* {mottoDesktop} */}
         </Grid>
       </Grid>
     </div>

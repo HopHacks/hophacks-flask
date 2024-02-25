@@ -52,6 +52,7 @@ export default function SignUpProfile(props) {
   const enabledButton = props.enabledButton;
 
   const handleProfileNext = props.handleProfileNext;
+  const handleProfileBack = props.handleProfileBack;
   const handleResumeFileChange = props.handleResumeFileChange;
   const handleVaccinationCheckBox = props.handleVaccinationCheckBox;
   const handleVaccinationFileChange = props.handleVaccinationFileChange;
@@ -550,6 +551,24 @@ export default function SignUpProfile(props) {
         </Grid>
 
         <Typography class="card-text-red">{profileSubmitMsg}</Typography>
+        <Button
+          class="card-button"
+          variant="contained"
+          color="primary"
+          size="large"
+          disabled={!enabledButton}
+          style={{
+            fontSize: '1.5rem',
+            width: isMobile ? '10rem' : '15rem',
+            height: isMobile ? '3rem' : '4rem',
+            marginTop: isMobile ? '10%' : '5%'
+          }}
+          onClick={() => {
+            handleProfileBack();
+          }}
+        >
+          Back
+        </Button>
 
         <Button
           class="card-button"
