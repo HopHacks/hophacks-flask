@@ -89,6 +89,11 @@ function SignUp(props) {
     setActivePage(PROFILE);
   }
 
+  // TODO: Configure this user flow
+  // async function handleProfileBack() {
+  //   setActivePage(Login);
+  // }
+
   // functions for profile page
   // function isEmpty() {
   //   return (
@@ -109,16 +114,7 @@ function SignUp(props) {
   // }
 
   //handles the user flow of the login
-  //TODO: Need to break up into more function
   async function handleProfileNext() {
-    if (username.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid username.');
-      return;
-    }
-    if (password.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid password.');
-      return;
-    }
     if (first_name.length === 0) {
       setProfileSubmitMsg('* Please enter a valid first name.');
       return;
@@ -159,6 +155,15 @@ function SignUp(props) {
       return;
     }
 
+    // Go to the confirmation page
+    setActivePage(CHECKS);
+  }
+
+  async function handleProfileBack() {
+    setActivePage(ACCOUNT);
+  }
+
+  async function handleChecksNext() {
     if (first_hackathon === 0) {
       setProfileSubmitMsg('* Please select if this is your first hackathon.');
       return;
@@ -284,15 +289,6 @@ function SignUp(props) {
     } catch (e) {
       return;
     }
-    // Go to the confirmation page
-    setActivePage(CHECKS);
-  }
-
-  async function handleProfileBack() {
-    setActivePage(ACCOUNT);
-  }
-
-  async function handleChecksNext() {
     setActivePage(CONFIRMATION);
   }
 
