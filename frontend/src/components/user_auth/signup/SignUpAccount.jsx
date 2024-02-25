@@ -100,18 +100,6 @@ export default function SignUpAccount(props) {
           color="primary"
           size="large"
           onClick={() => {
-            handleAccountNext(); //TODO: need to update the flow of this
-          }}
-        >
-          Back
-        </Button>
-
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={() => {
             handleAccountNext();
           }}
         >
