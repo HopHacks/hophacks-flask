@@ -19,60 +19,78 @@ export default function SignUpAccount(props) {
   const confirmMsg = props.confirmMsg;
   const handleAccountNext = props.handleAccountNext;
 
+  const grayWrapperStyle = {
+    backgroundColor: '#D9D9D9', // Gray background color for the specific input field
+    padding: '10px',
+    borderRadius: '4px',
+    marginBottom: '10px'
+  };
+
   const signUpCardDesktop = (
     <Card class="card">
       <CardContent>
         <Typography class="card-title">Sign Up</Typography>
-        <TextField
-          // TODO: make the border white
-          required
-          variant="standard"
-          label="Email Address"
-          style={{ width: '80%' }}
-          value={username}
-          onChange={(e) => setUsername(e.target.value.toLowerCase())}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
-        <TextField
-          // TODO: make the border white
-          type={'password'}
-          required
-          variant="standard"
-          label="Password"
-          value={password}
-          style={{ width: '80%', marginTop: '15%' }}
-          onChange={(e) => setPassword(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
-
-        <TextField
-          // TODO: make the border white
-          type={'password'}
-          required
-          variant="standard"
-          label="Confirm Password"
-          value={passwordConfirm}
-          style={{ width: '80%', marginTop: '15%' }}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
+        <div style={grayWrapperStyle}>
+          <TextField
+            // TODO: make the border white
+            required
+            variant="standard"
+            label="Email Address"
+            style={{ width: '100%' }}
+            value={username}
+            onChange={(e) => setUsername(e.target.value.toLowerCase())}
+            InputLabelProps={{
+              style: { color: '#FFFFFF' }
+            }}
+            InputProps={{
+              style: { color: '#FFFFFF' }
+            }}
+          />
+        </div>
+        <div style={grayWrapperStyle}>
+          <TextField
+            // TODO: make the border white
+            type={'password'}
+            required
+            variant="standard"
+            label="Password"
+            value={password}
+            style={{ width: '100%' }}
+            onChange={(e) => setPassword(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#FFFFFF' }
+            }}
+            InputProps={{
+              style: { color: '#FFFFFF' }
+            }}
+          />
+        </div>
+        <div style={grayWrapperStyle}>
+          <TextField
+            // TODO: make the border white
+            type={'password'}
+            required
+            variant="standard"
+            label="Confirm Password"
+            value={passwordConfirm}
+            style={{ width: '100%' }}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#FFFFFF' }
+            }}
+            InputProps={{
+              style: { color: '#FFFFFF' }
+            }}
+          />
+        </div>
 
         <Typography class="card-text-red">{confirmMsg}</Typography>
+
+        <Link to="/user_auth/login">
+          <Button class="card-button" variant="contained" color="primary" size="large">
+            Back
+          </Button>
+        </Link>
 
         <Button
           class="card-button"
@@ -85,9 +103,6 @@ export default function SignUpAccount(props) {
         >
           Next
         </Button>
-        <Link to={'/user_auth/login'}>
-          <Typography class="card-text"> Go to Sign in? </Typography>
-        </Link>
       </CardContent>
     </Card>
   );
@@ -107,10 +122,10 @@ export default function SignUpAccount(props) {
           value={username}
           onChange={(e) => setUsername(e.target.value.toLowerCase())}
           InputLabelProps={{
-            style: { color: '#ffffff' }
+            style: { color: '#29A0E2' }
           }}
           InputProps={{
-            style: { color: '#ffffff' }
+            style: { color: '#29A0E2' }
           }}
         />
         <TextField
@@ -123,10 +138,10 @@ export default function SignUpAccount(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPassword(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' }
+            style: { color: '#29A0E2' }
           }}
           InputProps={{
-            style: { color: '#ffffff' }
+            style: { color: '#29A0E2' }
           }}
         />
 
@@ -140,10 +155,10 @@ export default function SignUpAccount(props) {
           style={{ width: '80%', marginTop: '15%' }}
           onChange={(e) => setPasswordConfirm(e.target.value)}
           InputLabelProps={{
-            style: { color: '#ffffff' }
+            style: { color: '#29A0E2' }
           }}
           InputProps={{
-            style: { color: '#ffffff' }
+            style: { color: '#29A0E2' }
           }}
         />
 
@@ -204,17 +219,27 @@ export default function SignUpAccount(props) {
     );
   }
 
+  const containerStyle = {
+    backgroundColor: '#E1F1FF', // Replace with your desired color code
+    padding: '20px',
+    borderRadius: '8px',
+    width: '100%',
+    margin: 'auto'
+  };
+
   return (
     <div className="root">
-      {signUpCardDesktop}
-      <Grid container>
-        <Grid item xs={5}>
-          {/* {signUpCardDesktop} */}
+      <div style={containerStyle} className="background-container">
+        {signUpCardDesktop}
+        <Grid container>
+          <Grid item xs={5}>
+            {/* {signUpCardDesktop} */}
+          </Grid>
+          <Grid item xs={5}>
+            {/* {mottoDesktop} */}
+          </Grid>
         </Grid>
-        <Grid item xs={5}>
-          {/* {mottoDesktop} */}
-        </Grid>
-      </Grid>
+      </div>
     </div>
   );
 }
