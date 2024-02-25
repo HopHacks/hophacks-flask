@@ -4,6 +4,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input';
 import '../../../stylesheets/user_auth.css';
 import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
+import SignUpChecks from './SignUpChecks'; //added check page
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
 // import { useHistory } from 'react-router-dom';
@@ -46,7 +47,8 @@ function SignUp(props) {
   // decide which page is actively showing
   const ACCOUNT = 0;
   const PROFILE = 1;
-  const CONFIRMATION = 2;
+  const CHECKS = 2; //changed this to be 2
+  const CONFIRMATION = 3;
   const [activePage, setActivePage] = useState(ACCOUNT);
 
   // functions for account page
@@ -106,6 +108,8 @@ function SignUp(props) {
   //   );
   // }
 
+  //handles the user flow of the login
+  //TODO: Need to break up into more function
   async function handleProfileNext() {
     if (username.length === 0) {
       setProfileSubmitMsg('* Please enter a valid username.');
@@ -281,11 +285,19 @@ function SignUp(props) {
       return;
     }
     // Go to the confirmation page
-    setActivePage(CONFIRMATION);
+    setActivePage(CHECKS);
   }
 
   async function handleProfileBack() {
     setActivePage(ACCOUNT);
+  }
+
+  async function handleChecksNext() {
+    setActivePage(CONFIRMATION);
+  }
+
+  async function handleChecksBack() {
+    setActivePage(PROFILE);
   }
 
   function handleResumeFileChange(e) {
@@ -333,6 +345,7 @@ function SignUp(props) {
         />
       );
     } else if (activePage === PROFILE) {
+      //TODO: need to divide this up
       console.log('profile page');
       return (
         <SignUpProfile
@@ -365,6 +378,48 @@ function SignUp(props) {
           enabledButton={enabledButton}
           handleProfileNext={handleProfileNext}
           handleProfileBack={handleProfileBack}
+          handleResumeFileChange={handleResumeFileChange}
+          handleVaccinationFileChange={handleVaccinationFileChange}
+          handleResumeCheckBox={handleResumeCheckBox}
+          handleVaccinationCheckBox={handleVaccinationCheckBox}
+          handleConductCheckBox={handleConductCheckBox}
+          handleLogisticsCheckBox={handleLogisticsCheckBox}
+          handleCommunicationCheckBox={handleCommunicationCheckBox}
+        />
+      );
+    } else if (activePage == CHECKS) {
+      console.log('checks page');
+      return (
+        <SignUpChecks
+          isMobile={isMobile}
+          setFirst_name={setFirst_name}
+          setLast_name={setLast_name}
+          setAge={setAge}
+          setGender={setGender}
+          setEthnicity={setEthnicity}
+          phone_number={phone_number}
+          setPhone_number={setPhone_number}
+          school={school}
+          setSchool={setSchool}
+          major={major}
+          setMajor={setMajor}
+          setGrad={setGrad}
+          setGrad_month={setGrad_month}
+          setGrad_year={setGrad_year}
+          setFirst_hackathon={setFirst_hackathon}
+          setFirst_hophacks={setFirst_hophacks}
+          setLearn_about_us={setLearn_about_us}
+          resumeFile={resumeFile}
+          resumeChecked={resumeChecked}
+          vaccinationFile={vaccinationFile}
+          vaccinationChecked={vaccinationChecked}
+          conductCodeChecked={conductCodeChecked}
+          eventLogisticsChecked={eventLogisticsChecked}
+          communicationChecked={communicationChecked}
+          profileSubmitMsg={profileSubmitMsg}
+          enabledButton={enabledButton}
+          handleChecksNext={handleChecksNext}
+          handleChecksBack={handleChecksBack}
           handleResumeFileChange={handleResumeFileChange}
           handleVaccinationFileChange={handleVaccinationFileChange}
           handleResumeCheckBox={handleResumeCheckBox}

@@ -51,8 +51,8 @@ export default function SignUpProfile(props) {
   const profileSubmitMsg = props.profileSubmitMsg;
   const enabledButton = props.enabledButton;
 
-  const handleProfileNext = props.handleProfileNext;
-  const handleProfileBack = props.handleProfileBack;
+  const handleChecksNext = props.handleChecksNext;
+  const handleChecksBack = props.handleChecksBack;
   const handleResumeFileChange = props.handleResumeFileChange;
   const handleVaccinationCheckBox = props.handleVaccinationCheckBox;
   const handleVaccinationFileChange = props.handleVaccinationFileChange;
@@ -210,7 +210,7 @@ export default function SignUpProfile(props) {
   const profileCard = (
     <Card class="card">
       <CardContent>
-        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>CREATE A PROFILE</Typography>
+        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>TEST</Typography>
         <Typography class={isMobile ? 'mobile-subheader' : 'card-subtitle'}>
           step 1: basic info
         </Typography>
@@ -569,7 +569,7 @@ export default function SignUpProfile(props) {
             marginTop: isMobile ? '10%' : '5%'
           }}
           onClick={() => {
-            handleProfileBack();
+            handleChecksBack();
           }}
         >
           Back
@@ -588,7 +588,7 @@ export default function SignUpProfile(props) {
             marginTop: isMobile ? '10%' : '5%'
           }}
           onClick={() => {
-            handleProfileNext();
+            handleChecksNext();
           }}
         >
           Next

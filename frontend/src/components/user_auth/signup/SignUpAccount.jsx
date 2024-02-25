@@ -22,7 +22,9 @@ export default function SignUpAccount(props) {
   const signUpCardDesktop = (
     <Card class="card">
       <CardContent>
-        <Typography class="card-title">Sign Up</Typography>
+        <Typography class="card-title">CREATE A PROFILE</Typography>
+        <Typography class="card-subtitle">step 0: email info</Typography>
+        <Typography class="card-infoline">link your account!</Typography>
         <TextField
           // TODO: make the border white
           required
@@ -73,6 +75,17 @@ export default function SignUpAccount(props) {
         />
 
         <Typography class="card-text-red">{confirmMsg}</Typography>
+        <Button
+          class="card-button"
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={() => {
+            handleAccountNext(); //TODO: need to update the flow of this
+          }}
+        >
+          Back
+        </Button>
 
         <Button
           class="card-button"
@@ -87,6 +100,7 @@ export default function SignUpAccount(props) {
         </Button>
         <Link to={'/user_auth/login'}>
           <Typography class="card-text"> Go to Sign in? </Typography>
+          {/* TODO: change/remove this message now that we have a back button */}
         </Link>
       </CardContent>
     </Card>

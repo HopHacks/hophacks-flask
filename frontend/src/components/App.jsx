@@ -109,7 +109,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/">
-                    <SignUp />
+                    <Login />
                   </Route>
                 </Switch>
               </div>
