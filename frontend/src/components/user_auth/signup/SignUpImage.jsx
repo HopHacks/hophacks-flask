@@ -14,9 +14,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import PhoneInput from 'react-phone-number-input';
 import PhoneNumber from '../../account/PhoneNumber';
 
-//import Login from '../Login';
-//import { useHistory } from 'react-router-dom';
-
 import '../../../stylesheets/user_auth.css';
 
 export default function SignUpProfile(props) {
@@ -40,13 +37,13 @@ export default function SignUpProfile(props) {
   const profileSubmitMsg = props.profileSubmitMsg;
   const enabledButton = props.enabledButton;
 
-  const handleProfileNext = props.handleProfileNext;
-  const handleProfileBack = props.handleProfileBack;
+  const handleImageNext = props.handleImageNext;
+  const handleImageBack = props.handleImageBack;
 
   const profileCard = (
     <Card class="card">
       <CardContent>
-        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>CREATE A PROFILE</Typography>
+        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>IMAGE HERE</Typography>
         <Typography class={isMobile ? 'mobile-subheader' : 'card-subtitle'}>
           step 1: basic info
         </Typography>
@@ -281,7 +278,7 @@ export default function SignUpProfile(props) {
             marginTop: isMobile ? '10%' : '5%'
           }}
           onClick={() => {
-            handleProfileBack();
+            handleImageBack();
           }}
         >
           Back
@@ -300,7 +297,7 @@ export default function SignUpProfile(props) {
             marginTop: isMobile ? '10%' : '5%'
           }}
           onClick={() => {
-            handleProfileNext();
+            handleImageNext();
           }}
         >
           Next

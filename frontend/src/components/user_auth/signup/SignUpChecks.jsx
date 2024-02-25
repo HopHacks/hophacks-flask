@@ -1,6 +1,5 @@
 import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
-//import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -8,35 +7,15 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
-//import MajorAutocomplete from '../../account/MajorAutocomplete';
-//import SchoolAutocomplete from '../../account/SchoolAutocomplete';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-//import FormHelperText from '@material-ui/core/FormHelperText';
-
-//import PhoneInput from 'react-phone-number-input';
-//import PhoneNumber from '../../account/PhoneNumber';
 
 import '../../../stylesheets/user_auth.css';
 
 export default function SignUpProfile(props) {
   const isMobile = props.isMobile;
 
-  // const setFirst_name = props.setFirst_name;
-  // const setLast_name = props.setLast_name;
-  // const setAge = props.setAge;
-  // const setGender = props.setGender;
-  // const setEthnicity = props.setEthnicity;
-  // const phone_number = props.phone_number;
-  // const setPhone_number = props.setPhone_number;
-  // const school = props.school;
-  // const setSchool = props.setSchool;
-  // const major = props.major;
-  // const setMajor = props.setMajor;
-  // const setGrad = props.setGrad;
-  // const setGrad_month = props.setGrad_month;
-  // const setGrad_year = props.setGrad_year;
   const setFirst_hackathon = props.setFirst_hackathon;
   const setFirst_hophacks = props.setFirst_hophacks;
   const setLearn_about_us = props.setLearn_about_us;

@@ -18,6 +18,7 @@ export default function SignUpAccount(props) {
   const setPasswordConfirm = props.setPasswordConfirm;
   const confirmMsg = props.confirmMsg;
   const handleAccountNext = props.handleAccountNext;
+  //const handleAccountBack = props.handleAccountBack;
 
   const signUpCardDesktop = (
     <Card class="card">
@@ -183,39 +184,8 @@ export default function SignUpAccount(props) {
     </Card>
   );
 
-  // const mottoDesktop = (
-  //   <div style={{ marginTop: '30%', marginRight: '-20%' }}>
-  //     <div>
-  //       <Typography class="motto-text">Hack Your Passion Into Reality</Typography>
-  //       <Typography class="motto-text" align="left">
-  //         HopHacks
-  //       </Typography>
-  //     </div>
-  //     <div style={{ marginTop: '15%' }}>
-  //       <Typography class="motto-subtext">Innovate | Collaborate | Dominate</Typography>
-  //     </div>
-  //   </div>
-  // );
-
-  const mottoMobile = (
-    <div style={{ marginTop: '10%' }}>
-      <Typography class="mobile-header">HOPHACKS</Typography>
-      <Typography class="mobile-motto-text" style={{ marginTop: '15%' }}>
-        Hack Your Passion Into Reality
-      </Typography>
-      <Typography class="mobile-motto-subtext" style={{ marginTop: '-3%' }}>
-        Innovate | Collaborate | Dominate
-      </Typography>
-    </div>
-  );
-
   if (isMobile) {
-    return (
-      <div className="root">
-        {mottoMobile}
-        {signUpCardMobile}
-      </div>
-    );
+    return <div className="root">{signUpCardMobile}</div>;
   }
 
   return (

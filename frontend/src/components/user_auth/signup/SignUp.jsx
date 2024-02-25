@@ -5,6 +5,7 @@ import '../../../stylesheets/user_auth.css';
 import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
 import SignUpChecks from './SignUpChecks'; //added check page
+import SignUpImage from './SignUpImage'; //added image page
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
 // import { useHistory } from 'react-router-dom';
@@ -48,7 +49,8 @@ function SignUp(props) {
   const ACCOUNT = 0;
   const PROFILE = 1;
   const CHECKS = 2; //changed this to be 2
-  const CONFIRMATION = 3;
+  const IMAGE = 3; //changed this to be 3
+  const CONFIRMATION = 4;
   const [activePage, setActivePage] = useState(ACCOUNT);
 
   // functions for account page
@@ -89,7 +91,12 @@ function SignUp(props) {
     setActivePage(PROFILE);
   }
 
-  // TODO: Configure this user flow
+  // TODO: need to figure this out
+  // async function handleAccountBack() {
+  //   setActivePage();
+  // }
+
+  //TODO: Configure this user flow
   // async function handleProfileBack() {
   //   setActivePage(Login);
   // }
@@ -138,7 +145,12 @@ function SignUp(props) {
       setProfileSubmitMsg('* Please select an ethnicity.');
       return;
     }
+    //TODO: not sure why there are two phone number checks
     if (phone_number === undefined || phone_number.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid phone number.');
+      return;
+    }
+    if (!isValidPhoneNumber(phone_number)) {
       setProfileSubmitMsg('* Please enter a valid phone number.');
       return;
     }
@@ -176,11 +188,6 @@ function SignUp(props) {
 
     if (learn_about_us === 0) {
       setProfileSubmitMsg('* Please select how you heard about us.');
-      return;
-    }
-
-    if (!isValidPhoneNumber(phone_number)) {
-      setProfileSubmitMsg('* Please enter a valid phone number.');
       return;
     }
 
@@ -289,11 +296,19 @@ function SignUp(props) {
     } catch (e) {
       return;
     }
-    setActivePage(CONFIRMATION);
+    setActivePage(IMAGE);
   }
 
   async function handleChecksBack() {
     setActivePage(PROFILE);
+  }
+
+  async function handleImageNext() {
+    setActivePage(CONFIRMATION);
+  }
+
+  async function handleImageBack() {
+    setActivePage(CHECKS);
   }
 
   function handleResumeFileChange(e) {
@@ -360,27 +375,27 @@ function SignUp(props) {
           setGrad={setGrad}
           setGrad_month={setGrad_month}
           setGrad_year={setGrad_year}
-          setFirst_hackathon={setFirst_hackathon}
-          setFirst_hophacks={setFirst_hophacks}
-          setLearn_about_us={setLearn_about_us}
-          resumeFile={resumeFile}
-          resumeChecked={resumeChecked}
-          vaccinationFile={vaccinationFile}
-          vaccinationChecked={vaccinationChecked}
-          conductCodeChecked={conductCodeChecked}
-          eventLogisticsChecked={eventLogisticsChecked}
-          communicationChecked={communicationChecked}
+          // setFirst_hackathon={setFirst_hackathon}
+          // setFirst_hophacks={setFirst_hophacks}
+          // setLearn_about_us={setLearn_about_us}
+          // resumeFile={resumeFile}
+          // resumeChecked={resumeChecked}
+          // vaccinationFile={vaccinationFile}
+          // vaccinationChecked={vaccinationChecked}
+          // conductCodeChecked={conductCodeChecked}
+          // eventLogisticsChecked={eventLogisticsChecked}
+          // communicationChecked={communicationChecked}
           profileSubmitMsg={profileSubmitMsg}
           enabledButton={enabledButton}
           handleProfileNext={handleProfileNext}
           handleProfileBack={handleProfileBack}
-          handleResumeFileChange={handleResumeFileChange}
-          handleVaccinationFileChange={handleVaccinationFileChange}
-          handleResumeCheckBox={handleResumeCheckBox}
-          handleVaccinationCheckBox={handleVaccinationCheckBox}
-          handleConductCheckBox={handleConductCheckBox}
-          handleLogisticsCheckBox={handleLogisticsCheckBox}
-          handleCommunicationCheckBox={handleCommunicationCheckBox}
+          // handleResumeFileChange={handleResumeFileChange}
+          // handleVaccinationFileChange={handleVaccinationFileChange}
+          // handleResumeCheckBox={handleResumeCheckBox}
+          // handleVaccinationCheckBox={handleVaccinationCheckBox}
+          // handleConductCheckBox={handleConductCheckBox}
+          // handleLogisticsCheckBox={handleLogisticsCheckBox}
+          // handleCommunicationCheckBox={handleCommunicationCheckBox}
         />
       );
     } else if (activePage == CHECKS) {
@@ -388,20 +403,20 @@ function SignUp(props) {
       return (
         <SignUpChecks
           isMobile={isMobile}
-          setFirst_name={setFirst_name}
-          setLast_name={setLast_name}
-          setAge={setAge}
-          setGender={setGender}
-          setEthnicity={setEthnicity}
-          phone_number={phone_number}
-          setPhone_number={setPhone_number}
-          school={school}
-          setSchool={setSchool}
-          major={major}
-          setMajor={setMajor}
-          setGrad={setGrad}
-          setGrad_month={setGrad_month}
-          setGrad_year={setGrad_year}
+          // setFirst_name={setFirst_name}
+          // setLast_name={setLast_name}
+          // setAge={setAge}
+          // setGender={setGender}
+          // setEthnicity={setEthnicity}
+          // phone_number={phone_number}
+          // setPhone_number={setPhone_number}
+          // school={school}
+          // setSchool={setSchool}
+          // major={major}
+          // setMajor={setMajor}
+          // setGrad={setGrad}
+          // setGrad_month={setGrad_month}
+          // setGrad_year={setGrad_year}
           setFirst_hackathon={setFirst_hackathon}
           setFirst_hophacks={setFirst_hophacks}
           setLearn_about_us={setLearn_about_us}
@@ -423,6 +438,17 @@ function SignUp(props) {
           handleConductCheckBox={handleConductCheckBox}
           handleLogisticsCheckBox={handleLogisticsCheckBox}
           handleCommunicationCheckBox={handleCommunicationCheckBox}
+        />
+      );
+    } else if (activePage == IMAGE) {
+      console.log('image page');
+      return (
+        <SignUpImage
+          isMobile={isMobile}
+          profileSubmitMsg={profileSubmitMsg}
+          enabledButton={enabledButton}
+          handleImageNext={handleImageNext}
+          handleImageBack={handleImageBack}
         />
       );
     } else {
