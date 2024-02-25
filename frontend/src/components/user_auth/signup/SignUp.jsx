@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import '../../../stylesheets/user_auth.css';
 import SignUpAccount from './SignUpAccount';
@@ -41,7 +41,8 @@ function SignUp(props) {
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
-  const [enabledButton, setEnabledButton] = useState(true);
+  const [enabledButton] = useState(true); //TMP get rid of setEnabledButton
+  //const [enabledButton, setEnabledButton] = useState(true); //ORIGINAL
 
   const isMobile = props.isMobile;
 
@@ -222,80 +223,81 @@ function SignUp(props) {
       return;
     }
 
+    //TODO: uncomment for actual testing
     const data = new FormData();
     data.append('file', resumeFile);
-    data.append(
-      'json_file',
-      JSON.stringify({
-        username: username,
-        password: password,
-        confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email',
-        profile: {
-          first_name: first_name,
-          last_name: last_name,
-          gender: gender,
-          age: age,
-          major: major,
-          phone_number: phone_number,
-          school: school,
-          ethnicity: ethnicity,
-          grad: grad,
-          is_jhu: school === 'Johns Hopkins University' ? true : false,
-          grad_month: grad_month,
-          grad_year: grad_year,
-          mlh_emails: communicationChecked,
-          first_hackathon: first_hackathon,
-          first_hophacks: first_hophacks,
-          learn_about_us: learn_about_us
-        }
-      })
-    );
+    // data.append(
+    //   'json_file',
+    //   JSON.stringify({
+    //     username: username,
+    //     password: password,
+    //     confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email',
+    //     profile: {
+    //       first_name: first_name,
+    //       last_name: last_name,
+    //       gender: gender,
+    //       age: age,
+    //       major: major,
+    //       phone_number: phone_number,
+    //       school: school,
+    //       ethnicity: ethnicity,
+    //       grad: grad,
+    //       is_jhu: school === 'Johns Hopkins University' ? true : false,
+    //       grad_month: grad_month,
+    //       grad_year: grad_year,
+    //       mlh_emails: communicationChecked,
+    //       first_hackathon: first_hackathon,
+    //       first_hophacks: first_hophacks,
+    //       learn_about_us: learn_about_us
+    //     }
+    //   })
+    // );
 
-    try {
-      setEnabledButton(false);
-      await axios.post('/api/accounts/create', data);
+    // try {
+    //   setEnabledButton(false);
+    //   await axios.post('/api/accounts/create', data);
 
-      //   await axios.post('/api/slack/registration', {
-      //     first_name: first_name,
-      //     last_name: last_name,
-      //     school: school,
-      //   });
-      await axios.post('/api/slack/registration', {
-        first_name: first_name,
-        last_name: last_name,
-        school: school
-      });
+    //   //   await axios.post('/api/slack/registration', {
+    //   //     first_name: first_name,
+    //   //     last_name: last_name,
+    //   //     school: school,
+    //   //   });
+    //   await axios.post('/api/slack/registration', {
+    //     first_name: first_name,
+    //     last_name: last_name,
+    //     school: school
+    //   });
 
-      try {
-        await props.login(username, password);
-        // if (username !== 'admin') {
-        //   history.push('/profile');
-        // } else {
-        //   history.push('/admin');
-        // }
-        console.log('failed here');
-        const resumeData = new FormData();
-        resumeData.append('file', resumeFile);
-        await axios.post('/api/resumes/', resumeData);
+    //   try {
+    //     await props.login(username, password);
+    //     // if (username !== 'admin') {
+    //     //   history.push('/profile');
+    //     // } else {
+    //     //   history.push('/admin');
+    //     // }
+    //     console.log('failed here');
+    //     const resumeData = new FormData();
+    //     resumeData.append('file', resumeFile);
+    //     await axios.post('/api/resumes/', resumeData);
 
-        const vaccinationData = new FormData();
-        vaccinationData.append('file', vaccinationFile);
-        await axios.post('/api/vaccination/', vaccinationData);
-      } catch (error) {
-        setEnabledButton(true);
-      }
-      // await axios.post('/api/slack/registration', {
-      //   first_name: first_name,
-      //   last_name: last_name,
-      //   school: school
-      // });
+    //     const vaccinationData = new FormData();
+    //     vaccinationData.append('file', vaccinationFile);
+    //     await axios.post('/api/vaccination/', vaccinationData);
+    //   } catch (error) {
+    //     setEnabledButton(true);
+    //   }
+    //   // await axios.post('/api/slack/registration', {
+    //   //   first_name: first_name,
+    //   //   last_name: last_name,
+    //   //   school: school
+    //   // });
 
-      // const resumeData = new FormData();
-      // resumeData.append('file', resumeFile);
-      // await axios.post('/api/resumes', resumeData);
-    } catch (e) {
-      return;
-    }
+    //   // const resumeData = new FormData();
+    //   // resumeData.append('file', resumeFile);
+    //   // await axios.post('/api/resumes', resumeData);
+    // } catch (e) {
+    //   return;
+    // }
     setActivePage(IMAGE);
   }
 
