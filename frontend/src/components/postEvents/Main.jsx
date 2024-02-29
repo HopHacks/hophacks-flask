@@ -51,7 +51,7 @@ const Main = () => {
         <PageBox activeLoc={activeLoc} num="3"/>
 
         <PageBox activeLoc={activeLoc} num="4" text='just some cool things about this year '/>
-        <PageBox activeLoc={activeLoc} num="5" text='here are the spectacular projects that won ! '/>
+        <PageBox activeLoc={activeLoc} num="5" text='here are some of the spectacular projects that won ! '/>
         <PageBox activeLoc={activeLoc} num="6" text='and most importantly, we want to thank...'/>
 
         {/*down button*/}
