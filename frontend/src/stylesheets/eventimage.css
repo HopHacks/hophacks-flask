@@ -1,7 +1,7 @@
 .main {
-    background-color: #350225;
-    width: 100%;
-    height: 100%;
+    position: relative;
+
+    height: 100vh;
     display: flex;
     justify-content: space-between;
     gap: 10px;

@@ -48,7 +48,6 @@ export default function App() {
           <AuthProvider>
             <CssBaseline />
             <Router>
-              <div>
                 {/* <Nav /> */}
 
                 <Switch>
@@ -130,7 +129,6 @@ export default function App() {
                     <Home />
                   </Route>
                 </Switch>
-              </div>
             </Router>
           </AuthProvider>
         </MuiThemeProvider>

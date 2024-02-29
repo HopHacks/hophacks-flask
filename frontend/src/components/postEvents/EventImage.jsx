@@ -18,6 +18,7 @@ const EventImage = (props) => {
 
   return (
     <div className='main'>
+
         <div className='left'>
             <img style={{ transition: "opacity 3s 0.25s" }}  src='images/event1.jpeg' className='eventimg1 img1' ref={image1}/>
             <img style={{ transition: "opacity 3s 0.5s" }} src='images/event2.jpeg' className='eventimg1 img2' ref={image2}/>
@@ -27,6 +28,7 @@ const EventImage = (props) => {
         <h1 style={{ transition: "margin-left 3s .5s" }} className='memories' ref={memoriesText}>memories were <br />made...</h1>
 
         </div>
+
     </div>
   )
 }

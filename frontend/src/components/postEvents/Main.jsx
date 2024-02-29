@@ -1,10 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import PageBox from './PageBox'
 import '../../stylesheets/postevents.css';
 
 const Main = () => {
   const [activeLoc, setActiveLoc] = useState(1);
-  
+
+  // scrolling sets the active location and scrolls to the next page
+
+  function scrollHandler(e) {
+    if(document.documentElement.scrollTop % document.documentElement.clientHeight == 0){
+      setActiveLoc(document.documentElement.scrollTop / document.documentElement.clientHeight + 1);
+      location.href = '#' + (document.documentElement.scrollTop / document.documentElement.clientHeight + 1) ;
+    }
+
+  }
+
+  useEffect(()  => {
+    scrollHandler();
+    document.addEventListener('scrollend', scrollHandler);
+  },[]);
+
   return (
     <>
     {/* up button */}
@@ -26,12 +41,11 @@ const Main = () => {
             </button>
           </div>
         ) : (
+          // an empty box for positioning
           <div className="down"></div>
         )}
 
         {/*content*/}
-
-        {/* <Origin /> */}
         <PageBox activeLoc={activeLoc} num="1"/>
         <PageBox activeLoc={activeLoc} num="2"/>
         <PageBox activeLoc={activeLoc} num="3"/>
@@ -58,8 +72,10 @@ const Main = () => {
             </button>
           </div>
         ) : (
+          // an empty box for positioning
           <div className="down"></div>
         )}
+
     </>
   )
 }
