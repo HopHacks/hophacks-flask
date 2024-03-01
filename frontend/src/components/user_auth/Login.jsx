@@ -44,41 +44,43 @@ function Login(props) {
     <Card class="card">
       <CardContent>
         <Typography class="card-title">LOGIN</Typography>
-        <TextField
-          // TODO: make the border white
-          required
-          variant="standard"
-          label="email address"
-          style={{ width: '80%' }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
-        <TextField
-          // TODO: make the border white
-          type={'password'}
-          required
-          variant="standard"
-          label="password"
-          value={password}
-          style={{ width: '80%', marginTop: '15%' }}
-          onChange={(e) => setPassword(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
+        <div className="text-field">
+          <TextField
+            required
+            variant="standard"
+            label="email address"
+            style={{ width: '100%' }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#061A40' }
+            }}
+            InputProps={{
+              style: { color: '#061A40' }
+            }}
+          />
+        </div>
+        <div className="text-field">
+          <TextField
+            type={'password'}
+            required
+            variant="standard"
+            label="password"
+            value={password}
+            style={{ width: '100%' }}
+            onChange={(e) => setPassword(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#061A40' }
+            }}
+            InputProps={{
+              style: { color: '#061A40' }
+            }}
+          />
+        </div>
 
         <div style={{ textAlign: 'right' }}>
           <Link to={'/user_auth/resetpassword'}>
-            <Typography class="card-text"> forgot password? </Typography>
+            <Typography class="card-text-blue"> forgot password? </Typography>
           </Link>
           {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
         </div>
@@ -105,7 +107,7 @@ function Login(props) {
         </Button>
 
         <Link to={'/user_auth/signup'}>
-          <Typography class="card-text"> need a profile? </Typography>
+          <Typography class="card-text-blue"> need a profile? </Typography>
         </Link>
       </CardContent>
     </Card>
@@ -168,20 +170,6 @@ function Login(props) {
       </CardContent>
     </Card>
   );
-
-  // const mottoDesktop = (
-  //   <div style={{ marginTop: '30%', marginRight: '-20%' }}>
-  //     <div>
-  //       <Typography class="motto-text">New Page</Typography>
-  //       <Typography class="motto-text" align="left">
-  //         HopHacks
-  //       </Typography>
-  //     </div>
-  //     <div style={{ marginTop: '15%' }}>
-  //       <Typography class="motto-subtext">New Motto</Typography>
-  //     </div>
-  //   </div>
-  // );
 
   const mottoMobile = (
     <div style={{ marginTop: '10%' }}>

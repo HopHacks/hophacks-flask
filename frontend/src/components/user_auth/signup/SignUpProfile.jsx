@@ -55,19 +55,21 @@ export default function SignUpProfile(props) {
         </Typography>
         <Grid container spacing={isMobile ? 2 : 5}>
           <Grid item xs={isMobile ? 12 : 5}>
-            <TextField
-              required
-              variant="standard"
-              label="First Name"
-              style={{ width: '100%' }}
-              onChange={(e) => setFirst_name(e.target.value)}
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            />
+            <div className="text-field">
+              <TextField
+                required
+                variant="standard"
+                label="First Name"
+                style={{ width: '100%' }}
+                onChange={(e) => setFirst_name(e.target.value)}
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              />
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 5}>
             <TextField

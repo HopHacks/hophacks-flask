@@ -19,103 +19,96 @@ export default function SignUpAccount(props) {
   const confirmMsg = props.confirmMsg;
   const handleAccountNext = props.handleAccountNext;
 
-  const containerStyle = {
-    backgroundColor: '#E1F1FF',
-    padding: '4px',
-    borderRadius: '20px',
-    width: '100%',
-    margin: 'auto'
-  };
-
-  const grayWrapperStyle = {
-    backgroundColor: '#D9D9D9',
-    padding: '10px',
-    borderRadius: '4px',
-    marginBottom: '10px'
-  };
+  // const grayWrapperStyle = {
+  //   backgroundColor: '#D9D9D9',
+  //   padding: '10px',
+  //   borderRadius: '4px',
+  //   marginBottom: '10px'
+  // };
   //const handleAccountBack = props.handleAccountBack;
 
   const signUpCardDesktop = (
     <Card class="card">
-      <div style={containerStyle} className="background-container">
-        <CardContent>
-          <Typography class="card-title">CREATE A PROFILE</Typography>
-          <Typography class="card-subtitle">step 0: email info</Typography>
-          <Typography class="card-infoline">link your account!</Typography>
-          <div style={grayWrapperStyle}>
-            <TextField
-              // TODO: make the border white
-              required
-              variant="standard"
-              label="Email Address"
-              style={{ width: '100%' }}
-              value={username}
-              onChange={(e) => setUsername(e.target.value.toLowerCase())}
-              InputLabelProps={{
-                style: { color: '#FFFFFF' }
-              }}
-              InputProps={{
-                style: { color: '#FFFFFF' }
-              }}
-            />
-          </div>
-          <div style={grayWrapperStyle}>
-            <TextField
-              // TODO: make the border white
-              type={'password'}
-              required
-              variant="standard"
-              label="Password"
-              value={password}
-              style={{ width: '100%' }}
-              onChange={(e) => setPassword(e.target.value)}
-              InputLabelProps={{
-                style: { color: '#FFFFFF' }
-              }}
-              InputProps={{
-                style: { color: '#FFFFFF' }
-              }}
-            />
-          </div>
-          <div style={grayWrapperStyle}>
-            <TextField
-              // TODO: make the border white
-              type={'password'}
-              required
-              variant="standard"
-              label="Confirm Password"
-              value={passwordConfirm}
-              style={{ width: '100%' }}
-              onChange={(e) => setPasswordConfirm(e.target.value)}
-              InputLabelProps={{
-                style: { color: '#FFFFFF' }
-              }}
-              InputProps={{
-                style: { color: '#FFFFFF' }
-              }}
-            />
-          </div>
-
-          <Typography class="card-text-red">{confirmMsg}</Typography>
-
-          <Link to="/user_auth/login">
-            <Button class="card-button" variant="contained" color="primary" size="large">
-              Back
-            </Button>
-          </Link>
-          <Button
-            class="card-button"
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={() => {
-              handleAccountNext();
+      <CardContent>
+        <Typography class="card-title">CREATE A PROFILE</Typography>
+        <Typography class="card-subtitle">step 0: email info</Typography>
+        <Typography class="card-infoline">link your account!</Typography>
+        <div className="text-field">
+          <TextField
+            // TODO: make the border white
+            required
+            variant="standard"
+            label="email address"
+            style={{ width: '100%' }}
+            value={username}
+            onChange={(e) => setUsername(e.target.value.toLowerCase())}
+            InputLabelProps={{
+              style: { color: '#061A40' }
             }}
-          >
-            Next
+            InputProps={{
+              style: { color: '#061A40' }
+            }}
+          />
+        </div>
+        <div className="text-field">
+          <TextField
+            // TODO: make the border white
+            type={'password'}
+            required
+            variant="standard"
+            label="password"
+            value={password}
+            style={{ width: '100%' }}
+            onChange={(e) => setPassword(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#061A40' }
+            }}
+            InputProps={{
+              style: { color: '#061A40' }
+            }}
+          />
+        </div>
+        <div className="text-field">
+          <TextField
+            // TODO: make the border white
+            type={'password'}
+            required
+            variant="standard"
+            label="confirm password"
+            value={passwordConfirm}
+            style={{ width: '100%' }}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#061A40' }
+            }}
+            InputProps={{
+              style: { color: '#061A40' },
+              classes: {
+                focused: 'text-field:focus-within'
+              }
+            }}
+          />
+        </div>
+
+        <Typography class="card-text-red">{confirmMsg}</Typography>
+
+        <Link to="/user_auth/login">
+          <Button class="card-button" variant="contained" color="primary" size="large">
+            Back
           </Button>
-        </CardContent>
-      </div>
+        </Link>
+        <Button
+          class="card-button"
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={() => {
+            handleAccountNext();
+          }}
+        >
+          Next
+        </Button>
+      </CardContent>
     </Card>
   );
 
