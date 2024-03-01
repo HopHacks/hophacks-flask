@@ -9,8 +9,13 @@ const Main = () => {
 
   function scrollHandler(e) {
     if(document.documentElement.scrollTop % document.documentElement.clientHeight == 0){
-      setActiveLoc(document.documentElement.scrollTop / document.documentElement.clientHeight + 1);
-      location.href = '#' + (document.documentElement.scrollTop / document.documentElement.clientHeight + 1) ;
+      if(activeLoc + 1 == document.documentElement.scrollTop / document.documentElement.clientHeight + 1 || activeLoc - 1 == document.documentElement.scrollTop / document.documentElement.clientHeight + 1){
+        setActiveLoc(document.documentElement.scrollTop / document.documentElement.clientHeight + 1);
+        location.href = '#' + (document.documentElement.scrollTop / document.documentElement.clientHeight + 1) ;
+      }
+      else {
+        location.href = '#' + (activeLoc);
+      }
     }
 
   }
