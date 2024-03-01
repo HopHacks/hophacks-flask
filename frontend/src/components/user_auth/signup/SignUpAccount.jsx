@@ -39,7 +39,7 @@ export default function SignUpAccount(props) {
             required
             variant="standard"
             label="email address"
-            style={{ width: '100%' }}
+            style={{ width: '90%' }}
             value={username}
             onChange={(e) => setUsername(e.target.value.toLowerCase())}
             InputLabelProps={{
@@ -52,13 +52,12 @@ export default function SignUpAccount(props) {
         </div>
         <div className="text-field">
           <TextField
-            // TODO: make the border white
             type={'password'}
             required
             variant="standard"
             label="password"
             value={password}
-            style={{ width: '100%' }}
+            style={{ width: '90%' }}
             onChange={(e) => setPassword(e.target.value)}
             InputLabelProps={{
               style: { color: '#061A40' }
@@ -76,38 +75,39 @@ export default function SignUpAccount(props) {
             variant="standard"
             label="confirm password"
             value={passwordConfirm}
-            style={{ width: '100%' }}
+            style={{ width: '90%' }}
             onChange={(e) => setPasswordConfirm(e.target.value)}
             InputLabelProps={{
               style: { color: '#061A40' }
             }}
             InputProps={{
-              style: { color: '#061A40' },
-              classes: {
-                focused: 'text-field:focus-within'
-              }
+              style: { color: '#061A40' }
             }}
           />
         </div>
 
         <Typography class="card-text-red">{confirmMsg}</Typography>
 
-        <Link to="/user_auth/login">
-          <Button class="card-button" variant="contained" color="primary" size="large">
-            Back
-          </Button>
-        </Link>
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={() => {
-            handleAccountNext();
-          }}
-        >
-          Next
-        </Button>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Link to="/user_auth/login">
+            <Button class="card-button" variant="contained" color="primary" size="large">
+              Back
+            </Button>
+          </Link>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              class="card-button"
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={() => {
+                handleAccountNext();
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

@@ -72,241 +72,263 @@ export default function SignUpProfile(props) {
             </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 5}>
-            <TextField
-              required
-              variant="standard"
-              label="Last Name"
-              style={{ width: '100%' }}
-              onChange={(e) => setLast_name(e.target.value)}
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            />
+            <div className="text-field">
+              <TextField
+                required
+                variant="standard"
+                label="Last Name"
+                style={{ width: '100%' }}
+                onChange={(e) => setLast_name(e.target.value)}
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              />
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 2}>
-            <TextField
-              required
-              variant="standard"
-              type="number"
-              label="Age"
-              style={{ width: '100%' }}
-              onChange={(e) => setAge(e.target.value)}
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' },
-                inputProps: { min: 0 }
-              }}
-            />
+            <div className="text-field">
+              <TextField
+                required
+                variant="standard"
+                type="number"
+                label="Age"
+                style={{ width: '100%' }}
+                onChange={(e) => setAge(e.target.value)}
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' },
+                  inputProps: { min: 0 }
+                }}
+              />
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <TextField
-              required
-              variant="standard"
-              label="Gender"
-              style={{ width: '100%' }}
-              onChange={(e) => {
-                setGender(e.target.value);
-              }}
-              select
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            >
-              <MenuItem value="Male">Male</MenuItem>
-              <MenuItem value="Female">Female</MenuItem>
-              <MenuItem value="Non-Binary">Non-Binary</MenuItem>
-              <MenuItem value="Transgender">Transgender</MenuItem>
-              <MenuItem value="Intersex">Intersex</MenuItem>
-              <MenuItem value="Not listed">Not listed</MenuItem>
-              <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-            </TextField>
+            <div className="text-field">
+              <TextField
+                required
+                variant="standard"
+                label="Gender"
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setGender(e.target.value);
+                }}
+                select
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              >
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Non-Binary">Non-Binary</MenuItem>
+                <MenuItem value="Transgender">Transgender</MenuItem>
+                <MenuItem value="Intersex">Intersex</MenuItem>
+                <MenuItem value="Not listed">Not listed</MenuItem>
+                <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
+              </TextField>
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <TextField
-              required
-              variant="standard"
-              label="Ethnicity"
-              style={{ width: '100%' }}
-              onChange={(e) => {
-                setEthnicity(e.target.value);
-              }}
-              select
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            >
-              <MenuItem value="American Indian or Alaska Native">
-                American Indian or Alaska Native
-              </MenuItem>
-              <MenuItem value="Asian">Asian</MenuItem>
-              <MenuItem value="Black or African American">Black or African American</MenuItem>
-              <MenuItem value="Hispanic, Latino or Spanish Origin">
-                Hispanic, Latino or Spanish Origin
-              </MenuItem>
-              <MenuItem value="Middle Eastern or North African">
-                Middle Eastern or North African
-              </MenuItem>
-              <MenuItem value="Native Hawaiian or Other Pacific Islander">
-                Native Hawaiian or Other Pacific Islander
-              </MenuItem>
-              <MenuItem value="White">White</MenuItem>
-              <MenuItem value="Multiethnic">Multiethnic</MenuItem>
-              <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-            </TextField>
+            <div className="text-field">
+              <TextField
+                required
+                variant="standard"
+                label="Ethnicity"
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setEthnicity(e.target.value);
+                }}
+                select
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              >
+                <MenuItem value="American Indian or Alaska Native">
+                  American Indian or Alaska Native
+                </MenuItem>
+                <MenuItem value="Asian">Asian</MenuItem>
+                <MenuItem value="Black or African American">Black or African American</MenuItem>
+                <MenuItem value="Hispanic, Latino or Spanish Origin">
+                  Hispanic, Latino or Spanish Origin
+                </MenuItem>
+                <MenuItem value="Middle Eastern or North African">
+                  Middle Eastern or North African
+                </MenuItem>
+                <MenuItem value="Native Hawaiian or Other Pacific Islander">
+                  Native Hawaiian or Other Pacific Islander
+                </MenuItem>
+                <MenuItem value="White">White</MenuItem>
+                <MenuItem value="Multiethnic">Multiethnic</MenuItem>
+                <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
+              </TextField>
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <PhoneInput
-              international
-              withCountryCallingCode
-              onChange={setPhone_number}
-              inputComponent={PhoneNumber}
-              value={phone_number}
-            />
+            <div className="text-field">
+              <PhoneInput
+                international
+                withCountryCallingCode
+                onChange={setPhone_number}
+                inputComponent={PhoneNumber}
+                value={phone_number}
+              />
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 6}>
-            <FormControl required variant="standard" style={{ width: '100%' }}>
-              <SchoolAutocomplete school={school} setSchool={setSchool} />
-            </FormControl>
-            <FormHelperText style={{ fontSize: 9, color: 'white', width: '100%' }}>
+            <div className="text-field">
+              <FormControl required variant="standard" style={{ width: '100%' }}>
+                <SchoolAutocomplete school={school} setSchool={setSchool} />
+              </FormControl>
+            </div>
+            <FormHelperText style={{ fontSize: 9, color: '#061A40', width: '100%' }}>
               * If your school is not in the list, choose &apos;other schools&apos;
             </FormHelperText>
           </Grid>
           <Grid item xs={isMobile ? 12 : 6}>
-            <MajorAutocomplete major={major} setMajor={setMajor} />
-            <FormHelperText style={{ fontSize: 9, color: 'white', width: '100%' }}>
+            <div className="text-field">
+              <MajorAutocomplete major={major} setMajor={setMajor} />
+            </div>
+            <FormHelperText style={{ fontSize: 9, color: '#061A40', width: '100%' }}>
               * If your major is not in the list, choose &apos;other majors&apos;
             </FormHelperText>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <TextField
-              required
-              variant="standard"
-              label="Program"
-              style={{ width: '100%' }}
-              onChange={(e) => {
-                setGrad(e.target.value);
-              }}
-              select
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            >
-              <MenuItem value="Undergraduate">Undergraduate</MenuItem>
-              <MenuItem value="Graduate">Graduate</MenuItem>
-              <MenuItem value="Postgraduate">Postgraduate</MenuItem>
-            </TextField>
+            <div className="text-field">
+              <TextField
+                required
+                variant="standard"
+                label="Program"
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setGrad(e.target.value);
+                }}
+                select
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              >
+                <MenuItem value="Undergraduate">Undergraduate</MenuItem>
+                <MenuItem value="Graduate">Graduate</MenuItem>
+                <MenuItem value="Postgraduate">Postgraduate</MenuItem>
+              </TextField>
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <TextField
-              required
-              variant="standard"
-              label="Grad Month"
-              style={{ width: '100%' }}
-              onChange={(e) => {
-                setGrad_month(e.target.value);
-              }}
-              select
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            >
-              <MenuItem value="01">01</MenuItem>
-              <MenuItem value="02">02</MenuItem>
-              <MenuItem value="03">03</MenuItem>
-              <MenuItem value="04">04</MenuItem>
-              <MenuItem value="05">05</MenuItem>
-              <MenuItem value="06">06</MenuItem>
-              <MenuItem value="07">07</MenuItem>
-              <MenuItem value="08">08</MenuItem>
-              <MenuItem value="09">09</MenuItem>
-              <MenuItem value="10">10</MenuItem>
-              <MenuItem value="11">11</MenuItem>
-              <MenuItem value="12">12</MenuItem>
-            </TextField>
+            <div className="text-field">
+              <TextField
+                required
+                variant="standard"
+                label="Grad Month"
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setGrad_month(e.target.value);
+                }}
+                select
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              >
+                <MenuItem value="01">01</MenuItem>
+                <MenuItem value="02">02</MenuItem>
+                <MenuItem value="03">03</MenuItem>
+                <MenuItem value="04">04</MenuItem>
+                <MenuItem value="05">05</MenuItem>
+                <MenuItem value="06">06</MenuItem>
+                <MenuItem value="07">07</MenuItem>
+                <MenuItem value="08">08</MenuItem>
+                <MenuItem value="09">09</MenuItem>
+                <MenuItem value="10">10</MenuItem>
+                <MenuItem value="11">11</MenuItem>
+                <MenuItem value="12">12</MenuItem>
+              </TextField>
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <TextField
-              required
-              variant="standard"
-              label="Grad Year"
-              style={{ width: '100%' }}
-              onChange={(e) => {
-                setGrad_year(e.target.value);
-              }}
-              select
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            >
-              <MenuItem value="2022">2022</MenuItem>
-              <MenuItem value="2023">2023</MenuItem>
-              <MenuItem value="2024">2024</MenuItem>
-              <MenuItem value="2025">2025</MenuItem>
-              <MenuItem value="2026">2026</MenuItem>
-              <MenuItem value="2027">2027</MenuItem>
-              <MenuItem value="2028">2028</MenuItem>
-            </TextField>
+            <div className="text-field">
+              <TextField
+                required
+                variant="standard"
+                label="Grad Year"
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setGrad_year(e.target.value);
+                }}
+                select
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              >
+                <MenuItem value="2024">2024</MenuItem>
+                <MenuItem value="2025">2025</MenuItem>
+                <MenuItem value="2026">2026</MenuItem>
+                <MenuItem value="2027">2027</MenuItem>
+                <MenuItem value="2028">2028</MenuItem>
+                <MenuItem value="2029">2029</MenuItem>
+                <MenuItem value="2030">2030</MenuItem>
+              </TextField>
+            </div>
           </Grid>
         </Grid>
 
         <Typography class="card-text-red">{profileSubmitMsg}</Typography>
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={!enabledButton}
-          style={{
-            fontSize: '1.5rem',
-            width: isMobile ? '10rem' : '15rem',
-            height: isMobile ? '3rem' : '4rem',
-            marginTop: isMobile ? '10%' : '5%'
-          }}
-          onClick={() => {
-            handleProfileBack();
-          }}
-        >
-          Back
-        </Button>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            class="card-button"
+            variant="contained"
+            color="primary"
+            size="large"
+            disabled={!enabledButton}
+            style={{
+              fontSize: '1.5rem',
+              width: isMobile ? '10rem' : '15rem',
+              height: isMobile ? '3rem' : '4rem',
+              marginTop: isMobile ? '10%' : '5%'
+            }}
+            onClick={() => {
+              handleProfileBack();
+            }}
+          >
+            Back
+          </Button>
 
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={!enabledButton}
-          style={{
-            fontSize: '1.5rem',
-            width: isMobile ? '10rem' : '15rem',
-            height: isMobile ? '3rem' : '4rem',
-            marginTop: isMobile ? '10%' : '5%'
-          }}
-          onClick={() => {
-            handleProfileNext();
-          }}
-        >
-          Next
-        </Button>
+          <Button
+            class="card-button"
+            variant="contained"
+            color="primary"
+            size="large"
+            disabled={!enabledButton}
+            style={{
+              fontSize: '1.5rem',
+              width: isMobile ? '10rem' : '15rem',
+              height: isMobile ? '3rem' : '4rem',
+              marginTop: isMobile ? '10%' : '5%'
+            }}
+            onClick={() => {
+              handleProfileNext();
+            }}
+          >
+            Next
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

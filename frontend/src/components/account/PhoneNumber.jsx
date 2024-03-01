@@ -15,8 +15,8 @@ const phoneInput = (props, ref) => {
       label="Phone Number"
       variant="standard"
       name="phone"
-      InputLabelProps={{ style: { color: '#ffffff' } }}
-      InputProps={{ style: { color: '#ffffff' } }}
+      InputLabelProps={{ style: { color: '#061A40' } }}
+      InputProps={{ style: { color: '#061A40' } }}
     />
   );
 };

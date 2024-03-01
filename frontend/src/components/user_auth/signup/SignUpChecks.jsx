@@ -60,13 +60,13 @@ export default function SignUpProfile(props) {
               checked={resumeChecked}
               onChange={handleResumeCheckBox}
               inputProps={{ 'aria-label': 'primary checkbox' }}
-              color="white"
+              color="#061A40"
               size="small"
             />
           </div>
         }
         label={
-          <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
+          <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               * I authorize HopHacks to send my resume to our event sponsors for recruiting
               purposes.
@@ -87,13 +87,13 @@ export default function SignUpProfile(props) {
               checked={vaccinationChecked}
               onChange={handleVaccinationCheckBox}
               inputProps={{ 'aria-label': 'primary checkbox' }}
-              color="white"
+              color="#061A40"
               size="small"
             />
           </div>
         }
         label={
-          <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
+          <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>* I authorize HopHacks to verify my vaccination card for safety purposes.</span>
           </div>
         }
@@ -111,13 +111,13 @@ export default function SignUpProfile(props) {
               checked={conductCodeChecked}
               onChange={handleConductCheckBox}
               inputProps={{ 'aria-label': 'primary checkbox' }}
-              color="white"
+              color="#061A40"
               size="small"
             />
           </div>
         }
         label={
-          <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
+          <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>* I have read and understand the </span>
             <Link onClick={openCodeOfConduct}>MLH Code of Conduct</Link>
             <span>.</span>
@@ -137,13 +137,13 @@ export default function SignUpProfile(props) {
               checked={eventLogisticsChecked}
               onChange={handleLogisticsCheckBox}
               inputProps={{ 'aria-label': 'primary checkbox' }}
-              color="white"
+              color="#061A40"
               size="small"
             />
           </div>
         }
         label={
-          <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
+          <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               * I authorize you to share my application/registration information with Major League
               Hacking for event administration, ranking, and MLH administration in-line with the{' '}
@@ -168,13 +168,13 @@ export default function SignUpProfile(props) {
               checked={communicationChecked}
               onChange={handleCommunicationCheckBox}
               inputProps={{ 'aria-label': 'primary checkbox' }}
-              color="white"
+              color="#061A40"
               size="small"
             />
           </div>
         }
         label={
-          <div style={{ fontSize: 15, textAlign: 'left', color: 'white' }}>
+          <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               {' '}
               (Optional) I authorize MLH to send me pre- and post-event informational emails, which
@@ -198,128 +198,140 @@ export default function SignUpProfile(props) {
         </Typography>
         <Grid container spacing={isMobile ? 2 : 5}>
           <Grid item xs={isMobile ? 12 : 4}>
-            <span style={{ color: '#ffffff', float: 'left' }}>
-              Is this your first time attending a hackathon?*
-            </span>
-            <TextField
-              required
-              variant="standard"
-              style={{ width: '100%' }}
-              onChange={(e) => {
-                setFirst_hackathon(e.target.value);
-              }}
-              select
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            >
-              <MenuItem value="Yes">Yes</MenuItem>
-              <MenuItem value="No">No</MenuItem>
-            </TextField>
+            <div className="text-field">
+              <span style={{ color: '#061A40', float: 'left' }}>
+                Is this your first time attending a hackathon?*
+              </span>
+              <TextField
+                required
+                variant="standard"
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setFirst_hackathon(e.target.value);
+                }}
+                select
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              >
+                <MenuItem value="Yes">Yes</MenuItem>
+                <MenuItem value="No">No</MenuItem>
+              </TextField>
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <span style={{ color: '#ffffff', float: 'left' }}>
-              Is this your first time attending HopHacks?*
-            </span>
-            <TextField
-              required
-              variant="standard"
-              style={{ width: '100%' }}
-              onChange={(e) => {
-                setFirst_hophacks(e.target.value);
-              }}
-              select
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            >
-              <MenuItem value="Yes">Yes</MenuItem>
-              <MenuItem value="No">No</MenuItem>
-            </TextField>
+            <div className="text-field">
+              <span style={{ color: '#061A40', float: 'left' }}>
+                Is this your first time attending HopHacks?*
+              </span>
+              <TextField
+                required
+                variant="standard"
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setFirst_hophacks(e.target.value);
+                }}
+                select
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              >
+                <MenuItem value="Yes">Yes</MenuItem>
+                <MenuItem value="No">No</MenuItem>
+              </TextField>
+            </div>
           </Grid>
           <Grid item xs={isMobile ? 12 : 4}>
-            <span style={{ color: '#ffffff', float: 'left' }}> How did you learn about us?*</span>
-            <TextField
-              required
-              variant="standard"
-              style={{ width: '100%' }}
-              onChange={(e) => {
-                setLearn_about_us(e.target.value);
-              }}
-              select
-              InputLabelProps={{
-                style: { color: '#ffffff' }
-              }}
-              InputProps={{
-                style: { color: '#ffffff' }
-              }}
-            >
-              <MenuItem value="Instagram">Instagram</MenuItem>
-              <MenuItem value="Facebook">Facebook</MenuItem>
-              <MenuItem value="Linkedin">Linkedin</MenuItem>
-              <MenuItem value="Google">Google</MenuItem>
-              <MenuItem value="Major League Hacking">Major League Hacking</MenuItem>
-              <MenuItem value="Email Listerv">Email Listerv</MenuItem>
-              <MenuItem value="Friend">Friend</MenuItem>
-              <MenuItem value="On Campus Flyers">On Campus Flyers</MenuItem>
-              <MenuItem value="In Class Promotion">In Class Promotion</MenuItem>
-              <MenuItem value="Other">Other</MenuItem>
-            </TextField>
+            <div className="text-field">
+              <span style={{ color: '#061A40', float: 'left' }}> How did you learn about us?*</span>
+              <TextField
+                required
+                variant="standard"
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setLearn_about_us(e.target.value);
+                }}
+                select
+                InputLabelProps={{
+                  style: { color: '#061A40' }
+                }}
+                InputProps={{
+                  style: { color: '#061A40' }
+                }}
+              >
+                <MenuItem value="Instagram">Instagram</MenuItem>
+                <MenuItem value="Facebook">Facebook</MenuItem>
+                <MenuItem value="Linkedin">Linkedin</MenuItem>
+                <MenuItem value="Google">Google</MenuItem>
+                <MenuItem value="Major League Hacking">Major League Hacking</MenuItem>
+                <MenuItem value="Email Listerv">Email Listerv</MenuItem>
+                <MenuItem value="Friend">Friend</MenuItem>
+                <MenuItem value="On Campus Flyers">On Campus Flyers</MenuItem>
+                <MenuItem value="In Class Promotion">In Class Promotion</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </TextField>
+            </div>
           </Grid>
           <Grid item xs={12} style={{ textAlign: isMobile ? 'center' : 'left' }}>
-            <label htmlFor="upload-resume">
-              <input
-                style={{ display: 'none' }}
-                accept=".pdf, .doc, .docx"
-                id="upload-resume"
-                type="file"
-                name="upload-resume"
-                onChange={handleResumeFileChange}
-              />
-              <Button variant="outlined" style={{ color: 'white' }} component="span">
-                Upload Resume*
-              </Button>
-              {isMobile ? <br /> : null}
-              {resumeFile !== undefined && (
-                <text style={{ marginLeft: isMobile ? '0rem' : '1rem', color: 'white' }}>
-                  {'Uploaded:' + resumeFile.name}
-                </text>
-              )}
-            </label>
+            <div className="text-field">
+              <label htmlFor="upload-resume">
+                <input
+                  style={{ display: 'none' }}
+                  accept=".pdf, .doc, .docx"
+                  id="upload-resume"
+                  type="file"
+                  name="upload-resume"
+                  onChange={handleResumeFileChange}
+                />
+                <Button variant="outlined" style={{ color: '#061A40' }} component="span">
+                  Upload Resume*
+                </Button>
+                {isMobile ? <br /> : null}
+                {resumeFile !== undefined && (
+                  <text style={{ marginLeft: isMobile ? '0rem' : '1rem', color: '#061A40' }}>
+                    {'Uploaded:' + resumeFile.name}
+                  </text>
+                )}
+              </label>
+            </div>
           </Grid>
           <Grid item xs={12} style={{ textAlign: isMobile ? 'center' : 'left' }}>
-            <label htmlFor="upload-vaccination">
-              <input
-                style={{ display: 'none' }}
-                accept=".pdf, .doc, .docx"
-                id="upload-vaccination"
-                type="file"
-                name="upload-vaccination"
-                onChange={handleVaccinationFileChange}
-              />
-              <Button variant="outlined" style={{ color: 'white' }} component="span">
-                Upload Vaccination Card*
-              </Button>
-              {isMobile ? <br /> : null}
-              {vaccinationFile !== undefined && (
-                <text style={{ marginLeft: isMobile ? '0rem' : '1rem', color: 'white' }}>
-                  {'Uploaded:' + vaccinationFile.name}
-                </text>
-              )}
-            </label>
+            <div className="text-field">
+              <label htmlFor="upload-vaccination">
+                <input
+                  style={{ display: 'none' }}
+                  accept=".pdf, .doc, .docx"
+                  id="upload-vaccination"
+                  type="file"
+                  name="upload-vaccination"
+                  onChange={handleVaccinationFileChange}
+                />
+                <Button variant="outlined" style={{ color: '#061A40' }} component="span">
+                  Upload Vaccination Card*
+                </Button>
+                {isMobile ? <br /> : null}
+                {vaccinationFile !== undefined && (
+                  <text style={{ marginLeft: isMobile ? '0rem' : '1rem', color: '#061A40' }}>
+                    {'Uploaded:' + vaccinationFile.name}
+                  </text>
+                )}
+              </label>
+            </div>
           </Grid>
           <Grid item xs={12}>
-            {resume}
-            {vaccination}
-            {codeOfConduct}
-            {eventLogistics}
-            {communication}
+            <div className="text-field">
+              {resume}
+              {vaccination}
+              {codeOfConduct}
+              {eventLogistics}
+              {communication}
+            </div>
           </Grid>
         </Grid>
 

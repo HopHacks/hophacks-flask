@@ -49,7 +49,7 @@ function Login(props) {
             required
             variant="standard"
             label="email address"
-            style={{ width: '100%' }}
+            style={{ width: '90%' }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             InputLabelProps={{
@@ -67,7 +67,7 @@ function Login(props) {
             variant="standard"
             label="password"
             value={password}
-            style={{ width: '100%' }}
+            style={{ width: '90%' }}
             onChange={(e) => setPassword(e.target.value)}
             InputLabelProps={{
               style: { color: '#061A40' }
@@ -84,27 +84,28 @@ function Login(props) {
           </Link>
           {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
         </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Button
+            class="card-button"
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleLogin}
+          >
+            sign in
+          </Button>
 
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={handleLogin}
-        >
-          sign in
-        </Button>
-
-        {/* TODO: link user JHED */}
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={handleLogin}
-        >
-          use JHED
-        </Button>
+          {/* TODO: link user JHED */}
+          <Button
+            class="card-button"
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleLogin}
+          >
+            use JHED
+          </Button>
+        </div>
 
         <Link to={'/user_auth/signup'}>
           <Typography class="card-text-blue"> need a profile? </Typography>
