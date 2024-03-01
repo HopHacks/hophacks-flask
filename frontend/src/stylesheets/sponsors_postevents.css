@@ -1,0 +1,415 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+.page {
+    background-color: #350225;
+    width: 100%;
+    min-height: 100vh;
+    font-family: "Abel";
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.parallax {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+}
+
+.parallax-body {
+  height: 100vh;
+  overflow: hidden;
+  color: #fff;
+  color: var(--color-text);
+  background-color: #000;
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fade effect */
+.js body {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.js body.render {
+  opacity: 1;
+}
+
+main {
+  position: relative;
+  width: 100%;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.scene-nav {
+  font-size: 1.15em;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: none;
+  border: 0;
+  right: 0;
+  padding: 1.5em;
+  color: var(--color-nav);
+}
+
+.slide-wrapper {
+  display: none;
+}
+
+@font-face {
+  font-family: vcrOsdMono;
+  src:
+    local('vcrOsdMono'),
+    url(./../fonts/VCR_OSD_MONO_1.001.ttf) format('truetype');
+}
+
+/* TODO: These are leftoever from old site Move to inline? */
+.grid-item {
+  text-align: center;
+  width: 100%;
+  font-family: 'Seravek', sans-serif;
+  font-size: 1.17em;
+  line-height: 1.5;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.grid-item h3 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+
+
+.about-flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.pe-sponsor-row {
+  display: flex;
+  justify-content: center
+}
+
+.pe-sponsor-gold {
+  width: 400px;
+  height: 200px;
+}
+
+.pe-sponsor-xl {
+  width: 350px;
+  height: 200px;
+}
+
+.pe-sponsor-sable {
+  width: 300px;
+  height: 200px;
+}
+
+.pe-sponsor-lab {
+  width: 250px;
+  height: 200px;
+}
+
+.pe-sponsor-blue {
+  width: 200px;
+  height: 150px;
+}
+
+.pe-sponsor-custom {
+  width: 200px;
+  height: 150px;
+}
+
+.pe-sponsor-inkind {
+  width: 165px;
+  height: 150px;
+}
+
+.sponsor-background {
+  background: var(--background, rgba(217, 217, 217, 0.1));
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  border-radius: 15px 15px 0px 15px;
+  z-index: -1;
+}
+
+.pe-sponsor-wrapper {
+  position: relative;
+  z-index: 10;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  margin: 0rem;
+}
+
+.sponsor-children {
+  margin-left: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sponsor-img {
+  margin-left: 15px;
+}
+
+.sponsor-title {
+  align-items: end;
+}
+
+@media (max-width: 1200px) {
+  .about-flex {
+    flex-direction: column;
+  }
+
+  .pe-sponsor-row {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sponsor-title {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+.title-align {
+  justify-content: center;
+  align-items: center;
+}
+
+@font-face {
+  font-family: 'VCR OSD Mono';
+  src: url('./VCR_OSD_MONO_1.001.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'PT Sans';
+  src: url('./PT_Sans-Web-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./Inter-Medium.ttf') format('truetype');
+}
+
+.tracks {
+  position: relative;
+  width: 100vw;
+  left: calc(-50vw + 50%);
+}
+
+.tracks > .text-container {
+  width: 80%;
+  margin: auto;
+}
+
+.general-track {
+  width: 50%;
+}
+
+.general-track > .title {
+  color: var(--secondarypurple, #cc6ba3);
+  text-align: left;
+  font:
+    700 40px/64px 'Raleway',
+    sans-serif;
+  position: relative;
+  width: 269.65px;
+}
+
+.general-track > .body {
+  color: var(--lightpurple, #f7f3ff);
+  text-align: left;
+  font:
+    200 20px/32px 'Raleway',
+    sans-serif;
+}
+
+.tracks .keyboard {
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  width: 1500px;
+  overflow: hidden;
+}
+
+.tracks .bass {
+  position: absolute;
+  top: 1600px;
+  left: 0px;
+  width: 1200px;
+  overflow: hidden;
+}
+
+.patient-track {
+  width: 70%;
+  margin-left: auto;
+  margin-top: 350px;
+  text-align: right;
+}
+
+.patient-track > .body {
+  color: var(--lightpurple, #f7f3ff);
+  text-align: right;
+  font:
+    200 20px/32px 'Raleway',
+    sans-serif;
+}
+
+.jhuiaa-track {
+  width: 50%;
+  margin-right: auto;
+  margin-top: 350px;
+  text-align: left;
+}
+
+.jhuiaa-track > .body {
+  color: var(--lightpurple, #f7f3ff);
+  text-align: left;
+  font:
+    200 20px/32px 'Raleway',
+    sans-serif;
+}
+
+.tracks .guitar {
+  position: absolute;
+  right: 0;
+  top: 650px;
+  width: 1500px;
+}
+.tracks .guitar2 {
+  position: absolute;
+  right: 0;
+  top: 2400px;
+  width: 1500px;
+}
+
+.prizeTrackDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: auto;
+}
+
+.prizeStampDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: auto;
+  width: 80%;
+}
+.prizeStamp {
+  width: 33.33%;
+  padding: 5px;
+}
+.prizeTrackStamp {
+  width: 18%;
+  padding: 0px;
+}
+.prizeTrackStampHidden {
+  width: 50px;
+  padding: 5px;
+  visibility: hidden;
+}
+.tracks .guitar-2 {
+  display: none;
+}
+@media (max-width: 1200px) {
+  .prizeTrackDiv,
+  .prizeStampDiv {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .prizeStamp {
+    width: 100%;
+    padding: 5px;
+  }
+
+  .general-track {
+    width: 100%;
+    text-align: center;
+  }
+  .general-track > .title {
+    width: 100%;
+    text-align: center;
+  }
+  .patient-track,
+  .jhuiaa-track {
+    width: 100%;
+    text-align: center;
+    margin-top: 150px;
+  }
+  .patient-track > .body,
+  .jhuiaa-track > .body {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tracks .keyboard {
+    position: absolute;
+    top: 20rem;
+    left: 0px;
+    width: 100%;
+    rotate: 16deg;
+  }
+
+  .tracks .bass {
+    position: absolute;
+    top: 105rem;
+    left: 0px;
+    width: 100%;
+    rotate: 16deg;
+  }
+
+  .tracks .guitar {
+    position: absolute;
+    right: -10px;
+    top: 1100px;
+    width: 100%;
+    rotate: -14deg;
+  }
+
+  .tracks .guitar-2 {
+    position: absolute;
+    right: -10px;
+    top: 2270px;
+    width: 100%;
+    rotate: -14deg;
+    display: block;
+  }
+}

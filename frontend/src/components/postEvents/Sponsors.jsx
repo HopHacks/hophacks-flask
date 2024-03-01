@@ -1,12 +1,12 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import '../../stylesheets/sponsors.css';
+import '../../stylesheets/sponsors_postevents.css';
 
 function img(url) {
     return 'https://hophacks-website.s3.amazonaws.com/images/sponsor/png/' + url;
 }
  
-function SponsorItem({ size, logo, width = '85%', link = '#sponsors' }) {
+function SponsorItem({ size, logo, width = '85%', link = '#sponsors_postevents' }) {
     return (
       <a
         style={{ display: 'table-cell', textDecoration: 'none' }}
@@ -14,10 +14,10 @@ function SponsorItem({ size, logo, width = '85%', link = '#sponsors' }) {
         target={'_blank'}
         rel={'noreferrer'}
       >
-        <div className="sponsor-wrapper">
-          <div className={`sponsor-${size} sponsor-children`}>
+        <div className="pe-sponsor-wrapper">
+          <div className={`pe-sponsor-${size} sponsor-children`}>
             <img src={img(logo)} style={{ width }} className="sponsor-img" />
-            <div className={`sponsor-background sponsor-${size}`}></div>
+            <div className={`sponsor-background pe-sponsor-${size}`}></div>
           </div>
         </div>
       </a>
@@ -28,7 +28,7 @@ const Sponsors = () => {
     return (
       <div className="page">    
         <Box marginTop={'0rem'} justifyContent="center" className="sponsor-container" id="sponsors">
-            <div className="sponsor-row">
+            <div className="pe-sponsor-row">
             <SponsorItem logo="it.png" size="sable" link="https://it.johnshopkins.edu/" />
             <SponsorItem
                 logo="bloomberg23.png"
@@ -44,7 +44,7 @@ const Sponsors = () => {
             <SponsorItem logo="twilio.png" size="sable" link="https://www.twilio.com/en-us" />
             <SponsorItem logo="scm.svg" size="sable" link="https://www.scm-lp.com/" />
             </div>
-            <div className="sponsor-row">
+            <div className="pe-sponsor-row">
             <SponsorItem
                 logo="bgb-white.png"
                 size="gold"
@@ -62,7 +62,7 @@ const Sponsors = () => {
             <SponsorItem logo="jhu_cs.png" size="blue" link="https://www.cs.jhu.edu/" width="120%" />
             <SponsorItem logo="jhume.jpg" size="blue" link="https://me.jhu.edu/" width="94%" />
             </div>
-            <div className="sponsor-row">
+            <div className="pe-sponsor-row">
             
             <SponsorItem logo="tunnel.svg" size="blue" link="https://tunnel.dev/" width="85%" />
             <SponsorItem logo="jhuapl.png" size="blue" link="https://www.jhuapl.edu/" width="120%" />
@@ -83,11 +83,11 @@ const Sponsors = () => {
             <SponsorItem logo="verbwire.svg" size="inkind" link="https://www.verbwire.com/" />
 
             </div>
-            <div className="sponsor-row">
+            <div className="pe-sponsor-row">
             
            
             </div>
-            <div className="sponsor-row">
+            <div className="pe-sponsor-row">
            
             <SponsorItem logo="echo3D.webp" size="inkind" link="https://www.echo3d.com/" />
             <SponsorItem
