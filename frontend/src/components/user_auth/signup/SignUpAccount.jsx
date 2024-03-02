@@ -19,12 +19,6 @@ export default function SignUpAccount(props) {
   const confirmMsg = props.confirmMsg;
   const handleAccountNext = props.handleAccountNext;
 
-  // const grayWrapperStyle = {
-  //   backgroundColor: '#D9D9D9',
-  //   padding: '10px',
-  //   borderRadius: '4px',
-  //   marginBottom: '10px'
-  // };
   //const handleAccountBack = props.handleAccountBack;
 
   const signUpCardDesktop = (
@@ -35,7 +29,6 @@ export default function SignUpAccount(props) {
         <Typography class="card-infoline">link your account!</Typography>
         <div className="text-field">
           <TextField
-            // TODO: make the border white
             required
             variant="standard"
             label="email address"
@@ -69,7 +62,6 @@ export default function SignUpAccount(props) {
         </div>
         <div className="text-field">
           <TextField
-            // TODO: make the border white
             type={'password'}
             required
             variant="standard"
@@ -119,7 +111,6 @@ export default function SignUpAccount(props) {
           Sign Up
         </Typography>
         <TextField
-          // TODO: make the border white
           required
           variant="standard"
           label="Email Address"
@@ -134,7 +125,6 @@ export default function SignUpAccount(props) {
           }}
         />
         <TextField
-          // TODO: make the border white
           type={'password'}
           required
           variant="standard"

@@ -28,6 +28,7 @@ import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
 import Login from './user_auth/Login'; //adjusted to be new path
 import SignUp from './user_auth/signup/SignUp';
+import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new path?
 import ResetPassword from './user_auth/ResetPassword';
 import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
@@ -98,6 +99,10 @@ export default function App() {
 
                   <Route path="/user_auth/signup">
                     <SignUp isMobile={isMobile} />
+                  </Route>
+
+                  <Route path="/user_auth/signup/signupchecks">
+                    <SignUpChecks />
                   </Route>
 
                   <Route path="/user_auth/resetpassword">

@@ -13,7 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import '../../../stylesheets/user_auth.css';
 
-export default function SignUpProfile(props) {
+export default function SignUpChecks(props) {
   const isMobile = props.isMobile;
 
   const setFirst_hackathon = props.setFirst_hackathon;

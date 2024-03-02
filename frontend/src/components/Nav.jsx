@@ -79,6 +79,33 @@ const Nav = function Nav(props) {
 
       <Button
         component={Link}
+        onClick={() => {
+          history.push('/reset_password/:token');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Reset Password
+        </Typography>
+      </Button>
+
+      <Button
+        component={Link}
+        onClick={() => {
+          console.log('Navigating to /user_auth/signup/signupchecks'); //this prints?
+          history.push('/user_auth/signup/signupchecks');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          SignUp Checks
+        </Typography>
+      </Button>
+
+      {/* <Button
+        component={Link}
         onClick={() => (window.location = '/#schedule')}
         color="inherit"
         className={classes.navBtn}
@@ -86,8 +113,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Schedule
         </Typography>
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#prizes')}
         color="inherit"
@@ -96,8 +123,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Prizes
         </Typography>
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#tracks')}
         color="inherit"
@@ -106,8 +133,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Tracks
         </Typography>
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#sponsors')}
         color="inherit"
@@ -116,7 +143,7 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Sponsors
         </Typography>
-      </Button>
+      </Button> */}
       <Button
         component={Link}
         onClick={() => (window.location = '/#faq')}
@@ -265,7 +292,7 @@ const Nav = function Nav(props) {
         >
           <img src={img('logo2023.png')} width={'55px'} />
           <Typography variant="h4" className={classes.title}>
-            HopHack
+            HopHacks
           </Typography>
         </Button>
 
@@ -295,7 +322,7 @@ const Nav = function Nav(props) {
           >
             <img
               src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-white-2024.svg"
-              alt="Major League Hacking 2023 Hackathon Season"
+              alt="Major League Hacking 2024 Hackathon Season"
               style={{ width: '100%' }}
             ></img>
           </a>
