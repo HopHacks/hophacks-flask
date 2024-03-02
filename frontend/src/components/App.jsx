@@ -29,6 +29,8 @@ import Team from './Team';
 import Login from './user_auth/Login'; //adjusted to be new path
 import SignUp from './user_auth/signup/SignUp';
 import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new path?
+import SignUpAccount from './user_auth/signup/SignUpAccount.jsx'; //new path?
+
 import ResetPassword from './user_auth/ResetPassword';
 import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
@@ -53,6 +55,8 @@ export default function App() {
                   <Route path="/upload-sponsors" component={UploadSponsors} />
                   <Route path="/sponsor-prizes" component={SponsorPrizes} />
                   <Route path="/tables" component={TablesAndRooms} />
+                  <Route path="/user_auth/signup/signupchecks" component={SignUpChecks} />
+                  <Route path="/user_auth/signup/signupaccounts" component={SignUpAccount} />
 
                   <Route exact path="/admin">
                     <Admin />

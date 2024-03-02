@@ -104,6 +104,20 @@ const Nav = function Nav(props) {
         </Typography>
       </Button>
 
+      <Button
+        component={Link}
+        onClick={() => {
+          console.log('Navigating to /user_auth/signupaccount'); //this prints?
+          history.push('/user_auth/signup/signupaccount');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          SignUp Account
+        </Typography>
+      </Button>
+
       {/* <Button
         component={Link}
         onClick={() => (window.location = '/#schedule')}
