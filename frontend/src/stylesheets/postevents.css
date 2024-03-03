@@ -20,7 +20,7 @@ html {
     margin: 0;
     color: white;
     scroll-snap-align: start;
-    z-index: -2;
+    /* z-index: -2; */
 
 }
 .guidingText {

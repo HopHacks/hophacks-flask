@@ -4,26 +4,32 @@ import '../../stylesheets/postevents.css';
 
 const Main = () => {
   const [activeLoc, setActiveLoc] = useState(1);
-
+  const [numScroll, setNumScroll] = useState(0);
   // scrolling sets the active location and scrolls to the next page
 
   function scrollHandler(e) {
-    if(document.documentElement.scrollTop % document.documentElement.clientHeight == 0){
-      if(activeLoc + 1 == document.documentElement.scrollTop / document.documentElement.clientHeight + 1 || activeLoc - 1 == document.documentElement.scrollTop / document.documentElement.clientHeight + 1){
-        setActiveLoc(document.documentElement.scrollTop / document.documentElement.clientHeight + 1);
-        location.href = '#' + (document.documentElement.scrollTop / document.documentElement.clientHeight + 1) ;
+    setNumScroll(numScroll + 1);
+    console.log(numScroll);
+    if(numScroll >= 4){
+      setNumScroll(0);
+
+      if(e.deltaY > 0) {
+        setActiveLoc(activeLoc + 1);
       }
       else {
-        location.href = '#' + (activeLoc);
+        setActiveLoc(activeLoc - 1);
       }
     }
 
+      location.href = '#' + (activeLoc) ;
+    
   }
 
   useEffect(()  => {
-    scrollHandler();
-    document.addEventListener('scrollend', scrollHandler);
-  },[]);
+    // scrollHandler();
+    // document.onwheel = (e) => scrollHandler(e);
+    // document.addEventListener('wheel', (e) => scrollHandler(e));
+  },[numScroll]);
 
   return (
     <>

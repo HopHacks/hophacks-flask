@@ -1,0 +1,88 @@
+.winnerMain {
+    position: relative;
+    /* background-color: blueviolet; */
+    width: 100%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    gap: 10px;
+}
+.top {
+    height: 60%;
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: space-between;
+}
+.first {
+    position: relative;
+}
+.top div {
+    position: relative;
+    width: 30%;
+    /* background-color: blanchedalmond; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-clip: border-box;
+    margin-top: 30px;
+    background-image: url('../../public/images/num1.jpg');
+    background-color: rgba(0, 0, 0, 0.644);
+    background-blend-mode: darken;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.winnerBanner {
+    position: absolute;
+    z-index: 10;
+    top: -100px;
+    left: -80px;
+    width: 250px;
+    height: 250px;
+}
+.top div:hover {
+    background-color: rgba(0, 0, 0, 0.753);
+    background-blend-mode: darken;
+}
+.bottom {
+    height: 40%;
+    /* background-color:chocolate; */
+}
+
+.carousel {
+    display: flex;
+    height: 80%;
+    gap: 10px;
+}
+.carouselControls {
+    width: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.projContainer {
+    width: 90%;
+    display: flex;
+    /* background-color: chartreuse; */
+    justify-content: space-between;
+}
+.projContainer div {
+    width : 30%;
+    /* background-color: blue; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-clip: border-box;
+    background-image: url('../../public/images/num1.jpg');
+    background-color: rgba(0, 0, 0, 0.644);
+    background-blend-mode: darken;
+    border-radius: 20px;
+    font-size: 30px;
+    line-height: 200px;
+    text-align: center;
+}

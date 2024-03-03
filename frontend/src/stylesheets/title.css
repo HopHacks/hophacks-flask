@@ -12,7 +12,6 @@
     object-fit: cover;
     opacity: .1;
     position: absolute;
-    z-index: -1;
 }
 
 .titleDiv {
