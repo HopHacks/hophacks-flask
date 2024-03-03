@@ -156,6 +156,19 @@ const Nav = function Nav(props) {
         </Typography>
       </Button>
 
+      <Button
+        component={Link}
+        onClick={() => {
+          history.push('/user_auth/signup/signupimage');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          SignUp Image
+        </Typography>
+      </Button>
+
       {/* <Button
         component={Link}
         onClick={() => (window.location = '/#schedule')}

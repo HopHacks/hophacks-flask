@@ -32,6 +32,7 @@ import SignUp from './user_auth/signup/SignUp';
 import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new paths
 import SignUpProfile from './user_auth/signup/SignUpProfile.jsx';
 import SignUpAccount from './user_auth/signup/SignUpAccount.jsx';
+import SignUpImage from './user_auth/signup/SignUpImage.jsx';
 
 import ResetPassword from './user_auth/ResetPassword';
 import TeamMatchingPage from './team_matching/TeamMatchingPage';
@@ -61,6 +62,7 @@ export default function App() {
                   <Route path="/user_auth/signup/signupchecks" component={SignUpChecks} />
                   <Route path="/user_auth/signup/signupaccounts" component={SignUpAccount} />
                   <Route path="/user_auth/signup/signupprofile" component={SignUpProfile} />
+                  <Route path="/user_auth/signup/signupimage" component={SignUpImage} />
 
                   <Route exact path="/admin">
                     <Admin />

@@ -31,43 +31,130 @@ export default function SignUpProfile(props) {
         <Grid container spacing={isMobile ? 2 : 5}></Grid>
 
         <Typography class="card-text-red">{profileSubmitMsg}</Typography>
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={!enabledButton}
-          style={{
-            fontSize: '1.5rem',
-            width: isMobile ? '10rem' : '15rem',
-            height: isMobile ? '3rem' : '4rem',
-            marginTop: isMobile ? '10%' : '5%'
-          }}
-          onClick={() => {
-            handleImageBack();
-          }}
-        >
-          Back
-        </Button>
 
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={!enabledButton}
-          style={{
-            fontSize: '1.5rem',
-            width: isMobile ? '10rem' : '15rem',
-            height: isMobile ? '3rem' : '4rem',
-            marginTop: isMobile ? '10%' : '5%'
-          }}
-          onClick={() => {
-            handleImageNext();
-          }}
-        >
-          Next
-        </Button>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <div>
+            <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}>
+              bird color
+            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#061A40' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#FAC013' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#C84630' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#57A773' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#bd2df1' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#2d99e0' }}
+                tabIndex="0"
+              ></div>
+            </div>
+          </div>
+          <div>
+            <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}>
+              background color
+            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#061A40' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#FAC013' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#C84630' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#57A773' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#bd2df1' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#2d99e0' }}
+                tabIndex="0"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}>your bird</Typography>
+        </div>
+
+        {/* nav buttons */}
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Button
+              class="card-button"
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={!enabledButton}
+              style={{
+                fontSize: '1.5rem',
+                width: isMobile ? '10rem' : '15rem',
+                height: isMobile ? '3rem' : '4rem',
+                marginTop: isMobile ? '10%' : '5%'
+              }}
+              onClick={() => {
+                handleImageBack();
+              }}
+            >
+              Back
+            </Button>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              class="card-button"
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={!enabledButton}
+              style={{
+                fontSize: '1.5rem',
+                width: isMobile ? '10rem' : '15rem',
+                height: isMobile ? '3rem' : '4rem',
+                marginTop: isMobile ? '10%' : '5%'
+              }}
+              onClick={() => {
+                handleImageNext();
+              }}
+            >
+              Submit
+            </Button>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

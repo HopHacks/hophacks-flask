@@ -11,6 +11,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
 import '../../../stylesheets/user_auth.css';
 
 export default function SignUpChecks(props) {
@@ -59,6 +61,7 @@ export default function SignUpChecks(props) {
             <Checkbox
               checked={resumeChecked}
               onChange={handleResumeCheckBox}
+              checkedIcon={<CheckCircleIcon style={{ color: '#57A773' }} />}
               inputProps={{ 'aria-label': 'primary checkbox' }}
               color="#061A40"
               size="small"
@@ -86,6 +89,7 @@ export default function SignUpChecks(props) {
             <Checkbox
               checked={vaccinationChecked}
               onChange={handleVaccinationCheckBox}
+              checkedIcon={<CheckCircleIcon style={{ color: '#57A773' }} />}
               inputProps={{ 'aria-label': 'primary checkbox' }}
               color="#061A40"
               size="small"
@@ -110,6 +114,7 @@ export default function SignUpChecks(props) {
             <Checkbox
               checked={conductCodeChecked}
               onChange={handleConductCheckBox}
+              checkedIcon={<CheckCircleIcon style={{ color: '#57A773' }} />}
               inputProps={{ 'aria-label': 'primary checkbox' }}
               color="#061A40"
               size="small"
@@ -136,6 +141,7 @@ export default function SignUpChecks(props) {
             <Checkbox
               checked={eventLogisticsChecked}
               onChange={handleLogisticsCheckBox}
+              checkedIcon={<CheckCircleIcon style={{ color: '#57A773' }} />}
               inputProps={{ 'aria-label': 'primary checkbox' }}
               color="#061A40"
               size="small"
@@ -167,6 +173,7 @@ export default function SignUpChecks(props) {
             <Checkbox
               checked={communicationChecked}
               onChange={handleCommunicationCheckBox}
+              checkedIcon={<CheckCircleIcon style={{ color: '#57A773' }} />}
               inputProps={{ 'aria-label': 'primary checkbox' }}
               color="#061A40"
               size="small"
@@ -336,43 +343,48 @@ export default function SignUpChecks(props) {
         </Grid>
 
         <Typography class="card-text-red">{profileSubmitMsg}</Typography>
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={!enabledButton}
-          style={{
-            fontSize: '1.5rem',
-            width: isMobile ? '10rem' : '15rem',
-            height: isMobile ? '3rem' : '4rem',
-            marginTop: isMobile ? '10%' : '5%'
-          }}
-          onClick={() => {
-            handleChecksBack();
-          }}
-        >
-          Back
-        </Button>
-
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={!enabledButton}
-          style={{
-            fontSize: '1.5rem',
-            width: isMobile ? '10rem' : '15rem',
-            height: isMobile ? '3rem' : '4rem',
-            marginTop: isMobile ? '10%' : '5%'
-          }}
-          onClick={() => {
-            handleChecksNext();
-          }}
-        >
-          Next
-        </Button>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Button
+              class="card-button"
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={!enabledButton}
+              style={{
+                fontSize: '1.5rem',
+                width: isMobile ? '10rem' : '15rem',
+                height: isMobile ? '3rem' : '4rem',
+                marginTop: isMobile ? '10%' : '5%'
+              }}
+              onClick={() => {
+                handleChecksBack();
+              }}
+            >
+              Back
+            </Button>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              class="card-button"
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={!enabledButton}
+              style={{
+                fontSize: '1.5rem',
+                width: isMobile ? '10rem' : '15rem',
+                height: isMobile ? '3rem' : '4rem',
+                marginTop: isMobile ? '10%' : '5%'
+              }}
+              onClick={() => {
+                handleChecksNext();
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

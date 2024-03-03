@@ -290,44 +290,47 @@ export default function SignUpProfile(props) {
         </Grid>
 
         <Typography class="card-text-red">{profileSubmitMsg}</Typography>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button
-            class="card-button"
-            variant="contained"
-            color="primary"
-            size="large"
-            disabled={!enabledButton}
-            style={{
-              fontSize: '1.5rem',
-              width: isMobile ? '10rem' : '15rem',
-              height: isMobile ? '3rem' : '4rem',
-              marginTop: isMobile ? '10%' : '5%'
-            }}
-            onClick={() => {
-              handleProfileBack();
-            }}
-          >
-            Back
-          </Button>
-
-          <Button
-            class="card-button"
-            variant="contained"
-            color="primary"
-            size="large"
-            disabled={!enabledButton}
-            style={{
-              fontSize: '1.5rem',
-              width: isMobile ? '10rem' : '15rem',
-              height: isMobile ? '3rem' : '4rem',
-              marginTop: isMobile ? '10%' : '5%'
-            }}
-            onClick={() => {
-              handleProfileNext();
-            }}
-          >
-            Next
-          </Button>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Button
+              class="card-button"
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={!enabledButton}
+              style={{
+                fontSize: '1.5rem',
+                width: isMobile ? '10rem' : '15rem',
+                height: isMobile ? '3rem' : '4rem',
+                marginTop: isMobile ? '10%' : '5%'
+              }}
+              onClick={() => {
+                handleProfileBack();
+              }}
+            >
+              Back
+            </Button>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              class="card-button"
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={!enabledButton}
+              style={{
+                fontSize: '1.5rem',
+                width: isMobile ? '10rem' : '15rem',
+                height: isMobile ? '3rem' : '4rem',
+                marginTop: isMobile ? '10%' : '5%'
+              }}
+              onClick={() => {
+                handleProfileNext();
+              }}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>
