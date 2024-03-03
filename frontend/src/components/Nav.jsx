@@ -80,20 +80,72 @@ const Nav = function Nav(props) {
       <Button
         component={Link}
         onClick={() => {
-          history.push('/reset_password/:token');
+          console.log('Profile button clicked'); //here
+          history.push('/profile');
         }}
         color="inherit"
         className={classes.navBtn}
       >
         <Typography variant="h5" className={classes.title}>
-          Reset Password
+          Profile
         </Typography>
       </Button>
 
       <Button
         component={Link}
         onClick={() => {
-          console.log('Navigating to /user_auth/signup/signupchecks'); //this prints?
+          history.push('/reset_password/:token');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Reset Password?
+        </Typography>
+      </Button>
+
+      <Button
+        component={Link}
+        onClick={() => {
+          history.push('/confirm_email/:token');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Email Confirmation
+        </Typography>
+      </Button>
+
+      <Button
+        component={Link}
+        onClick={() => {
+          history.push('/user_auth/signup/signupaccounts');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          SignUp Account
+        </Typography>
+      </Button>
+
+      <Button
+        component={Link}
+        onClick={() => {
+          history.push('/user_auth/signup/signupprofile');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          SignUp Profile
+        </Typography>
+      </Button>
+
+      <Button
+        component={Link}
+        onClick={() => {
           history.push('/user_auth/signup/signupchecks');
         }}
         color="inherit"
@@ -101,20 +153,6 @@ const Nav = function Nav(props) {
       >
         <Typography variant="h5" className={classes.title}>
           SignUp Checks
-        </Typography>
-      </Button>
-
-      <Button
-        component={Link}
-        onClick={() => {
-          console.log('Navigating to /user_auth/signupaccount'); //this prints?
-          history.push('/user_auth/signup/signupaccount');
-        }}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          SignUp Account
         </Typography>
       </Button>
 
@@ -158,7 +196,7 @@ const Nav = function Nav(props) {
           Sponsors
         </Typography>
       </Button> */}
-      <Button
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#faq')}
         color="inherit"
@@ -167,7 +205,7 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           FAQ
         </Typography>
-      </Button>
+      </Button> */}
       <Button
         component={Link}
         onClick={() => {

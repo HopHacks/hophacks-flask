@@ -29,7 +29,7 @@ const Profile = function Profile(props) {
   const [oldVaccinationName, setOldVaccinationName] = useState('');
   const [vaccinationFile, setVaccinationFile] = useState('');
   const [vaccinationMsg, setVaccinationMsg] = useState(
-    'Acceptable format: *.pdf, *.png, *.jpeg, *.jpg, *.heic'
+    'Acceptable formats: *.pdf, *.png, *.jpeg, *.jpg, *.heic'
   );
 
   //display database
@@ -54,7 +54,7 @@ const Profile = function Profile(props) {
   const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
   const [ageMsg, setAgeMsg] = useState('');
 
-  const currentEvent = 'Fall 2023';
+  const currentEvent = 'Fall 2024';
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
   const acceptedStatus =
     'You have been accepted to HopHacks. Please RSVP if you plan on participating!';

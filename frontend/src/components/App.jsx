@@ -11,7 +11,7 @@ import { AuthProvider } from '../util/auth';
 
 //import Home from './Home'; //temporarily took out home page
 import Recruiting from './Recruiting';
-import Profile from './account/Profile';
+import Profile from './account/Profile'; //why does this not work!!!
 import Admin from './admin/Admin';
 import AnnouncementPanel from './admin/AnnouncementPanel';
 import Nav from './Nav';
@@ -27,9 +27,11 @@ import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
 import Login from './user_auth/Login'; //adjusted to be new path
+
 import SignUp from './user_auth/signup/SignUp';
-import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new path?
-import SignUpAccount from './user_auth/signup/SignUpAccount.jsx'; //new path?
+import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new paths
+import SignUpProfile from './user_auth/signup/SignUpProfile.jsx';
+import SignUpAccount from './user_auth/signup/SignUpAccount.jsx';
 
 import ResetPassword from './user_auth/ResetPassword';
 import TeamMatchingPage from './team_matching/TeamMatchingPage';
@@ -55,8 +57,10 @@ export default function App() {
                   <Route path="/upload-sponsors" component={UploadSponsors} />
                   <Route path="/sponsor-prizes" component={SponsorPrizes} />
                   <Route path="/tables" component={TablesAndRooms} />
+
                   <Route path="/user_auth/signup/signupchecks" component={SignUpChecks} />
                   <Route path="/user_auth/signup/signupaccounts" component={SignUpAccount} />
+                  <Route path="/user_auth/signup/signupprofile" component={SignUpProfile} />
 
                   <Route exact path="/admin">
                     <Admin />
@@ -66,6 +70,7 @@ export default function App() {
                     <AnnouncementPanel />
                   </Route>
 
+                  {/* <Route path="/account/profile" component={Profile} /> */}
                   <Route path="/profile">
                     <Profile isMobile={isMobile} />
                   </Route>
@@ -103,10 +108,6 @@ export default function App() {
 
                   <Route path="/user_auth/signup">
                     <SignUp isMobile={isMobile} />
-                  </Route>
-
-                  <Route path="/user_auth/signup/signupchecks">
-                    <SignUpChecks />
                   </Route>
 
                   <Route path="/user_auth/resetpassword">
