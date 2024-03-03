@@ -1,5 +1,5 @@
 import React from 'react';
-//import MenuItem from '@material-ui/core/MenuItem';
+import { useState } from 'react'; //so we can have states
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -17,6 +17,13 @@ export default function SignUpProfile(props) {
 
   const handleImageNext = props.handleImageNext;
   const handleImageBack = props.handleImageBack;
+
+  const [backgroundColor, setBackgroundColor] = useState('#234acb'); //default color
+
+  //function to handle setting the bkgd color
+  const handleColorSelect = (color) => {
+    setBackgroundColor(color);
+  };
 
   const profileCard = (
     <Card class="card">
@@ -79,6 +86,64 @@ export default function SignUpProfile(props) {
                 className="color-select"
                 style={{ backgroundColor: '#061A40' }}
                 tabIndex="0"
+                onClick={() => handleColorSelect('#061A40')}
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#FAC013' }}
+                tabIndex="0"
+                onClick={() => handleColorSelect('#FAC013')}
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#C84630' }}
+                tabIndex="0"
+                onClick={() => handleColorSelect('#C84630')}
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#57A773' }}
+                tabIndex="0"
+                onClick={() => handleColorSelect('#57A773')}
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#bd2df1' }}
+                tabIndex="0"
+                onClick={() => handleColorSelect('#bd2df1')}
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#2d99e0' }}
+                tabIndex="0"
+                onClick={() => handleColorSelect('#2d99e0')}
+              ></div>
+            </div>
+          </div>
+        </div>
+        {/* Our image */}
+        <div>
+          <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}>your bird</Typography>
+          <img
+            src="https://hophacks-website.s3.amazonaws.com/images/bluejaytransparentbkgd.svg"
+            alt="Transparent Bluejay"
+            style={{
+              border: '8px solid',
+              borderRadius: '20px',
+              width: '50%',
+              borderColor: '#ffffff',
+              backgroundColor: backgroundColor
+            }} //styling the image
+          ></img>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <div>
+            <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}> hats </Typography>
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#061A40' }}
+                tabIndex="0"
               ></div>
               <div
                 className="color-select"
@@ -107,9 +172,41 @@ export default function SignUpProfile(props) {
               ></div>
             </div>
           </div>
-        </div>
-        <div>
-          <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}>your bird</Typography>
+          <div>
+            <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}> shoes </Typography>
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#061A40' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#FAC013' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#C84630' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#57A773' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#bd2df1' }}
+                tabIndex="0"
+              ></div>
+              <div
+                className="color-select"
+                style={{ backgroundColor: '#2d99e0' }}
+                tabIndex="0"
+              ></div>
+            </div>
+          </div>
         </div>
 
         {/* nav buttons */}

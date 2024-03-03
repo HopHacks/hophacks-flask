@@ -216,8 +216,8 @@ body {
   border-radius: 20%;
   background-color: #000;
   cursor: 'pointer';
-  border: 2px solid;
-  border-color: white;
+  border: 3px solid;
+  border-color: #fff;
 }
 
 .color-select:focus {
