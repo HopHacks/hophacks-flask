@@ -15,6 +15,7 @@ import Nav from './Nav';
 import Team from './Team';
 import LandingPage from './LandingPage';
 import PrizeHighlight from './PrizeHighlight';
+import HasTeam from './HasTeam';
 /**
 import Home from './Home';
 import Profile from './account/Profile';
@@ -70,8 +71,12 @@ export default function App() {
                     <PrizeHighlight />
                   </Route>
 
+                  <Route path="/HasTeam">
+                    <HasTeam />
+                  </Route>
+
                   <Route path="/">
-                    <LandingPage />
+                    <HasTeam />
                   </Route>
                 </Switch>
               </div>
