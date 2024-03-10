@@ -6,9 +6,11 @@ import Sponsors from './Sponsors';
 import EventImage from './EventImage';
 import EventImage2 from './EventImage2';
 import Winner from './Winner';
+import Empty from './Empty';
 
 const PageBox = (props) => {
   return (
+    
     <div id={props.num} className="fullscreen">
       <>{(props.text != null) ? <h1 className='guidingText'>{props.text}</h1> : <></>}</>
 
@@ -26,7 +28,9 @@ const PageBox = (props) => {
                           <EventImage2 activeLoc={props.activeLoc} /> :
                             <>{props.num == '5' ?
                               <Winner activeLoc={props.activeLoc} /> :
-                                <></>}
+                                <>{props.num == '0' ?
+                                <Empty /> :
+                                  <></>}</>}
                             </>}
                     </>}
                 </>}

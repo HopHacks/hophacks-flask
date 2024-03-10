@@ -4,7 +4,6 @@
 }
 
 html {
-  scroll-snap-type: y mandatory;
   /* to hide scroll bar */
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -19,7 +18,6 @@ html {
     font-size: 30px;
     margin: 0;
     color: white;
-    scroll-snap-align: start;
     /* z-index: -2; */
 
 }
