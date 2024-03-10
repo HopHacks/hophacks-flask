@@ -21,7 +21,7 @@ For Linux
 
 ```
 source hophacks-env/bin/activate
-```
+```3.4
 
 #### 2. Install Requirements
 
