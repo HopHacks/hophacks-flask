@@ -41,24 +41,15 @@ function Login(props) {
   }
 
   const signInCardDesktop = (
-    <Card class="card">
+    <Card class="card" style={{ color: '#ffffff', height: '70%' }}>
       <CardContent>
         <Typography class="card-title">Welcome!</Typography>
-        <TextField
-          // TODO: make the border white
-          required
-          variant="standard"
-          label="Email Address"
-          style={{ width: '80%' }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
+        <div style={{ color: '#ffffff', fontSize: '2rem' }}>
+          {' '}
+          Sign up for HopHacks 2023 is currently closed! Please check back in June to sign up for
+          HopHacks 2024!{' '}
+        </div>
+        {/*
         <TextField
           // TODO: make the border white
           type={'password'}
@@ -93,7 +84,7 @@ function Login(props) {
 
         <Link to={'/register/signup'}>
           <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
-        </Link>
+        </Link> */}
       </CardContent>
     </Card>
   );
