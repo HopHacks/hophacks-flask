@@ -10,6 +10,15 @@ html {
 }
 
 
+.background-image {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  opacity: 1;
+  position: fixed;
+  z-index: 10;
+}
+
 .fullscreen {
   position: relative;
     width: 100vw;

@@ -5,11 +5,13 @@ import { useParallax } from 'react-scroll-parallax';
 const Main = () => {
   const [activeLoc, setActiveLoc] = useState(1);
 
-  
+  const background = useParallax({
+    opacity: [1, 0.3],
+  });
   return (
 
     <>
-    
+      <img src="/images/title_background.png" alt="Title Background" className="background-image" ref={background.ref}/>
     <>
               {/*content*/}
         <PageBox activeLoc={activeLoc} num="1"/>

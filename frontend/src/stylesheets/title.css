@@ -6,13 +6,6 @@
 
 }
 
-.background-image {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    opacity: .1;
-    position: absolute;
-}
 
 .titleDiv {
     display: flex;
