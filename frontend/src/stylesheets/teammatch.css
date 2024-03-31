@@ -4,3 +4,86 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.mainBg {
+  background-color: #DAE9FF;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonDiv {
+  width: 15vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hiText {
+  text-align: center;
+  color: #1D539F;
+}
+
+.emphasisYellow{
+  color: #F8B92A;
+}
+
+.inputDiv {
+  display: flex;
+  justify-content: left;
+  gap: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+}
+
+.dot{
+  display: none;
+}
+
+
+.labell{
+  color: #1D539F;
+  display: inline-block;
+  position: relative;
+  margin-right: 1vw;
+  padding-left: 1.5vw;
+  cursor: pointer;
+}
+
+.labell:before{
+  content: "";
+  /* display: block;  */
+  position: absolute;
+  width: 1vw;
+  height: 2vh;
+  left: .1vh;
+  top: 50%;
+  margin-top: -.8vh;
+  border: .2vh solid #F8B92A;
+  border-radius: 5vh;;
+}
+
+.labell:after{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 1vw;;
+  margin-top: 0;
+  background: #F8B92A;
+  border-radius: 5vh;
+  transition: .4s ease-in-out;
+}
+
+:checked + .labell:after {
+    height:1.4vh;
+    width: .7vw;
+    margin-top: -.5vh;
+    left: .2vw;
+  }
