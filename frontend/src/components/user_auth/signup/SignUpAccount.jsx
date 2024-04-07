@@ -12,6 +12,7 @@ export default function SignUpAccount(props) {
   const isMobile = props.isMobile;
   const username = props.username;
   const setUsername = props.setUsername;
+  console.log(props);
   const password = props.password;
   const setPassword = props.setPassword;
   const passwordConfirm = props.passwordConfirm;

@@ -14,8 +14,11 @@ export default function SignUpConfirmation(props) {
         <Typography class={isMobile ? 'mobile-motto-text' : 'card-title'}>
           Account Created
         </Typography>
-        <Typography class="mobile-motto-subtext">
-          Thank you for signing up. We are excited to have you joining our event!
+        <Typography class={isMobile ? 'mobile-motto-subtext' : 'card-subtitle'}>
+          Thank you for signing up.
+        </Typography>
+        <Typography class={isMobile ? 'mobile-motto-subtext' : 'card-subtitle'}>
+          We are excited to have you joining our event!
         </Typography>
         <Link to="/user_auth/login" style={{ width: '100%' }}>
           <Button

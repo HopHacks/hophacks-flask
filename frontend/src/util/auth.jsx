@@ -35,7 +35,8 @@ function AuthProvider(props) {
 
   // Login to page
   async function login(email, password) {
-    const response = await axios.post('/api/auth/login', {
+    console.log('hello');
+    const response = await axios.post('http://127.0.0.1:5000/api/auth/login', {
       username: email,
       password: password
     });
