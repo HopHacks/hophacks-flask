@@ -24,8 +24,6 @@ export default function SignUpChecks(props) {
 
   const resumeFile = props.resumeFile;
   const resumeChecked = props.resumeChecked;
-  const vaccinationFile = props.vaccinationFile;
-  const vaccinationChecked = props.vaccinationChecked;
   const conductCodeChecked = props.conductCodeChecked;
   const eventLogisticsChecked = props.eventLogisticsChecked;
   const communicationChecked = props.communicationChecked;
@@ -35,8 +33,6 @@ export default function SignUpChecks(props) {
   const handleChecksNext = props.handleChecksNext;
   const handleChecksBack = props.handleChecksBack;
   const handleResumeFileChange = props.handleResumeFileChange;
-  const handleVaccinationCheckBox = props.handleVaccinationCheckBox;
-  const handleVaccinationFileChange = props.handleVaccinationFileChange;
   const handleResumeCheckBox = props.handleResumeCheckBox;
   const handleConductCheckBox = props.handleConductCheckBox;
   const handleLogisticsCheckBox = props.handleLogisticsCheckBox;
@@ -74,31 +70,6 @@ export default function SignUpChecks(props) {
               * I authorize HopHacks to send my resume to our event sponsors for recruiting
               purposes.
             </span>
-          </div>
-        }
-      />
-    </FormGroup>
-  );
-
-  const vaccination = (
-    <FormGroup style={{ display: 'initial' }}>
-      <FormControlLabel
-        style={{ display: 'table' }}
-        control={
-          <div style={{ display: 'table-cell' }}>
-            <Checkbox
-              checked={vaccinationChecked}
-              onChange={handleVaccinationCheckBox}
-              checkedIcon={<CheckCircleIcon style={{ color: '#57A773' }} />}
-              inputProps={{ 'aria-label': 'primary checkbox' }}
-              color="#061A40"
-              size="small"
-            />
-          </div>
-        }
-        label={
-          <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
-            <span>* I authorize HopHacks to verify my vaccination card for safety purposes.</span>
           </div>
         }
       />
@@ -308,33 +279,9 @@ export default function SignUpChecks(props) {
               </label>
             </div>
           </Grid>
-          <Grid item xs={12} style={{ textAlign: isMobile ? 'center' : 'left' }}>
-            <div className="text-field">
-              <label htmlFor="upload-vaccination">
-                <input
-                  style={{ display: 'none' }}
-                  accept=".pdf, .doc, .docx"
-                  id="upload-vaccination"
-                  type="file"
-                  name="upload-vaccination"
-                  onChange={handleVaccinationFileChange}
-                />
-                <Button variant="outlined" style={{ color: '#061A40' }} component="span">
-                  Upload Vaccination Card*
-                </Button>
-                {isMobile ? <br /> : null}
-                {vaccinationFile !== undefined && (
-                  <text style={{ marginLeft: isMobile ? '0rem' : '1rem', color: '#061A40' }}>
-                    {'Uploaded:' + vaccinationFile.name}
-                  </text>
-                )}
-              </label>
-            </div>
-          </Grid>
           <Grid item xs={12}>
             <div className="text-field">
               {resume}
-              {vaccination}
               {codeOfConduct}
               {eventLogistics}
               {communication}

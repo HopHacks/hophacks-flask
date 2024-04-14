@@ -9,6 +9,12 @@ function SponsorPrizes() {
   const [tables, setTables] = useState([]);
   const [rooms, setRooms] = useState([]);
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   useEffect(() => {
     axios.get('api/judgetool/sponsor-prizes').then((response) => {
       setPrizes(response.data);

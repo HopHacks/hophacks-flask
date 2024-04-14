@@ -14,6 +14,12 @@ function AuthProvider(props) {
   const [isLoggedIn, setLoggedIn] = useState(null);
   let refreshInterval;
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+  console.log(myVariable);
+  if (myVariable != undefined) {
+    axios.defaults.baseURL = myVariable;
+  }
+
   async function refreshToken() {
     if (isLoggedIn === false) {
       // false rather than null
@@ -36,7 +42,7 @@ function AuthProvider(props) {
   // Login to page
   async function login(email, password) {
     console.log('hello');
-    const response = await axios.post('http://127.0.0.1:5000/api/auth/login', {
+    const response = await axios.post('/api/auth/login', {
       username: email,
       password: password
     });

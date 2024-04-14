@@ -23,6 +23,12 @@ import '../../stylesheets/profile.css';
 const Profile = function Profile(props) {
   const isMobile = props.isMobile;
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   const [status, setStatus] = useState('Application not complete: confirm email');
   const [resumeFile, setResumeFile] = useState('');
   const [oldResumeName, setOldResumeName] = useState('');

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import '../../../stylesheets/user_auth.css';
 import SignUpAccount from './SignUpAccount';
@@ -15,7 +15,7 @@ function SignUp(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  //const [confirmMsg, setConfirmMsg] = useState('');
+  const [confirmMsg, setConfirmMsg] = useState('');
   const [first_name, setFirst_name] = useState('');
   const [last_name, setLast_name] = useState('');
   const [gender, setGender] = useState('');
@@ -32,19 +32,23 @@ function SignUp(props) {
   const [learn_about_us, setLearn_about_us] = useState('');
 
   const [resumeFile, setResumeFile] = useState('');
-  const [vaccinationFile, setVaccinationFile] = useState('');
 
   const [profileSubmitMsg, setProfileSubmitMsg] = useState('');
   const [resumeChecked, setResumeChecked] = useState(false);
-  const [vaccinationChecked, setVaccinationChecked] = useState(false);
 
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
-  const [enabledButton] = useState(true); //TMP get rid of setEnabledButton
-  //const [enabledButton, setEnabledButton] = useState(true); //ORIGINAL
+  const [enabledButton, setEnabledButton] = useState(true); //TMP get rid of setEnabledButton
+  // const [enabledButton, setEnabledButton] = useState(true); //ORIGINAL
 
   const isMobile = props.isMobile;
+
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
 
   // decide which page is actively showing
   const ACCOUNT = 0;
@@ -56,39 +60,40 @@ function SignUp(props) {
 
   // functions for account page
   async function handleAccountNext() {
-    // if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
-    //   setConfirmMsg('* Required field cannot be empty');
-    //   return;
-    // }
+    if (password.length === 0 || passwordConfirm.length === 0 || username.length === 0) {
+      setConfirmMsg('* Required field cannot be empty');
+      return;
+    }
 
-    // const emailre =
-    //   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // if (!emailre.test(String(username).toLowerCase())) {
-    //   setConfirmMsg('Please enter a valid email address.');
-    //   return;
-    // }
+    const emailre =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailre.test(String(username).toLowerCase())) {
+      setConfirmMsg('Please enter a valid email address.');
+      return;
+    }
 
-    // const response = await axios.get('/api/accounts/check/' + username);
-    // if (response.data.exist) {
-    //   setConfirmMsg('Email is already in use.');
-    //   return;
-    // }
+    const response = await axios.get('/api/accounts/check/' + username);
+    if (response.data.exist) {
+      setConfirmMsg('Email is already in use.');
+      return;
+    }
 
-    // const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
-    // if (!password.match(passwordre)) {
-    //   setConfirmMsg(
-    //     'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
-    //   );
-    //   return;
-    // }
+    if (!password.match(passwordre)) {
+      setConfirmMsg(
+        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
+      );
+      return;
+    }
 
-    // if (password !== passwordConfirm) {
-    //   setConfirmMsg('Confirm password must match with the password.');
-    //   return;
-    // }
+    // console.
+    if (password !== passwordConfirm) {
+      setConfirmMsg('Confirm password must match with the password.');
+      return;
+    }
 
-    // Go to the profile page
+    //Go to the profile page
     setActivePage(PROFILE);
   }
 
@@ -197,11 +202,6 @@ function SignUp(props) {
       return;
     }
 
-    if (!vaccinationChecked || vaccinationFile === '') {
-      setProfileSubmitMsg('* Please upload your vaccination card.');
-      return;
-    }
-
     if (!conductCodeChecked) {
       setProfileSubmitMsg('* Please read the MLH Code of Conduct.');
       return;
@@ -226,79 +226,79 @@ function SignUp(props) {
     //TODO: uncomment for actual testing
     const data = new FormData();
     data.append('file', resumeFile);
-    // data.append(
-    //   'json_file',
-    //   JSON.stringify({
-    //     username: username,
-    //     password: password,
-    //     confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email',
-    //     profile: {
-    //       first_name: first_name,
-    //       last_name: last_name,
-    //       gender: gender,
-    //       age: age,
-    //       major: major,
-    //       phone_number: phone_number,
-    //       school: school,
-    //       ethnicity: ethnicity,
-    //       grad: grad,
-    //       is_jhu: school === 'Johns Hopkins University' ? true : false,
-    //       grad_month: grad_month,
-    //       grad_year: grad_year,
-    //       mlh_emails: communicationChecked,
-    //       first_hackathon: first_hackathon,
-    //       first_hophacks: first_hophacks,
-    //       learn_about_us: learn_about_us
-    //     }
-    //   })
-    // );
+    data.append(
+      'json_file',
+      JSON.stringify({
+        username: username,
+        password: password,
+        confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email',
+        profile: {
+          first_name: first_name,
+          last_name: last_name,
+          gender: gender,
+          age: age,
+          major: major,
+          phone_number: phone_number,
+          school: school,
+          ethnicity: ethnicity,
+          grad: grad,
+          is_jhu: school === 'Johns Hopkins University' ? true : false,
+          grad_month: grad_month,
+          grad_year: grad_year,
+          mlh_emails: communicationChecked,
+          first_hackathon: first_hackathon,
+          first_hophacks: first_hophacks,
+          learn_about_us: learn_about_us
+        }
+      })
+    );
 
-    // try {
-    //   setEnabledButton(false);
-    //   await axios.post('/api/accounts/create', data);
+    try {
+      setEnabledButton(false);
+      await axios.post('/api/accounts/create', data);
 
-    //   //   await axios.post('/api/slack/registration', {
-    //   //     first_name: first_name,
-    //   //     last_name: last_name,
-    //   //     school: school,
-    //   //   });
-    //   await axios.post('/api/slack/registration', {
-    //     first_name: first_name,
-    //     last_name: last_name,
-    //     school: school
-    //   });
+      //   await axios.post('/api/slack/registration', {
+      //     first_name: first_name,
+      //     last_name: last_name,
+      //     school: school,
+      //   });
 
-    //   try {
-    //     await props.login(username, password);
-    //     // if (username !== 'admin') {
-    //     //   history.push('/profile');
-    //     // } else {
-    //     //   history.push('/admin');
-    //     // }
-    //     console.log('failed here');
-    //     const resumeData = new FormData();
-    //     resumeData.append('file', resumeFile);
-    //     await axios.post('/api/resumes/', resumeData);
+      await axios.post('/api/slack/registration', {
+        first_name: first_name,
+        last_name: last_name,
+        school: school
+      });
 
-    //     const vaccinationData = new FormData();
-    //     vaccinationData.append('file', vaccinationFile);
-    //     await axios.post('/api/vaccination/', vaccinationData);
-    //   } catch (error) {
-    //     setEnabledButton(true);
-    //   }
-    //   // await axios.post('/api/slack/registration', {
-    //   //   first_name: first_name,
-    //   //   last_name: last_name,
-    //   //   school: school
-    //   // });
+      try {
+        await props.login(username, password);
+        // if (username !== 'admin') {
+        //   history.push('/profile');
+        // } else {
+        //   history.push('/admin');
+        // }
+        console.log('failed here');
+        const resumeData = new FormData();
+        resumeData.append('file', resumeFile);
+        await axios.post('/api/resumes/', resumeData);
+      } catch (error) {
+        setEnabledButton(true);
+      }
+      // await axios.post('/api/slack/registration', {
+      //   first_name: first_name,
+      //   last_name: last_name,
+      //   school: school
+      // });
 
-    //   // const resumeData = new FormData();
-    //   // resumeData.append('file', resumeFile);
-    //   // await axios.post('/api/resumes', resumeData);
-    // } catch (e) {
-    //   return;
-    // }
-    setActivePage(IMAGE);
+      // const resumeData = new FormData();
+      // resumeData.append('file', resumeFile);
+      // await axios.post('/api/resumes', resumeData);
+    } catch (e) {
+      return;
+    }
+
+    //ignore image for now
+    // setActivePage(IMAGE);
+    setActivePage(CONFIRMATION);
   }
 
   async function handleChecksBack() {
@@ -317,16 +317,8 @@ function SignUp(props) {
     setResumeFile(e.target.files[0]);
   }
 
-  function handleVaccinationFileChange(e) {
-    setVaccinationFile(e.target.files[0]);
-  }
-
   const handleResumeCheckBox = (event) => {
     setResumeChecked(event.target.checked);
-  };
-
-  const handleVaccinationCheckBox = (event) => {
-    setVaccinationChecked(event.target.checked);
   };
 
   const handleConductCheckBox = (event) => {
@@ -353,7 +345,7 @@ function SignUp(props) {
           setPassword={setPassword}
           passwordConfirm={passwordConfirm}
           setPasswordConfirm={setPasswordConfirm}
-          //confirmMsg={confirmMsg}
+          confirmMsg={confirmMsg}
           handleAccountNext={handleAccountNext}
         />
       );
@@ -424,8 +416,6 @@ function SignUp(props) {
           setLearn_about_us={setLearn_about_us}
           resumeFile={resumeFile}
           resumeChecked={resumeChecked}
-          vaccinationFile={vaccinationFile}
-          vaccinationChecked={vaccinationChecked}
           conductCodeChecked={conductCodeChecked}
           eventLogisticsChecked={eventLogisticsChecked}
           communicationChecked={communicationChecked}
@@ -434,9 +424,7 @@ function SignUp(props) {
           handleChecksNext={handleChecksNext}
           handleChecksBack={handleChecksBack}
           handleResumeFileChange={handleResumeFileChange}
-          handleVaccinationFileChange={handleVaccinationFileChange}
           handleResumeCheckBox={handleResumeCheckBox}
-          handleVaccinationCheckBox={handleVaccinationCheckBox}
           handleConductCheckBox={handleConductCheckBox}
           handleLogisticsCheckBox={handleLogisticsCheckBox}
           handleCommunicationCheckBox={handleCommunicationCheckBox}

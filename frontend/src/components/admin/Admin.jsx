@@ -41,6 +41,11 @@ const HeaderTableCell = withStyles({
 })(TableCell);
 
 const Admin = function () {
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
   const classes = useStyles();
   const [users, setusers] = useState([]);
   const [query, setQuery] = useState('');

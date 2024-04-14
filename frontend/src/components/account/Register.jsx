@@ -24,6 +24,12 @@ import '../../stylesheets/register.css';
 export default function Register() {
   const [username] = useState('');
   const [password] = useState('');
+
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
   // const [passwordConfirm, setPasswordConfirm] = useState('');
   // const [confirmMsg, setConfirmMsg] = useState('');
   const [first_name, setFirst_name] = useState('');

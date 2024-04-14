@@ -9,6 +9,12 @@ function Assignments() {
   const [tables, setTables] = useState([]);
   const [rooms, setRooms] = useState([]);
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   useEffect(() => {
     axios.get('api/judgetool/assignments').then((response) => {
       setAssignments(response.data);

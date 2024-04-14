@@ -27,7 +27,7 @@ body {
   box-shadow: 15px 15px 0px rgba(45, 153, 224, 0.6);
   height: 90%;
   min-height: none;
-  background-color: #E1F1FF;
+  background-color: #e1f1ff;
   padding: 3%;
   text-align: center;
   border-radius: 25px;
@@ -52,7 +52,7 @@ body {
   font-weight: 700;
   font-style: italic;
   font-size: 2.5rem;
-  color: #29A0E2;
+  color: #29a0e2;
   margin-top: '10%';
   margin-right: auto;
   margin-left: auto;
@@ -62,7 +62,7 @@ body {
   font-family: proxima-nova, sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
-  color: #29A0E2;
+  color: #29a0e2;
   margin-right: auto;
   margin-left: auto;
 }
@@ -70,8 +70,8 @@ body {
 .card-infoline {
   font-family: proxima-nova, sans-serif;
   font-weight: 700;
-  font-size: 1.0rem;
-  color: #29A0E2;
+  font-size: 1rem;
+  color: #29a0e2;
   margin-right: auto;
   margin-left: auto;
 }
@@ -85,7 +85,7 @@ body {
   max-width: 200px;
   height: 60px;
   border-radius: 15px;
-  background-color: #2D99E0;
+  background-color: #2d99e0;
   color: #fff;
   font-size: 1.5rem;
   font-weight: 700;
@@ -96,8 +96,8 @@ body {
 }
 
 .card-button:hover {
-  background-color: #061A40;
-  border-color: #2D99E0;
+  background-color: #061a40;
+  border-color: #2d99e0;
   color: #fff;
 }
 
@@ -115,7 +115,7 @@ body {
   font-weight: 700;
   font-style: normal;
   font-size: 1rem;
-  color: #2D99E0;
+  color: #2d99e0;
   margin-top: 5%;
 }
 

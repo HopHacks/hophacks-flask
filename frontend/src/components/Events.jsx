@@ -9,6 +9,12 @@ const Events = function Events(props) {
   const [startDateToAdd, setStartDateToAdd] = useState('');
   const [endDateToAdd, setEndDateToAdd] = useState('');
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   // display list of events
   async function viewEvents() {
     if (props.isLoggedIn == true) {

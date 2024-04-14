@@ -8,6 +8,12 @@ function img(url) {
 }
 
 export default function EmailConfirmation(props) {
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   const [message, setMessage] = useState('Confirming Email...');
   const [email, setEmail] = useState('');
   let attempted = false;

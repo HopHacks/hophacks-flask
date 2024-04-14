@@ -19,6 +19,11 @@ export default function PasswordReset(props) {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   async function reset_password() {
+    const myVariable = process.env.REACT_APP_BACKENDURL;
+
+    if (myVariable != '') {
+      axios.defaults.baseURL = myVariable;
+    }
     const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
     if (!password.match(passwordre)) {

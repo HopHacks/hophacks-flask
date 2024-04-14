@@ -4,6 +4,7 @@ from mail import mail
 from db import db
 from slack import slack_client
 from discord import discord_client
+from flask_cors import CORS
 
 import json
 
@@ -26,6 +27,7 @@ def get_req_config(app, config, key):
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
 
+    CORS(app)
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
