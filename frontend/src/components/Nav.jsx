@@ -77,20 +77,7 @@ const Nav = function Nav(props) {
         </Typography>
       </Button>
 
-      <Button
-        component={Link}
-        onClick={() => {
-          console.log('Profile button clicked'); //here
-          history.push('/profile');
-        }}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          Profile
-        </Typography>
-      </Button>
-
+      {/* 
       <Button
         component={Link}
         onClick={() => {
@@ -102,9 +89,9 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Reset Password?
         </Typography>
-      </Button>
+      </Button> */}
 
-      <Button
+      {/* <Button
         component={Link}
         onClick={() => {
           history.push('/confirm_email/:token');
@@ -115,48 +102,9 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Email Confirmation
         </Typography>
-      </Button>
+      </Button> */}
 
-      <Button
-        component={Link}
-        onClick={() => {
-          history.push('/user_auth/signup/signupaccounts');
-        }}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          SignUp Account
-        </Typography>
-      </Button>
-
-      <Button
-        component={Link}
-        onClick={() => {
-          history.push('/user_auth/signup/signupprofile');
-        }}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          SignUp Profile
-        </Typography>
-      </Button>
-
-      <Button
-        component={Link}
-        onClick={() => {
-          history.push('/user_auth/signup/signupchecks');
-        }}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          SignUp Checks
-        </Typography>
-      </Button>
-
-      <Button
+      {/* <Button
         component={Link}
         onClick={() => {
           history.push('/user_auth/signup/signupimage');
@@ -167,9 +115,9 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           SignUp Image
         </Typography>
-      </Button>
+      </Button> */}
 
-      {/* <Button
+      <Button
         component={Link}
         onClick={() => (window.location = '/#schedule')}
         color="inherit"
@@ -178,8 +126,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Schedule
         </Typography>
-      </Button> */}
-      {/* <Button
+      </Button>
+      <Button
         component={Link}
         onClick={() => (window.location = '/#prizes')}
         color="inherit"
@@ -188,8 +136,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Prizes
         </Typography>
-      </Button> */}
-      {/* <Button
+      </Button>
+      <Button
         component={Link}
         onClick={() => (window.location = '/#tracks')}
         color="inherit"
@@ -198,8 +146,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Tracks
         </Typography>
-      </Button> */}
-      {/* <Button
+      </Button>
+      <Button
         component={Link}
         onClick={() => (window.location = '/#sponsors')}
         color="inherit"
@@ -208,8 +156,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Sponsors
         </Typography>
-      </Button> */}
-      {/* <Button
+      </Button>
+      <Button
         component={Link}
         onClick={() => (window.location = '/#faq')}
         color="inherit"
@@ -218,7 +166,7 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           FAQ
         </Typography>
-      </Button> */}
+      </Button>
       <Button
         component={Link}
         onClick={() => {

@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../util/theme';
 import { AuthProvider } from '../util/auth';
 
-//import Home from './Home'; //temporarily took out home page
+import Home from './Home'; //temporarily took out home page
 import Recruiting from './Recruiting';
 import Profile from './account/Profile'; //why does this not work!!!
 import Admin from './admin/Admin';
@@ -104,15 +104,15 @@ export default function App() {
                     <Team />
                   </Route>
 
-                  <Route path="/user_auth/login">
+                  <Route path="/register/login">
                     <Login isMobile={isMobile} />
                   </Route>
 
-                  <Route path="/user_auth/signup">
+                  <Route path="/register/signup">
                     <SignUp isMobile={isMobile} />
                   </Route>
 
-                  <Route path="/user_auth/resetpassword">
+                  <Route path="/register/resetpassword">
                     <ResetPassword isMobile={isMobile} />
                   </Route>
 
@@ -121,7 +121,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/">
-                    <Login />
+                    <Home isMobile={isMobile} />
                   </Route>
                 </Switch>
               </div>
