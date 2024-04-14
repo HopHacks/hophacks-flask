@@ -16,6 +16,7 @@ import Team from './Team';
 import LandingPage from './LandingPage';
 import PrizeHighlight from './PrizeHighlight';
 import HasTeam from './HasTeam';
+import TeamFindingPage from './TeamFindingPage';
 /**
 import Home from './Home';
 import Profile from './account/Profile';
@@ -76,7 +77,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/">
-                    <HasTeam />
+                    <TeamFindingPage />
                   </Route>
                 </Switch>
               </div>
