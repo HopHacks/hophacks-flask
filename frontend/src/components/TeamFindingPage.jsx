@@ -44,7 +44,7 @@ export default function TeamFindingPage() {
 
   return (
     <div className="App">
-      <h1>browse potential friends/teammates!</h1>
+      <h1 style={{color: 'white' }}>browse potential friends/teammates!</h1>
       <div className="filters">
         <div className="dropdowns">
           <select value={year} onChange={(e) => setYear(e.target.value)}>
@@ -78,10 +78,10 @@ export default function TeamFindingPage() {
       <div className="teamHolderContainer">
         {teams.map((team) => (
           <div key={team.id} className="teamHolder">
-            <button style={{ width: '300px', height: '300px', margin: '15px' }}>
-              <p>Leader: {team.leader}</p>
-              <p>Team Name: {team.teamName}</p>
-              <p>Occupancy: {team.occupancy}</p>
+            <button style={{ width: '280px', height: '300px', margin: '15px', backgroundColor: '#A9E5F6'}}>
+              <h2 style={{color: 'white' }}>Leader: {team.leader}</h2>
+              <p style={{color: 'white' }}>Team Name: {team.teamName}</p>
+              <p style={{color: 'white' }}>Occupancy: {team.occupancy}</p>
             </button>
           </div>
         ))}
