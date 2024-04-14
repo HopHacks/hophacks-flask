@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid } from '@material-ui/core';
+import '../stylesheets/teamfinding.css'
 
 const useStyles = makeStyles({
     margin: {
@@ -20,86 +21,71 @@ const useStyles = makeStyles({
   });
 
 export default function TeamFindingPage() {
-  const classes = useStyles();
-  const title = (
-    <Typography
-      className={classes.title}
-      variant="h3"
-      gutterBottom
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%'
-      }}
-    >
-      <h2>browse for teams:</h2>
-    </Typography>
-  );
-  const teamHolder = (
-    <Button
-      variant="contained"
-      style={{ height: '280px', width: '220px', backgroundColor: '#0047AB' }}
-    >
-      <Grid
-          container
-          spacing={0}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <Grid item md = {8}>
-            <Typography variant='h5'>
-              Team Name
-            </Typography>
-          </Grid>
-        <Grid item md = {8}>Description Description Description Description</Grid>
-      </Grid>  
-      
-    </Button>
-  );
-    return (
-      <div>
-        <div>
-            {title}
+  const [teams, setTeams] = useState([
+    { id: 1, leader: "Jane Doe", teamName: "Freshmen Gosling", occupancy: "2/4" },
+    { id: 2, leader: "Jane Doe", teamName: "Freshmen Gosling", occupancy: "2/4" },
+    { id: 3, leader: "Jane Doe", teamName: "Freshmen Gosling", occupancy: "2/4" },
+    { id: 4, leader: "Jane Doe", teamName: "Freshmen Gosling", occupancy: "2/4" },
+    { id: 5, leader: "Jane Doe", teamName: "Freshmen Gosling", occupancy: "2/4" },
+    { id: 6, leader: "Jane Doe", teamName: "Freshmen Gosling", occupancy: "2/4" },
+    { id: 7, leader: "Jane Doe", teamName: "Freshmen Gosling", occupancy: "2/4" },
+    { id: 8, leader: "Jane Doe", teamName: "Freshmen Gosling", occupancy: "2/4" },
+  ]);
+
+  const [year, setYear] = useState('');
+  const [skill, setSkill] = useState('');
+  const [status, setStatus] = useState('');
+  const [search, setSearch] = useState('');
+
+  // Function to filter teams based on selected criteria
+  const filterTeams = () => {
+    // Implement your filtering logic here
+  };
+
+  return (
+    <div className="App">
+      <h1>browse potential friends/teammates!</h1>
+      <div className="filters">
+        <div className="dropdowns">
+          <select value={year} onChange={(e) => setYear(e.target.value)}>
+            <option value="">Select Year</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+          </select>
+          <select value={skill} onChange={(e) => setSkill(e.target.value)}>
+            <option value="">Select Skill</option>
+            <option value="newbie">Newbie</option>
+            <option value="experienced">Experienced</option>
+            <option value="hackathon hunters">Hackathon Hunters</option>
+          </select>
+          <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="">Select Status</option>
+            <option value="open for recruit">Open for Recruit</option>
+          </select>
         </div>
-        <Grid
-          container
-          spacing={1}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <Grid item xs={3} md={3}>
-              {teamHolder}
-          </Grid>
-          <Grid item xs={3} md={3}>
-              {teamHolder}
-          </Grid>
-          <Grid item xs={3} md={3}>
-              {teamHolder}
-          </Grid>
-          <Grid item xs={3} md={3}>
-              {teamHolder}
-          </Grid>
-          <Grid item xs={3} md={3}>
-              {teamHolder}
-          </Grid>
-          <Grid item xs={3} md={3}>
-              {teamHolder}
-          </Grid>
-          <Grid item xs={3} md={3}>
-              {teamHolder}
-          </Grid>
-          <Grid item xs={3} md={3}>
-              {teamHolder}
-        </Grid>
-        </Grid>
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={filterTeams}>Search</button>
+        </div>
       </div>
-        
-      );
+      <div className="teamHolderContainer">
+        {teams.map((team) => (
+          <div key={team.id} className="teamHolder">
+            <button style={{ width: '300px', height: '300px', margin: '15px' }}>
+              <p>Leader: {team.leader}</p>
+              <p>Team Name: {team.teamName}</p>
+              <p>Occupancy: {team.occupancy}</p>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
