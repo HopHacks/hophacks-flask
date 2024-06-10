@@ -12,7 +12,7 @@ const theme = createMuiTheme({
       main: '#141230'
     },
     background: {
-      default: '#0F1827'
+      default: '#ADD8E6'
     }
   }),
   overrides: {
