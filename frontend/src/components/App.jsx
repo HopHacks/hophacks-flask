@@ -85,6 +85,10 @@ export default function App() {
                     <Announcements />
                   </Route>
 
+                  <Route exact path="/home">
+                    <Home />
+                  </Route>
+
                   {/* TODO: replace this with new register page */}
                   {/* <Route path="/register">
                     <Register isMobile ={isMobile}/>

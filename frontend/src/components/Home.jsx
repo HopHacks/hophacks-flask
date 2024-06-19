@@ -28,10 +28,10 @@ const useStyles = makeStyles({
     marginBottom: '13px'
   },
   colorBackground: {
-    backgroundColor: '#350225'
+    backgroundColor: '#bfeafc'
   },
   title: {
-    color: '#ffffff',
+    color: '#061A40',
     fontFamily: 'VCR OSD Mono'
   },
 

@@ -5,28 +5,34 @@ import styled from 'styled-components';
 const Title = styled.h2`
   font-size: 3rem;
   font-weight: 600;
-  color: rgba(255, 255, 255);
+  font-style: italic;
+  color: rgba(6, 26, 64, 1);
+  text-align: ${(props) => props.align || 'left'};
 `;
 
 const AboutText = styled.p`
   font-size: 1.5rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(6, 26, 64, 1);
   text-align: ${(props) => props.align || 'center'};
 `;
 
 const Highlight = styled.span`
-  color: rgb(204, 107, 163);
+  background-color: rgba(250, 192, 19, 1);
+  border-radius: 10px;
+  padding: 6px;
+  color: rgba(255, 255, 255, 1);
   font-weight: 800;
+  font-style: bold;
 `;
 
-function img(url) {
-  return process.env.PUBLIC_URL + '/images/' + url;
-}
+// function img(url) {
+//   return process.env.PUBLIC_URL + '/images/' + url;
+// }
 
 export default function About() {
   const introTextP1 = (
     <AboutText>
-      HopHacks is a <Highlight>36-hour annual Hackathon</Highlight> held at the Johns Hopkins
+      HopHacks is a <Highlight>36 hour annual Hackathon</Highlight> held at the Johns Hopkins
       University that encourages engineers, designers, and entrepreneurs to explore new ideas and
       create new applications.
     </AboutText>
@@ -42,9 +48,9 @@ export default function About() {
 
   return (
     <div id="about" style={{}}>
-      <Box align="center">
+      {/* <Box align="center">
         <img src={img('logo2023.png')} width={'160px'} />
-      </Box>
+      </Box> */}
       <Box flex={1} marginTop={'-4rem'} align="center">
         <Title>About</Title>
       </Box>
