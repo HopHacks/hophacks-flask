@@ -19,21 +19,21 @@ const useStyles = makeStyles({
     borderBottom: '20'
   },
   color: {
-    //backgroundColor: "#2195ea",
-    backgroundColor: '#376eea'
+    backgroundColor: 'rgba(45, 153, 224, 1)'
   },
   colorBackground: {
-    backgroundColor: 'transparent'
+    backgroundColor: 'rgba(6, 26, 64, 1)'
   },
   title: {
-    fontSize: '2rem',
-    color: '#ffffff',
+    fontSize: '3rem',
+    color: '#061a40',
     fontFamily: 'Inter',
-    marginBottom: '2rem'
+    fontWeight: 'bold',
+    fontStyle: 'italic'
   },
 
   button: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#6, 26, 64, 1',
     color: '#c8e7fa',
     width: '50%',
     minHeight: '50px',
@@ -43,13 +43,13 @@ const useStyles = makeStyles({
     }
   },
   text: {
-    color: '#ffffff',
+    color: 'rgba(255, 255, 255, 1)',
     fontFamily: 'Inter',
     flexDirection: 'column',
     marginBottom: '0px'
   },
   link: {
-    color: '#8aecff'
+    color: 'rgba(250, 192, 19, 1)'
   },
   MuiAccordionroot: {
     '&.MuiAccordion-root:before': {
@@ -57,8 +57,10 @@ const useStyles = makeStyles({
       flexDirection: 'column'
     },
     '&.MuiAccordion-root.Mui-expanded:last-child': {
+      paddingBottom: '20px',
       marginTop: '1px',
-      marginBottom: '25px'
+      marginBottom: '10px',
+      backgroundColor: 'rgba(45, 153, 224, 1)'
     },
     '&.MuiAccordionSummary-content': {
       margin: '0'
@@ -77,7 +79,7 @@ const useStyles = makeStyles({
     flexDirection: 'column'
   },
   expand_icon: {
-    color: 'white'
+    color: 'rgba(250, 192, 19, 1)'
   }
 });
 
@@ -89,6 +91,41 @@ export default function Faq() {
       <Typography className={classes.title} variant="h4" style={{ marginTop: '0%' }} gutterBottom>
         Frequently Asked Questions
       </Typography>
+      <Box
+        raised="true"
+        border={4}
+        borderLeft={0}
+        borderRight={0}
+        borderBottom={0}
+        borderColor="#ffffff"
+      >
+        <Accordion
+          className={`${classes.colorBackground} ${classes.text}`}
+          border={0}
+          elevation={0}
+          classes={{ root: classes.MuiAccordionroot }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
+            classes={{
+              root: classes.content,
+              content: classes.content,
+              expanded: classes.expanded
+            }}
+          >
+            <Typography className={classes.text} variant="h6" gutterBottom>
+              <b> What is a Hackathon? </b>
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+            <Typography className={classes.text}>
+              A hackathon is a <b>36 hour event</b> where students with similar interests come
+              together to work on a cool, innovative project. You can hear from people in computer
+              science and network with fellow peers and sponsors from companies!
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
       <Box
         raised="true"
         border={4}
