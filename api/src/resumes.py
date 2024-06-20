@@ -1,4 +1,4 @@
-from api.src.registrations import send_apply_confirm
+from registrations import send_apply_confirm
 from db import db
 
 from flask import Blueprint, request, Response, jsonify
