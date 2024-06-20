@@ -7,6 +7,10 @@ from bson import ObjectId
 import boto3
 from werkzeug.utils import secure_filename
 
+import pytz
+import datetime
+
+
 resume_api = Blueprint('resumes', __name__)
 
 ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
@@ -49,9 +53,27 @@ def upload():
 
     # remove old resume
     if ('resume' in user):
-        old_file_name = user['resume']
-        object_name = 'Fall-2024/{}-{}'.format(id, old_file_name)
-        s3.delete_object(Bucket=BUCKET, Key=object_name)
+        if (user['resume'] == ""):
+            eastern = pytz.timezone("America/New_York")
+            eventFile = open("event.txt", "r")
+            result = db.users.update_many(
+            {
+                '_id': {'$in': id},
+                'registrations.event' : eventFile.read()
+            },
+            {
+                '$set': {
+                    "registrations.$.apply": True,
+                    "registrations.$.apply_at": datetime.datetime.utcnow(),
+                    "registrations.$.status": "applied"
+                }
+            }
+        )
+        else:
+            old_file_name = user['resume']
+            object_name = 'Fall-2024/{}-{}'.format(id, old_file_name)
+            s3.delete_object(Bucket=BUCKET, Key=object_name)
+    
 
     # TODO make this atomic? what if the file upload doesn't work?
     object_name = 'Fall-2024/{}-{}'.format(id, file_name)

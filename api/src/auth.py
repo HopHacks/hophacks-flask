@@ -10,6 +10,7 @@ from flask_jwt_extended import (
 )
 import bcrypt
 from bson.objectid import ObjectId
+from registrations import send_apply_confirm
 
 auth_api = Blueprint('auth', __name__)
 
@@ -85,6 +86,32 @@ def login():
             }
         }}
     )
+    
+    user = db.users.find_one({'_id': ObjectId(id)})
+
+
+    # eastern = pytz.timezone("America/New_York")
+
+    eventFile = open("event.txt", "r")
+    
+    new_reg = {
+        "event": eventFile.read(), # update 
+        # "apply_at": ,
+        "accept": False,
+        "checkin": False,
+        "status": "email_confirmed"
+    }
+
+    if (user["email_confirmed"]):
+        alreadyReg = False
+        for registrations in user['registrations']:
+            if (registrations['event'] == "Fall 2024"):
+                alreadyReg = True
+        if (not alreadyReg):
+            result = db.users.update_one({'_id': ObjectId(id)}, {'$push': {'registrations': new_reg}})
+            result = db.users.update_one({'_id': ObjectId(id)}, {'$set': {'resume': ""}})
+            send_apply_confirm(user['username'], user['profile']['first_name'])
+
 
     resp = jsonify(ret)
 
@@ -93,6 +120,7 @@ def login():
     print(resp)
     print(ret)
     return resp, 200
+
 
 @auth_api.route('/session/refresh', methods=['GET'])
 @jwt_refresh_token_required
