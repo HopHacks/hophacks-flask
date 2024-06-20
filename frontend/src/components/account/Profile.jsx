@@ -178,7 +178,7 @@ const Profile = function Profile(props) {
             'Upload Resume to finish applying. Reload the page to see updated application status.'
           );
         }
-        if (registration.rsvp) {
+        else if (registration.rsvp) {
           setStatus(rsvpStatus);
         } else if (registration.accept) {
           setStatus(acceptedStatus);
