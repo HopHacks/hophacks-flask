@@ -173,7 +173,7 @@ const Profile = function Profile(props) {
     const response = await axios.get('/api/registrations/get');
     response.data.registrations.forEach((registration) => {
       if (registration.event === currentEvent) {
-        if (registration.status == 'Email confirmed') {
+        if (registration.status == 'email_confirmed') {
           setStatus(
             'Upload Resume to finish applying. Reload the page to see updated application status.'
           );

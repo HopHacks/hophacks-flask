@@ -53,27 +53,28 @@ def upload():
 
     # remove old resume
     if ('resume' in user):
-        old_file_name = user['resume']
-        object_name = 'Fall-2024/{}-{}'.format(id, old_file_name)
-        s3.delete_object(Bucket=BUCKET, Key=object_name)
-    
-    eastern = pytz.timezone("America/New_York")
-
-    eventFile = open("event.txt", "r")
-    if (user['resume'] == ""):
-        result = db.users.update_many(
-        {
-            '_id': {'$in': id},
-            'registrations.event' : eventFile.read()
-        },
-        {
-            '$set': {
-                "registrations.$.apply": True,
-                "registrations.$.accept_at": datetime.datetime.utcnow(),
-                "registrations.$.status": "applied"
+        if (user['resume'] == ""):
+            eastern = pytz.timezone("America/New_York")
+            eventFile = open("event.txt", "r")
+            result = db.users.update_many(
+            {
+                '_id': {'$in': id},
+                'registrations.event' : eventFile.read()
+            },
+            {
+                '$set': {
+                    "registrations.$.apply": True,
+                    "registrations.$.apply_at": datetime.datetime.utcnow(),
+                    "registrations.$.status": "applied"
+                }
             }
-        }
-    )
+        )
+        else:
+            old_file_name = user['resume']
+            object_name = 'Fall-2024/{}-{}'.format(id, old_file_name)
+            s3.delete_object(Bucket=BUCKET, Key=object_name)
+    
+
     # TODO make this atomic? what if the file upload doesn't work?
     object_name = 'Fall-2024/{}-{}'.format(id, file_name)
     s3.upload_fileobj(file, BUCKET, object_name)
