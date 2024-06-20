@@ -1,3 +1,4 @@
+from api.src.registrations import send_apply_confirm
 from db import db
 
 from flask import Blueprint, request, Response, jsonify
@@ -70,6 +71,7 @@ def upload():
                     }
                 }
             )
+                send_apply_confirm(user['username'], user['profile']['first_name'])
             else:
                 old_file_name = user['resume']
                 object_name = 'Fall-2024/{}-{}'.format(id, old_file_name)
