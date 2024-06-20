@@ -77,6 +77,7 @@ function Login(props) {
             }}
           />
         </div>
+
         <div style={{ textAlign: 'right' }}>
           <Link to={'/register/resetpassword'}>
             <Typography class="card-text-blue"> forgot password? </Typography>
@@ -105,10 +106,10 @@ function Login(props) {
             use JHED
           </Button> */}
         </div>
+
         <Link to={'/register/signup'}>
           <Typography class="card-text-blue"> New To HopHacks? Sign Up Now! </Typography>
-        </Link>{' '}
-        */}
+        </Link>
       </CardContent>
     </Card>
   );
