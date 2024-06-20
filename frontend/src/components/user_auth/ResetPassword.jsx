@@ -15,8 +15,8 @@ export default function PasswordReset(props) {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   // const [attempted, setAttempted] = useState(false);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
 
   async function reset_password() {
     const myVariable = process.env.REACT_APP_BACKENDURL;
@@ -24,19 +24,19 @@ export default function PasswordReset(props) {
     if (myVariable != '') {
       axios.defaults.baseURL = myVariable;
     }
-    const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+    // const passwordre = /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
-    if (!password.match(passwordre)) {
-      setMessage(
-        'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
-      );
-      return;
-    }
+    // if (!password.match(passwordre)) {
+    //   setMessage(
+    //     'Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.'
+    //   );
+    //   return;
+    // }
 
-    if (password != confirmPassword) {
-      setMessage('Confirm password must match with the password');
-      return;
-    }
+    // if (password != confirmPassword) {
+    //   setMessage('Confirm password must match with the password');
+    //   return;
+    // }
 
     try {
       //TODO: need email verification
@@ -62,40 +62,6 @@ export default function PasswordReset(props) {
             style={{ width: '90%' }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            InputLabelProps={{
-              style: { color: '#061A40' }
-            }}
-            InputProps={{
-              style: { color: '#061A40' }
-            }}
-          />
-        </div>
-        <div className="text-field">
-          <TextField
-            type={'password'}
-            required
-            variant="standard"
-            label="New Password"
-            value={password}
-            style={{ width: '90%' }}
-            onChange={(e) => setPassword(e.target.value)}
-            InputLabelProps={{
-              style: { color: '#061A40' }
-            }}
-            InputProps={{
-              style: { color: '#061A40' }
-            }}
-          />
-        </div>
-        <div className="text-field">
-          <TextField
-            type={'password'}
-            required
-            variant="standard"
-            label="Confirm New Password"
-            value={confirmPassword}
-            style={{ width: '90%' }}
-            onChange={(e) => setConfirmPassword(e.target.value)}
             InputLabelProps={{
               style: { color: '#061A40' }
             }}
@@ -147,37 +113,6 @@ export default function PasswordReset(props) {
             }}
           />
         </div>
-        <TextField
-          type={'password'}
-          required
-          variant="standard"
-          label="New Password"
-          value={password}
-          style={{ width: '80%', marginTop: '15%' }}
-          onChange={(e) => setPassword(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
-
-        <TextField
-          type={'password'}
-          required
-          variant="standard"
-          label="Confirm New Password"
-          value={confirmPassword}
-          style={{ width: '80%', marginTop: '15%' }}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
 
         <Typography class="card-text-red">{message}</Typography>
 
