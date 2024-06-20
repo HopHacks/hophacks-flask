@@ -35,7 +35,7 @@ def get_all_users_account():
                 {"profile.last_name": {"$regex": ".*"+query+".*", "$options": "i"}}
             ]
         },
-        {"registration": {"$elemMatch": {"event": "Fall 2024"}}}
+        {"registrations": {"$elemMatch": {"event": "Fall 2024"}}}
     ]
 })
 
