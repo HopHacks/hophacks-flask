@@ -63,7 +63,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
           value={school}
           InputProps={{
             ...params.InputProps,
-            style: { color: '#ffffff' },
+            style: { color: '#061A40' },
             endAdornment: (
               <React.Fragment>
                 {loading ? <CircularProgress color="inherit" size={20} /> : null}
@@ -71,7 +71,7 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
               </React.Fragment>
             )
           }}
-          InputLabelProps={{ style: { color: '#ffffff' } }}
+          InputLabelProps={{ style: { color: '#061A40' } }}
         />
       )}
     />

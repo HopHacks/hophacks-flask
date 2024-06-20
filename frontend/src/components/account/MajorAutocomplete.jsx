@@ -74,10 +74,10 @@ const MajorAutocomplete = function MajorAutocomplete({ setMajor }) {
           label="Major"
           variant="standard"
           style={{ width: '100%' }}
-          InputLabelProps={{ style: { color: '#ffffff' } }}
+          InputLabelProps={{ style: { color: '#061A40' } }}
           InputProps={{
             ...params.InputProps,
-            style: { color: '#ffffff' }
+            style: { color: '#061A40' }
           }}
         />
       )}

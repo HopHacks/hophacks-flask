@@ -11,6 +11,12 @@ export default function PasswordReset(props) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   async function reset_password(event) {
     event.preventDefault();
 
@@ -44,7 +50,7 @@ export default function PasswordReset(props) {
   return (
     <div
       style={{
-        backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/2022_theme.png")`,
+        backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/goose_background.png")`,
         backgroundSize: 'cover',
         height: '100vh'
       }}

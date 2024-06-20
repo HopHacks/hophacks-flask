@@ -42,6 +42,11 @@ class Upload extends Component {
     formData.append('room_file', this.state.roomsFile);
     formData.append('ifile', this.state.number);
 
+    const myVariable = process.env.REACT_APP_BACKENDURL;
+
+    if (myVariable != '') {
+      axios.defaults.baseURL = myVariable;
+    }
     try {
       await axios.post('api/judgetool/assignments', formData);
       this.props.history.push('/assignments');

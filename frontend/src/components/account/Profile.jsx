@@ -23,14 +23,15 @@ import '../../stylesheets/profile.css';
 const Profile = function Profile(props) {
   const isMobile = props.isMobile;
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   const [status, setStatus] = useState('Application not complete: confirm email');
   const [resumeFile, setResumeFile] = useState('');
   const [oldResumeName, setOldResumeName] = useState('');
-  const [oldVaccinationName, setOldVaccinationName] = useState('');
-  const [vaccinationFile, setVaccinationFile] = useState('');
-  const [vaccinationMsg, setVaccinationMsg] = useState(
-    'Acceptable format: *.pdf, *.png, *.jpeg, *.jpg, *.heic'
-  );
 
   //display database
   const [profile, setProfile] = useState([]);
@@ -54,7 +55,7 @@ const Profile = function Profile(props) {
   const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
   const [ageMsg, setAgeMsg] = useState('');
 
-  const currentEvent = 'Fall 2023';
+  const currentEvent = 'Fall 2024';
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
   const acceptedStatus =
     'You have been accepted to HopHacks. Please RSVP if you plan on participating!';
@@ -95,44 +96,6 @@ const Profile = function Profile(props) {
     e.preventDefault();
 
     const response = await axios.get('/api/resumes/');
-    const url = response.data['url'];
-    window.open(url, '_blank');
-  }
-
-  async function getVaccinationFileName() {
-    /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
-    if (!props.isLoggedIn) return;
-
-    try {
-      const response = await axios.get('/api/vaccination/filename');
-      setOldVaccinationName(response.data['filename']);
-    } catch (e) {
-      setOldVaccinationName('');
-    }
-  }
-
-  function handleVaccinationFileChange(e) {
-    setVaccinationFile(e.target.files[0]);
-  }
-
-  async function handleVaccinationSubmit(e) {
-    e.preventDefault();
-    const data = new FormData();
-    data.append('file', vaccinationFile);
-
-    try {
-      await axios.post('/api/vaccination/', data);
-      setVaccinationMsg('Vaccination card has been successfully uploaded');
-    } catch (e) {
-      setVaccinationMsg('Failed to upload vaccination card. Please try again.');
-    }
-    // TODO handle error!
-  }
-
-  async function handleVaccinationDownload(e) {
-    e.preventDefault();
-
-    const response = await axios.get('/api/vaccination/');
     const url = response.data['url'];
     window.open(url, '_blank');
   }
@@ -255,7 +218,6 @@ const Profile = function Profile(props) {
     getStatus();
     getProfile();
     getResumeFileName();
-    getVaccinationFileName();
     getEmailConfirmStatus();
   }, [props.isLoggedIn]);
 
@@ -381,67 +343,6 @@ const Profile = function Profile(props) {
                 </div>
                 <input type="submit" value="Submit" />
                 <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
-              </form>
-            </TableCell>
-          </TableRow>
-        </Table>
-      )}
-    </div>
-  );
-
-  const vaccination = (
-    <div>
-      <Typography class="section-header" gutterBottom>
-        Vaccination
-      </Typography>
-      <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-        {
-          "In response to the current administrative policy, this year's participants are required to be fully vaccinated or follow the indoor mask policy. Please upload a picture of your vaccination card if you are fully vaccinated."
-        }
-      </Typography>
-      {isMobile ? (
-        <div className="table">
-          <text className="table-header">Current Vaccination Card:</text>
-          <Link class="table-body" onClick={handleVaccinationDownload} style={{ color: 'blue' }}>
-            {' ' + oldVaccinationName}
-          </Link>
-          <br />
-          <Grid container>
-            <Grid item>
-              <text className="table-header">Upload New Vaccination Card:</text>
-            </Grid>
-            <Grid item>
-              <form onSubmit={handleVaccinationSubmit}>
-                <div>
-                  <input type="file" name="file" onChange={handleVaccinationFileChange} />
-                </div>
-                <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}> {vaccinationMsg} </Typography>
-              </form>
-            </Grid>
-          </Grid>
-        </div>
-      ) : (
-        <Table>
-          <TableHead>
-            <TableCell>Vaccination</TableCell>
-            <TableCell>Action</TableCell>
-            <TableCell>Upload Vaccination Card</TableCell>
-          </TableHead>
-          <TableRow>
-            <TableCell>{oldVaccinationName}</TableCell>
-            <TableCell>
-              <Link onClick={handleVaccinationDownload} style={{ fontSize: '15px', color: 'blue' }}>
-                Download
-              </Link>
-            </TableCell>
-            <TableCell>
-              <form onSubmit={handleVaccinationSubmit}>
-                <div>
-                  <input type="file" name="file" onChange={handleVaccinationFileChange} />
-                </div>
-                <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}> {vaccinationMsg} </Typography>
               </form>
             </TableCell>
           </TableRow>
@@ -626,12 +527,12 @@ const Profile = function Profile(props) {
               setGrad_year(e.target.value);
             }}
           >
-            <MenuItem value="2020">2020</MenuItem>
-            <MenuItem value="2021">2021</MenuItem>
-            <MenuItem value="2022">2022</MenuItem>
-            <MenuItem value="2023">2023</MenuItem>
-            <MenuItem value="2024">2024</MenuItem>
             <MenuItem value="2025">2025</MenuItem>
+            <MenuItem value="2026">2026</MenuItem>
+            <MenuItem value="2027">2027</MenuItem>
+            <MenuItem value="2028">2028</MenuItem>
+            <MenuItem value="2029">2029</MenuItem>
+            <MenuItem value="2030">2030</MenuItem>
           </Select>
         </FormControl>
       </form>
@@ -813,9 +714,6 @@ const Profile = function Profile(props) {
       <div className="section">{appStatus}</div>
       <div className="section" style={{ marginTop: '7%' }}>
         {resume}
-      </div>
-      <div className="section" style={{ marginTop: '7%' }}>
-        {vaccination}
       </div>
       <div className="section" style={{ marginTop: '7%' }}>
         {ProfileCard}

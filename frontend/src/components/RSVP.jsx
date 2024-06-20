@@ -7,6 +7,12 @@ const RSVP = function RSVP(props) {
   const [allList, setAllList] = useState([]); // list of all events user was accepted to
   const [rsvpList, setRsvpList] = useState([]); // list of events user has RSVPed to
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   // display list of events the user was accepted to
   async function viewEvents() {
     if (props.isLoggedIn == true) {

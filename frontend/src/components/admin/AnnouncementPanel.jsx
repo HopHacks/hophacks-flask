@@ -87,6 +87,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const Panel = function () {
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [announcements, setAnnouncements] = useState([]);

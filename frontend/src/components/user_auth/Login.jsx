@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { withAuthProps } from '../../util/auth';
-import '../../stylesheets/register.css';
+import '../../stylesheets/user_auth.css';
 import { useEffect } from 'react';
 
 function Login(props) {
@@ -43,48 +43,72 @@ function Login(props) {
   const signInCardDesktop = (
     <Card class="card" style={{ color: '#ffffff', height: '70%' }}>
       <CardContent>
-        <Typography class="card-title">Welcome!</Typography>
-        <div style={{ color: '#ffffff', fontSize: '2rem' }}>
-          {' '}
-          Sign up for HopHacks 2023 is currently closed! Please check back in June to sign up for
-          HopHacks 2024!{' '}
+        <Typography class="card-title">LOGIN</Typography>
+        <div className="text-field">
+          <TextField
+            required
+            variant="standard"
+            label="email address"
+            style={{ width: '90%' }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#061A40' }
+            }}
+            InputProps={{
+              style: { color: '#061A40' }
+            }}
+          />
         </div>
-        {/*
-        <TextField
-          // TODO: make the border white
-          type={'password'}
-          required
-          variant="standard"
-          label="Password"
-          value={password}
-          style={{ width: '80%', marginTop: '15%' }}
-          onChange={(e) => setPassword(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
+        <div className="text-field">
+          <TextField
+            type={'password'}
+            required
+            variant="standard"
+            label="password"
+            value={password}
+            style={{ width: '90%' }}
+            onChange={(e) => setPassword(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#061A40' }
+            }}
+            InputProps={{
+              style: { color: '#061A40' }
+            }}
+          />
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <Link to={'/register/resetpassword'}>
+            <Typography class="card-text-blue"> forgot password? </Typography>
+          </Link>
+          {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Button
+            class="card-button"
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleLogin}
+          >
+            sign in
+          </Button>
 
-        <Link to={'/register/resetpassword'}>
-          <Typography class="card-text"> Forgot Password? </Typography>
-        </Link>
-        {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
-
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={handleLogin}
-        >
-          Sign In
-        </Button>
-
+          {/* TODO: link user JHED */}
+          {/* <Button
+            class="card-button"
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleLogin}
+          >
+            use JHED
+          </Button> */}
+        </div>
         <Link to={'/register/signup'}>
-          <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
-        </Link> */}
+          <Typography class="card-text-blue"> New To HopHacks? Sign Up Now! </Typography>
+        </Link>{' '}
+        */}
       </CardContent>
     </Card>
   );
@@ -92,7 +116,7 @@ function Login(props) {
   const signInCardMobile = (
     <Card class="card">
       <CardContent>
-        <Typography class="card-title">Welcome!</Typography>
+        <Typography class="card-title">LOGIN</Typography>
         <TextField
           // TODO: make the border white
           required
@@ -126,7 +150,7 @@ function Login(props) {
         />
 
         <Link to={'/register/resetpassword'}>
-          <Typography class="card-text"> Forgot Password? </Typography>
+          <Typography class="card-text"> forgot password? </Typography>
         </Link>
         {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
 
@@ -137,7 +161,7 @@ function Login(props) {
           size="large"
           onClick={handleLogin}
         >
-          Sign In
+          Sign in
         </Button>
 
         <Link to={'/register/signup'}>
@@ -147,20 +171,6 @@ function Login(props) {
     </Card>
   );
 
-  const mottoDesktop = (
-    <div style={{ marginTop: '30%', marginRight: '-20%' }}>
-      <div>
-        <Typography class="motto-text">Hack Your Passion Into Reality</Typography>
-        <Typography class="motto-text" align="left">
-          HopHacks
-        </Typography>
-      </div>
-      <div style={{ marginTop: '15%' }}>
-        <Typography class="motto-subtext">Innovate | Collaborate | Dominate</Typography>
-      </div>
-    </div>
-  );
-
   const mottoMobile = (
     <div style={{ marginTop: '10%' }}>
       <Typography class="mobile-header">HOPHACKS</Typography>
@@ -168,7 +178,7 @@ function Login(props) {
         Hack Your Passion Into Reality
       </Typography>
       <Typography class="mobile-motto-subtext" style={{ marginTop: '-3%' }}>
-        Innovate | Collaborate | Dominate
+        New Motto
       </Typography>
     </div>
   );
@@ -193,12 +203,10 @@ function Login(props) {
 
   return (
     <div className="root">
-      <Grid container>
+      {signInCardDesktop}
+      <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={5}>
-          {signInCardDesktop}
-        </Grid>
-        <Grid item xs={5}>
-          {mottoDesktop}
+          {/*signInCardDesktop*/}
         </Grid>
       </Grid>
     </div>

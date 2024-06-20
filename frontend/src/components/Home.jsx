@@ -11,9 +11,9 @@ import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import AboutSeparation from './home/AboutSeparation';
-import RandomSpace from './home/RandomSpace';
+// import RandomSpace from './home/RandomSpace';
 import Prizes from './home/Prizes';
-import Tracks from './home/Tracks';
+// import Tracks from './home/Tracks';
 // import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 // import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 const useStyles = makeStyles({
@@ -28,10 +28,10 @@ const useStyles = makeStyles({
     marginBottom: '13px'
   },
   colorBackground: {
-    backgroundColor: '#350225'
+    backgroundColor: '#bfeafc'
   },
   title: {
-    color: '#ffffff',
+    color: '#061A40',
     fontFamily: 'VCR OSD Mono'
   },
 
@@ -100,13 +100,17 @@ export default function Home() {
       ) : (
         <div>
           <Cover />
-          <RandomSpace />
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          {/* <RandomSpace /> */}
           <Container fixed>
             <About />
             <AboutSeparation />
             <Prizes />
             <Schedule />
-            <Tracks />
+            {/* <Tracks /> */}
             <Sponsors />
             <Faq />
           </Container>

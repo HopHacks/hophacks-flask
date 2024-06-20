@@ -11,7 +11,7 @@ const Footer = function Footer() {
   }
 
   return (
-    <Box pt={5} bgcolor="#33073E" color="white">
+    <Box pt={5} bgcolor="#1D539F" color="white">
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>

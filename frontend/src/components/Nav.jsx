@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     fontFamily: 'Inter',
     flexGrow: 1,
     textAlign: 'center',
-    color: 'white'
+    color: '#F7F3FF'
   },
 
   hophacksButton: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   },
 
   drawer: {
-    background: '#33073E',
+    background: '#1D539F',
     width: '100vw'
   },
 
@@ -68,16 +68,56 @@ const Nav = function Nav(props) {
     <>
       <Button
         component={Link}
-        onClick={() => (window.location = '/#about')}
+        onClick={() => (window.location = '/')}
         color="inherit"
         className={classes.navBtn}
       >
         <Typography variant="h5" className={classes.title}>
-          About
+          Home
         </Typography>
       </Button>
 
+      {/* 
       <Button
+        component={Link}
+        onClick={() => {
+          history.push('/reset_password/:token');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Reset Password?
+        </Typography>
+      </Button> */}
+
+      {/* <Button
+        component={Link}
+        onClick={() => {
+          history.push('/confirm_email/:token');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Email Confirmation
+        </Typography>
+      </Button> */}
+
+      {/* <Button
+        component={Link}
+        onClick={() => {
+          history.push('/user_auth/signup/signupimage');
+        }}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          SignUp Image
+        </Typography>
+      </Button> */}
+
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#schedule')}
         color="inherit"
@@ -86,8 +126,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Schedule
         </Typography>
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#prizes')}
         color="inherit"
@@ -96,8 +136,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Prizes
         </Typography>
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#tracks')}
         color="inherit"
@@ -106,8 +146,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Tracks
         </Typography>
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#sponsors')}
         color="inherit"
@@ -116,8 +156,8 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           Sponsors
         </Typography>
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         component={Link}
         onClick={() => (window.location = '/#faq')}
         color="inherit"
@@ -126,7 +166,7 @@ const Nav = function Nav(props) {
         <Typography variant="h5" className={classes.title}>
           FAQ
         </Typography>
-      </Button>
+      </Button> */}
       <Button
         component={Link}
         onClick={() => {
@@ -136,7 +176,7 @@ const Nav = function Nav(props) {
         className={classes.navBtn}
       >
         <Typography variant="h5" className={classes.title}>
-          Team
+          Organizers
         </Typography>
       </Button>
       <Button
@@ -146,7 +186,7 @@ const Nav = function Nav(props) {
         className={classes.navBtn}
       >
         <Typography variant="h5" className={classes.title}>
-          Team Match
+          Team Matching
         </Typography>
       </Button>
       {!props.isLoggedIn && (
@@ -257,7 +297,7 @@ const Nav = function Nav(props) {
           marginRight: '8rem'
         }}
       >
-        <Button
+        {/* <Button
           component={Link}
           onClick={() => (window.location = '/')}
           color="inherit"
@@ -267,7 +307,29 @@ const Nav = function Nav(props) {
           <Typography variant="h4" className={classes.title}>
             HopHacks
           </Typography>
-        </Button>
+        </Button> */}
+        <a
+          id="mlh-trust-badge"
+          style={{
+            display: 'block',
+            maxWidth: '100px',
+            minWidth: '60px',
+            position: 'fixed',
+            right: '50px',
+            top: '0',
+            width: '10%',
+            zIndex: '10000'
+          }}
+          href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-white-2024.svg"
+            alt="Major League Hacking 2024 Hackathon Season"
+            style={{ width: '100%' }}
+          ></img>
+        </a>
 
         <section
           className={classes.otherButton}
@@ -276,29 +338,6 @@ const Nav = function Nav(props) {
           }}
         >
           {navItem}
-
-          <a
-            id="mlh-trust-badge"
-            style={{
-              display: 'block',
-              maxWidth: '100px',
-              minWidth: '60px',
-              position: 'fixed',
-              right: '50px',
-              top: '0',
-              width: '10%',
-              zIndex: '10000'
-            }}
-            href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-white-2024.svg"
-              alt="Major League Hacking 2023 Hackathon Season"
-              style={{ width: '100%' }}
-            ></img>
-          </a>
         </section>
       </Toolbar>
     </AppBar>

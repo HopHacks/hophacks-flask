@@ -97,11 +97,17 @@ const useStyles = makeStyles({
 export default function Announcements() {
   const classes = useStyles();
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   const [page, setPage] = useState(1);
   const [historyAnnouncements, setHistoryAnnouncements] = useState([]);
   const [topAnnouncement, setTopAnnouncement] = useState({});
   const [recentFourAnnouncements, setRecentFourAnnouncements] = useState([]);
-  const [event] = useState('Fall 2023');
+  const [event] = useState('Fall 2024');
 
   async function getTopAnnouncement() {
     try {

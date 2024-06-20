@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Login from './register/Login';
+import Login from './user_auth/Login';
 import '../stylesheets/email_confirm.css';
 
 function img(url) {
@@ -8,6 +8,12 @@ function img(url) {
 }
 
 export default function EmailConfirmation(props) {
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   const [message, setMessage] = useState('Confirming Email...');
   const [email, setEmail] = useState('');
   let attempted = false;

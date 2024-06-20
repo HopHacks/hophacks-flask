@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { isValidPhoneNumber } from 'react-phone-number-input';
-import '../../../stylesheets/register.css';
+import '../../../stylesheets/user_auth.css';
 import SignUpAccount from './SignUpAccount';
 import SignUpProfile from './SignUpProfile';
+import SignUpChecks from './SignUpChecks'; //added check page
+import SignUpImage from './SignUpImage'; //added image page
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
 // import { useHistory } from 'react-router-dom';
@@ -30,23 +32,30 @@ function SignUp(props) {
   const [learn_about_us, setLearn_about_us] = useState('');
 
   const [resumeFile, setResumeFile] = useState('');
-  const [vaccinationFile, setVaccinationFile] = useState('');
 
   const [profileSubmitMsg, setProfileSubmitMsg] = useState('');
   const [resumeChecked, setResumeChecked] = useState(false);
-  const [vaccinationChecked, setVaccinationChecked] = useState(false);
 
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
-  const [enabledButton, setEnabledButton] = useState(true);
+  const [enabledButton, setEnabledButton] = useState(true); //TMP get rid of setEnabledButton
+  // const [enabledButton, setEnabledButton] = useState(true); //ORIGINAL
 
   const isMobile = props.isMobile;
+
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
 
   // decide which page is actively showing
   const ACCOUNT = 0;
   const PROFILE = 1;
-  const CONFIRMATION = 2;
+  const CHECKS = 2; //changed this to be 2
+  const IMAGE = 3; //changed this to be 3
+  const CONFIRMATION = 4;
   const [activePage, setActivePage] = useState(ACCOUNT);
 
   // functions for account page
@@ -78,14 +87,25 @@ function SignUp(props) {
       return;
     }
 
+    // console.
     if (password !== passwordConfirm) {
       setConfirmMsg('Confirm password must match with the password.');
       return;
     }
 
-    // Go to the profile page
+    //Go to the profile page
     setActivePage(PROFILE);
   }
+
+  // TODO: need to figure this out
+  // async function handleAccountBack() {
+  //   setActivePage();
+  // }
+
+  //TODO: Configure this user flow
+  // async function handleProfileBack() {
+  //   setActivePage(Login);
+  // }
 
   // functions for profile page
   // function isEmpty() {
@@ -106,15 +126,8 @@ function SignUp(props) {
   //   );
   // }
 
+  //handles the user flow of the login
   async function handleProfileNext() {
-    if (username.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid username.');
-      return;
-    }
-    if (password.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid password.');
-      return;
-    }
     if (first_name.length === 0) {
       setProfileSubmitMsg('* Please enter a valid first name.');
       return;
@@ -138,7 +151,12 @@ function SignUp(props) {
       setProfileSubmitMsg('* Please select an ethnicity.');
       return;
     }
+    //TODO: not sure why there are two phone number checks
     if (phone_number === undefined || phone_number.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid phone number.');
+      return;
+    }
+    if (!isValidPhoneNumber(phone_number)) {
       setProfileSubmitMsg('* Please enter a valid phone number.');
       return;
     }
@@ -155,33 +173,32 @@ function SignUp(props) {
       return;
     }
 
-    if (first_hackathon === 0) {
+    // Go to the confirmation page
+    setActivePage(CHECKS);
+  }
+
+  async function handleProfileBack() {
+    setActivePage(ACCOUNT);
+  }
+
+  async function handleChecksNext() {
+    if (first_hackathon.length === 0) {
       setProfileSubmitMsg('* Please select if this is your first hackathon.');
       return;
     }
 
-    if (first_hophacks === 0) {
+    if (first_hophacks.length === 0) {
       setProfileSubmitMsg('* Please select if this is your first time at hophacks.');
       return;
     }
 
-    if (learn_about_us === 0) {
+    if (learn_about_us.length === 0) {
       setProfileSubmitMsg('* Please select how you heard about us.');
       return;
     }
 
-    if (!isValidPhoneNumber(phone_number)) {
-      setProfileSubmitMsg('* Please enter a valid phone number.');
-      return;
-    }
-
     if (!resumeChecked || resumeFile === '') {
-      setProfileSubmitMsg('* Please upload your resume.');
-      return;
-    }
-
-    if (!vaccinationChecked || vaccinationFile === '') {
-      setProfileSubmitMsg('* Please upload your vaccination card.');
+      setProfileSubmitMsg('* Please upload your resume and agree to the terms.');
       return;
     }
 
@@ -206,6 +223,7 @@ function SignUp(props) {
       return;
     }
 
+    //TODO: uncomment for actual testing
     const data = new FormData();
     data.append('file', resumeFile);
     data.append(
@@ -244,6 +262,7 @@ function SignUp(props) {
       //     last_name: last_name,
       //     school: school,
       //   });
+
       await axios.post('/api/slack/registration', {
         first_name: first_name,
         last_name: last_name,
@@ -261,10 +280,6 @@ function SignUp(props) {
         const resumeData = new FormData();
         resumeData.append('file', resumeFile);
         await axios.post('/api/resumes/', resumeData);
-
-        const vaccinationData = new FormData();
-        vaccinationData.append('file', vaccinationFile);
-        await axios.post('/api/vaccination/', vaccinationData);
       } catch (error) {
         setEnabledButton(true);
       }
@@ -280,24 +295,30 @@ function SignUp(props) {
     } catch (e) {
       return;
     }
-    // Go to the confirmation page
+
+    //ignore image for now
+    // setActivePage(IMAGE);
     setActivePage(CONFIRMATION);
+  }
+
+  async function handleChecksBack() {
+    setActivePage(PROFILE);
+  }
+
+  async function handleImageNext() {
+    setActivePage(CONFIRMATION);
+  }
+
+  async function handleImageBack() {
+    setActivePage(CHECKS);
   }
 
   function handleResumeFileChange(e) {
     setResumeFile(e.target.files[0]);
   }
 
-  function handleVaccinationFileChange(e) {
-    setVaccinationFile(e.target.files[0]);
-  }
-
   const handleResumeCheckBox = (event) => {
     setResumeChecked(event.target.checked);
-  };
-
-  const handleVaccinationCheckBox = (event) => {
-    setVaccinationChecked(event.target.checked);
   };
 
   const handleConductCheckBox = (event) => {
@@ -329,6 +350,7 @@ function SignUp(props) {
         />
       );
     } else if (activePage === PROFILE) {
+      //TODO: need to divide this up
       console.log('profile page');
       return (
         <SignUpProfile
@@ -347,26 +369,76 @@ function SignUp(props) {
           setGrad={setGrad}
           setGrad_month={setGrad_month}
           setGrad_year={setGrad_year}
+          // setFirst_hackathon={setFirst_hackathon}
+          // setFirst_hophacks={setFirst_hophacks}
+          // setLearn_about_us={setLearn_about_us}
+          // resumeFile={resumeFile}
+          // resumeChecked={resumeChecked}
+          // vaccinationFile={vaccinationFile}
+          // vaccinationChecked={vaccinationChecked}
+          // conductCodeChecked={conductCodeChecked}
+          // eventLogisticsChecked={eventLogisticsChecked}
+          // communicationChecked={communicationChecked}
+          profileSubmitMsg={profileSubmitMsg}
+          enabledButton={enabledButton}
+          handleProfileNext={handleProfileNext}
+          handleProfileBack={handleProfileBack}
+          // handleResumeFileChange={handleResumeFileChange}
+          // handleVaccinationFileChange={handleVaccinationFileChange}
+          // handleResumeCheckBox={handleResumeCheckBox}
+          // handleVaccinationCheckBox={handleVaccinationCheckBox}
+          // handleConductCheckBox={handleConductCheckBox}
+          // handleLogisticsCheckBox={handleLogisticsCheckBox}
+          // handleCommunicationCheckBox={handleCommunicationCheckBox}
+        />
+      );
+    } else if (activePage == CHECKS) {
+      console.log('checks page');
+      return (
+        <SignUpChecks
+          isMobile={isMobile}
+          // setFirst_name={setFirst_name}
+          // setLast_name={setLast_name}
+          // setAge={setAge}
+          // setGender={setGender}
+          // setEthnicity={setEthnicity}
+          // phone_number={phone_number}
+          // setPhone_number={setPhone_number}
+          // school={school}
+          // setSchool={setSchool}
+          // major={major}
+          // setMajor={setMajor}
+          // setGrad={setGrad}
+          // setGrad_month={setGrad_month}
+          // setGrad_year={setGrad_year}
           setFirst_hackathon={setFirst_hackathon}
           setFirst_hophacks={setFirst_hophacks}
           setLearn_about_us={setLearn_about_us}
           resumeFile={resumeFile}
           resumeChecked={resumeChecked}
-          vaccinationFile={vaccinationFile}
-          vaccinationChecked={vaccinationChecked}
           conductCodeChecked={conductCodeChecked}
           eventLogisticsChecked={eventLogisticsChecked}
           communicationChecked={communicationChecked}
           profileSubmitMsg={profileSubmitMsg}
           enabledButton={enabledButton}
-          handleProfileNext={handleProfileNext}
+          handleChecksNext={handleChecksNext}
+          handleChecksBack={handleChecksBack}
           handleResumeFileChange={handleResumeFileChange}
-          handleVaccinationFileChange={handleVaccinationFileChange}
           handleResumeCheckBox={handleResumeCheckBox}
-          handleVaccinationCheckBox={handleVaccinationCheckBox}
           handleConductCheckBox={handleConductCheckBox}
           handleLogisticsCheckBox={handleLogisticsCheckBox}
           handleCommunicationCheckBox={handleCommunicationCheckBox}
+        />
+      );
+    } else if (activePage == IMAGE) {
+      console.log('image page');
+      return (
+        <SignUpImage
+          isMobile={isMobile}
+          profileSubmitMsg={profileSubmitMsg}
+          enabledButton={enabledButton}
+          handleImageNext={handleImageNext}
+          handleImageBack={handleImageBack}
         />
       );
     } else {

@@ -21,6 +21,12 @@ function ResetPassword() {
     }
   });
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   const classes = useStyles();
   /* State for handling reset password modal */
   const [resetDialogOpen, setResetDialogOpen] = useState(false);

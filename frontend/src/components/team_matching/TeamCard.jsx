@@ -92,6 +92,12 @@ export default function TeamCard({
 }) {
   const classes = useStyles({ isMobile });
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   const handleOpenClose = async () => {
     try {
       // Determine the new status based on the current status

@@ -176,8 +176,8 @@ def create():
         if (file and check_filename(file.filename)):
 
             s3 = boto3.client('s3')
-            # object_name = 'Fall-2023/{}-{}'.format(id, file_name)
-            # s3.upload_fileobj(file, BUCKET, object_name)
+            object_name = 'Fall-2024/{}-{}'.format(id, file_name)
+            s3.upload_fileobj(file, BUCKET, object_name)
 
             resume_link = file_name
     

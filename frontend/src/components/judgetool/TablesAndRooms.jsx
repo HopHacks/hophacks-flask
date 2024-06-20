@@ -8,6 +8,12 @@ function TablesAndRooms() {
   const [roomAssignment, setRoomAssignment] = useState([]);
   const [tables, setTables] = useState([]);
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   useEffect(() => {
     axios.get('api/judgetool/room-assignments').then((response) => {
       setRoomAssignment(response.data);

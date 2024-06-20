@@ -90,7 +90,8 @@ def login():
 
     # secure = true?, max_age?
     set_refresh_cookies(resp, refresh_token)
-
+    print(resp)
+    print(ret)
     return resp, 200
 
 @auth_api.route('/session/refresh', methods=['GET'])

@@ -9,9 +9,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../util/theme';
 import { AuthProvider } from '../util/auth';
 
-import Home from './Home';
+import Home from './Home'; //temporarily took out home page
 import Recruiting from './Recruiting';
-import Profile from './account/Profile';
+import Profile from './account/Profile'; //why does this not work!!!
 import Admin from './admin/Admin';
 import AnnouncementPanel from './admin/AnnouncementPanel';
 import Nav from './Nav';
@@ -26,9 +26,15 @@ import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
-import Login from './register/Login';
-import SignUp from './register/signup/SignUp';
-import ResetPassword from './register/ResetPassword';
+import Login from './user_auth/Login'; //adjusted to be new path
+
+import SignUp from './user_auth/signup/SignUp';
+// import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new paths
+// import SignUpProfile from './user_auth/signup/SignUpProfile.jsx';
+// import SignUpAccount from './user_auth/signup/SignUpAccount.jsx';
+// import SignUpImage from './user_auth/signup/SignUpImage.jsx';
+
+import ResetPassword from './user_auth/ResetPassword';
 import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
 import { useMediaQuery } from 'usehooks-ts';
@@ -43,7 +49,7 @@ export default function App() {
           <AuthProvider>
             <CssBaseline />
             <Router>
-              <div>
+              <div style={{ backgroundColor: '#172759' }}>
                 <Nav />
 
                 <Switch>
@@ -61,6 +67,7 @@ export default function App() {
                     <AnnouncementPanel />
                   </Route>
 
+                  {/* <Route path="/account/profile" component={Profile} /> */}
                   <Route path="/profile">
                     <Profile isMobile={isMobile} />
                   </Route>
@@ -71,6 +78,10 @@ export default function App() {
 
                   <Route path="/announcements">
                     <Announcements />
+                  </Route>
+
+                  <Route exact path="/home">
+                    <Home />
                   </Route>
 
                   {/* TODO: replace this with new register page */}
@@ -109,7 +120,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/">
-                    <Home />
+                    <Home isMobile={isMobile} />
                   </Route>
                 </Switch>
               </div>

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     marginBottom: '13px'
   },
   color: {
-    backgroundColor: 'transparent'
+    backgroundColor: 'rgba(6, 26, 64, 1)'
   },
   body: {
     maxHeight: '150px',
@@ -24,47 +24,51 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: '3rem',
-    color: '#ffffff',
+    color: '#061a40',
     fontFamily: 'Inter',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontStyle: 'italic'
   },
   schedule: {
-    backgroundColor: 'transparent'
+    backgroundColor: 'rgba(45, 153, 224, 1)',
+    fontStyle: 'italic'
   },
   font: {
     fontFamily: 'Inter',
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: 'rgba(6, 26, 64, 1)',
     backgroundColor: 'transparent',
     fontWeight: 'bold',
     '&.Mui-selected': {
-      color: 'rgba(255, 255, 255, 1)',
+      color: 'rgba(6, 26, 64, 1)',
       fontWeight: 'bold'
     },
     fontSize: '15px'
   },
   titleFont: {
     fontFamily: 'Inter',
+    fontStyle: 'italic',
     color: 'rgba(255, 255, 255, 1)',
     backgroundColor: 'transparent',
     fontWeight: 'bolder',
     '&.Mui-selected': {
-      color: 'rgba(255, 255, 255, 1)',
+      color: 'rgba(6, 26, 64, 1)',
       fontWeight: 'bolder'
     },
     fontSize: '15px'
   },
   divFont: {
     fontFamily: 'Inter',
-    color: 'rgba(255, 255, 255, 1)',
+    color: 'rgba(6, 26, 64, 1)',
     height: '35px',
     fontSize: '15px',
     fontWeight: 'bold'
   },
   indicator: {
-    backgroundColor: 'white'
+    backgroundColor: 'rgba(250, 192, 19, 1)'
   },
   selected: {
-    color: 'rgba(255, 255, 255, 0.8)'
+    backgroundColor: 'rgba(250, 192, 19, 1)',
+    color: 'rgba(250, 192, 19, 1)'
   }
 });
 export default function Schedule() {
@@ -80,20 +84,20 @@ export default function Schedule() {
       </Typography>
       <Typography
         className={classes.divFont}
-        style={{ color: 'rgba(255, 255, 255, 0.8)', fontWeight: 'bold', fontStyle: 'italic' }}
+        style={{ color: 'rgba(6, 26, 64, 1)', fontWeight: 'bold', fontStyle: 'italic' }}
       >
         All times in EDT (GMT-4)
       </Typography>
       <Typography
         className={classes.divFont}
-        style={{ color: 'rgba(255, 255, 255, 0.8)', fontWeight: 'bold', fontStyle: 'italic' }}
+        style={{ color: 'rgba(6, 26, 64, 1)', fontWeight: 'bold', fontStyle: 'italic' }}
       >
         Workshop information coming soon!
       </Typography>
 
       <TableContainer
         component={Paper}
-        style={{ width: '100%', backgroundColor: 'transparent' }}
+        style={{ width: '100%', backgroundColor: 'rgba(45, 153, 224, 1)' }}
         align="center"
         sx={{ maxHeight: 440 }}
       >
@@ -114,7 +118,7 @@ export default function Schedule() {
           variant="fullWidth"
         >
           <Tab
-            label="Fri., Sept 15th"
+            label="Fri., Sept 16th"
             value="fri"
             className={classes.font}
             style={{
@@ -122,7 +126,7 @@ export default function Schedule() {
             }}
           />
           <Tab
-            label="Sat., Sept 16th"
+            label="Sat., Sept 17th"
             value="sat"
             className={classes.font}
             style={{
@@ -130,7 +134,7 @@ export default function Schedule() {
             }}
           />
           <Tab
-            label="Sun., Sept 17th"
+            label="Sun., Sept 18th"
             value="sun"
             className={classes.font}
             style={{
@@ -181,7 +185,7 @@ export default function Schedule() {
                 <TableCell width="20%" className={classes.font}>
                   9:00 PM
                 </TableCell>
-                <TableCell className={classes.font}>Team Formation</TableCell>
+                <TableCell className={classes.font}>Team Building</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 203
                 </TableCell>
@@ -199,28 +203,15 @@ export default function Schedule() {
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
-                <TableCell className={classes.font}>9:00 PM</TableCell>
-                <TableCell className={classes.font}>
-                  Patient Safety Technology Challenge Workshop
-                </TableCell>
+                <TableCell className={classes.font}>10:00 PM</TableCell>
+                <TableCell className={classes.font}> uCredit Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 316
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
-                <TableCell className={classes.font}>9:00 PM</TableCell>
-                <TableCell className={classes.font}>
-                  JHU Center for Bioengineering Innovation & Design Workshop
-                </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 313
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>9:30 PM</TableCell>
-                <TableCell className={classes.font}>
-                  JHUXplore Intro to Figma: Design-Dev Workshop
-                </TableCell>
+                <TableCell className={classes.font}>11:30 PM</TableCell>
+                <TableCell className={classes.font}>Midnight Pizza</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Hodson 110
                 </TableCell>

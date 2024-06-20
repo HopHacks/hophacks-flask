@@ -6,6 +6,8 @@ hophacks-env
 build
 config.json
 
+frontend/.env
+
 # frontend
 node_modules
 .eslintcache

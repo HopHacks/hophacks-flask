@@ -281,6 +281,12 @@ function TeamMatchingPage(props) {
   const [tags, setTags] = useState([]); // for the list of tags
   const [filteredTeams, setFilteredTeams] = useState([]);
 
+  const myVariable = process.env.REACT_APP_BACKENDURL;
+
+  if (myVariable != '') {
+    axios.defaults.baseURL = myVariable;
+  }
+
   const handleSortChange = (event) => {
     const sortType = event.target.value;
     const sortedTeams = [...teams]; // Create a copy of originalTeams to sort

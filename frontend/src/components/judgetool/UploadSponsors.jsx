@@ -23,7 +23,11 @@ class UploadSponsors extends Component {
     event.preventDefault();
     const formData = new FormData();
     formData.append('sponsors_file', this.state.file);
+    const myVariable = process.env.REACT_APP_BACKENDURL;
 
+    if (myVariable != '') {
+      axios.defaults.baseURL = myVariable;
+    }
     try {
       await axios.post('api/judgetool/sponsor-prizes', formData);
       this.props.history.push('/sponsor-prizes');
