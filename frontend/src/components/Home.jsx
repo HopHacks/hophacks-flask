@@ -10,7 +10,7 @@ import Cover from './home/Cover';
 import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
 import Footer from './Footer';
-import AboutSeparation from './home/AboutSeparation';
+// import AboutSeparation from './home/AboutSeparation';
 // import RandomSpace from './home/RandomSpace';
 import Prizes from './home/Prizes';
 // import Tracks from './home/Tracks';
@@ -107,7 +107,7 @@ export default function Home() {
           {/* <RandomSpace /> */}
           <Container fixed>
             <About />
-            <AboutSeparation />
+            {/* <AboutSeparation /> */}
             <Prizes />
             <Schedule />
             {/* <Tracks /> */}
