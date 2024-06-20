@@ -182,23 +182,23 @@ function SignUp(props) {
   }
 
   async function handleChecksNext() {
-    if (first_hackathon === 0) {
+    if (first_hackathon.length === 0) {
       setProfileSubmitMsg('* Please select if this is your first hackathon.');
       return;
     }
 
-    if (first_hophacks === 0) {
+    if (first_hophacks.length === 0) {
       setProfileSubmitMsg('* Please select if this is your first time at hophacks.');
       return;
     }
 
-    if (learn_about_us === 0) {
+    if (learn_about_us.length === 0) {
       setProfileSubmitMsg('* Please select how you heard about us.');
       return;
     }
 
     if (!resumeChecked || resumeFile === '') {
-      setProfileSubmitMsg('* Please upload your resume.');
+      setProfileSubmitMsg('* Please upload your resume and agree to the terms.');
       return;
     }
 

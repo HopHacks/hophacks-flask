@@ -4,9 +4,9 @@ import Box from '@material-ui/core/Box';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-function img(url) {
-  return 'https://hophacks-website.s3.amazonaws.com/images/sponsor/png/' + url;
-}
+// function img(url) {
+//   return 'https://hophacks-website.s3.amazonaws.com/images/sponsor/png/' + url;
+// }
 
 const useStyles = makeStyles({
   title: {
@@ -14,8 +14,8 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: '3rem',
-    color: 'rgba(247, 243, 255, 1)',
-    margin: '0 2rem'
+    color: '#1D539F',
+    margin: '0 0rem'
   },
   contact: {
     fontFamily: 'Inter',
@@ -23,27 +23,35 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontSize: '1rem',
     margin: '0.5rem',
-    color: '#F7F3FF'
+    color: '#1D539F'
+  },
+  comingSoon: {
+    fontFamily: 'Inter',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    fontSize: '1.5rem',
+    margin: '0.5rem',
+    color: '#1D539F'
   }
 });
 
-function SponsorItem({ size, logo, width = '85%', link = '#sponsors' }) {
-  return (
-    <a
-      style={{ display: 'table-cell', textDecoration: 'none' }}
-      href={link}
-      target={'_blank'}
-      rel={'noreferrer'}
-    >
-      <div className="sponsor-wrapper">
-        <div className={`sponsor-foreground sponsor-${size} sponsor-children`}>
-          <img src={img(logo)} style={{ width }} className="sponsor-img" />
-          <div className={`sponsor-background sponsor-${size}`}></div>
-        </div>
-      </div>
-    </a>
-  );
-}
+// function SponsorItem({ size, logo, width = '85%', link = '#sponsors' }) {
+//   return (
+//     <a
+//       style={{ display: 'table-cell', textDecoration: 'none' }}
+//       href={link}
+//       target={'_blank'}
+//       rel={'noreferrer'}
+//     >
+//       <div className="sponsor-wrapper">
+//         <div className={`sponsor-foreground sponsor-${size} sponsor-children`}>
+//           <img src={img(logo)} style={{ width }} className="sponsor-img" />
+//           <div className={`sponsor-background sponsor-${size}`}></div>
+//         </div>
+//       </div>
+//     </a>
+//   );
+// }
 
 export default function Sponsors() {
   const classes = useStyles();
@@ -59,8 +67,10 @@ export default function Sponsors() {
           </a>
         </div>
       </Box>
+      <div className={classes.comingSoon}>Coming Soon!</div>
       <div className="sponsor-row">
-        <SponsorItem logo="it.png" size="sable" link="https://it.johnshopkins.edu/" />
+        {/* Sponsors coming soon! */}
+        {/* <SponsorItem logo="it.png" size="sable" link="https://it.johnshopkins.edu/" />
         <SponsorItem
           logo="bloomberg23.png"
           size="gold"
@@ -129,7 +139,7 @@ export default function Sponsors() {
           size="inkind"
           link="https://incogni.com/ "
           width="80%"
-        />
+        /> */}
       </div>
     </Box>
   );

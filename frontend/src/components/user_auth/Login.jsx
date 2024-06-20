@@ -79,7 +79,7 @@ function Login(props) {
         </div>
 
         <div style={{ textAlign: 'right' }}>
-          <Link to={'/user_auth/resetpassword'}>
+          <Link to={'/register/resetpassword'}>
             <Typography class="card-text-blue"> forgot password? </Typography>
           </Link>
           {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
@@ -96,7 +96,7 @@ function Login(props) {
           </Button>
 
           {/* TODO: link user JHED */}
-          <Button
+          {/* <Button
             class="card-button"
             variant="contained"
             color="primary"
@@ -104,10 +104,10 @@ function Login(props) {
             onClick={handleLogin}
           >
             use JHED
-          </Button>
+          </Button> */}
         </div>
 
-        <Link to={'/user_auth/signup'}>
+        <Link to={'/register/signup'}>
           <Typography class="card-text-blue"> need a profile? </Typography>
         </Link>
       </CardContent>
@@ -150,7 +150,7 @@ function Login(props) {
           }}
         />
 
-        <Link to={'/user_auth/resetpassword'}>
+        <Link to={'/register/resetpassword'}>
           <Typography class="card-text"> forgot password? </Typography>
         </Link>
         {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
@@ -162,10 +162,10 @@ function Login(props) {
           size="large"
           onClick={handleLogin}
         >
-          sign in
+          Sign in
         </Button>
 
-        <Link to={'/user_auth/signup'}>
+        <Link to={'/register/signup'}>
           <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
         </Link>
       </CardContent>

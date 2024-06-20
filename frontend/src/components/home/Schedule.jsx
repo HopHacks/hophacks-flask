@@ -47,7 +47,7 @@ const useStyles = makeStyles({
   titleFont: {
     fontFamily: 'Inter',
     fontStyle: 'italic',
-    color: 'rgba(6, 26, 64, 1)',
+    color: 'rgba(255, 255, 255, 1)',
     backgroundColor: 'transparent',
     fontWeight: 'bolder',
     '&.Mui-selected': {

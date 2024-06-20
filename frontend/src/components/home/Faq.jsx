@@ -22,11 +22,11 @@ const useStyles = makeStyles({
     backgroundColor: 'rgba(45, 153, 224, 1)'
   },
   colorBackground: {
-    backgroundColor: 'rgba(6, 26, 64, 1)'
+    backgroundColor: '#1D539F'
   },
   title: {
     fontSize: '3rem',
-    color: '#061a40',
+    color: '#1D539F',
     fontFamily: 'Inter',
     fontWeight: 'bold',
     fontStyle: 'italic'

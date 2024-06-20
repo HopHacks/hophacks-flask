@@ -6,12 +6,12 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
   title: {
-    color: '#ffffff',
+    color: '#061a40',
     fontFamily: 'Inter',
     fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: '375%',
-    margin: 'auto'
+    // textAlign: 'center',
+    fontSize: '375%'
+    // margin: 'auto'
   },
   platform: {
     margin: 'auto',
@@ -36,35 +36,31 @@ export default function Prizes() {
           <img src={img('prize2023Fall.PNG')} className={classes.platform} />
         </div>
         <div className="prizeStampDiv">
-          <img className="prizeStamp" src={img('1st.svg')} />
-          <img className="prizeStamp" src={img('2nd.svg')} />
-          <img className="prizeStamp" src={img('3rd.svg')} />
+          <img className="prizeStamp" src={img('firstPlace.png')} />
+          <img className="prizeStamp" src={img('secondPlace.png')} />
+          <img className="prizeStamp" src={img('thirdPlace.png')} />
         </div>
       </Grid>
-      <div>
+      {/* <div>
         <div className="prizeTrackDiv">
           <img className="prizeTrackStamp" src={img('PSW.png')} />
           <img className="prizeTrackStamp" src={img('IAA1.png')} />
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
           <img className="prizeTrackStamp" src={img('FFU1.png')} />
-          {/* <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} /> */}
           <img className="prizeTrackStamp" src={img('FFU2.png')} />
           <img className="prizeTrackStamp" src={img('FFU3.png')} />
         </div>
-      </div>
-      <div>
+      </div> */}
+      {/* <div>
         <div className="prizeTrackDiv">
-          {/* <img className="prizeTrackStamp" src={img('FFUNV1.png')} />
-          <img className="prizeTrackStamp" src={img('FFUNV2.png')} />
-          <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} /> */}
           <img className="prizeTrackStamp" src={img('BGBTrack1.png')} />
           <img className="prizeTrackStamp" src={img('BGBTrack2.png')} />
           <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
           <img className="prizeTrackStamp" src={img('CBID1.png')} />
           <img className="prizeTrackStamp" src={img('CBID2.png')} />
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

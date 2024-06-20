@@ -12,8 +12,10 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 100% 100%;
-  background-image: url('https://hophacks-website.s3.amazonaws.com/images/goose_background.png'); /* updated image */
+  /* background-image: url('https://hophacks-website.s3.amazonaws.com/images/goose_background.png');  */
+  /* updated image */
   background-attachment: fixed;
+  /* background-color: #e1f1ff; */
 }
 
 .section {
@@ -31,7 +33,7 @@ body {
   box-shadow: 0 15px 25px rgba(129, 124, 124, 0.2);
   min-height: none;
   backdrop-filter: blur(14px);
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #bfeafc;
   padding-top: 1%;
   padding-bottom: 1%;
   padding-left: 5%;

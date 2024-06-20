@@ -118,7 +118,7 @@ export default function PasswordReset(props) {
           confirm
         </Button>
 
-        <Link to={'/user_auth/login'}>
+        <Link to={'/register/login'}>
           <Typography class="card-text-blue"> Back to Sign in </Typography>
         </Link>
       </CardContent>

@@ -12,8 +12,9 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 100% 100%;
-  background-image: url('https://hophacks-website.s3.amazonaws.com/images/goose_background.png');
+  /* background-image: url('https://hophacks-website.s3.amazonaws.com/images/goose_background.png'); */
   background-attachment: fixed;
+  /* background-color: #0b7adc; */
 }
 
 .card {
