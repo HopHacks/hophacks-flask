@@ -41,7 +41,7 @@ function Login(props) {
   }
 
   const signInCardDesktop = (
-    <Card class="card">
+    <Card class="card" style={{ color: '#ffffff', height: '70%' }}>
       <CardContent>
         <Typography class="card-title">LOGIN</Typography>
         <div className="text-field">
@@ -108,8 +108,8 @@ function Login(props) {
         </div>
 
         <Link to={'/register/signup'}>
-          <Typography class="card-text-blue"> need a profile? </Typography>
-        </Link>
+          <Typography class="card-text-blue"> New To HopHacks? Sign Up Now! </Typography>
+        </Link> */}
       </CardContent>
     </Card>
   );
