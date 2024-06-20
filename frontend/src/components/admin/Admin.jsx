@@ -111,12 +111,17 @@ const Admin = function () {
   async function checkInUser(id) {
     await axios.post('/api/registrations/check_in', {
       user: id,
-      event: 'Fall 202'
+      event: 'Fall 2024'
     });
   }
 
   function getStatus(user) {
     if (user.email_confirmed) {
+      user.registrations.forEach((registration) => {
+        if (registration.event === 'Fall 2024') {
+          return registration.status;
+        }
+      });
       return user.registrations[0].status;
     } else {
       return 'email not confirmed';
