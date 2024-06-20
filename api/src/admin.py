@@ -24,8 +24,20 @@ def test_admin():
 @check_admin
 def get_all_users_account():
     query = request.args.get("query")
+    eventFile = open("event.txt", "r")
 
-    cursor  = db.users.find({ "$or": [{"username" : {"$regex" : ".*"+query+".*", "$options" : "i"}}, {"profile.first_name": {"$regex" : ".*"+query+".*", "$options" : "i"}}, {"profile.last_name": {"$regex" : ".*"+query+".*", "$options" : "i"}}]})
+    cursor  = db.users.find({
+    "$and": [
+        {
+            "$or": [
+                {"username": {"$regex": ".*"+query+".*", "$options": "i"}},
+                {"profile.first_name": {"$regex": ".*"+query+".*", "$options": "i"}},
+                {"profile.last_name": {"$regex": ".*"+query+".*", "$options": "i"}}
+            ]
+        },
+        {"registration.event": eventFile.read()}
+    ]
+})
 
     users = []
     
