@@ -103,7 +103,7 @@ def login():
         "apply": False
     }
 
-    if (user["email_confirmed"]):
+    if ("email_confirmed" in user and user["email_confirmed"]):
         alreadyReg = False
         for registrations in user['registrations']:
             if (registrations['event'] == "Fall 2024"):
