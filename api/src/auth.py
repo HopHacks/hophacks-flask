@@ -99,7 +99,8 @@ def login():
         # "apply_at": ,
         "accept": False,
         "checkin": False,
-        "status": "email_confirmed"
+        "status": "email_confirmed",
+        "apply": False
     }
 
     if (user["email_confirmed"]):
@@ -110,9 +111,6 @@ def login():
         if (not alreadyReg):
             result = db.users.update_one({'_id': ObjectId(id)}, {'$push': {'registrations': new_reg}})
             result = db.users.update_one({'_id': ObjectId(id)}, {'$set': {'resume': ""}})
-            send_apply_confirm(user['username'], user['profile']['first_name'])
-
-
     resp = jsonify(ret)
 
     # secure = true?, max_age?
