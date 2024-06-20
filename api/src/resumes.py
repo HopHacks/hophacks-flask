@@ -60,7 +60,7 @@ def upload():
                 eventFile = open("event.txt", "r")
                 result = db.users.update_many(
                 {
-                    '_id': id,
+                    '_id': ObjectId(id),
                     'registrations.event' : eventFile.read()
                 },
                 {
