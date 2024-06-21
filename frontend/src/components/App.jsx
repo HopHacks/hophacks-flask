@@ -49,7 +49,7 @@ export default function App() {
           <AuthProvider>
             <CssBaseline />
             <Router>
-              <div style={{ backgroundColor: '#172759' }}>
+              <div>
                 <Nav />
 
                 <Switch>

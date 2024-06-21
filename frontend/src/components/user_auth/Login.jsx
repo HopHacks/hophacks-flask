@@ -30,7 +30,7 @@ function Login(props) {
     try {
       await props.login(email, password);
 
-      if (email !== 'admin') {
+      if (email !== 'admin' && email !== 'hophacks') {
         history.push('/profile');
       } else {
         history.push('/admin');
@@ -92,7 +92,7 @@ function Login(props) {
             size="large"
             onClick={handleLogin}
           >
-            sign in
+            Sign in
           </Button>
 
           {/* TODO: link user JHED */}

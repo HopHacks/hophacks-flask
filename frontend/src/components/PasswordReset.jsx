@@ -50,7 +50,7 @@ export default function PasswordReset(props) {
   return (
     <div
       style={{
-        backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/goose_background.png")`,
+        backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/About.png")`,
         backgroundSize: 'cover',
         height: '100vh'
       }}
