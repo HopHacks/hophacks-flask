@@ -117,12 +117,12 @@ const Admin = function () {
 
   function getStatus(user) {
     if (user.email_confirmed) {
-      user.registrations.forEach((registration) => {
-        if (registration.event === 'Fall 2024') {
-          return registration.status;
+      for (let i = 0; i < user.registrations.length; i++) {
+        if (user.registrations[i].event === 'Fall 2024') {
+          return user.registrations[i].status;
         }
-      });
-      return user.registrations[0].status;
+      }
+      return 'Unknown';
     } else {
       return 'email not confirmed';
     }

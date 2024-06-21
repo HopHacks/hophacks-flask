@@ -2,6 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 // import { motion, useViewportScroll, useTransform } from 'framer-motion';
 
+function img(url) {
+  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+}
+
 const useStyles = makeStyles({
   images: {
     // position: 'absolute',
@@ -26,7 +30,15 @@ const useStyles = makeStyles({
   },
   tempPageeBackground: {
     backgroundColor: '#172759',
-    paddingBottom: '20vh'
+    paddingBottom: '20vh',
+    backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/About.png")`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center center',
+    // backgroundSize: 'auto 100% 100%'
+    // backgroundSize: '100%'
+    backgroundSize: 'cover', // Ensure the background image covers the entire element
+    height: '100vh'
+    // height: '100vh'
     // marginBottom: '10vh'
   },
   tempImageBackground: {
@@ -40,25 +52,28 @@ const useStyles = makeStyles({
     // height: '100vh' // Adjust height as needed
 
     // top: '0vw'
-    paddingTop: '13vh',
-    paddingBottom: '0vh'
+    paddingTop: '13vh'
+    // paddingBottom: '0vh'
   },
   tempTextHeader: {
     textAlign: 'center', // Center text horizontally
-    fontSize: '2rem', // Example font size
+    fontSize: '8rem', // Example font size
     // fontWeight: 'bold', // Example font weight
-    color: '#B4E3F7', // Example text color
+    paddingTop: '3vh',
+    // color: '#B4E3F7' // Example text color
+    color: 'white'
     // padding: '1px',
-    paddingBottom: '0vh'
+    // paddingBottom: '0vh'
 
     // marginTop: '20px' // Adjust vertical spacing as needed
   },
   tempTextSubtext: {
     textAlign: 'center', // Center text horizontally
-    fontSize: '1.5rem', // Example font size
+    fontSize: '2rem', // Example font size
     // fontWeight: 'bold', // Example font weight
-    color: '#B4E3F7', // Example text color
-    marginTop: '20px' // Adjust vertical spacing as needed
+    // color: '#B4E3F7', // Example text color
+    color: 'white',
+    marginTop: '5px' // Adjust vertical spacing as needed
   },
   tempRegisterButton: {
     // textAlign: 'center', // Center text horizontally
@@ -74,9 +89,6 @@ const useStyles = makeStyles({
   }
 });
 
-function img(url) {
-  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-}
 export default function Cover() {
   //const [imageLoading, setImageLoading] = useState(true);
   //const [pulsing, setPulsing] = useState(true);
@@ -90,7 +102,7 @@ export default function Cover() {
   // const mobileRegisterYRight = useTransform(scrollYProgress, [0, 0.02], ['0em', '-3em']);
 
   const classes = useStyles();
-  if (window.innerWidth <= 850) {
+  if (window.innerWidth <= 850 && 1 < 0) {
     return (
       <div className={classes.tempPageeBackground}>
         <div className={classes.tempImageBackground}>
@@ -116,15 +128,15 @@ export default function Cover() {
 
     return (
       <div className={classes.tempPageeBackground}>
-        <div className={classes.tempImageBackground}>
-          <img
+        {/* <div className={classes.tempImageBackground}> */}
+        {/* <img
             src={img('hophacks_bird_default.png')}
             //style={{ top: center(scale.current) }}
             // className={classes.images}
             alt="image_could_not_load"
-          />
-          {/* <br></br> */}
-          {/* <img
+          /> */}
+        {/* <br></br> */}
+        {/* <img
                 src={img('register.png')}
                 //style={{ top: center(scale.current) }}
                 className={classes.images}
@@ -133,9 +145,9 @@ export default function Cover() {
                   window.location = '/register/login';
                 }}
               /> */}
-        </div>
+        {/* </div> */}
         <div className={classes.tempTextHeader}>HOPHACKS</div>
-        <div className={classes.tempTextSubtext}>September 16 - 18, 2024</div>
+        <div className={classes.tempTextSubtext}>September 13 - 15, 2024</div>
         <div className={classes.tempRegisterButton}>
           <img
             src={img('register_button_alone.png')}
