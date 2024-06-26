@@ -654,7 +654,7 @@ export default function Register() {
           <TextField
             required
             variant="standard"
-            label="Program"
+            label="Level of Study"
             style={{ minWidth: 300, marginTop: -5.5, maxWidth: 300 }}
             onChange={(e) => {
               setGrad(e.target.value);
@@ -665,9 +665,21 @@ export default function Register() {
               classes: { root: classes.label }
             }}
           >
-            <MenuItem value="Undergraduate">Undergraduate</MenuItem>
-            <MenuItem value="Graduate">Graduate</MenuItem>
-            <MenuItem value="Postgraduate">Postgraduate</MenuItem>
+            <MenuItem value="Undergraduate University (2 year - community college or similar)">
+              Undergraduate University (2 year - community college or similar)
+            </MenuItem>
+            <MenuItem value="Undergraduate University (3+ year)">
+              Undergraduate University (3+ year)
+            </MenuItem>
+            <MenuItem value="Graduate University (Masters, Professional, Doctoral, etc)">
+              Graduate University (Masters, Professional, Doctoral, etc)
+            </MenuItem>
+            <MenuItem value="Code School / Bootcamp">Code School / Bootcamp</MenuItem>
+            <MenuItem value="Other Vocational / Trade Program or Apprenticeship">
+              Other Vocational / Trade Program or Apprenticeship
+            </MenuItem>
+            <MenuItem value="Post Doctorate">Post Doctorate</MenuItem>
+            <MenuItem value="Other">Other </MenuItem>
           </TextField>
         </Grid>
 

@@ -7,21 +7,22 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import MajorAutocomplete from '../../account/MajorAutocomplete';
-import SchoolAutocomplete from '../../account/SchoolAutocomplete';
-import CountryAutocomplete from '../../account/CountryAutocomplete';
+import MajorAutocomplete from './MajorAutocomplete';
+import SchoolAutocomplete from './SchoolAutocomplete';
+import CountryAutocomplete from './CountryAutocomplete';
 
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PhoneInput from 'react-phone-number-input';
-import PhoneNumber from '../../account/PhoneNumber';
+import PhoneNumber from '../account/PhoneNumber';
 
 //import Login from '../Login';
 //import { useHistory } from 'react-router-dom';
 
-import '../../../stylesheets/user_auth.css';
+import '../../stylesheets/user_auth.css';
 
-export default function SignUpProfile(props) {
+//users with accounts from previous years
+export default function ProfileOldUser(props) {
   const isMobile = props.isMobile;
 
   const setFirst_name = props.setFirst_name;
@@ -36,26 +37,24 @@ export default function SignUpProfile(props) {
   const major = props.major;
   const setMajor = props.setMajor;
   const setGrad = props.setGrad;
+  const setOtherSchool = props.setOtherSchool;
   const setGrad_month = props.setGrad_month;
   const setGrad_year = props.setGrad_year;
   const setCountry = props.setCountry;
   const profileSubmitMsg = props.profileSubmitMsg;
-
-  const setOtherSchool = props.setOtherSchool;
   const enabledButton = props.enabledButton;
 
   const handleProfileNext = props.handleProfileNext;
-  const handleProfileBack = props.handleProfileBack;
 
   const profileCard = (
     <Card class="card">
       <CardContent>
-        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>CREATE A PROFILE</Typography>
+        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>Welcome Back</Typography>
         <Typography class={isMobile ? 'mobile-subheader' : 'card-subtitle'}>
-          step 1: basic info
+          Please verify all of your information from last year is still accurate!
         </Typography>
         <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}>
-          help us learn more about you!
+          Be sure to fill out any new fields, and upload your latest resume on the next page.
         </Typography>
         <Grid container spacing={isMobile ? 2 : 5}>
           <Grid item xs={isMobile ? 12 : 5}>
@@ -63,6 +62,7 @@ export default function SignUpProfile(props) {
               <TextField
                 required
                 variant="standard"
+                value={props.first_name}
                 label="First Name"
                 style={{ width: '100%' }}
                 onChange={(e) => setFirst_name(e.target.value)}
@@ -81,6 +81,7 @@ export default function SignUpProfile(props) {
                 required
                 variant="standard"
                 label="Last Name"
+                value={props.last_name}
                 style={{ width: '100%' }}
                 onChange={(e) => setLast_name(e.target.value)}
                 InputLabelProps={{
@@ -99,6 +100,7 @@ export default function SignUpProfile(props) {
                 variant="standard"
                 type="number"
                 label="Age"
+                value={props.age}
                 style={{ width: '100%' }}
                 onChange={(e) => setAge(e.target.value)}
                 InputLabelProps={{
@@ -117,6 +119,7 @@ export default function SignUpProfile(props) {
                 required
                 variant="standard"
                 label="Gender"
+                value={props.gender}
                 style={{ width: '100%' }}
                 onChange={(e) => {
                   setGender(e.target.value);
@@ -145,6 +148,7 @@ export default function SignUpProfile(props) {
                 required
                 variant="standard"
                 label="Ethnicity"
+                value={props.ethnicity}
                 style={{ width: '100%' }}
                 onChange={(e) => {
                   setEthnicity(e.target.value);
@@ -198,7 +202,6 @@ export default function SignUpProfile(props) {
               * If your school is not in the list, choose &apos;other schools&apos;
             </FormHelperText>
           </Grid>
-
           {props.school === 'Other Schools' && (
             <Grid item xs={isMobile ? 12 : 6}>
               <div className="text-field">
@@ -226,7 +229,7 @@ export default function SignUpProfile(props) {
           <Grid item xs={isMobile ? 12 : 6}>
             <div className="text-field">
               <FormControl required variant="standard" style={{ width: '100%' }}>
-                <CountryAutocomplete setCountry={setCountry} />
+                <CountryAutocomplete setCountry={setCountry} country={props.country} />
               </FormControl>
             </div>
             {/* <FormHelperText style={{ fontSize: 9, color: '#061A40', width: '100%' }}>
@@ -239,6 +242,7 @@ export default function SignUpProfile(props) {
                 required
                 variant="standard"
                 label="Program"
+                value={props.grad}
                 style={{ width: '100%' }}
                 onChange={(e) => {
                   setGrad(e.target.value);
@@ -264,6 +268,7 @@ export default function SignUpProfile(props) {
                 variant="standard"
                 label="Grad Month"
                 style={{ width: '100%' }}
+                value={props.grad_month}
                 onChange={(e) => {
                   setGrad_month(e.target.value);
                 }}
@@ -296,6 +301,7 @@ export default function SignUpProfile(props) {
                 required
                 variant="standard"
                 label="Grad Year"
+                value={props.grad_year}
                 style={{ width: '100%' }}
                 onChange={(e) => {
                   setGrad_year(e.target.value);
@@ -322,26 +328,6 @@ export default function SignUpProfile(props) {
 
         <Typography class="card-text-red">{profileSubmitMsg}</Typography>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <Button
-              class="card-button"
-              variant="contained"
-              color="primary"
-              size="large"
-              disabled={!enabledButton}
-              style={{
-                fontSize: '1.5rem',
-                width: isMobile ? '10rem' : '15rem',
-                height: isMobile ? '3rem' : '4rem',
-                marginTop: isMobile ? '10%' : '5%'
-              }}
-              onClick={() => {
-                handleProfileBack();
-              }}
-            >
-              Back
-            </Button>
-          </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button
               class="card-button"

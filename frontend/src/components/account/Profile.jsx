@@ -1,25 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
 import { withAuthCheck } from '../../util/auth.jsx';
-import { Link } from 'react-router-dom';
-import List from '@material-ui/core/List';
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Grid from '@material-ui/core/Grid';
-import FormDialog from './FormDialog';
-import MajorAutocomplete from './MajorAutocomplete';
-import SchoolAutocomplete from './SchoolAutocomplete';
-import '../../stylesheets/profile.css';
 
+import '../../stylesheets/profile.css';
+import ProfileReturningUser from './ProfileReturningUser.jsx';
+import { isValidPhoneNumber } from 'react-phone-number-input';
+import ProfileOldUser from './ProfileOldUser.jsx';
 const Profile = function Profile(props) {
   const isMobile = props.isMobile;
 
@@ -28,10 +14,6 @@ const Profile = function Profile(props) {
   if (myVariable != '') {
     axios.defaults.baseURL = myVariable;
   }
-
-  const [status, setStatus] = useState('Application not complete: confirm email');
-  const [resumeFile, setResumeFile] = useState('');
-  const [oldResumeName, setOldResumeName] = useState('');
 
   //display database
   const [profile, setProfile] = useState([]);
@@ -43,62 +25,123 @@ const Profile = function Profile(props) {
   const [major, setMajor] = useState('');
   const [phone_number, setPhone_number] = useState('');
   const [school, setSchool] = useState('');
+  const [otherSchool, setOtherSchool] = useState('');
   const [ethnicity, setEthnicity] = useState('');
   const [grad, setGrad] = useState('');
   const [grad_month, setGrad_month] = useState('');
   const [grad_year, setGrad_year] = useState('');
+  const [country, setCountry] = useState('');
   const [first_hackathon, setFirst_hackathon] = useState('');
   const [first_hophacks, setFirst_hophacks] = useState('');
   const [learn_about_us, setLearn_about_us] = useState('');
-  const [confirmed, setConfirmed] = useState(false);
-  const [sendConfimationMsg, setSendConfimationMsg] = useState('');
-  const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
-  const [ageMsg, setAgeMsg] = useState('');
+  const [profileSubmitMsg, setProfileSubmitMsg] = useState('');
+  const [enabledButton, setEnabledButton] = useState(true); //TMP get rid of setEnabledButton
 
-  const currentEvent = 'Fall 2024';
-  const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
-  const acceptedStatus =
-    'You have been accepted to HopHacks. Please RSVP if you plan on participating!';
-  const appCompleteStatus = 'Application complete!';
+  const [profileUpToDate, setProfileUpToDate] = useState(false);
 
-  async function getResumeFileName() {
+  async function getProfileUpToDate() {
     /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
     if (!props.isLoggedIn) return;
 
     try {
-      const response = await axios.get('/api/resumes/filename');
-      setOldResumeName(response.data['filename']);
+      const response = await axios.get('/api/accounts/updatedAccount/get');
+      setProfileUpToDate(response.data['updated']);
     } catch (e) {
-      setOldResumeName('');
+      console.log('error');
     }
   }
 
-  function handleResumeFileChange(e) {
-    setResumeFile(e.target.files[0]);
-  }
+  async function handleProfileNext() {
+    if (first_name.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid first name.');
+      return;
+    }
+    if (last_name.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid last name.');
+      return;
+    }
+    if (gender.length === 0) {
+      setProfileSubmitMsg('* Please select a gender.');
+      return;
+    }
+    if (major.length === 0) {
+      setProfileSubmitMsg('* Please select a major.');
+      return;
+    }
+    if (country === undefined || country.length === 0) {
+      setProfileSubmitMsg('* Please select a country.');
+      return;
+    }
 
-  async function handleResumeSubmit(e) {
-    e.preventDefault();
-    const data = new FormData();
-    data.append('file', resumeFile);
+    if (school.length === 0) {
+      setProfileSubmitMsg('* Please select a school.');
+      return;
+    }
+    if (school === 'Other Schools' && otherSchool.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid school.');
+      return;
+    }
+    if (ethnicity.length === 0) {
+      setProfileSubmitMsg('* Please select an ethnicity.');
+      return;
+    }
+    //TODO: not sure why there are two phone number checks
+    if (phone_number === undefined || phone_number.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid phone number.');
+      return;
+    }
+    if (!isValidPhoneNumber(phone_number)) {
+      setProfileSubmitMsg('* Please enter a valid phone number.');
+      return;
+    }
+    if (grad.length === 0) {
+      setProfileSubmitMsg('* Please select a valid graduation program.');
+      return;
+    }
+    if (grad_month.length === 0) {
+      setProfileSubmitMsg('* Please select a valid graduation month.');
+      return;
+    }
+    if (grad_year.length === 0) {
+      setProfileSubmitMsg('* Please select a valid graduation year.');
+      return;
+    }
 
+    const newProfile = {
+      first_name: first_name,
+      last_name: last_name,
+      gender: gender,
+      age: age,
+      major: major,
+      phone_number: phone_number,
+      school: school,
+      otherSchool: otherSchool,
+      ethnicity: ethnicity,
+      grad: grad,
+      grad_month: grad_month,
+      grad_year: grad_year,
+      country: country,
+      first_hackathon: first_hackathon,
+      first_hophacks: first_hophacks,
+      learn_about_us: learn_about_us,
+      is_jhu: school === 'Johns Hopkins University' ? true : false
+    };
+    if (!props.isLoggedIn) return;
     try {
-      await axios.post('/api/resumes/', data);
-      setResumeMsg('Resume has been successfully uploaded');
+      await axios.post('/api/accounts/profile/update', {
+        profile: newProfile
+      });
     } catch (e) {
-      setResumeMsg('Failed to upload resume. Please try again.');
+      console.log('fail to update');
     }
-
-    // TODO handle error!
+    await axios.post('/api/accounts/updatedAccount/post');
+    getProfileUpToDate();
   }
 
-  async function handleResumeDownload(e) {
-    e.preventDefault();
-
-    const response = await axios.get('/api/resumes/');
-    const url = response.data['url'];
-    window.open(url, '_blank');
-  }
+  useEffect(() => {
+    getProfileUpToDate();
+    getProfile();
+  }, [props.isLoggedIn]);
 
   async function getProfile() {
     if (!props.isLoggedIn) return;
@@ -119,611 +162,56 @@ const Profile = function Profile(props) {
     setFirst_hackathon(response.data.profile.first_hackathon);
     setFirst_hophacks(response.data.profile.first_hophacks);
     setLearn_about_us(response.data.profile.learn_about_us);
+    setCountry(response.data.profile.country);
   }
 
-  async function getStatus() {
-    if (!props.isLoggedIn) return;
-    const response = await axios.get('/api/accounts/profile/email_confirmed');
-
-    if (response.data.email_confirmed) {
-      setConfirmed(true);
-    } else {
-      setConfirmed(false);
-    }
-  }
-
-  async function handleProfileSave() {
-    if (!props.isLoggedIn) return;
-    profile.first_name = first_name;
-    profile.last_name = last_name;
-    profile.gender = gender;
-    profile.major = major;
-    profile.phone_number = phone_number;
-    profile.school = school;
-    profile.ethnicity = ethnicity;
-    profile.grad = grad;
-    profile.grad_month = grad_month;
-    profile.grad_year = grad_year;
-    profile.age = age;
-    profile.first_hackathon = first_hackathon;
-    profile.first_hophacks = first_hophacks;
-    profile.learn_about_us = learn_about_us;
-    try {
-      await axios.post('/api/accounts/profile/update', {
-        profile: profile
-      });
-      getProfile();
-    } catch (e) {
-      console.log('fail to update');
-    }
-  }
-
-  const checkAgeValid = () => {
-    const agere = /^[0-9\b]+$/;
-    if (!agere.test(age)) {
-      setAgeMsg('* Age must be an integer value. Please try again.');
-      return;
-    }
-    setAgeMsg('');
-    handleProfileSave();
-  };
-
-  async function getEmailConfirmStatus() {
-    if (!props.isLoggedIn) return;
-    const response = await axios.get('/api/registrations/get');
-    response.data.registrations.forEach((registration) => {
-      if (registration.event === currentEvent) {
-        if (registration.status === 'email_confirmed') {
-          setStatus(
-            'Upload Resume to finish applying. Reload the page to see updated application status.'
-          );
-        } else if (registration.rsvp) {
-          setStatus(rsvpStatus);
-        } else if (registration.accept) {
-          setStatus(acceptedStatus);
-        } else {
-          setStatus(appCompleteStatus);
-        }
-      }
-    });
-  }
-
-  async function sendConfirmationEmail() {
-    try {
-      await axios.post('/api/accounts/confirm_email/request', {
-        confirm_url: window.location.protocol + '//' + window.location.host + '/confirm_email'
-      });
-      setSendConfimationMsg('Sent confirmation email successfully!');
-    } catch (e) {
-      setSendConfimationMsg('Unable to send confirmation email');
-    }
-  }
-
-  async function rsvp(event) {
-    try {
-      await axios.post('/api/registrations/rsvp/rsvp', { event: event });
-      setStatus(rsvpStatus);
-    } catch (e) {
-      // maybe TODO: more descriptive error messages depending on error code?
-      alert('Failed');
-    }
-  }
-
-  async function cancel(event) {
-    try {
-      await axios.post('/api/registrations/rsvp/cancel', { event: event });
-      setStatus(acceptedStatus);
-    } catch (e) {
-      alert('Failed');
-    }
-  }
-
-  useEffect(() => {
-    getStatus();
-    getProfile();
-    getResumeFileName();
-    getEmailConfirmStatus();
-  }, [props.isLoggedIn]);
-
-  function ActionItems() {
-    if (!confirmed) {
-      return (
-        <>
-          <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
-          <p>{sendConfimationMsg}</p>
-        </>
-      );
-    } else if (confirmed && status === appCompleteStatus) {
-      return (
-        <p>
-          You have successfully applied to HopHacks. Please be patient while we process your
-          application :)
-        </p>
-      );
-    } else if (status === acceptedStatus) {
-      return (
-        <>
-          <button onClick={() => rsvp(currentEvent)}>RSVP</button>
-        </>
-      );
-    } else if (status === rsvpStatus) {
-      return (
-        <>
-          <button onClick={() => cancel(currentEvent)}>Cancel RSVP</button>
-        </>
-      );
-    }
-  }
-
-  const appStatus = (
-    <div>
-      <Typography class="section-header" gutterBottom>
-        Application
-      </Typography>
-      <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-        You need to confirm your email before applying to the current event. Once you are accepted
-        to the event, you can RSVP to the event.
-      </Typography>
-
-      {isMobile ? (
-        <div className="table">
-          <text className="table-header">Current Event:</text>
-          <text className="table-body">{' ' + currentEvent}</text>
-          <br />
-          <text className="table-header">Application Status:</text>
-          <text className="table-body">{' ' + status}</text>
-          <br />
-          <text className="table-header">Action Items:</text>
-          {ActionItems()}
-        </div>
-      ) : (
-        <Table>
-          <TableHead>
-            <TableCell>Current Event</TableCell>
-            <TableCell>Application Status</TableCell>
-            <TableCell>Action Items</TableCell>
-          </TableHead>
-          <TableRow>
-            <TableCell>{currentEvent}</TableCell>
-            <TableCell>{status}</TableCell>
-            <TableCell>
-              <div>{ActionItems()}</div>
-            </TableCell>
-          </TableRow>
-        </Table>
-      )}
-    </div>
-  );
-
-  const resume = (
-    <div>
-      <Typography class="section-header" gutterBottom>
-        Resume
-      </Typography>
-      <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-        You can replace your resume by clicking on “Choose File” above and selecting a new file. You
-        can have only one resume attached to your profile.
-      </Typography>
-      {isMobile ? (
-        <div className="table">
-          <text className="table-header">Current Resume:</text>
-          <Link class="table-body" onClick={handleResumeDownload} style={{ color: 'blue' }}>
-            {' ' + oldResumeName}
-          </Link>
-          <br />
-          <Grid container>
-            <Grid item>
-              <text className="table-header">Upload New Resume:</text>
-            </Grid>
-            <Grid item>
-              <form onSubmit={handleResumeSubmit}>
-                <div>
-                  <input type="file" name="file" onChange={handleResumeFileChange} />
-                </div>
-                <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
-              </form>
-            </Grid>
-          </Grid>
-        </div>
-      ) : (
-        <Table>
-          <TableHead>
-            <TableCell>File Name</TableCell>
-            <TableCell>Action</TableCell>
-            <TableCell>Upload Resume</TableCell>
-          </TableHead>
-          <TableRow>
-            <TableCell>{oldResumeName}</TableCell>
-            <TableCell>
-              <Link onClick={handleResumeDownload} style={{ fontSize: '15px', color: 'blue' }}>
-                Download
-              </Link>
-            </TableCell>
-            <TableCell>
-              <form onSubmit={handleResumeSubmit}>
-                <div>
-                  <input type="file" name="file" onChange={handleResumeFileChange} />
-                </div>
-                <input type="submit" value="Submit" />
-                <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
-              </form>
-            </TableCell>
-          </TableRow>
-        </Table>
-      )}
-    </div>
-  );
-
-  const NameForm = (
-    <div>
-      <form>
-        <TextField
-          id="standard-basic"
-          variant="outlined"
-          label="First Name"
-          defaultValue={profile.first_name}
-          onChange={(e) => setFirst_name(e.target.value)}
-        />
-      </form>
-      <form>
-        <TextField
-          id="standard-basic"
-          variant="outlined"
-          label="Last Name"
-          defaultValue={profile.last_name}
-          onChange={(e) => setLast_name(e.target.value)}
-        />
-      </form>
-    </div>
-  );
-
-  const GenderForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={gender}
-          onChange={(e) => {
-            setGender(e.target.value);
-          }}
-        >
-          <MenuItem value="Male">Male</MenuItem>
-          <MenuItem value="Female">Female</MenuItem>
-          <MenuItem value="Non-Binary">Non-Binary</MenuItem>
-          <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-        </Select>
-      </FormControl>
-    </form>
-  );
-
-  const AgeForm = (
-    <div>
-      <form>
-        <TextField
-          id="stand-basic"
-          variant="outlined"
-          label="Age"
-          defaultValue={profile.age}
-          onChange={(e) => setAge(e.target.value)}
-        ></TextField>
-      </form>
-    </div>
-  );
-
-  const EthnicityForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">Ethnicity</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={ethnicity}
-          onChange={(e) => {
-            setEthnicity(e.target.value);
-          }}
-        >
-          <MenuItem value="American Indian or Alaska Native">
-            American Indian or Alaska Native
-          </MenuItem>
-          <MenuItem value="Asian">Asian</MenuItem>
-          <MenuItem value="Black or African American">Black or African American</MenuItem>
-          <MenuItem value="Hispanic, Latino or Spanish Origin">
-            Hispanic, Latino or Spanish Origin
-          </MenuItem>
-          <MenuItem value="Middle Eastern or North African">
-            Middle Eastern or North African
-          </MenuItem>
-          <MenuItem value="Native Hawaiian or Other Pacific Islander">
-            Native Hawaiian or Other Pacific Islander
-          </MenuItem>
-          <MenuItem value="White">White</MenuItem>
-          <MenuItem value="Multiethnic">Multiethnic</MenuItem>
-          <MenuItem value="Prefer not to disclose">Prefer not to disclose</MenuItem>
-        </Select>
-      </FormControl>
-    </form>
-  );
-
-  const SchoolForm = (
-    <form>
-      <SchoolAutocomplete school={school} setSchool={setSchool} />
-    </form>
-  );
-
-  const MajorForm = (
-    <form>
-      <MajorAutocomplete major={major} setMajor={setMajor} />
-    </form>
-  );
-
-  const ProgramForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">Program</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={grad}
-          onChange={(e) => {
-            setGrad(e.target.value);
-          }}
-        >
-          <MenuItem value="Undergraduate">Undergraduate</MenuItem>
-          <MenuItem value="Graduate">Graduate</MenuItem>
-          <MenuItem value="Postgraduate">Postgraduate</MenuItem>
-        </Select>
-      </FormControl>
-    </form>
-  );
-
-  const PhoneNumberForm = (
-    <form>
-      <TextField
-        id="standard-basic"
-        variant="outlined"
-        label="Phone Number"
-        defaultValue={profile.phone_number}
-        onChange={(e) => setPhone_number(e.target.value)}
+  if (!profileUpToDate) {
+    return (
+      <ProfileOldUser
+        props={props}
+        isMobile={isMobile}
+        setFirst_name={setFirst_name}
+        setLast_name={setLast_name}
+        setAge={setAge}
+        setGender={setGender}
+        setEthnicity={setEthnicity}
+        setMajor={setMajor}
+        setPhone_number={setPhone_number}
+        setSchool={setSchool}
+        setGrad={setGrad}
+        setGrad_month={setGrad_month}
+        setGrad_year={setGrad_year}
+        setCountry={setCountry}
+        setFirst_hackathon={setFirst_hackathon}
+        setFirst_hophacks={setFirst_hophacks}
+        setLearn_about_us={setLearn_about_us}
+        setOtherSchool={setOtherSchool}
+        first_name={first_name}
+        last_name={last_name}
+        gender={gender}
+        age={age}
+        major={major}
+        phone_number={phone_number}
+        school={school}
+        ethnicity={ethnicity}
+        grad={grad}
+        grad_month={grad_month}
+        grad_year={grad_year}
+        country={country}
+        first_hackathon={first_hackathon}
+        first_hophacks={first_hophacks}
+        learn_about_us={learn_about_us}
+        profileSubmitMsg={profileSubmitMsg}
+        enabledButton={enabledButton}
+        profile={profile}
+        otherSchool={otherSchool}
+        handleProfileNext={handleProfileNext}
+        setEnabledButton={setEnabledButton}
       />
-    </form>
-  );
-
-  const GraduationForm = (
-    <div>
-      <form>
-        <FormControl>
-          <InputLabel id="demo-simple-select-label">Month</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={grad_month}
-            onChange={(e) => {
-              setGrad_month(e.target.value);
-            }}
-          >
-            <MenuItem value="01">01</MenuItem>
-            <MenuItem value="02">02</MenuItem>
-            <MenuItem value="03">03</MenuItem>
-            <MenuItem value="04">04</MenuItem>
-            <MenuItem value="05">05</MenuItem>
-            <MenuItem value="06">06</MenuItem>
-            <MenuItem value="07">07</MenuItem>
-            <MenuItem value="08">08</MenuItem>
-            <MenuItem value="09">09</MenuItem>
-            <MenuItem value="10">10</MenuItem>
-            <MenuItem value="11">11</MenuItem>
-            <MenuItem value="12">12</MenuItem>
-          </Select>
-        </FormControl>
-      </form>
-
-      <form>
-        <FormControl>
-          <InputLabel id="demo-simple-select-label">Year</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={grad_year}
-            onChange={(e) => {
-              setGrad_year(e.target.value);
-            }}
-          >
-            <MenuItem value="2025">2025</MenuItem>
-            <MenuItem value="2026">2026</MenuItem>
-            <MenuItem value="2027">2027</MenuItem>
-            <MenuItem value="2028">2028</MenuItem>
-            <MenuItem value="2029">2029</MenuItem>
-            <MenuItem value="2030">2030</MenuItem>
-          </Select>
-        </FormControl>
-      </form>
-    </div>
-  );
-
-  const first_hackathonForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">Is this your first Hackathon?</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={first_hackathon}
-          onChange={(e) => {
-            setFirst_hackathon(e.target.value);
-          }}
-        >
-          <MenuItem value="Yes">Yes</MenuItem>
-          <MenuItem value="No">No</MenuItem>
-        </Select>
-      </FormControl>
-    </form>
-  );
-
-  const first_hophacksForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">
-          Is this your first time attending HopHacks?
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={first_hophacks}
-          onChange={(e) => {
-            setFirst_hophacks(e.target.value);
-          }}
-        >
-          <MenuItem value="Yes">Yes</MenuItem>
-          <MenuItem value="No">No</MenuItem>
-        </Select>
-      </FormControl>
-    </form>
-  );
-
-  const learn_about_usForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label"> How did you hear about us?</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={learn_about_us}
-          onChange={(e) => {
-            setLearn_about_us(e.target.value);
-          }}
-        >
-          <MenuItem value="Instagram">Instagram</MenuItem>
-          <MenuItem value="Facebook">Facebook</MenuItem>
-          <MenuItem value="Linkedin">Linkedin</MenuItem>
-          <MenuItem value="Google">Google</MenuItem>
-          <MenuItem value="Major League Hacking">Major League Hacking</MenuItem>
-          <MenuItem value="Email Listerv">Email Listerv</MenuItem>
-          <MenuItem value="Friend">Friend</MenuItem>
-          <MenuItem value="Other">Other</MenuItem>
-        </Select>
-      </FormControl>
-    </form>
-  );
-
-  const ProfileCard = (
-    <div>
-      <Typography class="section-header" gutterBottom>
-        Profile
-      </Typography>
-
-      <List class="list">
-        <FormDialog
-          title={'Edit Name'}
-          form={NameForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Name'}
-          secondaryText={profile.first_name + ' ' + profile.last_name}
-        />
-
-        <FormDialog
-          title={'Edit Gender'}
-          form={GenderForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Gender'}
-          secondaryText={profile.gender}
-        />
-
-        <FormDialog
-          title={'Edit Age'}
-          form={AgeForm}
-          handleProfileSave={checkAgeValid}
-          primaryText={'Age'}
-          secondaryText={profile.age}
-        />
-
-        <Typography style={{ fontSize: '13px' }}> {ageMsg} </Typography>
-
-        <FormDialog
-          title={'Edit Ethnicity'}
-          form={EthnicityForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Ethnicity'}
-          secondaryText={profile.ethnicity}
-        />
-
-        <FormDialog
-          title={'Edit School'}
-          form={SchoolForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'School'}
-          secondaryText={profile.school}
-        />
-
-        <FormDialog
-          title={'Edit Major'}
-          form={MajorForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Major'}
-          secondaryText={profile.major}
-        />
-
-        <FormDialog
-          title={'Edit Program'}
-          form={ProgramForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Program'}
-          secondaryText={profile.grad}
-        />
-
-        <FormDialog
-          title={'Edit Expected Graduation Date'}
-          form={GraduationForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Expected Graduation Date'}
-          secondaryText={profile.grad_month + ' ' + profile.grad_year}
-        />
-
-        <FormDialog
-          title={'Edit Phone Number'}
-          form={PhoneNumberForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Phone Number'}
-          secondaryText={profile.phone_number}
-        />
-        <FormDialog
-          title={'Is this your first time attending a hackathon?'}
-          form={first_hackathonForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Is this your first time attending a hackathon?'}
-          secondaryText={profile.first_hackathon}
-        />
-        <FormDialog
-          title={'Is this your first time attending Hophacks?'}
-          form={first_hophacksForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'Is this your first time attending Hophacks?'}
-          secondaryText={profile.first_hackathon}
-        />
-        <FormDialog
-          title={'How did you hear about us?'}
-          form={learn_about_usForm}
-          handleProfileSave={handleProfileSave}
-          primaryText={'How did you hear about us?'}
-          secondaryText={profile.learn_about_us}
-        />
-      </List>
-    </div>
-  );
-
-  return (
-    <Card class="profile">
-      <div className="section">{appStatus}</div>
-      <div className="section" style={{ marginTop: '7%' }}>
-        {resume}
-      </div>
-      <div className="section" style={{ marginTop: '7%' }}>
-        {ProfileCard}
-      </div>
-    </Card>
-  );
+    );
+  } else {
+    return <ProfileReturningUser isMobile={isMobile} />;
+  }
 };
 
 export default withAuthCheck(Profile);
