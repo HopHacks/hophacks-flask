@@ -241,7 +241,7 @@ export default function ProfileOldUser(props) {
               <TextField
                 required
                 variant="standard"
-                label="Program"
+                label="Level of Study"
                 value={props.grad}
                 style={{ width: '100%' }}
                 onChange={(e) => {
@@ -255,9 +255,21 @@ export default function ProfileOldUser(props) {
                   style: { color: '#061A40' }
                 }}
               >
-                <MenuItem value="Undergraduate">Undergraduate</MenuItem>
-                <MenuItem value="Graduate">Graduate</MenuItem>
-                <MenuItem value="Postgraduate">Postgraduate</MenuItem>
+                <MenuItem value="Undergraduate University (2 year - community college or similar)">
+                  Undergraduate University (2 year - community college or similar)
+                </MenuItem>
+                <MenuItem value="Undergraduate University (3+ year)">
+                  Undergraduate University (3+ year)
+                </MenuItem>
+                <MenuItem value="Graduate University (Masters, Professional, Doctoral, etc)">
+                  Graduate University (Masters, Professional, Doctoral, etc)
+                </MenuItem>
+                <MenuItem value="Code School / Bootcamp">Code School / Bootcamp</MenuItem>
+                <MenuItem value="Other Vocational / Trade Program or Apprenticeship">
+                  Other Vocational / Trade Program or Apprenticeship
+                </MenuItem>
+                <MenuItem value="Post Doctorate">Post Doctorate</MenuItem>
+                <MenuItem value="Other">Other </MenuItem>
               </TextField>
             </div>
           </Grid>
