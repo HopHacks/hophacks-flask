@@ -38,13 +38,16 @@ export default function SignUpChecks(props) {
   const handleLogisticsCheckBox = props.handleLogisticsCheckBox;
   const handleCommunicationCheckBox = props.handleCommunicationCheckBox;
 
-  function openCodeOfConduct() {
+  function openCodeOfConduct(event) {
+    event.preventDefault();
     window.open('https://static.mlh.io/docs/mlh-code-of-conduct.pdf', '_blank');
   }
-  function openPrivacy() {
+  function openPrivacy(event) {
+    event.preventDefault();
     window.open('https://mlh.io/privacy', '_blank');
   }
-  function openTerms() {
+  function openTerms(event) {
+    event.preventDefault();
     window.open('https://mlh.io/terms', '_blank');
   }
 
@@ -126,8 +129,10 @@ export default function SignUpChecks(props) {
               Hacking for event administration, ranking, and MLH administration in-line with the{' '}
             </span>
             <Link onClick={openPrivacy}>MLH Privacy Policy</Link>
-            <span>. I further agree to the </span>
+            <span>. I further agree to the terms of both the </span>
             <Link onClick={openTerms}>MLH Terms and Conditions</Link>
+            <span> and the</span>
+            <Link onClick={openPrivacy}> MLH Privacy Policy</Link>
             <span>.</span>
           </div>
         }
