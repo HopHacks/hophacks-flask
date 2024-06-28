@@ -98,9 +98,7 @@ export default function SignUpChecks(props) {
         label={
           <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>* I have read and understand the </span>
-            <Link onClick={openCodeOfConduct} onContextMenu={openCodeOfConduct}>
-              MLH Code of Conduct
-            </Link>
+            <Link onClick={openCodeOfConduct}>MLH Code of Conduct</Link>
             <span>.</span>
           </div>
         }
