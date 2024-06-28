@@ -155,8 +155,8 @@ export default function SignUpChecks(props) {
           <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               {' '}
-              (Optional) I authorize MLH to send me pre- and post-event informational emails, which
-              contain free credit and opportunities from their partners.{' '}
+              (Optional) I authorize MLH to send me occasional emails about relevant events, career
+              opportunities, and community announcements.{' '}
             </span>
           </div>
         }
