@@ -449,14 +449,16 @@ export default function Register() {
           </div>
         }
         label={
-          <div style={{ fontSize: 15 }}>
+          <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               * I authorize you to share my application/registration information with Major League
               Hacking for event administration, ranking, and MLH administration in-line with the{' '}
             </span>
             <Link onClick={openPrivacy}>MLH Privacy Policy</Link>
-            <span>. I further agree to the </span>
+            <span>. I further agree to the terms of both the </span>
             <Link onClick={openTerms}>MLH Terms and Conditions</Link>
+            <span> and the</span>
+            <Link onClick={openPrivacy}> MLH Privacy Policy</Link>
             <span>.</span>
           </div>
         }
