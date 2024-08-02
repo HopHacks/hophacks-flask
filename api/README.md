@@ -19,7 +19,7 @@ For Windows:
 
 For Linux
 
-```
+````
 source hophacks-env/bin/activate
 ```3.4
 
@@ -27,8 +27,10 @@ source hophacks-env/bin/activate
 
 Then install the requirements (with your virtual environment activated)
 
-```
+````
+
 pip install -r requirements.txt
+
 ```
 
 #### 3. Configuration
@@ -38,7 +40,9 @@ script to generate one, (along with an admin account to the users database).
 To run this, go to the `src/config` directory and do
 
 ```
+
 python config.py dev
+
 ```
 
 Note this script will also prompt you for admin account credentials.
@@ -48,13 +52,19 @@ Note this script will also prompt you for admin account credentials.
 Running Dev:
 
 ```
+
 cd src
 flask run
+
 ```
 
 Running Server on port 8000 (need gunicorn):
 
 ```
+
 cd src
 gunicorn app:app
+
+```
+
 ```
