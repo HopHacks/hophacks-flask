@@ -161,7 +161,7 @@ function MemberItem(props) {
             <img
               className={classes.memberPic}
               style={background}
-              src={img(`team/img/${props.imgURL}.jpg`)}
+              src={img(`team/img/${props.imgURL}`)}
               alt="loading"
             />
             {linkedin}
@@ -244,105 +244,69 @@ export default function Team() {
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="Akhil"
-                memberName="Akhil Deo"
+                imgURL="Josephine.png"
+                memberName="Josephine Deng"
                 memberTitle="Director"
-                linkedin="https://www.linkedin.com/in/akhildeo"
-                github="https://github.com/akhildeo"
+                linkedin="https://www.linkedin.com/in/josephine-deng"
+                // github="https://github.com/akhildeo"
               />
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="joanne"
+                imgURL="Muxi.png"
+                memberName="Muxi Lyu"
+                memberTitle="Director"
+                linkedin="www.linkedin.com/in/muxi-lyu-652a04223/"
+                github="https://github.com/MuxiLyuLucy"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="joanne.jpg"
                 memberName="Joanne Selinski"
                 memberTitle="Faculty Advisor"
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem imgURL="lyn" memberName="Lyn Doan" memberTitle="Admin Coordinator" />
+              <MemberItem imgURL="lyn.jpg" memberName="Lyn Doan" memberTitle="Admin Coordinator" />
             </div>
           </Grid>
         )}
         {value === 1 && (
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
-              <MemberItem imgURL="Miranda" memberName="Miranda Bian" memberTitle="Design Head" />
+              <MemberItem imgURL="Emily.png" memberName="Emily Kim" memberTitle="Design" />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Jam"
-                memberName="Jam Navarro"
-                memberTitle="Design"
-                linkedin="https://www.linkedin.com/in/jam-navarro"
-                github="https://github.com/jamnavarro"
-              />
+              <MemberItem imgURL="Cynthia.png" memberName="Cynthia Wang" memberTitle="Design" />
             </div>
-            {
-              <div className={classes.teambox}>
-                <MemberItem imgURL="Quinyue" memberName="Qinyue Huang" memberTitle="Design" />
-              </div>
-            }
           </Grid>
         )}
         {value === 2 && (
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="Sejal"
-                memberName="Sejal Srivastava"
-                memberTitle="Logistics Head"
-                linkedin="https://www.linkedin.com/in/sejal-srivastava0123"
-              />
-            </div>
-            <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Iris"
-                memberName="Iris Gupta"
-                memberTitle="Logistics"
-                linkedin="https://www.linkedin.com/in/iris-gupta-5b422a190"
-              />
-            </div>
-            <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Minoo"
+                imgURL="Minoo.jpg"
                 memberName="Minoo Kim"
-                memberTitle="Logistics"
+                memberTitle="Logistics Head"
                 linkedin="https://www.linkedin.com/in/minoo-kim-166b50231/"
               />
             </div>
-            {
-              <div className={classes.teambox}>
-                <MemberItem imgURL="Daniel" memberName="Daniel Song" memberTitle="Logistics" />
-              </div>
-            }
+            <div className={classes.teambox}>
+              <MemberItem imgURL="Eva.png" memberName="Eva Loftus" memberTitle="Logistics" />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem imgURL="Liam.png" memberName="Liam Finn" memberTitle="Logistics" />
+            </div>
           </Grid>
         )}
         {value === 3 && (
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Elizabeth"
-                memberName="Elizabeth Hsieh"
-                memberTitle="Social/PR Head"
-                linkedin="https://www.linkedin.com/in/elizabeth-hsieh/"
-              />
+              <MemberItem imgURL="Anvi.png" memberName="Anvi Mishra" memberTitle="Marketing Head" />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Elva"
-                memberName="Ruoyan Shang"
-                memberTitle="Social/PR"
-                linkedin="https://www.linkedin.com/in/ruoyan-shang/"
-                github="https://github.com/Elvaaaaaa"
-              />
-            </div>
-            <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Milton"
-                memberName="Milton Diaz"
-                memberTitle="Social/PR"
-                linkedin="https://www.linkedin.com/in/milton-diaz/"
-              />
+              <MemberItem imgURL="Daniel.jpg" memberName="Daniel Song" memberTitle="Marketing" />
             </div>
           </Grid>
         )}
@@ -350,28 +314,16 @@ export default function Team() {
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="Josephine"
-                memberName="Josephine Deng"
-                memberTitle="Sponsors Head"
-                linkedin="https://www.linkedin.com/in/josephine-deng"
+                imgURL="Malcolm.png"
+                memberName="Malcolm Krolick"
+                memberTitle="Sponsors"
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Dhruv"
-                memberName="Dhruv Dubey"
-                memberTitle="Sponsors"
-                linkedin="https://www.linkedin.com/in/dhruv-dubey-51660b1b7/"
-              />
+              <MemberItem imgURL="Jasmine.png" memberName="Jasmine Yoon" memberTitle="Sponsors" />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Sujin"
-                memberName="Sujin Lee"
-                memberTitle="Sponsors"
-                linkedin="https://www.linkedin.com/in/sujin-lee-6a0766258"
-                github="https://github.com/lsj0232191"
-              />
+              <MemberItem imgURL="Lia.png" memberName="Lia Kim" memberTitle="Sponsors" />
             </div>
           </Grid>
         )}
@@ -379,47 +331,89 @@ export default function Team() {
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="Julia"
-                memberName="Julia Bian"
+                imgURL="Nish.jpg"
+                memberName="Nishikar Paruchuri"
                 memberTitle="Website Head"
-                linkedin="https://www.linkedin.com/in/juliabian/"
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Shaopeng"
-                memberName="Shaopeng Zeng"
-                memberTitle="Website"
-                linkedin="https://www.linkedin.com/in/shaopeng-zeng-862154149/"
-              />
+              <MemberItem imgURL="Clara.png" memberName="Clara Jeon" memberTitle="Website" />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Muxi"
-                memberName="Muxi Lyu"
-                memberTitle="Website"
-                linkedin="www.linkedin.com/in/muxi-lyu-652a04223/"
-                github="https://github.com/MuxiLyuLucy"
-              />
+              <MemberItem imgURL="Sujin.jpg" memberName="Sujin Lee" memberTitle="Website" />
             </div>
             <div className={classes.teambox}>
-              <MemberItem
-                imgURL="Jacky"
-                memberName="Jacky Wang"
-                memberTitle="Website"
-                linkedin="https://www.linkedin.com/in/jiaqi-jacky-wang/, https://github.com/JiaqiWang18"
-              />
+              <MemberItem imgURL="Lucy.png" memberName="Lucy Wu" memberTitle="Website" />
             </div>
             <div className={classes.teambox}>
-              <MemberItem imgURL="Nish" memberName="Nishikar Paruchuri" memberTitle="Website" />
+              <MemberItem imgURL="Jayden.png" memberName="Jayden Moon" memberTitle="Website" />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem imgURL="Ryan.png" memberName="Ryan Wu" memberTitle="Website" />
             </div>
           </Grid>
         )}
         {value === 6 && (
           <Grid className={classes.team} container>
             <div className={classes.teambox}>
+              <MemberItem imgURL="Akhil.jpg" memberName="Akhil Deo" memberTitle="JHU" />
+            </div>
+
+            <div className={classes.teambox}>
+              <MemberItem imgURL="Julia.jpg" memberName="Julia Bian" memberTitle="Meta" />
+            </div>
+            <div className={classes.teambox}>
               <MemberItem
-                imgURL="curtis_headshot"
+                imgURL="Shaopeng.jpg"
+                memberName="Shaopeng Zeng"
+                memberTitle="Amazon"
+                linkedin="https://www.linkedin.com/in/shaopeng-zeng-862154149/"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="Jacky.jpg"
+                memberName="Jacky Wang"
+                memberTitle="Website"
+                linkedin="https://www.linkedin.com/in/jiaqi-jacky-wang/, https://github.com/JiaqiWang18"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="Elva.jpg"
+                memberName="Ruoyan Shang"
+                memberTitle="DataBricks"
+                linkedin="https://www.linkedin.com/in/ruoyan-shang/"
+                github="https://github.com/Elvaaaaaa"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="Sejal.jpg"
+                memberName="Sejal Srivastava"
+                memberTitle="Accenture"
+                linkedin="https://www.linkedin.com/in/sejal-srivastava0123"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="Jam.jpg"
+                memberName="Jam Navarro"
+                memberTitle="JHU"
+                linkedin="https://www.linkedin.com/in/jam-navarro"
+                github="https://github.com/jamnavarro"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="Elizabeth.jpg"
+                memberName="Elizabeth Hsieh"
+                linkedin="https://www.linkedin.com/in/elizabeth-hsieh/"
+              />
+            </div>
+            <div className={classes.teambox}>
+              <MemberItem
+                imgURL="curtis_headshot.jpg"
                 memberName="Curtis Ahn"
                 memberTitle="Amazon"
                 linkedin="https://www.linkedin.com/in/ctsahn/"
@@ -427,14 +421,14 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="kelly"
+                imgURL="kelly.jpg"
                 memberName="Kelly Culotta"
                 memberTitle="Admin Coordinator"
               />
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="ElizabethCho"
+                imgURL="ElizabethCho.jpg"
                 memberName="Elizabeth Cho"
                 memberTitle="Capital One"
                 linkedin="https://www.linkedin.com/in/elizabeth-c-cho/"
@@ -444,7 +438,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="LaurenBack"
+                imgURL="LaurenBack.jpg"
                 memberName="Lauren Back"
                 memberTitle=""
                 linkedin="https://www.linkedin.com/in/backs/"
@@ -452,7 +446,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="ElaineHe"
+                imgURL="ElaineHe.jpg"
                 memberName="Elaine He"
                 memberTitle=""
                 linkedin="https://www.linkedin.com/in/jiayi-elaine-he/"
@@ -460,7 +454,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="AnhTran"
+                imgURL="AnhTran.jpg"
                 memberName="Trần Thế Anh"
                 memberTitle="Mission Data"
                 linkedin="https://www.linkedin.com/in/anh-the-tran/"
@@ -468,7 +462,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="ZoeKim"
+                imgURL="ZoeKim.jpg"
                 memberName="Zoe Kim"
                 memberTitle="Masters at UMichigan"
                 linkedin="https://www.linkedin.com/in/kimminjeong/"
@@ -476,7 +470,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="LaineWang"
+                imgURL="LaineWang.jpg"
                 memberName="Laine Wang"
                 memberTitle=""
                 linkedin="https://www.linkedin.com/in/yuelian-wang-9a48b71a4/"
@@ -484,18 +478,18 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="StellaLi"
+                imgURL="StellaLi.jpg"
                 memberName="Stella Li"
                 memberTitle=""
                 linkedin="https://www.linkedin.com/in/stella-li-1106/"
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem imgURL="AlanLi" memberName="Alan Li" memberTitle="" linkedin="" />
+              <MemberItem imgURL="AlanLi.jpg" memberName="Alan Li" memberTitle="" linkedin="" />
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="NicholasBowen"
+                imgURL="NicholasBowen.jpg"
                 memberName="Nicolas Bowen"
                 memberTitle="Palantir"
                 linkedin="https://www.linkedin.com/in/nicholas-bowen24/"
@@ -503,7 +497,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="brandon_headshot"
+                imgURL="brandon_headshot.jpg"
                 memberName="Brandon Wong"
                 memberTitle="Nuro"
                 linkedin="https://linkedin.com/in/brandonynwong"
@@ -512,29 +506,29 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="elaine"
+                imgURL="elaine.jpg"
                 memberName="Elaine Wong"
                 memberTitle="Meta"
                 linkedin="https://www.linkedin.com/in/ewong127/"
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem imgURL="alison_headshot" memberName="Alison Lee" memberTitle="Meta" />
+              <MemberItem imgURL="alison_headshot.jpg" memberName="Alison Lee" memberTitle="Meta" />
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="az"
+                imgURL="az.jpg"
                 memberName="Andrew Zhang"
                 memberTitle="Datadog"
                 linkedin="https://www.linkedin.com/in/yzhan289/"
               />
             </div>
             <div className={classes.teambox}>
-              <MemberItem imgURL="jimmy_headshot" memberName="Jimmy Shi" />
+              <MemberItem imgURL="jimmy_headshot.jpg" memberName="Jimmy Shi" />
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="kavan_headshot"
+                imgURL="kavan_headshot.jpg"
                 memberName="Kavan Bansal"
                 memberTitle="Amazon"
                 linkedin="https://www.linkedin.com/in/kavanbansal/"
@@ -542,7 +536,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="charissa_headshot"
+                imgURL="charissa_headshot.jpg"
                 memberName="Charissa Zou"
                 memberTitle="Meta"
                 linkedin="https://www.linkedin.com/in/charissa-zou/"
@@ -550,7 +544,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="dan"
+                imgURL="dan.jpg"
                 memberName="Daniel Qian"
                 memberTitle="Bloomberg"
                 linkedin="https://www.linkedin.com/in/daniel-qian/"
@@ -558,7 +552,7 @@ export default function Team() {
             </div>
             <div className={classes.teambox}>
               <MemberItem
-                imgURL="brice"
+                imgURL="brice.jpg"
                 memberName="Brice Halder"
                 memberTitle="Meta"
                 linkedin="https://www.linkedin.com/in/brice-halder/"

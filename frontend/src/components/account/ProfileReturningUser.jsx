@@ -22,6 +22,10 @@ import CountryAutocomplete from './CountryAutocomplete';
 
 import '../../stylesheets/profile.css';
 
+function img(url) {
+  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+}
+
 //current users
 const ProfileReturningUser = function ProfileReturningUser(props) {
   const isMobile = props.isMobile;
@@ -140,6 +144,11 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     }
   }
 
+  function openPhotoRelease(event) {
+    event.preventDefault();
+    window.open(img('JHU_Photo-and-Video-Release_20192.pdf'), '_blank');
+  }
+
   async function handleProfileSave() {
     if (!props.isLoggedIn) return;
     profile.first_name = first_name;
@@ -254,6 +263,12 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       return (
         <>
           <button onClick={() => rsvp(currentEvent)}>RSVP</button>
+          <br />
+          <span> Note, by RSVPing to our event, you consent to our </span>
+          <a href={img('JHU_Photo-and-Video-Release_20192.pdf')} onClick={openPhotoRelease}>
+            {' photo release form'}
+          </a>
+          <span>.</span>
         </>
       );
     } else if (status === rsvpStatus) {
