@@ -15,6 +15,10 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import '../../../stylesheets/user_auth.css';
 
+function img(url) {
+  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+}
+
 export default function SignUpChecks(props) {
   const isMobile = props.isMobile;
 
@@ -51,6 +55,11 @@ export default function SignUpChecks(props) {
     window.open('https://github.com/MLH/mlh-policies/blob/main/contest-terms.md', '_blank');
   }
 
+  function openPhotoRelease(event) {
+    event.preventDefault();
+    window.open(img('JHU_Photo-and-Video-Release_20192.pdf'), '_blank');
+  }
+
   const resume = (
     <FormGroup style={{ display: 'initial' }}>
       <FormControlLabel
@@ -71,8 +80,12 @@ export default function SignUpChecks(props) {
           <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               * I authorize HopHacks to send my resume to our event sponsors for recruiting
-              purposes.
+              purposes. I also consent to this
             </span>
+            <a href={img('JHU_Photo-and-Video-Release_20192.pdf')} onClick={openPhotoRelease}>
+              {' photo release form'}
+            </a>
+            <span>.</span>
           </div>
         }
       />
