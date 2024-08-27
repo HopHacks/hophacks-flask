@@ -65,13 +65,17 @@ const Admin = function () {
 
   async function handleRSVPAndAcceptedResumeDownload() {
     users.forEach(async (user) => {
-      if (
-        user.email_confirmed &&
-        (user.registrations[0].status == 'rsvped' || user.registrations[0].status == 'accepted')
-      ) {
-        const response = await axios.get('/api/admin/resume?id=' + user.id);
-        const url = response.data['url'];
-        window.open(url, '_blank');
+      for (let i = 0; i < user.registrations.length; i++) {
+        if (user.registrations[i].event === 'Fall 2024') {
+          if (
+            user.email_confirmed &&
+            (user.registrations[i].status == 'rsvped' || user.registrations[i].status == 'accepted')
+          ) {
+            const response = await axios.get('/api/admin/resume?id=' + user.id);
+            const url = response.data['url'];
+            window.open(url, '_blank');
+          }
+        }
       }
     });
   }
@@ -193,6 +197,11 @@ const Admin = function () {
       return true;
     } else if (status == 'not') {
       if (user.email_confirmed) {
+        for (let i = 0; i < user.registrations.length; i++) {
+          if (user.registrations[i].event === 'Fall 2024') {
+            return user.registrations[i].status != 'checked_in';
+          }
+        }
         return user.registrations[0].status != 'checked_in';
       } else {
         return true;
@@ -201,6 +210,11 @@ const Admin = function () {
       return !user.email_confirmed;
     } else {
       if (user.email_confirmed) {
+        for (let i = 0; i < user.registrations.length; i++) {
+          if (user.registrations[i].event === 'Fall 2024') {
+            return user.registrations[i].status == status;
+          }
+        }
         return user.registrations[0].status == status;
       } else {
         return false;
