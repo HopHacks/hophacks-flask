@@ -146,7 +146,6 @@ export default function Sponsors() {
             </Grid>
           </Grid>
 
-          {/* Sable Sponsors */}
           <Grid container spacing={3} className={classes.gridRow}>
             {/* <Grid item xs={12} md={2}>
               <Typography variant="h4" style={{ color: '#23580A' }}>
@@ -195,13 +194,7 @@ export default function Sponsors() {
             </Grid>
           </Grid>
 
-          {/* Blue Sponsors */}
           <Grid container spacing={3} className={classes.gridRow}>
-            {/* <Grid item xs={12} md={2}>
-              <Typography variant="h4" style={{ color: '#1D539F' }}>
-                BLUE
-              </Typography>
-            </Grid> */}
             <Grid item>
               <SponsorBox
                 size={sizes.starter}
@@ -249,6 +242,17 @@ export default function Sponsors() {
                 backgroundColor="#E73427"
                 borderColor="#E73427"
                 imageUrl={img('sponsor/png/red_bull.png')}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} className={classes.gridRow}>
+            <Grid item>
+              <SponsorBox
+                size={sizes.starter}
+                backgroundColor="#E73427"
+                borderColor="#E73427"
+                imageUrl={img('sponsor/png/palantir.png')}
               />
             </Grid>
           </Grid>
