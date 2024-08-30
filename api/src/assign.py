@@ -170,7 +170,8 @@ def assignments():
         print("hello")
         print(sub_dicts)
         for x in sub_dicts:
-            submissions.append(x['Submission Title'])
+            if x['Project Title'] != "Untitled" and x['Project Title'] != "SAMPLE":
+                submissions.append(x['Project Title'])
         random.Random(0).shuffle(submissions)
 
         assign_tables(submissions)
@@ -211,7 +212,7 @@ def sponsor_prizes():
             for j in i['Opt-In Prizes'].split(","):
                 if j not in prizes:
                     prizes[j] = []                
-                prizes[j].append(i['Submission Title'])
+                prizes[j].append(i['Project Title'])
 
         db.sponsor.replace_one({}, prizes, upsert=True)
 
