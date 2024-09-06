@@ -208,7 +208,7 @@ export default function Sponsors() {
                 size={sizes.starter}
                 backgroundColor="#E73427"
                 borderColor="#E73427"
-                imageUrl={img('sponsor/png/ffu.png')}
+                imageUrl={img('sponsor/png/pavaLogo.png')}
               />
             </Grid>
             <Grid item>
