@@ -22,6 +22,7 @@ function SignUp(props) {
   const [major, setMajor] = useState('');
   const [phone_number, setPhone_number] = useState('');
   const [school, setSchool] = useState('');
+  const [otherSchool, setOtherSchool] = useState('');
   const [ethnicity, setEthnicity] = useState('');
   const [age, setAge] = useState(0);
   const [grad, setGrad] = useState('');
@@ -30,6 +31,7 @@ function SignUp(props) {
   const [first_hackathon, setFirst_hackathon] = useState('');
   const [first_hophacks, setFirst_hophacks] = useState('');
   const [learn_about_us, setLearn_about_us] = useState('');
+  const [country, setCountry] = useState('');
 
   const [resumeFile, setResumeFile] = useState('');
 
@@ -142,9 +144,19 @@ function SignUp(props) {
     }
     if (major.length === 0) {
       setProfileSubmitMsg('* Please select a major.');
+      return;
     }
+    if (country === undefined || country.length === 0) {
+      setProfileSubmitMsg('* Please select a country.');
+      return;
+    }
+
     if (school.length === 0) {
       setProfileSubmitMsg('* Please select a school.');
+      return;
+    }
+    if (school === 'Other Schools' && otherSchool.length === 0) {
+      setProfileSubmitMsg('* Please enter a valid school.');
       return;
     }
     if (ethnicity.length === 0) {
@@ -172,7 +184,6 @@ function SignUp(props) {
       setProfileSubmitMsg('* Please select a valid graduation year.');
       return;
     }
-
     // Go to the confirmation page
     setActivePage(CHECKS);
   }
@@ -240,6 +251,7 @@ function SignUp(props) {
           major: major,
           phone_number: phone_number,
           school: school,
+          otherSchool: otherSchool,
           ethnicity: ethnicity,
           grad: grad,
           is_jhu: school === 'Johns Hopkins University' ? true : false,
@@ -248,7 +260,8 @@ function SignUp(props) {
           mlh_emails: communicationChecked,
           first_hackathon: first_hackathon,
           first_hophacks: first_hophacks,
-          learn_about_us: learn_about_us
+          learn_about_us: learn_about_us,
+          country: country
         }
       })
     );
@@ -369,6 +382,8 @@ function SignUp(props) {
           setGrad={setGrad}
           setGrad_month={setGrad_month}
           setGrad_year={setGrad_year}
+          setCountry={setCountry}
+          setOtherSchool={setOtherSchool}
           // setFirst_hackathon={setFirst_hackathon}
           // setFirst_hophacks={setFirst_hophacks}
           // setLearn_about_us={setLearn_about_us}

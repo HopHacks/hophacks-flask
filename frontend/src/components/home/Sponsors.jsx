@@ -1,21 +1,26 @@
 import React from 'react';
-
+// import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-// function img(url) {
-//   return 'https://hophacks-website.s3.amazonaws.com/images/sponsor/png/' + url;
-// }
-
 const useStyles = makeStyles({
-  title: {
-    fontFamily: 'Inter',
-    textAlign: 'center',
-    fontWeight: 'bold',
+  root: {
+    marginTop: '50px' // Space above the entire component
+  },
+  sponsorTitle: {
     fontSize: '3rem',
-    color: '#1D539F',
-    margin: '0 0rem'
+    color: '#061a40',
+    fontFamily: 'Inter',
+    fontWeight: 'bold'
+  },
+  title: {
+    fontSize: '3rem',
+    color: '#061a40',
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    marginBottom: '30px' // Space below the title box
   },
   contact: {
     fontFamily: 'Inter',
@@ -23,7 +28,8 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontSize: '1rem',
     margin: '0.5rem',
-    color: '#1D539F'
+    color: '#1D539F',
+    marginBottom: '40px' // Space below the title box
   },
   comingSoon: {
     fontFamily: 'Inter',
@@ -32,115 +38,235 @@ const useStyles = makeStyles({
     fontSize: '1.5rem',
     margin: '0.5rem',
     color: '#1D539F'
+  },
+  sponsorBox: {
+    width: '250px',
+    height: '250px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    borderRadius: '5px',
+    overflow: 'hidden',
+    position: 'relative',
+    border: '20px solid'
+  },
+  sponsorImage: {
+    maxWidth: '80%',
+    maxHeight: '80%',
+    objectFit: 'contain'
+  },
+  labelText: {
+    position: 'absolute',
+    bottom: '10px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    color: '#FFFFFF',
+    fontWeight: 'bold'
+  },
+  gridRow: {
+    marginBottom: '20px', // Adjust this value to set the spacing between rows
+    justifyContent: 'center' // Center the grid items
   }
 });
 
-// function SponsorItem({ size, logo, width = '85%', link = '#sponsors' }) {
-//   return (
-//     <a
-//       style={{ display: 'table-cell', textDecoration: 'none' }}
-//       href={link}
-//       target={'_blank'}
-//       rel={'noreferrer'}
-//     >
-//       <div className="sponsor-wrapper">
-//         <div className={`sponsor-foreground sponsor-${size} sponsor-children`}>
-//           <img src={img(logo)} style={{ width }} className="sponsor-img" />
-//           <div className={`sponsor-background sponsor-${size}`}></div>
-//         </div>
-//       </div>
-//     </a>
-//   );
-// }
-
-export default function Sponsors() {
+function SponsorBox({ imageUrl, borderColor, size }) {
   const classes = useStyles();
 
   return (
-    <Box marginTop={'10rem'} justifyContent="center" className="sponsor-container" id="sponsors">
-      <Box display="flex" className="sponsor-title">
-        <div className={classes.title}>Sponsors</div>
-        <div className={classes.contact}>
-          Interested in sponsoring us? Email us at
-          <a className={classes.contact} href={`mailto:hophacks.sponsors@gmail.com`}>
-            hophacks.sponsors@gmail.com
-          </a>
-        </div>
-      </Box>
-      <div className={classes.comingSoon}>Coming Soon!</div>
-      <div className="sponsor-row">
-        {/* Sponsors coming soon! */}
-        {/* <SponsorItem logo="it.png" size="sable" link="https://it.johnshopkins.edu/" />
-        <SponsorItem
-          logo="bloomberg23.png"
-          size="gold"
-          link="https://www.bloomberg.com/company/"
-          width="85%"
-        />
-        <SponsorItem
-          logo="PatientSafety.png"
-          size="sable"
-          link="https://www.patientsafetytech.com/"
-        />
-      </div>
-      <div className="sponsor-row">
-        <SponsorItem logo="twilio.png" size="sable" link="https://www.twilio.com/en-us" />
-        <SponsorItem
-          logo="bgb-white.png"
-          size="gold"
-          link="https://www.bgbgroup.com/"
-          width="95%"
-        />
-        <SponsorItem logo="scm.svg" size="sable" link="https://www.scm-lp.com/" />
-      </div>
-      <div className="sponsor-row">
-        <SponsorItem logo="cbid.png" size="lab" link="https://cbid.bme.jhu.edu/" />
-        <SponsorItem logo="jhuiaa.webp" size="lab" link="https://iaa.jhu.edu/" />
-        <SponsorItem
-          logo="jhmi_tic.png"
-          size="blue"
-          link="https://www.hopkinsmedicine.org/technology_innovation/"
-          width="70%"
-        />
-        <SponsorItem logo="jhu_cs.png" size="blue" link="https://www.cs.jhu.edu/" width="120%" />
-      </div>
-      <div className="sponsor-row">
-        <SponsorItem logo="jhume.jpg" size="blue" link="https://me.jhu.edu/" width="94%" />
+    <div
+      className={classes.sponsorBox}
+      style={{
+        backgroundColor: '#cbc2cb',
+        borderColor,
+        width: size.width,
+        height: size.height
+      }}
+    >
+      <img src={imageUrl} className={classes.sponsorImage} alt="sponsor" />
+    </div>
+  );
+}
 
-        <SponsorItem logo="tunnel.svg" size="blue" link="https://tunnel.dev/" width="85%" />
-        <SponsorItem logo="jhuapl.png" size="blue" link="https://www.jhuapl.edu/" width="120%" />
-        <SponsorItem logo="jhfcu_2.png" size="custom" link="https://www.jhfcu.org/" width="95%" />
+export default function Sponsors() {
+  const classes = useStyles();
+  function img(url) {
+    return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+  }
+  const sizes = {
+    gold: { width: '400px', height: '300px' },
+    sable: { width: '270px', height: '270px' },
+    blue: { width: '220px', height: '200px' },
+    starter: { width: '150px', height: '150px' }
+  };
+  return (
+    <div className={classes.root}>
+      <div className="hero">
+        <Box display="flex" className="sponsor-title">
+          <div className={classes.title}>Sponsors</div>
+          <div className={classes.contact}>
+            Interested in sponsoring us? Email us at
+            <a className={classes.contact} href={`mailto:hophacks.sponsors@gmail.com`}>
+              hophacks.sponsors@gmail.com
+            </a>
+          </div>
+        </Box>
+        {/* <div className={classes.comingSoon}>Coming Soon!</div> */}
+        <Grid
+          container
+          spacing={3}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          {/* Gold Sponsors */}
+          <Grid container spacing={3} className={classes.gridRow}>
+            {/* <Grid item xs={12} md={2}>
+              <Typography variant="h4" style={{ color: '#F8B92A' }}>
+                GOLD
+              </Typography>
+            </Grid> */}
+            <Grid item>
+              <SponsorBox
+                size={sizes.gold}
+                backgroundColor="#D9D9D9"
+                borderColor="#F8B92A"
+                imageUrl={img('sponsor/png/marshall_wace.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.gold}
+                backgroundColor="#F8B92A"
+                borderColor="#F8B92A"
+                imageUrl={img('sponsor/png/bloomberg_hori.png')}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} className={classes.gridRow}>
+            {/* <Grid item xs={12} md={2}>
+              <Typography variant="h4" style={{ color: '#23580A' }}>
+                SABLE
+              </Typography>
+            </Grid> */}
+            <Grid item>
+              <SponsorBox
+                size={sizes.blue}
+                backgroundColor="#1D539F"
+                borderColor="#1D539F"
+                imageUrl={img('sponsor/png/cbid.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.blue}
+                backgroundColor="#1D539F"
+                borderColor="#1D539F"
+                imageUrl={img('sponsor/png/apl_hori.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.sable}
+                backgroundColor="#23580A"
+                borderColor="#23580A"
+                imageUrl={img('sponsor/png/it_hori.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.blue}
+                backgroundColor="#1D539F"
+                borderColor="#1D539F"
+                imageUrl={img('sponsor/png/scm_hori_bg.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.blue}
+                backgroundColor="#1D539F"
+                borderColor="#1D539F"
+                imageUrl={img('sponsor/png/pst.png')}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} className={classes.gridRow}>
+            <Grid item>
+              <SponsorBox
+                size={sizes.starter}
+                backgroundColor="#E73427"
+                borderColor="#E73427"
+                imageUrl={img('sponsor/png/jhfcu.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.starter}
+                backgroundColor="#E73427"
+                borderColor="#E73427"
+                imageUrl={img('sponsor/png/pavaLogo.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.blue}
+                backgroundColor="#1D539F"
+                borderColor="#1D539F"
+                imageUrl={img('sponsor/png/jhuaa.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.blue}
+                backgroundColor="#1D539F"
+                borderColor="#1D539F"
+                imageUrl={img('sponsor/png/jhu_cs.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.starter}
+                backgroundColor="#E73427"
+                borderColor="#E73427"
+                imageUrl={img('sponsor/png/cards_against_humanity.png')}
+              />
+            </Grid>
+
+            <Grid item>
+              <SponsorBox
+                size={sizes.starter}
+                backgroundColor="#E73427"
+                borderColor="#E73427"
+                imageUrl={img('sponsor/png/red_bull.png')}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} className={classes.gridRow}>
+            <Grid item>
+              <SponsorBox
+                size={sizes.starter}
+                backgroundColor="#E73427"
+                borderColor="#E73427"
+                imageUrl={img('sponsor/png/palantir.png')}
+              />
+            </Grid>
+          </Grid>
+
+          {/* Starter Sponsors */}
+          <Grid container spacing={3} className={classes.gridRow}>
+            {/* <Grid item xs={12} md={2}>
+              <Typography variant="h4" style={{ color: '#E73427' }}>
+                STARTER
+              </Typography>
+            </Grid> */}
+          </Grid>
+        </Grid>
       </div>
-      <div className="sponsor-row">
-        <SponsorItem logo="GCP.png" size="inkind" link="https://cloud.google.com" width="60%" />
-        <SponsorItem logo="wolfram.png" size="inkind" link="https://www.wolframalpha.com/" />
-        <SponsorItem
-          logo="stickerMule.png"
-          size="inkind"
-          link="https://www.stickermule.com/uses/laptop-stickers?utm_source=referral_us&utm_medium=sponsorships_us&utm_campaign=hophacks2023"
-        />
-        <SponsorItem
-          logo="leading_learners.jpeg"
-          size="inkind"
-          link="https://www.leading-learners.com/"
-          width="40%"
-        />
-        <SponsorItem logo="verbwire.svg" size="inkind" link="https://www.verbwire.com/" />
-      </div>
-      <div className="sponsor-row">
-        <SponsorItem logo="echo3D.webp" size="inkind" link="https://www.echo3d.com/" />
-        <SponsorItem
-          logo="ffu.png"
-          size="inkind"
-          link="https://ventures.jhu.edu/programs-services/fastforward-u/"
-        />
-        <SponsorItem
-          logo="incogniblack.png"
-          size="inkind"
-          link="https://incogni.com/ "
-          width="80%"
-        /> */}
-      </div>
-    </Box>
+    </div>
   );
 }

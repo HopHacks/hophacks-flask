@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const MajorAutocomplete = function MajorAutocomplete({ setMajor }) {
+const MajorAutocomplete = function MajorAutocomplete({ setMajor, major }) {
   const majors = [
     'Africana Studies',
     'Anthropology',
@@ -62,7 +62,7 @@ const MajorAutocomplete = function MajorAutocomplete({ setMajor }) {
     <Autocomplete
       id="majors"
       options={majors}
-      // defaultValue={major}
+      value={major}
       style={{ width: '100%' }}
       onChange={(event, newValue) => {
         setMajor(newValue);

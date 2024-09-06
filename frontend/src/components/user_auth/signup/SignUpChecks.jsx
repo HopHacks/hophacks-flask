@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -14,6 +14,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import '../../../stylesheets/user_auth.css';
+
+function img(url) {
+  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+}
 
 export default function SignUpChecks(props) {
   const isMobile = props.isMobile;
@@ -38,14 +42,22 @@ export default function SignUpChecks(props) {
   const handleLogisticsCheckBox = props.handleLogisticsCheckBox;
   const handleCommunicationCheckBox = props.handleCommunicationCheckBox;
 
-  function openCodeOfConduct() {
-    window.open('https://static.mlh.io/docs/mlh-code-of-conduct.pdf', '_blank');
+  function openCodeOfConduct(event) {
+    event.preventDefault();
+    window.open('https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md', '_blank');
   }
-  function openPrivacy() {
-    window.open('https://mlh.io/privacy', '_blank');
+  function openPrivacy(event) {
+    event.preventDefault();
+    window.open('https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md', '_blank');
   }
-  function openTerms() {
-    window.open('https://mlh.io/terms', '_blank');
+  function openTerms(event) {
+    event.preventDefault();
+    window.open('https://github.com/MLH/mlh-policies/blob/main/contest-terms.md', '_blank');
+  }
+
+  function openPhotoRelease(event) {
+    event.preventDefault();
+    window.open(img('JHU_Photo-and-Video-Release_20192.pdf'), '_blank');
   }
 
   const resume = (
@@ -68,8 +80,12 @@ export default function SignUpChecks(props) {
           <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               * I authorize HopHacks to send my resume to our event sponsors for recruiting
-              purposes.
+              purposes. I also consent to this
             </span>
+            <a href={img('JHU_Photo-and-Video-Release_20192.pdf')} onClick={openPhotoRelease}>
+              {' photo release form'}
+            </a>
+            <span>.</span>
           </div>
         }
       />
@@ -95,7 +111,12 @@ export default function SignUpChecks(props) {
         label={
           <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>* I have read and understand the </span>
-            <Link onClick={openCodeOfConduct}>MLH Code of Conduct</Link>
+            <a
+              href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+              onClick={openCodeOfConduct}
+            >
+              MLH Code of Conduct
+            </a>
             <span>.</span>
           </div>
         }
@@ -125,9 +146,27 @@ export default function SignUpChecks(props) {
               * I authorize you to share my application/registration information with Major League
               Hacking for event administration, ranking, and MLH administration in-line with the{' '}
             </span>
-            <Link onClick={openPrivacy}>MLH Privacy Policy</Link>
-            <span>. I further agree to the </span>
-            <Link onClick={openTerms}>MLH Terms and Conditions</Link>
+            <a
+              href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+              onClick={openPrivacy}
+            >
+              MLH Privacy Policy
+            </a>
+            <span>. I further agree to the terms of both the </span>
+            <a
+              href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+              onClick={openTerms}
+            >
+              MLH Terms and Conditions
+            </a>
+            <span> and the</span>
+            <a
+              href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+              onClick={openPrivacy}
+            >
+              {' '}
+              MLH Privacy Policy
+            </a>
             <span>.</span>
           </div>
         }
@@ -155,8 +194,8 @@ export default function SignUpChecks(props) {
           <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               {' '}
-              (Optional) I authorize MLH to send me pre- and post-event informational emails, which
-              contain free credit and opportunities from their partners.{' '}
+              (Optional) I authorize MLH to send me occasional emails about relevant events, career
+              opportunities, and community announcements.{' '}
             </span>
           </div>
         }

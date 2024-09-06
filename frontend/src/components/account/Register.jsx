@@ -449,14 +449,16 @@ export default function Register() {
           </div>
         }
         label={
-          <div style={{ fontSize: 15 }}>
+          <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               * I authorize you to share my application/registration information with Major League
               Hacking for event administration, ranking, and MLH administration in-line with the{' '}
             </span>
             <Link onClick={openPrivacy}>MLH Privacy Policy</Link>
-            <span>. I further agree to the </span>
+            <span>. I further agree to the terms of both the </span>
             <Link onClick={openTerms}>MLH Terms and Conditions</Link>
+            <span> and the</span>
+            <Link onClick={openPrivacy}> MLH Privacy Policy</Link>
             <span>.</span>
           </div>
         }
@@ -654,7 +656,7 @@ export default function Register() {
           <TextField
             required
             variant="standard"
-            label="Program"
+            label="Level of Study"
             style={{ minWidth: 300, marginTop: -5.5, maxWidth: 300 }}
             onChange={(e) => {
               setGrad(e.target.value);
@@ -665,9 +667,21 @@ export default function Register() {
               classes: { root: classes.label }
             }}
           >
-            <MenuItem value="Undergraduate">Undergraduate</MenuItem>
-            <MenuItem value="Graduate">Graduate</MenuItem>
-            <MenuItem value="Postgraduate">Postgraduate</MenuItem>
+            <MenuItem value="Undergraduate University (2 year - community college or similar)">
+              Undergraduate University (2 year - community college or similar)
+            </MenuItem>
+            <MenuItem value="Undergraduate University (3+ year)">
+              Undergraduate University (3+ year)
+            </MenuItem>
+            <MenuItem value="Graduate University (Masters, Professional, Doctoral, etc)">
+              Graduate University (Masters, Professional, Doctoral, etc)
+            </MenuItem>
+            <MenuItem value="Code School / Bootcamp">Code School / Bootcamp</MenuItem>
+            <MenuItem value="Other Vocational / Trade Program or Apprenticeship">
+              Other Vocational / Trade Program or Apprenticeship
+            </MenuItem>
+            <MenuItem value="Post Doctorate">Post Doctorate</MenuItem>
+            <MenuItem value="Other">Other </MenuItem>
           </TextField>
         </Grid>
 

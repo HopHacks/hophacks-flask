@@ -36,11 +36,13 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
     };
   }, [loading]);
 
+  console.log(school);
   return (
     <Autocomplete
       id="schools"
       style={{ width: '100%' }}
       open={open}
+      value={{ name: school }}
       onOpen={() => {
         setOpen(true);
       }}

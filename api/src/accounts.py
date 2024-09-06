@@ -30,7 +30,7 @@ accounts_api = Blueprint('accounts', __name__)
 # email_client_accounts = email_client()
 
 profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
-"ethnicity", "grad", "is_jhu", "grad_month", "grad_year"]
+"ethnicity", "grad", "is_jhu", "grad_month", "grad_year", "country"]
 
 ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
 BUCKET = 'hophacks-resume'
@@ -85,6 +85,7 @@ def validate_profile(request):
     profile = request.json['profile']
     for key in profile_keys:
         if (key not in profile):
+            print(key)
             return False
 
     # TODO do more here?
@@ -128,7 +129,8 @@ def create():
                 "first_hackathon": "yes"
                 "first_hophacks": "yes"
                 "learn_about_us": "friend"
-            }
+            },
+            "updated" : True
         }
 
     Given the request from above, the user will get an email with a link in the following format:
@@ -191,7 +193,8 @@ def create():
         'reset_secret': '',
         'is_admin': False,
         'registrations': [],
-        'resume': resume_link
+        'resume': resume_link,
+        "updated": True
     })
 
     return jsonify({"msg": "user added"}), 200
@@ -276,6 +279,65 @@ def get_profile():
         return jsonify({"msg": "user not found?"}), 404
 
     return jsonify({'profile': user['profile']}), 200
+
+@accounts_api.route('/updatedAccount/get', methods = ['GET'])
+@jwt_required
+def get_up_to_date_status():
+    """ 
+    Now that accounts can persist across years, this double checks if a current account has been updated this year.
+
+    """
+    id = get_jwt_identity()
+    user = db.users.find_one({'_id': ObjectId(id)})
+    if (user is None):
+        return jsonify({"msg": "user not found?"}), 404
+
+    if 'updated' not in user:
+        return jsonify({'updated': False}), 200
+    return jsonify({'updated': user['updated']}), 200
+
+@accounts_api.route('/updatedAccount/post', methods = ['POST'])
+@jwt_required
+def updaate_up_to_date_status():
+    """Update profile information
+
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :reqjson profile: Profile/personal information. See following example.
+
+    Example request json:
+
+    .. sourcecode:: json
+
+        {
+            "profile": {
+                "first_name": "Andrew",
+                "last_name": "Wong",
+                "gender": "male",
+                "major": "Computer Science",
+                "phone_number": "8888888888",
+                "school": "Cornell University",
+                "ethnicity": "Asian/Pacific Islander",
+                "grad": "ugrad",
+                "is_jhu": false,
+                "grad_month": "05",
+                "grad_year": "2022"
+                "first_hackathon": "yes"
+                "first_hophacks": "yes"
+                "learn_about_us": "friend"
+            }
+        }
+
+    :status 200: Profile edited successfully
+    :status 400: No json or ``application/json`` header, or field missing
+    :status 422: Not logged in
+
+    """
+    id = get_jwt_identity()
+
+
+    db.users.update_one({'_id': ObjectId(id)}, {'$set': {'updated' : True}})
+    return jsonify({"msg": "updated!"}), 200
 
 @accounts_api.route('/profile/update', methods = ['POST'])
 @jwt_required

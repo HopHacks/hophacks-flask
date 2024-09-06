@@ -80,7 +80,7 @@ export default function Schedule() {
   return (
     <Box py={2} id="schedule" marginTop={'10rem'}>
       <Typography className={classes.title} variant="h4" gutterBottom>
-        Schedule
+        Schedule (Tentative)
       </Typography>
       <Typography
         className={classes.divFont}
@@ -118,7 +118,7 @@ export default function Schedule() {
           variant="fullWidth"
         >
           <Tab
-            label="Fri., Sept 16th"
+            label="Fri., Sept 13th"
             value="fri"
             className={classes.font}
             style={{
@@ -126,7 +126,7 @@ export default function Schedule() {
             }}
           />
           <Tab
-            label="Sat., Sept 17th"
+            label="Sat., Sept 14th"
             value="sat"
             className={classes.font}
             style={{
@@ -134,7 +134,7 @@ export default function Schedule() {
             }}
           />
           <Tab
-            label="Sun., Sept 18th"
+            label="Sun., Sept 15th"
             value="sun"
             className={classes.font}
             style={{
@@ -157,10 +157,10 @@ export default function Schedule() {
           {day === 'fri' && (
             <TableBody className={classes.body}>
               <TableRow className={classes.bodycolor}>
-                <TableCell className={classes.font}>6:30 PM</TableCell>
+                <TableCell className={classes.font}>6:00 PM</TableCell>
                 <TableCell className={classes.font}>Check-in Begins </TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (1st floor lobby)
+                  Hodson Hall - first floor
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -169,7 +169,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Dinner</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (1st floor lobby)
+                  Levering Hall - Glass Pavilion
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -178,42 +178,53 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Opening Ceremony</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 110
+                  Hodson Hall - Auditorium
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
-                  9:00 PM
+                  8:45 PM
                 </TableCell>
                 <TableCell className={classes.font}>Team Building</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 203
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
                   9:00 PM
                 </TableCell>
+                <TableCell className={classes.font}> Sponsor Hall Opens</TableCell>
+                <TableCell width="40%" align="left" className={classes.font}>
+                  Levering Hall - Great Hall
+                </TableCell>
+              </TableRow>
+              <TableRow className={classes.bodycolor}>
+                <TableCell width="20%" className={classes.font}>
+                  9:00 PM
+                </TableCell>
+                <TableCell className={classes.font}> Hacking Begins!</TableCell>
+                <TableCell width="40%" align="left" className={classes.font}>
+                  TBD
+                </TableCell>
+              </TableRow>
+              <TableRow className={classes.bodycolor}>
+                <TableCell width="20%" className={classes.font}>
+                  9:00 PM
+                </TableCell>
+                <TableCell className={classes.font}> PST Workshop</TableCell>
+                <TableCell width="40%" align="left" className={classes.font}>
+                  TBD
+                </TableCell>
+              </TableRow>
+              <TableRow className={classes.font}>
+                <TableCell className={classes.font}>11:00 PM</TableCell>
                 <TableCell className={classes.font}>
                   {' '}
-                  Sponsor Hall Opens & Hacking Begins!
+                  Sponsor Hall Closes, Sleeping Rooms Open{' '}
                 </TableCell>
-                <TableCell width="40%" align="left" className={classes.font}>
-                  Hodson Hall
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>10:00 PM</TableCell>
-                <TableCell className={classes.font}> uCredit Workshop </TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 316
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>11:30 PM</TableCell>
-                <TableCell className={classes.font}>Midnight Pizza</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 110
+                  N/A
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -226,92 +237,53 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Breakfast</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+                  Levering Hall - Levering Lounge
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
-                  10:00 AM
+                  10:00 AM to 2:00 PM
                 </TableCell>
-                <TableCell className={classes.font}>
-                  MLH Cybersecurity Challenge & Bob Ross Workshop
-                </TableCell>
+                <TableCell className={classes.font}>Workshops</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 110
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  12:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>
-                  Bloomberg Technical Interview Workshop
-                </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 316
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  1:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>Lunch</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
                   2:00 PM
                 </TableCell>
-                <TableCell className={classes.font}>BGB Group Workshop</TableCell>
+                <TableCell className={classes.font}>Lunch</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 316
+                  Levering Hall - Levering Lounge
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
-                  3:00 PM
+                  3:00 PM to 8:00 PM
                 </TableCell>
-                <TableCell className={classes.font}>LDL HopHacks on a Resume Workshop</TableCell>
+                <TableCell className={classes.font}>Workshops</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 313
+                  TBD
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
-                  4:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>
-                  HopHacks Resume Workshop w/ Bloomberg, BGB, JHU APL & Tunnel.dev
-                </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 316
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  5:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>HopHacks Coding Interview Workshop</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 313
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  6:00 PM
+                  8:00 PM
                 </TableCell>
                 <TableCell className={classes.font}>Dinner</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+                  Levering Hall - Glass Pavilion
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
-                <TableCell className={classes.font}>7:00 PM</TableCell>
-                <TableCell className={classes.font}>JHU IT Agile Workshop </TableCell>
+                <TableCell className={classes.font}>11:00 PM</TableCell>
+                <TableCell className={classes.font}>
+                  {' '}
+                  Sponsor Hall Closes, Sleeping Rooms Open{' '}
+                </TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 316
+                  N/A
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -334,7 +306,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>All Coding Stops (Hard Deadline)</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  N/A
+                  Devpost
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -343,12 +315,12 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Breakfast</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (3rd floor lobby)
+                  Levering Hall - Great Hall
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
                 <TableCell width="20%" className={classes.font}>
-                  9:30 AM
+                  10:00 AM
                 </TableCell>
                 <TableCell className={classes.font}>Presentations Fair</TableCell>
                 <TableCell align="left" className={classes.font}>
@@ -361,7 +333,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Lunch</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall (1st floor lobby)
+                  Levering Hall - Great Hall
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -370,7 +342,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Top 10 Demos & Judging</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 110
+                  Hodson Hall - Auditorium
                 </TableCell>
               </TableRow>
 
@@ -380,7 +352,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson 110
+                  Hodson Hall - Auditorium
                 </TableCell>
               </TableRow>
             </TableBody>
