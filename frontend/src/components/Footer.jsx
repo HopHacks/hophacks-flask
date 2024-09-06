@@ -16,7 +16,7 @@ const Footer = function Footer() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <Grid container direction="column" alignItems="center" justifyContent="center">
-              <img src={img('logo2023.png')} style={{ width: '100px' }} />
+              <img src={img('Hophacks_logo_clean.png')} style={{ width: '100px' }} />
             </Grid>
           </Grid>
           <Grid item xs={12} sm={4}>

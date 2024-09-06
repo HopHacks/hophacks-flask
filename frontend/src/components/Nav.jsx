@@ -30,6 +30,12 @@ const useStyles = makeStyles({
     marginLeft: 'auto'
   },
 
+  leftMostItem: {
+    marginRight: 'auto', // Pushes the item to the leftmost
+    marginLeft: '1rem', // Adjust this value for more space
+    textTransform: 'none'
+  },
+
   navBtn: {
     textTransform: 'none',
     margin: '0 1rem'
@@ -308,6 +314,31 @@ const Nav = function Nav(props) {
             HopHacks
           </Typography>
         </Button> */}
+
+        <Button
+          id="HomeButton"
+          style={{
+            display: 'block',
+            maxWidth: '100px',
+            minWidth: '60px',
+            position: 'fixed',
+            left: '50px',
+            top: '0',
+            width: '5.5%',
+            zIndex: '10000'
+          }}
+          onClick={() => (window.location = '/')}
+          // href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="https://hophacks-website.s3.amazonaws.com/images/Hophacks_logo_clean.png"
+            alt="Major League Hacking 2024 Hackathon Season"
+            style={{ width: '100%' }}
+          ></img>
+        </Button>
+
         <a
           id="mlh-trust-badge"
           style={{
