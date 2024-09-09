@@ -1,5 +1,6 @@
 from util.decorators import check_admin
 from db import db
+from pymongo import ASCENDING, DESCENDING
 
 from flask import Blueprint, request, Response, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -39,7 +40,7 @@ def get_all_users_account():
 #     ]
 # })
     query = request.args.get("query")
-    event_name = open("event.txt", "r")
+    event_name = "Fall 2024"
 
     cursor = db.users.aggregate([
         {
@@ -47,38 +48,43 @@ def get_all_users_account():
                 "$and": [
                     {
                         "$or": [
-                            {"username": {"$regex": ".*"+query+".*", "$options": "i"}},
-                            {"profile.first_name": {"$regex": ".*"+query+".*", "$options": "i"}},
-                            {"profile.last_name": {"$regex": ".*"+query+".*", "$options": "i"}}
+                            {"username": {"$regex": ".*" + query + ".*", "$options": "i"}},
+                            {"profile.first_name": {"$regex": ".*" + query + ".*", "$options": "i"}},
+                            {"profile.last_name": {"$regex": ".*" + query + ".*", "$options": "i"}}
                         ]
                     },
+                    # Filter users who have a 'Fall 2024' registration
                     {"registrations": {"$elemMatch": {"event": event_name}}}
                 ]
             }
         },
         {
-            "$project": {
-                "username": 1,
-                "profile": 1,
-                "email_confirmed": 1,
-                "registrations": {
-                    "$filter": {
-                        "input": "$registrations",
-                        "as": "registration",
-                        "cond": {"$eq": ["$$registration.event", event_name]}
+            "$addFields": {
+                "fall2024_rsvp_time": {
+                    "$let": {
+                        "vars": {
+                            "fall2024_registration": {
+                                "$filter": {
+                                    "input": "$registrations",
+                                    "as": "registration",
+                                    "cond": {"$eq": ["$$registration.event", event_name]}
+                                }
+                            }
+                        },
+                        "in": {
+                            "$cond": {
+                                "if": {"$gt": [{"$size": "$$fall2024_registration"}, 0]},
+                                "then": {"$arrayElemAt": ["$$fall2024_registration.rsvp_time", 0]},
+                                "else": None
+                            }
+                        }
                     }
-                },
-                "is_admin": 1,
-                "resume": 1,
-                "vaccination": 1
+                }
             }
         },
         {
-            "$unwind": "$registrations"
-        },
-        {
             "$sort": {
-                "registrations.rsvp_time": ASCENDING  # Sort by RSVP time in descending order
+                "fall2024_rsvp_time": ASCENDING  # Sort by RSVP time for Fall 2024 if it exists
             }
         }
     ])
