@@ -23,21 +23,65 @@ def test_admin():
 @jwt_required
 @check_admin
 def get_all_users_account():
-    query = request.args.get("query")
-    eventFile = open("event.txt", "r")
+#     query = request.args.get("query")
+#     eventFile = open("event.txt", "r")
 
-    cursor  = db.users.find({
-    "$and": [
+#     cursor  = db.users.find({
+#     "$and": [
+#         {
+#             "$or": [
+#                 {"username": {"$regex": ".*"+query+".*", "$options": "i"}},
+#                 {"profile.first_name": {"$regex": ".*"+query+".*", "$options": "i"}},
+#                 {"profile.last_name": {"$regex": ".*"+query+".*", "$options": "i"}}
+#             ]
+#         },
+#         {"registrations": {"$elemMatch": {"event": "Fall 2024"}}}
+#     ]
+# })
+    query = request.args.get("query")
+    event_name = open("event.txt", "r")
+
+    cursor = db.users.aggregate([
         {
-            "$or": [
-                {"username": {"$regex": ".*"+query+".*", "$options": "i"}},
-                {"profile.first_name": {"$regex": ".*"+query+".*", "$options": "i"}},
-                {"profile.last_name": {"$regex": ".*"+query+".*", "$options": "i"}}
-            ]
+            "$match": {
+                "$and": [
+                    {
+                        "$or": [
+                            {"username": {"$regex": ".*"+query+".*", "$options": "i"}},
+                            {"profile.first_name": {"$regex": ".*"+query+".*", "$options": "i"}},
+                            {"profile.last_name": {"$regex": ".*"+query+".*", "$options": "i"}}
+                        ]
+                    },
+                    {"registrations": {"$elemMatch": {"event": event_name}}}
+                ]
+            }
         },
-        {"registrations": {"$elemMatch": {"event": "Fall 2024"}}}
-    ]
-})
+        {
+            "$project": {
+                "username": 1,
+                "profile": 1,
+                "email_confirmed": 1,
+                "registrations": {
+                    "$filter": {
+                        "input": "$registrations",
+                        "as": "registration",
+                        "cond": {"$eq": ["$$registration.event", event_name]}
+                    }
+                },
+                "is_admin": 1,
+                "resume": 1,
+                "vaccination": 1
+            }
+        },
+        {
+            "$unwind": "$registrations"
+        },
+        {
+            "$sort": {
+                "registrations.rsvp_time": ASCENDING  # Sort by RSVP time in descending order
+            }
+        }
+    ])
 
     users = []
     
