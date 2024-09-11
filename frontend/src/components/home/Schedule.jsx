@@ -80,19 +80,13 @@ export default function Schedule() {
   return (
     <Box py={2} id="schedule" marginTop={'10rem'}>
       <Typography className={classes.title} variant="h4" gutterBottom>
-        Schedule (Tentative)
+        Schedule
       </Typography>
       <Typography
         className={classes.divFont}
         style={{ color: 'rgba(6, 26, 64, 1)', fontWeight: 'bold', fontStyle: 'italic' }}
       >
         All times in EDT (GMT-4)
-      </Typography>
-      <Typography
-        className={classes.divFont}
-        style={{ color: 'rgba(6, 26, 64, 1)', fontWeight: 'bold', fontStyle: 'italic' }}
-      >
-        Workshop information coming soon!
       </Typography>
 
       <TableContainer
@@ -178,7 +172,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Opening Ceremony</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall - Auditorium (Hodson 101)
+                  Hodson Hall - Auditorium (Hodson 110)
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -230,7 +224,7 @@ export default function Schedule() {
                 <TableCell className={classes.font}>11:00 PM</TableCell>
                 <TableCell className={classes.font}> Sponsor Hall Closes </TableCell>
                 <TableCell align="left" className={classes.font}>
-                  N/A
+                  Levering Hall - Great Hall
                 </TableCell>
               </TableRow>
               <TableRow className={classes.font}>
@@ -251,15 +245,6 @@ export default function Schedule() {
                 <TableCell className={classes.font}>Breakfast</TableCell>
                 <TableCell align="left" className={classes.font}>
                   Levering Lounge
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  11:00 AM
-                </TableCell>
-                <TableCell className={classes.font}>JHU IT Workshop - Real World SDLC</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 313
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -310,7 +295,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>MLH Workshop - MS Paint Bob Ross</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall - Auditorium (Hodson 101)
+                  Hodson Hall - Auditorium (Hodson 110)
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -326,7 +311,7 @@ export default function Schedule() {
                 <TableCell className={classes.font}>11:00 PM</TableCell>
                 <TableCell className={classes.font}> Sponsor Hall Closes</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  N/A
+                  Levering Hall - Great Hall
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -368,7 +353,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Sleeping Rooms Close</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  N/A
+                  Hodson 203
                 </TableCell>
               </TableRow>
               <TableRow className={classes.bodycolor}>
@@ -395,7 +380,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Top 10 Demos & Judging</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall - Auditorium (Hodson 101)
+                  Hodson Hall - Auditorium (Hodson 110)
                 </TableCell>
               </TableRow>
 
@@ -405,7 +390,7 @@ export default function Schedule() {
                 </TableCell>
                 <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
                 <TableCell align="left" className={classes.font}>
-                  Hodson Hall - Auditorium (Hodson 101)
+                  Hodson Hall - Auditorium (Hodson 110)
                 </TableCell>
               </TableRow>
             </TableBody>
