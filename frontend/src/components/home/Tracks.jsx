@@ -92,7 +92,20 @@ const Tracks = () => {
         <Typography className={classes.title} variant="h4" style={{ marginTop: '0%' }} gutterBottom>
           Tracks
         </Typography>
-        <Box raised="true" border={0} borderLeft={0} borderRight={0} borderBottom={0}>
+        <Typography
+          className={classes.divFont}
+          style={{ color: 'rgba(6, 26, 64, 1)', fontWeight: 'bold', fontStyle: 'italic' }}
+        >
+          Each Team can choose one and only one track
+        </Typography>
+        <Box
+          raised="true"
+          border={0}
+          borderLeft={0}
+          borderRight={0}
+          borderBottom={0}
+          marginTop={'0.5rem'}
+        >
           <Accordion
             className={`${classes.colorBackground} ${classes.text}`}
             border={0}
@@ -120,8 +133,14 @@ const Tracks = () => {
             </AccordionDetails>
           </Accordion>
         </Box>
-        <div className={classes.mt_50}></div>
-        <Box raised="true" border={0} borderLeft={0} borderRight={0} borderBottom={0}>
+        <Box
+          raised="true"
+          border={0}
+          borderLeft={0}
+          borderRight={0}
+          borderBottom={0}
+          marginTop={'0.5rem'}
+        >
           <Accordion
             className={`${classes.colorBackground} ${classes.text}`}
             border={0}
@@ -160,6 +179,44 @@ const Tracks = () => {
                   here
                 </a>
                 .
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
+        <Box
+          raised="true"
+          border={0}
+          borderLeft={0}
+          borderRight={0}
+          borderBottom={0}
+          marginTop={'0.5rem'}
+        >
+          <Accordion
+            className={`${classes.colorBackground} ${classes.text}`}
+            border={0}
+            elevation={0}
+            classes={{ root: classes.MuiAccordionroot }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
+              classes={{
+                root: classes.content,
+                content: classes.content,
+                expanded: classes.expanded
+              }}
+            >
+              <Typography className={classes.text} variant="h6" gutterBottom>
+                <b> Telemedicine & AI : Patient History Taking Challenges in Teleconsultations </b>
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+              <Typography className={classes.text}>
+                Telemedicine Hub doctors need accurate and complete patient clinical history from
+                Spokes to improve diagnostic accuracy and reduce repeated questioning. Currently,
+                insufficient history forces Hub doctors to spend valuable time asking basic
+                questions, delaying treatment. Your challenge is to create a solution that improves
+                the reliability and completeness of clinical data collected at Spokes, optimizing
+                time for more teleconsultations and better diagnoses.
               </Typography>
             </AccordionDetails>
           </Accordion>
