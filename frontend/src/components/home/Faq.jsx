@@ -26,12 +26,12 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: '3rem',
-    color: '#1D539F',
+    color: '#061a40',
     fontFamily: 'Inter',
     fontWeight: 'bold',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    marginBottom: '30px'
   },
-
   button: {
     backgroundColor: '#6, 26, 64, 1',
     color: '#c8e7fa',
@@ -93,11 +93,11 @@ export default function Faq() {
       </Typography>
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -126,13 +126,14 @@ export default function Faq() {
           </AccordionDetails>
         </Accordion>
       </Box>
+
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -163,11 +164,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -217,11 +218,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -252,11 +253,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -343,11 +344,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -378,11 +379,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -412,11 +413,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -444,11 +445,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -482,11 +483,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -519,11 +520,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
         borderBottom={0}
-        borderColor="#ffffff"
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
@@ -551,7 +552,14 @@ export default function Faq() {
         </Accordion>
       </Box>
 
-      <Box border={4} borderLeft={0} borderRight={0} borderBottom={0} borderColor="#ffffff">
+      <Box
+        raised="true"
+        border={0}
+        borderLeft={0}
+        borderRight={0}
+        borderBottom={0}
+        marginTop={'0.5rem'}
+      >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
           border={0}
@@ -580,11 +588,11 @@ export default function Faq() {
 
       <Box
         raised="true"
-        border={4}
+        border={0}
         borderLeft={0}
         borderRight={0}
-        borderColor="#ffffff"
-        sx={{ height: '800px' }}
+        borderBottom={0}
+        marginTop={'0.5rem'}
       >
         <Accordion
           className={`${classes.colorBackground} ${classes.text}`}
