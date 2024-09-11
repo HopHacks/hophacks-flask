@@ -209,11 +209,20 @@ def sponsor_prizes():
         print(dicts[1])
         for i in dicts:
             print(i)
-            for j in i['Opt-In Prizes'].split(","):
+            if i['Project Title'] == "Untitled" or i['Project Title'] == "SAMPLE":
+                continue
+            for j in i['Opt-In Prizes'].split(", "):
+                if j == "":
+                    continue
                 if j not in prizes:
                     prizes[j] = []                
                 prizes[j].append(i['Project Title'])
-
+            
+            for j in i['Which Track Are You Submitting To?'].split(", "):
+                if j not in prizes:
+                    prizes[j] = []
+                prizes[j].append(i['Project Title'])
+            
         db.sponsor.replace_one({}, prizes, upsert=True)
 
         return get_sponsor_prizes()

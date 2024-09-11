@@ -388,9 +388,10 @@ def rsvp_rsvp():
         'registrations.accept': True},
     
     {'$set': {"registrations.$.rsvp":True,
-    "registrations.$.status": "rsvped"}})
+    "registrations.$.status": "rsvped",
+    "registrations.$.rsvp_time": datetime.datetime.utcnow()
+    }})
     
-
     # comment out first
     user = db.users.find({'_id' : ObjectId(id)})
     send_rsvp_info(user)
