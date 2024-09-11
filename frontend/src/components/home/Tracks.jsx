@@ -121,7 +121,7 @@ const Tracks = () => {
               }}
             >
               <Typography className={classes.text} variant="h6" gutterBottom>
-                <b> Bloomberg - “Most Philanthropic Hack” </b>
+                <b> Most Philanthropic Hack </b> - Bloomberg
               </Typography>
             </AccordionSummary>
             <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
@@ -156,7 +156,7 @@ const Tracks = () => {
               }}
             >
               <Typography className={classes.text} variant="h6" gutterBottom>
-                <b> Patient Safety Technology Challenge </b>
+                <b> 5 Patient Safety Challenges </b> - Patient Safety Technology
               </Typography>
             </AccordionSummary>
             <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
@@ -206,7 +206,8 @@ const Tracks = () => {
               }}
             >
               <Typography className={classes.text} variant="h6" gutterBottom>
-                <b> Telemedicine & AI : Patient History Taking Challenges in Teleconsultations </b>
+                <b>Telemedicine & AI : Patient History Taking Challenges in Teleconsultations</b> -
+                CBID
               </Typography>
             </AccordionSummary>
             <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
