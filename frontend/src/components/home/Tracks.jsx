@@ -121,6 +121,41 @@ const Tracks = () => {
               }}
             >
               <Typography className={classes.text} variant="h6" gutterBottom>
+                <b> General Track </b>
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+              <Typography className={classes.text}>
+                Open to all HopHacks hackers! Take this open-ended opportunity to collaborate
+                alongside others of all skills and experience levels and hack to your heart’s
+                desire.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
+        <Box
+          raised="true"
+          border={0}
+          borderLeft={0}
+          borderRight={0}
+          borderBottom={0}
+          marginTop={'0.5rem'}
+        >
+          <Accordion
+            className={`${classes.colorBackground} ${classes.text}`}
+            border={0}
+            elevation={0}
+            classes={{ root: classes.MuiAccordionroot }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
+              classes={{
+                root: classes.content,
+                content: classes.content,
+                expanded: classes.expanded
+              }}
+            >
+              <Typography className={classes.text} variant="h6" gutterBottom>
                 <b> Most Philanthropic Hack </b> - Bloomberg
               </Typography>
             </AccordionSummary>
@@ -156,7 +191,7 @@ const Tracks = () => {
               }}
             >
               <Typography className={classes.text} variant="h6" gutterBottom>
-                <b> 5 Patient Safety Challenges </b> - Patient Safety Technology
+                <b> Patient Safety Technology Challenge </b>
               </Typography>
             </AccordionSummary>
             <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
