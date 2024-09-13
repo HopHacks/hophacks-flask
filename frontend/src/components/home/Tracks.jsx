@@ -257,6 +257,44 @@ const Tracks = () => {
             </AccordionDetails>
           </Accordion>
         </Box>
+        <Box
+          raised="true"
+          border={0}
+          borderLeft={0}
+          borderRight={0}
+          borderBottom={0}
+          marginTop={'0.5rem'}
+        >
+          <Accordion
+            className={`${classes.colorBackground} ${classes.text}`}
+            border={0}
+            elevation={0}
+            classes={{ root: classes.MuiAccordionroot }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
+              classes={{
+                root: classes.content,
+                content: classes.content,
+                expanded: classes.expanded
+              }}
+            >
+              <Typography className={classes.text} variant="h6" gutterBottom>
+                <b>Best Use of Data</b> - Marshall Wace
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+              <Typography className={classes.text}>
+                At Marshall Wace, data is our cornerstone—whether it is ingesting market data from
+                Bloomberg and OTC exchanges or leveraging alternative data for deeper market
+                insights. Showcase your prowess in ETL pipelines, data visualization, and/or
+                real-time data processing (these are just examples of potential projects). The team
+                with the most compelling data demonstration will each win an iPad and Marshall Wace
+                branded jackets.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
       </div>
     </div>
   );
