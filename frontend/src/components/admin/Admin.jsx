@@ -80,6 +80,20 @@ const Admin = function () {
     });
   }
 
+  async function handleCheckedInResumeDownload() {
+    users.forEach(async (user) => {
+      for (let i = 0; i < user.registrations.length; i++) {
+        if (user.registrations[i].event === 'Fall 2024') {
+          if (user.email_confirmed && user.registrations[i].status == 'checked_in') {
+            const response = await axios.get('/api/admin/resume?id=' + user.id);
+            const url = response.data['url'];
+            window.open(url, '_blank');
+          }
+        }
+      }
+    });
+  }
+
   async function handleVaccinationDownload(userid) {
     const response = await axios.get('/api/admin/vaccination?id=' + userid);
     const url = response.data['url'];
@@ -396,6 +410,13 @@ const Admin = function () {
           <>
             <button onClick={() => handleRSVPAndAcceptedResumeDownload()}>
               Download Accepted and RSVP resumes
+            </button>
+          </>
+        }
+        {
+          <>
+            <button onClick={() => handleCheckedInResumeDownload()}>
+              Download Checked in resumes
             </button>
           </>
         }
