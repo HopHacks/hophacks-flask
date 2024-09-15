@@ -15,7 +15,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
-// import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
+import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { Link } from 'react-router-dom';
 import { InputAdornment, TableCell, TextField, Tooltip, withStyles } from '@material-ui/core';
@@ -94,11 +94,11 @@ const Admin = function () {
     });
   }
 
-  // async function handleVaccinationDownload(userid) {
-  //   const response = await axios.get('/api/admin/vaccination?id=' + userid);
-  //   const url = response.data['url'];
-  //   window.open(url, '_blank');
-  // }
+  async function handleVaccinationDownload(userid) {
+    const response = await axios.get('/api/admin/vaccination?id=' + userid);
+    const url = response.data['url'];
+    window.open(url, '_blank');
+  }
 
   async function getUsers() {
     const response = await axios.get('/api/admin/users' + '?query=');
@@ -249,7 +249,6 @@ const Admin = function () {
         <StyledTableCell>{user.profile.first_name}</StyledTableCell>
         <StyledTableCell>{user.profile.last_name}</StyledTableCell>
         <StyledTableCell>{user.profile.school}</StyledTableCell>
-        <StyledTableCell>{user.profile.age}</StyledTableCell>
         <StyledTableCell>{getStatus(user)}</StyledTableCell>
 
         <StyledTableCell>
@@ -300,7 +299,7 @@ const Admin = function () {
           </Tooltip>
         </StyledTableCell>
 
-        {/* <StyledTableCell>
+        <StyledTableCell>
           <Tooltip title="Vaccine">
             <Link onClick={() => handleVaccinationDownload(user.id)}>
               <AssignmentOutlinedIcon
@@ -310,7 +309,7 @@ const Admin = function () {
               />
             </Link>
           </Tooltip>
-        </StyledTableCell> */}
+        </StyledTableCell>
       </TableRow>
     ));
   }
@@ -383,7 +382,6 @@ const Admin = function () {
                 Last Name
               </HeaderTableCell>
               <HeaderTableCell>School</HeaderTableCell>
-              <HeaderTableCell>Age</HeaderTableCell>
               <HeaderTableCell>Status</HeaderTableCell>
               <HeaderTableCell>Actions</HeaderTableCell>
               <HeaderTableCell></HeaderTableCell>

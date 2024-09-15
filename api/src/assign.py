@@ -219,8 +219,6 @@ def sponsor_prizes():
                 prizes[j].append(i['Project Title'])
             
             for j in i['Which Track Are You Submitting To?'].split(", "):
-                if j == "":
-                    continue
                 if j not in prizes:
                     prizes[j] = []
                 prizes[j].append(i['Project Title'])
