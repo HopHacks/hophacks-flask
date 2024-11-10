@@ -37,7 +37,7 @@ boto3==1.13.18
 Jinja2==3.1.1
 markupsafe==2.1.1
 itsdangerous==1.1.0
-werkzeug==2.0.3
+werkzeug==2.2.3
 slack-sdk==3.17.0
 slack-webhook==1.0.7
 discord-webhook==0.16.3
