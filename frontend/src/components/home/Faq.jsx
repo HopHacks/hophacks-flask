@@ -83,6 +83,7 @@ const useStyles = makeStyles({
   }
 });
 
+// TODO: add to/consolidate the FAQ
 export default function Faq() {
   const classes = useStyles();
 
@@ -210,41 +211,6 @@ export default function Faq() {
                 Google Maps
               </a>
               . We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to
-              attend virtually.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      </Box>
-
-      <Box
-        raised="true"
-        border={0}
-        borderLeft={0}
-        borderRight={0}
-        borderBottom={0}
-        marginTop={'0.5rem'}
-      >
-        <Accordion
-          className={`${classes.colorBackground} ${classes.text}`}
-          border={0}
-          elevation={0}
-          classes={{ root: classes.MuiAccordionroot }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
-            classes={{
-              root: classes.content,
-              content: classes.content,
-              expanded: classes.expanded
-            }}
-          >
-            <Typography className={classes.text} variant="h6" gutterBottom>
-              <b>Is HopHacks in-person or virtual this year?</b>
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
-            <Typography className={classes.text}>
-              We will be <b>fully in-person</b> this year! Unfortunately, there will be no way to
               attend virtually.
             </Typography>
           </AccordionDetails>

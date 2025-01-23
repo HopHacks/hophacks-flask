@@ -248,7 +248,6 @@ export default function Team() {
                 memberName="Josephine Deng"
                 memberTitle="Director"
                 linkedin="https://www.linkedin.com/in/josephine-deng"
-                // github="https://github.com/akhildeo"
               />
             </div>
             <div className={classes.teambox}>

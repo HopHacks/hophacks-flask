@@ -10,12 +10,12 @@ import Cover from './home/Cover';
 import LoadingAnimation from './home/LoadingAnimation';
 import { useState, useEffect } from 'react';
 import Footer from './Footer';
-// import AboutSeparation from './home/AboutSeparation';
-// import RandomSpace from './home/RandomSpace';
 import Prizes from './home/Prizes';
 import Tracks from './home/Tracks';
 // import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 // import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+
+// CODE QUALITY: need to standardize styling
 const useStyles = makeStyles({
   logo: {
     top: '25%',
@@ -53,9 +53,7 @@ const useStyles = makeStyles({
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  // function img(url) {
-  //   return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-  // }
+
   const classes = useStyles();
 
   const [, setWindowSize] = useState({
@@ -104,10 +102,8 @@ export default function Home() {
           <br></br>
           <br></br>
           <br></br>
-          {/* <RandomSpace /> */}
           <Container fixed>
             <About />
-            {/* <AboutSeparation /> */}
             <Prizes />
             <Schedule />
             <Tracks />

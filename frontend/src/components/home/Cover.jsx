@@ -28,10 +28,11 @@ const useStyles = makeStyles({
     left: '0%',
     width: '100%'
   },
-  tempPageeBackground: {
+  tempPageBackground: {
     backgroundColor: '#172759',
     paddingBottom: '20vh',
-    backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/About.png")`,
+    // TODO: update the background image in AWS here
+    // backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/About.png")`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center center',
     // backgroundSize: 'auto 100% 100%'
@@ -48,9 +49,7 @@ const useStyles = makeStyles({
     alignItems: 'center', // Vertically center content
     width: '100%',
     // margin: '1px',
-
     // height: '100vh' // Adjust height as needed
-
     // top: '0vw'
     paddingTop: '13vh'
     // paddingBottom: '0vh'
@@ -104,16 +103,8 @@ export default function Cover() {
   const classes = useStyles();
   if (window.innerWidth <= 850 && 1 < 0) {
     return (
-      <div className={classes.tempPageeBackground}>
-        <div className={classes.tempImageBackground}>
-          <img
-            src={img('hophacks_bird_default.png')}
-            style={{
-              width: '100vw',
-              marginTop: '20vw'
-            }}
-          />
-        </div>
+      <div className={classes.tempPageBackground}>
+        <div className={classes.tempImageBackground}></div>
       </div>
     );
   } else {
@@ -127,27 +118,11 @@ export default function Cover() {
     // );
 
     return (
-      <div className={classes.tempPageeBackground}>
-        {/* <div className={classes.tempImageBackground}> */}
-        {/* <img
-            src={img('hophacks_bird_default.png')}
-            //style={{ top: center(scale.current) }}
-            // className={classes.images}
-            alt="image_could_not_load"
-          /> */}
-        {/* <br></br> */}
-        {/* <img
-                src={img('register.png')}
-                //style={{ top: center(scale.current) }}
-                className={classes.images}
-                alt="image_could_not_load"
-                onClick={() => {
-                  window.location = '/register/login';
-                }}
-              /> */}
-        {/* </div> */}
+      <div className={classes.tempPageBackground}>
         <div className={classes.tempTextHeader}>HOPHACKS</div>
-        <div className={classes.tempTextSubtext}>September 13 - 15, 2024</div>
+        <div className={classes.tempTextSubtext}>[DATE OF HACKATHON]</div>
+
+        {/* TODO: This is a image "button"... but not a real button */}
         <div className={classes.tempRegisterButton}>
           <img
             src={img('register_button_alone.png')}

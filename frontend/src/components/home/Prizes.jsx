@@ -1,5 +1,6 @@
 import React from 'react';
-
+// TODO: style this in a way where we can use Box/is consistent with the other sections
+// import { Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -32,6 +33,7 @@ export default function Prizes() {
         <Typography className={classes.title} variant="h3" gutterBottom>
           Prizes
         </Typography>
+        {/* TODO: replace with redesigned prize tracks and/or new track page */}
         <div style={{ textAlign: 'center' }}>
           <img src={img('prize2023Fall.PNG')} className={classes.platform} />
         </div>
@@ -41,7 +43,7 @@ export default function Prizes() {
           <img className="prizeStamp" src={img('thirdPlace.png')} />
         </div>
       </Grid>
-      {/* <div>
+      <div>
         <div className="prizeTrackDiv">
           <img className="prizeTrackStamp" src={img('PSW.png')} />
           <img className="prizeTrackStamp" src={img('IAA1.png')} />
@@ -51,8 +53,8 @@ export default function Prizes() {
           <img className="prizeTrackStamp" src={img('FFU2.png')} />
           <img className="prizeTrackStamp" src={img('FFU3.png')} />
         </div>
-      </div> */}
-      {/* <div>
+      </div>
+      <div>
         <div className="prizeTrackDiv">
           <img className="prizeTrackStamp" src={img('BGBTrack1.png')} />
           <img className="prizeTrackStamp" src={img('BGBTrack2.png')} />
@@ -60,7 +62,7 @@ export default function Prizes() {
           <img className="prizeTrackStamp" src={img('CBID1.png')} />
           <img className="prizeTrackStamp" src={img('CBID2.png')} />
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

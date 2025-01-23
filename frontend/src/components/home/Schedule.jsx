@@ -71,6 +71,7 @@ const useStyles = makeStyles({
     color: 'rgba(250, 192, 19, 1)'
   }
 });
+// TODO: update table cells with the new schedule and/or create a better style of table
 export default function Schedule() {
   const classes = useStyles();
   const [day, setDay] = React.useState('fri');
@@ -112,7 +113,7 @@ export default function Schedule() {
           variant="fullWidth"
         >
           <Tab
-            label="Fri., Sept 13th"
+            label="[Day 1]"
             value="fri"
             className={classes.font}
             style={{
@@ -120,7 +121,7 @@ export default function Schedule() {
             }}
           />
           <Tab
-            label="Sat., Sept 14th"
+            label="[Day 2]"
             value="sat"
             className={classes.font}
             style={{
@@ -128,7 +129,7 @@ export default function Schedule() {
             }}
           />
           <Tab
-            label="Sun., Sept 15th"
+            label="[Day 3]"
             value="sun"
             className={classes.font}
             style={{

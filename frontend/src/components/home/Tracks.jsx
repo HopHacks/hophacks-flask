@@ -6,6 +6,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+// TODO: update this page with more interactive/styled tracks
 const useStyles = makeStyles({
   margin: {
     borderTop: '1',
