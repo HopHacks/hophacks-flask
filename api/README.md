@@ -56,7 +56,7 @@ source hophacks-env/bin/activate
 Then install the requirements (with your virtual environment activated)
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-2025.txt # requirements and requirements2 are deprecated
 ```
 
 #### 3. Configuration
@@ -92,7 +92,7 @@ gunicorn app:app
 
 Make sure you have all the APIs that can send data publicly are disabled. They include AWS bucket, Slack, and Discord.
 
-### Database
+## Database
 
 Production database can be accessed through logging in to [MongoDB Cloud](https://account.mongodb.com/account/login) with HopHacks Gmail account.
 
@@ -109,3 +109,8 @@ brew services start mongodb-community@8.0
 ```
 
 For your convenience, it is encouraged to download [MongoDB Compass](https://www.mongodb.com/try/download/compass). Then connect to `mongodb://localhost:27017`. You can also connect to production database with its URL here.
+
+## Hosting
+
+This application is hosted on AWS EC2 using Nginx. You could connect to the VM through our AWS Root account console.
+In the VM's config.json, you could see our credentials of MongoDB and PostMaster and webhooks for Slack and Discord.
