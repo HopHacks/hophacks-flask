@@ -107,9 +107,9 @@ function Login(props) {
           </Button> */}
         </div>
 
-        <Link to={'/register/signup'}>
+        {/* <Link to={'/register/signup'}>
           <Typography class="card-text-blue"> New To HopHacks? Sign Up Now! </Typography>
-        </Link>
+        </Link> */}
       </CardContent>
     </Card>
   );
@@ -165,9 +165,9 @@ function Login(props) {
           Sign in
         </Button>
 
-        <Link to={'/register/signup'}>
+        {/* <Link to={'/register/signup'}>
           <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
-        </Link>
+        </Link> */}
       </CardContent>
     </Card>
   );
