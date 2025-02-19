@@ -130,7 +130,7 @@ export default function Cover() {
             style={{ width: '20%' }}
             alt="image_could_not_load"
             onClick={() => {
-              window.location = '/register/login';
+              // window.location = '/register/login';
             }}
           />
         </div>
