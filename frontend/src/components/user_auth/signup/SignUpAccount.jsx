@@ -82,7 +82,7 @@ export default function SignUpAccount(props) {
         <Typography class="card-text-red">{confirmMsg}</Typography>
 
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Link to="/register/login">
+          <Link to={`/register/login`}>
             <Button class="card-button" variant="contained" color="primary" size="large">
               Back
             </Button>
@@ -160,7 +160,7 @@ export default function SignUpAccount(props) {
 
         <Typography class="card-text-red">{confirmMsg}</Typography>
 
-        <Link to="/register/login">
+        <Link to={`/register/login`}>
           <Typography class="card-text"> Back </Typography>
         </Link>
 

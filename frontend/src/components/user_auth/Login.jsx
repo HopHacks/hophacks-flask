@@ -79,7 +79,7 @@ function Login(props) {
         </div>
 
         <div style={{ textAlign: 'right' }}>
-          <Link to="/register/resetpassword">
+          <Link to={`/register/resetpassword`}>
             <Typography class="card-text-blue"> forgot password? </Typography>
           </Link>
           {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
@@ -107,7 +107,7 @@ function Login(props) {
           </Button> */}
         </div>
 
-        {/* <Link to="/register/signup">
+        {/* <Link to={`/register/signup`}>
           <Typography class="card-text-blue"> New To HopHacks? Sign Up Now! </Typography>
         </Link> */}
       </CardContent>
@@ -150,7 +150,7 @@ function Login(props) {
           }}
         />
 
-        <Link to="/register/resetpassword">
+        <Link to={`/register/resetpassword`}>
           <Typography class="card-text"> forgot password? </Typography>
         </Link>
         {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
@@ -165,7 +165,7 @@ function Login(props) {
           Sign in
         </Button>
 
-        {/* <Link to={'/register/signup'}>
+        {/* <Link to={`/register/signup`}>
           <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
         </Link> */}
       </CardContent>

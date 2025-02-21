@@ -139,7 +139,7 @@ function Login(props) {
       </Button>
       <Typography display="inline" className={classes.dialogPad}>
         <Link
-          to="/register"
+          to={`/register`}
           style={{ textDecoration: 'none' }}
           onClick={() => {
             setLoginDialogOpen(false);
