@@ -160,7 +160,7 @@ export default function SignUpAccount(props) {
 
         <Typography class="card-text-red">{confirmMsg}</Typography>
 
-        <Link to={'/register/login'}>
+        <Link to="/register/login">
           <Typography class="card-text"> Back </Typography>
         </Link>
 

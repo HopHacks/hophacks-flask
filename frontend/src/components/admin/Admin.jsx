@@ -17,7 +17,6 @@ import TableRow from '@material-ui/core/TableRow';
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import { Link } from 'react-router-dom';
 import { InputAdornment, TableCell, TextField, Tooltip, withStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
@@ -289,25 +288,25 @@ const Admin = function () {
         </StyledTableCell>
         <StyledTableCell>
           <Tooltip title="Resume">
-            <Link onClick={() => handleResumeDownload(user.id)}>
+            <Button onClick={() => handleResumeDownload(user.id)}>
               <InsertDriveFileOutlinedIcon
                 style={{
                   color: '#24292F'
                 }}
               />
-            </Link>
+            </Button>
           </Tooltip>
         </StyledTableCell>
 
         <StyledTableCell>
           <Tooltip title="Vaccine">
-            <Link onClick={() => handleVaccinationDownload(user.id)}>
+            <Button onClick={() => handleVaccinationDownload(user.id)}>
               <AssignmentOutlinedIcon
                 style={{
                   color: '#24292F'
                 }}
               />
-            </Link>
+            </Button>
           </Tooltip>
         </StyledTableCell>
       </TableRow>
