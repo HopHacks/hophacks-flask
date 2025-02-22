@@ -72,12 +72,7 @@ const Nav = function Nav(props) {
 
   const navItem = (
     <>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/')}
-        color="inherit"
-        className={classes.navBtn}
-      >
+      <Button component={Link} to="/" color="inherit" className={classes.navBtn}>
         <Typography variant="h5" className={classes.title}>
           Home
         </Typography>
@@ -175,9 +170,7 @@ const Nav = function Nav(props) {
       </Button> */}
       <Button
         component={Link}
-        onClick={() => {
-          history.push('/team');
-        }}
+        to="/team" //{history.push('/team')}
         color="inherit"
         className={classes.navBtn}
       >
@@ -185,12 +178,7 @@ const Nav = function Nav(props) {
           Organizers
         </Typography>
       </Button>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/teamMatching')}
-        color="inherit"
-        className={classes.navBtn}
-      >
+      <Button component={Link} to="/teamMatching" color="inherit" className={classes.navBtn}>
         <Typography variant="h5" className={classes.title}>
           Team Matching
         </Typography>
@@ -306,7 +294,7 @@ const Nav = function Nav(props) {
         <Button
           id="HomeButton"
           component={Link}
-          onClick={() => (window.location = '/')}
+          to="/"
           color="inherit"
           className={classes.hophacksButton}
         >
