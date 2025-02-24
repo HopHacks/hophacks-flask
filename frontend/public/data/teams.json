@@ -1,0 +1,147 @@
+{
+  "teams": [
+    {
+      "name": "Directors",
+      "defaultRole": "Directors",
+      "members": [
+        {
+          "name": "Lucy Wu",
+          "github": "https://github.com/lucywu12",
+          "linkedin": "https://www.linkedin.com/in/lucy-wu-012/",
+          "hometown": "Long Island, NY",
+          "funFact": "I have synesthesia (so I associate colors with letters and numbers)/Discord light mode is superior",
+          "major": "Computer Science and Applied Math",
+          "year": "2026"
+        }
+      ]
+    },
+    {
+      "name": "Design",
+      "defaultRole": "Design",
+      "members": [
+        {
+          "name": "Angela Guo",
+          "github": "https://github.com/angelag13",
+          "linkedin": "https://www.linkedin.com/in/angelaguo13",
+          "hometown": "Herndon",
+          "funFact": "I do not like cheese!",
+          "major": "Computer Science ",
+          "year": "2027"
+        },
+        {
+          "name": "Emily Zou",
+          "github": "",
+          "linkedin": "",
+          "hometown": "Puerto Rico",
+          "funFact": "I love going to concerts",
+          "major": "Computer Science",
+          "year": "2027"
+        },
+        {
+          "name": "Jennifer Li",
+          "github": "",
+          "linkedin": "https://www.linkedin.com/in/jenniferli7437/",
+          "hometown": "Nashville, TN",
+          "funFact": "Does the NYTimes Mini Crossword daily (but not very good at it).",
+          "major": "Computer Science & Public Health",
+          "year": "2026"
+        }
+      ]
+    },
+    {
+      "name": "Logistics",
+      "defaultRole": "Logistics",
+      "members": [
+        {
+          "name": "Jacob Gutsin",
+          "github": "",
+          "linkedin": "https://www.linkedin.com/in/jacob-gutsin/",
+          "hometown": "Colts Neck, NJ",
+          "funFact": "I have hiked to the highest point in Edinburgh, Scotland",
+          "major": "Computer Science/AMS",
+          "year": "2027"
+        },
+        {
+          "name": "Chelsea Wong",
+          "github": "https://github.com/cheollie",
+          "linkedin": "https://www.linkedin.com/in/chelseawong07/",
+          "hometown": "Toronto, Canada",
+          "funFact": "I've met a couple of Olympic figure skaters (and got their autographs)!",
+          "major": "Biomedical Engineering and Computer Science",
+          "year": "2028"
+        }
+      ]
+    },
+    {
+      "name": "Marketing",
+      "defaultRole": "Marketing",
+      "members": [
+        {
+          "name": "Joanne Li",
+          "github": "",
+          "linkedin": "www.linkedin.com/in/-joanneli-",
+          "hometown": "Rockville, Maryland",
+          "funFact": "I practice wushu (Chinese martial arts)!",
+          "major": "Biomedical Engineering",
+          "year": "2028"
+        }
+      ]
+    },
+    {
+      "name": "Sponsors",
+      "defaultRole": "Sponsors",
+      "members": []
+    },
+    {
+      "name": "Website",
+      "defaultRole": "Website",
+      "members": [
+        {
+          "name": "Leon Xu",
+          "github": "https://github.com/Hanliang-Xu",
+          "linkedin": "https://www.linkedin.com/in/hanliang-xu-b79062239/",
+          "hometown": "Beijing China",
+          "funFact": "Lost more than five water bottles in the past few years, so bought three identical ones on Black Friday. Spoiler: one is already gone.",
+          "major": "Computer Science",
+          "year": "2026"
+        },
+        {
+          "name": "Jin Hong Moon",
+          "github": "https://github.com/jmo-on",
+          "linkedin": "https://www.linkedin.com/in/jayden-moonjh/",
+          "hometown": "Seoul, South Korea",
+          "funFact": "Hate babies",
+          "major": "Computer Science",
+          "year": "2027"
+        },
+        {
+          "name": "David Benjamin",
+          "github": "https://github.com/DavidBenj15",
+          "linkedin": "https://www.linkedin.com/in/david-benjamin-9b342b290/",
+          "hometown": "Philadelphia, PA",
+          "funFact": "My dog's name is LeBron",
+          "major": "Computer Science",
+          "year": "2027"
+        },
+        {
+          "name": "Wendy Xiao",
+          "github": "",
+          "linkedin": "https://www.linkedin.com/in/wendy-xiao-82a441285/",
+          "hometown": "Bellevue, Washington",
+          "funFact": "Apples blended with milk is a really tasty drink..",
+          "major": "Computer Science and Applied Mathematics and Statistics",
+          "year": "2028"
+        },
+        {
+          "name": "Ronit Sohal",
+          "github": "https://github.com/ronitsohal05",
+          "linkedin": "https://www.linkedin.com/in/ronit-sohal-b13857258/",
+          "hometown": "Miami, FL",
+          "funFact": "I love eating food",
+          "major": "Computer Science",
+          "year": "2028"
+        }
+      ]
+    }
+  ]
+}
