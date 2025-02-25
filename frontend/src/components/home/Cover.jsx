@@ -110,9 +110,24 @@ export default function Cover() {
 
     return (
       <div className={classes.pageBackground}>
-        <div className="textHeader">HOPHACKS</div>
-        <div className="textSubtext">ILLUMINATING INNOVATIONS</div>
-        <div className="details">September 13-15, 2025 · 250+ Hackers · 36 Hours</div>
+        <div className="textHeaderContainer">
+          <div className="textHeader">
+            <span className="larger-letter">H</span>OP
+            <br />
+            <span className="larger-letter">H</span>ACKS
+          </div>
+        </div>
+
+        <div className="textSubtextContainer">
+          <div className="textSubtext">
+            <span className="larger-letter">I</span>LLUMINATING&nbsp;&nbsp;
+            <span className="larger-letter">I</span>NNOVATIONS
+          </div>
+        </div>
+
+        <div className="detailsContainer">
+          <div className="details">September 13-15, 2025 · 250+ Hackers · 36 Hours</div>
+        </div>
 
         {/* TODO: This is a image "button"... but not a real button */}
         {/*

@@ -1,41 +1,75 @@
 .pageBackground {
-    background-image: url("https://hophacks-image.s3.us-east-1.amazonaws.com/main_page.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .textHeader {
-    font-family: Anton, sans-serif;
-    font-weight: 400;
-    font-size: 128px;
-    line-height: 250px;
-    letter-spacing: 5%;
-    color: #FFFFFF;
-    text-transform: uppercase;
-  }
-  
-  .textSubtext {
-    font-family: Montserrat, sans-serif;
-    font-weight: 700;
-    font-size: 44px;
-    line-height: 200px;
-    letter-spacing: 5%;
-    color: #30598F;
-    text-transform: uppercase;
-  }
-  
-  .details {
-    font-family: Open Sans, sans-serif;
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 200px;
-    letter-spacing: 5%;
-    color: #FFFFFF;
-  }
+  background-image: url('https://hophacks-image.s3.us-east-1.amazonaws.com/main_page.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.textHeaderContainer {
+  position: absolute;
+  left: 37.5%;
+  top: 58%;
+  transform: translate(-50%, -50%);
+}
+
+.textHeader {
+  font-family: Anton, sans-serif;
+  font-weight: 400;
+  font-size: 122px;
+  line-height: 110.5px;
+  letter-spacing: 5%;
+  color: #ffffff;
+  text-transform: uppercase;
+  white-space: pre-line;
+}
+
+.larger-letter {
+  font-size: 1.1em; /* Slightly larger than the parent */
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-transform: inherit;
+}
+
+.textSubtextContainer {
+  position: absolute;
+  left: 46%;
+  top: 82%;
+  transform: translate(-50%, -50%);
+}
+
+.textSubtext {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 200px;
+  letter-spacing: 5%;
+  color: #30598f;
+  text-transform: uppercase;
+}
+
+.detailsContainer {
+  position: absolute;
+  left: 48%;
+  top: 92%;
+  transform: translate(-50%, -50%);
+}
+
+.details {
+  font-family:
+    Open Sans,
+    sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 200px;
+  letter-spacing: 5%;
+  color: #ffffff;
+}
