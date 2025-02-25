@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
   let prizeDivs = document.querySelectorAll(".prizeTrackDiv");
   prizeDivs.forEach((div) => div.remove());
 
-  let trackDivs = document.querySelectorAll(".makeStyles-mt_50-55");
+  let trackDivs = document.querySelectorAll(".makeStyles-mt_50-56");
   trackDivs.forEach((div) => div.remove());
 
-  let sponsorDivs = document.querySelectorAll(".makeStyles-root-60");
+  let sponsorDivs = document.querySelectorAll(".makeStyles-root-61");
   sponsorDivs.forEach((div) => div.remove());
 });
 
