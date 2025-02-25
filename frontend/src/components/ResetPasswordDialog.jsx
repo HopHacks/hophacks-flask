@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { withAuthProps } from '../util/auth';
-import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 function ResetPassword() {
@@ -82,13 +82,13 @@ function ResetPassword() {
 
   return (
     <>
-      <Link
+      <Button
         style={{ textDecoration: 'none' }}
         onClick={() => setResetDialogOpen(true)}
         className={classes.linkColor}
       >
         Forgot your password?
-      </Link>
+      </Button>
       {ResetDialog}
     </>
   );

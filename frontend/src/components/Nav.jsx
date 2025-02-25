@@ -72,12 +72,7 @@ const Nav = function Nav(props) {
 
   const navItem = (
     <>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/')}
-        color="inherit"
-        className={classes.navBtn}
-      >
+      <Button component={Link} to="/" color="inherit" className={classes.navBtn}>
         <Typography variant="h5" className={classes.title}>
           Home
         </Typography>
@@ -175,9 +170,7 @@ const Nav = function Nav(props) {
       </Button> */}
       <Button
         component={Link}
-        onClick={() => {
-          history.push('/team');
-        }}
+        to="/team" //{history.push('/team')}
         color="inherit"
         className={classes.navBtn}
       >
@@ -185,12 +178,7 @@ const Nav = function Nav(props) {
           Organizers
         </Typography>
       </Button>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/teamMatching')}
-        color="inherit"
-        className={classes.navBtn}
-      >
+      <Button component={Link} to="/teamMatching" color="inherit" className={classes.navBtn}>
         <Typography variant="h5" className={classes.title}>
           Team Matching
         </Typography>
@@ -303,40 +291,21 @@ const Nav = function Nav(props) {
           marginRight: '8rem'
         }}
       >
-        {/* <Button
-          component={Link}
-          onClick={() => (window.location = '/')}
-          color="inherit"
-          className={classes.hophacksButton}
-        >
-          <img src={img('logo2023.png')} width={'55px'} />
-          <Typography variant="h4" className={classes.title}>
-            HopHacks
-          </Typography>
-        </Button> */}
-
         <Button
           id="HomeButton"
-          style={{
-            display: 'block',
-            maxWidth: '100px',
-            minWidth: '60px',
-            position: 'fixed',
-            left: '50px',
-            top: '0',
-            width: '5.5%',
-            zIndex: '10000'
-          }}
-          onClick={() => (window.location = '/')}
-          // href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
-          target="_blank"
-          rel="noreferrer"
+          component={Link}
+          to="/"
+          color="inherit"
+          className={classes.hophacksButton}
         >
           <img
             src="https://hophacks-website.s3.amazonaws.com/images/Hophacks_logo_clean.png"
             alt="Major League Hacking 2024 Hackathon Season"
-            style={{ width: '100%' }}
-          ></img>
+            width={'55px'}
+          />
+          <Typography variant="h4" className={classes.title}>
+            HopHacks
+          </Typography>
         </Button>
 
         <a

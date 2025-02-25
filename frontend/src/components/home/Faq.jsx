@@ -240,7 +240,7 @@ export default function Faq() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
-            <Typography className={classes.text}>
+            <Typography component={'span'} className={classes.text}>
               Here are some ways to get to the party:
               <ul>
                 <li>

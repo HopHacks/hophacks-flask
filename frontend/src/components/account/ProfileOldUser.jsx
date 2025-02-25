@@ -49,11 +49,11 @@ export default function ProfileOldUser(props) {
   const profileCard = (
     <Card class="card">
       <CardContent>
-        <Typography class={isMobile ? 'mobile-header' : 'card-title'}>Welcome Back</Typography>
-        <Typography class={isMobile ? 'mobile-subheader' : 'card-subtitle'}>
+        <Typography className={isMobile ? 'mobile-header' : 'card-title'}>Welcome Back</Typography>
+        <Typography className={isMobile ? 'mobile-subheader' : 'card-subtitle'}>
           Please verify all of your information from last year is still accurate!
         </Typography>
-        <Typography class={isMobile ? 'mobile-infoline' : 'card-infoline'}>
+        <Typography className={isMobile ? 'mobile-infoline' : 'card-infoline'}>
           Be sure to fill out any new fields, and upload your latest resume on the next page.
         </Typography>
         <Grid container spacing={isMobile ? 2 : 5}>

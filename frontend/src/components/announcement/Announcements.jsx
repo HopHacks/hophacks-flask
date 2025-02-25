@@ -167,12 +167,7 @@ export default function Announcements() {
           <TableCell component="th" scope="row">
             <Box className={classes.historyAnnouncementContent}>
               {announcement.content}{' '}
-              <Link
-                to={{
-                  pathname: `/announcements/detail/${announcement.title}`,
-                  state: announcement
-                }}
-              >
+              <Link to={`/announcements/detail/${announcement.title}`} state={announcement}>
                 [more]
               </Link>
             </Box>
@@ -232,12 +227,7 @@ export default function Announcements() {
         </CardContent>
         <CardActions>
           <Button size="small">
-            <Link
-              to={{
-                pathname: `/announcements/detail/${topAnnouncement.title}`,
-                state: topAnnouncement
-              }}
-            >
+            <Link to={`/announcements/detail/${topAnnouncement.title}`} state={topAnnouncement}>
               Learn More
             </Link>
           </Button>
@@ -264,12 +254,7 @@ export default function Announcements() {
         </CardContent>
         <CardActions>
           <Button size="small">
-            <Link
-              to={{
-                pathname: `/announcements/detail/${announcement.title}`,
-                state: announcement
-              }}
-            >
+            <Link to={`/announcements/detail/${announcement.title}`} state={announcement}>
               Learn More
             </Link>
           </Button>

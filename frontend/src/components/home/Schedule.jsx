@@ -104,7 +104,7 @@ export default function Schedule() {
           centered
           fullWidth={true}
           className={classes.schedule}
-          classes={{ indicator: classes.indicator, selected: classes.selected }}
+          classes={{ indicator: classes.indicator }}
           style={{
             width: '100%',
             backgroundColor: 'transparent',
