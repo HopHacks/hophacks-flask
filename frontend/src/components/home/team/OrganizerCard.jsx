@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import EastIcon from '@material-ui/icons/ArrowForward';
-import './Card.css';
+import './OrganizerCard.css';
 
-export const Card = ({
+export const OrganizerCard = ({
   name,
   position,
   image,
@@ -103,7 +103,7 @@ export const Card = ({
   );
 };
 
-Card.propTypes = {
+OrganizerCard.propTypes = {
   name: PropTypes.string.isRequired,
   position: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,

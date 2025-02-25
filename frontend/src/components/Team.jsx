@@ -8,7 +8,6 @@ export default function TeamPage() {
         // backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/cover.png")`,
         backgroundSize: 'cover',
         minHeight: '100vh'
-        // backgroundColor: '#172759'
       }}
     >
       <Team />
