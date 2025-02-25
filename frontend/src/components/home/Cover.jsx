@@ -1,10 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-// import { motion, useViewportScroll, useTransform } from 'framer-motion';
+import '../../stylesheets/cover.css';
 
-function img(url) {
-  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-}
+// import { motion, useViewportScroll, useTransform } from 'framer-motion';
 
 const useStyles = makeStyles({
   images: {
@@ -28,19 +26,12 @@ const useStyles = makeStyles({
     left: '0%',
     width: '100%'
   },
-  tempPageBackground: {
-    backgroundColor: '#172759',
-    paddingBottom: '20vh',
-    // TODO: update the background image in AWS here
-    // backgroundImage: `url("https://hophacks-website.s3.amazonaws.com/images/About.png")`,
+  pageBackground: {
+    backgroundImage: `url("https://hophacks-image.s3.us-east-1.amazonaws.com/main_page.png")`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center center',
-    // backgroundSize: 'auto 100% 100%'
-    // backgroundSize: '100%'
-    backgroundSize: 'cover', // Ensure the background image covers the entire element
+    backgroundSize: 'cover',
     height: '100vh'
-    // height: '100vh'
-    // marginBottom: '10vh'
   },
   tempImageBackground: {
     overflow: 'hidden',
@@ -103,7 +94,7 @@ export default function Cover() {
   const classes = useStyles();
   if (window.innerWidth <= 850 && 1 < 0) {
     return (
-      <div className={classes.tempPageBackground}>
+      <div className={classes.pageBackground}>
         <div className={classes.tempImageBackground}></div>
       </div>
     );
@@ -118,11 +109,13 @@ export default function Cover() {
     // );
 
     return (
-      <div className={classes.tempPageBackground}>
-        <div className={classes.tempTextHeader}>HOPHACKS</div>
-        <div className={classes.tempTextSubtext}>[DATE OF HACKATHON]</div>
+      <div className={classes.pageBackground}>
+        <div className="textHeader">HOPHACKS</div>
+        <div className="textSubtext">ILLUMINATING INNOVATIONS</div>
+        <div className="details">September 13-15, 2025 · 250+ Hackers · 36 Hours</div>
 
         {/* TODO: This is a image "button"... but not a real button */}
+        {/*
         <div className={classes.tempRegisterButton}>
           <img
             src={img('register_button_alone.png')}
@@ -134,6 +127,7 @@ export default function Cover() {
             }}
           />
         </div>
+          */}
 
         {/* <button> Register</button> */}
       </div>

@@ -1,0 +1,41 @@
+.pageBackground {
+    background-image: url("https://hophacks-image.s3.us-east-1.amazonaws.com/main_page.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .textHeader {
+    font-family: Anton, sans-serif;
+    font-weight: 400;
+    font-size: 128px;
+    line-height: 250px;
+    letter-spacing: 5%;
+    color: #FFFFFF;
+    text-transform: uppercase;
+  }
+  
+  .textSubtext {
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 200px;
+    letter-spacing: 5%;
+    color: #30598F;
+    text-transform: uppercase;
+  }
+  
+  .details {
+    font-family: Open Sans, sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 200px;
+    letter-spacing: 5%;
+    color: #FFFFFF;
+  }
