@@ -32,11 +32,17 @@ const Highlight = styled.span`
 export default function About() {
   const introTextP1 = (
     <AboutText>
-      HopHacks is a <Highlight>36 hour annual Hackathon</Highlight> held at Johns Hopkins University
-      that encourages engineers, designers, and entrepreneurs to explore new ideas and create new
-      applications. Teams of up to <Highlight>4 university students</Highlight> work on projects
-      from scratch. At the end of the hackathon, teams present their projects to judges and compete
-      for prizes ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!
+      HopHacks is a <Highlight>36 hour annual Hackathon</Highlight> held at the Johns Hopkins
+      University that encourages engineers, designers, and entrepreneurs to explore new ideas and
+      create new applications.
+    </AboutText>
+  );
+
+  const introTextP2 = (
+    <AboutText>
+      Teams of up to <Highlight>4 university students</Highlight> work on projects from scratch. At
+      the end of the hackathon, teams present their projects to judges and compete for prizes
+      ($1024, $512, $256 for top 3 winners and sponsor specific prizes)!
     </AboutText>
   );
 
@@ -51,6 +57,8 @@ export default function About() {
       <Box flex={1} align="center">
         <Box flex={1} width={'80%'}>
           {introTextP1}
+          <Box height={5}></Box>
+          {introTextP2}
         </Box>
       </Box>
     </div>
