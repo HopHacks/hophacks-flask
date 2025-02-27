@@ -288,16 +288,26 @@ const Nav = function Nav(props) {
     <AppBar position="sticky" className={classes.drawer}>
       <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
         {/* Left-aligned HopHacks Logo */}
-        <Button component={Link} to="/" color="inherit" className={classes.hophacksButton}>
+        <Button
+          component={Link}
+          to="/"
+          color="inherit"
+          className={classes.hophacksButton}
+          style={{ display: 'flex', alignItems: 'center' }}
+        >
           <img
             src="https://hophacks-website.s3.amazonaws.com/images/Hophacks_logo_clean.png"
             alt="HopHacks Logo"
             width={'55px'}
           />
-          <Typography variant="h4" className={classes.title}>
+          <Typography variant="h4" className={classes.title} style={{ marginLeft: '15px' }}>
             HopHacks
           </Typography>
         </Button>
+
+
+
+
   
         {/* Centered Navigation */}
         <div
