@@ -8,6 +8,8 @@ from flask_cors import CORS
 
 import json
 
+
+
 class ConfigurationError(Exception):
     """Exception raised for errors in app config
     """
@@ -26,6 +28,7 @@ def get_req_config(app, config, key):
 
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
+
 
     CORS(app)
     config = json.load(open(config_file))
@@ -103,6 +106,9 @@ def create_app(config_file='config/config.json'):
     app.register_blueprint(slack_api, url_prefix='/api/slack')
     app.register_blueprint(discord_api, url_prefix='/api/discord')
     app.register_blueprint(teammatch_api, url_prefix='/api/teammatch')
+    
+    
+
 
 
 
