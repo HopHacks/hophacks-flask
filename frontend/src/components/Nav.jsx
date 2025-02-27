@@ -178,6 +178,7 @@ const Nav = function Nav(props) {
           Organizers
         </Typography>
       </Button>
+      {/*}
       <Button component={Link} to="/teamMatching" color="inherit" className={classes.navBtn}>
         <Typography variant="h5" className={classes.title}>
           Team Matching
@@ -217,7 +218,7 @@ const Nav = function Nav(props) {
             Logout
           </Typography>
         </Button>
-      )}
+      )}*/}
     </>
   );
 
@@ -283,65 +284,63 @@ const Nav = function Nav(props) {
   }
 
   return (
-    <AppBar position="sticky" className={classes.drawer}>
-      <Toolbar
+  <AppBar position="sticky" className={classes.drawer}>
+    <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+      {/* Left-aligned HopHacks Logo */}
+      <Button component={Link} to="/" color="inherit" className={classes.hophacksButton}>
+        <img
+          src="https://hophacks-website.s3.amazonaws.com/images/Hophacks_logo_clean.png"
+          alt="HopHacks Logo"
+          width={'55px'}
+        />
+        <Typography variant="h4" className={classes.title}>
+          HopHacks
+        </Typography>
+      </Button>
+
+      {/* Centered Navigation */}
+      <div
         style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          marginRight: '8rem'
+          position: 'absolute',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '20px',
         }}
       >
-        <Button
-          id="HomeButton"
-          component={Link}
-          to="/"
-          color="inherit"
-          className={classes.hophacksButton}
-        >
-          <img
-            src="https://hophacks-website.s3.amazonaws.com/images/Hophacks_logo_clean.png"
-            alt="Major League Hacking 2024 Hackathon Season"
-            width={'55px'}
-          />
-          <Typography variant="h4" className={classes.title}>
-            HopHacks
-          </Typography>
-        </Button>
+        {navItem}
+      </div>
 
-        <a
-          id="mlh-trust-badge"
-          style={{
-            display: 'block',
-            maxWidth: '100px',
-            minWidth: '60px',
-            position: 'fixed',
-            right: '50px',
-            top: '0',
-            width: '10%',
-            zIndex: '10000'
-          }}
-          href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img
-            src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-2025-white.svg"
-            alt="Major League Hacking 2024 Hackathon Season"
-            style={{ width: '100%' }}
-          ></img>
-        </a>
+      {/* Right-aligned MLH Trust Badge */}
+      <a
+        id="mlh-trust-badge"
+        style={{
+          display: 'block',
+          maxWidth: '100px',
+          minWidth: '60px',
+          position: 'absolute',
+          right: '50px',
+          top: '0',
+          width: '10%',
+          zIndex: '10000',
+        }}
+        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-2025-white.svg"
+          alt="Major League Hacking 2024 Hackathon Season"
+          style={{ width: '100%' }}
+        />
+      </a>
+    </Toolbar>
+  </AppBar>
+);
 
-        <section
-          className={classes.otherButton}
-          style={{
-            margin: 'auto'
-          }}
-        >
-          {navItem}
-        </section>
-      </Toolbar>
-    </AppBar>
-  );
+  
+  
+  
 };
 
 export default withAuthProps(Nav);
