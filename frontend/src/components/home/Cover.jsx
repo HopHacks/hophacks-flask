@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     //top: '-40vw',
     left: '0%',
     width: '100%'
-  },
+  }
 });
 
 export default function Cover() {
@@ -60,7 +60,11 @@ export default function Cover() {
     return (
       <div className="pageBackground">
         <div className="textHeaderContainer">
-          <img src="https://hophacks-image.s3.us-east-1.amazonaws.com/logo2023.PNG" alt="HopHacks Logo" className="hophacks-logo" />
+          <img
+            src="https://hophacks-image.s3.us-east-1.amazonaws.com/logo2023.PNG"
+            alt="HopHacks Logo"
+            className="hophacks-logo"
+          />
           <div className="textHeader">
             <span className="larger-letter">H</span>OP
             <br />
