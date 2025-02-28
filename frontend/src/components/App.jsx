@@ -23,20 +23,20 @@ import Upload from './judgetool/Upload.jsx';
 import UploadSponsors from './judgetool/UploadSponsors.jsx';
 import SponsorPrizes from './judgetool/SponsorPrizes.jsx';
 import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
-import Announcements from './announcement/Announcements.jsx';
-import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
+//import Announcements from './announcement/Announcements.jsx';
+//import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
-import Login from './user_auth/Login'; //adjusted to be new path
+//import Login from './user_auth/Login'; //adjusted to be new path
 import Tracks from './tracks/Tracks.jsx';
 
-import SignUp from './user_auth/signup/SignUp';
+//import SignUp from './user_auth/signup/SignUp';
 // import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new paths
 // import SignUpProfile from './user_auth/signup/SignUpProfile.jsx';
 // import SignUpAccount from './user_auth/signup/SignUpAccount.jsx';
 // import SignUpImage from './user_auth/signup/SignUpImage.jsx';
 
-import ResetPassword from './user_auth/ResetPassword';
-import TeamMatchingPage from './team_matching/TeamMatchingPage';
+//import ResetPassword from './user_auth/ResetPassword';
+//import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -73,13 +73,13 @@ export default function App() {
                     <Profile isMobile={isMobile} />
                   </Route>
 
-                  <Route path="/announcements/detail">
+                  {/*<Route path="/announcements/detail">
                     <AnnouncementDetails />
                   </Route>
 
                   <Route path="/announcements">
                     <Announcements />
-                  </Route>
+                  </Route>*/}
 
                   <Route exact path="/home">
                     <Home />
@@ -104,7 +104,7 @@ export default function App() {
                     <Team />
                   </Route>
 
-                  <Route path="/register/login">
+                  {/*<Route path ="/register/login">
                     <Login isMobile={isMobile} />
                   </Route>
 
@@ -118,7 +118,7 @@ export default function App() {
 
                   <Route path="/teamMatching" isMobile={isMobile}>
                     <TeamMatchingPage isMobile={isMobile} />
-                  </Route>
+                  </Route>*/}
 
                   <Route path="/tracks">
                     <Tracks />
