@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+//import { useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -55,12 +55,13 @@ function img(url) {
   return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
 }
 
-const Nav = function Nav(props) {
-  let history = useHistory();
+const Nav = function Nav() {
+  //props removed because not used for now, add in when needed
+  /*let history = useHistory();
   async function handleLogout() {
     await props.logout();
     history.push('/');
-  }
+  }*/
 
   const classes = useStyles();
   const isMobile = window.innerWidth <= 800;
@@ -283,10 +284,16 @@ const Nav = function Nav(props) {
     );
   }
 
-  
   return (
     <AppBar position="sticky" className={classes.drawer}>
-      <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+      <Toolbar
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%'
+        }}
+      >
         {/* Left-aligned HopHacks Logo */}
         <Button
           component={Link}
@@ -305,10 +312,6 @@ const Nav = function Nav(props) {
           </Typography>
         </Button>
 
-
-
-
-  
         {/* Centered Navigation */}
         <div
           style={{
@@ -316,12 +319,12 @@ const Nav = function Nav(props) {
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
-            gap: '20px',
+            gap: '20px'
           }}
         >
           {navItem}
         </div>
-  
+
         {/* Right-aligned MLH Trust Badge */}
         <a
           id="mlh-trust-badge"
@@ -333,7 +336,7 @@ const Nav = function Nav(props) {
             right: '50px',
             top: '0',
             width: '10%',
-            zIndex: '10000',
+            zIndex: '10000'
           }}
           href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
           target="_blank"
@@ -348,11 +351,6 @@ const Nav = function Nav(props) {
       </Toolbar>
     </AppBar>
   );
-  
-
-  
-  
-  
 };
 
 export default withAuthProps(Nav);
