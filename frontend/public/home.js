@@ -4,13 +4,6 @@ var texts = [];
 
 document.addEventListener("DOMContentLoaded", function () {
   // Remove the #prizes section
-  let prizesSection = document.getElementById('prizes');
-  if (prizesSection) {
-    prizesSection.remove();
-  } else {
-    console.log("Prizes section not found.");
-  }
-
   let scheduleSection = document.getElementById('schedule');
   if (scheduleSection) {
     scheduleSection.remove();
@@ -22,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
   let prizeDivs = document.querySelectorAll(".prizeTrackDiv");
   prizeDivs.forEach((div) => div.remove());
 
-  let trackDivs = document.querySelectorAll(".makeStyles-mt_50-56");
+  let trackDivs = document.querySelectorAll(".makeStyles-mt_50-51");
   trackDivs.forEach((div) => div.remove());
 
-  let sponsorDivs = document.querySelectorAll(".makeStyles-root-61");
+  let sponsorDivs = document.querySelectorAll(".makeStyles-root-56");
   sponsorDivs.forEach((div) => div.remove());
 });
 

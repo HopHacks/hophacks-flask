@@ -25,57 +25,6 @@ const useStyles = makeStyles({
     //top: '-40vw',
     left: '0%',
     width: '100%'
-  },
-  pageBackground: {
-    backgroundImage: `url("https://hophacks-image.s3.us-east-1.amazonaws.com/main_page.png")`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-    backgroundSize: 'cover',
-    height: '100vh'
-  },
-  tempImageBackground: {
-    overflow: 'hidden',
-    display: 'flex', // Use flexbox for centering
-    justifyContent: 'center', // Horizontally center content
-    alignItems: 'center', // Vertically center content
-    width: '100%',
-    // margin: '1px',
-    // height: '100vh' // Adjust height as needed
-    // top: '0vw'
-    paddingTop: '13vh'
-    // paddingBottom: '0vh'
-  },
-  tempTextHeader: {
-    textAlign: 'center', // Center text horizontally
-    fontSize: '8rem', // Example font size
-    // fontWeight: 'bold', // Example font weight
-    paddingTop: '3vh',
-    // color: '#B4E3F7' // Example text color
-    color: 'white'
-    // padding: '1px',
-    // paddingBottom: '0vh'
-
-    // marginTop: '20px' // Adjust vertical spacing as needed
-  },
-  tempTextSubtext: {
-    textAlign: 'center', // Center text horizontally
-    fontSize: '2rem', // Example font size
-    // fontWeight: 'bold', // Example font weight
-    // color: '#B4E3F7', // Example text color
-    color: 'white',
-    marginTop: '5px' // Adjust vertical spacing as needed
-  },
-  tempRegisterButton: {
-    // textAlign: 'center', // Center text horizontally
-    // fontSize: '1.5rem', // Example font size
-    // // fontWeight: 'bold', // Example font weight
-    // color: '#B4E3F7', // Example text color
-    // marginTop: '20px' // Adjust vertical spacing as needed
-    display: 'flex', // Use flexbox for centering
-    justifyContent: 'center', // Horizontally center content
-    alignItems: 'center', // Vertically center content
-    width: '100%'
-    // overflow: 'hidden'
   }
 });
 
@@ -94,7 +43,7 @@ export default function Cover() {
   const classes = useStyles();
   if (window.innerWidth <= 850 && 1 < 0) {
     return (
-      <div className={classes.pageBackground}>
+      <div className="pageBackground">
         <div className={classes.tempImageBackground}></div>
       </div>
     );
@@ -109,8 +58,13 @@ export default function Cover() {
     // );
 
     return (
-      <div className={classes.pageBackground}>
+      <div className="pageBackground">
         <div className="textHeaderContainer">
+          <img
+            src="https://hophacks-image.s3.us-east-1.amazonaws.com/logo2023.PNG"
+            alt="HopHacks Logo"
+            className="hophacks-logo"
+          />
           <div className="textHeader">
             <span className="larger-letter">H</span>OP
             <br />
