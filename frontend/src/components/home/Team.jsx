@@ -37,7 +37,27 @@ export default function TeamPage() {
         }
         return response.json();
       })
-      .then((data) => setTeams(data.teams))
+      .then((data) => {
+        let teamsArr = [
+          {
+            name: 'All',
+            defaultRole: '',
+            members: []
+          }
+        ];
+
+        for (const team of data.teams) {
+          for (const member of team.members) {
+            if (!('role' in member)) {
+              member.role = team.defaultRole;
+            }
+            // Add member to 'All'
+            teamsArr[0].members.push(member);
+          }
+          teamsArr.push(team);
+        }
+        setTeams(teamsArr);
+      })
       .catch(() => console.error('Error fetching organizers'));
 
     fetch('/data/alumni.json')
@@ -170,6 +190,7 @@ export default function TeamPage() {
               variant="scrollable"
               scrollButtons="auto"
             >
+              <Tab label="All" />
               <Tab label="Directors" />
               <Tab label="Design" />
               <Tab label="Logistics" />
