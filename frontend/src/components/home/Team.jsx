@@ -1,6 +1,5 @@
-import { ThemeProvider, makeStyles } from '@material-ui/styles';
-import { OrganizerCard } from './team/OrganizerCard';
-import { AlumniCard } from './team/AlumniCard';
+import React, { useEffect, useState } from 'react';
+import { ThemeProvider } from '@material-ui/styles';
 import {
   Tab,
   Tabs,
@@ -11,94 +10,25 @@ import {
   TextField,
   Grid,
   Container,
-  Box,
-  createMuiTheme
+  Box
 } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { OrganizerCard } from './team/OrganizerCard';
+import { AlumniCard } from './team/AlumniCard';
+import theme from './team/teamTheme';
+import useStyles from './team/TeamStyles';
+import { nameToURL, filterTeamMembers, sortAlumni } from './team/teamHelpers';
 import '../../stylesheets/team.css';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#e1f5fe' // Gray for primary elements
-    },
-    text: {
-      primary: '#333333', // Dark gray for main text
-      secondary: '#81d4fa' // Lighter gray for secondary text
-    },
-    background: {
-      default: '#f5f5f5', // Light gray background
-      paper: '#ffffff' // White for cards
-    }
-  },
-  components: {
-    MuiTab: {
-      styleOverrides: {
-        root: {
-          color: '#808080', // Default text color (gray)
-          backgroundColor: 'transparent', // Transparent background
-          '&.Mui-selected': {
-            color: '#333333' // Darker gray when selected
-          }
-        }
-      }
-    },
-    MuiTabScrollButton: {
-      styleOverrides: {
-        root: {
-          color: '#808080', // Gray for scroll buttons
-          '&.Mui-disabled': {
-            color: '#cccccc' // Light gray for disabled buttons
-          }
-        }
-      }
-    }
-  }
-});
-
-const useStyles = makeStyles((theme) => ({
-  dropdownContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    padding: theme.spacing(2),
-    maxWidth: '900px',
-    flexWrap: 'wrap',
-    gap: theme.spacing(2)
-  },
-  textField: {
-    minWidth: 150,
-    '& .MuiOutlinedInput-root': {
-      borderRadius: '30px'
-    }
-  },
-  formControl: {
-    minWidth: 200,
-    marginRight: theme.spacing(2)
-  },
-  container: {
-    height: 'fit-content',
-    minHeight: '404px',
-    margin: '16px auto',
-    padding: '16px'
-  }
-}));
-
-function nameToURL(name) {
-  const processedName = name.replaceAll(' ', '+');
-  return 'https://hophacks-organizers.s3.us-east-1.amazonaws.com/' + processedName + '.jpg';
-}
-
 export default function TeamPage() {
+  const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
   const [teams, setTeams] = useState({});
   const [alumni, setAlumni] = useState([]);
-  const [view, setView] = useState('Current Organizers'); // Dropdown selection
-  const [searchQuery, setSearchQuery] = useState(''); // Search bar input
+  const [view, setView] = useState('Current Organizers');
+  const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState('desc');
-  const classes = useStyles();
 
+  // Fetch data
   useEffect(() => {
     fetch('/data/teams.json')
       .then((response) => {
@@ -121,38 +51,23 @@ export default function TeamPage() {
       .catch(() => console.error('Error fetching alumni'));
   }, []);
 
+  // Handle tab switching based on search
   useEffect(() => {
-    if (view === 'Current Organizers') {
-      let matchingTabIndex = tabIndex; // Default to current tabIndex
-
-      // Check if there are matches in the current tab
-      let matchesInCurrentTab =
-        teams[tabIndex]?.members.filter(
-          (member) =>
-            member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            member.role?.toLowerCase().includes(searchQuery.toLowerCase())
-        ) || [];
+    if (view === 'Current Organizers' && searchQuery && teams[tabIndex]) {
+      // Check if there are matches in current tab
+      let matchesInCurrentTab = filterTeamMembers(teams[tabIndex].members, searchQuery);
 
       // If no matches in current tab, search other tabs
-      if (matchesInCurrentTab.length === 0 && searchQuery) {
+      if (matchesInCurrentTab.length === 0) {
         for (let i = 0; i < Object.keys(teams).length; i++) {
-          if (i !== tabIndex) {
-            const matchesInOtherTab = teams[i]?.members.filter(
-              (member) =>
-                member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                member.role?.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            if (matchesInOtherTab && matchesInOtherTab.length > 0) {
-              matchingTabIndex = i; // Update to the tab with matches
+          if (i !== tabIndex && teams[i]) {
+            const matchesInOtherTab = filterTeamMembers(teams[i].members, searchQuery);
+            if (matchesInOtherTab.length > 0) {
+              setTabIndex(i); // Switch to the tab with matches
               break;
             }
           }
         }
-      }
-
-      // Switch to the tab with matches if it's different from the current tabIndex
-      if (matchingTabIndex !== tabIndex) {
-        setTabIndex(matchingTabIndex);
       }
     }
   }, [searchQuery, teams, tabIndex, view]);
@@ -164,50 +79,79 @@ export default function TeamPage() {
     setTabIndex(newIndex);
   };
 
-  const filteredTeams = teams[tabIndex]?.members.filter(
-    (member) =>
-      member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      member.role?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter teams based on search query
+  const filteredTeams = teams[tabIndex]?.members
+    ? filterTeamMembers(teams[tabIndex].members, searchQuery)
+    : [];
 
-  const filteredAlumni = [...alumni]
-    .filter(
-      (member) =>
-        member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        member.role?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => (sortOrder === 'asc' ? a.year - b.year : b.year - a.year));
+  // Filter and sort alumni
+  const filteredAlumni = alumni ? filterTeamMembers(alumni, searchQuery) : [];
+  const sortedAlumni = sortAlumni(filteredAlumni, sortOrder);
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex flex-col items-center min-h-screen bg-[#172759]">
-        <div className="w-full flex flex-col items-center pt-20">
-          <Typography variant="h3" className="pb-1 text-[#e1f5fe]" style={{ fontWeight: 'bold' }}>
+      <div className={classes.root}>
+        {/* Header */}
+        <div className={classes.header}>
+          <Typography variant="h3" className={classes.title}>
             Our team
           </Typography>
-          <Typography className="pb-7 text-[#e1f5fe]">
+          <Typography className={classes.subtitle}>
             Meet the team that organizes HopHacks
           </Typography>
         </div>
 
-        {/* Dropdown and Search Bar */}
+        {/* Filters */}
         <Box className={classes.dropdownContainer}>
-          <FormControl className={classes.formControl}>
-            <Select value={view} onChange={(e) => setView(e.target.value)}>
+          <FormControl className={classes.formControl} variant="outlined">
+            <Select
+              value={view}
+              onChange={(e) => setView(e.target.value)}
+              MenuProps={{
+                classes: { paper: classes.selectMenu },
+                anchorOrigin: {
+                  vertical: 'bottom',
+                  horizontal: 'left'
+                },
+                getContentAnchorEl: null
+              }}
+              inputProps={{
+                style: { color: '#e1f5fe' }
+              }}
+            >
               <MenuItem value="Current Organizers">Current Organizers</MenuItem>
               <MenuItem value="Alumni">Alumni</MenuItem>
             </Select>
           </FormControl>
+
           <TextField
             placeholder="I'm looking for..."
             variant="outlined"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={classes.textField}
+            InputProps={{
+              style: { color: '#e1f5fe' }
+            }}
           />
-          {view == 'Alumni' && (
-            <FormControl className={classes.formControl} disabled={view !== 'Alumni'}>
-              <Select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+
+          {view === 'Alumni' && (
+            <FormControl className={classes.formControl} variant="outlined">
+              <Select
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                MenuProps={{
+                  classes: { paper: classes.selectMenu },
+                  anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                  },
+                  getContentAnchorEl: null
+                }}
+                inputProps={{
+                  style: { color: '#e1f5fe' }
+                }}
+              >
                 <MenuItem value="asc">Year (Ascending)</MenuItem>
                 <MenuItem value="desc">Year (Descending)</MenuItem>
               </Select>
@@ -217,7 +161,7 @@ export default function TeamPage() {
 
         {/* Tabs */}
         {view === 'Current Organizers' && (
-          <Box className="flex justify-center w-full">
+          <Box className={classes.tabsContainer}>
             <Tabs
               value={tabIndex}
               onChange={(e, newIndex) => handleSetTabIndex(newIndex, true)}
@@ -236,15 +180,13 @@ export default function TeamPage() {
           </Box>
         )}
 
+        {/* Team/Alumni Cards */}
         <Container className={classes.container}>
-          {/* Cards */}
-          <Grid container spacing={2} className="flex justify-center">
+          <Grid container spacing={2} className={classes.gridContainer}>
             {view === 'Current Organizers' &&
-              filteredTeams &&
               filteredTeams.map((member) => (
                 <Grid item key={member.name}>
                   <OrganizerCard
-                    key={member.name}
                     name={member.name}
                     position={member.role ?? teams[tabIndex].defaultRole}
                     image={nameToURL(member.name)}
@@ -256,11 +198,11 @@ export default function TeamPage() {
                   />
                 </Grid>
               ))}
+
             {view === 'Alumni' &&
-              filteredAlumni.map((member) => (
+              sortedAlumni.map((member) => (
                 <Grid item key={member.name}>
                   <AlumniCard
-                    key={member.name}
                     name={member.name}
                     position={member.role ?? 'Alumnus'}
                     image={member.image ?? 'default'}
