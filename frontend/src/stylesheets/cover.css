@@ -1,5 +1,5 @@
 .pageBackground {
-  background-image: url('https://hophacks-image.s3.us-east-1.amazonaws.com/main_page.png');
+  background-image: url('https://hophacks-image.s3.us-east-1.amazonaws.com/hophacks_title_layers.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -13,16 +13,18 @@
 
 .textHeaderContainer {
   position: absolute;
-  left: 37.5%;
-  top: 58%;
+  left: 51%;
+  top: 54%;
   transform: translate(-50%, -50%);
+  text-align: left;
+  width: max-content;
 }
 
 .textHeader {
   font-family: Anton, sans-serif;
   font-weight: 400;
-  font-size: 122px;
-  line-height: 110.5px;
+  font-size: 140px;
+  line-height: 120px;
   letter-spacing: 5%;
   color: #ffffff;
   text-transform: uppercase;
@@ -39,28 +41,39 @@
   text-transform: inherit;
 }
 
+.hophacks-logo {
+  position: absolute;
+  top: -20px;
+  left: 190px;
+  width: 200px;
+  height: auto;
+  z-index: 1;
+}
+
 .textSubtextContainer {
   position: absolute;
-  left: 46%;
-  top: 82%;
+  left: 61.5%;
+  top: 77%;
   transform: translate(-50%, -50%);
+  text-align: left;
 }
 
 .textSubtext {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 42px;
+  font-size: 43px;
   line-height: 200px;
   letter-spacing: 5%;
-  color: #30598f;
+  color: #ffe188;
   text-transform: uppercase;
 }
 
 .detailsContainer {
   position: absolute;
-  left: 48%;
-  top: 92%;
+  left: 64%;
+  top: 83%;
   transform: translate(-50%, -50%);
+  width: max-content;
 }
 
 .details {
