@@ -178,6 +178,16 @@ const Nav = function Nav(props) {
           Organizers
         </Typography>
       </Button>
+      <Button
+        component={Link}
+        to="/Recap" //{history.push('/Recap')}
+        color="inherit"
+        className={classes.navBtn}
+      >
+        <Typography variant="h5" className={classes.title}>
+          Recap from 2024
+        </Typography>
+      </Button>
       <Button component={Link} to="/teamMatching" color="inherit" className={classes.navBtn}>
         <Typography variant="h5" className={classes.title}>
           Team Matching

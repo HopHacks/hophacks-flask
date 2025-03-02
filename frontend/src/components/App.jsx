@@ -28,6 +28,7 @@ import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
 import Login from './user_auth/Login'; //adjusted to be new path
 import Tracks from './tracks/Tracks.jsx';
+import Recap from './recap.jsx';
 
 import SignUp from './user_auth/signup/SignUp';
 // import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new paths
@@ -122,6 +123,10 @@ export default function App() {
 
                   <Route path="/tracks">
                     <Tracks />
+                  </Route>
+
+                  <Route path="/Recap">
+                    <Recap />
                   </Route>
 
                   <Route path="/">
