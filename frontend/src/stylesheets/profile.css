@@ -12,7 +12,7 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 100% 100%;
-  background-image: url('https://hophacks-website.s3.amazonaws.com/images/About.png'); 
+  background-image: url('https://hophacks-website.s3.amazonaws.com/images/About.png');
   /* updated image */
   background-attachment: fixed;
   /* background-color: #e1f1ff; */
