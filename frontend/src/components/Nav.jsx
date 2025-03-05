@@ -183,6 +183,11 @@ const Nav = function Nav(props) {
           Team Matching
         </Typography>
       </Button>
+      <Button component={Link} to="/Recap" color="inherit" className={classes.navBtn}>
+        <Typography variant="h5" className={classes.title}>
+          Recap
+        </Typography>
+      </Button>
       {!props.isLoggedIn && (
         <Button
           onClick={() => {
