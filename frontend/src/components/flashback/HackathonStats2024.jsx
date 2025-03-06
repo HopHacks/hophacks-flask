@@ -36,7 +36,8 @@ const styles = {
   header: {
     fontSize: '24px',
     fontWeight: 'bold',
-    marginBottom: '40px'
+    marginBottom: '40px',
+    color: 'white'
   },
   statsContainer: {
     display: 'flex',

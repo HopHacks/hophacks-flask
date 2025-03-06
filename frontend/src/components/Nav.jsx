@@ -178,14 +178,14 @@ const Nav = function Nav(props) {
           Team
         </Typography>
       </Button>
-      <Button component={Link} to="/teamMatching" color="inherit" className={classes.navBtn}>
-        <Typography variant="h5" className={classes.title}>
-          Team Matching
-        </Typography>
-      </Button>
       <Button component={Link} to="/Recap" color="inherit" className={classes.navBtn}>
         <Typography variant="h5" className={classes.title}>
           Recap
+        </Typography>
+      </Button>
+      <Button component={Link} to="/teamMatching" color="inherit" className={classes.navBtn}>
+        <Typography variant="h5" className={classes.title}>
+          Team Matching
         </Typography>
       </Button>
       {!props.isLoggedIn && (

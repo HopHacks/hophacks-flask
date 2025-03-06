@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
 
   title: {
     fontWeight: 'bold',
-    color: theme.custom?.teamPage.header.titleColor || '#e1f5fe',
+    color: 'white',
     paddingBottom: theme.spacing(0.5)
   },
 
   subtitle: {
-    color: theme.custom?.teamPage.header.subtitleColor || '#e1f5fe',
+    color: 'white',
     paddingBottom: theme.spacing(3.5)
   },
 

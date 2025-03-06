@@ -136,7 +136,6 @@ function ProjectHighlights() {
             />
           ))}
         </div>
-
         <button
           onClick={() => {
             const yearUrls = {
@@ -148,7 +147,7 @@ function ProjectHighlights() {
           }}
           style={styles.viewAllButton}
         >
-          View All Projects
+          {`View All Projects From ${selectedYear}`}
         </button>
       </div>
     </div>
@@ -169,9 +168,12 @@ const styles = {
     marginBottom: '20px'
   },
   header: {
-    fontSize: '24px',
+    fontSize: '36px',
     fontWeight: 'bold',
-    textAlign: 'left'
+    textAlign: 'center',
+    marginTop: '16px',
+    marginBottom: '24px',
+    color: 'white'
   },
   viewAllButton: {
     backgroundColor: '#ff5722',
@@ -181,7 +183,8 @@ const styles = {
     padding: '10px 20px',
     fontSize: '16px',
     cursor: 'pointer',
-    marginLeft: '10px'
+    marginLeft: '10px',
+    height: '48px'
   },
   buttonContainer: {
     display: 'flex',
@@ -209,7 +212,7 @@ const styles = {
     display: 'flex',
     gap: '20px',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start'
+    justifyContent: 'center'
   },
   card: {
     border: '1px solid #ccc',
@@ -225,7 +228,7 @@ const styles = {
   },
   contentContainer: {
     display: 'flex',
-    flexDirection: 'row', // Items in a horizontal row
+    flexDirection: 'column', // Items in a horizontal row
     justifyContent: 'center', // Center the row in the container
     alignItems: 'center', // Align items vertically in the center
     gap: '20px', // Space between the cards and the button

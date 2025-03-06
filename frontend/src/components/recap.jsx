@@ -3,7 +3,7 @@ import { ProjectHighlights, HackathonStats2024, ImagesFromPastYears } from './fl
 
 function Recap() {
   return (
-    <div>
+    <div className="bg-[#172759]">
       <ProjectHighlights />
       <ImagesFromPastYears />
       <HackathonStats2024 />
