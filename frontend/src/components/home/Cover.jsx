@@ -81,7 +81,7 @@ export default function Cover() {
           </div>
 
           <div className="detailsContainer">
-            <div className="details">September 13-15, 2025 · 250+ Hackers · 36 Hours</div>
+            <div className="details">September 12-14, 2025 · 250+ Hackers · 36 Hours</div>
           </div>
 
           {/* TODO: This is a image "button"... but not a real button */}

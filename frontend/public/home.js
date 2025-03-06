@@ -35,10 +35,10 @@ for (var i = 0; i < spriteImages.length; i++) {
   spriteImagesSrc.push(img.getAttribute('src'));
 }
 
-var initCanvasSlideshow = new CanvasSlideshow({
+/*var initCanvasSlideshow = new CanvasSlideshow({
   sprites: spriteImagesSrc,
   texts: texts,
   displacementImage: 'img/dmaps/2048x2048/ripple.jpg',
   fullScreen: true,
   centerSprites: false
-});
+});*/
