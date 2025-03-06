@@ -58,48 +58,50 @@ export default function Cover() {
     // );
 
     return (
-      <div className="pageBackground">
-        <div className="textHeaderContainer">
-          <img
-            src="https://hophacks-image.s3.us-east-1.amazonaws.com/logo2023.PNG"
-            alt="HopHacks Logo"
-            className="hophacks-logo"
-          />
-          <div className="textHeader">
-            <span className="larger-letter">H</span>OP
-            <br />
-            <span className="larger-letter">H</span>ACKS
+      <section id="cover" className="cover-section">
+        <div className="pageBackground">
+          <div className="textHeaderContainer">
+            <img
+              src="https://hophacks-image.s3.us-east-1.amazonaws.com/logo2023.PNG"
+              alt="HopHacks Logo"
+              className="hophacks-logo"
+            />
+            <div className="textHeader">
+              <span className="larger-letter">H</span>OP
+              <br />
+              <span className="larger-letter">H</span>ACKS
+            </div>
           </div>
-        </div>
 
-        <div className="textSubtextContainer">
-          <div className="textSubtext">
-            <span className="larger-letter">I</span>LLUMINATING&nbsp;&nbsp;
-            <span className="larger-letter">I</span>NNOVATIONS
+          <div className="textSubtextContainer">
+            <div className="textSubtext">
+              <span className="larger-letter">I</span>LLUMINATING&nbsp;&nbsp;
+              <span className="larger-letter">I</span>NNOVATIONS
+            </div>
           </div>
-        </div>
 
-        <div className="detailsContainer">
-          <div className="details">September 13-15, 2025 · 250+ Hackers · 36 Hours</div>
-        </div>
+          <div className="detailsContainer">
+            <div className="details">September 13-15, 2025 · 250+ Hackers · 36 Hours</div>
+          </div>
 
-        {/* TODO: This is a image "button"... but not a real button */}
-        {/*
-        <div className={classes.tempRegisterButton}>
-          <img
-            src={img('register_button_alone.png')}
-            //style={{ top: center(scale.current) }}
-            style={{ width: '20%' }}
-            alt="image_could_not_load"
-            onClick={() => {
-              // window.location = '/register/login';
-            }}
-          />
-        </div>
-          */}
+          {/* TODO: This is a image "button"... but not a real button */}
+          {/*
+          <div className={classes.tempRegisterButton}>
+            <img
+              src={img('register_button_alone.png')}
+              //style={{ top: center(scale.current) }}
+              style={{ width: '20%' }}
+              alt="image_could_not_load"
+              onClick={() => {
+                // window.location = '/register/login';
+              }}
+            />
+          </div>
+            */}
 
-        {/* <button> Register</button> */}
-      </div>
+          {/* <button> Register</button> */}
+        </div>
+      </section>
     );
   }
 }

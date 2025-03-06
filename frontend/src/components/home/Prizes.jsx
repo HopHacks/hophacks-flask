@@ -1,68 +1,24 @@
-import React from 'react';
-// TODO: style this in a way where we can use Box/is consistent with the other sections
-// import { Box } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-
-const useStyles = makeStyles({
-  title: {
-    color: '#061a40',
-    fontFamily: 'Inter',
-    fontWeight: 'bold',
-    // textAlign: 'center',
-    fontSize: '375%'
-    // margin: 'auto'
-  },
-  platform: {
-    margin: 'auto',
-    width: '70%'
-  }
-});
-
-function img(url) {
-  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-}
+import '../../stylesheets/prizes.css';
 
 export default function Prizes() {
-  const classes = useStyles();
-
   return (
-    <>
-      <Grid container spacing={2} alignItems="center" id="prizes">
-        <Typography className={classes.title} variant="h3" gutterBottom>
-          Prizes
-        </Typography>
-        {/* TODO: replace with redesigned prize tracks and/or new track page */}
-        <div style={{ textAlign: 'center' }}>
-          <img src={img('prize2023Fall.PNG')} className={classes.platform} />
-        </div>
-        <div className="prizeStampDiv">
-          <img className="prizeStamp" src={img('firstPlace.png')} />
-          <img className="prizeStamp" src={img('secondPlace.png')} />
-          <img className="prizeStamp" src={img('thirdPlace.png')} />
-        </div>
-      </Grid>
-      <div>
-        <div className="prizeTrackDiv">
-          <img className="prizeTrackStamp" src={img('PSW.png')} />
-          <img className="prizeTrackStamp" src={img('IAA1.png')} />
-          <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
-          <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
-          <img className="prizeTrackStamp" src={img('FFU1.png')} />
-          <img className="prizeTrackStamp" src={img('FFU2.png')} />
-          <img className="prizeTrackStamp" src={img('FFU3.png')} />
-        </div>
+    <section id="prizes" className="prizes-section">
+      <div className="background">
+        <img
+          src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/home/prizes_background.png"
+          alt="Prizes section background"
+        />
       </div>
-      <div>
-        <div className="prizeTrackDiv">
-          <img className="prizeTrackStamp" src={img('BGBTrack1.png')} />
-          <img className="prizeTrackStamp" src={img('BGBTrack2.png')} />
-          <img className="prizeTrackStampHidden" src={img('pstcwinner.svg')} />
-          <img className="prizeTrackStamp" src={img('CBID1.png')} />
-          <img className="prizeTrackStamp" src={img('CBID2.png')} />
-        </div>
+      <div className="container">
+        <h2>Prizes</h2>
+        {/*<div className="content">
+          <p>
+            Teams of up to 4 university students work on projects from scratch. Teams present their projects
+            to judges and compete for prizes ($1024, $512, $256 for top 3 winners
+            and sponsor specific prizes)!
+          </p>
+        </div>*/}
       </div>
-    </>
+    </section>
   );
 }

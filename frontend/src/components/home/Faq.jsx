@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -594,5 +594,130 @@ export default function Faq() {
         </Accordion>
       </Box>
     </Box>
+  );
+}*/
+
+import React from 'react';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import '@fontsource/rosarivo';
+import '../../stylesheets/faq.css';
+
+// Define styles using makeStyles
+const useStyles = makeStyles(() => ({
+  colorBackground: {
+    backgroundColor: 'rgba(30, 58, 138, 0.8) !important',
+    borderRadius: '8px !important',
+    border: '1px solid rgba(100, 116, 139, 0.3) !important'
+  },
+  text: {
+    color: '#ffffff !important'
+  },
+  expand_icon: {
+    color: '#cbd5e1 !important'
+  },
+  content: {
+    padding: '8px 16px',
+    '&.Mui-expanded': {
+      minHeight: 'auto'
+    }
+  },
+  expanded: {
+    margin: '0 !important'
+  },
+  MuiAccordionroot: {
+    boxShadow: 'none !important',
+    '&:before': {
+      display: 'none'
+    },
+    '&.Mui-expanded': {
+      margin: '0'
+    }
+  },
+  MuiAccordionDetailroot: {
+    backgroundColor: 'rgba(23, 37, 84, 0.7)',
+    padding: '0 16px 8px 40px !important'
+  }
+}));
+
+const faqData = [
+  {
+    question: 'What is a hackathon?',
+    answer:
+      'A hackathon is a 36-hour event where students come together to work on innovative projects.'
+  },
+  {
+    question: 'Who can participate?',
+    answer: 'University students from any institution can participate in HopHacks.'
+  },
+  {
+    question: 'Where will HopHacks take place?',
+    answer: 'HopHacks will take place at Johns Hopkins University Homewood campus.'
+  },
+  {
+    question: 'What about the FREE FOOD?',
+    answer: 'We provide meals, snacks, and beverages throughout the event for all participants.'
+  },
+  {
+    question: 'When can I pick up parking passes?',
+    answer: 'Parking passes will be available for pickup at registration.'
+  },
+  {
+    question: 'Will there be travel reimbursement?',
+    answer: 'Yes, limited travel reimbursements are available. Please contact us for details.'
+  }
+];
+
+export default function Faq() {
+  const classes = useStyles();
+
+  return (
+    <section id="faq" className="faq-section">
+      <div className="background">
+        <img
+          src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/home/faq_background.png"
+          alt="FAQ section background"
+        />
+      </div>
+      <div className="header-container">
+        <h2>FAQ</h2>
+      </div>
+      <div className="container">
+        <div className="faq-accordion">
+          {faqData.map((item, index) => (
+            <Box key={index} marginTop={'0.25rem'}>
+              <Accordion
+                className={classes.colorBackground}
+                elevation={0}
+                classes={{
+                  root: classes.MuiAccordionroot,
+                  expanded: classes.expanded
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon className={classes.expand_icon} />}
+                  classes={{
+                    root: classes.content,
+                    expanded: classes.expanded
+                  }}
+                >
+                  <Typography className={classes.text} variant="h6">
+                    <b>{item.question}</b>
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails classes={{ root: classes.MuiAccordionDetailroot }}>
+                  <Typography className={classes.text}>{item.answer}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            </Box>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
