@@ -111,7 +111,9 @@ canvas {
 
 @font-face {
   font-family: vcrOsdMono;
-  src: local('vcrOsdMono'), url(./../fonts/VCR_OSD_MONO_1.001.ttf) format('truetype');
+  src:
+    local('vcrOsdMono'),
+    url(./../fonts/VCR_OSD_MONO_1.001.ttf) format('truetype');
 }
 
 /* TODO: These are leftoever from old site Move to inline? */
@@ -312,7 +314,9 @@ canvas {
 .general-track > .title {
   color: var(--secondarypurple, #cc6ba3);
   text-align: left;
-  font: 700 40px/64px 'Raleway', sans-serif;
+  font:
+    700 40px/64px 'Raleway',
+    sans-serif;
   position: relative;
   width: 269.65px;
 }
@@ -320,7 +324,9 @@ canvas {
 .general-track > .body {
   color: var(--lightpurple, #f7f3ff);
   text-align: left;
-  font: 200 20px/32px 'Raleway', sans-serif;
+  font:
+    200 20px/32px 'Raleway',
+    sans-serif;
 }
 
 .tracks .keyboard {
@@ -349,7 +355,9 @@ canvas {
 .patient-track > .body {
   color: var(--lightpurple, #f7f3ff);
   text-align: right;
-  font: 200 20px/32px 'Raleway', sans-serif;
+  font:
+    200 20px/32px 'Raleway',
+    sans-serif;
 }
 
 .jhuiaa-track {
@@ -362,7 +370,9 @@ canvas {
 .jhuiaa-track > .body {
   color: var(--lightpurple, #f7f3ff);
   text-align: left;
-  font: 200 20px/32px 'Raleway', sans-serif;
+  font:
+    200 20px/32px 'Raleway',
+    sans-serif;
 }
 
 .tracks .guitar {
