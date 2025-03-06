@@ -1,22 +1,22 @@
 /* eslint-disable react/no-unknown-property */
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
-import Sponsors from './home/Sponsors';
-import Schedule from './home/Schedule';
-import About from './home/About';
-import Faq from './home/Faq';
-import Cover from './home/Cover';
-import LoadingAnimation from './home/LoadingAnimation';
-import { useState, useEffect } from 'react';
-import Footer from './Footer';
-import Prizes from './home/Prizes';
-import Tracks from './home/Tracks';
+//import React from 'react';
+//import Container from '@material-ui/core/Container';
+//import { makeStyles } from '@material-ui/core/styles';
+//import Sponsors from './home/Sponsors';
+//import Schedule from './home/Schedule';
+//import About from './home/About';
+//import Faq from './home/Faq';
+//import Cover from './home/Cover';
+//import LoadingAnimation from './home/LoadingAnimation';
+//import { useState, useEffect } from 'react';
+//import Footer from './Footer';
+//import Prizes from './home/Prizes';
+//import Tracks from './home/Tracks';
 // import { motion, useScroll } from 'framer-motion/dist/framer-motion'; // Needs to be added to requirements.txt
 // import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
 // CODE QUALITY: need to standardize styling
-const useStyles = makeStyles({
+/*const useStyles = makeStyles({
   logo: {
     top: '25%',
     width: '60vw', // This is centered, 20 - 60 - 20
@@ -49,12 +49,12 @@ const useStyles = makeStyles({
     padding: '30px',
     backgroundColor: '#c8e7fa'
   }
-});
+});*/
 
-export default function Home() {
-  const [loading, setLoading] = useState(false);
+/*export default function Home() {
+  //const [loading, setLoading] = useState(false);
 
-  const classes = useStyles();
+  //const classes = useStyles();
 
   const [, setWindowSize] = useState({
     width: window.innerWidth,
@@ -63,7 +63,7 @@ export default function Home() {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      //setLoading(false);
     }, 0);
 
     function handleWindowResize() {
@@ -91,24 +91,24 @@ export default function Home() {
   //     },
   //   },
   // };
-  return (
+  /*return (
     <div className={classes.colorBackground}>
       {loading ? (
         <LoadingAnimation />
       ) : (
         <div>
           <Cover />
+          <About />
+          <Prizes />\
+          <Faq />
           <br></br>
           <br></br>
           <br></br>
           <br></br>
           <Container fixed>
-            <About />
-            <Prizes />
             <Schedule />
             <Tracks />
             <Sponsors />
-            <Faq />
           </Container>
           <br></br>
           <br></br>
@@ -116,6 +116,43 @@ export default function Home() {
           <Footer />
         </div>
       )}
+    </div>
+  );
+
+  return (
+    <div className="bg-[#bfeafc] min-h-screen">
+      <Cover />
+      <Prizes />
+      <Footer />
+    </div>
+  );
+}*/
+
+import Navigation from './home/navigation';
+import Cover from './home/Cover';
+import AboutSection from './home/About';
+import PrizesSection from './home/Prizes';
+import FAQSection from './home/Faq';
+
+export default function Home() {
+  return (
+    <div className="snap-y snap-mandatory h-screen overflow-y-scroll">
+      <Navigation />
+      <div className="snap-start">
+        <Cover />
+      </div>
+      <div className="snap-start">
+        <AboutSection />
+      </div>
+      <div className="snap-start">
+        <PrizesSection />
+      </div>
+      {/*<div className="snap-start">
+        <TracksSection />
+      </div>*/}
+      <div className="snap-start">
+        <FAQSection />
+      </div>
     </div>
   );
 }
