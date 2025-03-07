@@ -80,7 +80,9 @@ export default function About() {
       <div className="container">
         <div className="content">
           <p>
-            HopHacks is a 36 hour annual Hackathon held at the Johns Hopkins University that encourages engineers, designers, and entrepreneurs to explore new ideas and create new applications.
+            HopHacks is a 36 hour annual Hackathon held at the Johns Hopkins University that
+            encourages engineers, designers, and entrepreneurs to explore new ideas and create new
+            applications.
           </p>
         </div>
         <h2>About</h2>
