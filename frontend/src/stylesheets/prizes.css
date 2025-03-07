@@ -36,10 +36,9 @@
   background: rgba(30, 58, 138, 0.7);
   padding: 30px;
   border-radius: 20px;
-  /* Adjust these margins to move the text box around */
   margin-left: auto;
-  margin-right: 5%;
-  margin-top: 15%;
+  margin-right: 25%;
+  margin-top: 25%;
 }
 
 .prizes-section p {

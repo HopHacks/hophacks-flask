@@ -37,7 +37,7 @@
     padding: 30px;
     border-radius: 20px;
     margin-left: auto;
-    margin-right: 5%;
+    margin-right:  15%;
     margin-top: 15%;
   }
   
@@ -45,7 +45,7 @@
     font-size: 20px;
     line-height: 1.6;
     color: white;
-    text-align: right;
+    text-align: center;
   }
   
   .about-section h2 {

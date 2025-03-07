@@ -62,7 +62,7 @@ export default function Cover() {
         <div className="pageBackground">
           <div className="textHeaderContainer">
             <img
-              src="https://hophacks-image.s3.us-east-1.amazonaws.com/logo2023.PNG"
+              src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/hophacks2025logo.png"
               alt="HopHacks Logo"
               className="hophacks-logo"
             />

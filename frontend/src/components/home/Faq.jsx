@@ -608,7 +608,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import '@fontsource/rosarivo';
 import '../../stylesheets/faq.css';
 
-// Define styles using makeStyles
 const useStyles = makeStyles(() => ({
   colorBackground: {
     backgroundColor: 'rgba(30, 58, 138, 0.8) !important',

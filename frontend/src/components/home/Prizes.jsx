@@ -11,13 +11,13 @@ export default function Prizes() {
       </div>
       <div className="container">
         <h2>Prizes</h2>
-        {/*<div className="content">
-          <p>
-            Teams of up to 4 university students work on projects from scratch. Teams present their projects
-            to judges and compete for prizes ($1024, $512, $256 for top 3 winners
-            and sponsor specific prizes)!
-          </p>
-        </div>*/}
+          <div className="content">
+            <p>
+              Teams of up to 4 university students work on projects from scratch. Teams present their projects
+              to judges and compete for prizes ($1024, $512, $256 for top 3 winners
+              and sponsor specific prizes)!
+            </p>
+          </div>
       </div>
     </section>
   );
