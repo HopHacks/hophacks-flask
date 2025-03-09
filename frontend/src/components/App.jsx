@@ -29,7 +29,7 @@ import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 //import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
 //import Login from './user_auth/Login'; //adjusted to be new path
-import Tracks from './tracks/Tracks.jsx';
+// import Tracks from './tracks/Tracks.jsx';
 
 //import SignUp from './user_auth/signup/SignUp';
 //import SignUp from './user_auth/signup/SignUp';
