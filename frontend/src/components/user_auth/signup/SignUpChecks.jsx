@@ -144,7 +144,8 @@ export default function SignUpChecks(props) {
           <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               * I authorize you to share my application/registration information with Major League
-              Hacking for event administration, ranking, and MLH administration in-line with the{' '}
+              Hacking for event administration, ranking, and MLH administration in-line with
+              the{' '}
             </span>
             <a
               href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
