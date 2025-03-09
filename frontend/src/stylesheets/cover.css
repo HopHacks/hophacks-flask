@@ -1,0 +1,86 @@
+.pageBackground {
+  background-image: url('https://hophacks-image.s3.us-east-1.amazonaws.com/hophacks_title_layers.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.textHeaderContainer {
+  position: absolute;
+  left: 51%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+  width: max-content;
+}
+
+.textHeader {
+  font-family: Anton, sans-serif;
+  font-weight: 400;
+  font-size: 140px;
+  line-height: 120px;
+  letter-spacing: 5%;
+  color: #ffffff;
+  text-transform: uppercase;
+  white-space: pre-line;
+}
+
+.larger-letter {
+  font-size: 1.1em; /* Slightly larger than the parent */
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-transform: inherit;
+}
+
+.hophacks-logo {
+  position: absolute;
+  top: -20px;
+  left: 190px;
+  width: 200px;
+  height: auto;
+  z-index: 1;
+}
+
+.textSubtextContainer {
+  position: absolute;
+  left: 61.5%;
+  top: 77%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+}
+
+.textSubtext {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 43px;
+  line-height: 200px;
+  letter-spacing: 5%;
+  color: #ffe188;
+  text-transform: uppercase;
+}
+
+.detailsContainer {
+  position: absolute;
+  left: 64%;
+  top: 83%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+}
+
+.details {
+  font-family: Open Sans, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 200px;
+  letter-spacing: 5%;
+  color: #ffffff;
+}
