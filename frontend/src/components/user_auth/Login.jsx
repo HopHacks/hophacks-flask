@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
@@ -41,7 +41,7 @@ function Login(props) {
   }
 
   const signInCardDesktop = (
-    <Card class="card" style={{ color: '#ffffff', height: '70%' }}>
+    <Card class="card" style={{ color: '#ffffff', height: '80%', width: '70%' }}>
       <CardContent>
         <Typography class="card-title">LOGIN</Typography>
         <div className="text-field">
@@ -115,7 +115,7 @@ function Login(props) {
   );
 
   const signInCardMobile = (
-    <Card class="card">
+    <Card class="card" style={{ height: '70%', width: '70%' }}>
       <CardContent>
         <Typography class="card-title">LOGIN</Typography>
         <TextField
@@ -172,17 +172,17 @@ function Login(props) {
     </Card>
   );
 
-  const mottoMobile = (
-    <div style={{ marginTop: '10%' }}>
-      <Typography class="mobile-header">HOPHACKS</Typography>
-      <Typography class="mobile-motto-text" style={{ marginTop: '15%' }}>
-        Hack Your Passion Into Reality
-      </Typography>
-      <Typography class="mobile-motto-subtext" style={{ marginTop: '-3%' }}>
-        New Motto
-      </Typography>
-    </div>
-  );
+  // const mottoMobile = (
+  //   <div style={{ marginTop: '10%' }}>
+  //     <Typography class="mobile-header">HOPHACKS</Typography>
+  //     <Typography class="mobile-motto-text" style={{ marginTop: '15%' }}>
+  //       Hack Your Passion Into Reality
+  //     </Typography>
+  //     <Typography class="mobile-motto-subtext" style={{ marginTop: '-3%' }}>
+  //       New Motto
+  //     </Typography>
+  //   </div>
+  // );
 
   // check login status
   if (props.isLoggedIn) {
@@ -195,21 +195,16 @@ function Login(props) {
 
   if (isMobile) {
     return (
-      <div className="root">
-        {mottoMobile}
+      <div className="flex flex-col items-center justify-center h-[calc(100dvh-67px)]">
+        {/* {mottoMobile} */}
         {signInCardMobile}
       </div>
     );
   }
 
   return (
-    <div className="root">
+    <div className="flex flex-col items-center justify-center h-[calc(100dvh-67px)]">
       {signInCardDesktop}
-      <Grid container justifyContent="center" alignItems="center">
-        <Grid item xs={5}>
-          {/*signInCardDesktop*/}
-        </Grid>
-      </Grid>
     </div>
   );
 }
