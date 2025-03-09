@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
-        run: npm install -g prettier@2.8.8
+        run: npm install -g prettier@3.5.1
       - name: Run Prettier
         working-directory: ./frontend
         run: npx prettier "**/*.{js,jsx,ts,tsx}" --check
