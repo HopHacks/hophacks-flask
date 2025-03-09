@@ -66,8 +66,8 @@ export const AlumniCard = ({ name, position, image, github, linkedin, year }) =>
                     ? `${position}, ${year}`
                     : position
                   : year !== 0
-                    ? year
-                    : ''}
+                  ? year
+                  : ''}
               </p>
               <button
                 className="flip-button"
