@@ -14,7 +14,7 @@ import Home from './Home'; //temporarily took out home page
 //import Profile from './account/Profile'; //why does this not work!!!
 import Admin from './admin/Admin';
 import AnnouncementPanel from './admin/AnnouncementPanel';
-//import Nav from './Nav';
+import Nav from './Nav';
 //import EmailConfirmation from './EmailConfirmation';
 //import PasswordReset from './PasswordReset';
 //import RSVP from './RSVP';
@@ -55,7 +55,7 @@ export default function App() {
             <CssBaseline />
             <Router>
               <div>
-                {/*<Nav />*/}
+                <Nav />
 
                 <Switch>
                   <Route path="/assignments" component={Assignments} />
