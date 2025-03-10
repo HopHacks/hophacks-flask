@@ -87,11 +87,17 @@ const useStyles = makeStyles({
 const Navigation = function Navigation() {
   const classes = useStyles();
   const location = useLocation();
-  const isMobile = window.innerWidth <= 800;
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 800);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('cover');
-  // Only used on the home page – if not home, use location.pathname
   const isHome = location.pathname === '/';
+
+  // Update isMobile on window resize.
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 800);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Update scroll state and active section only if on home page
   useEffect(() => {
@@ -116,10 +122,10 @@ const Navigation = function Navigation() {
 
   // Define cover nav items (only active if home page, otherwise no active style)
   const coverSections = [
-    { id: 'cover', label: 'HOME' },
-    { id: 'about', label: 'ABOUT' },
-    { id: 'prizes', label: 'PRIZES' },
-    { id: 'faq', label: 'FAQ' }
+    { id: 'cover', label: 'HOME' }
+    // { id: 'about', label: 'ABOUT' },
+    // { id: 'prizes', label: 'PRIZES' },
+    // { id: 'faq', label: 'FAQ' }
   ];
 
   const coverNavItems = coverSections.map((section) => {

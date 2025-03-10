@@ -70,6 +70,16 @@ export default function Cover() {
               <span className="larger-letter">H</span>OP
               <br />
               <span className="larger-letter">H</span>ACKS
+              <div className="discordbtnContainer">
+                <a
+                  href="https://discord.gg/w2dWEuxY"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="discordbtn inline-block"
+                >
+                  <button className="join-discord">Join Discord!</button>
+                </a>
+              </div>
             </div>
           </div>
 
