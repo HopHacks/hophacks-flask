@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
+import { useLocation } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -13,19 +14,42 @@ import { withAuthProps } from '../util/auth';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
+  // AppBar fixed to the top with full width
+  appBar: {
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+    height: 50,
+    transition: 'height 0.3s ease',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    zIndex: 1100 // ensure it stays on top of other elements
+  },
+  toolbar: {
+    minHeight: '50px',
+    padding: '0 16px',
+    position: 'relative'
+  },
+  logo: {
+    display: 'flex',
+    alignItems: 'center'
+  },
   title: {
     fontFamily: 'Inter',
-    color: '#F7F3FF'
+    color: '#F7F3FF',
+    fontSize: '0.9rem'
   },
   hophacksButton: {
-    marginLeft: 20,
     marginRight: 20
   },
   navBtn: {
     textTransform: 'none',
-    margin: '0 1rem',
+    margin: '0 0.5rem',
+    padding: '4px 8px',
     opacity: 0.8,
     transition: 'opacity 0.3s ease',
+    fontSize: '0.8rem',
     '&:hover': {
       opacity: 1
     }
@@ -35,27 +59,44 @@ const useStyles = makeStyles({
     borderBottom: '2px solid white',
     opacity: 1
   },
+  drawerPaper: {
+    background: '#1D539F',
+    width: '100vw'
+  },
   icon: {
     color: 'white'
+  },
+  // Container for nav items; reserves 100px on right for the MLH banner.
+  navItemsContainer: {
+    marginLeft: 'auto',
+    marginRight: 100,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  mlhBanner: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    maxWidth: 100,
+    minWidth: 60,
+    width: '100%',
+    zIndex: 1200
   }
 });
 
-function img(url) {
-  return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-}
-
 const Navigation = function Navigation() {
   const classes = useStyles();
+  const location = useLocation();
   const isMobile = window.innerWidth <= 800;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('cover');
-  const [isScrolled, setIsScrolled] = useState(false);
+  // Only used on the home page – if not home, use location.pathname
+  const isHome = location.pathname === '/';
 
-  // Update scroll state and active section
+  // Update scroll state and active section only if on home page
   useEffect(() => {
+    if (!isHome) return;
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 50);
       const sections = ['cover', 'about', 'prizes', 'faq'];
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -71,9 +112,9 @@ const Navigation = function Navigation() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHome]);
 
-  // The cover page sections – these now use HashLinks to scroll to anchors
+  // Define cover nav items (only active if home page, otherwise no active style)
   const coverSections = [
     { id: 'cover', label: 'HOME' },
     { id: 'about', label: 'ABOUT' },
@@ -81,126 +122,148 @@ const Navigation = function Navigation() {
     { id: 'faq', label: 'FAQ' }
   ];
 
-  // Render cover nav items using HashLink for smooth scroll
-  const coverNavItems = coverSections.map((section) => (
-    <Button
-      key={section.id}
-      component={Link}
-      smooth
-      to={`/#${section.id}`}
-      className={`${classes.navBtn} ${activeSection === section.id ? classes.activeNavBtn : ''}`}
-    >
+  const coverNavItems = coverSections.map((section) => {
+    const isActive = isHome && activeSection === section.id;
+    return (
+      <Button
+        key={section.id}
+        component={Link}
+        smooth
+        to={`/#${section.id}`}
+        className={`${classes.navBtn} ${isActive ? classes.activeNavBtn : ''}`}
+      >
+        <Typography variant="body2" className={classes.title}>
+          {section.label}
+        </Typography>
+      </Button>
+    );
+  });
+
+  // Define other nav items with route paths and active matching via location.pathname
+  const otherNavItemsData = [
+    { path: '/team', label: 'TEAM' },
+    { path: '/Recap', label: 'RECAP' }
+  ];
+
+  /* Past Navigation items
+  <>
+    <Button component={Link} to="/team" color="inherit" className={classes.navBtn}>
       <Typography variant="h5" className={classes.title}>
-        {section.label}
+        Team
       </Typography>
     </Button>
-  ));
+    <Button component={Link} to="/Recap" color="inherit" className={classes.navBtn}>
+      <Typography variant="h5" className={classes.title}>
+        Recap
+      </Typography>
+    </Button>
+    {/*
+    <Button
+      component={Link}
+      onClick={() => {
+        history.push('/reset_password/:token');
+      }}
+      color="inherit"
+      className={classes.navBtn}
+    >
+      <Typography variant="h5" className={classes.title}>
+        Reset Password?
+      </Typography>
+    </Button>
+    <Button
+      component={Link}
+      onClick={() => {
+        history.push('/confirm_email/:token');
+      }}
+      color="inherit"
+      className={classes.navBtn}
+    >
+      <Typography variant="h5" className={classes.title}>
+        Email Confirmation
+      </Typography>
+    </Button>
+    <Button
+      component={Link}
+      onClick={() => {
+        history.push('/user_auth/signup/signupimage');
+      }}
+      color="inherit"
+      className={classes.navBtn}
+    >
+      <Typography variant="h5" className={classes.title}>
+        SignUp Image
+      </Typography>
+    </Button>
+    <Button
+      component={Link}
+      onClick={() => (window.location = '/#schedule')}
+      color="inherit"
+      className={classes.navBtn}
+    >
+      <Typography variant="h5" className={classes.title}>
+        Schedule
+      </Typography>
+    </Button>
+    <Button
+      component={Link}
+      onClick={() => (window.location = '/#prizes')}
+      color="inherit"
+      className={classes.navBtn}
+    >
+      <Typography variant="h5" className={classes.title}>
+        Prizes
+      </Typography>
+    </Button>
+    <Button
+      component={Link}
+      onClick={() => (window.location = '/#tracks')}
+      color="inherit"
+      className={classes.navBtn}
+    >
+      <Typography variant="h5" className={classes.title}>
+        Tracks
+      </Typography>
+    </Button>
+    <Button
+      component={Link}
+      onClick={() => (window.location = '/#sponsors')}
+      color="inherit"
+      className={classes.navBtn}
+    >
+      <Typography variant="h5" className={classes.title}>
+        Sponsors
+      </Typography>
+    </Button>
+    <Button
+      component={Link}
+      onClick={() => (window.location = '/#faq')}
+      color="inherit"
+      className={classes.navBtn}
+    >
+      <Typography variant="h5" className={classes.title}>
+        FAQ
+      </Typography>
+    </Button>
+  </>
+  */
 
-  // Other navigation items (as before)
-  const otherNavItems = (
-    <>
-      <Button component={Link} to="/team" color="inherit" className={classes.navBtn}>
-        <Typography variant="h5" className={classes.title}>
-          Team
-        </Typography>
-      </Button>
-      <Button component={Link} to="/Recap" color="inherit" className={classes.navBtn}>
-        <Typography variant="h5" className={classes.title}>
-          Recap
-        </Typography>
-      </Button>
-      {/*
+  const otherNavItems = otherNavItemsData.map((item) => {
+    const isActive = location.pathname === item.path;
+    return (
       <Button
+        key={item.path}
         component={Link}
-        onClick={() => {
-          history.push('/reset_password/:token');
-        }}
-        color="inherit"
-        className={classes.navBtn}
+        to={item.path}
+        className={`${classes.navBtn} ${isActive ? classes.activeNavBtn : ''}`}
       >
-        <Typography variant="h5" className={classes.title}>
-          Reset Password?
+        <Typography variant="body2" className={classes.title}>
+          {item.label}
         </Typography>
       </Button>
-      <Button
-        component={Link}
-        onClick={() => {
-          history.push('/confirm_email/:token');
-        }}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          Email Confirmation
-        </Typography>
-      </Button>
-      <Button
-        component={Link}
-        onClick={() => {
-          history.push('/user_auth/signup/signupimage');
-        }}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          SignUp Image
-        </Typography>
-      </Button>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/#schedule')}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          Schedule
-        </Typography>
-      </Button>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/#prizes')}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          Prizes
-        </Typography>
-      </Button>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/#tracks')}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          Tracks
-        </Typography>
-      </Button>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/#sponsors')}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          Sponsors
-        </Typography>
-      </Button>
-      <Button
-        component={Link}
-        onClick={() => (window.location = '/#faq')}
-        color="inherit"
-        className={classes.navBtn}
-      >
-        <Typography variant="h5" className={classes.title}>
-          FAQ
-        </Typography>
-      </Button>
-      */}
-    </>
-  );
+    );
+  });
 
-  // Combined navigation items for both cover and other sections
+  // Combined navigation items for cover sections and other items
   const navItems = (
     <>
       {coverNavItems}
@@ -208,124 +271,80 @@ const Navigation = function Navigation() {
     </>
   );
 
-  // AppBar style adjusts based on scroll
-  const appBarStyle = {
-    padding: isScrolled ? '8px 0' : '16px 0',
-    transition: 'all 0.3s ease'
-  };
-
+  // Mobile view
   if (isMobile) {
     return (
       <div>
-        <AppBar position="sticky" className={classes.drawer} style={appBarStyle}>
-          <Toolbar style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-            <section>
-              <Button component={Link} smooth to="/#cover" color="inherit">
-                <img src={img('logo2023.png')} width={'55px'} alt="HopHacks Logo" />
-              </Button>
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                onClick={() => setIsDrawerOpen(true)}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Drawer
-                open={isDrawerOpen}
-                onClose={() => setIsDrawerOpen(false)}
-                classes={{ paper: classes.drawer }}
-              >
-                <div>
-                  <IconButton onClick={() => setIsDrawerOpen(false)} className={classes.icon}>
-                    <ChevronLeftIcon />
-                  </IconButton>
-                </div>
-                <Divider />
-                {navItems}
-              </Drawer>
-              <a
-                id="mlh-trust-badge"
-                style={{
-                  display: 'block',
-                  maxWidth: '100px',
-                  minWidth: '60px',
-                  position: 'fixed',
-                  right: '50px',
-                  top: '0',
-                  width: '10%',
-                  zIndex: '10000'
-                }}
-                href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img
-                  src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-2025-white.svg"
-                  alt="Major League Hacking 2024 Hackathon Season"
-                  style={{ width: '100%' }}
-                />
-              </a>
-            </section>
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar className={classes.toolbar}>
+            <Button
+              component={Link}
+              smooth
+              to="/"
+              color="inherit"
+              className={classes.hophacksButton}
+            >
+              <img
+                src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/hophacks2025logo.png"
+                alt="HopHacks Logo"
+                width={'55px'}
+              />
+            </Button>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setIsDrawerOpen(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              open={isDrawerOpen}
+              onClose={() => setIsDrawerOpen(false)}
+              classes={{ paper: classes.drawerPaper }}
+            >
+              <div>
+                <IconButton onClick={() => setIsDrawerOpen(false)} className={classes.icon}>
+                  <ChevronLeftIcon />
+                </IconButton>
+              </div>
+              <Divider />
+              {navItems}
+            </Drawer>
+            <a
+              id="mlh-trust-badge"
+              className={classes.mlhBanner}
+              href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-2025-white.svg"
+                alt="Major League Hacking 2024 Hackathon Season"
+                style={{ width: '100%' }}
+              />
+            </a>
           </Toolbar>
         </AppBar>
       </div>
     );
   }
 
+  // Desktop view
   return (
-    <AppBar position="sticky" className={classes.drawer} style={appBarStyle}>
-      <Toolbar
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          position: 'relative'
-        }}
-      >
-        <Button
-          component={Link}
-          smooth
-          to="/#cover"
-          color="inherit"
-          className={classes.hophacksButton}
-          style={{ display: 'flex', alignItems: 'center' }}
-        >
+    <AppBar position="fixed" className={classes.appBar}>
+      <Toolbar className={classes.toolbar}>
+        <Button component={Link} smooth to="/" color="inherit" className={classes.hophacksButton}>
           <img
-            src="https://hophacks-website.s3.amazonaws.com/images/Hophacks_logo_clean.png"
+            src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/hophacks2025logo.png"
             alt="HopHacks Logo"
             width={'55px'}
           />
-          <Typography variant="h4" className={classes.title} style={{ marginLeft: '15px' }}>
-            HopHacks
-          </Typography>
         </Button>
-
-        <div
-          style={{
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            gap: '20px'
-          }}
-        >
-          {navItems}
-        </div>
-
+        <div className={classes.navItemsContainer}>{navItems}</div>
         <a
           id="mlh-trust-badge"
-          style={{
-            display: 'block',
-            maxWidth: '100px',
-            minWidth: '60px',
-            position: 'absolute',
-            right: '50px',
-            top: '0',
-            width: '10%',
-            zIndex: '10000'
-          }}
+          className={classes.mlhBanner}
           href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
           target="_blank"
           rel="noreferrer"
