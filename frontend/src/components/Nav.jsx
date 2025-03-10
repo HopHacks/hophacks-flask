@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+//import { useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -55,12 +55,13 @@ function img(url) {
   return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
 }
 
-const Nav = function Nav(props) {
-  let history = useHistory();
+const Nav = function Nav() {
+  //props removed because not used for now, add in when needed
+  /*let history = useHistory();
   async function handleLogout() {
     await props.logout();
     history.push('/');
-  }
+  }*/
 
   const classes = useStyles();
   const isMobile = window.innerWidth <= 800;
@@ -183,6 +184,7 @@ const Nav = function Nav(props) {
           Recap
         </Typography>
       </Button>
+      {/*}
       <Button component={Link} to="/teamMatching" color="inherit" className={classes.navBtn}>
         <Typography variant="h5" className={classes.title}>
           Team Matching
@@ -222,7 +224,7 @@ const Nav = function Nav(props) {
             Logout
           </Typography>
         </Button>
-      )}
+      )}*/}
     </>
   );
 
@@ -291,35 +293,51 @@ const Nav = function Nav(props) {
     <AppBar position="sticky" className={classes.drawer}>
       <Toolbar
         style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          marginRight: '8rem'
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%'
         }}
       >
+        {/* Left-aligned HopHacks Logo */}
         <Button
-          id="HomeButton"
           component={Link}
           to="/"
           color="inherit"
           className={classes.hophacksButton}
+          style={{ display: 'flex', alignItems: 'center' }}
         >
           <img
             src="https://hophacks-website.s3.amazonaws.com/images/Hophacks_logo_clean.png"
-            alt="Major League Hacking 2024 Hackathon Season"
+            alt="HopHacks Logo"
             width={'55px'}
           />
-          <Typography variant="h4" className={classes.title}>
+          <Typography variant="h4" className={classes.title} style={{ marginLeft: '15px' }}>
             HopHacks
           </Typography>
         </Button>
 
+        {/* Centered Navigation */}
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            gap: '20px'
+          }}
+        >
+          {navItem}
+        </div>
+
+        {/* Right-aligned MLH Trust Badge */}
         <a
           id="mlh-trust-badge"
           style={{
             display: 'block',
             maxWidth: '100px',
             minWidth: '60px',
-            position: 'fixed',
+            position: 'absolute',
             right: '50px',
             top: '0',
             width: '10%',
@@ -333,17 +351,8 @@ const Nav = function Nav(props) {
             src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-2025-white.svg"
             alt="Major League Hacking 2024 Hackathon Season"
             style={{ width: '100%' }}
-          ></img>
+          />
         </a>
-
-        <section
-          className={classes.otherButton}
-          style={{
-            margin: 'auto'
-          }}
-        >
-          {navItem}
-        </section>
       </Toolbar>
     </AppBar>
   );
