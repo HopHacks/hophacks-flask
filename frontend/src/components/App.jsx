@@ -30,9 +30,8 @@ import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 import Team from './Team';
 //import Login from './user_auth/Login'; //adjusted to be new path
 // import Tracks from './tracks/Tracks.jsx';
-
 //import SignUp from './user_auth/signup/SignUp';
-//import SignUp from './user_auth/signup/SignUp';
+import Recap from './recap.jsx';
 // import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new paths
 // import SignUpProfile from './user_auth/signup/SignUpProfile.jsx';
 // import SignUpAccount from './user_auth/signup/SignUpAccount.jsx';
@@ -128,6 +127,10 @@ export default function App() {
                   <Route path="/tracks">
                     <Tracks />
                   </Route>*/}
+
+                  <Route path="/Recap">
+                    <Recap />
+                  </Route>
 
                   <Route path="/">
                     <Home isMobile={isMobile} />

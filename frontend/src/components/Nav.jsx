@@ -176,7 +176,12 @@ const Nav = function Nav() {
         className={classes.navBtn}
       >
         <Typography variant="h5" className={classes.title}>
-          Organizers
+          Team
+        </Typography>
+      </Button>
+      <Button component={Link} to="/Recap" color="inherit" className={classes.navBtn}>
+        <Typography variant="h5" className={classes.title}>
+          Recap
         </Typography>
       </Button>
       {/*}
