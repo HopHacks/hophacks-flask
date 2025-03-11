@@ -21,7 +21,7 @@ export default function SignUpConfirmation(props) {
           We are excited to have you joining our event! Please go to your profile to finish
           registering.
         </Typography>
-        <Link to="/register/login" style={{ width: '100%' }}>
+        <Link to={`/register/login`} style={{ width: '100%' }}>
           <Button
             variant="contained"
             class="card-button"

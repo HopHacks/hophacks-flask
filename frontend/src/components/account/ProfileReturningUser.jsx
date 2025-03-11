@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { withAuthCheck } from '../../util/auth.jsx';
-import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
@@ -332,9 +332,9 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       {isMobile ? (
         <div className="table">
           <text className="table-header">Current Resume:</text>
-          <Link class="table-body" onClick={handleResumeDownload} style={{ color: 'blue' }}>
+          <Button class="table-body" onClick={handleResumeDownload} style={{ color: 'blue' }}>
             {' ' + oldResumeName}
-          </Link>
+          </Button>
           <br />
           <Grid container>
             <Grid item>
@@ -361,9 +361,9 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
           <TableRow>
             <TableCell>{oldResumeName}</TableCell>
             <TableCell>
-              <Link onClick={handleResumeDownload} style={{ fontSize: '15px', color: 'blue' }}>
+              <Button onClick={handleResumeDownload} style={{ fontSize: '15px', color: 'blue' }}>
                 Download
-              </Link>
+              </Button>
             </TableCell>
             <TableCell>
               <form onSubmit={handleResumeSubmit}>

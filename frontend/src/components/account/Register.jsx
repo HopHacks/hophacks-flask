@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -425,7 +425,7 @@ export default function Register() {
         label={
           <div style={{ fontSize: 15 }}>
             <span>* I have read and understand the </span>
-            <Link onClick={openCodeOfConduct}>MLH Code of Conduct</Link>
+            <Button onClick={openCodeOfConduct}>MLH Code of Conduct</Button>
             <span>.</span>
           </div>
         }
@@ -452,13 +452,14 @@ export default function Register() {
           <div style={{ fontSize: 15, textAlign: 'left', color: '#061A40' }}>
             <span>
               * I authorize you to share my application/registration information with Major League
-              Hacking for event administration, ranking, and MLH administration in-line with the{' '}
+              Hacking for event administration, ranking, and MLH administration in-line with
+              the{' '}
             </span>
-            <Link onClick={openPrivacy}>MLH Privacy Policy</Link>
+            <Button onClick={openPrivacy}>MLH Privacy Policy</Button>
             <span>. I further agree to the terms of both the </span>
-            <Link onClick={openTerms}>MLH Terms and Conditions</Link>
+            <Button onClick={openTerms}>MLH Terms and Conditions</Button>
             <span> and the</span>
-            <Link onClick={openPrivacy}> MLH Privacy Policy</Link>
+            <Button onClick={openPrivacy}> MLH Privacy Policy</Button>
             <span>.</span>
           </div>
         }

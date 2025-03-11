@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
 
@@ -48,9 +48,9 @@ export default function About() {
 
   return (
     <div id="about" style={{}}>
-      {/* <Box align="center">
+      <Box align="center">
         <img src={img('logo2023.png')} width={'160px'} />
-      </Box> */}
+      </Box>
       <Box flex={1} marginTop={'-4rem'} align="center">
         <Title>About</Title>
       </Box>
@@ -62,5 +62,31 @@ export default function About() {
         </Box>
       </Box>
     </div>
+  );
+}
+*/
+
+import '../../stylesheets/about.css';
+
+export default function About() {
+  return (
+    <section id="about" className="about-section">
+      <div className="background">
+        <img
+          src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/home/about_background.png"
+          alt="About section background"
+        />
+      </div>
+      <div className="container">
+        <div className="content">
+          <p>
+            HopHacks is a 36 hour annual Hackathon held at the Johns Hopkins University that
+            encourages engineers, designers, and entrepreneurs to explore new ideas and create new
+            applications.
+          </p>
+        </div>
+        <h2>About</h2>
+      </div>
+    </section>
   );
 }

@@ -1,0 +1,92 @@
+.faq-section {
+  position: relative;
+  height: 100vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.faq-section .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.faq-section .background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.faq-section .container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  z-index: 10;
+}
+
+.faq-section .header-container {
+  position: absolute;
+  top: 10%;
+  right: 20%;
+  z-index: 20;
+}
+
+.faq-section h2 {
+  font-family: Anton, sans-serif;
+  font-weight: 400;
+  font-size: 140px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-align: right;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.faq-section .faq-accordion {
+  width: 800px;
+  max-width: 90%;
+  margin: 0 auto;
+  margin-top: 100px;
+  max-height: 60vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.faq-section .faq-accordion::-webkit-scrollbar {
+  width: 4px;
+}
+
+.faq-section .faq-accordion::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.faq-section .faq-accordion::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .faq-section h2 {
+    font-size: 48px;
+  }
+
+  .faq-section .faq-accordion {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .faq-section .header-container {
+    top: 20px;
+    right: 20px;
+  }
+}

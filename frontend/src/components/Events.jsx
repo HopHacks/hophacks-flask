@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { withAuthCheck } from '../util/auth.jsx';
-import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 const Events = function Events(props) {
   const [eventsList, setEventsList] = useState([]); // list of events
@@ -62,7 +62,7 @@ const Events = function Events(props) {
   const events = eventsList.map((event) => (
     <tr key={event._id}>
       <td>{event.eventName}</td> <td>{event.startDate} </td> <td> {event.endDate} </td>{' '}
-      <Link onClick={() => remove(event.eventName)}>Remove </Link>
+      <Button onClick={() => remove(event.eventName)}>Remove </Button>
     </tr>
   ));
 
