@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 // Reusable ProjectCard component
 function ProjectCard({ title, description, image, link }) {
   return (
@@ -14,9 +12,7 @@ function ProjectCard({ title, description, image, link }) {
 }
 
 // Main ProjectHighlights component
-function ProjectHighlights() {
-  const [selectedYear, setSelectedYear] = useState('2023'); // State for the selected year
-
+function ProjectHighlights({ selectedYear, setSelectedYear }) {
   // Define data for each year
   const projectsData = {
     2022: [
@@ -100,29 +96,24 @@ function ProjectHighlights() {
   return (
     <div className="p-20 font-sans">
       <div style={styles.headerContainer}>
-        <h2 className="font-anton-sc text-white text-[60px] text-center mb-5">
+        <h2 className="font-anton-sc text-white text-[60px] text-center mb-5 max-w-xl leading-tight">
           Project Highlights from Past Years
         </h2>
 
         <div style={styles.buttonContainer}>
-          <button
-            style={selectedYear === '2022' ? styles.activeButton : styles.button}
-            onClick={() => setSelectedYear('2022')}
-          >
-            2022
-          </button>
-          <button
-            style={selectedYear === '2023' ? styles.activeButton : styles.button}
-            onClick={() => setSelectedYear('2023')}
-          >
-            2023
-          </button>
-          <button
-            style={selectedYear === '2024' ? styles.activeButton : styles.button}
-            onClick={() => setSelectedYear('2024')}
-          >
-            2024
-          </button>
+          {['2022', '2023', '2024'].map((year) => (
+            <button
+              key={year}
+              onClick={() => setSelectedYear(year)}
+              className={
+                selectedYear === year
+                  ? 'px-3.5 py-2 text-lg font-bold rounded-md bg-recap-gold cursor-pointer transition-colors duration-300 hover:bg-recap-gold-light text-white'
+                  : 'px-3.5 py-2 text-lg font-bold rounded-md bg-gray-100 cursor-pointer transition-colors duration-300 hover:bg-recap-gold-light hover:text-white'
+              }
+            >
+              {year}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -147,7 +138,7 @@ function ProjectHighlights() {
             };
             window.open(yearUrls[selectedYear], '_blank');
           }}
-          style={styles.viewAllButton}
+          className="px-4 py-2 text-lg font-bold rounded-md bg-recap-gold cursor-pointer transition-colors duration-300 hover:bg-recap-gold-light text-white"
         >
           {`View All Projects From ${selectedYear}`}
         </button>
