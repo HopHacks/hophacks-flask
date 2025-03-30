@@ -3,7 +3,7 @@ import { ProjectHighlights, HackathonStats2024, ImagesFromPastYears } from './fl
 
 function Recap() {
   return (
-    <div className="bg-[#172759]">
+    <div className="bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')]">
       <ProjectHighlights />
       <ImagesFromPastYears />
       <HackathonStats2024 />

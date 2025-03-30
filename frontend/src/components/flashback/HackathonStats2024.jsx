@@ -15,7 +15,10 @@ function HackathonStats2024() {
       <h2 style={styles.header}>2024 Hackathon Stats</h2>
       <div style={styles.statsContainer}>
         {stats.map((stat, index) => (
-          <div key={index} style={styles.statCard}>
+          <div
+            key={index}
+            className="bg-recap-gold w-[200px] h-[200px] rounded-full flex flex-col justify-center items-center shadow-md p-2.5"
+          >
             <p style={styles.number}>{stat.number}</p>
             <p style={styles.label}>{stat.label}</p>
           </div>
@@ -50,7 +53,6 @@ const styles = {
     width: '200px',
     height: '200px',
     borderRadius: '50%',
-    backgroundColor: '#f0f0f0',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -61,7 +63,7 @@ const styles = {
   number: {
     fontSize: '40px',
     fontWeight: 'bold',
-    color: '#ff5722'
+    color: '#ffffff'
   },
   label: {
     fontSize: '20px',

@@ -98,9 +98,11 @@ function ProjectHighlights() {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="p-20 font-sans">
       <div style={styles.headerContainer}>
-        <h2 style={styles.header}>Project Highlights from Past Years</h2>
+        <h2 className="font-anton-sc text-white text-[60px] text-center mb-5">
+          Project Highlights from Past Years
+        </h2>
 
         <div style={styles.buttonContainer}>
           <button
@@ -156,10 +158,6 @@ function ProjectHighlights() {
 
 // Inline styles for the component
 const styles = {
-  container: {
-    padding: '20px',
-    fontFamily: 'Arial, sans-serif'
-  },
   headerContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -176,7 +174,7 @@ const styles = {
     color: 'white'
   },
   viewAllButton: {
-    backgroundColor: '#ff5722',
+    backgroundColor: '#ffb51f',
     color: '#fff',
     border: 'none',
     borderRadius: '5px',
@@ -204,7 +202,7 @@ const styles = {
     fontSize: '16px',
     border: '1px solid #ccc',
     borderRadius: '5px',
-    backgroundColor: '#ff5722',
+    backgroundColor: '#ffb51f',
     color: 'white',
     cursor: 'pointer'
   },
