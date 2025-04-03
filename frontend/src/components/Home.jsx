@@ -1,8 +1,8 @@
 import React from 'react';
 import Cover from './home/Cover';
-import AboutSection from './home/About';
-import PrizesSection from './home/Prizes';
-import FAQSection from './home/Faq';
+// import AboutSection from './home/About';
+// import PrizesSection from './home/Prizes';
+// import FAQSection from './home/Faq';
 
 export default function Home() {
   return (
@@ -10,20 +10,19 @@ export default function Home() {
       <div id="cover" className="snap-start">
         <Cover />
       </div>
-      <div id="about" className="snap-start">
+      {/* <div id="about" className="snap-start">
         <AboutSection />
       </div>
       <div id="prizes" className="snap-start">
         <PrizesSection />
       </div>
-      {/*
       <div id="tracks" className="snap-start">
         <TracksSection />
       </div>
-      */}
       <div id="faq" className="snap-start">
         <FAQSection />
       </div>
+      */}
     </div>
   );
 }
