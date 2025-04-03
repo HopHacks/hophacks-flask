@@ -11,7 +11,7 @@ const Footer = function Footer() {
   }
 
   return (
-    <Box pt={5} bgcolor="#1D539F" color="white">
+    <Box pt={5} bgcolor="#15004B" color="white">
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
@@ -52,34 +52,31 @@ const Footer = function Footer() {
           <Grid item xs={12} sm={4}>
             <Grid container direction="column" alignItems="center" justifyContent="center">
               <Typography style={{ fontFamily: 'Inter', fontSize: 20 }}>Follow Us</Typography>
-            </Grid>
-            <Grid container direction="column" alignItems="center" justifyContent="center">
-              <Grid item>
+              <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
                 <a href="https://www.facebook.com/HopHacks" title="Facebook">
                   <img
                     src={img('footer/fb-icon.png')}
-                    style={{ width: '40px', margin: '10px 5px 5px' }}
+                    style={{ width: '40px', marginRight: '10px' }}
                     alt="fb-icon"
                   />
                 </a>
                 <a href="https://www.linkedin.com/company/hophacks/" title="LinkedIn">
                   <img
                     src={img('footer/linkedin-icon.png')}
-                    style={{ width: '40px', margin: '10px 5px 5px' }}
+                    style={{ width: '40px', marginRight: '10px' }}
                     alt="linkedin-icon"
                   />
                 </a>
                 <a href="https://www.instagram.com/hophacks/?hl=en" title="Instagram">
                   <img
                     src={img('footer/instagram-icon.png')}
-                    style={{ width: '40px', margin: '10px 5px 5px' }}
-                    alt="linkedin-icon"
+                    style={{ width: '40px' }}
+                    alt="instagram-icon"
                   />
                 </a>
-              </Grid>
+              </Box>
             </Grid>
           </Grid>
-
           <Grid item xs={12}></Grid>
         </Grid>
       </Container>

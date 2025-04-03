@@ -5,30 +5,43 @@
   background-size: cover;
   height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
-.textHeaderContainer {
-  position: absolute;
-  left: 51%;
-  top: 54%;
-  transform: translate(-50%, -50%);
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   text-align: left;
-  width: max-content;
+  margin-left: 28rem;
+  margin-top: 10rem;
 }
 
-.textHeader {
+.headerRow:first-of-type {
+  margin-bottom: 0rem;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.textLine {
   font-family: Anton, sans-serif;
   font-weight: 400;
   font-size: 140px;
   line-height: 120px;
-  letter-spacing: 5%;
   color: #ffffff;
   text-transform: uppercase;
-  white-space: pre-line;
+}
+
+.hophacks-logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: -2rem;
 }
 
 .larger-letter {
@@ -41,39 +54,12 @@
   text-transform: inherit;
 }
 
-.hophacks-logo {
-  position: absolute;
-  top: -40px;
-  left: 195px;
-  width: 200px;
-  height: auto;
-  z-index: 1;
-}
-
-.textSubtextContainer {
-  position: absolute;
-  left: 61.5%;
-  top: 77%;
-  transform: translate(-50%, -50%);
-  text-align: left;
-}
-
 .textSubtext {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
   font-size: 43px;
-  line-height: 100px;
-  letter-spacing: 5%;
   color: #ffe188;
   text-transform: uppercase;
-}
-
-.detailsContainer {
-  position: absolute;
-  left: 64%;
-  top: 83%;
-  transform: translate(-50%, -50%);
-  width: max-content;
 }
 
 .details {
@@ -82,28 +68,12 @@
     sans-serif;
   font-weight: 700;
   font-size: 32px;
-  line-height: 100px;
-  letter-spacing: 5%;
   color: #ffffff;
 }
 
 .discordbtnContainer {
-  position: absolute;
-  left: 140%;
-  top: 79%;
-  transform: translate(-50%, -50%);
-  width: max-content;
-}
-
-.discordbtn {
-  font-family:
-    Open Sans,
-    sans-serif;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: normal;
-  letter-spacing: 5%;
-  color: #ffffff;
+  margin-top: 1rem;
+  margin-bottom: -1rem;
 }
 
 .join-discord {
@@ -113,69 +83,71 @@
   text-shadow: 0 0 8px #facc15;
   border: none;
   cursor: pointer;
+  background: transparent;
+  color: white;
+  font-size: 2rem;
 }
 
 .join-discord:hover {
-  text-shadow: 0 0 12px #facc15;
+  text-shadow: 0 0 36px #facc15;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .textHeaderContainer {
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    text-align: center;
+/* Responsive */
+
+@media (max-width: 1200px) {
+  .mainContent {
+    margin-left: 20rem;
+    margin-top: 10rem;
   }
 
-  .textHeader {
-    font-size: 80px;
-    line-height: 90px;
-    letter-spacing: 2%;
+  .textLine {
+    font-size: 100px;
+    line-height: 100px;
   }
 
   .hophacks-logo {
-    top: -140px;
-    left: 50%;
-    transform: translateX(-50%);
     width: 150px;
   }
 
-  .textSubtextContainer {
-    left: 50%;
-    top: 60%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+  .join-discord {
+    font-size: 1.5rem;
   }
 
   .textSubtext {
-    font-size: 30px;
-    line-height: 40px;
-    letter-spacing: 1%;
-  }
-
-  .detailsContainer {
-    left: 50%;
-    top: 70%;
-    transform: translate(-50%, -50%);
+    font-size: 36px;
   }
 
   .details {
-    font-size: 20px;
-    line-height: normal;
-    letter-spacing: 1%;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 950px) {
+  .mainContent {
+    margin-left: 2rem;
+    margin-top: 3rem;
   }
 
-  .discordbtnContainer {
-    left: 50%;
-    top: 100%;
-    transform: translate(-50%, -50%);
+  .textLine {
+    font-size: 64px;
+    line-height: 70px;
   }
 
-  .discordbtn {
+  .hophacks-logo {
+    width: 90px;
+    margin-bottom: -1rem;
+  }
+
+  .join-discord {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+  }
+
+  .textSubtext {
+    font-size: 26px;
+  }
+
+  .details {
     font-size: 18px;
-    line-height: 1;
-    letter-spacing: normal;
   }
 }
