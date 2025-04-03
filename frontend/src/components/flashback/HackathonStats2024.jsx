@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import CountUp from 'react-countup';
 
 function HackathonStats2024() {
   // Stats data for the hackathon
   // TODO use stats from selectedYear (need API)
   const stats = [
     { number: '36', label: 'Hours' },
-    { number: '$16,376', label: 'Total Prizes' },
+    { number: '16376', label: 'Total Prizes' },
     { number: '202', label: 'Participants' },
     { number: '10', label: 'Sponsors' },
     { number: '68', label: 'Projects' }
   ];
 
+  const [inView, setInView] = useState(false);
+  const statsRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          // observer.disconnect();
+        } else {
+          setInView(false);
+        }
+      },
+      { threshold: 0.4 } // Trigger when 30% of component is visible
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="flex flex-col justify-center items-center w-full font-sans">
+    <div className="flex flex-col justify-center items-center w-full font-sans" ref={statsRef}>
       <h2 className="font-anton-sc text-center text-white text-[60px] mb-5">{`2024 Hackathon Stats`}</h2>
       <div className="flex flex-wrap justify-center items-center gap-8 max-w-2xl">
         {stats.map((stat, index) => (
@@ -23,7 +47,21 @@ function HackathonStats2024() {
              p-2.5 transition-all duration-300 
              hover:-translate-y-2 shadow-[0_0_100px_rgba(255,255,148,0.3)] hover:shadow-[0_0_120px_rgba(255,255,148,0.9)]"
           >
-            <p style={styles.number}>{stat.number}</p>
+            <p style={styles.number}>
+              {inView ? (
+                <CountUp
+                  start={0}
+                  end={stat.number}
+                  duration={2.5}
+                  separator=","
+                  prefix={stat.label === 'Total Prizes' ? '$' : ''}
+                />
+              ) : stat.label === 'Total Prizes' ? (
+                '$0'
+              ) : (
+                '0'
+              )}
+            </p>
             <p style={styles.label}>{stat.label}</p>
           </div>
         ))}
