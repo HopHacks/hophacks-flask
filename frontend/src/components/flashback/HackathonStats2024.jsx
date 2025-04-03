@@ -1,7 +1,8 @@
 import React from 'react';
 
-function HackathonStats2024({ selectedYear }) {
+function HackathonStats2024() {
   // Stats data for the hackathon
+  // TODO use stats from selectedYear (need API)
   const stats = [
     { number: '36', label: 'Hours' },
     { number: '$16,376', label: 'Total Prizes' },
@@ -11,15 +12,16 @@ function HackathonStats2024({ selectedYear }) {
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center w-full py-20 font-sans">
-      <h2 className="font-anton-sc text-center text-white text-[60px] mb-5">{`${selectedYear} Hackathon Stats`}</h2>
+    <div className="flex flex-col justify-center items-center w-full font-sans">
+      <h2 className="font-anton-sc text-center text-white text-[60px] mb-5">{`2024 Hackathon Stats`}</h2>
       <div className="flex flex-wrap justify-center items-center gap-8 max-w-2xl">
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-recap-gold w-[200px] h-[200px] rounded-full flex flex-col justify-center items-center shadow-md p-2.5 
-                   transition-transform transform hover:-translate-y-2 
-                   shadow-lg hover:shadow-[0_0_120px_rgba(255,255,148,0.9)]"
+            className="bg-recap-gold w-[200px] h-[200px] rounded-full flex flex-col justify-center items-center 
+             shadow-md shadow-lg 
+             p-2.5 transition-all duration-300 
+             hover:-translate-y-2 shadow-[0_0_100px_rgba(255,255,148,0.3)] hover:shadow-[0_0_120px_rgba(255,255,148,0.9)]"
           >
             <p style={styles.number}>{stat.number}</p>
             <p style={styles.label}>{stat.label}</p>

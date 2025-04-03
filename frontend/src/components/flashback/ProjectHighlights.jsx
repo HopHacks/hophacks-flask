@@ -1,7 +1,12 @@
 // Reusable ProjectCard component
 function ProjectCard({ title, description, image, link }) {
   return (
-    <a href={link} target="_blank" rel="noopener noreferrer" style={styles.cardLink}>
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="no-underline text-inherit transition-translate duration-300 hover:-translate-y-2"
+    >
       <div style={styles.card}>
         <img src={image} alt={`${title} logo`} style={styles.image} />
         <h3 style={styles.title}>{title}</h3>
@@ -94,20 +99,20 @@ function ProjectHighlights({ selectedYear, setSelectedYear }) {
   };
 
   return (
-    <div className="p-20 font-sans">
+    <div className="font-sans">
       <div style={styles.headerContainer}>
-        <h2 className="font-anton-sc text-white text-[60px] text-center mb-5 max-w-xl leading-tight">
+        <h2 className="font-anton-sc text-white text-[60px] text-center mb-9 mt-12 max-w-xl leading-tight">
           Project Highlights from Past Years
         </h2>
 
-        <div style={styles.buttonContainer}>
+        <div className="flex gap-3 mb-2">
           {['2022', '2023', '2024'].map((year) => (
             <button
               key={year}
               onClick={() => setSelectedYear(year)}
               className={
                 selectedYear === year
-                  ? 'px-3.5 py-2 text-lg font-bold rounded-md bg-recap-gold cursor-pointer transition-colors duration-300 hover:bg-recap-gold-light text-white'
+                  ? 'px-3.5 py-2 text-lg font-bold rounded-md bg-recap-gold cursor-pointer transition-all duration-300 hover:bg-recap-gold-light text-white shadow-[0_0_20px_rgba(255,255,148,0.3)]'
                   : 'px-3.5 py-2 text-lg font-bold rounded-md bg-gray-100 cursor-pointer transition-colors duration-300 hover:bg-recap-gold-light hover:text-white'
               }
             >
@@ -138,7 +143,10 @@ function ProjectHighlights({ selectedYear, setSelectedYear }) {
             };
             window.open(yearUrls[selectedYear], '_blank');
           }}
-          className="px-4 py-2 text-lg font-bold rounded-md bg-recap-gold cursor-pointer transition-colors duration-300 hover:bg-recap-gold-light text-white"
+          className="px-4 py-2 text-lg font-bold rounded-md bg-recap-gold cursor-pointer 
+             text-white shadow-[0_0_40px_rgba(255,255,148,0.3)] 
+             transition-shadow duration-300 
+             hover:shadow-[0_0_120px_rgba(255,255,148,0.9)]"
         >
           {`View All Projects From ${selectedYear}`}
         </button>
@@ -205,15 +213,11 @@ const styles = {
   },
   card: {
     border: '1px solid #ccc',
-    borderRadius: '8px',
+    borderRadius: '16px',
     padding: '16px',
     width: '300px',
     textAlign: 'center',
     backgroundColor: '#f0f0f0'
-  },
-  cardLink: {
-    textDecoration: 'none',
-    color: 'inherit'
   },
   contentContainer: {
     display: 'flex',
