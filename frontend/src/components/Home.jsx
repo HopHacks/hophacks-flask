@@ -1,5 +1,6 @@
 import React from 'react';
 import Cover from './home/Cover';
+import Footer from './Footer';
 // import AboutSection from './home/About';
 // import PrizesSection from './home/Prizes';
 // import FAQSection from './home/Faq';
@@ -9,6 +10,7 @@ export default function Home() {
     <div className="snap-y snap-mandatory h-screen overflow-y-scroll">
       <div id="cover" className="snap-start">
         <Cover />
+        <Footer />
       </div>
       {/* <div id="about" className="snap-start">
         <AboutSection />
