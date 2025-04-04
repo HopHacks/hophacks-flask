@@ -52,8 +52,17 @@ def get_matches():
 def get_potential_matches():
     current_user_id = ObjectId(get_jwt_identity())
 
-    users = list(db.teammatch.find({ "_id": { "$ne": current_user_id } }))
+    current_user = db.teammatch.find_one({ "_id": current_user_id })
+    if not current_user:
+        return jsonify({"error": "User not found"}), 404
+
+    swiped_left = current_user.get("swipes", {}).get("left", [])
+    swiped_right = current_user.get("swipes", {}).get("right", [])
+    swiped_ids = swiped_left + swiped_right + [current_user_id]
+
+    users = list(db.teammatch.find({ "_id": { "$nin": swiped_ids } }))
     return jsonify([serialize_user(u) for u in users]), 200
+
 
 
 @teammatch_api.route('/generate_token', methods=['POST'])
@@ -92,3 +101,14 @@ def login_user():
         "user_id": str(user["_id"]),
         "username": user.get("username", "unknown")
     }), 200
+
+@teammatch_api.route('/user/<user_id>', methods=['GET'])
+@jwt_required
+def get_user_by_id(user_id):
+    try:
+        user = db.teammatch.find_one({ "_id": ObjectId(user_id) })
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+        return jsonify(serialize_user(user)), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
