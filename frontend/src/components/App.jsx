@@ -40,7 +40,7 @@ import Recap from './recap.jsx';
 //import ResetPassword from './user_auth/ResetPassword';
 //import TeamMatchingPage from './team_matching/TeamMatchingPage';
 //import ResetPassword from './user_auth/ResetPassword';
-//import TeamMatchingPage from './team_matching/TeamMatchingPage';
+import TeamMatching from './team_matching/TeamMatching';
 
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -119,11 +119,11 @@ export default function App() {
                   <Route path="/register/resetpassword">
                     <ResetPassword isMobile={isMobile} />
                   </Route>
-
+                    */}
                   <Route path="/teamMatching" isMobile={isMobile}>
-                    <TeamMatchingPage isMobile={isMobile} />
+                    <TeamMatching />
                   </Route>
-
+                      {/*}
                   <Route path="/tracks">
                     <Tracks />
                   </Route>*/}
