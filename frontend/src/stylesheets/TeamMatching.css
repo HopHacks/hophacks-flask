@@ -37,3 +37,10 @@
     color: red;
   }
   
+  .match-success {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  
