@@ -15,10 +15,32 @@ const theme = createMuiTheme({
       default: '#0F1827'
     }
   }),
-  overrides: {
-    MuiCard: {
-      root: {
-        background: '#dfe6ee'
+  //   overrides: {
+  //     MuiCard: {
+  //       root: {
+  //         background: '#dfe6ee'
+  //       }
+  //     }
+  //   }
+  components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          cursor: 'pointer',
+          '&:hover': {
+            cursor: 'pointer'
+          }
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          cursor: 'pointer',
+          '&:hover': {
+            cursor: 'pointer'
+          }
+        }
       }
     }
   }
