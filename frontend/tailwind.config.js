@@ -9,7 +9,8 @@ module.exports = {
         'recap-gold-light': '#FFE194'
       },
       fontFamily: {
-        'anton-sc': ['"Anton SC"', 'sans-serif']
+        'anton-sc': ['"Anton SC"', 'sans-serif'],
+        montserrat: ['"Montserrat"', 'sans-serif']
       }
     }
   },
