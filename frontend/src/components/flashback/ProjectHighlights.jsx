@@ -101,7 +101,7 @@ function ProjectHighlights({ selectedYear, setSelectedYear }) {
   return (
     <div>
       <div style={styles.headerContainer}>
-        <h2 className="tracking-wide font-bold text-white text-6xl text-center mb-12 mt-12 w-2/3 max-w-3xl">
+        <h2 className="tracking-wide font-bold text-white text-6xl text-center mb-12 mt-32 w-2/3 max-w-3xl">
           PROJECT HIGHLIGHTS FROM PAST YEARS
         </h2>
 
@@ -112,8 +112,8 @@ function ProjectHighlights({ selectedYear, setSelectedYear }) {
               onClick={() => setSelectedYear(year)}
               className={
                 selectedYear === year
-                  ? 'h-11 px-4 py-2 text-lg font-bold rounded-2xl bg-recap-gold cursor-pointer transition-all duration-300 hover:bg-recap-gold-light text-white shadow-[0_0_20px_rgba(255,255,148,0.3)]'
-                  : 'h-11 px-4 py-2 text-lg font-bold rounded-2xl bg-gray-100 cursor-pointer transition-colors duration-300 hover:bg-recap-gold-light hover:text-white'
+                  ? 'h-12 px-4 py-2 text-lg font-bold rounded-2xl bg-recap-gold cursor-pointer transition-all duration-300 hover:bg-recap-gold-light text-white shadow-[0_0_20px_rgba(255,255,148,0.3)]'
+                  : 'h-12 px-4 py-2 text-lg font-bold rounded-2xl bg-gray-100 cursor-pointer transition-colors duration-300 hover:bg-recap-gold-light hover:text-white'
               }
             >
               {year}
@@ -143,7 +143,7 @@ function ProjectHighlights({ selectedYear, setSelectedYear }) {
             };
             window.open(yearUrls[selectedYear], '_blank');
           }}
-          className="px-5 py-3 text-lg font-bold rounded-2xl bg-recap-gold cursor-pointer 
+          className="px-5 py-4 text-lg font-bold rounded-2xl bg-recap-gold cursor-pointer 
              text-white shadow-[0_0_40px_rgba(255,255,148,0.3)] 
              transition-shadow duration-300 
              hover:shadow-[0_0_120px_rgba(255,255,148,0.9)]"

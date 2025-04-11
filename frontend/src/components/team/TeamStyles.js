@@ -1,14 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    minHeight: '100vh',
-    backgroundColor: theme.colors?.bgDark || '#172759' // Fallback for older MUI v4
-  },
-
   header: {
     width: '100%',
     display: 'flex',

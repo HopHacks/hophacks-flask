@@ -12,11 +12,11 @@ import {
   Container,
   Box
 } from '@material-ui/core';
-import { OrganizerCard } from './team/OrganizerCard';
-import { AlumniCard } from './team/AlumniCard';
-import theme from './team/teamTheme';
-import useStyles from './team/TeamStyles';
-import { nameToURL, filterTeamMembers, sortAlumni } from './team/teamHelpers';
+import { OrganizerCard } from './OrganizerCard';
+import { AlumniCard } from './AlumniCard';
+import theme from './teamTheme';
+import useStyles from './TeamStyles';
+import { nameToURL, filterTeamMembers, sortAlumni } from './teamHelpers';
 import '../../stylesheets/team.css';
 
 export default function TeamPage() {
@@ -110,7 +110,7 @@ export default function TeamPage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
+      <div className="flex flex-col justify-center items-center">
         {/* Header */}
         <div className={classes.header}>
           <Typography variant="h3" className={classes.title}>

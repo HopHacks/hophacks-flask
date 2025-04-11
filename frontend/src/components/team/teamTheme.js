@@ -47,6 +47,32 @@ const theme = createMuiTheme({
       }
     },
 
+    MuiFilledInput: {
+      root: {
+        transition: 'box-shadow 0.3s ease',
+        '&:hover': {
+          boxShadow: `0 0 0 3px ${colors.glowLight}`,
+          borderColor: '#FF0000'
+        }
+        // '&.Mui-focused': {
+        //   boxShadow: `0 0 0 3px ${colors.glowStrong}`,
+        //   '& .MuiOutlinedInput-notchedOutline': {
+        //     borderColor: colors.primaryLight
+        //   }
+        // }
+      },
+      notchedOutline: {
+        borderColor: colors.primaryLight
+      },
+      input: {
+        color: colors.textLight, // Text color inside inputs
+        '&::placeholder': {
+          color: `${colors.textLight}`,
+          opacity: 0.7
+        }
+      }
+    },
+
     MuiSelect: {
       root: {
         color: colors.textLight
