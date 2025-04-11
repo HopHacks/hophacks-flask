@@ -145,9 +145,12 @@ function ImagesFromPastYears({ selectedYear }) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="w-[70%] max-w-[800px] text-center text-white mb-14 tracking-wide font-bold text-6xl">
-        {`OUR FAVORITE MEMORIES FROM ${selectedYear}`}
-      </div>
+      <h2
+        className="font-bold text-white text-6xl text-center mb-12 mt-32 w-2/3 max-w-2xl"
+        style={{ fontVariant: 'small-caps' }}
+      >
+        {`Our Favorite Memories From ${selectedYear}`}
+      </h2>
       <div className="bg-recap-gray max-w-[80%] rounded-2xl shadow-2xl">
         <div className="m-5" ref={carouselRef} style={styles.carousel} tabIndex={0}>
           {/* Original images */}

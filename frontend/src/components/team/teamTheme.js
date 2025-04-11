@@ -16,121 +16,25 @@ const theme = createMuiTheme({
     background: {
       default: colors.bgLight,
       paper: colors.bgPaper
+    },
+    typography: {
+      fontFamily: "'Montserrat', 'sans-serif'"
     }
   },
 
   overrides: {
-    // Global styles for components
     MuiOutlinedInput: {
       root: {
-        transition: 'box-shadow 0.3s ease',
-        '&:hover': {
-          boxShadow: `0 0 0 3px ${colors.glowLight}`,
-          borderColor: '#FF0000'
-        }
-        // '&.Mui-focused': {
-        //   boxShadow: `0 0 0 3px ${colors.glowStrong}`,
-        //   '& .MuiOutlinedInput-notchedOutline': {
-        //     borderColor: colors.primaryLight
-        //   }
-        // }
-      },
-      notchedOutline: {
-        borderColor: colors.primaryLight
-      },
-      input: {
-        color: colors.textLight, // Text color inside inputs
-        '&::placeholder': {
-          color: `${colors.textLight}`,
-          opacity: 0.7
-        }
-      }
-    },
-
-    MuiFilledInput: {
-      root: {
-        transition: 'box-shadow 0.3s ease',
-        '&:hover': {
-          boxShadow: `0 0 0 3px ${colors.glowLight}`,
-          borderColor: '#FF0000'
-        }
-        // '&.Mui-focused': {
-        //   boxShadow: `0 0 0 3px ${colors.glowStrong}`,
-        //   '& .MuiOutlinedInput-notchedOutline': {
-        //     borderColor: colors.primaryLight
-        //   }
-        // }
-      },
-      notchedOutline: {
-        borderColor: colors.primaryLight
-      },
-      input: {
-        color: colors.textLight, // Text color inside inputs
-        '&::placeholder': {
-          color: `${colors.textLight}`,
-          opacity: 0.7
-        }
-      }
-    },
-
-    MuiSelect: {
-      root: {
-        color: colors.textLight
-      },
-      icon: {
-        color: colors.primaryMain
-      },
-      select: {
-        '&:focus': {
-          backgroundColor: 'transparent'
-        }
-      }
-    },
-
-    MuiMenuItem: {
-      root: {
-        '&.Mui-selected': {
-          backgroundColor: colors.primaryLight,
-          color: colors.textPrimary
+        borderRadius: 16,
+        '& $notchedOutline': {
+          borderRadius: 16 // Ensures the outline is rounded even when not focused
         },
-        '&.Mui-selected:hover': {
-          backgroundColor: colors.primaryDark
-        }
-        // '&:hover': {
-        //   backgroundColor: colors.primaryLight
-        // }
-      }
-    },
-
-    MuiInputLabel: {
-      root: {
-        color: colors.primaryMain,
-        '&.Mui-focused': {
-          color: colors.primaryLight
-        }
-      }
-    },
-
-    MuiTab: {
-      root: {
-        color: colors.tabDefault,
-        backgroundColor: 'transparent',
-        '&.Mui-selected': {
-          color: colors.tabSelected
-        }
-      }
-    },
-
-    MuiTabScrollButton: {
-      root: {
-        color: colors.tabDefault,
-        '&.Mui-disabled': {
-          color: '#cccccc'
+        '&$focused $notchedOutline': {
+          borderColor: '#FFE194', // gold border
+          boxShadow: '0 0 10px 10px rgba(255, 215, 0, 0.2)' // gold glow
         }
       }
     }
-
-    // Add more global component styles as needed
   },
 
   // Custom theme properties for your specific components

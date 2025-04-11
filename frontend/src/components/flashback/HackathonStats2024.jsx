@@ -40,8 +40,11 @@ function HackathonStats2024() {
 
   return (
     <div className="flex flex-col justify-center items-center w-full font-sans" ref={statsRef}>
-      <h2 className="text-center text-white text-6xl tracking-wide font-bold mb-16">
-        2024 HACKATHON STATS
+      <h2
+        className="font-bold text-white text-6xl text-center mb-12 mt-32 w-2/3 max-w-3xl"
+        style={{ fontVariant: 'small-caps' }}
+      >
+        2024 Hackathon Stats
       </h2>
 
       {/* STATS A */}
