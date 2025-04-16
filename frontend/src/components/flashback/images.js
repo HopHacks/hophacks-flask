@@ -1,6 +1,9 @@
 import nameToURL from '../utils/nameToURL';
 
 const images = [
+  {
+    src: nameToURL('recap-bg')
+  },
   { src: nameToURL('Project2024_1'), description: 'One of our winners stepping up for the prize.' },
   {
     src: nameToURL('Project2024_2'),
