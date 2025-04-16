@@ -5,6 +5,8 @@
   margin: 10px;
   width: 240px;
   height: 348px;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .card-inner {
@@ -13,9 +15,8 @@
   transition: transform 1s;
   transform-style: preserve-3d;
   cursor: pointer;
-  position: relative;
   border-radius: 16px;
-  overflow: hidden;
+  position: relative;
 }
 
 .card-image-container {
@@ -32,6 +33,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  border-radius: 16px 16px 0 0;
 }
 
 .card-inner.is-flipped {
@@ -113,7 +115,6 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px;
 }
 
 .east-icon,

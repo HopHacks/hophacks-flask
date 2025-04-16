@@ -22,7 +22,7 @@ import '../../stylesheets/team.css';
 export default function TeamPage() {
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
-  const [teams, setTeams] = useState({});
+  const [teams, setTeams] = useState([]);
   const [alumni, setAlumni] = useState([]);
   const [view, setView] = useState('Current Organizers');
   const [searchQuery, setSearchQuery] = useState('');
@@ -100,8 +100,9 @@ export default function TeamPage() {
   };
 
   // Filter teams based on search query
-  const filteredTeams = teams[tabIndex]?.members
-    ? filterTeamMembers(teams[tabIndex].members, searchQuery)
+  const currentTeam = teams[tabIndex];
+  const filteredTeams = currentTeam?.members
+    ? filterTeamMembers(currentTeam.members, searchQuery)
     : [];
 
   // Filter and sort alumni
@@ -202,6 +203,7 @@ export default function TeamPage() {
         <Container className={classes.container}>
           <Grid container spacing={2} className={classes.gridContainer}>
             {view === 'Current Organizers' &&
+              currentTeam &&
               filteredTeams.map((member) => (
                 <Grid item key={member.name}>
                   <OrganizerCard
