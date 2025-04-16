@@ -4,7 +4,7 @@ function nameToURL(name) {
   return `https://hophacks-recap.s3.us-east-1.amazonaws.com${name}`;
 }
 
-function ImagesFromPastYears() {
+function ImagesFromPastYears({ selectedYear }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   // Sample images for the carousel, each with a unique description
@@ -144,14 +144,21 @@ function ImagesFromPastYears() {
   }
 
   return (
-    <div style={styles.backgroundContainer}>
-      <h2 style={styles.header}>Our Favorite Memories from 2024</h2>
-      <div ref={carouselRef} style={styles.carousel} tabIndex={0}>
-        {/* Original images */}
-        {images.map((image, index) => renderImage(image, index))}
+    <div className="flex flex-col justify-center items-center">
+      <h2
+        className="font-bold text-white text-6xl text-center mb-12 mt-32 w-2/3 max-w-2xl"
+        style={{ fontVariant: 'small-caps' }}
+      >
+        {`Our Favorite Memories From ${selectedYear}`}
+      </h2>
+      <div className="bg-recap-gray max-w-[80%] rounded-2xl shadow-2xl">
+        <div className="m-5" ref={carouselRef} style={styles.carousel} tabIndex={0}>
+          {/* Original images */}
+          {images.map((image, index) => renderImage(image, index))}
 
-        {/* Duplicate images for seamless scrolling */}
-        {images.map((image, index) => renderImage(image, index, images.length))}
+          {/* Duplicate images for seamless scrolling */}
+          {images.map((image, index) => renderImage(image, index, images.length))}
+        </div>
       </div>
     </div>
   );
@@ -174,21 +181,15 @@ const styles = {
     fontFamily: 'Arial, sans-serif',
     textAlign: 'center'
   },
-  header: {
-    color: '#ffffff',
-    fontSize: '30px',
-    fontWeight: 'bold',
-    marginBottom: '20px',
-    textAlign: 'center'
-  },
   carousel: {
     display: 'flex',
+    alignItems: 'center',
     overflowX: 'scroll', // Allow scrollbar but hide it visually
     gap: '16px',
-    padding: '10px',
     scrollBehavior: 'smooth',
     cursor: 'grab', // Indicate draggable area
-    scrollbarWidth: 'none'
+    scrollbarWidth: 'none',
+    height: '320px'
   },
   imageContainer: {
     position: 'relative', // Needed for absolutely positioned overlay
