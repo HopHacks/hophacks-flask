@@ -28,7 +28,7 @@ import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 //import Announcements from './announcement/Announcements.jsx';
 //import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
-//import Login from './user_auth/Login'; //adjusted to be new path
+import Login from './user_auth/Login'; //adjusted to be new path
 // import Tracks from './tracks/Tracks.jsx';
 //import SignUp from './user_auth/signup/SignUp';
 import Recap from './recap.jsx';
@@ -91,7 +91,7 @@ export default function App() {
 
                   {/* TODO: replace this with new register page */}
                   {/* <Route path="/register">
-                    <Register isMobile ={isMobile}/>
+                    <Register isMobile={isMobile}/>
                   </Route> */}
 
                   {/*<Route path="/recruiting">
