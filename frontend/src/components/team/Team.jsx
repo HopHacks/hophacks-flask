@@ -12,11 +12,11 @@ import {
   Container,
   Box
 } from '@material-ui/core';
-import { OrganizerCard } from './team/OrganizerCard';
-import { AlumniCard } from './team/AlumniCard';
-import theme from './team/teamTheme';
-import useStyles from './team/TeamStyles';
-import { nameToURL, filterTeamMembers, sortAlumni } from './team/teamHelpers';
+import { OrganizerCard } from './OrganizerCard';
+import { AlumniCard } from './AlumniCard';
+import theme from './teamTheme';
+import useStyles from './TeamStyles';
+import { nameToURL, filterTeamMembers, sortAlumni } from './teamHelpers';
 import '../../stylesheets/team.css';
 
 export default function TeamPage() {
@@ -110,11 +110,11 @@ export default function TeamPage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
+      <div className="flex flex-col justify-center items-center">
         {/* Header */}
         <div className={classes.header}>
           <Typography variant="h3" className={classes.title}>
-            Our team
+            Our Team
           </Typography>
           <Typography className={classes.subtitle}>
             Meet the team that organizes HopHacks
@@ -127,6 +127,7 @@ export default function TeamPage() {
             <Select
               value={view}
               onChange={(e) => setView(e.target.value)}
+              classes={{ root: classes.selectRoot }}
               MenuProps={{
                 classes: { paper: classes.selectMenu },
                 anchorOrigin: {
@@ -134,9 +135,6 @@ export default function TeamPage() {
                   horizontal: 'left'
                 },
                 getContentAnchorEl: null
-              }}
-              inputProps={{
-                style: { color: '#e1f5fe' }
               }}
             >
               <MenuItem value="Current Organizers">Current Organizers</MenuItem>
@@ -150,15 +148,13 @@ export default function TeamPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={classes.textField}
-            InputProps={{
-              style: { color: '#e1f5fe' }
-            }}
           />
 
           {view === 'Alumni' && (
             <FormControl className={classes.formControl} variant="outlined">
               <Select
                 value={sortOrder}
+                classes={{ root: classes.selectRoot }}
                 onChange={(e) => setSortOrder(e.target.value)}
                 MenuProps={{
                   classes: { paper: classes.selectMenu },
@@ -167,9 +163,6 @@ export default function TeamPage() {
                     horizontal: 'left'
                   },
                   getContentAnchorEl: null
-                }}
-                inputProps={{
-                  style: { color: '#e1f5fe' }
                 }}
               >
                 <MenuItem value="asc">Year (Ascending)</MenuItem>
@@ -185,18 +178,22 @@ export default function TeamPage() {
             <Tabs
               value={tabIndex}
               onChange={(e, newIndex) => handleSetTabIndex(newIndex, true)}
-              textColor="primary"
-              indicatorColor="primary"
               variant="scrollable"
               scrollButtons="auto"
+              TabIndicatorProps={{ style: { display: 'none' } }}
             >
-              <Tab label="All" />
-              <Tab label="Directors" />
-              <Tab label="Design" />
-              <Tab label="Logistics" />
-              <Tab label="Marketing" />
-              <Tab label="Sponsors" />
-              <Tab label="Website" />
+              {['All', 'Directors', 'Design', 'Logistics', 'Marketing', 'Sponsors', 'Website'].map(
+                (label) => (
+                  <Tab
+                    key={label}
+                    label={label}
+                    classes={{
+                      root: classes.tabRoot,
+                      selected: classes.tabSelected
+                    }}
+                  />
+                )
+              )}
             </Tabs>
           </Box>
         )}
