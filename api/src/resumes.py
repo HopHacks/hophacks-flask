@@ -20,7 +20,8 @@ resume_api = Blueprint('resumes', __name__)
 
 ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
 BUCKET = 'hophacks-resume'
-DEEPSEEK_API_KEY = "sk-23fc33eec2c844f4ac342142170afa12"
+import os
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
 API_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # remove weird directories just in case
