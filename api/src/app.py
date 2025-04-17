@@ -64,7 +64,7 @@ def create_app(config_file='config/config.json'):
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers']
     app.config['JWT_REFRESH_COOKIE_PATH'] = '/api/auth/session'
-    app.config['JWT_COOKIE_CSRF_PROTECT '] = False
+    app.config['JWT_COOKIE_CSRF_PROTECT'] = False
     app.config['JWT_CSRF_IN_COOKIES'] = False
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
