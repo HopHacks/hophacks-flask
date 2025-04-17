@@ -64,6 +64,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   const [sendConfimationMsg, setSendConfimationMsg] = useState('');
   const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
   const [ageMsg, setAgeMsg] = useState('');
+  const [resumeSummary, setResumeSummary] = useState('');
 
   const currentEvent = 'Fall 2024';
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
@@ -108,6 +109,14 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     const response = await axios.get('/api/resumes/');
     const url = response.data['url'];
     window.open(url, '_blank');
+  }
+
+  async function handleSummaryGeneration(e) {
+    e.preventDefault();
+
+    const response = await axios.get('/api/resumes/summarize');
+    const summary = response.data['summary'];
+    setResumeSummary(summary);
   }
 
   async function getProfile() {
@@ -357,6 +366,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
             <TableCell>File Name</TableCell>
             <TableCell>Action</TableCell>
             <TableCell>Upload Resume</TableCell>
+            <TableCell>Generate Summary</TableCell>
           </TableHead>
           <TableRow>
             <TableCell>{oldResumeName}</TableCell>
@@ -373,6 +383,19 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
                 <input type="submit" value="Submit" />
                 <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
               </form>
+            </TableCell>
+            <TableCell>
+              <Button onClick={handleSummaryGeneration} style={{ fontSize: '15px', color: 'blue' }}>
+                Summary Generation
+              </Button>
+
+              <Typography style={{ fontSize: '13px' }}> {resumeMsg} </Typography>
+
+              {resumeSummary && (
+                <Typography style={{ fontSize: '40px', marginTop: '10px', fontStyle: 'italic' }}>
+                  <strong>Summary:</strong> {resumeSummary}
+                </Typography>
+              )}
             </TableCell>
           </TableRow>
         </Table>
