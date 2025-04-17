@@ -42,12 +42,6 @@ body {
   box-shadow: 8px 8px 10px rgba(45, 153, 224, 0.4);
 }
 
-/* Targeted selectors */
-.text-field:focus-within {
-  border: 4px solid;
-  border-color: rgb(21, 113, 69);
-}
-
 .card-title {
   font-family: proxima-nova, sans-serif;
   font-weight: 700;

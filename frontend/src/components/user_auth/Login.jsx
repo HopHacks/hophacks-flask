@@ -1,210 +1,111 @@
-import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-// import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { TextField } from '@material-ui/core';
+import { Link, useHistory } from 'react-router-dom';
 import { withAuthProps } from '../../util/auth';
 import '../../stylesheets/user_auth.css';
-import { useEffect } from 'react';
 
-function Login(props) {
-  const isMobile = props.isMobile;
-
-  /* State for handling login */
-  const [email, setEmail] = useState(props.email);
+function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
+  const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState('');
   const [attempted, setAttempted] = useState(false);
-
-  let history = useHistory();
+  const history = useHistory();
+  const textColor = '#061A40';
 
   useEffect(() => {
-    setEmail(props.email);
-  }, [props.email]);
+    setEmail(initialEmail);
+  }, [initialEmail]);
 
-  async function handleLogin(event) {
-    event.preventDefault();
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push(email === 'admin' ? '/admin' : '/profile');
+    }
+  }, [isLoggedIn, email, history]);
+
+  const handleChangeEmail = (e) => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  };
+
+  const handleChangePassword = (e) => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      await props.login(email, password);
-
-      if (email !== 'admin' && email !== 'hophacks') {
-        history.push('/profile');
-      } else {
-        history.push('/admin');
-      }
-    } catch (error) {
+      await login(email, password);
+      history.push(email === 'admin' ? '/admin' : '/profile');
+    } catch {
       setAttempted(true);
     }
-  }
+  };
 
-  const signInCardDesktop = (
-    <Card class="card" style={{ color: '#ffffff', height: '80%', width: '70%' }}>
-      <CardContent>
-        <Typography class="card-title">LOGIN</Typography>
-        <div className="text-field">
-          <TextField
-            required
-            variant="standard"
-            label="email address"
-            style={{ width: '90%' }}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            InputLabelProps={{
-              style: { color: '#061A40' }
-            }}
-            InputProps={{
-              style: { color: '#061A40' }
-            }}
-          />
-        </div>
-        <div className="text-field">
-          <TextField
-            type={'password'}
-            required
-            variant="standard"
-            label="password"
-            value={password}
-            style={{ width: '90%' }}
-            onChange={(e) => setPassword(e.target.value)}
-            InputLabelProps={{
-              style: { color: '#061A40' }
-            }}
-            InputProps={{
-              style: { color: '#061A40' }
-            }}
-          />
-        </div>
-
-        <div style={{ textAlign: 'right' }}>
-          <Link to={`/register/resetpassword`}>
-            <Typography class="card-text-blue"> forgot password? </Typography>
-          </Link>
-          {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Button
-            class="card-button"
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={handleLogin}
-          >
-            Sign in
-          </Button>
-
-          {/* TODO: link user JHED */}
-          {/* <Button
-            class="card-button"
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={handleLogin}
-          >
-            use JHED
-          </Button> */}
-        </div>
-
-        {/* <Link to={`/register/signup`}>
-          <Typography class="card-text-blue"> New To HopHacks? Sign Up Now! </Typography>
-        </Link> */}
-      </CardContent>
-    </Card>
+  const AuthTextField = ({ label, type = 'text', value, onChange, color }) => (
+    <TextField
+      required
+      variant="standard"
+      label={label}
+      type={type}
+      value={value}
+      onChange={onChange}
+      style={{ width: isMobile ? '80%' : '90%' }}
+      InputLabelProps={{ style: { color } }}
+      InputProps={{ style: { color } }}
+    />
   );
-
-  const signInCardMobile = (
-    <Card class="card" style={{ height: '70%', width: '70%' }}>
-      <CardContent>
-        <Typography class="card-title">LOGIN</Typography>
-        <TextField
-          // TODO: make the border white
-          required
-          variant="standard"
-          label="Email Address"
-          style={{ width: '80%' }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
-        <TextField
-          // TODO: make the border white
-          type={'password'}
-          required
-          variant="standard"
-          label="Password"
-          value={password}
-          style={{ width: '80%', marginTop: '15%' }}
-          onChange={(e) => setPassword(e.target.value)}
-          InputLabelProps={{
-            style: { color: '#ffffff' }
-          }}
-          InputProps={{
-            style: { color: '#ffffff' }
-          }}
-        />
-
-        <Link to={`/register/resetpassword`}>
-          <Typography class="card-text"> forgot password? </Typography>
-        </Link>
-        {attempted && <Typography color="error">Incorrect Username or Password</Typography>}
-
-        <Button
-          class="card-button"
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={handleLogin}
-        >
-          Sign in
-        </Button>
-
-        {/* <Link to={`/register/signup`}>
-          <Typography class="card-text"> New To HopHacks? Sign Up Now! </Typography>
-        </Link> */}
-      </CardContent>
-    </Card>
-  );
-
-  // const mottoMobile = (
-  //   <div style={{ marginTop: '10%' }}>
-  //     <Typography class="mobile-header">HOPHACKS</Typography>
-  //     <Typography class="mobile-motto-text" style={{ marginTop: '15%' }}>
-  //       Hack Your Passion Into Reality
-  //     </Typography>
-  //     <Typography class="mobile-motto-subtext" style={{ marginTop: '-3%' }}>
-  //       New Motto
-  //     </Typography>
-  //   </div>
-  // );
-
-  // check login status
-  if (props.isLoggedIn) {
-    if (email === 'admin') {
-      history.push('/admin');
-    } else {
-      history.push('/profile');
-    }
-  }
-
-  if (isMobile) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[calc(100dvh-67px)]">
-        {/* {mottoMobile} */}
-        {signInCardMobile}
-      </div>
-    );
-  }
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100dvh-67px)]">
-      {signInCardDesktop}
+    <div className="flex flex-col items-center justify-center h-[calc(100dvh-67px)] bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
+      <div
+        className="min-w-[300px] max-w-[700px] w-[70%] flex flex-col rounded-2xl p-10"
+        style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
+      >
+        <h2
+          className="font-bold text-white text-5xl text-center mb-3"
+          style={{ fontVariant: 'small-caps' }}
+        >
+          Login
+        </h2>
+        <div className="h-5 text-center mb-2 text-red-500">
+          {attempted && <p>Incorrect Username or Password</p>}
+        </div>
+        <div className="text-field">
+          <AuthTextField
+            label="Email Address"
+            value={email}
+            onChange={(e) => handleChangeEmail(e)}
+            color={textColor}
+          />
+        </div>
+        <div className="text-field">
+          <AuthTextField
+            type="password"
+            label="Password"
+            value={password}
+            onChange={(e) => handleChangePassword(e)}
+            color={textColor}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <button
+            className="px-5 py-4 text-2xl font-bold rounded-2xl bg-recap-gold cursor-pointer 
+              text-white shadow-[0_0_40px_rgba(255,255,148,0.3)] 
+              transition-shadow duration-300 
+              hover:shadow-[0_0_50px_rgba(255,255,148,0.5)]
+              max-w-[200px] min-w-[150px] w-[30%] mt-5 mb-10"
+            style={{ fontVariant: 'small-caps' }}
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+          <div className="w-full text-right">
+            <Link to="/register/resetpassword">
+              <p className="text-gray-500 hover:text-gray-400 transition-all">Forgot Password?</p>
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
