@@ -16,7 +16,7 @@ import Admin from './admin/Admin';
 import AnnouncementPanel from './admin/AnnouncementPanel';
 import Nav from './Nav';
 //import EmailConfirmation from './EmailConfirmation';
-//import PasswordReset from './PasswordReset';
+import PasswordReset from './PasswordReset';
 //import RSVP from './RSVP';
 import Assignments from './judgetool/Assignments.jsx';
 import Upload from './judgetool/Upload.jsx';
@@ -37,9 +37,8 @@ import Recap from './recap.jsx';
 // import SignUpAccount from './user_auth/signup/SignUpAccount.jsx';
 // import SignUpImage from './user_auth/signup/SignUpImage.jsx';
 
-//import ResetPassword from './user_auth/ResetPassword';
+import ResetPassword from './user_auth/ResetPassword';
 //import TeamMatchingPage from './team_matching/TeamMatchingPage';
-//import ResetPassword from './user_auth/ResetPassword';
 //import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
 import { useMediaQuery } from 'usehooks-ts';
@@ -101,9 +100,10 @@ export default function App() {
                   <Route path="/rsvp">
                     <RSVP />
                   </Route>
-                  <Route path="/reset_password/:token" component={PasswordReset} />
+                  
                   <Route path="/confirm_email/:token" component={EmailConfirmation} />
                   */}
+                  <Route path="/reset_password/:token" component={PasswordReset} />
                   <Route path="/team">
                     <Team />
                   </Route>
@@ -116,11 +116,11 @@ export default function App() {
                     <SignUp isMobile={isMobile} />
                   </Route>
 
-                  {/*<Route path="/register/resetpassword">
+                  <Route path="/register/resetpassword">
                     <ResetPassword isMobile={isMobile} />
                   </Route>
 
-                  <Route path="/teamMatching" isMobile={isMobile}>
+                  {/*<Route path="/teamMatching" isMobile={isMobile}>
                     <TeamMatchingPage isMobile={isMobile} />
                   </Route>*/}
 

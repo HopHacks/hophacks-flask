@@ -84,108 +84,98 @@ export default function SignUpProfile({
       >
         2. Basic Info
       </p>
-      <div className="">
-        <Grid container spacing={isMobile ? 2 : 5}>
-          <Grid item xs={isMobile ? 12 : 5}>
-            <LabeledTextField label="First Name" onChange={(e) => setFirst_name(e.target.value)} />
-          </Grid>
-          <Grid item xs={isMobile ? 12 : 5}>
-            <LabeledTextField label="Last Name" onChange={(e) => setLast_name(e.target.value)} />
-          </Grid>
-          <Grid item xs={isMobile ? 12 : 2}>
-            <LabeledTextField label="Age" type="number" onChange={(e) => setAge(e.target.value)} />
-          </Grid>
-          <Grid item xs={isMobile ? 12 : 4}>
-            <LabeledTextField label="Gender" onChange={(e) => setGender(e.target.value)} select>
-              {renderMenuItems(genders)}
-            </LabeledTextField>
-          </Grid>
-          <Grid item xs={isMobile ? 12 : 4}>
+
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <LabeledTextField label="First Name" onChange={(e) => setFirst_name(e.target.value)} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <LabeledTextField label="Last Name" onChange={(e) => setLast_name(e.target.value)} />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <LabeledTextField label="Age" type="number" onChange={(e) => setAge(e.target.value)} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <LabeledTextField label="Gender" onChange={(e) => setGender(e.target.value)} select>
+            {renderMenuItems(genders)}
+          </LabeledTextField>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <LabeledTextField label="Ethnicity" onChange={(e) => setEthnicity(e.target.value)} select>
+            {renderMenuItems(ethnicities)}
+          </LabeledTextField>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <FormControl required style={{ width: '100%' }}>
+            <SchoolAutocomplete school={school} setSchool={setSchool} />
+          </FormControl>
+          <FormHelperText style={{ color: SECONDARY_COLOR }}>
+            {"* If your school is not in the list, choose 'other schools'"}
+          </FormHelperText>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <MajorAutocomplete major={major} setMajor={setMajor} />
+          <FormHelperText style={{ color: SECONDARY_COLOR }}>
+            {"* If your major is not in the list, choose 'other majors'"}
+          </FormHelperText>
+        </Grid>
+
+        {school === 'Other Schools' && (
+          <Grid item xs={12}>
             <LabeledTextField
-              label="Ethnicity"
-              onChange={(e) => setEthnicity(e.target.value)}
-              select
-            >
-              {renderMenuItems(ethnicities)}
-            </LabeledTextField>
-          </Grid>
-          <Grid item xs={isMobile ? 12 : 4}>
-            <PhoneInput
-              international
-              withCountryCallingCode
-              onChange={setPhone_number}
-              inputComponent={PhoneNumber}
-              value={phone_number}
+              label="Other School"
+              value={otherSchool}
+              onChange={(e) => setOtherSchool(e.target.value)}
             />
           </Grid>
-          <Grid item xs={isMobile ? 12 : 6}>
-            <FormControl required style={{ width: '100%' }}>
-              <SchoolAutocomplete school={school} setSchool={setSchool} />
-            </FormControl>
-            <FormHelperText style={{ color: SECONDARY_COLOR }}>
-              {"* If your school is not in the list, choose 'other schools'"}
-            </FormHelperText>
-          </Grid>
+        )}
 
-          {school === 'Other Schools' && (
-            <Grid item xs={isMobile ? 12 : 6}>
-              <LabeledTextField
-                label="Other School"
-                value={otherSchool}
-                onChange={(e) => setOtherSchool(e.target.value)}
-              />
-            </Grid>
-          )}
-
-          <Grid item xs={isMobile ? 12 : 6}>
-            <MajorAutocomplete major={major} setMajor={setMajor} />
-            <FormHelperText style={{ color: SECONDARY_COLOR }}>
-              {"* If your major is not in the list, choose 'other majors'"}
-            </FormHelperText>
-          </Grid>
-
-          <Grid item xs={isMobile ? 12 : 6}>
-            <CountryAutocomplete setCountry={setCountry} />
-          </Grid>
-
-          <Grid item xs={isMobile ? 12 : 4}>
-            <LabeledTextField
-              label="Level of Study"
-              onChange={(e) => setGrad(e.target.value)}
-              select
-            >
-              {renderMenuItems(gradLevels)}
-            </LabeledTextField>
-          </Grid>
-          <Grid item xs={isMobile ? 12 : 4}>
-            <LabeledTextField
-              label="Grad Month"
-              onChange={(e) => setGrad_month(e.target.value)}
-              select
-            >
-              {renderMenuItems(months)}
-            </LabeledTextField>
-          </Grid>
-          <Grid item xs={isMobile ? 12 : 4}>
-            <LabeledTextField
-              label="Grad Year"
-              onChange={(e) => setGrad_year(e.target.value)}
-              select
-            >
-              {renderMenuItems(years)}
-            </LabeledTextField>
-          </Grid>
+        <Grid item xs={12} md={6}>
+          <CountryAutocomplete setCountry={setCountry} />
         </Grid>
-      </div>
 
-      <Typography className="card-text-red">{profileSubmitMsg}</Typography>
+        <Grid item xs={12} md={6}>
+          <PhoneInput
+            international
+            withCountryCallingCode
+            onChange={setPhone_number}
+            inputComponent={PhoneNumber}
+            value={phone_number}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <LabeledTextField label="Level of Study" onChange={(e) => setGrad(e.target.value)} select>
+            {renderMenuItems(gradLevels)}
+          </LabeledTextField>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <LabeledTextField
+            label="Grad Month"
+            onChange={(e) => setGrad_month(e.target.value)}
+            select
+          >
+            {renderMenuItems(months)}
+          </LabeledTextField>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <LabeledTextField label="Grad Year" onChange={(e) => setGrad_year(e.target.value)} select>
+            {renderMenuItems(years)}
+          </LabeledTextField>
+        </Grid>
+      </Grid>
+
+      <Typography className="card-text-red mt-4">{profileSubmitMsg}</Typography>
 
       <div
         style={{
           display: 'flex',
           justifyContent: isMobile ? 'center' : 'space-between',
           alignItems: 'center',
-          marginTop: '1rem',
+          marginTop: '2rem',
           flexDirection: isMobile ? 'column' : 'row',
           gap: isMobile ? '1rem' : 0
         }}

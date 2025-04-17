@@ -58,10 +58,8 @@ def login():
 
     username = request.json.get('username', None)
     password = request.json.get('password', None)
-    # print(username, password) # TODO REMOVE ME!!
 
     user = db.users.find_one({'username': re.compile('^' + re.escape(username) + '$', re.IGNORECASE)})
-    # print(user)
     if (user is None):
         return jsonify({'msg': 'Bad username or password'}), 401
 
