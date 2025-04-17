@@ -7,7 +7,7 @@ function nameToURL(name) {
 function ImagesFromPastYears({ selectedYear }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  // Sample images for the carousel, each with a unique description
+  // sample images for the carousel, each with a unique description
   const images = [
     {
       src: nameToURL('/Project2024_1.JPG'),
@@ -49,8 +49,10 @@ function ImagesFromPastYears({ selectedYear }) {
 
   const carouselRef = useRef(null);
   const autoScrollIntervalRef = useRef(null);
-  const isPaused = useRef(false); // Track pause state
-  const resumeTimeoutRef = useRef(null); // Track resume timeout
+  const isPaused = useRef(false);
+  const resumeTimeoutRef = useRef(null);
+  const needsRepositioning = useRef(false);
+  const startPosition = useRef(0);
 
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -59,27 +61,43 @@ function ImagesFromPastYears({ selectedYear }) {
     const scrollStep = 1;
     const scrollInterval = 30;
 
+    const imageWidth = 400;
+    const imageGap = 16;
+    const totalWidth = images.length * (imageWidth + imageGap);
+
+    startPosition.current = totalWidth / 2;
+
+    setTimeout(() => {
+      carousel.scrollLeft = startPosition.current;
+    }, 100);
+
     const startAutoScroll = () => {
       autoScrollIntervalRef.current = setInterval(() => {
-        if (isPaused.current) return; // Pause when flag is set
+        if (isPaused.current) return;
 
+        // regular scrolling
         carousel.scrollLeft += scrollStep;
-        if (carousel.scrollLeft >= carousel.scrollWidth / 2) {
-          carousel.scrollLeft = 0;
+
+        if (carousel.scrollLeft >= totalWidth * 2 - 500) {
+          needsRepositioning.current = true;
+        }
+
+        if (needsRepositioning.current) {
+          carousel.style.scrollBehavior = 'auto';
+          carousel.scrollLeft = startPosition.current;
+          needsRepositioning.current = false;
+
+          setTimeout(() => {
+            carousel.style.scrollBehavior = 'smooth';
+          }, 50);
         }
       }, scrollInterval);
     };
 
-    // Clone images for infinite scroll
-    const cloneImages = () => {
-      const clonedImages = carousel.cloneNode(true);
-      carousel.appendChild(clonedImages);
-    };
-
-    // Event handlers
     const handleMouseEnter = () => {
       isPaused.current = true;
     };
+
     const handleMouseLeave = () => {
       isPaused.current = false;
     };
@@ -92,8 +110,8 @@ function ImagesFromPastYears({ selectedYear }) {
       }, 3000);
     };
 
-    cloneImages();
     startAutoScroll();
+
     carousel.addEventListener('mouseenter', handleMouseEnter);
     carousel.addEventListener('mouseleave', handleMouseLeave);
     carousel.addEventListener('wheel', handleInteraction);
@@ -109,31 +127,27 @@ function ImagesFromPastYears({ selectedYear }) {
       carousel.removeEventListener('touchstart', handleInteraction);
       carousel.removeEventListener('mousedown', handleInteraction);
     };
-  }, []);
+  }, [images.length]);
 
-  // Helper function to render the image container with hover effect
-  function renderImage(image, index, offset = 0) {
-    const imageIndex = index + offset;
-    const isHovered = hoveredIndex === imageIndex;
+  function renderImage(image, index) {
+    const isHovered = hoveredIndex === index;
 
     return (
       <div
-        key={imageIndex}
+        key={index}
         style={styles.imageContainer}
-        onMouseEnter={() => setHoveredIndex(imageIndex)}
+        onMouseEnter={() => setHoveredIndex(index)}
         onMouseLeave={() => setHoveredIndex(null)}
       >
         <img
           src={image.src}
-          alt={`Memory ${imageIndex + 1}`}
+          alt={`Memory ${index + 1}`}
           style={{
             ...styles.image,
-            // Dimming effect on hover
             filter: isHovered ? 'brightness(50%)' : 'brightness(100%)'
           }}
           draggable={false}
         />
-        {/* Show description overlay only if hovered */}
         {isHovered && (
           <div style={styles.overlay}>
             <span>{image.description}</span>
@@ -153,18 +167,18 @@ function ImagesFromPastYears({ selectedYear }) {
       </h2>
       <div className="bg-recap-gray max-w-[80%] rounded-2xl shadow-2xl">
         <div className="m-5" ref={carouselRef} style={styles.carousel} tabIndex={0}>
-          {/* Original images */}
-          {images.map((image, index) => renderImage(image, index))}
-
-          {/* Duplicate images for seamless scrolling */}
-          {images.map((image, index) => renderImage(image, index, images.length))}
+          {/* Duplicate the images multiple times to ensure enough content */}
+          {[...Array(3)].map((_, setIndex) => (
+            <React.Fragment key={`set-${setIndex}`}>
+              {images.map((image, imgIndex) => renderImage(image, `${setIndex}-${imgIndex}`))}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-// Styles for the component
 const styles = {
   backgroundContainer: {
     backgroundColor: '#2C529A',
@@ -184,15 +198,15 @@ const styles = {
   carousel: {
     display: 'flex',
     alignItems: 'center',
-    overflowX: 'scroll', // Allow scrollbar but hide it visually
+    overflowX: 'scroll',
     gap: '16px',
     scrollBehavior: 'smooth',
-    cursor: 'grab', // Indicate draggable area
+    cursor: 'grab',
     scrollbarWidth: 'none',
     height: '320px'
   },
   imageContainer: {
-    position: 'relative', // Needed for absolutely positioned overlay
+    position: 'relative',
     flex: '0 0 auto',
     width: '400px',
     height: '300px',
@@ -218,15 +232,13 @@ const styles = {
     color: '#fff',
     fontSize: '18px',
     backgroundColor: 'rgba(0,0,0,0.5)'
-    // You can also add a transition for fade in/out if desired
   }
 };
 
-// Additional CSS for hiding the scrollbar
 const globalStyles = document.createElement('style');
 globalStyles.innerHTML = `
     ::-webkit-scrollbar {
-        display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
+        display: none;
     }
 `;
 document.head.appendChild(globalStyles);
