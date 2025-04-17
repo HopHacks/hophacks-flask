@@ -1,5 +1,5 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import LabeledTextField from '../ui/LabeledTextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const CountryAutocomplete = function CountryAutocomplete({ country, setCountry }) {
@@ -265,16 +265,21 @@ const CountryAutocomplete = function CountryAutocomplete({ country, setCountry }
         setCountry(newValue);
       }}
       renderInput={(params) => (
-        <TextField
-          required
-          {...params}
+        <LabeledTextField
           label="Country"
-          variant="standard"
+          required
           style={{ width: '100%' }}
-          InputLabelProps={{ style: { color: '#061A40' } }}
+          {...params}
+          InputLabelProps={{
+            style: { color: '#061A40' },
+            ...(params.InputLabelProps || {})
+          }}
           InputProps={{
             ...params.InputProps,
-            style: { color: '#061A40' }
+            style: {
+              color: '#061A40',
+              ...(params.InputProps?.style || {})
+            }
           }}
         />
       )}

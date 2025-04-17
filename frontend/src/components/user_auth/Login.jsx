@@ -56,7 +56,7 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100dvh-67px)] bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
+    <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
       <div
         className="min-w-[300px] max-w-[700px] w-[70%] flex flex-col rounded-2xl p-10"
         style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
@@ -99,9 +99,15 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
           >
             Login
           </button>
-          <div className="w-full text-right">
+          <div className="w-full flex justify-between">
+            <div className="flex">
+              <p className="text-gray-400 mr-2">{"Don't have an account yet?"}</p>
+              <Link to="/register/signup">
+                <p className="text-gray-200 hover:text-gray-400 transition-all">Sign Up</p>
+              </Link>
+            </div>
             <Link to="/register/resetpassword">
-              <p className="text-gray-500 hover:text-gray-400 transition-all">Forgot Password?</p>
+              <p className="text-gray-200 hover:text-gray-400 transition-all">Forgot Password?</p>
             </Link>
           </div>
         </div>

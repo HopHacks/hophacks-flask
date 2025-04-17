@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
+import LabeledTextField from '../ui/LabeledTextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -9,32 +9,9 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
   const loading = open && options.length === 0;
   // for school autocomplete
   useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
-  useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      //const response = await axios.get('http://universities.hipolabs.com/search');
-      //console.log(response)
-      const response = require('./list.json');
-      const colleges = await response;
-      //const colleges = await response.data;
-      if (active) {
-        setOptions(Object.keys(colleges).map((key) => colleges[key]));
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
+    const response = require('./list.json');
+    setOptions(Object.values(response));
+  }, []);
 
   console.log(school);
   return (
@@ -57,23 +34,26 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
         setSchool(newValue !== null ? newValue.name : '');
       }}
       renderInput={(params) => (
-        <TextField
+        <LabeledTextField
+          label="School"
+          value={school}
           required
           {...params}
-          label="School"
-          variant="standard"
-          value={school}
           InputProps={{
             ...params.InputProps,
-            style: { color: '#061A40' },
+            style: {
+              color: '#061A40'
+            },
             endAdornment: (
-              <React.Fragment>
+              <>
                 {loading ? <CircularProgress color="inherit" size={20} /> : null}
                 {params.InputProps.endAdornment}
-              </React.Fragment>
+              </>
             )
           }}
-          InputLabelProps={{ style: { color: '#061A40' } }}
+          InputLabelProps={{
+            style: { color: '#061A40' }
+          }}
         />
       )}
     />
