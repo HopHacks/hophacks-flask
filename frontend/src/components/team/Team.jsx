@@ -206,16 +206,24 @@ export default function TeamPage() {
               currentTeam &&
               filteredTeams.map((member) => (
                 <Grid item key={member.name}>
-                  <OrganizerCard
-                    name={member.name}
-                    position={member.role ?? teams[tabIndex].defaultRole}
-                    image={nameToURL(member.name)}
-                    github={member.github ?? ''}
-                    linkedin={member.linkedin ?? ''}
-                    hometown={member.hometown ?? ''}
-                    major_year={`${member.major}, ${member.year}`}
-                    funfact={member.funFact ?? ''}
-                  />
+                  {member.role === 'Faculty Advisor' ? (
+                    <AlumniCard
+                      name={member.name}
+                      position={member.role ?? 'Alumnus'}
+                      image={nameToURL(member.name)}
+                    />
+                  ) : (
+                    <OrganizerCard
+                      name={member.name}
+                      position={member.role ?? teams[tabIndex].defaultRole}
+                      image={nameToURL(member.name)}
+                      github={member.github ?? ''}
+                      linkedin={member.linkedin ?? ''}
+                      hometown={member.hometown ?? ''}
+                      major_year={`${member.major}, ${member.year}`}
+                      funfact={member.funFact ?? ''}
+                    />
+                  )}
                 </Grid>
               ))}
 
