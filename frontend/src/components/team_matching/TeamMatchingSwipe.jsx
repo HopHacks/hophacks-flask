@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import MatchList from './MatchList'; // ⬅️ Make sure you have this component
+import MatchList from './MatchList'; // Make sure this exists
 import '../../stylesheets/TeamMatching.css';
 
 function TeamMatching({ token }) {
@@ -8,7 +8,7 @@ function TeamMatching({ token }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [error, setError] = useState(null);
   const [matchResult, setMatchResult] = useState(null);
-  const [view, setView] = useState('swipe'); // ⬅️ New state for toggle
+  const [view, setView] = useState('swipe');
 
   const API_URL = 'http://localhost:5000/api/teammatch';
 
@@ -47,7 +47,7 @@ function TeamMatching({ token }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          target_id: targetUser._id,
+          target_id: targetUser.id,
           action: direction,
         }),
       });
@@ -84,7 +84,7 @@ function TeamMatching({ token }) {
             <AnimatePresence>
               {currentUser && (
                 <motion.div
-                  key={currentUser._id}
+                  key={currentUser.id}
                   className="card"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -100,13 +100,14 @@ function TeamMatching({ token }) {
                   }}
                   whileTap={{ scale: 1.05 }}
                 >
-                  <h2>{currentUser.name} ({currentUser.username})</h2>
-                  <p><strong>School:</strong> {currentUser.school}</p>
-                  <p><strong>Skills:</strong> {currentUser.technical_skills?.join(', ')}</p>
-                  <p><strong>Specialty:</strong> {currentUser.preferred_specialty}</p>
-                  <p><strong>Looking for:</strong> {currentUser.teammate_preferences}</p>
-                  <p><strong>Fav Song:</strong> {currentUser.favorite_song}</p>
-                  <p><strong>Fav Show:</strong> {currentUser.favorite_show}</p>
+                  <h2>
+                    {currentUser.profile?.first_name} {currentUser.profile?.last_name} ({currentUser.username})
+                  </h2>
+                  <p><strong>School:</strong> {currentUser.profile?.school}</p>
+                  <p><strong>Major:</strong> {currentUser.profile?.major}</p>
+                  <p><strong>Gender:</strong> {currentUser.profile?.gender}</p>
+                  <p><strong>Age:</strong> {currentUser.profile?.age}</p>
+                  {/* Add more profile fields as needed */}
                 </motion.div>
               )}
             </AnimatePresence>

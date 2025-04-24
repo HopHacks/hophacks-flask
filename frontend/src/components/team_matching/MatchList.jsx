@@ -18,20 +18,18 @@ function MatchList({ token }) {
 
         if (!res.ok) throw new Error('Failed to fetch matches');
 
-        const data = await res.json();
+        const ids = await res.json();
 
-        // You can also fetch full user data for each ID if needed
         const userResponses = await Promise.all(
-            data.map((id) =>
-              fetch(`http://localhost:5000/api/teammatch/user/${id}`, {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  'Content-Type': 'application/json',
-                },
-              }).then((res) => res.json())
-            )
+          ids.map((id) =>
+            fetch(`http://localhost:5000/api/teammatch/user/${id}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            }).then((res) => res.json())
+          )
         );
-          
 
         setMatches(userResponses);
       } catch (err) {
@@ -49,13 +47,12 @@ function MatchList({ token }) {
       {error && <p className="error">{error}</p>}
       <div className="match-grid">
         {matches.map((user) => (
-          <div key={user._id} className="match-card">
-            <h3>{user.name}</h3>
-            <p><strong>School:</strong> {user.school}</p>
-            <p><strong>Specialty:</strong> {user.preferred_specialty}</p>
-            <p><strong>Skills:</strong> {user.technical_skills.join(', ')}</p>
-            <p><strong>Fav Song:</strong> {user.favorite_song}</p>
-            <p><strong>Fav Show:</strong> {user.favorite_show}</p>
+          <div key={user.id} className="match-card">
+            <h3>{user.profile?.first_name} {user.profile?.last_name}</h3>
+            <p><strong>School:</strong> {user.profile?.school}</p>
+            <p><strong>Major:</strong> {user.profile?.major}</p>
+            <p><strong>Gender:</strong> {user.profile?.gender}</p>
+            <p><strong>Age:</strong> {user.profile?.age}</p>
           </div>
         ))}
       </div>

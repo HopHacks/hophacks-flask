@@ -8,14 +8,22 @@ teammatch_api = Blueprint('teammatch_api', __name__)
 
 def serialize_user(user):
     user["_id"] = str(user["_id"])
-    user["swipes"] = user.get("swipes", {"left": [], "right": []})
-    user["matches"] = user.get("matches", [])
+    team_data = user.get("teammatch", {})
+    
+    swipes = team_data.get("swipes", {"left": [], "right": []})
+    matches = team_data.get("matches", [])
 
-    user["swipes"]["left"] = [str(uid) for uid in user["swipes"].get("left", [])]
-    user["swipes"]["right"] = [str(uid) for uid in user["swipes"].get("right", [])]
-    user["matches"] = [str(uid) for uid in user.get("matches", [])]
+    swipes["left"] = [str(uid) for uid in swipes.get("left", [])]
+    swipes["right"] = [str(uid) for uid in swipes.get("right", [])]
+    matches = [str(uid) for uid in matches]
 
-    return user
+    return {
+        "id": user["_id"],
+        "username": user.get("username", ""),
+        "profile": user.get("profile", {}),
+        "swipes": swipes,
+        "matches": matches
+    }
 
 @teammatch_api.route('/swipe', methods=['POST'])
 @jwt_required
@@ -28,13 +36,28 @@ def swipe():
     if not target_id or action not in {"right", "left"}:
         return jsonify({"error": "Invalid request"}), 400
 
-    db.teammatch.update_one({"_id": user_id}, {"$addToSet": {"swipes.{}".format(action): target_id}})
+    # Don't allow swiping on admins
+    if db.users.find_one({"_id": target_id, "is_admin": True}):
+        return jsonify({"error": "Cannot swipe on admin accounts"}), 403
+
+    db.users.update_one(
+        {"_id": user_id},
+        {"$addToSet": {f"teammatch.swipes.{action}": target_id}}
+    )
 
     if action == "right":
-        target_user = db.teammatch.find_one({"_id": target_id, "swipes.right": user_id})
+        target_user = db.users.find_one(
+            {"_id": target_id, "teammatch.swipes.right": user_id, "is_admin": {"$ne": True}}
+        )
         if target_user:
-            db.teammatch.update_one({"_id": user_id}, {"$addToSet": {"matches": target_id}})
-            db.teammatch.update_one({"_id": target_id}, {"$addToSet": {"matches": user_id}})
+            db.users.update_one(
+                {"_id": user_id},
+                {"$addToSet": {"teammatch.matches": target_id}}
+            )
+            db.users.update_one(
+                {"_id": target_id},
+                {"$addToSet": {"teammatch.matches": user_id}}
+            )
             return jsonify({"match": True}), 200
 
     return jsonify({"match": False}), 200
@@ -43,27 +66,35 @@ def swipe():
 @jwt_required
 def get_matches():
     user_id = ObjectId(get_jwt_identity())
-    user = db.teammatch.find_one({"_id": user_id}, {"matches": 1})
-    matches = [str(uid) for uid in user.get("matches", [])] if user else []
+    user = db.users.find_one({"_id": user_id}, {"teammatch.matches": 1})
+    match_ids = user.get("teammatch", {}).get("matches", []) if user else []
+
+    # Filter out admin matches
+    non_admins = db.users.find({
+        "_id": { "$in": match_ids },
+        "is_admin": { "$ne": True }
+    })
+
+    matches = [str(u["_id"]) for u in non_admins]
     return jsonify(matches), 200
 
 @teammatch_api.route('/potential_matches', methods=['GET'])
 @jwt_required
 def get_potential_matches():
     current_user_id = ObjectId(get_jwt_identity())
+    current_user = db.users.find_one({ "_id": current_user_id })
 
-    current_user = db.teammatch.find_one({ "_id": current_user_id })
     if not current_user:
         return jsonify({"error": "User not found"}), 404
 
-    swiped_left = current_user.get("swipes", {}).get("left", [])
-    swiped_right = current_user.get("swipes", {}).get("right", [])
-    swiped_ids = swiped_left + swiped_right + [current_user_id]
+    swiped = current_user.get("teammatch", {}).get("swipes", {})
+    swiped_ids = swiped.get("left", []) + swiped.get("right", []) + [current_user_id]
 
-    users = list(db.teammatch.find({ "_id": { "$nin": swiped_ids } }))
+    users = list(db.users.find({
+        "_id": { "$nin": swiped_ids },
+        "is_admin": { "$ne": True }
+    }))
     return jsonify([serialize_user(u) for u in users]), 200
-
-
 
 @teammatch_api.route('/generate_token', methods=['POST'])
 def generate_token():
@@ -73,7 +104,7 @@ def generate_token():
     if not user_id:
         return jsonify({"error": "Missing user_id"}), 400
 
-    user = db.teammatch.find_one({"_id": ObjectId(user_id)})
+    user = db.users.find_one({"_id": ObjectId(user_id)})
     if not user:
         return jsonify({"error": "User not found"}), 404
 
@@ -87,10 +118,11 @@ def generate_token():
 @teammatch_api.route('/login', methods=['POST'])
 def login_user():
     username = request.json.get("username")
+    print(username)
     if not username:
         return jsonify({"error": "Username required"}), 400
 
-    user = db.teammatch.find_one({"username": username})
+    user = db.users.find_one({"username": username})
     if not user:
         return jsonify({"error": "User not found"}), 404
 
@@ -106,7 +138,7 @@ def login_user():
 @jwt_required
 def get_user_by_id(user_id):
     try:
-        user = db.teammatch.find_one({ "_id": ObjectId(user_id) })
+        user = db.users.find_one({ "_id": ObjectId(user_id), "is_admin": { "$ne": True } })
         if not user:
             return jsonify({"error": "User not found"}), 404
         return jsonify(serialize_user(user)), 200
