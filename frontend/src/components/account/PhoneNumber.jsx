@@ -1,22 +1,30 @@
 import React from 'react';
 import { forwardRef } from 'react';
-
-import TextField from '@material-ui/core/TextField';
+import LabeledTextField from '../ui/LabeledTextField';
 
 const phoneInput = (props, ref) => {
   return (
-    <TextField
+    <LabeledTextField
       {...props}
-      style={{ width: '100%' }}
-      inputRef={ref}
-      fullWidth
+      label="Phone Number"
+      name="phone"
       required
       size="small"
-      label="Phone Number"
       variant="standard"
-      name="phone"
-      InputLabelProps={{ style: { color: '#061A40' } }}
-      InputProps={{ style: { color: '#061A40' } }}
+      fullWidth
+      inputRef={ref}
+      style={{ width: '100%' }}
+      InputLabelProps={{
+        style: { color: '#061A40' },
+        ...(props.InputLabelProps || {})
+      }}
+      InputProps={{
+        style: {
+          color: '#061A40',
+          ...(props.InputProps?.style || {})
+        },
+        ...(props.InputProps || {})
+      }}
     />
   );
 };

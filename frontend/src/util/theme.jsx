@@ -3,7 +3,7 @@ import createPalette from '@material-ui/core/styles/createPalette';
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: 'PT Sans' //change font here
+    fontFamily: 'montserrat' //change font here
   },
 
   spacing: 8,
