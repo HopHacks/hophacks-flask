@@ -145,11 +145,11 @@ def create():
 
     """
 
-
     if 'json_file' not in request.form:
         return Response('Data not in json format', status=400)
 
     json_info = json.loads(request.form['json_file'])
+    print(json_info)
 
     username = json_info['username']
     password = json_info['password'].encode()
@@ -194,7 +194,7 @@ def create():
         'is_admin': False,
         'registrations': [],
         'resume': resume_link,
-        "updated": True
+        "updated": True,
     })
 
     return jsonify({"msg": "user added"}), 200

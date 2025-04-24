@@ -8,6 +8,7 @@ import SignUpChecks from './SignUpChecks'; //added check page
 import SignUpImage from './SignUpImage'; //added image page
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
+import { use } from 'react';
 // import { useHistory } from 'react-router-dom';
 
 function SignUp(props) {
@@ -32,6 +33,7 @@ function SignUp(props) {
   const [first_hophacks, setFirst_hophacks] = useState('');
   const [learn_about_us, setLearn_about_us] = useState('');
   const [country, setCountry] = useState('');
+  const [linkedIn, setLinkedIn] = useState('');
 
   const [resumeFile, setResumeFile] = useState('');
 
@@ -58,7 +60,7 @@ function SignUp(props) {
   const CHECKS = 2; //changed this to be 2
   const IMAGE = 3; //changed this to be 3
   const CONFIRMATION = 4;
-  const [activePage, setActivePage] = useState(ACCOUNT);
+  const [activePage, setActivePage] = useState(2);
 
   // functions for account page
   async function handleAccountNext() {
@@ -261,7 +263,8 @@ function SignUp(props) {
           first_hackathon: first_hackathon,
           first_hophacks: first_hophacks,
           learn_about_us: learn_about_us,
-          country: country
+          country: country,
+          linkedIn
         }
       })
     );
@@ -416,6 +419,7 @@ function SignUp(props) {
             handleConductCheckBox={handleConductCheckBox}
             handleLogisticsCheckBox={handleLogisticsCheckBox}
             handleCommunicationCheckBox={handleCommunicationCheckBox}
+            setLinkedIn={setLinkedIn}
           />
         )}
         {activePage === IMAGE && (

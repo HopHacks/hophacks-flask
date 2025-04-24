@@ -63,7 +63,8 @@ const SignUpChecks = ({
   handleResumeCheckBox,
   handleConductCheckBox,
   handleLogisticsCheckBox,
-  handleCommunicationCheckBox
+  handleCommunicationCheckBox,
+  setLinkedIn
 }) => {
   const img = (url) => `https://hophacks-website.s3.amazonaws.com/images/${url}`;
 
@@ -80,7 +81,7 @@ const SignUpChecks = ({
         className="font-bold text-white text-xl text-center mb-10"
         style={{ fontVariant: 'small-caps' }}
       >
-        2. Additional Info
+        3. Additional Info
       </p>
       <Grid container spacing={isMobile ? 2 : 5}>
         <Grid container spacing={2}>
@@ -129,6 +130,13 @@ const SignUpChecks = ({
                 </MenuItem>
               ))}
             </LabeledTextField>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <LabeledTextField
+              label="Link to LinkedIn Profile (Optional)"
+              required={false}
+              onChange={(e) => setLinkedIn(e.target.value)}
+            />
           </Grid>
         </Grid>
         <Grid item xs={12} style={{ textAlign: isMobile ? 'center' : 'left' }}>

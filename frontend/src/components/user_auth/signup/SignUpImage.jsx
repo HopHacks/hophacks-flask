@@ -39,7 +39,7 @@ export default function SignUpProfile({
         className="font-bold text-white text-xl text-center mb-12"
         style={{ fontVariant: 'small-caps' }}
       >
-        2. Build a Bird - this will be your profile picture!
+        4. Build a Bird - this will be your profile picture!
       </p>
       <Grid container spacing={isMobile ? 2 : 5} />
 
