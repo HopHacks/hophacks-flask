@@ -8,7 +8,6 @@ import SignUpChecks from './SignUpChecks'; //added check page
 import SignUpImage from './SignUpImage'; //added image page
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
-import { use } from 'react';
 // import { useHistory } from 'react-router-dom';
 
 function SignUp(props) {
@@ -60,7 +59,7 @@ function SignUp(props) {
   const CHECKS = 2; //changed this to be 2
   const IMAGE = 3; //changed this to be 3
   const CONFIRMATION = 4;
-  const [activePage, setActivePage] = useState(2);
+  const [activePage, setActivePage] = useState(0);
 
   // functions for account page
   async function handleAccountNext() {

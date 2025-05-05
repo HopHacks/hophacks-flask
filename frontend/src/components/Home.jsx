@@ -3,6 +3,7 @@ import Cover from './home/Cover';
 import RegisterSection from './home/Register';
 import Footer from './Footer';
 import AboutSection from './home/About';
+import HomeSection from './home/HomeSection';
 // import PrizesSection from './home/Prizes';
 // import FAQSection from './home/Faq';
 
@@ -12,9 +13,9 @@ export default function Home() {
       <div id="cover" className="snap-start">
         <Cover />
       </div>
-      <div id="register-section" className="snap-start">
+      <HomeSection id="register-section" img="'https://hophacks-website.s3.us-east-1.amazonaws.com/whole-bg-splitted/image1x2.png'">
         <RegisterSection />
-      </div>
+      </HomeSection>
       {/* <div id="about" className="snap-start">
         <AboutSection />
       </div> */}
