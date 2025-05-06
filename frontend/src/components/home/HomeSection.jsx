@@ -1,6 +1,6 @@
-const HomeSection = ({ children }) => {
+const HomeSection = ({ id, children }) => {
     return (
-        <section className="h-screen w-full flex items-center justify-center snap-start">
+        <section className="h-screen w-full flex items-center justify-center" id={id}>
             {children}
         </section>
     );
