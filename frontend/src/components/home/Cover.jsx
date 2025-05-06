@@ -3,19 +3,7 @@ import '../../stylesheets/cover.css';
 
 export default function Cover() {
   return (
-    <section id="cover" className="cover-section">
-      <div className="pageBackground">
         <div className="mainContent">
-          <div className="headerRow">
-            <div className="textLine">
-              <span className="larger-letter">H</span>OP
-            </div>
-            <img
-              src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/hophacks2025logo.png"
-              alt="HopHacks Logo"
-              className="hophacks-logo"
-            />
-          </div>
 
           <div className="headerRow">
             <div className="textLine">
@@ -57,7 +45,5 @@ export default function Cover() {
 
           {/* <button> Register</button> */}
         </div>
-      </div>
-    </section>
   );
 }

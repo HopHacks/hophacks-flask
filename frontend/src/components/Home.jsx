@@ -9,28 +9,22 @@ import HomeSection from './home/HomeSection';
 
 export default function Home() {
   return (
-    <div className="snap-y snap-mandatory h-screen overflow-y-scroll">
-      <div id="cover" className="snap-start">
-        <Cover />
+    <main
+      className="relative w-full bg-no-repeat bg-top bg-cover"
+      style={{
+        backgroundImage:
+          "url('https://hophacks-website.s3.us-east-1.amazonaws.com/whole-bg-splitted/whole-bg-2.png')",
+      }}
+    >
+      <div className="snap-y snap-mandatory">
+        <HomeSection><Cover /></HomeSection>
+        <HomeSection><RegisterSection /></HomeSection>
+        <HomeSection><h1>Section 3</h1></HomeSection>
+        <HomeSection><h1>Section 4</h1></HomeSection>
+        <HomeSection><h1>Section 5</h1></HomeSection>
       </div>
-      <HomeSection id="register-section" img="'https://hophacks-website.s3.us-east-1.amazonaws.com/whole-bg-splitted/image1x2.png'">
-        <RegisterSection />
-      </HomeSection>
-      {/* <div id="about" className="snap-start">
-        <AboutSection />
-      </div> */}
-      {/*<div id="prizes" className="snap-start">
-        <PrizesSection />
-      </div>
-      <div id="tracks" className="snap-start">
-        <TracksSection />
-      </div>
-      <div id="faq" className="snap-start">
-        <FAQSection />
-      </div>*/}
-      <div className="snap-start">
-        <Footer />
-      </div>
-    </div>
+    </main>
+
+
   );
 }

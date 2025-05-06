@@ -1,12 +1,9 @@
-export default function HomeSection({ id, img, children }) {    
+const HomeSection = ({ children }) => {
     return (
-        <section id={id} className="snap-start">
-            <div
-                className="bg-no-repeat bg-center bg-cover h-screen flex justify-center items-center"
-                style={{ backgroundImage: `url(${img})` }}
-            >
-                {children}
-            </div>        
+        <section className="h-screen w-full flex items-center justify-center snap-start">
+            {children}
         </section>
-    )
-}
+    );
+};
+
+export default HomeSection;
