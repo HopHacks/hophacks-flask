@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CountUp from 'react-countup';
+import SectionHeader from '../ui/SectionHeader';
 
-function HackathonStats2024() {
+function HackathonStats2024({ modifiedTitle }) {
   // Stats data for the hackathon
   // TODO use stats from selectedYear (need API)
   const statsA = [
@@ -40,12 +41,9 @@ function HackathonStats2024() {
 
   return (
     <div className="flex flex-col justify-center items-center w-full font-sans" ref={statsRef}>
-      <h2
-        className="font-bold text-white text-6xl text-center mb-12 mt-32 w-2/3 max-w-3xl"
-        style={{ fontVariant: 'small-caps' }}
-      >
-        2024 Hackathon Stats
-      </h2>
+      <SectionHeader className="mb-3">
+        {modifiedTitle ?? "2024 Hackathon Stats"}
+      </SectionHeader>
 
       {/* STATS A */}
       <div className="flex flex-wrap justify-center items-center gap-36">
