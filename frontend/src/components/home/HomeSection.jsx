@@ -1,6 +1,15 @@
 const HomeSection = ({ id, children }) => {
     return (
-        <section className="h-screen w-full flex items-center justify-center" id={id}>
+        // <section
+        //     className="min-h-dvh w-full flex items-center justify-center border border-white"
+        //     id={id}
+        // >
+        //     {children}
+        // </section>
+        <section
+            className="min-h-dvh w-full flex items-center justify-center"
+            id={id}
+        >
             {children}
         </section>
     );

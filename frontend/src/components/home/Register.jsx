@@ -2,8 +2,8 @@ import GlowText from '../ui/GlowText';
 
 export default function Register() {
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h2 className="text-6xl mb-20 font-bold text-white" style={{ fontVariant: 'small-caps' }}>
+    <div className="flex flex-col justify-center items-center h-full">
+      <h2 className="font-extrabold text-[80px] leading-[160px] tracking-[0.04em] font-montserrat text-white" style={{ fontVariant: 'small-caps' }}>
         Register
       </h2>
 
@@ -30,7 +30,7 @@ export default function Register() {
               <img
                 src={`https://hophacks-website.s3.us-east-1.amazonaws.com/home/${img}`}
                 alt={`${label} Bird`}
-                className="h-[300px] w-auto mb-4 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
+                className="h-[427px] w-auto mb-4 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
               />
             </a>
             <a
