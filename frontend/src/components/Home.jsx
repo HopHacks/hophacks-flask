@@ -28,10 +28,10 @@ export default function Home() {
           <HomeSection id={'register-section'}>
             <RegisterSection />
           </HomeSection>
-          <HomeSection>
+          <HomeSection id={'about-section'}>
             <AboutSection />
           </HomeSection>
-          <HomeSection>
+          <HomeSection id={'stats-section'}>
             <div className="flex flex-col min-h-dvh justify-center items-center">
               <Stats modifiedTitle={"2024 Stats"} />
               <a href={"/Recap"} className="mt-12">
@@ -42,7 +42,7 @@ export default function Home() {
             </div>
             
           </HomeSection>
-          <HomeSection>
+          <HomeSection id={'faq-section'}>
             <div className="min-h-dvh">
               <FaqAccordion />
             </div>
