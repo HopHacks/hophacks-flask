@@ -16,16 +16,21 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
   // AppBar fixed to the top with full width
   appBar: {
-    backgroundColor: 'transparent',
+    background: 'linear-gradient(to bottom, rgba(28, 33, 81, 1) 8%, rgba(0, 29, 76, 0) 100%)',
     boxShadow: 'none',
-    height: 100,
-    transition: 'height 0.3s ease',
+    height: 70,
+    transition: 'transform 0.3s ease',
     position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
-    zIndex: 1100 // ensure it stays on top of other elements
+    zIndex: 1100,
+    transform: 'translateY(0)',
   },
+  appBarHidden: {
+    transform: 'translateY(-100%)',
+  },
+
   toolbar: {
     minHeight: '50px',
     padding: '0 16px',
@@ -39,9 +44,9 @@ const useStyles = makeStyles({
     color: '#F7F3FF',
     fontFamily: 'Montserrat, sans-serif',
     fontWeight: 'bold',
-    fontSize: '1.25rem', // 20px
-    lineHeight: 2,       // 200%
-    letterSpacing: '0.0625rem', // 5% of 1.25rem
+    fontSize: '1.25rem',
+    lineHeight: 2,
+    letterSpacing: '0.0625rem',
     fontVariant: 'small-caps',
   },
   hophacksButton: {
@@ -76,13 +81,12 @@ const useStyles = makeStyles({
     alignItems: 'center',
   },
   mlhBanner: {
-    position: 'absolute',
-    right: 0,
+    position: 'fixed',
     top: 0,
+    right: 0,
     maxWidth: 100,
     minWidth: 60,
     width: '100%',
-    zIndex: 1200
   },
   whiteDivider: {
     opacity: 0.60,
@@ -100,6 +104,8 @@ const Navigation = function Navigation() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('cover-section');
   const isHome = location.pathname === '/';
+  const [showNavbar, setShowNavbar] = useState(true);
+
 
   // Update isMobile on window resize.
   useEffect(() => {
@@ -107,6 +113,34 @@ const Navigation = function Navigation() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Navbar dissapear on scroll effect
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let timeoutId = null;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down → hide navbar
+        setShowNavbar(false);
+      } else {
+        // Scrolling up or stopped → show navbar
+        setShowNavbar(true);
+      }
+
+      lastScrollY = currentScrollY;
+
+      // Re-show navbar if user stops scrolling after a delay
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => setShowNavbar(true), 500); // adjust delay if needed
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
 
   // Update scroll state and active section only if on home page
   useEffect(() => {
@@ -147,6 +181,7 @@ const Navigation = function Navigation() {
         smooth
         to={`/#${section.id}`}
         className={`${classes.navBtn} ${isActive ? classes.activeNavBtn : ''}`}
+        onClick={() => isMobile && setIsDrawerOpen(false)}
       >
         <Typography variant="body2" className={classes.title}>
           {section.label}
@@ -169,6 +204,7 @@ const Navigation = function Navigation() {
         component={Link}
         to={item.path}
         className={`${classes.navBtn} ${isActive ? classes.activeNavBtn : ''}`}
+        onClick={() => isMobile && setIsDrawerOpen(false)}
       >
         <Typography variant="body2" className={classes.title}>
           {item.label}
@@ -181,7 +217,8 @@ const Navigation = function Navigation() {
   const navItems = (
     <>
       {coverNavItems}
-      <Divider orientation='vertical' flexItem className={classes.whiteDivider} variant="middle" />
+      {/* Only need the divider on mobile */}
+      {!isMobile && <Divider orientation='vertical' flexItem className={classes.whiteDivider} variant="middle" />}
       {otherNavItems}
     </>
   );
@@ -190,7 +227,11 @@ const Navigation = function Navigation() {
   if (isMobile) {
     return (
       <div>
-        <AppBar position="fixed" className={classes.appBar}>
+        <AppBar
+          position="fixed"
+          className={`${classes.appBar} ${!showNavbar ? classes.appBarHidden : ''}`}
+        >
+
           <Toolbar className={classes.toolbar}>
             <Button
               component={Link}
@@ -247,7 +288,11 @@ const Navigation = function Navigation() {
 
   // Desktop view
   return (
-    <AppBar position="fixed" className={classes.appBar}>
+    <AppBar
+      position="fixed"
+      className={`${classes.appBar} ${!showNavbar ? classes.appBarHidden : ''}`}
+    >
+
       <Toolbar className={classes.toolbar}>
         <Button component={Link} smooth to="/" color="inherit" className={classes.hophacksButton}>
           <img

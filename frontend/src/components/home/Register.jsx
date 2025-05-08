@@ -2,7 +2,7 @@ import GlowText from '../ui/GlowText';
 import SectionHeader from '../ui/SectionHeader';
 import SectionSubtext from '../ui/SectionSubtext';
 
-export default function Register() {
+export default function Register({ isMobile }) {
   return (
     <div className="flex flex-col justify-center items-center h-full">
       <SectionHeader>Register</SectionHeader>
@@ -30,7 +30,7 @@ export default function Register() {
               <img
                 src={`https://hophacks-website.s3.us-east-1.amazonaws.com/home/${img}`}
                 alt={`${label} Bird`}
-                className="h-[427px] w-auto mb-4 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
+                className="h-[100px] sm:h-[100px] md:h-[200px] lg:h-[350px] w-auto mb-4 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
               />
             </a>
             <a href={link ?? '#'} className="">

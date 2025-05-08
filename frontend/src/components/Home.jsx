@@ -5,13 +5,15 @@ import Footer from './Footer';
 import AboutSection from './home/About';
 import HomeSection from './home/HomeSection';
 import Stats from './flashback/HackathonStats2024';
-import SectionSubtext from './ui/SectionSubtext';
 import SectionParagraph from './ui/SectionParagraph';
 import { ArrowRightAlt } from '@material-ui/icons';
 // import PrizesSection from './home/Prizes';
 import FaqAccordion from './home/FaqAccordian';
+import { useState } from 'react';
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 800);
+
   return (
     <div>
       <main
@@ -25,17 +27,17 @@ export default function Home() {
           <HomeSection id={'cover-section'}>
             <Cover />
           </HomeSection>
-          <HomeSection id={'register-section'}>
-            <RegisterSection />
+          <HomeSection id={'register-section'} darkerBg={true} bgOpacity={0.3}>
+            <RegisterSection isMoble={isMobile} />
           </HomeSection>
-          <HomeSection id={'about-section'}>
+          <HomeSection id={'about-section'} darkerBg={true}>
             <AboutSection />
           </HomeSection>
-          <HomeSection id={'stats-section'}>
-            <div className="flex flex-col min-h-dvh justify-center items-center">
+          <HomeSection id={'stats-section'} darkerBg={true}>
+            <div className="flex flex-col min-h-dvh justify-center items-center w-full">
               <Stats modifiedTitle={"2024 Stats"} />
               <a href={"/Recap"} className="mt-12">
-                <SectionParagraph className="hover:text-blue-600 transition-colors duration-300">
+                <SectionParagraph className="hover:text-blue-600 transition-colors duration-300 underline">
                   {"See More Stats on Our Recap Page"}<ArrowRightAlt />
                 </SectionParagraph>
               </a>

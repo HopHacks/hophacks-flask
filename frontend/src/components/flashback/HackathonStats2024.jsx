@@ -2,6 +2,49 @@ import React, { useState, useEffect, useRef } from 'react';
 import CountUp from 'react-countup';
 import SectionHeader from '../ui/SectionHeader';
 
+function StatCircle({ stat, inView }) {
+  const isPrize = stat.label === 'Total Prizes';
+  const displayValue = inView ? (
+    <CountUp
+      start={0}
+      end={stat.number}
+      duration={2.5}
+      separator=","
+      prefix={isPrize ? '$' : ''}
+    />
+  ) : isPrize ? (
+    '$0'
+  ) : (
+    '0'
+  );
+
+  return (
+    <div
+      className="bg-recap-gold w-[150px] h-[150px] rounded-full flex flex-col justify-center items-center  
+      p-2.5 transition-all duration-300 
+      shadow-[0_0_100px_8px_rgba(255,255,148,.5)]
+      hover:shadow-[0_0_25px_8px_rgba(255,255,148,.6),0_0_60px_25px_rgba(255,255,148,0.6)]
+      hover:-translate-y-2"
+    >
+      <p className="font-bold text-3xl text-white">{displayValue}</p>
+      <p className="text-lg mt-[-3px]">{stat.label}</p>
+    </div>
+  );
+}
+
+function StatRow({ stats, inView }) {
+  return (
+    <div
+      className="flex flex-col sm:flex-row justify-center items-center gap-12 sm:gap-36 mb-2"
+    >
+      {stats.map((stat, index) => (
+        <StatCircle key={index} stat={stat} inView={inView} />
+      ))}
+    </div>
+  );
+}
+
+
 function HackathonStats2024({ modifiedTitle }) {
   // Stats data for the hackathon
   // TODO use stats from selectedYear (need API)
@@ -40,70 +83,10 @@ function HackathonStats2024({ modifiedTitle }) {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full font-sans" ref={statsRef}>
-      <SectionHeader className="mb-3">
-        {modifiedTitle ?? "2024 Hackathon Stats"}
-      </SectionHeader>
-
-      {/* STATS A */}
-      <div className="flex flex-wrap justify-center items-center gap-36">
-        {statsA.map((stat, index) => (
-          <div
-            key={index}
-            className="bg-recap-gold w-[150px] h-[150px] rounded-full flex flex-col justify-center items-center 
-           shadow-md shadow-lg 
-           p-2.5 transition-all duration-300 
-           hover:-translate-y-2 shadow-[0_0_100px_rgba(255,255,148,0.3)] hover:shadow-[0_0_120px_rgba(255,255,148,0.9)]"
-          >
-            <p className="font-bold text-3xl text-white">
-              {inView ? (
-                <CountUp
-                  start={0}
-                  end={stat.number}
-                  duration={2.5}
-                  separator=","
-                  prefix={stat.label === 'Total Prizes' ? '$' : ''}
-                />
-              ) : stat.label === 'Total Prizes' ? (
-                '$0'
-              ) : (
-                '0'
-              )}
-            </p>
-            <p className="text-lg mt-[-3px]">{stat.label}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* STATS B */}
-      <div className="flex flex-wrap justify-center items-center gap-36">
-        {statsB.map((stat, index) => (
-          <div
-            key={index}
-            className="bg-recap-gold w-[150px] h-[150px] rounded-full flex flex-col justify-center items-center 
-           shadow-md shadow-lg 
-           p-2.5 transition-all duration-300 
-           hover:-translate-y-2 shadow-[0_0_100px_rgba(255,255,148,0.3)] hover:shadow-[0_0_120px_rgba(255,255,148,0.9)]"
-          >
-            <p className="font-bold text-3xl text-white">
-              {inView ? (
-                <CountUp
-                  start={0}
-                  end={stat.number}
-                  duration={2.5}
-                  separator=","
-                  prefix={stat.label === 'Total Prizes' ? '$' : ''}
-                />
-              ) : stat.label === 'Total Prizes' ? (
-                '$0'
-              ) : (
-                '0'
-              )}
-            </p>
-            <p className="text-lg mt-[-3px]">{stat.label}</p>
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-col items-center gap-4">
+      <SectionHeader>{modifiedTitle ?? "2024 Hackathon Stats"}</SectionHeader>
+      <StatRow stats={statsA} inView={inView} />
+      <StatRow stats={statsB} inView={inView} />
     </div>
   );
 }

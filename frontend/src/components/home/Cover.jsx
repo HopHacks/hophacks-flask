@@ -5,7 +5,7 @@ import { ArrowDownward } from '@material-ui/icons';
 
 export default function Cover() {
   return (
-    <div className="flex flex-col items-start text-left ml-[28rem] mt-[10rem] h-full">
+    <div className="flex flex-col items-start px-20 text-left lg:ml-[30%] md:ml-[30%] mt-[2%] h-full">
       <div className="headerRow">
         <div className="textLine">
           <span className="larger-letter">H</span>OP
@@ -23,10 +23,9 @@ export default function Cover() {
       </div>
 
       <div className="flex items-start font-montserrat font-bold text-[#ffe188] text-[50px] leading-[35px] tracking-[0.05em]">
-        {/* Words beside the shared I */}
         <div className="flex flex-col" style={{ fontVariant: 'small-caps'}}>
           <p>Illuminating</p>
-          <div>Innovations</div>
+          <p>Innovations</p>
         </div>
       </div>
 
