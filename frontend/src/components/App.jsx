@@ -10,35 +10,33 @@ import { theme } from '../util/theme';
 import { AuthProvider } from '../util/auth';
 
 import Home from './Home'; //temporarily took out home page
-//import Recruiting from './Recruiting';
-//import Profile from './account/Profile'; //why does this not work!!!
+import Recruiting from './Recruiting';
+import Profile from './account/Profile'; //why does this not work!!!
 import Admin from './admin/Admin';
 import AnnouncementPanel from './admin/AnnouncementPanel';
 import Nav from './Nav';
-//import EmailConfirmation from './EmailConfirmation';
-//import PasswordReset from './PasswordReset';
-//import RSVP from './RSVP';
+import EmailConfirmation from './EmailConfirmation';
+import PasswordReset from './PasswordReset';
+import RSVP from './RSVP';
 import Assignments from './judgetool/Assignments.jsx';
 import Upload from './judgetool/Upload.jsx';
 import UploadSponsors from './judgetool/UploadSponsors.jsx';
 import SponsorPrizes from './judgetool/SponsorPrizes.jsx';
 import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
-//import Announcements from './announcement/Announcements.jsx';
-//import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
-//import Announcements from './announcement/Announcements.jsx';
-//import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
+import Announcements from './announcement/Announcements.jsx';
+import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
 import Team from './Team';
-//import Login from './user_auth/Login'; //adjusted to be new path
-// import Tracks from './tracks/Tracks.jsx';
-//import SignUp from './user_auth/signup/SignUp';
+import Login from './user_auth/Login'; //adjusted to be new path
+import Tracks from './tracks/Tracks.jsx';
+import SignUp from './user_auth/signup/SignUp';
 import Recap from './recap.jsx';
+
 // import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new paths
 // import SignUpProfile from './user_auth/signup/SignUpProfile.jsx';
 // import SignUpAccount from './user_auth/signup/SignUpAccount.jsx';
 // import SignUpImage from './user_auth/signup/SignUpImage.jsx';
 
-//import ResetPassword from './user_auth/ResetPassword';
-//import TeamMatchingPage from './team_matching/TeamMatchingPage';
+import ResetPassword from './user_auth/ResetPassword';
 //import ResetPassword from './user_auth/ResetPassword';
 import TeamMatchingPage from './team_matching/TeamMatchingPage';
 
@@ -73,17 +71,17 @@ export default function App() {
                   </Route>
 
                   {/* <Route path="/account/profile" component={Profile} /> */}
-                  {/*<Route path="/profile">
+                  <Route path="/profile">
                     <Profile isMobile={isMobile} />
                   </Route>
 
-                  {/*<Route path="/announcements/detail">
+                  <Route path="/announcements/detail">
                     <AnnouncementDetails />
                   </Route>
 
                   <Route path="/announcements">
                     <Announcements />
-                  </Route>*/}
+                  </Route>
 
                   <Route exact path="/home">
                     <Home />
@@ -94,7 +92,7 @@ export default function App() {
                     <Register isMobile ={isMobile}/>
                   </Route> */}
 
-                  {/*<Route path="/recruiting">
+                  <Route path="/recruiting">
                     <Recruiting />
                   </Route>
 
@@ -103,12 +101,12 @@ export default function App() {
                   </Route>
                   <Route path="/reset_password/:token" component={PasswordReset} />
                   <Route path="/confirm_email/:token" component={EmailConfirmation} />
-                  */}
+                  
                   <Route path="/team">
                     <Team />
                   </Route>
 
-                  {/*<Route path ="/register/login">
+                  <Route path ="/register/login">
                     <Login isMobile={isMobile} />
                   </Route>
 
@@ -119,14 +117,14 @@ export default function App() {
                   <Route path="/register/resetpassword">
                     <ResetPassword isMobile={isMobile} />
                   </Route>
-                    */}
+                  
                   <Route path="/teamMatching" isMobile={isMobile}>
                     <TeamMatchingPage />
                   </Route>
-                      {/*}
+                    
                   <Route path="/tracks">
                     <Tracks />
-                  </Route>*/}
+                  </Route>
 
                   <Route path="/Recap">
                     <Recap />

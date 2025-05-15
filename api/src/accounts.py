@@ -175,6 +175,9 @@ def create():
             file_name = 'resume'
 
         file_name = secure_filename(file_name)
+
+        # COMMENTED OUT: S3 Upload Disabled for Dev 
+        ''' 
         if (file and check_filename(file.filename)):
 
             s3 = boto3.client('s3')
@@ -182,6 +185,8 @@ def create():
             s3.upload_fileobj(file, BUCKET, object_name)
 
             resume_link = file_name
+        
+        '''
     
     db.users.insert_one({
         'username': username,
