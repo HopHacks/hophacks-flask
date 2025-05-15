@@ -89,8 +89,8 @@ def create_app(config_file='config/config.json'):
     from assign import assign_api
     from announcements import announcements_api
     from events import events_api
-    from slack import slack_api
-    from discord import discord_api
+    #from slack import slack_api
+    #from discord import discord_api
     from teammatching import teammatch_api
 
 
@@ -103,8 +103,8 @@ def create_app(config_file='config/config.json'):
     app.register_blueprint(assign_api, url_prefix='/api/judgetool')
     app.register_blueprint(announcements_api, url_prefix='/api/announcements')
     app.register_blueprint(events_api, url_prefix='/api/events')
-    app.register_blueprint(slack_api, url_prefix='/api/slack')
-    app.register_blueprint(discord_api, url_prefix='/api/discord')
+    #app.register_blueprint(slack_api, url_prefix='/api/slack')
+    #app.register_blueprint(discord_api, url_prefix='/api/discord')
     app.register_blueprint(teammatch_api, url_prefix='/api/teammatch')
     
     

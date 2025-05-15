@@ -25,7 +25,6 @@ import SponsorPrizes from './judgetool/SponsorPrizes.jsx';
 import TablesAndRooms from './judgetool/TablesAndRooms.jsx';
 import Announcements from './announcement/Announcements.jsx';
 import AnnouncementDetails from './announcement/AnnouncementDetails.jsx';
-import Team from './Team';
 import Login from './user_auth/Login'; //adjusted to be new path
 import Tracks from './tracks/Tracks.jsx';
 import SignUp from './user_auth/signup/SignUp';
@@ -101,12 +100,8 @@ export default function App() {
                   </Route>
                   <Route path="/reset_password/:token" component={PasswordReset} />
                   <Route path="/confirm_email/:token" component={EmailConfirmation} />
-                  
-                  <Route path="/team">
-                    <Team />
-                  </Route>
 
-                  <Route path ="/register/login">
+                  <Route path="/register/login">
                     <Login isMobile={isMobile} />
                   </Route>
 
@@ -117,11 +112,11 @@ export default function App() {
                   <Route path="/register/resetpassword">
                     <ResetPassword isMobile={isMobile} />
                   </Route>
-                  
+
                   <Route path="/teamMatching" isMobile={isMobile}>
                     <TeamMatchingPage />
                   </Route>
-                    
+
                   <Route path="/tracks">
                     <Tracks />
                   </Route>

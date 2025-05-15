@@ -1,59 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import MatchList from './MatchList'; // Make sure this exists
+import { useHistory } from 'react-router-dom'; // ✅ this works in v5
+import axios from 'axios';
+import MatchList from './MatchList';
+import { withAuthProps } from '../../util/auth.jsx';
 import '../../stylesheets/TeamMatching.css';
 
-function TeamMatching({ token }) {
+function TeamMatching({ isLoggedIn }) {
+  const history = useHistory(); // ✅ get history object
+
   const [users, setUsers] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [error, setError] = useState(null);
   const [matchResult, setMatchResult] = useState(null);
   const [view, setView] = useState('swipe');
 
-  const API_URL = 'http://localhost:5000/api/teammatch';
+  const API_URL = '/api/teammatch';
 
   useEffect(() => {
     const getPotentialMatches = async () => {
       try {
-        const response = await fetch(`${API_URL}/potential_matches`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) throw new Error('Failed to fetch potential matches');
-        const data = await response.json();
-        setUsers(data);
+        const response = await axios.get(`${API_URL}/potential_matches`);
+        setUsers(response.data);
       } catch (err) {
         setError('Error fetching potential matches');
         console.error(err);
       }
     };
 
-    if (view === 'swipe') {
+    if (view === 'swipe' && isLoggedIn) {
       getPotentialMatches();
     }
-  }, [token, view]);
+  }, [view, isLoggedIn]);
 
   const handleSwipe = async (direction) => {
     const targetUser = users[currentIndex];
-
     try {
-      const res = await fetch(`${API_URL}/swipe`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          target_id: targetUser.id,
-          action: direction,
-        }),
+      const res = await axios.post(`${API_URL}/swipe`, {
+        target_id: targetUser.id,
+        action: direction
       });
 
-      const data = await res.json();
-      if (data.match) {
+      if (res.data.match) {
         setMatchResult(`🎉 You matched with ${targetUser.username}!`);
       } else {
         setMatchResult(null);
@@ -61,7 +49,6 @@ function TeamMatching({ token }) {
     } catch (err) {
       console.error('Error swiping:', err);
     }
-
     setCurrentIndex((prev) => prev + 1);
   };
 
@@ -70,6 +57,7 @@ function TeamMatching({ token }) {
   return (
     <div className="team-matching-container">
       <div className="toggle-buttons" style={{ textAlign: 'center', marginBottom: '1rem' }}>
+        <button onClick={() => history.push('/profile')}>← Back to Profile</button>
         <button onClick={() => setView('swipe')}>Swipe</button>
         <button onClick={() => setView('matches')}>View Matches</button>
       </div>
@@ -101,13 +89,21 @@ function TeamMatching({ token }) {
                   whileTap={{ scale: 1.05 }}
                 >
                   <h2>
-                    {currentUser.profile?.first_name} {currentUser.profile?.last_name} ({currentUser.username})
+                    {currentUser.profile?.first_name} {currentUser.profile?.last_name} (
+                    {currentUser.username})
                   </h2>
-                  <p><strong>School:</strong> {currentUser.profile?.school}</p>
-                  <p><strong>Major:</strong> {currentUser.profile?.major}</p>
-                  <p><strong>Gender:</strong> {currentUser.profile?.gender}</p>
-                  <p><strong>Age:</strong> {currentUser.profile?.age}</p>
-                  {/* Add more profile fields as needed */}
+                  <p>
+                    <strong>School:</strong> {currentUser.profile?.school}
+                  </p>
+                  <p>
+                    <strong>Major:</strong> {currentUser.profile?.major}
+                  </p>
+                  <p>
+                    <strong>Gender:</strong> {currentUser.profile?.gender}
+                  </p>
+                  <p>
+                    <strong>Age:</strong> {currentUser.profile?.age}
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -116,10 +112,10 @@ function TeamMatching({ token }) {
           {!currentUser && <p>No more users to show</p>}
         </>
       ) : (
-        <MatchList token={token} />
+        <MatchList />
       )}
     </div>
   );
 }
 
-export default TeamMatching;
+export default withAuthProps(TeamMatching);

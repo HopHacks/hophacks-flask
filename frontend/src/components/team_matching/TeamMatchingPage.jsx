@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
-import TeamMatchingSwipe from './TeamMatchingSwipe'
-import TeamMatchingLoginPage from './TeamMatchingLoginPage';
+import React from 'react';
+import TeamMatchingSwipe from './TeamMatchingSwipe';
+import { withAuthCheck } from '../../util/auth.jsx'; // make sure the path is correct
 
-function App() {
-  const [token, setToken] = useState(null);
-
-  return (
-    <div>
-      {token ? (
-        <TeamMatchingSwipe token={token} />
-      ) : (
-        <TeamMatchingLoginPage setToken={setToken} />
-      )}
-    </div>
-  );
+function TeamMatchingApp() {
+  return <TeamMatchingSwipe />;
 }
 
-export default App;
+export default withAuthCheck(TeamMatchingApp);
