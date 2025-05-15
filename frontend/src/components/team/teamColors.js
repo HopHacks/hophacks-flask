@@ -17,9 +17,5 @@ export const colors = {
   // UI element colors
   tabDefault: '#808080', // Default tab color
   tabSelected: '#333333', // Selected tab color
-  inputBorder: '#81d4fa', // Input border color
-
-  // Effects
-  glowLight: 'rgba(129, 212, 250, .7)', // Light glow
-  glowStrong: 'rgba(225, 245, 254, 1)' // Strong glow
+  inputBorder: '#81d4fa' // Input border color
 };
