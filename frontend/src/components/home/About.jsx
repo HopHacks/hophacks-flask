@@ -13,9 +13,7 @@ export default function About() {
       {/* Fading gradient (top to bottom: 0,0.7,0.7,0)
           for easier reading
       */}
-      <div
-        className="absolute inset-0 z-0"
-      ></div>
+      <div className="absolute inset-0 z-0"></div>
 
       <div
         className="
@@ -43,4 +41,3 @@ export default function About() {
     </div>
   );
 }
-

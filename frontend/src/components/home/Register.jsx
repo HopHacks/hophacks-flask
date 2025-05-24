@@ -1,8 +1,7 @@
-import GlowText from '../ui/GlowText';
 import SectionHeader from '../ui/SectionHeader';
 import SectionSubtext from '../ui/SectionSubtext';
 
-export default function Register({ isMobile }) {
+export default function Register() {
   return (
     <div className="flex flex-col justify-center items-center h-full">
       <SectionHeader>Register</SectionHeader>

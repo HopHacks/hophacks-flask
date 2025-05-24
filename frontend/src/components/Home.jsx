@@ -1,4 +1,3 @@
-import React from 'react';
 import Cover from './home/Cover';
 import RegisterSection from './home/Register';
 import Footer from './Footer';
@@ -9,12 +8,8 @@ import SectionParagraph from './ui/SectionParagraph';
 import { ArrowRightAlt } from '@material-ui/icons';
 // import PrizesSection from './home/Prizes';
 import FaqAccordion from './home/FaqAccordian';
-import { useState, useEffect } from 'react';
-import Sparkles from './home/Sparkle';
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false);
-
   return (
     <div>
       <main
@@ -27,26 +22,25 @@ export default function Home() {
         {/* Position the sparkles as an absolute overlay */}
         {/* <Sparkles /> */}
         <div className="flex flex-col space-y-24">
-          
           <HomeSection id={'cover-section'}>
             <Cover />
           </HomeSection>
           <HomeSection id={'register-section'} darkerBg={true} bgOpacity={0.3}>
-            <RegisterSection isMoble={isMobile} />
+            <RegisterSection />
           </HomeSection>
           <HomeSection id={'about-section'} darkerBg={true}>
             <AboutSection />
           </HomeSection>
           <HomeSection id={'stats-section'} darkerBg={true}>
             <div className="flex flex-col min-h-dvh justify-center items-center w-full">
-              <Stats modifiedTitle={"2024 Stats"} />
-              <a href={"/Recap"} className="mt-12">
+              <Stats modifiedTitle={'2024 Stats'} />
+              <a href={'/Recap'} className="mt-12">
                 <SectionParagraph className="hover:text-blue-600 transition-colors duration-300 underline">
-                  {"See More Stats on Our Recap Page"}<ArrowRightAlt />
+                  {'See More Stats on Our Recap Page'}
+                  <ArrowRightAlt />
                 </SectionParagraph>
               </a>
             </div>
-            
           </HomeSection>
           <HomeSection id={'faq-section'}>
             <div className="min-h-dvh">

@@ -72,7 +72,6 @@ export default function TeamPage() {
       .catch(() => console.error('Error fetching alumni'));
   }, []);
 
-
   // Handle tab switching based on search
   useEffect(() => {
     if (view === 'Current Organizers' && searchQuery && teams[tabIndex]) {
@@ -107,7 +106,7 @@ export default function TeamPage() {
     ? filterTeamMembers(currentTeam.members, searchQuery)
     : [];
 
-  console.log(currentTeam)
+  console.log(currentTeam);
 
   // Filter and sort alumni
   const filteredAlumni = alumni ? filterTeamMembers(alumni, searchQuery) : [];

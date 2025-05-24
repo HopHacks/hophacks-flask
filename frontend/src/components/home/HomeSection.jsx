@@ -1,7 +1,9 @@
 const HomeSection = ({ id, children, darkerBg = false, bgOpacity = 0.5 }) => {
-  const backgroundStyle = darkerBg ? {
-    background: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${bgOpacity}) 30%, rgba(0,0,0,${bgOpacity}) 70%, rgba(0,0,0,0) 100%)`
-  } : {};
+  const backgroundStyle = darkerBg
+    ? {
+        background: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${bgOpacity}) 30%, rgba(0,0,0,${bgOpacity}) 70%, rgba(0,0,0,0) 100%)`
+      }
+    : {};
 
   return (
     <section

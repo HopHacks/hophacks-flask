@@ -25,10 +25,10 @@ const useStyles = makeStyles({
     left: 0,
     width: '100%',
     zIndex: 1100,
-    transform: 'translateY(0)',
+    transform: 'translateY(0)'
   },
   appBarHidden: {
-    transform: 'translateY(-100%)',
+    transform: 'translateY(-100%)'
   },
 
   toolbar: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
     fontSize: '1.25rem',
     lineHeight: 2,
     letterSpacing: '0.0625rem',
-    fontVariant: 'small-caps',
+    fontVariant: 'small-caps'
   },
   hophacksButton: {
     marginRight: 20
@@ -56,11 +56,11 @@ const useStyles = makeStyles({
     textTransform: 'none',
     margin: '0 0.5rem',
     padding: '4px 8px',
-    opacity: 0.60,
+    opacity: 0.6,
     transition: 'opacity 0.3s ease',
     '&:hover': {
-      opacity: 1,
-    },
+      opacity: 1
+    }
   },
   activeNavBtn: {
     fontWeight: 'bold',
@@ -78,7 +78,7 @@ const useStyles = makeStyles({
     marginLeft: 0,
     marginRight: 100,
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   mlhBanner: {
     position: 'fixed',
@@ -86,10 +86,10 @@ const useStyles = makeStyles({
     right: 0,
     maxWidth: 100,
     minWidth: 60,
-    width: '100%',
+    width: '100%'
   },
   whiteDivider: {
-    opacity: 0.60,
+    opacity: 0.6,
     background: 'white',
     height: '1.5rem',
     alignSelf: 'center',
@@ -105,7 +105,6 @@ const Navigation = function Navigation() {
   const [activeSection, setActiveSection] = useState('cover-section');
   const isHome = location.pathname === '/';
   const [showNavbar, setShowNavbar] = useState(true);
-
 
   // Update isMobile on window resize.
   useEffect(() => {
@@ -141,7 +140,6 @@ const Navigation = function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-
   // Update scroll state and active section only if on home page
   useEffect(() => {
     if (!isHome) return;
@@ -167,7 +165,7 @@ const Navigation = function Navigation() {
   const coverSections = [
     { id: 'cover-section', label: 'Home' },
     { id: 'about-section', label: 'About' },
-    { id: 'faq-section', label: 'FAQs' },
+    { id: 'faq-section', label: 'FAQs' }
     // { id: 'prizes', label: 'PRIZES' },
     // { id: 'faq', label: 'FAQ' }
   ];
@@ -218,7 +216,14 @@ const Navigation = function Navigation() {
     <>
       {coverNavItems}
       {/* Only need the divider on mobile */}
-      {!isMobile && <Divider orientation='vertical' flexItem className={classes.whiteDivider} variant="middle" />}
+      {!isMobile && (
+        <Divider
+          orientation="vertical"
+          flexItem
+          className={classes.whiteDivider}
+          variant="middle"
+        />
+      )}
       {otherNavItems}
     </>
   );
@@ -231,7 +236,6 @@ const Navigation = function Navigation() {
           position="fixed"
           className={`${classes.appBar} ${!showNavbar ? classes.appBarHidden : ''}`}
         >
-
           <Toolbar className={classes.toolbar}>
             <Button
               component={Link}
@@ -292,7 +296,6 @@ const Navigation = function Navigation() {
       position="fixed"
       className={`${classes.appBar} ${!showNavbar ? classes.appBarHidden : ''}`}
     >
-
       <Toolbar className={classes.toolbar}>
         <Button component={Link} smooth to="/" color="inherit" className={classes.hophacksButton}>
           <img

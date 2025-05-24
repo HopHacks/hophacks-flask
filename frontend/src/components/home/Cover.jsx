@@ -23,15 +23,15 @@ export default function Cover() {
       </div>
 
       <div className="flex items-start font-montserrat font-bold text-[#ffe188] text-[50px] leading-[35px] tracking-[0.05em]">
-        <div className="flex flex-col" style={{ fontVariant: 'small-caps'}}>
+        <div className="flex flex-col" style={{ fontVariant: 'small-caps' }}>
           <p>Illuminating</p>
           <p>Innovations</p>
         </div>
       </div>
 
-
-
-      <div className="font-montserrat font-bold text-[30px] leading-[60px] tracking-[0.05em] text-white">September 12–14, 2025</div>
+      <div className="font-montserrat font-bold text-[30px] leading-[60px] tracking-[0.05em] text-white">
+        September 12–14, 2025
+      </div>
       <div className="flex items-center gap-x-6 py-4 w-full">
         {/* LinkTree */}
         <a
@@ -69,22 +69,20 @@ export default function Cover() {
             className="h-12 w-12 relative z-10 transition duration-300"
           />
         </a>
-          <GlowButton
-            style={{ padding: 5, margin: 0 }}
-            className="bg-opacity-50 bg-[#E1E9F2] shadow-none"
-            variant="secondary"
-            onClick={() => {
-              document.getElementById('register-section')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            <div className="flex justify-center items-center gap-1">
-              Register
-              <ArrowDownward />
-            </div>
-          </GlowButton>
-
+        <GlowButton
+          style={{ padding: 5, margin: 0 }}
+          className="bg-opacity-50 bg-[#E1E9F2] shadow-none"
+          variant="secondary"
+          onClick={() => {
+            document.getElementById('register-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <div className="flex justify-center items-center gap-1">
+            Register
+            <ArrowDownward />
+          </div>
+        </GlowButton>
       </div>
-
     </div>
   );
 }

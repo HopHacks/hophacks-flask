@@ -5,13 +5,7 @@ import SectionHeader from '../ui/SectionHeader';
 function StatCircle({ stat, inView }) {
   const isPrize = stat.label === 'Total Prizes';
   const displayValue = inView ? (
-    <CountUp
-      start={0}
-      end={stat.number}
-      duration={2.5}
-      separator=","
-      prefix={isPrize ? '$' : ''}
-    />
+    <CountUp start={0} end={stat.number} duration={2.5} separator="," prefix={isPrize ? '$' : ''} />
   ) : isPrize ? (
     '$0'
   ) : (
@@ -34,16 +28,13 @@ function StatCircle({ stat, inView }) {
 
 function StatRow({ stats, inView }) {
   return (
-    <div
-      className="flex flex-col sm:flex-row justify-center items-center gap-12 sm:gap-36 mb-2"
-    >
+    <div className="flex flex-col sm:flex-row justify-center items-center gap-12 sm:gap-36 mb-2">
       {stats.map((stat, index) => (
         <StatCircle key={index} stat={stat} inView={inView} />
       ))}
     </div>
   );
 }
-
 
 function HackathonStats2024({ modifiedTitle }) {
   // Stats data for the hackathon
@@ -84,7 +75,7 @@ function HackathonStats2024({ modifiedTitle }) {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <SectionHeader>{modifiedTitle ?? "2024 Hackathon Stats"}</SectionHeader>
+      <SectionHeader>{modifiedTitle ?? '2024 Hackathon Stats'}</SectionHeader>
       <StatRow stats={statsA} inView={inView} />
       <StatRow stats={statsB} inView={inView} />
     </div>
