@@ -32,6 +32,7 @@ function SignUp(props) {
   const [first_hophacks, setFirst_hophacks] = useState('');
   const [learn_about_us, setLearn_about_us] = useState('');
   const [country, setCountry] = useState('');
+  const [linkedIn, setLinkedIn] = useState('');
 
   const [resumeFile, setResumeFile] = useState('');
 
@@ -58,7 +59,7 @@ function SignUp(props) {
   const CHECKS = 2; //changed this to be 2
   const IMAGE = 3; //changed this to be 3
   const CONFIRMATION = 4;
-  const [activePage, setActivePage] = useState(ACCOUNT);
+  const [activePage, setActivePage] = useState(0);
 
   // functions for account page
   async function handleAccountNext() {
@@ -261,7 +262,8 @@ function SignUp(props) {
           first_hackathon: first_hackathon,
           first_hophacks: first_hophacks,
           learn_about_us: learn_about_us,
-          country: country
+          country: country,
+          linkedIn
         }
       })
     );
@@ -346,123 +348,92 @@ function SignUp(props) {
     setCommunicationChecked(event.target.checked);
   };
 
-  function selectPage() {
-    if (activePage === ACCOUNT) {
-      console.log('account page');
-      return (
-        <SignUpAccount
-          isMobile={isMobile}
-          username={username}
-          setUsername={setUsername}
-          password={password}
-          setPassword={setPassword}
-          passwordConfirm={passwordConfirm}
-          setPasswordConfirm={setPasswordConfirm}
-          confirmMsg={confirmMsg}
-          handleAccountNext={handleAccountNext}
-        />
-      );
-    } else if (activePage === PROFILE) {
-      //TODO: need to divide this up
-      console.log('profile page');
-      return (
-        <SignUpProfile
-          isMobile={isMobile}
-          setFirst_name={setFirst_name}
-          setLast_name={setLast_name}
-          setAge={setAge}
-          setGender={setGender}
-          setEthnicity={setEthnicity}
-          phone_number={phone_number}
-          setPhone_number={setPhone_number}
-          school={school}
-          setSchool={setSchool}
-          major={major}
-          setMajor={setMajor}
-          setGrad={setGrad}
-          setGrad_month={setGrad_month}
-          setGrad_year={setGrad_year}
-          setCountry={setCountry}
-          setOtherSchool={setOtherSchool}
-          // setFirst_hackathon={setFirst_hackathon}
-          // setFirst_hophacks={setFirst_hophacks}
-          // setLearn_about_us={setLearn_about_us}
-          // resumeFile={resumeFile}
-          // resumeChecked={resumeChecked}
-          // vaccinationFile={vaccinationFile}
-          // vaccinationChecked={vaccinationChecked}
-          // conductCodeChecked={conductCodeChecked}
-          // eventLogisticsChecked={eventLogisticsChecked}
-          // communicationChecked={communicationChecked}
-          profileSubmitMsg={profileSubmitMsg}
-          enabledButton={enabledButton}
-          handleProfileNext={handleProfileNext}
-          handleProfileBack={handleProfileBack}
-          // handleResumeFileChange={handleResumeFileChange}
-          // handleVaccinationFileChange={handleVaccinationFileChange}
-          // handleResumeCheckBox={handleResumeCheckBox}
-          // handleVaccinationCheckBox={handleVaccinationCheckBox}
-          // handleConductCheckBox={handleConductCheckBox}
-          // handleLogisticsCheckBox={handleLogisticsCheckBox}
-          // handleCommunicationCheckBox={handleCommunicationCheckBox}
-        />
-      );
-    } else if (activePage == CHECKS) {
-      console.log('checks page');
-      return (
-        <SignUpChecks
-          isMobile={isMobile}
-          // setFirst_name={setFirst_name}
-          // setLast_name={setLast_name}
-          // setAge={setAge}
-          // setGender={setGender}
-          // setEthnicity={setEthnicity}
-          // phone_number={phone_number}
-          // setPhone_number={setPhone_number}
-          // school={school}
-          // setSchool={setSchool}
-          // major={major}
-          // setMajor={setMajor}
-          // setGrad={setGrad}
-          // setGrad_month={setGrad_month}
-          // setGrad_year={setGrad_year}
-          setFirst_hackathon={setFirst_hackathon}
-          setFirst_hophacks={setFirst_hophacks}
-          setLearn_about_us={setLearn_about_us}
-          resumeFile={resumeFile}
-          resumeChecked={resumeChecked}
-          conductCodeChecked={conductCodeChecked}
-          eventLogisticsChecked={eventLogisticsChecked}
-          communicationChecked={communicationChecked}
-          profileSubmitMsg={profileSubmitMsg}
-          enabledButton={enabledButton}
-          handleChecksNext={handleChecksNext}
-          handleChecksBack={handleChecksBack}
-          handleResumeFileChange={handleResumeFileChange}
-          handleResumeCheckBox={handleResumeCheckBox}
-          handleConductCheckBox={handleConductCheckBox}
-          handleLogisticsCheckBox={handleLogisticsCheckBox}
-          handleCommunicationCheckBox={handleCommunicationCheckBox}
-        />
-      );
-    } else if (activePage == IMAGE) {
-      console.log('image page');
-      return (
-        <SignUpImage
-          isMobile={isMobile}
-          profileSubmitMsg={profileSubmitMsg}
-          enabledButton={enabledButton}
-          handleImageNext={handleImageNext}
-          handleImageBack={handleImageBack}
-        />
-      );
-    } else {
-      console.log('confirmation page');
-      return <SignUpConfirmation isMobile={isMobile} />;
-    }
-  }
-
-  return <div>{selectPage()}</div>;
+  return (
+    <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
+      <div
+        className="min-w-[300px] max-w-[700px] w-[70%] flex flex-col rounded-2xl p-10 m-5"
+        style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
+      >
+        <h2
+          className="font-bold text-white text-5xl text-center mb-3"
+          style={{ fontVariant: 'small-caps' }}
+        >
+          {activePage === 4 ? 'Profile Created' : 'Create Your Profile'}
+        </h2>
+        {activePage === ACCOUNT && (
+          <SignUpAccount
+            isMobile={isMobile}
+            username={username}
+            setUsername={setUsername}
+            password={password}
+            setPassword={setPassword}
+            passwordConfirm={passwordConfirm}
+            setPasswordConfirm={setPasswordConfirm}
+            confirmMsg={confirmMsg}
+            handleAccountNext={handleAccountNext}
+          />
+        )}
+        {activePage === PROFILE && (
+          <SignUpProfile
+            isMobile={isMobile}
+            setFirst_name={setFirst_name}
+            setLast_name={setLast_name}
+            setAge={setAge}
+            setGender={setGender}
+            setEthnicity={setEthnicity}
+            phone_number={phone_number}
+            setPhone_number={setPhone_number}
+            school={school}
+            setSchool={setSchool}
+            major={major}
+            setMajor={setMajor}
+            setGrad={setGrad}
+            setGrad_month={setGrad_month}
+            setGrad_year={setGrad_year}
+            setCountry={setCountry}
+            setOtherSchool={setOtherSchool}
+            profileSubmitMsg={profileSubmitMsg}
+            enabledButton={enabledButton}
+            handleProfileNext={handleProfileNext}
+            handleProfileBack={handleProfileBack}
+          />
+        )}
+        {activePage === CHECKS && (
+          <SignUpChecks
+            isMobile={isMobile}
+            setFirst_hackathon={setFirst_hackathon}
+            setFirst_hophacks={setFirst_hophacks}
+            setLearn_about_us={setLearn_about_us}
+            resumeFile={resumeFile}
+            resumeChecked={resumeChecked}
+            conductCodeChecked={conductCodeChecked}
+            eventLogisticsChecked={eventLogisticsChecked}
+            communicationChecked={communicationChecked}
+            profileSubmitMsg={profileSubmitMsg}
+            enabledButton={enabledButton}
+            handleChecksNext={handleChecksNext}
+            handleChecksBack={handleChecksBack}
+            handleResumeFileChange={handleResumeFileChange}
+            handleResumeCheckBox={handleResumeCheckBox}
+            handleConductCheckBox={handleConductCheckBox}
+            handleLogisticsCheckBox={handleLogisticsCheckBox}
+            handleCommunicationCheckBox={handleCommunicationCheckBox}
+            setLinkedIn={setLinkedIn}
+          />
+        )}
+        {activePage === IMAGE && (
+          <SignUpImage
+            isMobile={isMobile}
+            profileSubmitMsg={profileSubmitMsg}
+            enabledButton={enabledButton}
+            handleImageNext={handleImageNext}
+            handleImageBack={handleImageBack}
+          />
+        )}
+        {activePage === CONFIRMATION && <SignUpConfirmation isMobile={isMobile} />}
+      </div>
+    </div>
+  );
 }
 
 export default withAuthProps(SignUp);

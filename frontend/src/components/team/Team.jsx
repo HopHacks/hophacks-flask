@@ -18,11 +18,12 @@ import theme from './teamTheme';
 import useStyles from './TeamStyles';
 import { nameToURL, filterTeamMembers, sortAlumni } from './teamHelpers';
 import '../../stylesheets/team.css';
+import SubteamPhoto from './SubteamPhoto';
 
 export default function TeamPage() {
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
-  const [teams, setTeams] = useState({});
+  const [teams, setTeams] = useState([]);
   const [alumni, setAlumni] = useState([]);
   const [view, setView] = useState('Current Organizers');
   const [searchQuery, setSearchQuery] = useState('');
@@ -100,9 +101,12 @@ export default function TeamPage() {
   };
 
   // Filter teams based on search query
-  const filteredTeams = teams[tabIndex]?.members
-    ? filterTeamMembers(teams[tabIndex].members, searchQuery)
+  const currentTeam = teams[tabIndex];
+  const filteredTeams = currentTeam?.members
+    ? filterTeamMembers(currentTeam.members, searchQuery)
     : [];
+
+  console.log(currentTeam);
 
   // Filter and sort alumni
   const filteredAlumni = alumni ? filterTeamMembers(alumni, searchQuery) : [];
@@ -201,19 +205,33 @@ export default function TeamPage() {
         {/* Team/Alumni Cards */}
         <Container className={classes.container}>
           <Grid container spacing={2} className={classes.gridContainer}>
+            {view === 'Current Organizers' && currentTeam && (
+              <div className="w-full flex items-center justify-center py-3">
+                <SubteamPhoto teamName={currentTeam.name} />
+              </div>
+            )}
             {view === 'Current Organizers' &&
+              currentTeam &&
               filteredTeams.map((member) => (
                 <Grid item key={member.name}>
-                  <OrganizerCard
-                    name={member.name}
-                    position={member.role ?? teams[tabIndex].defaultRole}
-                    image={nameToURL(member.name)}
-                    github={member.github ?? ''}
-                    linkedin={member.linkedin ?? ''}
-                    hometown={member.hometown ?? ''}
-                    major_year={`${member.major}, ${member.year}`}
-                    funfact={member.funFact ?? ''}
-                  />
+                  {member.role === 'Faculty Advisor' ? (
+                    <AlumniCard
+                      name={member.name}
+                      position={member.role ?? 'Alumnus'}
+                      image={nameToURL(member.name)}
+                    />
+                  ) : (
+                    <OrganizerCard
+                      name={member.name}
+                      position={member.role ?? teams[tabIndex].defaultRole}
+                      image={nameToURL(member.name)}
+                      github={member.github ?? ''}
+                      linkedin={member.linkedin ?? ''}
+                      hometown={member.hometown ?? ''}
+                      major_year={`${member.major}, ${member.year}`}
+                      funfact={member.funFact ?? ''}
+                    />
+                  )}
                 </Grid>
               ))}
 

@@ -16,7 +16,7 @@ export const OrganizerCard = ({
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleCardFlip = () => {
-    setIsFlipped(!isFlipped);
+    setIsFlipped((prev) => !prev);
   };
 
   return (
