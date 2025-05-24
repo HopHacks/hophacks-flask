@@ -9,10 +9,11 @@ import SectionParagraph from './ui/SectionParagraph';
 import { ArrowRightAlt } from '@material-ui/icons';
 // import PrizesSection from './home/Prizes';
 import FaqAccordion from './home/FaqAccordian';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Sparkles from './home/Sparkle';
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 800);
+  const [isMobile, setIsMobile] = useState(false);
 
   return (
     <div>
@@ -23,7 +24,10 @@ export default function Home() {
             "url('https://hophacks-website.s3.us-east-1.amazonaws.com/whole-bg-splitted/whole-bg-2.png')"
         }}
       >
+        {/* Position the sparkles as an absolute overlay */}
+        {/* <Sparkles /> */}
         <div className="flex flex-col space-y-24">
+          
           <HomeSection id={'cover-section'}>
             <Cover />
           </HomeSection>

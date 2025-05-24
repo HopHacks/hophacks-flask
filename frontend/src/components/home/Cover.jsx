@@ -33,11 +33,25 @@ export default function Cover() {
 
       <div className="font-montserrat font-bold text-[30px] leading-[60px] tracking-[0.05em] text-white">September 12–14, 2025</div>
       <div className="flex items-center gap-x-6 py-4 w-full">
-        <img
-          src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/candle.svg"
-          alt="Candle"
-          className="h-12 w-12"
-        />
+        {/* LinkTree */}
+        <a
+          href="https://linktr.ee/hophacks"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative inline-block"
+        >
+          {/* Circular glow only on hover */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-0 group-hover:opacity-30 transition-opacity duration-300 pointer-events-none">
+            <div className="h-20 w-20 rounded-full bg-[#FFE194] blur-[20px]"></div>
+          </div>
+
+          <img
+            src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/candle.svg"
+            alt="Candle"
+            className="h-12 w-12"
+          />
+        </a>
+        {/* Discord */}
         <a
           href="https://discord.gg/8V8wmCWUhH"
           target="_blank"
@@ -57,7 +71,7 @@ export default function Cover() {
         </a>
           <GlowButton
             style={{ padding: 5, margin: 0 }}
-            className="bg-opacity-50 bg-[#E1E9F2]"
+            className="bg-opacity-50 bg-[#E1E9F2] shadow-none"
             variant="secondary"
             onClick={() => {
               document.getElementById('register-section')?.scrollIntoView({ behavior: 'smooth' });

@@ -18,6 +18,7 @@ import theme from './teamTheme';
 import useStyles from './TeamStyles';
 import { nameToURL, filterTeamMembers, sortAlumni } from './teamHelpers';
 import '../../stylesheets/team.css';
+import SubteamPhoto from './SubteamPhoto';
 
 export default function TeamPage() {
   const classes = useStyles();
@@ -71,6 +72,7 @@ export default function TeamPage() {
       .catch(() => console.error('Error fetching alumni'));
   }, []);
 
+
   // Handle tab switching based on search
   useEffect(() => {
     if (view === 'Current Organizers' && searchQuery && teams[tabIndex]) {
@@ -104,6 +106,8 @@ export default function TeamPage() {
   const filteredTeams = currentTeam?.members
     ? filterTeamMembers(currentTeam.members, searchQuery)
     : [];
+
+  console.log(currentTeam)
 
   // Filter and sort alumni
   const filteredAlumni = alumni ? filterTeamMembers(alumni, searchQuery) : [];
@@ -202,6 +206,11 @@ export default function TeamPage() {
         {/* Team/Alumni Cards */}
         <Container className={classes.container}>
           <Grid container spacing={2} className={classes.gridContainer}>
+            {view === 'Current Organizers' && currentTeam && (
+              <div className="w-full flex items-center justify-center py-3">
+                <SubteamPhoto teamName={currentTeam.name} />
+              </div>
+            )}
             {view === 'Current Organizers' &&
               currentTeam &&
               filteredTeams.map((member) => (
