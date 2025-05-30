@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import CountUp from 'react-countup';
 import SectionHeader from '../ui/SectionHeader';
 
@@ -56,14 +56,17 @@ function HackathonStats2024({ modifiedTitle }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
+        console.log("hey dude")
         if (entry.isIntersecting) {
           setInView(true);
+          console.log("intersection")
           // observer.disconnect();
         } else {
+          console.log("nope")
           setInView(false);
         }
       },
-      { threshold: 0.4 } // Trigger when 30% of component is visible
+      { threshold: 0.5 } // Trigger when x% of component is visible
     );
 
     if (statsRef.current) {
@@ -74,7 +77,7 @@ function HackathonStats2024({ modifiedTitle }) {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4" ref={statsRef}>
       <SectionHeader>{modifiedTitle ?? '2024 Hackathon Stats'}</SectionHeader>
       <StatRow stats={statsA} inView={inView} />
       <StatRow stats={statsB} inView={inView} />
