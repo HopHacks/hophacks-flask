@@ -33,7 +33,7 @@ export default function Register() {
                 className="h-[100px] sm:h-[100px] md:h-[200px] lg:h-[350px] w-auto mb-1 transform transition-transform duration-300 hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_10px_white]"
               />
             </a>
-            <GlowButton onClick={() => window.open(link ?? "#", "_blank")} className='py-1.5'>
+            <GlowButton onClick={() => window.open(link ?? '#', '_blank')} className="py-1.5">
               {label}
             </GlowButton>
           </div>

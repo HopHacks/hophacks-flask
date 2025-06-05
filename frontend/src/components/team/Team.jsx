@@ -47,7 +47,7 @@ export default function TeamPage() {
           }
         ];
 
-        const facultyArr = []
+        const facultyArr = [];
 
         for (const team of data.teams) {
           for (const member of team.members) {
@@ -55,15 +55,15 @@ export default function TeamPage() {
               member.role = team.defaultRole;
             }
             // Add member to 'All', but put faculty at the end (sorry, faculty)
-            if (member.role === "Faculty Advisor") {
-              facultyArr.push(member)
+            if (member.role === 'Faculty Advisor') {
+              facultyArr.push(member);
             } else {
               teamsArr[0].members.push(member);
             }
           }
           teamsArr.push(team);
         }
-        teamsArr[0].members.push(...facultyArr)
+        teamsArr[0].members.push(...facultyArr);
         setTeams(teamsArr);
       })
       .catch(() => console.error('Error fetching organizers'));

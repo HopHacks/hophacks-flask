@@ -145,9 +145,7 @@ function ImagesFromPastYears({ selectedYear }) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h2
-        className="font-bold text-white text-6xl text-center mb-12 mt-32 w-3/4 max-w-2xl"
-      >
+      <h2 className="font-bold text-white text-6xl text-center mb-12 mt-32 w-3/4 max-w-2xl">
         {`Our Favorite Memories From ${selectedYear}`}
       </h2>
       <div className="bg-recap-gray max-w-[80%] rounded-2xl shadow-2xl">

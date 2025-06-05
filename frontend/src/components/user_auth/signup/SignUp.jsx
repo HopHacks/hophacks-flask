@@ -59,7 +59,7 @@ function SignUp(props) {
   const CHECKS = 2; //changed this to be 2
   const IMAGE = 3; //changed this to be 3
   const CONFIRMATION = 4;
-  const [activePage, setActivePage] = useState(0);
+  const [activePage, setActivePage] = useState(3);
 
   // functions for account page
   async function handleAccountNext() {
