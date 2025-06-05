@@ -39,7 +39,7 @@ export default function TeamPage() {
         return response.json();
       })
       .then((data) => {
-        let teamsArr = [
+        const teamsArr = [
           {
             name: 'All',
             defaultRole: '',
@@ -47,16 +47,23 @@ export default function TeamPage() {
           }
         ];
 
+        const facultyArr = []
+
         for (const team of data.teams) {
           for (const member of team.members) {
             if (!('role' in member)) {
               member.role = team.defaultRole;
             }
-            // Add member to 'All'
-            teamsArr[0].members.push(member);
+            // Add member to 'All', but put faculty at the end (sorry, faculty)
+            if (member.role === "Faculty Advisor") {
+              facultyArr.push(member)
+            } else {
+              teamsArr[0].members.push(member);
+            }
           }
           teamsArr.push(team);
         }
+        teamsArr[0].members.push(...facultyArr)
         setTeams(teamsArr);
       })
       .catch(() => console.error('Error fetching organizers'));
@@ -218,6 +225,7 @@ export default function TeamPage() {
                     <AlumniCard
                       name={member.name}
                       position={member.role ?? 'Alumnus'}
+                      year={0}
                       image={nameToURL(member.name)}
                     />
                   ) : (

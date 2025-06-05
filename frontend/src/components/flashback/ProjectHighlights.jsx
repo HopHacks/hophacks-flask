@@ -103,7 +103,6 @@ function ProjectHighlights({ selectedYear, setSelectedYear }) {
       <div style={styles.headerContainer}>
         <h2
           className="font-bold text-white text-6xl text-center mb-12 mt-32 w-2/3 max-w-2xl"
-          style={{ fontVariant: 'small-caps' }}
         >
           Project Highlights from Past Years
         </h2>

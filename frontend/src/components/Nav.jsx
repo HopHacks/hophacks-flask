@@ -240,7 +240,7 @@ const Navigation = function Navigation() {
             <Button
               component={Link}
               smooth
-              to="/"
+              to="/#cover-section"
               color="inherit"
               className={classes.hophacksButton}
             >
@@ -297,7 +297,7 @@ const Navigation = function Navigation() {
       className={`${classes.appBar} ${!showNavbar ? classes.appBarHidden : ''}`}
     >
       <Toolbar className={classes.toolbar}>
-        <Button component={Link} smooth to="/" color="inherit" className={classes.hophacksButton}>
+        <Button component={Link} smooth to="/#cover-section" color="inherit" className={classes.hophacksButton}>
           <img
             src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/hophacks2025logo.png"
             alt="HopHacks Logo"

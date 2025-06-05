@@ -146,8 +146,7 @@ function ImagesFromPastYears({ selectedYear }) {
   return (
     <div className="flex flex-col justify-center items-center">
       <h2
-        className="font-bold text-white text-6xl text-center mb-12 mt-32 w-2/3 max-w-2xl"
-        style={{ fontVariant: 'small-caps' }}
+        className="font-bold text-white text-6xl text-center mb-12 mt-32 w-3/4 max-w-2xl"
       >
         {`Our Favorite Memories From ${selectedYear}`}
       </h2>

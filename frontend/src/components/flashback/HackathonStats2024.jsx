@@ -78,7 +78,10 @@ function HackathonStats2024({ modifiedTitle }) {
 
   return (
     <div className="flex flex-col items-center gap-4" ref={statsRef}>
-      <SectionHeader>{modifiedTitle ?? '2024 Hackathon Stats'}</SectionHeader>
+      <h2
+        className="font-bold text-white text-6xl text-center mb-12 mt-32 w-3/4"
+      >{modifiedTitle ?? '2024 Hackathon Stats'}
+      </h2>
       <StatRow stats={statsA} inView={inView} />
       <StatRow stats={statsB} inView={inView} />
     </div>
