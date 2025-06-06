@@ -8,7 +8,11 @@ const SectionHeader = ({ children, className = '', style = {} }) => {
         'font-extrabold text-[80px] leading-[160px] tracking-[0.04em] font-montserrat text-white',
         className
       )}
-      style={{ fontVariant: 'small-caps', textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', ...style }}
+      style={{
+        fontVariant: 'all-small-caps',
+        textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        ...style
+      }}
     >
       {children}
     </h2>

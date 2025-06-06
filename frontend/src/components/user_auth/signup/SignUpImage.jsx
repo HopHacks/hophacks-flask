@@ -2,83 +2,178 @@ import React, { useState } from 'react';
 import { Typography, Grid } from '@material-ui/core';
 import GlowButton from '../../ui/GlowButton';
 import '../../../stylesheets/user_auth.css';
+import { Category } from '@material-ui/icons';
+import { useEffect } from 'react';
 
-const COLORS = ['#061A40', '#FAC013', '#C84630', '#57A773', '#bd2df1', '#2d99e0'];
+const CATEGORIES = {
+  stage: {
+    names: ['None', 'Branch', 'Stump'],
+    range: [0, 2]
+  },
+  accessory: {
+    names: [
+      'None',
+      'Headphones',
+      'Halo',
+      'Flowers',
+      'Party hat',
+      'Book',
+      'Sprout',
+      'Flower',
+      'Glasses',
+      ''
+    ],
+    range: [0, 8]
+  },
+  object: {
+    names: ['None', 'Coffee', 'Boba', 'Lemonade', 'Burger', 'Plant', 'Laptop'],
+    range: [0, 6]
+  }
+};
+const COLOR_CATEGORIES = {
+  Body: {
+    colors: ['#313079', '#2a4785', '#417b9f', '#6a9bd6', '#8db8ef'],
+    range: [1, 5]
+  },
+  Accent: {
+    colors: ['#c44c82', '#644e7a', '#a9bf79', '#dfc186', '#d9784c', '#dd505a'],
+    range: [1, 6]
+  }
+};
 
-const ColorPicker = ({ label, onSelect }) => (
+const ColorPicker = ({ onSelect, colors, category }) => (
   <div className="flex flex-col items-center justify-center">
-    <p className="text-hopBlue font-bold text-xl" style={{ fontVariant: 'small-caps' }}>
-      {label}
-    </p>
     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-      {COLORS.map((color) => (
+      {colors.map((color, index) => (
         <div
-          key={color + label}
+          key={color}
           className="color-select"
           style={{ backgroundColor: color }}
           tabIndex="0"
-          onClick={onSelect ? () => onSelect(color) : undefined}
+          onClick={() => onSelect(index + 1)}
         />
       ))}
+      {category === 'Accent' && (
+        <div
+          className="color-select text-white text-xs flex items-center"
+          style={{ background: 'None' }}
+          onClick={() => onSelect(0)}
+        >
+          None
+        </div>
+      )}
     </div>
   </div>
 );
 
-export default function SignUpProfile({
-  isMobile,
-  profileSubmitMsg,
-  enabledButton,
-  handleImageNext,
-  handleImageBack
-}) {
-  const [backgroundColor, setBackgroundColor] = useState('#234acb');
+const ColorSelect = ({ onSelect, category }) => {
+  return (
+    <div className="w-full">
+      <ColorPicker
+        onSelect={onSelect}
+        colors={COLOR_CATEGORIES[category]['colors']}
+        category={category}
+      />
+    </div>
+  );
+};
+
+const ScrollSelect = ({ selected, setSelected, category }) => {
+  const properties = CATEGORIES[category];
+  const handleIncrement = () => {
+    if (selected >= properties.range[1]) {
+      setSelected(properties.range[0]);
+    } else {
+      setSelected((prev) => prev + 1);
+    }
+  };
+
+  const handleDecrement = () => {
+    if (selected <= properties.range[0]) {
+      setSelected(properties.range[1]);
+    } else {
+      setSelected((prev) => prev - 1);
+    }
+  };
 
   return (
-    <div>
-      <p
-        className="font-bold text-white text-xl text-center mb-12"
-        style={{ fontVariant: 'small-caps' }}
-      >
-        4. Build a Bird - this will be your profile picture!
-      </p>
-      <Grid container spacing={isMobile ? 2 : 5} />
+    <div className="flex flex-col items-center justify-center w-full">
+      <p className="text-white font-bold pb-3">{category}</p>
+      <div className="flex flex-col items-center">
+        <button onClick={handleIncrement} className="w-8 pb-3">
+          <img src="/images/select-arrow.svg" className="w-full h-auto max-h-full object-contain" />
+        </button>
+        {/* <p className='py-3 font-bold text-white'>
+          {properties.names[properties.range[0] === 0 ? selected : selected + 1]}
+        </p> */}
+        <button onClick={handleDecrement} className="w-8">
+          <img
+            src="/images/select-arrow.svg"
+            className="w-full h-auto max-h-full object-contain rotate-180"
+          />
+        </button>
+      </div>
+    </div>
+  );
+};
 
-      <Typography className="card-text-red">{profileSubmitMsg}</Typography>
+export default function SignUpImage({
+  stage,
+  setStage,
+  body,
+  setBody,
+  accent,
+  setAccent,
+  accessory,
+  setAccessory,
+  object,
+  setObject
+}) {
+  // <stages>_<body>_<main bird COMPOSED>_<accent>_<accessory>_<object>.png
+  const [colorSelector, setColorSelector] = useState('Body');
 
-      <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-        <ColorPicker label="bird color" />
-        <ColorPicker label="background color" onSelect={setBackgroundColor} />
+  return (
+    <div className="w-full bg-[#5997CC] h-[400px] rounded-[80px] p-8 grid grid-rows-[1fr_auto] gap-8">
+      {/* Top Row: 2 columns */}
+      <div className="grid grid-cols-2 gap-4">
+        {/* Image Container */}
+        <div className="bg-white w-full h-[200px] rounded-[32px] flex items-center justify-center">
+          <img
+            className="w-full h-auto max-h-full object-contain"
+            src={`https://hophacks-website.s3.us-east-1.amazonaws.com/pfps/${stage}_${body}_1_${accent}_${accessory}_${object}.png`}
+            alt="Profile"
+          />
+        </div>
+
+        <div className="w-full h-[200px] rounded-[32px] flex flex-col items-center justify-between py-2">
+          <div className="bg-[rgba(225,233,242,.32)] rounded-[16px] text-white text-lg sm:text-xl md:text-2xl font-bold w-[90%] text-center px-5">
+            Customize your blue jay!
+          </div>
+          <div className="flex justify-center w-[90%]">
+            {['Body', 'Accent'].map((category) => (
+              <button
+                key={category}
+                className={`flex-1 rounded-t-lg text-white font-bold px-2 py-1 ${colorSelector === category ? 'bg-[#2885D4]' : ''}`}
+                onClick={() => setColorSelector(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          <div>
+            <ColorSelect
+              onSelect={colorSelector === 'Body' ? setBody : setAccent}
+              category={colorSelector}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="w-full flex flex-col items-center justify-center m-5">
-        <p className="text-hopBlue font-bold text-xl" style={{ fontVariant: 'small-caps' }}>
-          Your Bird
-        </p>
-        <img
-          src="https://hophacks-website.s3.amazonaws.com/images/bluejaytransparentbkgd.svg"
-          alt="Transparent Bluejay"
-          style={{
-            border: '8px solid',
-            borderRadius: '20px',
-            width: '50%',
-            borderColor: '#ffffff',
-            backgroundColor
-          }}
-        />
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-        <ColorPicker label="hats" />
-        <ColorPicker label="shoes" />
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <GlowButton onClick={handleImageBack} variant="secondary" disabled={!enabledButton}>
-          Back
-        </GlowButton>
-        <GlowButton onClick={handleImageNext} disabled={!enabledButton}>
-          Next
-        </GlowButton>
+      {/* Bottom Row: 4 columns */}
+      <div className="grid grid-cols-3">
+        <ScrollSelect selected={stage} setSelected={setStage} category="stage" />
+        <ScrollSelect selected={accessory} setSelected={setAccessory} category="accessory" />
+        <ScrollSelect selected={object} setSelected={setObject} category="object" />
       </div>
     </div>
   );

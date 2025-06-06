@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold',
     color: 'white',
-    paddingBottom: theme.spacing(0.5),
-    fontVariant: 'small-caps'
+    paddingBottom: theme.spacing(0.5)
   },
 
   subtitle: {

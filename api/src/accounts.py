@@ -144,7 +144,6 @@ def create():
     :status 409: User alreay exists
 
     """
-
     if 'json_file' not in request.form:
         return Response('Data not in json format', status=400)
 
@@ -155,7 +154,6 @@ def create():
     password = json_info['password'].encode()
     confirm_url = json_info['confirm_url']
     profile = json_info['profile']
-
 
     if (db.users.find_one({'username': username})):
         return Response('User already exists!', status=409)
