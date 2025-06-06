@@ -41,7 +41,7 @@ const COLOR_CATEGORIES = {
   }
 };
 
-const ColorPicker = ({ onSelect, colors }) => (
+const ColorPicker = ({ onSelect, colors, category }) => (
   <div className="flex flex-col items-center justify-center">
     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
       {colors.map((color, index) => (
@@ -53,18 +53,23 @@ const ColorPicker = ({ onSelect, colors }) => (
           onClick={() => onSelect(index + 1)}
         />
       ))}
+      {category === "Accent" && (
+        <div
+          className='color-select text-white text-xs flex items-center'
+          style={{ background: "None"}}
+          onClick={() => onSelect(0)}
+        >
+          None
+        </div>
+      )}
     </div>
   </div>
 );
 
 const ColorSelect = ({onSelect, category}) => {
-  useEffect(() => {
-    console.log(category);
-    console.log(COLOR_CATEGORIES[category])
-  }, [category])
   return (
     <div className="w-full">
-      <ColorPicker onSelect={onSelect} colors={COLOR_CATEGORIES[category]["colors"]}/>
+      <ColorPicker onSelect={onSelect} colors={COLOR_CATEGORIES[category]["colors"]} category={category} />
     </div>
   )
 };
@@ -108,20 +113,19 @@ const ScrollSelect = ({ selected, setSelected, category }) => {
   );
 };
 
-export default function SignUpProfile({
-  isMobile,
-  profileSubmitMsg,
-  enabledButton,
-  handleImageNext,
-  handleImageBack
+export default function SignUpImage({
+  stage,
+  setStage,
+  body,
+  setBody,
+  accent,
+  setAccent,
+  accessory,
+  setAccessory,
+  object,
+  setObject,
 }) {
-  const [backgroundColor, setBackgroundColor] = useState('#234acb');
   // <stages>_<body>_<main bird COMPOSED>_<accent>_<accessory>_<object>.png
-  const [stage, setStage] = useState(0);
-  const [body, setBody] = useState(1);
-  const [accent, setAccent] = useState(0);
-  const [accessory, setAccessory] = useState(0);
-  const [object, setObject] = useState(0);
   const [colorSelector, setColorSelector] = useState('Body');
 
   return (
@@ -137,8 +141,8 @@ export default function SignUpProfile({
           />
         </div>
 
-        <div className="w-full h-[200px] rounded-[32px] flex flex-col items-center justify-center">
-          <div className="bg-[rgba(225,233,242,.32)] rounded-[16px] text-white text-2xl font-bold w-[90%] text-center px-5">
+        <div className="w-full h-[200px] rounded-[32px] flex flex-col items-center justify-between py-2">
+          <div className="bg-[rgba(225,233,242,.32)] rounded-[16px] text-white text-lg sm:text-xl md:text-2xl font-bold w-[90%] text-center px-5">
             Customize your blue jay!
           </div>
           <div className="flex justify-center w-[90%]">
