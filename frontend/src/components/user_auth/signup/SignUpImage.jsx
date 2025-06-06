@@ -53,10 +53,10 @@ const ColorPicker = ({ onSelect, colors, category }) => (
           onClick={() => onSelect(index + 1)}
         />
       ))}
-      {category === "Accent" && (
+      {category === 'Accent' && (
         <div
-          className='color-select text-white text-xs flex items-center'
-          style={{ background: "None"}}
+          className="color-select text-white text-xs flex items-center"
+          style={{ background: 'None' }}
           onClick={() => onSelect(0)}
         >
           None
@@ -66,12 +66,16 @@ const ColorPicker = ({ onSelect, colors, category }) => (
   </div>
 );
 
-const ColorSelect = ({onSelect, category}) => {
+const ColorSelect = ({ onSelect, category }) => {
   return (
     <div className="w-full">
-      <ColorPicker onSelect={onSelect} colors={COLOR_CATEGORIES[category]["colors"]} category={category} />
+      <ColorPicker
+        onSelect={onSelect}
+        colors={COLOR_CATEGORIES[category]['colors']}
+        category={category}
+      />
     </div>
-  )
+  );
 };
 
 const ScrollSelect = ({ selected, setSelected, category }) => {
@@ -123,7 +127,7 @@ export default function SignUpImage({
   accessory,
   setAccessory,
   object,
-  setObject,
+  setObject
 }) {
   // <stages>_<body>_<main bird COMPOSED>_<accent>_<accessory>_<object>.png
   const [colorSelector, setColorSelector] = useState('Body');
@@ -157,7 +161,10 @@ export default function SignUpImage({
             ))}
           </div>
           <div>
-            <ColorSelect onSelect={colorSelector === "Body" ? setBody : setAccent} category={colorSelector} />
+            <ColorSelect
+              onSelect={colorSelector === 'Body' ? setBody : setAccent}
+              category={colorSelector}
+            />
           </div>
         </div>
       </div>

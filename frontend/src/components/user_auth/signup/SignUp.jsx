@@ -44,7 +44,6 @@ function SignUp(props) {
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
 
-
   // -----
   const [enabledButton, setEnabledButton] = useState(true); //TMP get rid of setEnabledButton
   // const [enabledButton, setEnabledButton] = useState(true); //ORIGINAL
@@ -245,7 +244,7 @@ function SignUp(props) {
       setProfileSubmitMsg('* Age must be an integer value.');
       return;
     }
-    setActivePage(IMAGE)
+    setActivePage(IMAGE);
   }
 
   async function handleChecksBack() {
@@ -314,7 +313,7 @@ function SignUp(props) {
         resumeData.append('file', resumeFile);
         await axios.post('/api/resumes/', resumeData);
       } catch (error) {
-        console.log("error A")
+        console.log('error A');
         setEnabledButton(true);
       }
       // await axios.post('/api/slack/registration', {
@@ -327,8 +326,8 @@ function SignUp(props) {
       // resumeData.append('file', resumeFile);
       // await axios.post('/api/resumes', resumeData);
     } catch (e) {
-      console.log("error B")
-      console.log(e)
+      console.log('error B');
+      console.log(e);
       return;
     }
     setActivePage(CONFIRMATION);
