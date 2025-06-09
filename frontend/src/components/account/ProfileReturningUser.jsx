@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import { withAuthCheck, withAuthProps } from '../../util/auth.jsx';
+import { withAuthCheck } from '../../util/auth.jsx';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Card from '@material-ui/core/Card';
@@ -786,34 +786,8 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       <div className="section" style={{ marginTop: '7%' }}>
         {ProfileCard}
       </div>
-      <div className="section" style={{ marginTop: '7%' }}>
-        <Typography className="section-header" gutterBottom>
-          Team Matching
-        </Typography>
-        <Typography color="textSecondary" style={{ fontSize: '15px' }}>
-          Find and match with other participants for team formation.
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => (window.location.href = 'http://localhost:3000/teammatching')}
-          style={{ marginTop: '10px' }}
-        >
-          Go to Team Matching
-        </Button>
-      </div>
-      <div className="section" style={{ marginTop: '7%' }}>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={props.logout}
-          style={{ marginTop: '10px' }}
-        >
-          Log Out
-        </Button>
-      </div>
     </Card>
   );
 };
 
-export default withAuthCheck(withAuthProps(ProfileReturningUser));
+export default withAuthCheck(ProfileReturningUser);

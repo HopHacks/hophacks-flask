@@ -42,12 +42,6 @@ body {
   box-shadow: 8px 8px 10px rgba(45, 153, 224, 0.4);
 }
 
-/* Targeted selectors */
-.text-field:focus-within {
-  border: 4px solid;
-  border-color: rgb(21, 113, 69);
-}
-
 .card-title {
   font-family: proxima-nova, sans-serif;
   font-weight: 700;
@@ -211,8 +205,8 @@ body {
 }
 
 .color-select {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   margin: 4px;
   border-radius: 20%;
   background-color: #000;

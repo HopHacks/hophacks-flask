@@ -11,7 +11,16 @@
           "hometown": "Long Island, NY",
           "funFact": "I have synesthesia (so I associate colors with letters and numbers)/Discord light mode is superior",
           "major": "Computer Science and Applied Math",
-          "year": "2026"
+          "year": "2026",
+          "role": "Director"
+        },
+        {
+          "name": "Joanne Selinski",
+          "role": "Faculty Advisor"
+        },
+        {
+          "name": "Lyn Doan",
+          "role": "Faculty Advisor"
         }
       ]
     },
@@ -69,6 +78,15 @@
           "funFact": "I've met a couple of Olympic figure skaters (and got their autographs)!",
           "major": "Biomedical Engineering and Computer Science",
           "year": "2028"
+        },
+        {
+          "name": "Lijia Lin",
+          "github": "",
+          "linkedin": "https://www.linkedin.com/in/lijia-lin/",
+          "hometown": "Long Island, New York",
+          "funFact": "warm boba with 0% sugar and brown sugar boba pearls are the best!",
+          "major": "AMS/CS",
+          "year": "2028"
         }
       ]
     },
@@ -90,7 +108,26 @@
     {
       "name": "Sponsors",
       "defaultRole": "Sponsors",
-      "members": []
+      "members": [
+        {
+          "name": "Mary Zhang",
+          "github": "https://github.com/cherringly",
+          "linkedin": "https://www.linkedin.com/in/mary-zhang-student/",
+          "hometown": "Chino Hills, CA",
+          "funFact": "I've held a human brain 🧠",
+          "major": "Electrical Engineering & Neuroscience",
+          "year": "2028"
+        },
+        {
+          "name": "Yeo Eun Yoon (Jasmine)",
+          "github": "https://github.com/cherringly",
+          "linkedin": "www.linkedin.com/in/jasmineyoon04",
+          "hometown": "Seoul, Korea",
+          "funFact": "I don't eat cheese",
+          "major": "AMS, CS",
+          "year": "2027"        
+        }
+      ]
     },
     {
       "name": "Website",

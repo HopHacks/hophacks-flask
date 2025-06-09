@@ -16,16 +16,21 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
   // AppBar fixed to the top with full width
   appBar: {
-    backgroundColor: 'transparent',
+    background: 'linear-gradient(to bottom, rgba(28, 33, 81, 1) 8%, rgba(0, 29, 76, 0) 100%)',
     boxShadow: 'none',
-    height: 50,
-    transition: 'height 0.3s ease',
+    height: 70,
+    transition: 'transform 0.3s ease',
     position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
-    zIndex: 1100 // ensure it stays on top of other elements
+    zIndex: 1100,
+    transform: 'translateY(0)'
   },
+  appBarHidden: {
+    transform: 'translateY(-100%)'
+  },
+
   toolbar: {
     minHeight: '50px',
     padding: '0 16px',
@@ -36,9 +41,13 @@ const useStyles = makeStyles({
     alignItems: 'center'
   },
   title: {
-    fontFamily: 'Inter',
     color: '#F7F3FF',
-    fontSize: '0.9rem'
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'bold',
+    fontSize: '1.25rem',
+    lineHeight: 2,
+    letterSpacing: '0.0625rem',
+    fontVariant: 'small-caps'
   },
   hophacksButton: {
     marginRight: 20
@@ -47,16 +56,14 @@ const useStyles = makeStyles({
     textTransform: 'none',
     margin: '0 0.5rem',
     padding: '4px 8px',
-    opacity: 0.8,
+    opacity: 0.6,
     transition: 'opacity 0.3s ease',
-    fontSize: '0.8rem',
     '&:hover': {
       opacity: 1
     }
   },
   activeNavBtn: {
     fontWeight: 'bold',
-    borderBottom: '2px solid white',
     opacity: 1
   },
   drawerPaper: {
@@ -68,19 +75,25 @@ const useStyles = makeStyles({
   },
   // Container for nav items; reserves 100px on right for the MLH banner.
   navItemsContainer: {
-    marginLeft: 'auto',
+    marginLeft: 0,
     marginRight: 100,
     display: 'flex',
     alignItems: 'center'
   },
   mlhBanner: {
-    position: 'absolute',
-    right: 0,
+    position: 'fixed',
     top: 0,
+    right: 0,
     maxWidth: 100,
     minWidth: 60,
-    width: '100%',
-    zIndex: 1200
+    width: '100%'
+  },
+  whiteDivider: {
+    opacity: 0.6,
+    background: 'white',
+    height: '1.5rem',
+    alignSelf: 'center',
+    width: '.15rem'
   }
 });
 
@@ -89,8 +102,9 @@ const Navigation = function Navigation() {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 800);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('cover');
+  const [activeSection, setActiveSection] = useState('cover-section');
   const isHome = location.pathname === '/';
+  const [showNavbar, setShowNavbar] = useState(true);
 
   // Update isMobile on window resize.
   useEffect(() => {
@@ -99,11 +113,38 @@ const Navigation = function Navigation() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Navbar dissapear on scroll effect
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let timeoutId = null;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down → hide navbar
+        setShowNavbar(false);
+      } else {
+        // Scrolling up or stopped → show navbar
+        setShowNavbar(true);
+      }
+
+      lastScrollY = currentScrollY;
+
+      // Re-show navbar if user stops scrolling after a delay
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => setShowNavbar(true), 500); // adjust delay if needed
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Update scroll state and active section only if on home page
   useEffect(() => {
     if (!isHome) return;
     const handleScroll = () => {
-      const sections = ['cover', 'about', 'prizes', 'faq'];
+      const sections = ['cover-section', 'about-section', 'prizes-section', 'faq-section'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -122,8 +163,9 @@ const Navigation = function Navigation() {
 
   // Define cover nav items (only active if home page, otherwise no active style)
   const coverSections = [
-    { id: 'cover', label: 'HOME' }
-    // { id: 'about', label: 'ABOUT' },
+    { id: 'cover-section', label: 'Home' },
+    { id: 'about-section', label: 'About' },
+    { id: 'faq-section', label: 'FAQs' }
     // { id: 'prizes', label: 'PRIZES' },
     // { id: 'faq', label: 'FAQ' }
   ];
@@ -137,6 +179,7 @@ const Navigation = function Navigation() {
         smooth
         to={`/#${section.id}`}
         className={`${classes.navBtn} ${isActive ? classes.activeNavBtn : ''}`}
+        onClick={() => isMobile && setIsDrawerOpen(false)}
       >
         <Typography variant="body2" className={classes.title}>
           {section.label}
@@ -147,111 +190,9 @@ const Navigation = function Navigation() {
 
   // Define other nav items with route paths and active matching via location.pathname
   const otherNavItemsData = [
-    { path: '/team', label: 'TEAM' },
-    { path: '/Recap', label: 'RECAP' }
+    { path: '/team', label: 'Team' },
+    { path: '/Recap', label: 'Recap' }
   ];
-
-  /* Past Navigation items
-  <>
-    <Button component={Link} to="/team" color="inherit" className={classes.navBtn}>
-      <Typography variant="h5" className={classes.title}>
-        Team
-      </Typography>
-    </Button>
-    <Button component={Link} to="/Recap" color="inherit" className={classes.navBtn}>
-      <Typography variant="h5" className={classes.title}>
-        Recap
-      </Typography>
-    </Button>
-    {/*
-    <Button
-      component={Link}
-      onClick={() => {
-        history.push('/reset_password/:token');
-      }}
-      color="inherit"
-      className={classes.navBtn}
-    >
-      <Typography variant="h5" className={classes.title}>
-        Reset Password?
-      </Typography>
-    </Button>
-    <Button
-      component={Link}
-      onClick={() => {
-        history.push('/confirm_email/:token');
-      }}
-      color="inherit"
-      className={classes.navBtn}
-    >
-      <Typography variant="h5" className={classes.title}>
-        Email Confirmation
-      </Typography>
-    </Button>
-    <Button
-      component={Link}
-      onClick={() => {
-        history.push('/user_auth/signup/signupimage');
-      }}
-      color="inherit"
-      className={classes.navBtn}
-    >
-      <Typography variant="h5" className={classes.title}>
-        SignUp Image
-      </Typography>
-    </Button>
-    <Button
-      component={Link}
-      onClick={() => (window.location = '/#schedule')}
-      color="inherit"
-      className={classes.navBtn}
-    >
-      <Typography variant="h5" className={classes.title}>
-        Schedule
-      </Typography>
-    </Button>
-    <Button
-      component={Link}
-      onClick={() => (window.location = '/#prizes')}
-      color="inherit"
-      className={classes.navBtn}
-    >
-      <Typography variant="h5" className={classes.title}>
-        Prizes
-      </Typography>
-    </Button>
-    <Button
-      component={Link}
-      onClick={() => (window.location = '/#tracks')}
-      color="inherit"
-      className={classes.navBtn}
-    >
-      <Typography variant="h5" className={classes.title}>
-        Tracks
-      </Typography>
-    </Button>
-    <Button
-      component={Link}
-      onClick={() => (window.location = '/#sponsors')}
-      color="inherit"
-      className={classes.navBtn}
-    >
-      <Typography variant="h5" className={classes.title}>
-        Sponsors
-      </Typography>
-    </Button>
-    <Button
-      component={Link}
-      onClick={() => (window.location = '/#faq')}
-      color="inherit"
-      className={classes.navBtn}
-    >
-      <Typography variant="h5" className={classes.title}>
-        FAQ
-      </Typography>
-    </Button>
-  </>
-  */
 
   const otherNavItems = otherNavItemsData.map((item) => {
     const isActive = location.pathname === item.path;
@@ -261,6 +202,7 @@ const Navigation = function Navigation() {
         component={Link}
         to={item.path}
         className={`${classes.navBtn} ${isActive ? classes.activeNavBtn : ''}`}
+        onClick={() => isMobile && setIsDrawerOpen(false)}
       >
         <Typography variant="body2" className={classes.title}>
           {item.label}
@@ -273,6 +215,15 @@ const Navigation = function Navigation() {
   const navItems = (
     <>
       {coverNavItems}
+      {/* Only need the divider on mobile */}
+      {!isMobile && (
+        <Divider
+          orientation="vertical"
+          flexItem
+          className={classes.whiteDivider}
+          variant="middle"
+        />
+      )}
       {otherNavItems}
     </>
   );
@@ -281,7 +232,10 @@ const Navigation = function Navigation() {
   if (isMobile) {
     return (
       <div>
-        <AppBar position="fixed" className={classes.appBar}>
+        <AppBar
+          position="fixed"
+          className={`${classes.appBar} ${!showNavbar ? classes.appBarHidden : ''}`}
+        >
           <Toolbar className={classes.toolbar}>
             <Button
               component={Link}
@@ -325,7 +279,7 @@ const Navigation = function Navigation() {
               rel="noreferrer"
             >
               <img
-                src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-2025-white.svg"
+                src="https://hophacks-website.s3.amazonaws.com/images/mlh-badge-2025-blue.svg"
                 alt="Major League Hacking 2024 Hackathon Season"
                 style={{ width: '100%' }}
               />
@@ -338,7 +292,10 @@ const Navigation = function Navigation() {
 
   // Desktop view
   return (
-    <AppBar position="fixed" className={classes.appBar}>
+    <AppBar
+      position="fixed"
+      className={`${classes.appBar} ${!showNavbar ? classes.appBarHidden : ''}`}
+    >
       <Toolbar className={classes.toolbar}>
         <Button component={Link} smooth to="/" color="inherit" className={classes.hophacksButton}>
           <img
@@ -356,7 +313,7 @@ const Navigation = function Navigation() {
           rel="noreferrer"
         >
           <img
-            src="https://hophacks-website.s3.amazonaws.com/images/mlh-trust-badge-2025-white.svg"
+            src="https://hophacks-website.s3.amazonaws.com/images/mlh-badge-2025-blue.svg"
             alt="Major League Hacking 2024 Hackathon Season"
             style={{ width: '100%' }}
           />

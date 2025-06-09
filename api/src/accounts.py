@@ -145,11 +145,11 @@ def create():
 
     """
 
-
     if 'json_file' not in request.form:
         return Response('Data not in json format', status=400)
 
     json_info = json.loads(request.form['json_file'])
+    print(json_info)
 
     username = json_info['username']
     password = json_info['password'].encode()
@@ -175,9 +175,6 @@ def create():
             file_name = 'resume'
 
         file_name = secure_filename(file_name)
-
-        # COMMENTED OUT: S3 Upload Disabled for Dev 
-        ''' 
         if (file and check_filename(file.filename)):
 
             s3 = boto3.client('s3')
@@ -185,8 +182,6 @@ def create():
             s3.upload_fileobj(file, BUCKET, object_name)
 
             resume_link = file_name
-        
-        '''
     
     db.users.insert_one({
         'username': username,
@@ -199,7 +194,7 @@ def create():
         'is_admin': False,
         'registrations': [],
         'resume': resume_link,
-        "updated": True
+        "updated": True,
     })
 
     return jsonify({"msg": "user added"}), 200

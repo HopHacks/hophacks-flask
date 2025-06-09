@@ -4,7 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-//import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -19,7 +19,7 @@ import PhoneInput from 'react-phone-number-input';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import PhoneNumber from './PhoneNumber';
 
-//import '../../stylesheets/register.css';
+import '../../stylesheets/register.css';
 
 export default function Register() {
   const [username] = useState('');
