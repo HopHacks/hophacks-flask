@@ -19,6 +19,7 @@ import FormDialog from './FormDialog';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
 import CountryAutocomplete from './CountryAutocomplete';
+import { useHistory } from 'react-router-dom';  
 
 import '../../stylesheets/profile.css';
 
@@ -86,6 +87,12 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   function handleResumeFileChange(e) {
     setResumeFile(e.target.files[0]);
   }
+
+  const history = useHistory();
+
+  const navigateToTeamMatching = () => {
+    history.push('/team-matching');
+  };
 
   async function handleResumeSubmit(e) {
     e.preventDefault();
@@ -777,11 +784,39 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     </div>
   );
 
+   const TeamMatchingSection = (
+    <div>
+      <Typography class="section-header" gutterBottom>
+        Team Matching
+      </Typography>
+      <Typography color="textSecondary" style={{ fontSize: '15px', marginBottom: '20px' }}>
+        Find teammates or form a team for the hackathon!
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={navigateToTeamMatching}
+        style={{
+          fontSize: '1.2rem',
+          padding: '10px 20px',
+          marginTop: '10px'
+        }}
+      >
+        Go to Team Matching
+      </Button>
+    </div>
+  );
+
   return (
     <Card class="profile">
       <div className="section">{appStatus}</div>
       <div className="section" style={{ marginTop: '7%' }}>
         {resume}
+      </div>
+      {/* NEW TEAM MATCHING SECTION */}
+      <div className="section" style={{ marginTop: '7%' }}>
+        {TeamMatchingSection}
       </div>
       <div className="section" style={{ marginTop: '7%' }}>
         {ProfileCard}

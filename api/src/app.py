@@ -91,7 +91,7 @@ def create_app(config_file='config/config.json'):
     from events import events_api
     from slack import slack_api
     from discord import discord_api
-    from teammatch import teammatch_api
+    from teammatching import teammatch_api
 
 
     app.register_blueprint(auth_api, url_prefix='/api/auth')

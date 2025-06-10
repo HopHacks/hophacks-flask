@@ -4,6 +4,21 @@ import { Link, useHistory } from 'react-router-dom';
 import { withAuthProps } from '../../util/auth';
 import '../../stylesheets/user_auth.css';
 
+
+const AuthTextField = ({ label, type = 'text', value, onChange, color, isMobile }) => (
+    <TextField
+      required
+      variant="standard"
+      label={label}
+      type={type}
+      value={value}
+      onChange={onChange}
+      style={{ width: isMobile ? '80%' : '90%' }}
+      InputLabelProps={{ style: { color } }}
+      InputProps={{ style: { color } }}
+    />
+  );
+
 function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
   const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState('');
@@ -41,19 +56,7 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
     }
   };
 
-  const AuthTextField = ({ label, type = 'text', value, onChange, color }) => (
-    <TextField
-      required
-      variant="standard"
-      label={label}
-      type={type}
-      value={value}
-      onChange={onChange}
-      style={{ width: isMobile ? '80%' : '90%' }}
-      InputLabelProps={{ style: { color } }}
-      InputProps={{ style: { color } }}
-    />
-  );
+  
 
   return (
     <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
@@ -76,6 +79,7 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
             value={email}
             onChange={(e) => handleChangeEmail(e)}
             color={textColor}
+            isMobile={isMobile}
           />
         </div>
         <div className="text-field">
@@ -85,6 +89,7 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
             value={password}
             onChange={(e) => handleChangePassword(e)}
             color={textColor}
+            isMobile={isMobile}
           />
         </div>
         <div className="flex flex-col items-center">

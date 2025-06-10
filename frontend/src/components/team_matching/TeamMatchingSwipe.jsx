@@ -55,65 +55,67 @@ function TeamMatching({ isLoggedIn }) {
   const currentUser = users[currentIndex];
 
   return (
-    <div className="team-matching-container">
-      <div className="toggle-buttons" style={{ textAlign: 'center', marginBottom: '1rem' }}>
-        <button onClick={() => history.push('/profile')}>← Back to Profile</button>
-        <button onClick={() => setView('swipe')}>Swipe</button>
-        <button onClick={() => setView('matches')}>View Matches</button>
+    <div className="team-matching">
+      <div className="team-matching-container">
+        <div className="toggle-buttons" style={{ textAlign: 'center', marginBottom: '1rem' }}>
+          <button onClick={() => history.push('/profile')}>← Back to Profile</button>
+          <button onClick={() => setView('swipe')}>Swipe</button>
+          <button onClick={() => setView('matches')}>View Matches</button>
+        </div>
+
+        {view === 'swipe' ? (
+          <>
+            <h1>Team Matching</h1>
+            {error && <p className="error">{error}</p>}
+            {matchResult && <p className="match-success">{matchResult}</p>}
+
+            <div className="card-container">
+              <AnimatePresence>
+                {currentUser && (
+                  <motion.div
+                    key={currentUser.id}
+                    className="card"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, x: 300, rotate: 15 }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    onDragEnd={(event, info) => {
+                      if (info.offset.x > 100) {
+                        handleSwipe('right');
+                      } else if (info.offset.x < -100) {
+                        handleSwipe('left');
+                      }
+                    }}
+                    whileTap={{ scale: 1.05 }}
+                  >
+                    <h2>
+                      {currentUser.profile?.first_name} {currentUser.profile?.last_name} (
+                      {currentUser.username})
+                    </h2>
+                    <p>
+                      <strong>School:</strong> {currentUser.profile?.school}
+                    </p>
+                    <p>
+                      <strong>Major:</strong> {currentUser.profile?.major}
+                    </p>
+                    <p>
+                      <strong>Gender:</strong> {currentUser.profile?.gender}
+                    </p>
+                    <p>
+                      <strong>Age:</strong> {currentUser.profile?.age}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {!currentUser && <p>No more users to show</p>}
+          </>
+        ) : (
+          <MatchList />
+        )}
       </div>
-
-      {view === 'swipe' ? (
-        <>
-          <h1>Team Matching</h1>
-          {error && <p className="error">{error}</p>}
-          {matchResult && <p className="match-success">{matchResult}</p>}
-
-          <div className="card-container">
-            <AnimatePresence>
-              {currentUser && (
-                <motion.div
-                  key={currentUser.id}
-                  className="card"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, x: 300, rotate: 15 }}
-                  drag="x"
-                  dragConstraints={{ left: 0, right: 0 }}
-                  onDragEnd={(event, info) => {
-                    if (info.offset.x > 100) {
-                      handleSwipe('right');
-                    } else if (info.offset.x < -100) {
-                      handleSwipe('left');
-                    }
-                  }}
-                  whileTap={{ scale: 1.05 }}
-                >
-                  <h2>
-                    {currentUser.profile?.first_name} {currentUser.profile?.last_name} (
-                    {currentUser.username})
-                  </h2>
-                  <p>
-                    <strong>School:</strong> {currentUser.profile?.school}
-                  </p>
-                  <p>
-                    <strong>Major:</strong> {currentUser.profile?.major}
-                  </p>
-                  <p>
-                    <strong>Gender:</strong> {currentUser.profile?.gender}
-                  </p>
-                  <p>
-                    <strong>Age:</strong> {currentUser.profile?.age}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {!currentUser && <p>No more users to show</p>}
-        </>
-      ) : (
-        <MatchList />
-      )}
     </div>
   );
 }

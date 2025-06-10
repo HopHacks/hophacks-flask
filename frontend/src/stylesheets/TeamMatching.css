@@ -1,68 +1,65 @@
-.team-matching-container {
-    background-color: white;
-    padding: 40px 20px;
-    min-height: 100vh;
-    text-align: center;
-    font-family: sans-serif;
-  }
-  
-  .card-container {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    margin: 40px auto;
-    height: 300px;
-  }
-  
-  .card {
-    background: #f0f0f0;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    width: 100%;
-    cursor: grab;
-  }
-  
-  .card h2 {
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .card p {
-    color: #555;
-  }
-  
-  .error {
-    color: red;
-  }
-  
-  .match-success {
-    color: green;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .toggle-buttons button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    margin: 0 10px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .toggle-buttons button:hover {
-    background-color: #0056b3;
-  }
-  
-  .toggle-buttons button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-  }
-  
+.team-matching .team-matching-container {
+  background-color: white;
+  padding: 40px 20px;
+  min-height: 100vh;
+  text-align: center;
+  font-family: sans-serif;
+}
 
-  
+.team-matching .card-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 40px auto;
+  height: 300px;
+}
+
+.team-matching .card {
+  background: #f0f0f0;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 100%;
+  cursor: grab;
+}
+
+.team-matching .card h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.team-matching .card p {
+  color: #555;
+}
+
+.team-matching .error {
+  color: red;
+}
+
+.team-matching .match-success {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.team-matching .toggle-buttons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.team-matching .toggle-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.team-matching .toggle-buttons button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}

@@ -11,7 +11,7 @@ import { AuthProvider } from '../util/auth';
 
 import Home from './Home'; //temporarily took out home page
 //import Recruiting from './Recruiting';
-//import Profile from './account/Profile'; //why does this not work!!!
+import Profile from './account/Profile'; //why does this not work!!!
 import Admin from './admin/Admin';
 import AnnouncementPanel from './admin/AnnouncementPanel';
 import Nav from './Nav';
@@ -32,14 +32,14 @@ import Login from './user_auth/Login'; //adjusted to be new path
 // import Tracks from './tracks/Tracks.jsx';
 import SignUp from './user_auth/signup/SignUp';
 import Recap from './recap.jsx';
+
 // import SignUpChecks from './user_auth/signup/SignUpChecks.jsx'; //new paths
 // import SignUpProfile from './user_auth/signup/SignUpProfile.jsx';
 // import SignUpAccount from './user_auth/signup/SignUpAccount.jsx';
 // import SignUpImage from './user_auth/signup/SignUpImage.jsx';
 
 import ResetPassword from './user_auth/ResetPassword';
-//import TeamMatchingPage from './team_matching/TeamMatchingPage';
-//import TeamMatchingPage from './team_matching/TeamMatchingPage';
+import TeamMatchingPage from './team_matching/TeamMatchingSwipe';
 
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -72,11 +72,12 @@ export default function App() {
                   </Route>
 
                   {/* <Route path="/account/profile" component={Profile} /> */}
-                  {/*<Route path="/profile">
+                  <Route path="/profile">
                     <Profile isMobile={isMobile} />
                   </Route>
 
-                  {/*<Route path="/announcements/detail">
+                  {/*}
+                  <Route path="/announcements/detail">
                     <AnnouncementDetails />
                   </Route>
 
@@ -91,9 +92,9 @@ export default function App() {
                   {/* TODO: replace this with new register page */}
                   {/* <Route path="/register">
                     <Register isMobile={isMobile}/>
-                  </Route> */}
+                  </Route>
 
-                  {/*<Route path="/recruiting">
+                  <Route path="/recruiting">
                     <Recruiting />
                   </Route>
 
@@ -120,9 +121,9 @@ export default function App() {
                     <ResetPassword isMobile={isMobile} />
                   </Route>
 
-                  {/*<Route path="/teamMatching" isMobile={isMobile}>
+                  <Route path="/team-matching" isMobile={isMobile}>
                     <TeamMatchingPage isMobile={isMobile} />
-                  </Route>*/}
+                  </Route>
 
                   {/* <Route path="/tracks">
                     <Tracks />
