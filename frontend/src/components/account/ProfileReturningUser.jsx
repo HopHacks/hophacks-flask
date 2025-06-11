@@ -19,7 +19,7 @@ import FormDialog from './FormDialog';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
 import CountryAutocomplete from './CountryAutocomplete';
-import { useHistory } from 'react-router-dom';  
+import { useHistory } from 'react-router-dom';
 
 import '../../stylesheets/profile.css';
 
@@ -784,7 +784,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     </div>
   );
 
-   const TeamMatchingSection = (
+  const TeamMatchingSection = (
     <div>
       <Typography class="section-header" gutterBottom>
         Team Matching
