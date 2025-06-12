@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { withAuthCheck } from '../../util/auth.jsx';
 
-import '../../stylesheets/profile.css';
 import ProfileReturningUser from './ProfileReturningUser.jsx';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import ProfileOldUser from './ProfileOldUser.jsx';

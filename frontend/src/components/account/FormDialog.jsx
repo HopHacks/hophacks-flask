@@ -32,7 +32,24 @@ const FormDialog = function FormDialog({
     <div>
       <Divider variant="inset" component="li" />
       <ListItem button>
-        <ListItemText primary={primaryText} secondary={secondaryText} />
+        <ListItemText
+          primary={primaryText}
+          secondary={secondaryText}
+          primaryTypographyProps={{
+            style: {
+              fontSize: '20px',
+              fontWeight: 'bold',
+              color: 'white',
+              marginBottom: '4px', // vertical space between primary and secondary
+            },
+          }}
+          secondaryTypographyProps={{
+            style: {
+              fontSize: '18px', 
+              color: 'white',
+            },
+          }}
+        />
         <CardActions>
           <IconButton>
             <EditIcon fontSize="small" color="primary" onClick={handleClickOpen} />

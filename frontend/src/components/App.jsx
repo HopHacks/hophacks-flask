@@ -11,7 +11,7 @@ import { AuthProvider } from '../util/auth';
 
 import Home from './Home'; //temporarily took out home page
 //import Recruiting from './Recruiting';
-//import Profile from './account/Profile'; //why does this not work!!!
+import Profile from './account/Profile.jsx';
 import Admin from './admin/Admin';
 import AnnouncementPanel from './admin/AnnouncementPanel';
 import Nav from './Nav';
@@ -72,7 +72,7 @@ export default function App() {
                   </Route>
 
                   {/* <Route path="/account/profile" component={Profile} /> */}
-                  {/*<Route path="/profile">
+                  <Route path="/profile">
                     <Profile isMobile={isMobile} />
                   </Route>
 

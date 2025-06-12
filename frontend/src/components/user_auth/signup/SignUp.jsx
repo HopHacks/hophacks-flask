@@ -278,11 +278,11 @@ function SignUp(props) {
       //     school: school,
       //   });
 
-      await axios.post('/api/slack/registration', {
+      /*await axios.post('/api/slack/registration', {
         first_name: first_name,
         last_name: last_name,
         school: school
-      });
+      });*/
 
       try {
         await props.login(username, password);

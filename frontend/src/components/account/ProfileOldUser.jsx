@@ -47,7 +47,7 @@ export default function ProfileOldUser(props) {
   const handleProfileNext = props.handleProfileNext;
 
   const profileCard = (
-    <Card class="card">
+    <Card>
       <CardContent>
         <Typography className={isMobile ? 'mobile-header' : 'card-title'}>Welcome Back</Typography>
         <Typography className={isMobile ? 'mobile-subheader' : 'card-subtitle'}>
