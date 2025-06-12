@@ -40,14 +40,14 @@ const FormDialog = function FormDialog({
               fontSize: '20px',
               fontWeight: 'bold',
               color: 'white',
-              marginBottom: '4px', // vertical space between primary and secondary
-            },
+              marginBottom: '4px' // vertical space between primary and secondary
+            }
           }}
           secondaryTypographyProps={{
             style: {
-              fontSize: '18px', 
-              color: 'white',
-            },
+              fontSize: '18px',
+              color: 'white'
+            }
           }}
         />
         <CardActions>

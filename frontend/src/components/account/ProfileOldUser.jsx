@@ -100,13 +100,9 @@ export default function ProfileOldUser({
         <div
           className="w-full max-w-[800px] flex flex-col rounded-2xl p-10 shadow-2xl"
           style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
-        >   
-          
+        >
           <div className="text-center mb-8">
-            <p
-              className="font-bold text-white text-2xl mb-4"
-              style={{ fontVariant: 'small-caps' }}
-            >
+            <p className="font-bold text-white text-2xl mb-4" style={{ fontVariant: 'small-caps' }}>
               Welcome Back
             </p>
             <p className="text-blue-200 text-base mb-2">
@@ -119,43 +115,43 @@ export default function ProfileOldUser({
 
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <LabeledTextField 
-                label="First Name" 
+              <LabeledTextField
+                label="First Name"
                 value={first_name}
-                onChange={(e) => setFirst_name(e.target.value)} 
+                onChange={(e) => setFirst_name(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <LabeledTextField 
+              <LabeledTextField
                 label="Last Name"
                 value={last_name}
-                onChange={(e) => setLast_name(e.target.value)} 
+                onChange={(e) => setLast_name(e.target.value)}
               />
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <LabeledTextField 
-                label="Age" 
+              <LabeledTextField
+                label="Age"
                 type="number"
                 value={age}
-                onChange={(e) => setAge(e.target.value)} 
+                onChange={(e) => setAge(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} md={4}>
-              <LabeledTextField 
+              <LabeledTextField
                 label="Gender"
                 value={gender}
-                onChange={(e) => setGender(e.target.value)} 
+                onChange={(e) => setGender(e.target.value)}
                 select
               >
                 {renderMenuItems(genders)}
               </LabeledTextField>
             </Grid>
             <Grid item xs={12} md={4}>
-              <LabeledTextField 
+              <LabeledTextField
                 label="Ethnicity"
                 value={ethnicity}
-                onChange={(e) => setEthnicity(e.target.value)} 
+                onChange={(e) => setEthnicity(e.target.value)}
                 select
               >
                 {renderMenuItems(ethnicities)}
@@ -165,9 +161,7 @@ export default function ProfileOldUser({
             <Grid item xs={12} md={6}>
               <FormControl required style={{ width: '100%' }}>
                 <div className="w-full">
-                  <label className="block text-sm font-medium text-blue-200 mb-2">
-                    School
-                  </label>
+                  <label className="block text-sm font-medium text-blue-200 mb-2">School</label>
                   <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
                     <SchoolAutocomplete school={school} setSchool={setSchool} />
                   </div>
@@ -180,9 +174,7 @@ export default function ProfileOldUser({
 
             <Grid item xs={12} md={6}>
               <div className="w-full">
-                <label className="block text-sm font-medium text-blue-200 mb-2">
-                  Major
-                </label>
+                <label className="block text-sm font-medium text-blue-200 mb-2">Major</label>
                 <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
                   <MajorAutocomplete major={major} setMajor={setMajor} />
                 </div>
@@ -204,9 +196,7 @@ export default function ProfileOldUser({
 
             <Grid item xs={12} md={6}>
               <div className="w-full">
-                <label className="block text-sm font-medium text-blue-200 mb-2">
-                  Country
-                </label>
+                <label className="block text-sm font-medium text-blue-200 mb-2">Country</label>
                 <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
                   <CountryAutocomplete setCountry={setCountry} country={country} />
                 </div>
@@ -215,9 +205,7 @@ export default function ProfileOldUser({
 
             <Grid item xs={12} md={6}>
               <div className="w-full">
-                <label className="block text-sm font-medium text-blue-200 mb-2">
-                  Phone Number
-                </label>
+                <label className="block text-sm font-medium text-blue-200 mb-2">Phone Number</label>
                 <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
                   <PhoneInput
                     international
@@ -231,10 +219,10 @@ export default function ProfileOldUser({
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <LabeledTextField 
+              <LabeledTextField
                 label="Level of Study"
                 value={grad}
-                onChange={(e) => setGrad(e.target.value)} 
+                onChange={(e) => setGrad(e.target.value)}
                 select
               >
                 {renderMenuItems(gradLevels)}
@@ -251,10 +239,10 @@ export default function ProfileOldUser({
               </LabeledTextField>
             </Grid>
             <Grid item xs={12} md={4}>
-              <LabeledTextField 
+              <LabeledTextField
                 label="Grad Year"
                 value={grad_year}
-                onChange={(e) => setGrad_year(e.target.value)} 
+                onChange={(e) => setGrad_year(e.target.value)}
                 select
               >
                 {renderMenuItems(years)}
@@ -276,7 +264,6 @@ export default function ProfileOldUser({
               Next
             </GlowButton>
           </div>
-
         </div>
       </div>
     </div>

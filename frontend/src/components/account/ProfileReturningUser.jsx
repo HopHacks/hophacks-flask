@@ -245,14 +245,14 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     if (!confirmed) {
       return (
         <>
-          <GlowButton 
+          <GlowButton
             onClick={sendConfirmationEmail}
-            style={{ 
-              fontSize: '14px',     // Very small text (12px)
-              padding: '0.25rem 0.5rem',   // Minimal padding
-              minWidth: '80px',        // Very small minimum width
+            style={{
+              fontSize: '14px', // Very small text (12px)
+              padding: '0.25rem 0.5rem', // Minimal padding
+              minWidth: '80px', // Very small minimum width
               width: 'auto',
-              margin: '0.25rem 0'      // Minimal margins
+              margin: '0.25rem 0' // Minimal margins
             }}
           >
             Request Email Confirmation
@@ -270,15 +270,15 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     } else if (status === acceptedStatus) {
       return (
         <>
-          <GlowButton 
-            onClick={() => rsvp(currentEvent)}>RSVP</GlowButton>
-            style={{ 
-              fontSize: '14px',     // Very small text (12px)
-              padding: '0.25rem 0.5rem',   // Minimal padding
-              minWidth: '80px',        // Very small minimum width
-              width: 'auto',
-              margin: '0.25rem 0'      // Minimal margins
-            }}
+          <GlowButton onClick={() => rsvp(currentEvent)}>RSVP</GlowButton>
+          style=
+          {{
+            fontSize: '14px', // Very small text (12px)
+            padding: '0.25rem 0.5rem', // Minimal padding
+            minWidth: '80px', // Very small minimum width
+            width: 'auto',
+            margin: '0.25rem 0' // Minimal margins
+          }}
           <br />
           <span> Note, by RSVPing to our event, you consent to our </span>
           <a href={img('JHU_Photo-and-Video-Release_20192.pdf')} onClick={openPhotoRelease}>
@@ -291,168 +291,166 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       return (
         <>
           <GlowButton
-           onClick={() => cancel(currentEvent)}
-           style={{ 
-              fontSize: '14px',     // Very small text (12px)
-              padding: '0.25rem 0.5rem',   // Minimal padding
-              minWidth: '80px',        // Very small minimum width
+            onClick={() => cancel(currentEvent)}
+            style={{
+              fontSize: '14px', // Very small text (12px)
+              padding: '0.25rem 0.5rem', // Minimal padding
+              minWidth: '80px', // Very small minimum width
               width: 'auto',
-              margin: '0.25rem 0'      // Minimal margins
+              margin: '0.25rem 0' // Minimal margins
             }}
           >
-            Cancel RSVP</GlowButton>
+            Cancel RSVP
+          </GlowButton>
         </>
       );
     }
   }
 
   const appStatus = (
-  <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-6">
-    {/* Left Side: Text Content */}
-    <div className="flex-1">
-      <h2 className="text-2xl font-bold text-white mb-2">Application</h2>
-      <p className="text-sm text-white/90 mb-4">
-        You must confirm your email before applying to the current event. Once you are accepted to
-        the event, you may RSVP.
-      </p>
+    <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-6">
+      {/* Left Side: Text Content */}
+      <div className="flex-1">
+        <h2 className="text-2xl font-bold text-white mb-2">Application</h2>
+        <p className="text-sm text-white/90 mb-4">
+          You must confirm your email before applying to the current event. Once you are accepted to
+          the event, you may RSVP.
+        </p>
 
-      <div className="space-y-2">
-        <div className="flex">
-          <span className="font-semibold w-40 text-white">Current Event:</span>
-          <span className="text-white">{currentEvent}</span>
-        </div>
-        <div className="flex">
-          <span className="font-semibold w-40 text-white">Status:</span>
-          <span className="text-white">{status}</span>
-        </div>
-        <div className="flex items-center">
-          <span className="font-semibold w-40 text-white">Action Items:</span>
-          <div>{ActionItems()}</div>
+        <div className="space-y-2">
+          <div className="flex">
+            <span className="font-semibold w-40 text-white">Current Event:</span>
+            <span className="text-white">{currentEvent}</span>
+          </div>
+          <div className="flex">
+            <span className="font-semibold w-40 text-white">Status:</span>
+            <span className="text-white">{status}</span>
+          </div>
+          <div className="flex items-center">
+            <span className="font-semibold w-40 text-white">Action Items:</span>
+            <div>{ActionItems()}</div>
+          </div>
         </div>
       </div>
+
+      {/* Right Side: Placeholder Profile Image */}
+      <div className="w-[364px] h-[254px] rounded-xl overflow-hidden bg-white/30 flex items-center justify-center shadow-inner">
+        <span className="text-white text-sm">Profile Image</span>
+      </div>
     </div>
-
-    {/* Right Side: Placeholder Profile Image */}
-    <div className="w-[364px] h-[254px] rounded-xl overflow-hidden bg-white/30 flex items-center justify-center shadow-inner">
-      <span className="text-white text-sm">Profile Image</span>
-    </div>
-  </div>
-);
-
-
-
+  );
 
   const resume = (
-  <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-6">
-    <div className=" w-full text-white">
-      <h2 className="text-2xl font-bold text-white mb-2">Resume</h2>
+    <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-6">
+      <div className=" w-full text-white">
+        <h2 className="text-2xl font-bold text-white mb-2">Resume</h2>
 
-      <Typography style={{ fontSize: '15px', color: '#ddd' }}>
-        You can replace your resume by clicking on “Choose File” above and selecting a new file. You
-        can have only one resume attached to your profile.
-      </Typography>
+        <Typography style={{ fontSize: '15px', color: '#ddd' }}>
+          You can replace your resume by clicking on “Choose File” above and selecting a new file.
+          You can have only one resume attached to your profile.
+        </Typography>
 
-      {isMobile ? (
-        <div className="mt-6">
-          <div className="mb-4">
-            <span className="font-semibold">Current Resume:</span>{' '}
-            <GlowButton
-             onClick={handleResumeDownload}
-             style={{ 
-              fontSize: '14px',     // Very small text (12px)
-              padding: '0.25rem 0.5rem',   // Minimal padding
-              minWidth: '80px',        // Very small minimum width
-              width: 'auto',
-              margin: '0.25rem 0'      // Minimal margins
-            }}
-            >
-              {oldResumeName}
-            </GlowButton>
-          </div>
-
-          <form onSubmit={handleResumeSubmit}>
-            <div className="mb-2">
-              <span className="font-semibold">Upload New Resume:</span>
-              <input
-                type="file"
-                name="file"
-                onChange={handleResumeFileChange}
-                className="block mt-2 text-sm text-gray-300"
-              />
+        {isMobile ? (
+          <div className="mt-6">
+            <div className="mb-4">
+              <span className="font-semibold">Current Resume:</span>{' '}
+              <GlowButton
+                onClick={handleResumeDownload}
+                style={{
+                  fontSize: '14px', // Very small text (12px)
+                  padding: '0.25rem 0.5rem', // Minimal padding
+                  minWidth: '80px', // Very small minimum width
+                  width: 'auto',
+                  margin: '0.25rem 0' // Minimal margins
+                }}
+              >
+                {oldResumeName}
+              </GlowButton>
             </div>
-            <GlowButton 
-              onClick={handleResumeSubmit}
-              style={{ 
-                fontSize: '0.875rem',
-                padding: '0.25rem 1rem',
-                minWidth: '80px',
-                width: 'auto',
-                margin: '0'
-              }}
-            >
-              Submit
-            </GlowButton>
-            <Typography className="text-sm text-gray-300 mt-2">{resumeMsg}</Typography>
-          </form>
-        </div>
-      ) : (
-        <div className="mt-6">
-          <table className="w-full text-white text-left table-auto border-collapse">
-            <thead>
-              <tr className="border-b border-white/20">
-                <th className="py-2">File Name</th>
-                <th className="py-2">Action</th>
-                <th className="py-2">Upload Resume</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-t border-white/10">
-                <td className="py-2">{oldResumeName}</td>
-                <td className="py-2">
-                  <GlowButton 
-                    onClick={handleResumeDownload}
-                    style={{ 
-                    fontSize: '14px',     // Very small text (12px)
-                    padding: '0.25rem 0.5rem',   // Minimal padding
-                    minWidth: '80px',        // Very small minimum width
-                    width: 'auto',
-                    margin: '0.25rem 0'      // Minimal margins
-                  }}>
-                    Download
-                  </GlowButton>
-                </td>
-                <td className="py-2">
-                  <form onSubmit={handleResumeSubmit} className="space-y-2 mt-6">
-                    <input
-                      type="file"
-                      name="file"
-                      onChange={handleResumeFileChange}
-                      className="text-sm text-gray-300"
-                    />
-                    <GlowButton 
-                      onClick={handleResumeSubmit}
-                      style={{ 
-                        fontSize: '0.875rem',
-                        padding: '0.25rem 1rem',
-                        minWidth: '80px',
+
+            <form onSubmit={handleResumeSubmit}>
+              <div className="mb-2">
+                <span className="font-semibold">Upload New Resume:</span>
+                <input
+                  type="file"
+                  name="file"
+                  onChange={handleResumeFileChange}
+                  className="block mt-2 text-sm text-gray-300"
+                />
+              </div>
+              <GlowButton
+                onClick={handleResumeSubmit}
+                style={{
+                  fontSize: '0.875rem',
+                  padding: '0.25rem 1rem',
+                  minWidth: '80px',
+                  width: 'auto',
+                  margin: '0'
+                }}
+              >
+                Submit
+              </GlowButton>
+              <Typography className="text-sm text-gray-300 mt-2">{resumeMsg}</Typography>
+            </form>
+          </div>
+        ) : (
+          <div className="mt-6">
+            <table className="w-full text-white text-left table-auto border-collapse">
+              <thead>
+                <tr className="border-b border-white/20">
+                  <th className="py-2">File Name</th>
+                  <th className="py-2">Action</th>
+                  <th className="py-2">Upload Resume</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-white/10">
+                  <td className="py-2">{oldResumeName}</td>
+                  <td className="py-2">
+                    <GlowButton
+                      onClick={handleResumeDownload}
+                      style={{
+                        fontSize: '14px', // Very small text (12px)
+                        padding: '0.25rem 0.5rem', // Minimal padding
+                        minWidth: '80px', // Very small minimum width
                         width: 'auto',
-                        margin: '0'
+                        margin: '0.25rem 0' // Minimal margins
                       }}
                     >
-                      Submit
+                      Download
                     </GlowButton>
-                    <Typography className="text-sm text-gray-300">{resumeMsg}</Typography>
-                  </form>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
+                  </td>
+                  <td className="py-2">
+                    <form onSubmit={handleResumeSubmit} className="space-y-2 mt-6">
+                      <input
+                        type="file"
+                        name="file"
+                        onChange={handleResumeFileChange}
+                        className="text-sm text-gray-300"
+                      />
+                      <GlowButton
+                        onClick={handleResumeSubmit}
+                        style={{
+                          fontSize: '0.875rem',
+                          padding: '0.25rem 1rem',
+                          minWidth: '80px',
+                          width: 'auto',
+                          margin: '0'
+                        }}
+                      >
+                        Submit
+                      </GlowButton>
+                      <Typography className="text-sm text-gray-300">{resumeMsg}</Typography>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-);
-  
+  );
 
   const NameForm = (
     <div>
@@ -737,148 +735,138 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       </FormControl>
     </form>
   );
-  
+
   const ProfileCard = (
-  <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-6">
-    <div className=" w-full text-white">
-      <h2 className="text-2xl font-bold text-white mb-2">Profile Info</h2>
+    <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-6">
+      <div className=" w-full text-white">
+        <h2 className="text-2xl font-bold text-white mb-2">Profile Info</h2>
 
-      <List className="space-y-4">
-        <FormDialog
-          title="Edit Name"
-          form={NameForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="Name"
-          secondaryText={profile.first_name + ' ' + profile.last_name}
-        />
+        <List className="space-y-4">
+          <FormDialog
+            title="Edit Name"
+            form={NameForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="Name"
+            secondaryText={profile.first_name + ' ' + profile.last_name}
+          />
 
-        <FormDialog
-          title="Edit Gender"
-          form={GenderForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="Gender"
-          secondaryText={profile.gender}
-        />
+          <FormDialog
+            title="Edit Gender"
+            form={GenderForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="Gender"
+            secondaryText={profile.gender}
+          />
 
-        <FormDialog
-          title="Edit Age"
-          form={AgeForm}
-          handleProfileSave={checkAgeValid}
-          primaryText="Age"
-          secondaryText={profile.age}
-        />
+          <FormDialog
+            title="Edit Age"
+            form={AgeForm}
+            handleProfileSave={checkAgeValid}
+            primaryText="Age"
+            secondaryText={profile.age}
+          />
 
-        {ageMsg && (
-          <Typography className="text-sm text-gray-300 ml-1 mt-[-10px]">
-            {ageMsg}
-          </Typography>
-        )}
+          {ageMsg && (
+            <Typography className="text-sm text-gray-300 ml-1 mt-[-10px]">{ageMsg}</Typography>
+          )}
 
-        <FormDialog
-          title="Edit Ethnicity"
-          form={EthnicityForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="Ethnicity"
-          secondaryText={profile.ethnicity}
-        />
+          <FormDialog
+            title="Edit Ethnicity"
+            form={EthnicityForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="Ethnicity"
+            secondaryText={profile.ethnicity}
+          />
 
-        <FormDialog
-          title="Edit School"
-          form={SchoolForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="School"
-          secondaryText={
-            profile.school === 'Other Schools' ? profile.otherSchool : profile.school
-          }
-        />
+          <FormDialog
+            title="Edit School"
+            form={SchoolForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="School"
+            secondaryText={
+              profile.school === 'Other Schools' ? profile.otherSchool : profile.school
+            }
+          />
 
-        <FormDialog
-          title="Edit Major"
-          form={MajorForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="Major"
-          secondaryText={profile.major}
-        />
+          <FormDialog
+            title="Edit Major"
+            form={MajorForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="Major"
+            secondaryText={profile.major}
+          />
 
-        <FormDialog
-          title="Edit Program"
-          form={ProgramForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="Program"
-          secondaryText={profile.grad}
-        />
+          <FormDialog
+            title="Edit Program"
+            form={ProgramForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="Program"
+            secondaryText={profile.grad}
+          />
 
-        <FormDialog
-          title="Edit Expected Graduation Date"
-          form={GraduationForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="Expected Graduation Date"
-          secondaryText={profile.grad_month + ' ' + profile.grad_year}
-        />
+          <FormDialog
+            title="Edit Expected Graduation Date"
+            form={GraduationForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="Expected Graduation Date"
+            secondaryText={profile.grad_month + ' ' + profile.grad_year}
+          />
 
-        <FormDialog
-          title="Edit Country"
-          form={CountryForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="Country"
-          secondaryText={profile.country}
-        />
+          <FormDialog
+            title="Edit Country"
+            form={CountryForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="Country"
+            secondaryText={profile.country}
+          />
 
-        <FormDialog
-          title="Edit Phone Number"
-          form={PhoneNumberForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="Phone Number"
-          secondaryText={profile.phone_number}
-        />
+          <FormDialog
+            title="Edit Phone Number"
+            form={PhoneNumberForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="Phone Number"
+            secondaryText={profile.phone_number}
+          />
 
-        <FormDialog
-          title="Is this your first time attending a hackathon?"
-          form={first_hackathonForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="First Hackathon?"
-          secondaryText={profile.first_hackathon}
-        />
+          <FormDialog
+            title="Is this your first time attending a hackathon?"
+            form={first_hackathonForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="First Hackathon?"
+            secondaryText={profile.first_hackathon}
+          />
 
-        <FormDialog
-          title="Is this your first time attending HopHacks?"
-          form={first_hophacksForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="First HopHacks?"
-          secondaryText={profile.first_hophacks}
-        />
+          <FormDialog
+            title="Is this your first time attending HopHacks?"
+            form={first_hophacksForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="First HopHacks?"
+            secondaryText={profile.first_hophacks}
+          />
 
-        <FormDialog
-          title="How did you hear about us?"
-          form={learn_about_usForm}
-          handleProfileSave={handleProfileSave}
-          primaryText="How did you hear about us?"
-          secondaryText={profile.learn_about_us}
-        />
-      </List>
+          <FormDialog
+            title="How did you hear about us?"
+            form={learn_about_usForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="How did you hear about us?"
+            secondaryText={profile.learn_about_us}
+          />
+        </List>
+      </div>
     </div>
-  </div>
-);
-
+  );
 
   return (
     <div className="min-h-screen h-fit bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center pt-24 pb-20">
       <div className="text-4xl font-bold text-center text-white mb-8">Profile</div>
 
-      <div className="section mb-8">
-        {appStatus}
-      </div>
+      <div className="section mb-8">{appStatus}</div>
 
-      <div className="section mb-8">
-        {resume}
-      </div>
+      <div className="section mb-8">{resume}</div>
 
-      <div className="section mb-8">
-        {ProfileCard}
-      </div>
+      <div className="section mb-8">{ProfileCard}</div>
     </div>
   );
-
 };
 
 export default withAuthCheck(ProfileReturningUser);
