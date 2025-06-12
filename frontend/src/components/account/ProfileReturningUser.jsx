@@ -10,15 +10,12 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 
 import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Grid from '@material-ui/core/Grid';
 import FormDialog from './FormDialog';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
 import CountryAutocomplete from './CountryAutocomplete';
+
+import GlowButton from '../ui/GlowButton';
 
 import '../../stylesheets/profile.css';
 
@@ -248,7 +245,18 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     if (!confirmed) {
       return (
         <>
-          <button onClick={sendConfirmationEmail}>Request Email Confirmation</button>
+          <GlowButton 
+            onClick={sendConfirmationEmail}
+            style={{ 
+              fontSize: '14px',     // Very small text (12px)
+              padding: '0.25rem 0.5rem',   // Minimal padding
+              minWidth: '80px',        // Very small minimum width
+              width: 'auto',
+              margin: '0.25rem 0'      // Minimal margins
+            }}
+          >
+            Request Email Confirmation
+          </GlowButton>
           <p>{sendConfimationMsg}</p>
         </>
       );
@@ -262,7 +270,15 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     } else if (status === acceptedStatus) {
       return (
         <>
-          <button onClick={() => rsvp(currentEvent)}>RSVP</button>
+          <GlowButton 
+            onClick={() => rsvp(currentEvent)}>RSVP</GlowButton>
+            style={{ 
+              fontSize: '14px',     // Very small text (12px)
+              padding: '0.25rem 0.5rem',   // Minimal padding
+              minWidth: '80px',        // Very small minimum width
+              width: 'auto',
+              margin: '0.25rem 0'      // Minimal margins
+            }}
           <br />
           <span> Note, by RSVPing to our event, you consent to our </span>
           <a href={img('JHU_Photo-and-Video-Release_20192.pdf')} onClick={openPhotoRelease}>
@@ -274,7 +290,17 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     } else if (status === rsvpStatus) {
       return (
         <>
-          <button onClick={() => cancel(currentEvent)}>Cancel RSVP</button>
+          <GlowButton
+           onClick={() => cancel(currentEvent)}
+           style={{ 
+              fontSize: '14px',     // Very small text (12px)
+              padding: '0.25rem 0.5rem',   // Minimal padding
+              minWidth: '80px',        // Very small minimum width
+              width: 'auto',
+              margin: '0.25rem 0'      // Minimal margins
+            }}
+          >
+            Cancel RSVP</GlowButton>
         </>
       );
     }
@@ -330,9 +356,18 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
         <div className="mt-6">
           <div className="mb-4">
             <span className="font-semibold">Current Resume:</span>{' '}
-            <Button onClick={handleResumeDownload} className="text-blue-400 normal-case">
+            <GlowButton
+             onClick={handleResumeDownload}
+             style={{ 
+              fontSize: '14px',     // Very small text (12px)
+              padding: '0.25rem 0.5rem',   // Minimal padding
+              minWidth: '80px',        // Very small minimum width
+              width: 'auto',
+              margin: '0.25rem 0'      // Minimal margins
+            }}
+            >
               {oldResumeName}
-            </Button>
+            </GlowButton>
           </div>
 
           <form onSubmit={handleResumeSubmit}>
@@ -345,11 +380,18 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
                 className="block mt-2 text-sm text-gray-300"
               />
             </div>
-            <input
-              type="submit"
-              value="Submit"
-              className="mt-2 px-4 py-1 bg-white text-black rounded hover:bg-gray-100 cursor-pointer"
-            />
+            <GlowButton 
+              onClick={handleResumeSubmit}
+              style={{ 
+                fontSize: '0.875rem',
+                padding: '0.25rem 1rem',
+                minWidth: '80px',
+                width: 'auto',
+                margin: '0'
+              }}
+            >
+              Submit
+            </GlowButton>
             <Typography className="text-sm text-gray-300 mt-2">{resumeMsg}</Typography>
           </form>
         </div>
@@ -367,23 +409,38 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
               <tr className="border-t border-white/10">
                 <td className="py-2">{oldResumeName}</td>
                 <td className="py-2">
-                  <Button onClick={handleResumeDownload} className="px-4 py-1 bg-white text-black rounded hover:bg-gray-100 cursor-pointer">
+                  <GlowButton 
+                    onClick={handleResumeDownload}
+                    style={{ 
+                    fontSize: '14px',     // Very small text (12px)
+                    padding: '0.25rem 0.5rem',   // Minimal padding
+                    minWidth: '80px',        // Very small minimum width
+                    width: 'auto',
+                    margin: '0.25rem 0'      // Minimal margins
+                  }}>
                     Download
-                  </Button>
+                  </GlowButton>
                 </td>
                 <td className="py-2">
-                  <form onSubmit={handleResumeSubmit} className="space-y-2">
+                  <form onSubmit={handleResumeSubmit} className="space-y-2 mt-6">
                     <input
                       type="file"
                       name="file"
                       onChange={handleResumeFileChange}
                       className="text-sm text-gray-300"
                     />
-                    <input
-                      type="submit"
-                      value="Submit"
-                      className="px-4 py-1 bg-white text-black rounded hover:bg-gray-100 cursor-pointer"
-                    />
+                    <GlowButton 
+                      onClick={handleResumeSubmit}
+                      style={{ 
+                        fontSize: '0.875rem',
+                        padding: '0.25rem 1rem',
+                        minWidth: '80px',
+                        width: 'auto',
+                        margin: '0'
+                      }}
+                    >
+                      Submit
+                    </GlowButton>
                     <Typography className="text-sm text-gray-300">{resumeMsg}</Typography>
                   </form>
                 </td>
