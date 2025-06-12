@@ -15,4 +15,4 @@ class MongoDriver():
 
 
 # Global driver object
-db  = MongoDriver()
+db = MongoDriver()

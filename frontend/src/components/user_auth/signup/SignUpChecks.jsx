@@ -256,6 +256,16 @@ const SignUpChecks = ({
           </div>
         </Grid>
       </Grid>
+      <div className="w-full flex justify-end">
+        <a
+          className="underline text-white hover:text-blue-600 transition-colors duration-300"
+          href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+          target="_blank"
+          rel="noreferrer"
+        >
+          MLH code of conduct
+        </a>
+      </div>
 
       <Typography className="card-text-red">{profileSubmitMsg}</Typography>
 
