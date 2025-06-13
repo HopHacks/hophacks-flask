@@ -1,5 +1,4 @@
 import SectionHeader from '../ui/SectionHeader';
-import SectionSubtext from '../ui/SectionSubtext';
 import GlowButton from '../ui/GlowButton';
 
 export default function Register() {
@@ -17,7 +16,7 @@ export default function Register() {
           {
             img: 'hack-bird.png',
             label: 'Hack',
-            link: 'https://discord.gg/8V8wmCWUhH'
+            link: '/register/signup'
           },
           {
             img: 'volunteer-bird.png',
