@@ -13,7 +13,6 @@ const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
     setOptions(Object.values(response));
   }, []);
 
-  console.log(school);
   return (
     <Autocomplete
       id="schools"
