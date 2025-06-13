@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import {
   MenuItem,
-  Button,
   Typography,
   Grid,
   Checkbox,
@@ -12,7 +10,6 @@ import {
 } from '@material-ui/core';
 import PhoneInput from 'react-phone-number-input';
 import GlowButton from '../ui/GlowButton';
-
 
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
@@ -28,16 +25,12 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import '../../stylesheets/user_auth.css';
 
-
 const CHECKBOX_STYLE = {
   display: 'table',
   color: '#061A40',
   fontSize: 15,
   textAlign: 'left'
 };
-
-
-
 
 const CustomCheckbox = ({ checked, onChange, label }) => (
   <FormGroup style={{ display: 'initial' }}>
@@ -61,7 +54,6 @@ const CustomCheckbox = ({ checked, onChange, label }) => (
 
 //users with accounts from previous years
 export default function ProfileOldUser({
-  isMobile,
   step,
   setFirst_name,
   setLast_name,
@@ -103,7 +95,6 @@ export default function ProfileOldUser({
   country = '',
   linkedIn = ''
 }) {
-
   const img = (url) => `https://hophacks-website.s3.amazonaws.com/images/${url}`;
 
   const handleResumeCheckBox = (event) => {
@@ -126,7 +117,6 @@ export default function ProfileOldUser({
     e.preventDefault();
     window.open(url, '_blank');
   };
-
 
   const renderMenuItems = (items) =>
     items.map((item) => (
@@ -172,7 +162,7 @@ export default function ProfileOldUser({
 
   const SECONDARY_COLOR = '#29A0E2';
 
-  if (step === "update info") {
+  if (step === 'update info') {
     return (
       <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-screen py-20 px-4">
         <div className="w-full max-w-4xl mx-auto flex items-center justify-center">
@@ -181,7 +171,10 @@ export default function ProfileOldUser({
             style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
           >
             <div className="text-center mb-8">
-              <p className="font-bold text-white text-2xl mb-4" style={{ fontVariant: 'small-caps' }}>
+              <p
+                className="font-bold text-white text-2xl mb-4"
+                style={{ fontVariant: 'small-caps' }}
+              >
                 Welcome Back
               </p>
               <p className="text-blue-200 text-base mb-2">
@@ -191,16 +184,16 @@ export default function ProfileOldUser({
                 Be sure to fill out any new fields, and upload your latest resume on the next page.
               </p>
             </div>
-
             <Grid container spacing={4}>
-              <Grid item xs={12} md={6}>
+              {/* Row 1: Name fields */}
+              <Grid item xs={12} sm={6}>
                 <LabeledTextField
                   label="First Name"
                   value={first_name}
                   onChange={(e) => setFirst_name(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} sm={6}>
                 <LabeledTextField
                   label="Last Name"
                   value={last_name}
@@ -208,7 +201,8 @@ export default function ProfileOldUser({
                 />
               </Grid>
 
-              <Grid item xs={12} md={4}>
+              {/* Row 2: Personal info - 3 equal columns */}
+              <Grid item xs={12} sm={4}>
                 <LabeledTextField
                   label="Age"
                   type="number"
@@ -216,7 +210,7 @@ export default function ProfileOldUser({
                   onChange={(e) => setAge(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} sm={4}>
                 <LabeledTextField
                   label="Gender"
                   value={gender}
@@ -226,7 +220,7 @@ export default function ProfileOldUser({
                   {renderMenuItems(genders)}
                 </LabeledTextField>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} sm={4}>
                 <LabeledTextField
                   label="Ethnicity"
                   value={ethnicity}
@@ -237,32 +231,35 @@ export default function ProfileOldUser({
                 </LabeledTextField>
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              {/* Row 3: School and Level - better proportions */}
+              <Grid item xs={12} md={8}>
                 <FormControl required style={{ width: '100%' }}>
-                  <div className="w-full">
-                    <label className="block text-sm font-medium text-blue-200 mb-2">School</label>
-                    <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
-                      <SchoolAutocomplete school={school} setSchool={setSchool} />
-                    </div>
-                  </div>
+                  <SchoolAutocomplete school={school} setSchool={setSchool} />
                 </FormControl>
                 <FormHelperText style={{ color: SECONDARY_COLOR }}>
                   {"* If your school is not in the list, choose 'other schools'"}
                 </FormHelperText>
               </Grid>
+              <Grid item xs={12} md={4}>
+                <LabeledTextField
+                  label="Level of Study"
+                  value={grad}
+                  onChange={(e) => setGrad(e.target.value)}
+                  select
+                >
+                  {renderMenuItems(gradLevels)}
+                </LabeledTextField>
+              </Grid>
 
-              <Grid item xs={12} md={6}>
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-blue-200 mb-2">Major</label>
-                  <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
-                    <MajorAutocomplete major={major} setMajor={setMajor} />
-                  </div>
-                </div>
+              {/* Row 4: Major - full width */}
+              <Grid item xs={12}>
+                <MajorAutocomplete major={major} setMajor={setMajor} />
                 <FormHelperText style={{ color: SECONDARY_COLOR }}>
                   {"* If your major is not in the list, choose 'other majors'"}
                 </FormHelperText>
               </Grid>
 
+              {/* Conditional Other School field */}
               {school === 'Other Schools' && (
                 <Grid item xs={12}>
                   <LabeledTextField
@@ -273,31 +270,22 @@ export default function ProfileOldUser({
                 </Grid>
               )}
 
-              <Grid item xs={12} md={6}>
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-blue-200 mb-2">Country</label>
-                  <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
-                    <CountryAutocomplete setCountry={setCountry} country={country} />
-                  </div>
-                </div>
+              {/* Row 5: Country and Phone */}
+              <Grid item xs={12} sm={6}>
+                <CountryAutocomplete setCountry={setCountry} country={country} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <PhoneInput
+                  international
+                  withCountryCallingCode
+                  onChange={setPhone_number}
+                  inputComponent={PhoneNumber}
+                  value={phone_number}
+                />
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-blue-200 mb-2">Phone Number</label>
-                  <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
-                    <PhoneInput
-                      international
-                      withCountryCallingCode
-                      onChange={setPhone_number}
-                      inputComponent={PhoneNumber}
-                      value={phone_number}
-                    />
-                  </div>
-                </div>
-              </Grid>
-
-              <Grid item xs={12} md={4}>
+              {/* Row 6: Graduation info - 3 equal columns */}
+              <Grid item xs={12} sm={4}>
                 <LabeledTextField
                   label="Grad Month"
                   value={grad_month}
@@ -307,7 +295,7 @@ export default function ProfileOldUser({
                   {renderMenuItems(months)}
                 </LabeledTextField>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} sm={4}>
                 <LabeledTextField
                   label="Grad Year"
                   value={grad_year}
@@ -317,18 +305,15 @@ export default function ProfileOldUser({
                   {renderMenuItems(years)}
                 </LabeledTextField>
               </Grid>
-
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} sm={4}>
                 <LabeledTextField
-                    label="Linkedin URL"
-                    value={linkedIn}
-                    onChange={(e) => setLinkedIn(e.target.value)}
+                  label="LinkedIn URL"
+                  value={linkedIn}
+                  onChange={(e) => setLinkedIn(e.target.value)}
                 />
               </Grid>
             </Grid>
-
             <Typography className="text-red-400 mt-4">{profileSubmitMsg}</Typography>
-
             <div
               style={{
                 display: 'flex',
@@ -345,7 +330,7 @@ export default function ProfileOldUser({
         </div>
       </div>
     );
-  } else if (step === "checks") {
+  } else if (step === 'checks') {
     return (
       <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-screen py-20 px-4">
         <div className="w-full max-w-4xl mx-auto flex items-center justify-center">
@@ -354,7 +339,10 @@ export default function ProfileOldUser({
             style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
           >
             <div className="text-center mb-8">
-              <p className="font-bold text-white text-2xl mb-4" style={{ fontVariant: 'small-caps' }}>
+              <p
+                className="font-bold text-white text-2xl mb-4"
+                style={{ fontVariant: 'small-caps' }}
+              >
                 Terms & Conditions
               </p>
               <p className="text-blue-200 text-base mb-2">
@@ -370,8 +358,8 @@ export default function ProfileOldUser({
                     onChange={handleResumeCheckBox}
                     label={
                       <>
-                        * I authorize HopHacks to send my resume to our event sponsors for recruiting
-                        purposes. I also consent to this
+                        * I authorize HopHacks to send my resume to our event sponsors for
+                        recruiting purposes. I also consent to this
                         <a
                           className="underline text-blue-600"
                           href={img('JHU_Photo-and-Video-Release_20192.pdf')}
@@ -409,8 +397,8 @@ export default function ProfileOldUser({
                     onChange={handleLogisticsCheckBox}
                     label={
                       <>
-                        * I authorize you to share my application with MLH for administration in line with
-                        the
+                        * I authorize you to share my application with MLH for administration in
+                        line with the
                         <a
                           className="underline text-blue-600"
                           href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
@@ -450,8 +438,8 @@ export default function ProfileOldUser({
                     onChange={handleCommunicationCheckBox}
                     label={
                       <>
-                        (Optional) I authorize MLH to send me occasional emails about relevant events and
-                        opportunities.
+                        (Optional) I authorize MLH to send me occasional emails about relevant
+                        events and opportunities.
                       </>
                     }
                   />
@@ -489,6 +477,4 @@ export default function ProfileOldUser({
       </div>
     );
   }
-
-  
 }

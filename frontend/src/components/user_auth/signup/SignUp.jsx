@@ -9,10 +9,8 @@ import SignUpImage from './SignUpImage'; //added image page
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
 import GlowButton from '../../ui/GlowButton';
-import { useHistory } from 'react-router-dom';
 
 function SignUp(props) {
-  let history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');

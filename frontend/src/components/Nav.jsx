@@ -13,9 +13,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { withAuthProps } from '../util/auth';
 import { makeStyles } from '@material-ui/core/styles';
 
-
-
-
 const useStyles = makeStyles({
   // AppBar fixed to the top with full width
   appBar: {
@@ -111,13 +108,12 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
 
   const handleLogout = async () => {
     try {
-      await logout();  // Calls your AuthProvider's logout
-      window.location.href = '/';  // Refresh to root page
+      await logout(); // Calls your AuthProvider's logout
+      window.location.href = '/'; // Refresh to root page
     } catch (err) {
       console.error('Logout failed:', err);
     }
   };
-
 
   // Update isMobile on window resize.
   useEffect(() => {
@@ -287,11 +283,15 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: 'auto' }}>
               {isLoggedIn ? (
                 <Button onClick={handleLogout} className={classes.navBtn}>
-                  <Typography variant="body2" className={classes.title}>Logout</Typography>
+                  <Typography variant="body2" className={classes.title}>
+                    Logout
+                  </Typography>
                 </Button>
               ) : (
                 <Button component={Link} to="/login" className={classes.navBtn}>
-                  <Typography variant="body2" className={classes.title}>Login</Typography>
+                  <Typography variant="body2" className={classes.title}>
+                    Login
+                  </Typography>
                 </Button>
               )}
               <a
@@ -299,6 +299,7 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
                 className={classes.mlhBanner}
                 href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=blue"
                 target="_blank"
+                rel="noreferrer"
               >
                 <img
                   src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-blue.svg"
@@ -334,14 +335,25 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
           />
         </Button>
         <div className={classes.navItemsContainer}>{navItems}</div>
-        <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', paddingRight: '110px' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginLeft: 'auto',
+            paddingRight: '110px'
+          }}
+        >
           {isLoggedIn ? (
             <Button onClick={handleLogout} className={classes.navBtn}>
-              <Typography variant="body2" className={classes.title}>Logout</Typography>
+              <Typography variant="body2" className={classes.title}>
+                Logout
+              </Typography>
             </Button>
           ) : (
             <Button component={Link} to="/register/login" className={classes.navBtn}>
-              <Typography variant="body2" className={classes.title}>Login</Typography>
+              <Typography variant="body2" className={classes.title}>
+                Login
+              </Typography>
             </Button>
           )}
         </div>
@@ -350,6 +362,7 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
           className={classes.mlhBanner}
           href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=blue"
           target="_blank"
+          rel="noreferrer"
         >
           <img
             src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-blue.svg"
@@ -357,7 +370,6 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
             className="w-full"
           />
         </a>
-
       </Toolbar>
     </AppBar>
   );

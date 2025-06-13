@@ -14,7 +14,7 @@ const Profile = function Profile(props) {
     axios.defaults.baseURL = myVariable;
   }
 
-  const [step, setStep] = useState("update info");
+  const [step, setStep] = useState('update info');
 
   //display database
   const [profile, setProfile] = useState([]);
@@ -58,11 +58,10 @@ const Profile = function Profile(props) {
   }
 
   async function handleProfileNext() {
-
-    if (step === "update info") {
+    if (step === 'update info') {
       if (first_name.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid first name.');
-      return;
+        setProfileSubmitMsg('* Please enter a valid first name.');
+        return;
       }
       if (last_name.length === 0) {
         setProfileSubmitMsg('* Please enter a valid last name.');
@@ -120,10 +119,8 @@ const Profile = function Profile(props) {
         return;
       }
 
-      setStep("checks")
-    } else if (step === "checks") {
-
-
+      setStep('checks');
+    } else if (step === 'checks') {
       if (!resumeChecked) {
         setProfileSubmitMsg('* Please agree to the resume terms.');
         return;
@@ -139,38 +136,37 @@ const Profile = function Profile(props) {
         return;
       }
 
-
-    const newProfile = {
-      first_name: first_name,
-      last_name: last_name,
-      gender: gender,
-      age: age,
-      major: major,
-      phone_number: phone_number,
-      school: school,
-      otherSchool: otherSchool,
-      ethnicity: ethnicity,
-      grad: grad,
-      grad_month: grad_month,
-      grad_year: grad_year,
-      country: country,
-      first_hackathon: first_hackathon,
-      first_hophacks: first_hophacks,
-      learn_about_us: learn_about_us,
-      linkedIn: linkedIn,
-      is_jhu: school === 'Johns Hopkins University' ? true : false
-    };
-    if (!props.isLoggedIn) return;
-    try {
-      await axios.post('/api/accounts/profile/update', {
-        profile: newProfile
-      });
-    } catch (e) {
-      console.log('fail to update');
+      const newProfile = {
+        first_name: first_name,
+        last_name: last_name,
+        gender: gender,
+        age: age,
+        major: major,
+        phone_number: phone_number,
+        school: school,
+        otherSchool: otherSchool,
+        ethnicity: ethnicity,
+        grad: grad,
+        grad_month: grad_month,
+        grad_year: grad_year,
+        country: country,
+        first_hackathon: first_hackathon,
+        first_hophacks: first_hophacks,
+        learn_about_us: learn_about_us,
+        linkedIn: linkedIn,
+        is_jhu: school === 'Johns Hopkins University' ? true : false
+      };
+      if (!props.isLoggedIn) return;
+      try {
+        await axios.post('/api/accounts/profile/update', {
+          profile: newProfile
+        });
+      } catch (e) {
+        console.log('fail to update');
+      }
+      await axios.post('/api/accounts/updatedAccount/post');
+      getProfileUpToDate();
     }
-    await axios.post('/api/accounts/updatedAccount/post');
-    getProfileUpToDate();
-  }
   }
 
   useEffect(() => {
