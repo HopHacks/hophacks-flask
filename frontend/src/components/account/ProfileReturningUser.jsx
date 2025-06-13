@@ -57,6 +57,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   const [first_hackathon, setFirst_hackathon] = useState('');
   const [first_hophacks, setFirst_hophacks] = useState('');
   const [learn_about_us, setLearn_about_us] = useState('');
+  const [linkedIn, setLinkedIn] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [sendConfimationMsg, setSendConfimationMsg] = useState('');
   const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
@@ -128,6 +129,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     setFirst_hophacks(response.data.profile.first_hophacks);
     setLearn_about_us(response.data.profile.learn_about_us);
     setCountry(response.data.profile.country);
+    setLinkedIn(response.data.linkedIn || '');
   }
 
   async function getStatus() {
@@ -164,6 +166,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     profile.learn_about_us = learn_about_us;
     profile.country = country;
     profile.otherSchool = otherSchool;
+    profile.linkedIn = linkedIn;
     try {
       await axios.post('/api/accounts/profile/update', {
         profile: profile
@@ -736,6 +739,20 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     </form>
   );
 
+  const LinkedInForm = (
+    <div>
+      <form>
+        <TextField
+          id="standard-basic"
+          variant="outlined"
+          label="LinkedIn URL"
+          defaultValue={profile.linkedIn}
+          onChange={(e) => setLinkedIn(e.target.value)}
+        />
+      </form>
+    </div>
+  );
+
   const ProfileCard = (
     <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0 md:space-x-6">
       <div className=" w-full text-white">
@@ -826,6 +843,14 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
             handleProfileSave={handleProfileSave}
             primaryText="Phone Number"
             secondaryText={profile.phone_number}
+          />
+
+          <FormDialog
+            title="Edit LinkedIn Profile URL"
+            form={LinkedInForm}
+            handleProfileSave={handleProfileSave}
+            primaryText="LinkedIn URL"
+            secondaryText={profile.linkedIn}
           />
 
           <FormDialog

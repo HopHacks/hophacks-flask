@@ -80,10 +80,18 @@ export default function ProfileOldUser({
   setGrad_month,
   setGrad_year,
   setCountry,
+  setLinkedIn,
   profileSubmitMsg,
   enabledButton,
   handleProfileNext,
-  // Props that exist in the original but not in SignUpProfile
+  resumeChecked,
+  setResumeChecked,
+  conductCodeChecked,
+  setConductCodeChecked,
+  eventLogisticsChecked,
+  setEventLogisticsChecked,
+  communicationChecked,
+  setCommunicationChecked,
   first_name = '',
   last_name = '',
   age = '',
@@ -92,15 +100,11 @@ export default function ProfileOldUser({
   grad = '',
   grad_month = '',
   grad_year = '',
-  country = ''
+  country = '',
+  linkedIn = ''
 }) {
 
   const img = (url) => `https://hophacks-website.s3.amazonaws.com/images/${url}`;
-
-  const [resumeChecked, setResumeChecked] = useState(false);
-  const [conductCodeChecked, setConductCodeChecked] = useState(false);
-  const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
-  const [communicationChecked, setCommunicationChecked] = useState(false);
 
   const handleResumeCheckBox = (event) => {
     setResumeChecked(event.target.checked);
@@ -295,16 +299,6 @@ export default function ProfileOldUser({
 
               <Grid item xs={12} md={4}>
                 <LabeledTextField
-                  label="Level of Study"
-                  value={grad}
-                  onChange={(e) => setGrad(e.target.value)}
-                  select
-                >
-                  {renderMenuItems(gradLevels)}
-                </LabeledTextField>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <LabeledTextField
                   label="Grad Month"
                   value={grad_month}
                   onChange={(e) => setGrad_month(e.target.value)}
@@ -322,6 +316,14 @@ export default function ProfileOldUser({
                 >
                   {renderMenuItems(years)}
                 </LabeledTextField>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <LabeledTextField
+                    label="Linkedin URL"
+                    value={linkedIn}
+                    onChange={(e) => setLinkedIn(e.target.value)}
+                />
               </Grid>
             </Grid>
 
@@ -456,6 +458,8 @@ export default function ProfileOldUser({
                 </div>
               </Grid>
             </Grid>
+
+            <Typography className="text-red-400 mt-4">{profileSubmitMsg}</Typography>
 
             <div className="w-full flex justify-end mt-8">
               <a

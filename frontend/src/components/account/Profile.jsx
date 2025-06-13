@@ -37,8 +37,13 @@ const Profile = function Profile(props) {
   const [learn_about_us, setLearn_about_us] = useState('');
   const [profileSubmitMsg, setProfileSubmitMsg] = useState('');
   const [enabledButton, setEnabledButton] = useState(true); //TMP get rid of setEnabledButton
-
+  const [linkedIn, setLinkedIn] = useState('');
   const [profileUpToDate, setProfileUpToDate] = useState(false);
+
+  const [resumeChecked, setResumeChecked] = useState(false);
+  const [conductCodeChecked, setConductCodeChecked] = useState(false);
+  const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
+  const [communicationChecked, setCommunicationChecked] = useState(false);
 
   async function getProfileUpToDate() {
     /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
@@ -110,38 +115,62 @@ const Profile = function Profile(props) {
         return;
       }
 
+      if (linkedIn.length === 0) {
+        setProfileSubmitMsg('* Please enter your linkedin link.');
+        return;
+      }
+
       setStep("checks")
     } else if (step === "checks") {
-        const newProfile = {
-        first_name: first_name,
-        last_name: last_name,
-        gender: gender,
-        age: age,
-        major: major,
-        phone_number: phone_number,
-        school: school,
-        otherSchool: otherSchool,
-        ethnicity: ethnicity,
-        grad: grad,
-        grad_month: grad_month,
-        grad_year: grad_year,
-        country: country,
-        first_hackathon: first_hackathon,
-        first_hophacks: first_hophacks,
-        learn_about_us: learn_about_us,
-        is_jhu: school === 'Johns Hopkins University' ? true : false
-      };
-      if (!props.isLoggedIn) return;
-      try {
-        await axios.post('/api/accounts/profile/update', {
-          profile: newProfile
-        });
-      } catch (e) {
-        console.log('fail to update');
+
+
+      if (!resumeChecked) {
+        setProfileSubmitMsg('* Please agree to the resume terms.');
+        return;
       }
-      await axios.post('/api/accounts/updatedAccount/post');
-      getProfileUpToDate();
+
+      if (!conductCodeChecked) {
+        setProfileSubmitMsg('* Please read the MLH Code of Conduct.');
+        return;
+      }
+
+      if (!eventLogisticsChecked) {
+        setProfileSubmitMsg('* Please read the MLH Terms and Conditions and Privacy Policy.');
+        return;
+      }
+
+
+    const newProfile = {
+      first_name: first_name,
+      last_name: last_name,
+      gender: gender,
+      age: age,
+      major: major,
+      phone_number: phone_number,
+      school: school,
+      otherSchool: otherSchool,
+      ethnicity: ethnicity,
+      grad: grad,
+      grad_month: grad_month,
+      grad_year: grad_year,
+      country: country,
+      first_hackathon: first_hackathon,
+      first_hophacks: first_hophacks,
+      learn_about_us: learn_about_us,
+      linkedIn: linkedIn,
+      is_jhu: school === 'Johns Hopkins University' ? true : false
+    };
+    if (!props.isLoggedIn) return;
+    try {
+      await axios.post('/api/accounts/profile/update', {
+        profile: newProfile
+      });
+    } catch (e) {
+      console.log('fail to update');
     }
+    await axios.post('/api/accounts/updatedAccount/post');
+    getProfileUpToDate();
+  }
   }
 
   useEffect(() => {
@@ -169,6 +198,7 @@ const Profile = function Profile(props) {
     setFirst_hophacks(response.data.profile.first_hophacks);
     setLearn_about_us(response.data.profile.learn_about_us);
     setCountry(response.data.profile.country);
+    setLinkedIn(response.data.profile.linkedIn || '');
   }
 
   if (!profileUpToDate) {
@@ -193,6 +223,7 @@ const Profile = function Profile(props) {
         setFirst_hophacks={setFirst_hophacks}
         setLearn_about_us={setLearn_about_us}
         setOtherSchool={setOtherSchool}
+        setLinkedIn={setLinkedIn}
         first_name={first_name}
         last_name={last_name}
         gender={gender}
@@ -205,6 +236,7 @@ const Profile = function Profile(props) {
         grad_month={grad_month}
         grad_year={grad_year}
         country={country}
+        linkedIn={linkedIn}
         first_hackathon={first_hackathon}
         first_hophacks={first_hophacks}
         learn_about_us={learn_about_us}
@@ -214,6 +246,14 @@ const Profile = function Profile(props) {
         otherSchool={otherSchool}
         handleProfileNext={handleProfileNext}
         setEnabledButton={setEnabledButton}
+        resumeChecked={resumeChecked}
+        setResumeChecked={setResumeChecked}
+        conductCodeChecked={conductCodeChecked}
+        setConductCodeChecked={setConductCodeChecked}
+        eventLogisticsChecked={eventLogisticsChecked}
+        setEventLogisticsChecked={setEventLogisticsChecked}
+        communicationChecked={communicationChecked}
+        setCommunicationChecked={setCommunicationChecked}
       />
     );
   } else {
