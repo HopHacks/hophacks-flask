@@ -133,8 +133,8 @@ const SignUpChecks = ({
           </Grid>
           <Grid item xs={12} md={6}>
             <LabeledTextField
-              label="Link to LinkedIn Profile (Optional)"
-              required={false}
+              label="Link to LinkedIn Profile"
+              required={true}
               onChange={(e) => setLinkedIn(e.target.value)}
             />
           </Grid>
@@ -157,7 +157,7 @@ const SignUpChecks = ({
               Upload Resume*
             </Button>
             {resumeFile && (
-              <span style={{ marginLeft: isMobile ? '0' : '1rem', color: '#061A40' }}>
+              <span style={{ marginLeft: isMobile ? '0' : '1rem', color: '#FFFFFF' }}>
                 Uploaded: {resumeFile.name}
               </span>
             )}

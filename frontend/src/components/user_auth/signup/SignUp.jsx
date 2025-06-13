@@ -219,6 +219,11 @@ function SignUp(props) {
       return;
     }
 
+    if (linkedIn.length === 0) {
+      setProfileSubmitMsg('* Please enter your LinkedIn profile url.');
+      return;
+    }
+
     if (!resumeChecked || resumeFile === '') {
       setProfileSubmitMsg('* Please upload your resume and agree to the terms.');
       return;
