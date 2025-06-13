@@ -1,13 +1,25 @@
-import React from 'react';
-import { MenuItem, Typography, Grid, FormControl, FormHelperText } from '@material-ui/core';
+import { useState } from 'react';
+import {
+  MenuItem,
+  Button,
+  Typography,
+  Grid,
+  Checkbox,
+  FormGroup,
+  FormControl,
+  FormHelperText,
+  FormControlLabel
+} from '@material-ui/core';
 import PhoneInput from 'react-phone-number-input';
 import GlowButton from '../ui/GlowButton';
+
 
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
 import CountryAutocomplete from './CountryAutocomplete';
 import PhoneNumber from './PhoneNumber';
 import LabeledTextField from '../ui/LabeledTextField';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 //import '../stylesheets/user_auth.css';
 
@@ -16,9 +28,41 @@ import LabeledTextField from '../ui/LabeledTextField';
 
 import '../../stylesheets/user_auth.css';
 
+
+const CHECKBOX_STYLE = {
+  display: 'table',
+  color: '#061A40',
+  fontSize: 15,
+  textAlign: 'left'
+};
+
+
+
+
+const CustomCheckbox = ({ checked, onChange, label }) => (
+  <FormGroup style={{ display: 'initial' }}>
+    <FormControlLabel
+      style={{ display: 'table' }}
+      control={
+        <div style={{ display: 'table-cell' }}>
+          <Checkbox
+            checked={checked}
+            onChange={onChange}
+            checkedIcon={<CheckCircleIcon style={{ color: '#57A773' }} />}
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+            size="small"
+          />
+        </div>
+      }
+      label={<div style={CHECKBOX_STYLE}>{label}</div>}
+    />
+  </FormGroup>
+);
+
 //users with accounts from previous years
 export default function ProfileOldUser({
   isMobile,
+  step,
   setFirst_name,
   setLast_name,
   setAge,
@@ -50,6 +94,36 @@ export default function ProfileOldUser({
   grad_year = '',
   country = ''
 }) {
+
+  const img = (url) => `https://hophacks-website.s3.amazonaws.com/images/${url}`;
+
+  const [resumeChecked, setResumeChecked] = useState(false);
+  const [conductCodeChecked, setConductCodeChecked] = useState(false);
+  const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
+  const [communicationChecked, setCommunicationChecked] = useState(false);
+
+  const handleResumeCheckBox = (event) => {
+    setResumeChecked(event.target.checked);
+  };
+
+  const handleConductCheckBox = (event) => {
+    setConductCodeChecked(event.target.checked);
+  };
+
+  const handleLogisticsCheckBox = (event) => {
+    setEventLogisticsChecked(event.target.checked);
+  };
+
+  const handleCommunicationCheckBox = (event) => {
+    setCommunicationChecked(event.target.checked);
+  };
+
+  const openLink = (url) => (e) => {
+    e.preventDefault();
+    window.open(url, '_blank');
+  };
+
+
   const renderMenuItems = (items) =>
     items.map((item) => (
       <MenuItem key={item} value={item}>
@@ -94,178 +168,323 @@ export default function ProfileOldUser({
 
   const SECONDARY_COLOR = '#29A0E2';
 
-  return (
-    <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-screen py-20 px-4">
-      <div className="w-full max-w-4xl mx-auto flex items-center justify-center">
-        <div
-          className="w-full max-w-[800px] flex flex-col rounded-2xl p-10 shadow-2xl"
-          style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
-        >
-          <div className="text-center mb-8">
-            <p className="font-bold text-white text-2xl mb-4" style={{ fontVariant: 'small-caps' }}>
-              Welcome Back
-            </p>
-            <p className="text-blue-200 text-base mb-2">
-              Please verify all of your information from last year is still accurate!
-            </p>
-            <p className="text-blue-300 text-sm">
-              Be sure to fill out any new fields, and upload your latest resume on the next page.
-            </p>
-          </div>
+  if (step === "update info") {
+    return (
+      <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-screen py-20 px-4">
+        <div className="w-full max-w-4xl mx-auto flex items-center justify-center">
+          <div
+            className="w-full max-w-[800px] flex flex-col rounded-2xl p-10 shadow-2xl"
+            style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
+          >
+            <div className="text-center mb-8">
+              <p className="font-bold text-white text-2xl mb-4" style={{ fontVariant: 'small-caps' }}>
+                Welcome Back
+              </p>
+              <p className="text-blue-200 text-base mb-2">
+                Please verify all of your information from last year is still accurate!
+              </p>
+              <p className="text-blue-300 text-sm">
+                Be sure to fill out any new fields, and upload your latest resume on the next page.
+              </p>
+            </div>
 
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
-              <LabeledTextField
-                label="First Name"
-                value={first_name}
-                onChange={(e) => setFirst_name(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <LabeledTextField
-                label="Last Name"
-                value={last_name}
-                onChange={(e) => setLast_name(e.target.value)}
-              />
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <LabeledTextField
-                label="Age"
-                type="number"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabeledTextField
-                label="Gender"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                select
-              >
-                {renderMenuItems(genders)}
-              </LabeledTextField>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabeledTextField
-                label="Ethnicity"
-                value={ethnicity}
-                onChange={(e) => setEthnicity(e.target.value)}
-                select
-              >
-                {renderMenuItems(ethnicities)}
-              </LabeledTextField>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <FormControl required style={{ width: '100%' }}>
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-blue-200 mb-2">School</label>
-                  <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
-                    <SchoolAutocomplete school={school} setSchool={setSchool} />
-                  </div>
-                </div>
-              </FormControl>
-              <FormHelperText style={{ color: SECONDARY_COLOR }}>
-                {"* If your school is not in the list, choose 'other schools'"}
-              </FormHelperText>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <div className="w-full">
-                <label className="block text-sm font-medium text-blue-200 mb-2">Major</label>
-                <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
-                  <MajorAutocomplete major={major} setMajor={setMajor} />
-                </div>
-              </div>
-              <FormHelperText style={{ color: SECONDARY_COLOR }}>
-                {"* If your major is not in the list, choose 'other majors'"}
-              </FormHelperText>
-            </Grid>
-
-            {school === 'Other Schools' && (
-              <Grid item xs={12}>
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={6}>
                 <LabeledTextField
-                  label="Other School"
-                  value={otherSchool}
-                  onChange={(e) => setOtherSchool(e.target.value)}
+                  label="First Name"
+                  value={first_name}
+                  onChange={(e) => setFirst_name(e.target.value)}
                 />
               </Grid>
-            )}
+              <Grid item xs={12} md={6}>
+                <LabeledTextField
+                  label="Last Name"
+                  value={last_name}
+                  onChange={(e) => setLast_name(e.target.value)}
+                />
+              </Grid>
 
-            <Grid item xs={12} md={6}>
-              <div className="w-full">
-                <label className="block text-sm font-medium text-blue-200 mb-2">Country</label>
-                <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
-                  <CountryAutocomplete setCountry={setCountry} country={country} />
+              <Grid item xs={12} md={4}>
+                <LabeledTextField
+                  label="Age"
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <LabeledTextField
+                  label="Gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  select
+                >
+                  {renderMenuItems(genders)}
+                </LabeledTextField>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <LabeledTextField
+                  label="Ethnicity"
+                  value={ethnicity}
+                  onChange={(e) => setEthnicity(e.target.value)}
+                  select
+                >
+                  {renderMenuItems(ethnicities)}
+                </LabeledTextField>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <FormControl required style={{ width: '100%' }}>
+                  <div className="w-full">
+                    <label className="block text-sm font-medium text-blue-200 mb-2">School</label>
+                    <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
+                      <SchoolAutocomplete school={school} setSchool={setSchool} />
+                    </div>
+                  </div>
+                </FormControl>
+                <FormHelperText style={{ color: SECONDARY_COLOR }}>
+                  {"* If your school is not in the list, choose 'other schools'"}
+                </FormHelperText>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <div className="w-full">
+                  <label className="block text-sm font-medium text-blue-200 mb-2">Major</label>
+                  <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
+                    <MajorAutocomplete major={major} setMajor={setMajor} />
+                  </div>
                 </div>
-              </div>
-            </Grid>
+                <FormHelperText style={{ color: SECONDARY_COLOR }}>
+                  {"* If your major is not in the list, choose 'other majors'"}
+                </FormHelperText>
+              </Grid>
 
-            <Grid item xs={12} md={6}>
-              <div className="w-full">
-                <label className="block text-sm font-medium text-blue-200 mb-2">Phone Number</label>
-                <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
-                  <PhoneInput
-                    international
-                    withCountryCallingCode
-                    onChange={setPhone_number}
-                    inputComponent={PhoneNumber}
-                    value={phone_number}
+              {school === 'Other Schools' && (
+                <Grid item xs={12}>
+                  <LabeledTextField
+                    label="Other School"
+                    value={otherSchool}
+                    onChange={(e) => setOtherSchool(e.target.value)}
                   />
+                </Grid>
+              )}
+
+              <Grid item xs={12} md={6}>
+                <div className="w-full">
+                  <label className="block text-sm font-medium text-blue-200 mb-2">Country</label>
+                  <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
+                    <CountryAutocomplete setCountry={setCountry} country={country} />
+                  </div>
                 </div>
-              </div>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <div className="w-full">
+                  <label className="block text-sm font-medium text-blue-200 mb-2">Phone Number</label>
+                  <div className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg">
+                    <PhoneInput
+                      international
+                      withCountryCallingCode
+                      onChange={setPhone_number}
+                      inputComponent={PhoneNumber}
+                      value={phone_number}
+                    />
+                  </div>
+                </div>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <LabeledTextField
+                  label="Level of Study"
+                  value={grad}
+                  onChange={(e) => setGrad(e.target.value)}
+                  select
+                >
+                  {renderMenuItems(gradLevels)}
+                </LabeledTextField>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <LabeledTextField
+                  label="Grad Month"
+                  value={grad_month}
+                  onChange={(e) => setGrad_month(e.target.value)}
+                  select
+                >
+                  {renderMenuItems(months)}
+                </LabeledTextField>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <LabeledTextField
+                  label="Grad Year"
+                  value={grad_year}
+                  onChange={(e) => setGrad_year(e.target.value)}
+                  select
+                >
+                  {renderMenuItems(years)}
+                </LabeledTextField>
+              </Grid>
             </Grid>
 
-            <Grid item xs={12} md={4}>
-              <LabeledTextField
-                label="Level of Study"
-                value={grad}
-                onChange={(e) => setGrad(e.target.value)}
-                select
-              >
-                {renderMenuItems(gradLevels)}
-              </LabeledTextField>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabeledTextField
-                label="Grad Month"
-                value={grad_month}
-                onChange={(e) => setGrad_month(e.target.value)}
-                select
-              >
-                {renderMenuItems(months)}
-              </LabeledTextField>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabeledTextField
-                label="Grad Year"
-                value={grad_year}
-                onChange={(e) => setGrad_year(e.target.value)}
-                select
-              >
-                {renderMenuItems(years)}
-              </LabeledTextField>
-            </Grid>
-          </Grid>
+            <Typography className="text-red-400 mt-4">{profileSubmitMsg}</Typography>
 
-          <Typography className="text-red-400 mt-4">{profileSubmitMsg}</Typography>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              marginTop: '2rem'
-            }}
-          >
-            <GlowButton onClick={handleProfileNext} disabled={!enabledButton}>
-              Next
-            </GlowButton>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                marginTop: '2rem'
+              }}
+            >
+              <GlowButton onClick={handleProfileNext} disabled={!enabledButton}>
+                Next
+              </GlowButton>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else if (step === "checks") {
+    return (
+      <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-screen py-20 px-4">
+        <div className="w-full max-w-4xl mx-auto flex items-center justify-center">
+          <div
+            className="w-full max-w-[800px] flex flex-col rounded-2xl p-10 shadow-2xl"
+            style={{ backgroundColor: 'rgba(0, 29, 76, 0.9)' }}
+          >
+            <div className="text-center mb-8">
+              <p className="font-bold text-white text-2xl mb-4" style={{ fontVariant: 'small-caps' }}>
+                Terms & Conditions
+              </p>
+              <p className="text-blue-200 text-base mb-2">
+                Please review and accept the following terms to continue.
+              </p>
+            </div>
+
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <div className="text-field">
+                  <CustomCheckbox
+                    checked={resumeChecked}
+                    onChange={handleResumeCheckBox}
+                    label={
+                      <>
+                        * I authorize HopHacks to send my resume to our event sponsors for recruiting
+                        purposes. I also consent to this
+                        <a
+                          className="underline text-blue-600"
+                          href={img('JHU_Photo-and-Video-Release_20192.pdf')}
+                          onClick={openLink(img('JHU_Photo-and-Video-Release_20192.pdf'))}
+                        >
+                          {' '}
+                          photo release form
+                        </a>
+                        .
+                      </>
+                    }
+                  />
+                  <CustomCheckbox
+                    checked={conductCodeChecked}
+                    onChange={handleConductCheckBox}
+                    label={
+                      <>
+                        * I have read and understand the
+                        <a
+                          className="underline text-blue-600"
+                          href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+                          onClick={openLink(
+                            'https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md'
+                          )}
+                        >
+                          {' '}
+                          MLH Code of Conduct
+                        </a>
+                        .
+                      </>
+                    }
+                  />
+                  <CustomCheckbox
+                    checked={eventLogisticsChecked}
+                    onChange={handleLogisticsCheckBox}
+                    label={
+                      <>
+                        * I authorize you to share my application with MLH for administration in line with
+                        the
+                        <a
+                          className="underline text-blue-600"
+                          href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                          onClick={openLink(
+                            'https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md'
+                          )}
+                        >
+                          {' '}
+                          MLH Privacy Policy
+                        </a>
+                        . I further agree to the
+                        <a
+                          href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                          onClick={openLink(
+                            'https://github.com/MLH/mlh-policies/blob/main/contest-terms.md'
+                          )}
+                        >
+                          {' '}
+                          MLH Terms
+                        </a>{' '}
+                        and
+                        <a
+                          href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                          onClick={openLink(
+                            'https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md'
+                          )}
+                        >
+                          {' '}
+                          Privacy Policy
+                        </a>
+                        .
+                      </>
+                    }
+                  />
+                  <CustomCheckbox
+                    checked={communicationChecked}
+                    onChange={handleCommunicationCheckBox}
+                    label={
+                      <>
+                        (Optional) I authorize MLH to send me occasional emails about relevant events and
+                        opportunities.
+                      </>
+                    }
+                  />
+                </div>
+              </Grid>
+            </Grid>
+
+            <div className="w-full flex justify-end mt-8">
+              <a
+                className="underline text-white hover:text-blue-600 transition-colors duration-300"
+                href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+                target="_blank"
+                rel="noreferrer"
+              >
+                MLH code of conduct
+              </a>
+            </div>
+
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                marginTop: '2rem'
+              }}
+            >
+              <GlowButton onClick={handleProfileNext} disabled={!enabledButton}>
+                Next
+              </GlowButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  
 }

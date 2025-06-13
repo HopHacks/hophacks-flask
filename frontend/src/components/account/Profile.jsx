@@ -14,6 +14,8 @@ const Profile = function Profile(props) {
     axios.defaults.baseURL = myVariable;
   }
 
+  const [step, setStep] = useState("update info");
+
   //display database
   const [profile, setProfile] = useState([]);
   //edit
@@ -51,90 +53,95 @@ const Profile = function Profile(props) {
   }
 
   async function handleProfileNext() {
-    if (first_name.length === 0) {
+
+    if (step === "update info") {
+      if (first_name.length === 0) {
       setProfileSubmitMsg('* Please enter a valid first name.');
       return;
-    }
-    if (last_name.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid last name.');
-      return;
-    }
-    if (gender.length === 0) {
-      setProfileSubmitMsg('* Please select a gender.');
-      return;
-    }
-    if (major.length === 0) {
-      setProfileSubmitMsg('* Please select a major.');
-      return;
-    }
-    if (country === undefined || country.length === 0) {
-      setProfileSubmitMsg('* Please select a country.');
-      return;
-    }
+      }
+      if (last_name.length === 0) {
+        setProfileSubmitMsg('* Please enter a valid last name.');
+        return;
+      }
+      if (gender.length === 0) {
+        setProfileSubmitMsg('* Please select a gender.');
+        return;
+      }
+      if (major.length === 0) {
+        setProfileSubmitMsg('* Please select a major.');
+        return;
+      }
+      if (country === undefined || country.length === 0) {
+        setProfileSubmitMsg('* Please select a country.');
+        return;
+      }
 
-    if (school.length === 0) {
-      setProfileSubmitMsg('* Please select a school.');
-      return;
-    }
-    if (school === 'Other Schools' && otherSchool.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid school.');
-      return;
-    }
-    if (ethnicity.length === 0) {
-      setProfileSubmitMsg('* Please select an ethnicity.');
-      return;
-    }
-    //TODO: not sure why there are two phone number checks
-    if (phone_number === undefined || phone_number.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid phone number.');
-      return;
-    }
-    if (!isValidPhoneNumber(phone_number)) {
-      setProfileSubmitMsg('* Please enter a valid phone number.');
-      return;
-    }
-    if (grad.length === 0) {
-      setProfileSubmitMsg('* Please select a valid graduation program.');
-      return;
-    }
-    if (grad_month.length === 0) {
-      setProfileSubmitMsg('* Please select a valid graduation month.');
-      return;
-    }
-    if (grad_year.length === 0) {
-      setProfileSubmitMsg('* Please select a valid graduation year.');
-      return;
-    }
+      if (school.length === 0) {
+        setProfileSubmitMsg('* Please select a school.');
+        return;
+      }
+      if (school === 'Other Schools' && otherSchool.length === 0) {
+        setProfileSubmitMsg('* Please enter a valid school.');
+        return;
+      }
+      if (ethnicity.length === 0) {
+        setProfileSubmitMsg('* Please select an ethnicity.');
+        return;
+      }
+      //TODO: not sure why there are two phone number checks
+      if (phone_number === undefined || phone_number.length === 0) {
+        setProfileSubmitMsg('* Please enter a valid phone number.');
+        return;
+      }
+      if (!isValidPhoneNumber(phone_number)) {
+        setProfileSubmitMsg('* Please enter a valid phone number.');
+        return;
+      }
+      if (grad.length === 0) {
+        setProfileSubmitMsg('* Please select a valid graduation program.');
+        return;
+      }
+      if (grad_month.length === 0) {
+        setProfileSubmitMsg('* Please select a valid graduation month.');
+        return;
+      }
+      if (grad_year.length === 0) {
+        setProfileSubmitMsg('* Please select a valid graduation year.');
+        return;
+      }
 
-    const newProfile = {
-      first_name: first_name,
-      last_name: last_name,
-      gender: gender,
-      age: age,
-      major: major,
-      phone_number: phone_number,
-      school: school,
-      otherSchool: otherSchool,
-      ethnicity: ethnicity,
-      grad: grad,
-      grad_month: grad_month,
-      grad_year: grad_year,
-      country: country,
-      first_hackathon: first_hackathon,
-      first_hophacks: first_hophacks,
-      learn_about_us: learn_about_us,
-      is_jhu: school === 'Johns Hopkins University' ? true : false
-    };
-    if (!props.isLoggedIn) return;
-    try {
-      await axios.post('/api/accounts/profile/update', {
-        profile: newProfile
-      });
-    } catch (e) {
-      console.log('fail to update');
+      setStep("checks")
+    } else if (step === "checks") {
+        const newProfile = {
+        first_name: first_name,
+        last_name: last_name,
+        gender: gender,
+        age: age,
+        major: major,
+        phone_number: phone_number,
+        school: school,
+        otherSchool: otherSchool,
+        ethnicity: ethnicity,
+        grad: grad,
+        grad_month: grad_month,
+        grad_year: grad_year,
+        country: country,
+        first_hackathon: first_hackathon,
+        first_hophacks: first_hophacks,
+        learn_about_us: learn_about_us,
+        is_jhu: school === 'Johns Hopkins University' ? true : false
+      };
+      if (!props.isLoggedIn) return;
+      try {
+        await axios.post('/api/accounts/profile/update', {
+          profile: newProfile
+        });
+      } catch (e) {
+        console.log('fail to update');
+      }
+      await axios.post('/api/accounts/updatedAccount/post');
+      getProfileUpToDate();
     }
-    await axios.post('/api/accounts/updatedAccount/post');
-    getProfileUpToDate();
   }
 
   useEffect(() => {
@@ -169,6 +176,7 @@ const Profile = function Profile(props) {
       <ProfileOldUser
         props={props}
         isMobile={isMobile}
+        step={step}
         setFirst_name={setFirst_name}
         setLast_name={setLast_name}
         setAge={setAge}
