@@ -282,11 +282,18 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
             </Drawer>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: 'auto' }}>
               {isLoggedIn ? (
-                <Button onClick={handleLogout} className={classes.navBtn}>
-                  <Typography variant="body2" className={classes.title}>
-                    Logout
-                  </Typography>
-                </Button>
+                <>
+                  <Button component={Link} to="/profile" className={classes.navBtn}>
+                    <Typography variant="body2" className={classes.title}>
+                      Profile
+                    </Typography>
+                  </Button>
+                  <Button onClick={handleLogout} className={classes.navBtn}>
+                    <Typography variant="body2" className={classes.title}>
+                      Logout
+                    </Typography>
+                  </Button>
+                </>
               ) : (
                 <Button component={Link} to="/login" className={classes.navBtn}>
                   <Typography variant="body2" className={classes.title}>
@@ -344,11 +351,18 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
           }}
         >
           {isLoggedIn ? (
-            <Button onClick={handleLogout} className={classes.navBtn}>
-              <Typography variant="body2" className={classes.title}>
-                Logout
-              </Typography>
-            </Button>
+            <>
+              <Button component={Link} to="/profile" className={classes.navBtn}>
+                <Typography variant="body2" className={classes.title}>
+                  Profile
+                </Typography>
+              </Button>
+              <Button onClick={handleLogout} className={classes.navBtn}>
+                <Typography variant="body2" className={classes.title}>
+                  Logout
+                </Typography>
+              </Button>
+            </>
           ) : (
             <Button component={Link} to="/register/login" className={classes.navBtn}>
               <Typography variant="body2" className={classes.title}>

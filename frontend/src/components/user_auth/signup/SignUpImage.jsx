@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
-import { Typography, Grid } from '@material-ui/core';
-import GlowButton from '../../ui/GlowButton';
+import { useState } from 'react';
 import '../../../stylesheets/user_auth.css';
-import { Category } from '@material-ui/icons';
-import { useEffect } from 'react';
 
 const CATEGORIES = {
   stage: {

@@ -152,19 +152,17 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   function setPfpComponents(str) {
     if (str) {
       const components = str.split('_');
-      console.log({ components });
-      setStage(components[0]);
-      setBody(components[1]);
-      setAccent(components[3]);
-      setAccessory(components[4]);
-      setObject(components[5]);
+      setStage(parseInt(components[0]));
+      setBody(parseInt(components[1]));
+      setAccent(parseInt(components[3]));
+      setAccessory(parseInt(components[4]));
+      setObject(parseInt(components[5]));
     }
   }
 
   async function getProfile() {
     if (!props.isLoggedIn) return;
     const response = await axios.get('/api/accounts/profile/get');
-    console.log(response);
 
     setProfile(response.data.profile);
     setFirst_name(response.data.profile.first_name);
