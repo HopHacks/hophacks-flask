@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import Pencil from '@material-ui/icons/Create';
 import { withAuthCheck } from '../../util/auth.jsx';
 import List from '@material-ui/core/List';
 
@@ -15,6 +16,7 @@ import SchoolAutocomplete from './SchoolAutocomplete';
 import CountryAutocomplete from './CountryAutocomplete';
 
 import GlowButton from '../ui/GlowButton';
+import SignUpImage from '../user_auth/signup/SignUpImage.jsx';
 
 import '../../stylesheets/profile.css';
 
@@ -62,6 +64,29 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   const [resumeMsg, setResumeMsg] = useState('Acceptable format: *.pdf, *.doc, *.docx');
   const [ageMsg, setAgeMsg] = useState('');
 
+  // PFP Variables
+  const [stage, setStage] = useState(0);
+  const [body, setBody] = useState(1);
+  const [accent, setAccent] = useState(0);
+  const [accessory, setAccessory] = useState(0);
+  const [object, setObject] = useState(0);
+  const [prevPfp, setPrevPfp] = useState([0, 1, 1, 0, 0, 0]);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    handleSetPrevPfp();
+    setModalOpen(true);
+  };
+  const handleCancelPfp = () => {
+    // TODO revert to prev components
+    handleRevertPfp();
+    setModalOpen(false);
+  };
+  const handleSavePfp = () => {
+    setModalOpen(false);
+    handleProfileSave();
+  };
+
   const currentEvent = 'Fall 2025';
   const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
   const acceptedStatus =
@@ -107,9 +132,39 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     window.open(url, '_blank');
   }
 
+  function handleSetPrevPfp() {
+    let res = [];
+    res.push(stage);
+    res.push(body);
+    res.push(accent);
+    res.push(accessory);
+    res.push(object);
+    setPrevPfp(res);
+  }
+
+  function handleRevertPfp() {
+    const fns = [setStage, setBody, setAccent, setAccessory, setObject];
+    for (let i = 0; i < fns.length; ++i) {
+      fns[i](prevPfp[i]);
+    }
+  }
+
+  function setPfpComponents(str) {
+    if (str) {
+      const components = str.split('_');
+      console.log({ components });
+      setStage(components[0]);
+      setBody(components[1]);
+      setAccent(components[3]);
+      setAccessory(components[4]);
+      setObject(components[5]);
+    }
+  }
+
   async function getProfile() {
     if (!props.isLoggedIn) return;
     const response = await axios.get('/api/accounts/profile/get');
+    console.log(response);
 
     setProfile(response.data.profile);
     setFirst_name(response.data.profile.first_name);
@@ -129,6 +184,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     setLearn_about_us(response.data.profile.learn_about_us);
     setCountry(response.data.profile.country);
     setLinkedIn(response.data.linkedIn || '');
+    setPfpComponents(response.data.profile.pfp || '');
   }
 
   async function getStatus() {
@@ -166,6 +222,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     profile.country = country;
     profile.otherSchool = otherSchool;
     profile.linkedIn = linkedIn;
+    profile.pfp = `${stage}_${body}_1_${accent}_${accessory}_${object}`;
     try {
       await axios.post('/api/accounts/profile/update', {
         profile: profile
@@ -336,8 +393,20 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       </div>
 
       {/* Right Side: Placeholder Profile Image */}
-      <div className="w-[364px] h-[254px] rounded-xl overflow-hidden bg-white/30 flex items-center justify-center shadow-inner">
-        <span className="text-white text-sm">Profile Image</span>
+      <div className="w-[364px] h-[254px] rounded-xl overflow-hidden bg-white/30 relative shadow-inner flex items-center justify-center">
+        <>
+          <img
+            src={`https://hophacks-website.s3.us-east-1.amazonaws.com/pfps/${stage}_${body}_1_${accent}_${accessory}_${object}.png`}
+            alt="Profile"
+            className="w-full h-full object-cover"
+          />
+          <button
+            onClick={handleOpenModal}
+            className="absolute top-2 right-2 bg-white/70 p-1 rounded-full hover:bg-white transition"
+          >
+            <Pencil size={16} className="text-black" />
+          </button>
+        </>
       </div>
     </div>
   );
@@ -881,15 +950,51 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   );
 
   return (
-    <div className="min-h-screen h-fit bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center pt-24 pb-20">
-      <div className="text-4xl font-bold text-center text-white mb-8">Profile</div>
+    <>
+      <div className="min-h-screen h-fit bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center pt-24 pb-20">
+        <div className="text-4xl font-bold text-center text-white mb-8">Profile</div>
 
-      <div className="section mb-8">{appStatus}</div>
+        <div className="section mb-8">{appStatus}</div>
 
-      <div className="section mb-8">{resume}</div>
+        <div className="section mb-8">{resume}</div>
 
-      <div className="section mb-8">{ProfileCard}</div>
-    </div>
+        <div className="section mb-8">{ProfileCard}</div>
+      </div>
+
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+          <div className="rounded-2xl bg-white/10 backdrop-blur-md p-6 max-w-xl w-full shadow-lg space-y-4">
+            <SignUpImage
+              stage={stage}
+              setStage={setStage}
+              body={body}
+              setBody={setBody}
+              accent={accent}
+              setAccent={setAccent}
+              accessory={accessory}
+              setAccessory={setAccessory}
+              object={object}
+              setObject={setObject}
+            />
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                onClick={handleCancelPfp}
+                className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition text-sm font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSavePfp}
+                className="px-4 py-2 rounded-lg bg-[#002D72] text-white hover:bg-[#264573] transition text-sm font-medium"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

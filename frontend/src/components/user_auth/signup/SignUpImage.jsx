@@ -129,48 +129,50 @@ export default function SignUpImage({
   object,
   setObject
 }) {
-  // <stages>_<body>_<main bird COMPOSED>_<accent>_<accessory>_<object>.png
   const [colorSelector, setColorSelector] = useState('Body');
 
   return (
-    <div className="w-full bg-[#5997CC] h-[400px] rounded-[80px] p-8 grid grid-rows-[1fr_auto] gap-8">
+    <div className="w-full bg-[#5997CC] rounded-[40px] p-6 md:p-8 grid grid-rows-[auto_1fr] gap-6 md:gap-8 max-w-4xl mx-auto">
       {/* Top Row: 2 columns */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Image Container */}
-        <div className="bg-white w-full h-[200px] rounded-[32px] flex items-center justify-center">
+        <div className="bg-white aspect-square rounded-[24px] flex items-center justify-center p-4">
           <img
-            className="w-full h-auto max-h-full object-contain"
+            className="w-full h-full object-contain"
             src={`https://hophacks-website.s3.us-east-1.amazonaws.com/pfps/${stage}_${body}_1_${accent}_${accessory}_${object}.png`}
             alt="Profile"
           />
         </div>
 
-        <div className="w-full h-[200px] rounded-[32px] flex flex-col items-center justify-between py-2">
-          <div className="bg-[rgba(225,233,242,.32)] rounded-[16px] text-white text-lg sm:text-xl md:text-2xl font-bold w-[90%] text-center px-5">
+        {/* Customization Panel */}
+        <div className="flex flex-col justify-between space-y-4 py-2">
+          <div className="bg-[rgba(225,233,242,.32)] rounded-lg text-white text-center font-bold text-lg md:text-xl p-3">
             Customize your blue jay!
           </div>
-          <div className="flex justify-center w-[90%]">
+
+          <div className="flex justify-center gap-2">
             {['Body', 'Accent'].map((category) => (
               <button
                 key={category}
-                className={`flex-1 rounded-t-lg text-white font-bold px-2 py-1 ${colorSelector === category ? 'bg-[#2885D4]' : ''}`}
+                className={`flex-1 rounded-md text-white font-semibold py-2 transition ${
+                  colorSelector === category ? 'bg-[#2885D4]' : 'bg-white/20 hover:bg-white/30'
+                }`}
                 onClick={() => setColorSelector(category)}
               >
                 {category}
               </button>
             ))}
           </div>
-          <div>
-            <ColorSelect
-              onSelect={colorSelector === 'Body' ? setBody : setAccent}
-              category={colorSelector}
-            />
-          </div>
+
+          <ColorSelect
+            onSelect={colorSelector === 'Body' ? setBody : setAccent}
+            category={colorSelector}
+          />
         </div>
       </div>
 
-      {/* Bottom Row: 4 columns */}
-      <div className="grid grid-cols-3">
+      {/* Bottom Row: 3 columns */}
+      <div className="grid grid-cols-3 gap-4">
         <ScrollSelect selected={stage} setSelected={setStage} category="stage" />
         <ScrollSelect selected={accessory} setSelected={setAccessory} category="accessory" />
         <ScrollSelect selected={object} setSelected={setObject} category="object" />
