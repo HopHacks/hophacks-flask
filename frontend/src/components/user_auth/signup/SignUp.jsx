@@ -105,6 +105,7 @@ function SignUp(props) {
     }
 
     //Go to the profile page
+    setProfileSubmitMsg('');
     setActivePage(PROFILE);
   }
 
@@ -194,6 +195,7 @@ function SignUp(props) {
       return;
     }
     // Go to the confirmation page
+    setProfileSubmitMsg('');
     setActivePage(CHECKS);
   }
 
@@ -247,6 +249,7 @@ function SignUp(props) {
       setProfileSubmitMsg('* Age must be an integer value.');
       return;
     }
+    setProfileSubmitMsg('');
     setActivePage(IMAGE);
   }
 
@@ -333,6 +336,7 @@ function SignUp(props) {
       console.log(e);
       return;
     }
+    setProfileSubmitMsg('');
     setActivePage(CONFIRMATION);
   }
 
