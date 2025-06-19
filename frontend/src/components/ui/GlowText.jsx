@@ -1,9 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 const GlowText = ({ children, className = '', style = {}, variant = 'primary' }) => {
-  const isPrimary = variant === 'primary';
-
   const baseClasses = `font-[Montserrat] text-4xl font-extrabold tracking-wide 
     transition-shadow duration-300 text-center`;
 

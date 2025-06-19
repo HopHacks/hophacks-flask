@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import CountUp from 'react-countup';
-import SectionHeader from '../ui/SectionHeader';
+// import SectionHeader from '../ui/SectionHeader';
 
 function StatCircle({ stat, inView }) {
   const isPrize = stat.label === 'Total Prizes';
