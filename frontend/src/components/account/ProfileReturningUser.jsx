@@ -319,7 +319,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       );
     } else if (confirmed && status === appCompleteStatus) {
       return (
-        <p>
+        <p className='text-white'>
           You have successfully applied to HopHacks. Please be patient while we process your
           application :)
         </p>
@@ -327,17 +327,20 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     } else if (status === acceptedStatus) {
       return (
         <>
-          <GlowButton onClick={() => rsvp(currentEvent)}>RSVP</GlowButton>
-          style=
-          {{
-            fontSize: '14px', // Very small text (12px)
-            padding: '0.25rem 0.5rem', // Minimal padding
-            minWidth: '80px', // Very small minimum width
-            width: 'auto',
-            margin: '0.25rem 0' // Minimal margins
-          }}
+          <GlowButton
+            onClick={() => rsvp(currentEvent)}
+            style={{
+              fontSize: '14px',
+              padding: '0.25rem 0.5rem',
+              minWidth: '80px',
+              width: 'auto',
+              margin: '0.25rem 0'
+            }}
+          >
+            RSVP
+          </GlowButton>
           <br />
-          <span> Note, by RSVPing to our event, you consent to our </span>
+          <span className='text-white'> Note, by RSVPing to our event, you consent to our </span>
           <a href={img('JHU_Photo-and-Video-Release_20192.pdf')} onClick={openPhotoRelease}>
             {' photo release form'}
           </a>

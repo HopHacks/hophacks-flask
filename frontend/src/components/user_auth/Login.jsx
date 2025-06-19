@@ -27,7 +27,7 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push(email === 'admin' ? '/admin' : '/profile');
+      history.push((email === 'admin' || email === 'hophacks') ? '/admin' : '/profile');
     }
   }, [isLoggedIn, email, history]);
 
@@ -43,7 +43,7 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
     e.preventDefault();
     try {
       await login(email, password);
-      history.push(email === 'admin' ? '/admin' : '/profile');
+      history.push((email === 'admin' || email === 'hophacks') ? '/admin' : '/profile');
     } catch {
       setAttempted(true);
     }
