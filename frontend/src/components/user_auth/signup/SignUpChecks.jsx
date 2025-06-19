@@ -133,8 +133,8 @@ const SignUpChecks = ({
           </Grid>
           <Grid item xs={12} md={6}>
             <LabeledTextField
-              label="Link to LinkedIn Profile (Optional)"
-              required={false}
+              label="Link to LinkedIn Profile"
+              required={true}
               onChange={(e) => setLinkedIn(e.target.value)}
             />
           </Grid>
@@ -157,7 +157,7 @@ const SignUpChecks = ({
               Upload Resume*
             </Button>
             {resumeFile && (
-              <span style={{ marginLeft: isMobile ? '0' : '1rem', color: '#061A40' }}>
+              <span style={{ marginLeft: isMobile ? '0' : '1rem', color: '#FFFFFF' }}>
                 Uploaded: {resumeFile.name}
               </span>
             )}
@@ -256,6 +256,16 @@ const SignUpChecks = ({
           </div>
         </Grid>
       </Grid>
+      <div className="w-full flex justify-end">
+        <a
+          className="underline text-white hover:text-blue-600 transition-colors duration-300"
+          href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+          target="_blank"
+          rel="noreferrer"
+        >
+          MLH code of conduct
+        </a>
+      </div>
 
       <Typography className="card-text-red">{profileSubmitMsg}</Typography>
 

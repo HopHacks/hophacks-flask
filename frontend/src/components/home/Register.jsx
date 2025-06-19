@@ -1,5 +1,5 @@
 import SectionHeader from '../ui/SectionHeader';
-import SectionSubtext from '../ui/SectionSubtext';
+import GlowButton from '../ui/GlowButton';
 
 export default function Register() {
   return (
@@ -16,7 +16,7 @@ export default function Register() {
           {
             img: 'hack-bird.png',
             label: 'Hack',
-            link: 'https://discord.gg/8V8wmCWUhH'
+            link: '/register/signup'
           },
           {
             img: 'volunteer-bird.png',
@@ -29,14 +29,12 @@ export default function Register() {
               <img
                 src={`https://hophacks-website.s3.us-east-1.amazonaws.com/home/${img}`}
                 alt={`${label} Bird`}
-                className="h-[100px] sm:h-[100px] md:h-[200px] lg:h-[350px] w-auto mb-4 transform transition-transform duration-300 hover:scale-110 cursor-pointer"
+                className="h-[100px] sm:h-[100px] md:h-[200px] lg:h-[350px] w-auto mb-1 transform transition-transform duration-300 hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_10px_white]"
               />
             </a>
-            <a href={link ?? '#'} className="">
-              <SectionSubtext className="hover:text-blue-600 transition-colors duration-300">
-                {label}
-              </SectionSubtext>
-            </a>
+            <GlowButton onClick={() => window.open(link ?? '#', '_blank')} className="py-1.5">
+              {label}
+            </GlowButton>
           </div>
         ))}
       </div>

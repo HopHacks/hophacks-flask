@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { withAuthCheck } from '../../util/auth.jsx';
 
-import '../../stylesheets/profile.css';
 import ProfileReturningUser from './ProfileReturningUser.jsx';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import ProfileOldUser from './ProfileOldUser.jsx';
@@ -14,6 +13,8 @@ const Profile = function Profile(props) {
   if (myVariable != '') {
     axios.defaults.baseURL = myVariable;
   }
+
+  const [step, setStep] = useState('update info');
 
   //display database
   const [profile, setProfile] = useState([]);
@@ -36,8 +37,13 @@ const Profile = function Profile(props) {
   const [learn_about_us, setLearn_about_us] = useState('');
   const [profileSubmitMsg, setProfileSubmitMsg] = useState('');
   const [enabledButton, setEnabledButton] = useState(true); //TMP get rid of setEnabledButton
-
+  const [linkedIn, setLinkedIn] = useState('');
   const [profileUpToDate, setProfileUpToDate] = useState(false);
+
+  const [resumeChecked, setResumeChecked] = useState(false);
+  const [conductCodeChecked, setConductCodeChecked] = useState(false);
+  const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
+  const [communicationChecked, setCommunicationChecked] = useState(false);
 
   async function getProfileUpToDate() {
     /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
@@ -52,90 +58,115 @@ const Profile = function Profile(props) {
   }
 
   async function handleProfileNext() {
-    if (first_name.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid first name.');
-      return;
-    }
-    if (last_name.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid last name.');
-      return;
-    }
-    if (gender.length === 0) {
-      setProfileSubmitMsg('* Please select a gender.');
-      return;
-    }
-    if (major.length === 0) {
-      setProfileSubmitMsg('* Please select a major.');
-      return;
-    }
-    if (country === undefined || country.length === 0) {
-      setProfileSubmitMsg('* Please select a country.');
-      return;
-    }
+    if (step === 'update info') {
+      if (first_name.length === 0) {
+        setProfileSubmitMsg('* Please enter a valid first name.');
+        return;
+      }
+      if (last_name.length === 0) {
+        setProfileSubmitMsg('* Please enter a valid last name.');
+        return;
+      }
+      if (gender.length === 0) {
+        setProfileSubmitMsg('* Please select a gender.');
+        return;
+      }
+      if (major.length === 0) {
+        setProfileSubmitMsg('* Please select a major.');
+        return;
+      }
+      if (country === undefined || country.length === 0) {
+        setProfileSubmitMsg('* Please select a country.');
+        return;
+      }
 
-    if (school.length === 0) {
-      setProfileSubmitMsg('* Please select a school.');
-      return;
-    }
-    if (school === 'Other Schools' && otherSchool.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid school.');
-      return;
-    }
-    if (ethnicity.length === 0) {
-      setProfileSubmitMsg('* Please select an ethnicity.');
-      return;
-    }
-    //TODO: not sure why there are two phone number checks
-    if (phone_number === undefined || phone_number.length === 0) {
-      setProfileSubmitMsg('* Please enter a valid phone number.');
-      return;
-    }
-    if (!isValidPhoneNumber(phone_number)) {
-      setProfileSubmitMsg('* Please enter a valid phone number.');
-      return;
-    }
-    if (grad.length === 0) {
-      setProfileSubmitMsg('* Please select a valid graduation program.');
-      return;
-    }
-    if (grad_month.length === 0) {
-      setProfileSubmitMsg('* Please select a valid graduation month.');
-      return;
-    }
-    if (grad_year.length === 0) {
-      setProfileSubmitMsg('* Please select a valid graduation year.');
-      return;
-    }
+      if (school.length === 0) {
+        setProfileSubmitMsg('* Please select a school.');
+        return;
+      }
+      if (school === 'Other Schools' && otherSchool.length === 0) {
+        setProfileSubmitMsg('* Please enter a valid school.');
+        return;
+      }
+      if (ethnicity.length === 0) {
+        setProfileSubmitMsg('* Please select an ethnicity.');
+        return;
+      }
+      //TODO: not sure why there are two phone number checks
+      if (phone_number === undefined || phone_number.length === 0) {
+        setProfileSubmitMsg('* Please enter a valid phone number.');
+        return;
+      }
+      if (!isValidPhoneNumber(phone_number)) {
+        setProfileSubmitMsg('* Please enter a valid phone number.');
+        return;
+      }
+      if (grad.length === 0) {
+        setProfileSubmitMsg('* Please select a valid graduation program.');
+        return;
+      }
+      if (grad_month.length === 0) {
+        setProfileSubmitMsg('* Please select a valid graduation month.');
+        return;
+      }
+      if (grad_year.length === 0) {
+        setProfileSubmitMsg('* Please select a valid graduation year.');
+        return;
+      }
 
-    const newProfile = {
-      first_name: first_name,
-      last_name: last_name,
-      gender: gender,
-      age: age,
-      major: major,
-      phone_number: phone_number,
-      school: school,
-      otherSchool: otherSchool,
-      ethnicity: ethnicity,
-      grad: grad,
-      grad_month: grad_month,
-      grad_year: grad_year,
-      country: country,
-      first_hackathon: first_hackathon,
-      first_hophacks: first_hophacks,
-      learn_about_us: learn_about_us,
-      is_jhu: school === 'Johns Hopkins University' ? true : false
-    };
-    if (!props.isLoggedIn) return;
-    try {
-      await axios.post('/api/accounts/profile/update', {
-        profile: newProfile
-      });
-    } catch (e) {
-      console.log('fail to update');
+      if (linkedIn.length === 0) {
+        setProfileSubmitMsg('* Please enter your linkedin link.');
+        return;
+      }
+
+      setStep('checks');
+    } else if (step === 'checks') {
+      if (!resumeChecked) {
+        setProfileSubmitMsg('* Please agree to the resume terms.');
+        return;
+      }
+
+      if (!conductCodeChecked) {
+        setProfileSubmitMsg('* Please read the MLH Code of Conduct.');
+        return;
+      }
+
+      if (!eventLogisticsChecked) {
+        setProfileSubmitMsg('* Please read the MLH Terms and Conditions and Privacy Policy.');
+        return;
+      }
+
+      const newProfile = {
+        first_name: first_name,
+        last_name: last_name,
+        gender: gender,
+        age: age,
+        major: major,
+        phone_number: phone_number,
+        school: school,
+        otherSchool: otherSchool,
+        ethnicity: ethnicity,
+        grad: grad,
+        grad_month: grad_month,
+        grad_year: grad_year,
+        country: country,
+        first_hackathon: first_hackathon,
+        first_hophacks: first_hophacks,
+        learn_about_us: learn_about_us,
+        linkedIn: linkedIn,
+        is_jhu: school === 'Johns Hopkins University' ? true : false
+      };
+      if (!props.isLoggedIn) return;
+      try {
+        await axios.post('/api/accounts/profile/update', {
+          profile: newProfile
+        });
+      } catch (e) {
+        console.log('fail to update');
+      }
+      await axios.post('/api/accounts/updatedAccount/post');
+      getProfileUpToDate();
     }
-    await axios.post('/api/accounts/updatedAccount/post');
-    getProfileUpToDate();
   }
 
   useEffect(() => {
@@ -163,6 +194,7 @@ const Profile = function Profile(props) {
     setFirst_hophacks(response.data.profile.first_hophacks);
     setLearn_about_us(response.data.profile.learn_about_us);
     setCountry(response.data.profile.country);
+    setLinkedIn(response.data.profile.linkedIn || '');
   }
 
   if (!profileUpToDate) {
@@ -170,6 +202,7 @@ const Profile = function Profile(props) {
       <ProfileOldUser
         props={props}
         isMobile={isMobile}
+        step={step}
         setFirst_name={setFirst_name}
         setLast_name={setLast_name}
         setAge={setAge}
@@ -186,6 +219,7 @@ const Profile = function Profile(props) {
         setFirst_hophacks={setFirst_hophacks}
         setLearn_about_us={setLearn_about_us}
         setOtherSchool={setOtherSchool}
+        setLinkedIn={setLinkedIn}
         first_name={first_name}
         last_name={last_name}
         gender={gender}
@@ -198,6 +232,7 @@ const Profile = function Profile(props) {
         grad_month={grad_month}
         grad_year={grad_year}
         country={country}
+        linkedIn={linkedIn}
         first_hackathon={first_hackathon}
         first_hophacks={first_hophacks}
         learn_about_us={learn_about_us}
@@ -207,6 +242,14 @@ const Profile = function Profile(props) {
         otherSchool={otherSchool}
         handleProfileNext={handleProfileNext}
         setEnabledButton={setEnabledButton}
+        resumeChecked={resumeChecked}
+        setResumeChecked={setResumeChecked}
+        conductCodeChecked={conductCodeChecked}
+        setConductCodeChecked={setConductCodeChecked}
+        eventLogisticsChecked={eventLogisticsChecked}
+        setEventLogisticsChecked={setEventLogisticsChecked}
+        communicationChecked={communicationChecked}
+        setCommunicationChecked={setCommunicationChecked}
       />
     );
   } else {

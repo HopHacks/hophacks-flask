@@ -4,16 +4,26 @@ import { Link, useHistory } from 'react-router-dom';
 import { withAuthProps } from '../../util/auth';
 import '../../stylesheets/user_auth.css';
 
+const AuthTextField = ({ isMobile, label, type = 'text', value, onChange, color }) => (
+  <TextField
+    required
+    variant="standard"
+    label={label}
+    type={type}
+    value={value}
+    onChange={onChange}
+    style={{ width: isMobile ? '80%' : '90%' }}
+    InputLabelProps={{ style: { color } }}
+    InputProps={{ style: { color } }}
+  />
+);
+
 function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
-  const [email, setEmail] = useState(initialEmail);
+  const [email, setEmail] = useState(initialEmail ?? '');
   const [password, setPassword] = useState('');
   const [attempted, setAttempted] = useState(false);
   const history = useHistory();
   const textColor = '#061A40';
-
-  useEffect(() => {
-    setEmail(initialEmail);
-  }, [initialEmail]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -22,12 +32,10 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
   }, [isLoggedIn, email, history]);
 
   const handleChangeEmail = (e) => {
-    e.preventDefault();
     setEmail(e.target.value);
   };
 
   const handleChangePassword = (e) => {
-    e.preventDefault();
     setPassword(e.target.value);
   };
 
@@ -40,20 +48,6 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
       setAttempted(true);
     }
   };
-
-  const AuthTextField = ({ label, type = 'text', value, onChange, color }) => (
-    <TextField
-      required
-      variant="standard"
-      label={label}
-      type={type}
-      value={value}
-      onChange={onChange}
-      style={{ width: isMobile ? '80%' : '90%' }}
-      InputLabelProps={{ style: { color } }}
-      InputProps={{ style: { color } }}
-    />
-  );
 
   return (
     <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
@@ -72,18 +66,20 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
         </div>
         <div className="text-field">
           <AuthTextField
+            isMobile={isMobile}
             label="Email Address"
             value={email}
-            onChange={(e) => handleChangeEmail(e)}
+            onChange={handleChangeEmail}
             color={textColor}
           />
         </div>
         <div className="text-field">
           <AuthTextField
+            isMobile={isMobile}
             type="password"
             label="Password"
             value={password}
-            onChange={(e) => handleChangePassword(e)}
+            onChange={handleChangePassword}
             color={textColor}
           />
         </div>

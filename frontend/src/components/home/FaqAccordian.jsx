@@ -112,6 +112,22 @@ const faqData = [
       'At registration, all participants will be given a wristband which MUST BE VISIBLE when you are getting food. If you do not have your wristband, you will not be able to get food.'
   },
   {
+    question: 'Where can I find the MLH code of conduct?',
+    answer: (
+      <>
+        You can find the MLH code of conduct{' '}
+        <a
+          className={linkClass}
+          href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+          target="_blank"
+          rel="noreferrer"
+        >
+          here.
+        </a>
+      </>
+    )
+  },
+  {
     question: 'My question wasn’t answered here!',
     answer: (
       <>

@@ -8,10 +8,9 @@ import SignUpChecks from './SignUpChecks'; //added check page
 import SignUpImage from './SignUpImage'; //added image page
 import SignUpConfirmation from './SignUpConfirmation';
 import { withAuthProps } from '../../../util/auth';
-// import { useHistory } from 'react-router-dom';
+import GlowButton from '../../ui/GlowButton';
 
 function SignUp(props) {
-  // let history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -42,8 +41,17 @@ function SignUp(props) {
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
+
+  // -----
   const [enabledButton, setEnabledButton] = useState(true); //TMP get rid of setEnabledButton
   // const [enabledButton, setEnabledButton] = useState(true); //ORIGINAL
+
+  // PFP Variables
+  const [stage, setStage] = useState(0);
+  const [body, setBody] = useState(1);
+  const [accent, setAccent] = useState(0);
+  const [accessory, setAccessory] = useState(0);
+  const [object, setObject] = useState(0);
 
   const isMobile = props.isMobile;
 
@@ -97,6 +105,7 @@ function SignUp(props) {
     }
 
     //Go to the profile page
+    setProfileSubmitMsg('');
     setActivePage(PROFILE);
   }
 
@@ -186,6 +195,7 @@ function SignUp(props) {
       return;
     }
     // Go to the confirmation page
+    setProfileSubmitMsg('');
     setActivePage(CHECKS);
   }
 
@@ -206,6 +216,11 @@ function SignUp(props) {
 
     if (learn_about_us.length === 0) {
       setProfileSubmitMsg('* Please select how you heard about us.');
+      return;
+    }
+
+    if (linkedIn.length === 0) {
+      setProfileSubmitMsg('* Please enter your LinkedIn profile url.');
       return;
     }
 
@@ -234,8 +249,15 @@ function SignUp(props) {
       setProfileSubmitMsg('* Age must be an integer value.');
       return;
     }
+    setProfileSubmitMsg('');
+    setActivePage(IMAGE);
+  }
 
-    //TODO: uncomment for actual testing
+  async function handleChecksBack() {
+    setActivePage(PROFILE);
+  }
+
+  async function handleImageNext() {
     const data = new FormData();
     data.append('file', resumeFile);
     data.append(
@@ -263,7 +285,8 @@ function SignUp(props) {
           first_hophacks: first_hophacks,
           learn_about_us: learn_about_us,
           country: country,
-          linkedIn
+          linkedIn,
+          pfp: `${stage}_${body}_1_${accent}_${accessory}_${object}`
         }
       })
     );
@@ -278,11 +301,11 @@ function SignUp(props) {
       //     school: school,
       //   });
 
-      await axios.post('/api/slack/registration', {
+      /*await axios.post('/api/slack/registration', {
         first_name: first_name,
         last_name: last_name,
         school: school
-      });
+      });*/
 
       try {
         await props.login(username, password);
@@ -296,6 +319,7 @@ function SignUp(props) {
         resumeData.append('file', resumeFile);
         await axios.post('/api/resumes/', resumeData);
       } catch (error) {
+        console.log('error A');
         setEnabledButton(true);
       }
       // await axios.post('/api/slack/registration', {
@@ -308,19 +332,11 @@ function SignUp(props) {
       // resumeData.append('file', resumeFile);
       // await axios.post('/api/resumes', resumeData);
     } catch (e) {
+      console.log('error B');
+      console.log(e);
       return;
     }
-
-    //ignore image for now
-    // setActivePage(IMAGE);
-    setActivePage(CONFIRMATION);
-  }
-
-  async function handleChecksBack() {
-    setActivePage(PROFILE);
-  }
-
-  async function handleImageNext() {
+    setProfileSubmitMsg('');
     setActivePage(CONFIRMATION);
   }
 
@@ -422,13 +438,39 @@ function SignUp(props) {
           />
         )}
         {activePage === IMAGE && (
-          <SignUpImage
-            isMobile={isMobile}
-            profileSubmitMsg={profileSubmitMsg}
-            enabledButton={enabledButton}
-            handleImageNext={handleImageNext}
-            handleImageBack={handleImageBack}
-          />
+          <div>
+            <SignUpImage
+              stage={stage}
+              setStage={setStage}
+              body={body}
+              setBody={setBody}
+              accent={accent}
+              setAccent={setAccent}
+              accessory={accessory}
+              setAccessory={setAccessory}
+              object={object}
+              setObject={setObject}
+              submitMsg={profileSubmitMsg}
+            />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: isMobile ? 'center' : 'space-between',
+                alignItems: 'center',
+                marginTop: '2rem',
+                flexDirection: isMobile ? 'column' : 'row',
+                gap: isMobile ? '1rem' : 0
+              }}
+            >
+              <GlowButton onClick={handleImageBack} variant="secondary" disabled={!enabledButton}>
+                Back
+              </GlowButton>
+              <GlowButton onClick={handleImageNext} disabled={!enabledButton}>
+                Next
+              </GlowButton>
+            </div>
+            <p>{profileSubmitMsg}</p>
+          </div>
         )}
         {activePage === CONFIRMATION && <SignUpConfirmation isMobile={isMobile} />}
       </div>
