@@ -181,7 +181,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     setFirst_hophacks(response.data.profile.first_hophacks);
     setLearn_about_us(response.data.profile.learn_about_us);
     setCountry(response.data.profile.country);
-    setLinkedIn(response.data.linkedIn || '');
+    setLinkedIn(response.data.profile.linkedIn || '');
     setPfpComponents(response.data.profile.pfp || '');
   }
 
@@ -617,34 +617,38 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   );
 
   const SchoolForm = (
-    <form>
-      <SchoolAutocomplete school={school} setSchool={setSchool} />
-      {school === 'Other Schools' && (
-        // <div className="text-field">
-        <TextField
-          variant="standard"
-          label="Other School"
-          value={otherSchool}
-          style={{ width: '100%' }}
-          onChange={(e) => {
-            setOtherSchool(e.target.value);
-          }}
-        />
-        // </div>
-      )}
-    </form>
+    <div style={{ width: '500px' }}>
+      <form>
+        <SchoolAutocomplete school={school} setSchool={setSchool} />
+        {school === 'Other Schools' && (
+          <TextField
+            variant="standard"
+            label="Other School"
+            value={otherSchool}
+            style={{ width: '100%' }}
+            onChange={(e) => {
+              setOtherSchool(e.target.value);
+            }}
+          />
+        )}
+      </form>
+    </div>
   );
 
   const MajorForm = (
-    <form>
-      <MajorAutocomplete major={major} setMajor={setMajor} />
-    </form>
+    <div style={{ width: '500px' }}>
+      <form>
+        <MajorAutocomplete major={major} setMajor={setMajor} />
+      </form>
+    </div>
   );
 
   const CountryForm = (
-    <form>
-      <CountryAutocomplete country={country} setCountry={setCountry} />
-    </form>
+    <div style={{ width: '500px' }}>
+      <form>
+        <CountryAutocomplete country={country} setCountry={setCountry} />
+      </form>
+    </div>
   );
 
   const ProgramForm = (
@@ -744,13 +748,18 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   );
 
   const first_hackathonForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">Is this your first Hackathon?</InputLabel>
+    <form className="w-full max-w-md">
+      {' '}
+      {/* Optional: control form width here */}
+      <FormControl fullWidth>
+        {' '}
+        {/* This ensures Select and InputLabel stretch properly */}
+        <InputLabel id="first-hackathon-label">Is this your first Hackathon?</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="first-hackathon-label"
+          id="first-hackathon"
           value={first_hackathon}
+          label="Is this your first Hackathon?"
           onChange={(e) => {
             setFirst_hackathon(e.target.value);
           }}
@@ -763,15 +772,18 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   );
 
   const first_hophacksForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">
+    <form className="w-full max-w-md">
+      {' '}
+      {/* Optional container width */}
+      <FormControl fullWidth>
+        <InputLabel id="first-hophacks-label">
           Is this your first time attending HopHacks?
         </InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="first-hophacks-label"
+          id="first-hophacks"
           value={first_hophacks}
+          label="Is this your first time attending HopHacks?"
           onChange={(e) => {
             setFirst_hophacks(e.target.value);
           }}
@@ -784,23 +796,26 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   );
 
   const learn_about_usForm = (
-    <form>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label"> How did you hear about us?</InputLabel>
+    <form className="w-full max-w-md">
+      {' '}
+      {/* Adjust width as needed */}
+      <FormControl fullWidth>
+        <InputLabel id="learn-about-us-label">How did you hear about us?</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="learn-about-us-label"
+          id="learn-about-us"
           value={learn_about_us}
+          label="How did you hear about us?"
           onChange={(e) => {
             setLearn_about_us(e.target.value);
           }}
         >
           <MenuItem value="Instagram">Instagram</MenuItem>
           <MenuItem value="Facebook">Facebook</MenuItem>
-          <MenuItem value="Linkedin">Linkedin</MenuItem>
+          <MenuItem value="Linkedin">LinkedIn</MenuItem>
           <MenuItem value="Google">Google</MenuItem>
           <MenuItem value="Major League Hacking">Major League Hacking</MenuItem>
-          <MenuItem value="Email Listerv">Email Listerv</MenuItem>
+          <MenuItem value="Email Listerv">Email Listserv</MenuItem>
           <MenuItem value="Friend">Friend</MenuItem>
           <MenuItem value="Other">Other</MenuItem>
         </Select>

@@ -175,9 +175,9 @@ def create():
         file_name = secure_filename(file_name)
         if (file and check_filename(file.filename)):
 
-            s3 = boto3.client('s3')
-            object_name = 'Fall-2025/{}-{}'.format(id, file_name)
-            s3.upload_fileobj(file, BUCKET, object_name)
+            #s3 = boto3.client('s3')
+            #object_name = 'Fall-2025/{}-{}'.format(id, file_name)
+            #s3.upload_fileobj(file, BUCKET, object_name)
 
             resume_link = file_name
     
@@ -333,8 +333,21 @@ def updaate_up_to_date_status():
     """
     id = get_jwt_identity()
 
+    eastern = pytz.timezone("America/New_York")
+
+    eventFile = open("event.txt", "r")
+    
+    new_reg = {
+        "event": eventFile.read(), # update 
+        "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
+        "accept": False,
+        "checkin": False,
+        "status": "email_confirmed"
+    }
 
     db.users.update_one({'_id': ObjectId(id)}, {'$set': {'updated' : True}})
+    db.users.update_one({'_id': ObjectId(id)}, {'$set': {'resume' : ''}})
+    db.users.update_one({'_id': ObjectId(id)}, {'$push': {'registrations': new_reg}})
     return jsonify({"msg": "updated!"}), 200
 
 @accounts_api.route('/profile/update', methods = ['POST'])

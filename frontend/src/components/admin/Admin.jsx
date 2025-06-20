@@ -301,11 +301,11 @@ const Admin = function () {
         </StyledTableCell>
 
         <StyledTableCell>
-          <Tooltip title="Vaccine">
-            <Button onClick={() => handleVaccinationDownload(user.id)}>
+          <Tooltip title="LinkedIn">
+            <Button onClick={() => window.open(user.profile.linkedIn, '_blank')}>
               <AssignmentOutlinedIcon
                 style={{
-                  color: '#24292F'
+                  color: '#0A66C2' // Optional: change to LinkedIn blue
                 }}
               />
             </Button>

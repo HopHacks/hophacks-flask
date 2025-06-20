@@ -314,7 +314,7 @@ function SignUp(props) {
         // } else {
         //   history.push('/admin');
         // }
-        console.log('failed here');
+
         const resumeData = new FormData();
         resumeData.append('file', resumeFile);
         await axios.post('/api/resumes/', resumeData);

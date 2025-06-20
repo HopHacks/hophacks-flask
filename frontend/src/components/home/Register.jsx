@@ -16,7 +16,7 @@ export default function Register() {
           {
             img: 'hack-bird.png',
             label: 'Hack',
-            link: '/register/signup'
+            link: '/register/login'
           },
           {
             img: 'volunteer-bird.png',
