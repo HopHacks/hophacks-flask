@@ -748,8 +748,12 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   );
 
   const first_hackathonForm = (
-    <form className="w-full max-w-md"> {/* Optional: control form width here */}
-      <FormControl fullWidth> {/* This ensures Select and InputLabel stretch properly */}
+    <form className="w-full max-w-md">
+      {' '}
+      {/* Optional: control form width here */}
+      <FormControl fullWidth>
+        {' '}
+        {/* This ensures Select and InputLabel stretch properly */}
         <InputLabel id="first-hackathon-label">Is this your first Hackathon?</InputLabel>
         <Select
           labelId="first-hackathon-label"
@@ -768,7 +772,9 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   );
 
   const first_hophacksForm = (
-    <form className="w-full max-w-md"> {/* Optional container width */}
+    <form className="w-full max-w-md">
+      {' '}
+      {/* Optional container width */}
       <FormControl fullWidth>
         <InputLabel id="first-hophacks-label">
           Is this your first time attending HopHacks?
@@ -790,7 +796,9 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   );
 
   const learn_about_usForm = (
-    <form className="w-full max-w-md"> {/* Adjust width as needed */}
+    <form className="w-full max-w-md">
+      {' '}
+      {/* Adjust width as needed */}
       <FormControl fullWidth>
         <InputLabel id="learn-about-us-label">How did you hear about us?</InputLabel>
         <Select
@@ -814,7 +822,6 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       </FormControl>
     </form>
   );
-
 
   const LinkedInForm = (
     <div>

@@ -95,7 +95,6 @@ const Admin = function () {
     });
   }
 
-
   async function handleVaccinationDownload(userid) {
     const response = await axios.get('/api/admin/vaccination?id=' + userid);
     const url = response.data['url'];
@@ -301,7 +300,7 @@ const Admin = function () {
           </Tooltip>
         </StyledTableCell>
 
-       <StyledTableCell>
+        <StyledTableCell>
           <Tooltip title="LinkedIn">
             <Button onClick={() => window.open(user.profile.linkedIn, '_blank')}>
               <AssignmentOutlinedIcon
