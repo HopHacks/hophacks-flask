@@ -17,7 +17,7 @@ import AnnouncementPanel from './admin/AnnouncementPanel';
 import Nav from './Nav';
 import EmailConfirmation from './EmailConfirmation';
 import PasswordReset from './PasswordReset';
-import RSVP from './RSVP';
+//import RSVP from './RSVP';
 import Assignments from './judgetool/Assignments.jsx';
 import Upload from './judgetool/Upload.jsx';
 import UploadSponsors from './judgetool/UploadSponsors.jsx';
