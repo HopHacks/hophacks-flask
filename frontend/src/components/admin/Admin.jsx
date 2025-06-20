@@ -95,6 +95,7 @@ const Admin = function () {
     });
   }
 
+
   async function handleVaccinationDownload(userid) {
     const response = await axios.get('/api/admin/vaccination?id=' + userid);
     const url = response.data['url'];
@@ -300,12 +301,12 @@ const Admin = function () {
           </Tooltip>
         </StyledTableCell>
 
-        <StyledTableCell>
-          <Tooltip title="Vaccine">
-            <Button onClick={() => handleVaccinationDownload(user.id)}>
+       <StyledTableCell>
+          <Tooltip title="LinkedIn">
+            <Button onClick={() => window.open(user.profile.linkedIn, '_blank')}>
               <AssignmentOutlinedIcon
                 style={{
-                  color: '#24292F'
+                  color: '#0A66C2' // Optional: change to LinkedIn blue
                 }}
               />
             </Button>
