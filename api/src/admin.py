@@ -40,7 +40,7 @@ def get_all_users_account():
 #     ]
 # })
     query = request.args.get("query")
-    event_name = "Fall 2024"
+    event_name = "Fall 2025"
 
     cursor = db.users.aggregate([
         {
@@ -53,17 +53,17 @@ def get_all_users_account():
                             {"profile.last_name": {"$regex": ".*" + query + ".*", "$options": "i"}}
                         ]
                     },
-                    # Filter users who have a 'Fall 2024' registration
+                    # Filter users who have a 'Fall 2025' registration
                     {"registrations": {"$elemMatch": {"event": event_name}}}
                 ]
             }
         },
         {
             "$addFields": {
-                "fall2024_rsvp_time": {
+                "fall2025_rsvp_time": {
                     "$let": {
                         "vars": {
-                            "fall2024_registration": {
+                            "fall2025_registration": {
                                 "$filter": {
                                     "input": "$registrations",
                                     "as": "registration",
@@ -73,8 +73,8 @@ def get_all_users_account():
                         },
                         "in": {
                             "$cond": {
-                                "if": {"$gt": [{"$size": "$$fall2024_registration"}, 0]},
-                                "then": {"$arrayElemAt": ["$$fall2024_registration.rsvp_time", 0]},
+                                "if": {"$gt": [{"$size": "$$fall2025_registration"}, 0]},
+                                "then": {"$arrayElemAt": ["$$fall2025_registration.rsvp_time", 0]},
                                 "else": None
                             }
                         }
@@ -84,7 +84,7 @@ def get_all_users_account():
         },
         {
             "$sort": {
-                "fall2024_rsvp_time": ASCENDING  # Sort by RSVP time for Fall 2024 if it exists
+                "fall2025_rsvp_time": ASCENDING  # Sort by RSVP time for Fall 2025 if it exists
             }
         }
     ])
@@ -112,7 +112,7 @@ def get_resume():
         return jsonify({'msg': 'no resume uploaded!'}, 404)
 
     s3 = boto3.client('s3')
-    object_name = 'Fall-2024/{}-{}'.format(id, user['resume'])
+    object_name = 'Fall-2025/{}-{}'.format(id, user['resume'])
 
     url = s3.generate_presigned_url('get_object',
                                      Params={'Bucket': 'hophacks-resume', 'Key': object_name},

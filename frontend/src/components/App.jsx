@@ -15,7 +15,7 @@ import Profile from './account/Profile.jsx';
 import Admin from './admin/Admin';
 import AnnouncementPanel from './admin/AnnouncementPanel';
 import Nav from './Nav';
-//import EmailConfirmation from './EmailConfirmation';
+import EmailConfirmation from './EmailConfirmation';
 import PasswordReset from './PasswordReset';
 //import RSVP from './RSVP';
 import Assignments from './judgetool/Assignments.jsx';
@@ -96,13 +96,13 @@ export default function App() {
                   {/*<Route path="/recruiting">
                     <Recruiting />
                   </Route>
-
+                  
                   <Route path="/rsvp">
                     <RSVP />
                   </Route>
-                  
-                  <Route path="/confirm_email/:token" component={EmailConfirmation} />
                   */}
+                  <Route path="/confirm_email/:token" component={EmailConfirmation} />
+
                   <Route path="/reset_password/:token" component={PasswordReset} />
                   <Route path="/team">
                     <Team />

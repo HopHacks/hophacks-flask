@@ -39,6 +39,8 @@ const HeaderTableCell = withStyles({
   }
 })(TableCell);
 
+const event = 'Fall 2025';
+
 const Admin = function () {
   const myVariable = process.env.REACT_APP_BACKENDURL;
 
@@ -65,7 +67,7 @@ const Admin = function () {
   async function handleRSVPAndAcceptedResumeDownload() {
     users.forEach(async (user) => {
       for (let i = 0; i < user.registrations.length; i++) {
-        if (user.registrations[i].event === 'Fall 2024') {
+        if (user.registrations[i].event === event) {
           if (
             user.email_confirmed &&
             (user.registrations[i].status == 'rsvped' || user.registrations[i].status == 'accepted')
@@ -82,7 +84,7 @@ const Admin = function () {
   async function handleCheckedInResumeDownload() {
     users.forEach(async (user) => {
       for (let i = 0; i < user.registrations.length; i++) {
-        if (user.registrations[i].event === 'Fall 2024') {
+        if (user.registrations[i].event === event) {
           if (user.email_confirmed && user.registrations[i].status == 'checked_in') {
             const response = await axios.get('/api/admin/resume?id=' + user.id);
             const url = response.data['url'];
@@ -114,28 +116,28 @@ const Admin = function () {
   async function acceptUser(id) {
     await axios.post('/api/registrations/accept', {
       users: [id],
-      event: 'Fall 2024'
+      event: event
     });
   }
 
   async function rejectUser(id) {
     await axios.post('/api/registrations/reject', {
       user: id,
-      event: 'Fall 2024'
+      event: event
     });
   }
 
   async function checkInUser(id) {
     await axios.post('/api/registrations/check_in', {
       user: id,
-      event: 'Fall 2024'
+      event: event
     });
   }
 
   function getStatus(user) {
     if (user.email_confirmed) {
       for (let i = 0; i < user.registrations.length; i++) {
-        if (user.registrations[i].event === 'Fall 2024') {
+        if (user.registrations[i].event === event) {
           return user.registrations[i].status;
         }
       }
@@ -211,7 +213,7 @@ const Admin = function () {
     } else if (status == 'not') {
       if (user.email_confirmed) {
         for (let i = 0; i < user.registrations.length; i++) {
-          if (user.registrations[i].event === 'Fall 2024') {
+          if (user.registrations[i].event === event) {
             return user.registrations[i].status != 'checked_in';
           }
         }
@@ -224,7 +226,7 @@ const Admin = function () {
     } else {
       if (user.email_confirmed) {
         for (let i = 0; i < user.registrations.length; i++) {
-          if (user.registrations[i].event === 'Fall 2024') {
+          if (user.registrations[i].event === event) {
             return user.registrations[i].status == status;
           }
         }
@@ -400,25 +402,39 @@ const Admin = function () {
   );
 
   return (
-    <Container fixed>
+    <Container fixed style={{ marginTop: '80px' }}>
       <Box style={{ backgroundColor: 'white' }} padding="1rem">
         {/* <>
         <button onClick={() => sendAllRsvpEmails()}>Send Rsvp Email</button>
       </> */}
-        {
-          <>
-            <button onClick={() => handleRSVPAndAcceptedResumeDownload()}>
-              Download Accepted and RSVP resumes
-            </button>
-          </>
-        }
-        {
-          <>
-            <button onClick={() => handleCheckedInResumeDownload()}>
-              Download Checked in resumes
-            </button>
-          </>
-        }
+        <Box display="flex" gap="1rem" marginBottom="1rem">
+          <button
+            onClick={handleRSVPAndAcceptedResumeDownload}
+            style={{
+              backgroundColor: '#003366',
+              color: 'white',
+              padding: '0.5rem 1rem',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer'
+            }}
+          >
+            Download Accepted and RSVP Resumes
+          </button>
+          <button
+            onClick={handleCheckedInResumeDownload}
+            style={{
+              backgroundColor: '#003366',
+              color: 'white',
+              padding: '0.5rem 1rem',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer'
+            }}
+          >
+            Download Checked In Resumes
+          </button>
+        </Box>
         Number of users: {users.length}
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <TextField
