@@ -74,7 +74,7 @@ def upload():
                 send_apply_confirm(user['username'], user['profile']['first_name'])
             else:
                 old_file_name = user['resume']
-                object_name = 'Fall-2024/{}-{}'.format(id, old_file_name)
+                object_name = 'Fall-2025/{}-{}'.format(id, old_file_name)
                 s3.delete_object(Bucket=BUCKET, Key=object_name)
     except Exception as e:
         print(e)
@@ -82,7 +82,7 @@ def upload():
         
 
     # TODO make this atomic? what if the file upload doesn't work?
-    object_name = 'Fall-2024/{}-{}'.format(id, file_name)
+    object_name = 'Fall-2025/{}-{}'.format(id, file_name)
     s3.upload_fileobj(file, BUCKET, object_name)
 
     db.users.update_one(
@@ -144,7 +144,7 @@ def download():
         return jsonify({'msg': 'no resume uploaded!'}, 404)
 
     s3 = boto3.client('s3')
-    object_name = 'Fall-2024/{}-{}'.format(id, user['resume'])
+    object_name = 'Fall-2025/{}-{}'.format(id, user['resume'])
 
     url = s3.generate_presigned_url('get_object',
                                      Params={'Bucket': BUCKET, 'Key': object_name},

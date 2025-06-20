@@ -378,8 +378,22 @@ def update_profile():
 
     if not validate_profile(request):
         return Response("invalid profile object", status=400)
+    
+    eastern = pytz.timezone("America/New_York")
+
+    eventFile = open("event.txt", "r")
+    
+    new_reg = {
+        "event": eventFile.read(), # update 
+        "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
+        "accept": False,
+        "checkin": False,
+        "status": "email_confirmed"
+    }
 
     db.users.update_one({'_id': ObjectId(id)}, {'$set': {'profile' : request.json['profile']}})
+    db.users.update_one({'_id': ObjectId(id)}, {'$set': {'resume' : ''}})
+    db.users.update_one({'_id': ObjectId(id)}, {'$push': {'registrations': new_reg}})
     return jsonify({"msg": "updated!"}), 200
 
 
