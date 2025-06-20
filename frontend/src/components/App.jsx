@@ -102,7 +102,7 @@ export default function App() {
                   </Route>
                   */}
                   <Route path="/confirm_email/:token" component={EmailConfirmation} />
-                  
+
                   <Route path="/reset_password/:token" component={PasswordReset} />
                   <Route path="/team">
                     <Team />

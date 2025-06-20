@@ -1,216 +1,297 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="color-scheme" content="light only">
-    <meta name="supported-color-schemes" content="light">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light only" />
+    <meta name="supported-color-schemes" content="light" />
     <title>Account Confirmation</title>
     <style type="text/css">
-        /* Reset styles */
-        body, table, td, p, a, li, blockquote {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
+      /* Reset styles */
+      body,
+      table,
+      td,
+      p,
+      a,
+      li,
+      blockquote {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      table,
+      td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+        border: 0;
+        outline: none;
+        text-decoration: none;
+      }
+
+      /* Outlook fixes */
+      table {
+        border-collapse: collapse !important;
+      }
+      .ReadMsgBody {
+        width: 100%;
+      }
+      .ExternalClass {
+        width: 100%;
+      }
+      .ExternalClass,
+      .ExternalClass p,
+      .ExternalClass span,
+      .ExternalClass font,
+      .ExternalClass td,
+      .ExternalClass div {
+        line-height: 100%;
+      }
+
+      /* Background image approach to prevent dark mode override */
+      .bg-light-blue {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTZmMGY2Ii8+PC9zdmc+") !important;
+        background-color: #e6f0f6; /* Fallback */
+      }
+
+      .bg-white {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmZmZmIi8+PC9zdmc+") !important;
+        background-color: #ffffff; /* Fallback */
+      }
+
+      .text-dark {
+        color: #333333 !important;
+      }
+
+      .text-muted {
+        color: #666666 !important;
+      }
+
+      .border-light-gray {
+        border-color: #cccccc !important;
+      }
+
+      /* Mobile styles */
+      @media only screen and (max-width: 600px) {
+        .container {
+          width: 100% !important;
+          max-width: 600px !important;
         }
-        table, td {
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
+        .mobile-center {
+          text-align: center !important;
         }
-        img {
-            -ms-interpolation-mode: bicubic;
-            border: 0;
-            outline: none;
-            text-decoration: none;
+        .mobile-padding {
+          padding: 20px !important;
         }
-        
-        /* Outlook fixes */
-        table {
-            border-collapse: collapse !important;
+        .mobile-font-size {
+          font-size: 24px !important;
         }
-        .ReadMsgBody {
-            width: 100%;
-        }
-        .ExternalClass {
-            width: 100%;
-        }
-        .ExternalClass, .ExternalClass p, .ExternalClass span,
-        .ExternalClass font, .ExternalClass td, .ExternalClass div {
-            line-height: 100%;
-        }
-        
-        /* Background image approach to prevent dark mode override */
-        .bg-light-blue {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTZmMGY2Ii8+PC9zdmc+') !important;
-            background-color: #e6f0f6; /* Fallback */
-        }
-        
-        .bg-white {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmZmZmIi8+PC9zdmc+') !important;
-            background-color: #ffffff; /* Fallback */
-        }
-        
-        .text-dark {
-            color: #333333 !important;
-        }
-        
-        .text-muted {
-            color: #666666 !important;
-        }
-        
-        .border-light-gray {
-            border-color: #cccccc !important;
-        }
-        
-        /* Mobile styles */
-        @media only screen and (max-width: 600px) {
-            .container {
-                width: 100% !important;
-                max-width: 600px !important;
-            }
-            .mobile-center {
-                text-align: center !important;
-            }
-            .mobile-padding {
-                padding: 20px !important;
-            }
-            .mobile-font-size {
-                font-size: 24px !important;
-            }
-        }
+      }
     </style>
-</head>
-<body style="margin: 0; padding: 0;" class="bg-light-blue">
+  </head>
+  <body style="margin: 0; padding: 0" class="bg-light-blue">
     <!-- Wrapper table -->
-    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="bg-light-blue">
-        <tr>
-            <td align="center">
-                <!-- Main container -->
-                <table border="0" cellpadding="0" cellspacing="0" width="590" class="container bg-white" style="margin: 20px auto;">
-                    
-                    <!-- Header with logo -->
-                    <tr>
-                        <td align="center" style="padding: 20px 20px 40px 20px;" class="bg-light-blue">
-                            <img src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/HopHacks_Email_Banner_1.png" 
-                                 alt="HopHacks Logo" 
-                                 width="550" 
-                                 style="display: block; max-width: 100%; height: auto;" />
-                        </td>
-                    </tr>
-                    
-                    <!-- Main content -->
-                    <tr>
-                        <td style="padding: 30px 40px 30px 40px;" class="mobile-padding bg-white">
-                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                <tr>
-                                    <td>
-                                        <!-- Greeting -->
-                                        <h2 style="margin: 0 0 15px 0; 
-                                                   font-family: 'Times New Roman', Times, serif; 
-                                                   font-size: 28px; 
-                                                   font-weight: normal; 
-                                                   color: #333333; 
-                                                   line-height: 34px;" 
-                                            class="mobile-font-size mobile-center text-dark">
-                                            Hi {{first_name}},
-                                        </h2>
-                                        
-                                        <!-- Message -->
-                                        <p style="margin: 0; 
-                                                  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; 
-                                                  font-size: 16px; 
-                                                  line-height: 24px; 
-                                                  color: #666666;" 
-                                           class="text-muted">
-                                            Thank you for applying! We have received your application. We will be reviewing 
-                                            your application over the next few weeks and keep you posted on the status.<br><br>
-                                            Wish you the best of luck!<br><br>
-                                            The HopHacks Team
-                                        </p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    
-                    <!-- Divider -->
-                    <tr>
-                        <td style="padding: 0 40px;" class="mobile-padding bg-white">
-                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                <tr>
-                                    <td style="border-top: 1px solid #cccccc; padding: 15px 0;" class="border-light-gray"></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    
-                    <!-- Footer -->
-                    <tr>
-                        <td align="center" style="padding: 0 40px 30px 40px;" class="mobile-padding bg-white">
-                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                <tr>
-                                    <td align="center">
-                                        <!-- Footer text -->
-                                        <p style="margin: 0 0 15px 0; 
-                                                  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; 
-                                                  font-size: 14px; 
-                                                  line-height: 21px; 
-                                                  color: #333333; 
-                                                  text-align: center;" 
-                                           class="text-dark">
-                                            HopHacks Fall 2025 | Johns Hopkins University<br>
-                                            To contact us, please email 
-                                            <a href="mailto:hophacks@gmail.com" style="color: #333333; text-decoration: underline;" class="text-dark">hophacks@gmail.com</a>
-                                        </p>
-                                        
-                                        <!-- Social media icons -->
-                                        <table border="0" cellpadding="0" cellspacing="0" align="center">
-                                            <tr>
-                                                <td align="center" style="padding: 0 5px;">
-                                                    <a href="https://www.instagram.com/hophacks/?hl=en" target="_blank">
-                                                        <img src="https://wodlub.stripocdn.email/content/assets/img/social-icons/logo-colored/instagram-logo-colored.png" 
-                                                             alt="Instagram" 
-                                                             width="32" 
-                                                             height="32" 
-                                                             style="display: block;" />
-                                                    </a>
-                                                </td>
-                                                <td align="center" style="padding: 0 5px;">
-                                                    <a href="https://www.facebook.com/HopHacks/" target="_blank">
-                                                        <img src="https://wodlub.stripocdn.email/content/assets/img/social-icons/logo-colored/facebook-logo-colored.png" 
-                                                             alt="Facebook" 
-                                                             width="32" 
-                                                             height="32" 
-                                                             style="display: block;" />
-                                                    </a>
-                                                </td>
-                                                <td align="center" style="padding: 0 5px;">
-                                                    <a href="https://hophacks.com" target="_blank">
-                                                        <img src="https://wodlub.stripocdn.email/content/assets/img/other-icons/logo-colored/link-logo-colored.png" 
-                                                             alt="Website" 
-                                                             width="32" 
-                                                             height="32" 
-                                                             style="display: block;" />
-                                                    </a>
-                                                </td>
-                                                <td align="center" style="padding: 0 5px;">
-                                                    <a href="mailto:hophacks@gmail.com">
-                                                        <img src="https://wodlub.stripocdn.email/content/assets/img/other-icons/logo-colored/mail-logo-colored.png" 
-                                                             alt="Email" 
-                                                             width="32" 
-                                                             height="32" 
-                                                             style="display: block;" />
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="100%"
+      class="bg-light-blue"
+    >
+      <tr>
+        <td align="center">
+          <!-- Main container -->
+          <table
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            width="590"
+            class="container bg-white"
+            style="margin: 20px auto"
+          >
+            <!-- Header with logo -->
+            <tr>
+              <td
+                align="center"
+                style="padding: 20px 20px 40px 20px"
+                class="bg-light-blue"
+              >
+                <img
+                  src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/HopHacks_Email_Banner_1.png"
+                  alt="HopHacks Logo"
+                  width="550"
+                  style="display: block; max-width: 100%; height: auto"
+                />
+              </td>
+            </tr>
+
+            <!-- Main content -->
+            <tr>
+              <td
+                style="padding: 30px 40px 30px 40px"
+                class="mobile-padding bg-white"
+              >
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td>
+                      <!-- Greeting -->
+                      <h2
+                        style="
+                          margin: 0 0 15px 0;
+                          font-family:
+                            &quot;Times New Roman&quot;, Times, serif;
+                          font-size: 28px;
+                          font-weight: normal;
+                          color: #333333;
+                          line-height: 34px;
+                        "
+                        class="mobile-font-size mobile-center text-dark"
+                      >
+                        Hi {{first_name}},
+                      </h2>
+
+                      <!-- Message -->
+                      <p
+                        style="
+                          margin: 0;
+                          font-family:
+                            Arial, &quot;Helvetica Neue&quot;, Helvetica,
+                            sans-serif;
+                          font-size: 16px;
+                          line-height: 24px;
+                          color: #666666;
+                        "
+                        class="text-muted"
+                      >
+                        Thank you for applying! We have received your
+                        application. We will be reviewing your application over
+                        the next few weeks and keep you posted on the status.<br /><br />
+                        Wish you the best of luck!<br /><br />
+                        The HopHacks Team
+                      </p>
+                    </td>
+                  </tr>
                 </table>
-            </td>
-        </tr>
+              </td>
+            </tr>
+
+            <!-- Divider -->
+            <tr>
+              <td style="padding: 0 40px" class="mobile-padding bg-white">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td
+                      style="border-top: 1px solid #cccccc; padding: 15px 0"
+                      class="border-light-gray"
+                    ></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                align="center"
+                style="padding: 0 40px 30px 40px"
+                class="mobile-padding bg-white"
+              >
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td align="center">
+                      <!-- Footer text -->
+                      <p
+                        style="
+                          margin: 0 0 15px 0;
+                          font-family:
+                            Arial, &quot;Helvetica Neue&quot;, Helvetica,
+                            sans-serif;
+                          font-size: 14px;
+                          line-height: 21px;
+                          color: #333333;
+                          text-align: center;
+                        "
+                        class="text-dark"
+                      >
+                        HopHacks Fall 2025 | Johns Hopkins University<br />
+                        To contact us, please email
+                        <a
+                          href="mailto:hophacks@gmail.com"
+                          style="color: #333333; text-decoration: underline"
+                          class="text-dark"
+                          >hophacks@gmail.com</a
+                        >
+                      </p>
+
+                      <!-- Social media icons -->
+                      <table
+                        border="0"
+                        cellpadding="0"
+                        cellspacing="0"
+                        align="center"
+                      >
+                        <tr>
+                          <td align="center" style="padding: 0 5px">
+                            <a
+                              href="https://www.instagram.com/hophacks/?hl=en"
+                              target="_blank"
+                            >
+                              <img
+                                src="https://wodlub.stripocdn.email/content/assets/img/social-icons/logo-colored/instagram-logo-colored.png"
+                                alt="Instagram"
+                                width="32"
+                                height="32"
+                                style="display: block"
+                              />
+                            </a>
+                          </td>
+                          <td align="center" style="padding: 0 5px">
+                            <a
+                              href="https://www.facebook.com/HopHacks/"
+                              target="_blank"
+                            >
+                              <img
+                                src="https://wodlub.stripocdn.email/content/assets/img/social-icons/logo-colored/facebook-logo-colored.png"
+                                alt="Facebook"
+                                width="32"
+                                height="32"
+                                style="display: block"
+                              />
+                            </a>
+                          </td>
+                          <td align="center" style="padding: 0 5px">
+                            <a href="https://hophacks.com" target="_blank">
+                              <img
+                                src="https://wodlub.stripocdn.email/content/assets/img/other-icons/logo-colored/link-logo-colored.png"
+                                alt="Website"
+                                width="32"
+                                height="32"
+                                style="display: block"
+                              />
+                            </a>
+                          </td>
+                          <td align="center" style="padding: 0 5px">
+                            <a href="mailto:hophacks@gmail.com">
+                              <img
+                                src="https://wodlub.stripocdn.email/content/assets/img/other-icons/logo-colored/mail-logo-colored.png"
+                                alt="Email"
+                                width="32"
+                                height="32"
+                                style="display: block"
+                              />
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
     </table>
-</body>
+  </body>
 </html>

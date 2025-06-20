@@ -319,7 +319,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       );
     } else if (confirmed && status === appCompleteStatus) {
       return (
-        <p className='text-white'>
+        <p className="text-white">
           You have successfully applied to HopHacks. Please be patient while we process your
           application :)
         </p>
@@ -340,7 +340,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
             RSVP
           </GlowButton>
           <br />
-          <span className='text-white'> Note, by RSVPing to our event, you consent to our </span>
+          <span className="text-white"> Note, by RSVPing to our event, you consent to our </span>
           <a href={img('JHU_Photo-and-Video-Release_20192.pdf')} onClick={openPhotoRelease}>
             {' photo release form'}
           </a>

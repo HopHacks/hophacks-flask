@@ -2,26 +2,25 @@ var spriteImages = document.querySelectorAll('.slide-item__image');
 var spriteImagesSrc = [];
 var texts = [];
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
   // Remove the #prizes section
   let scheduleSection = document.getElementById('schedule');
   if (scheduleSection) {
     scheduleSection.remove();
   } else {
-    console.log("Schedule section not found.");
+    console.log('Schedule section not found.');
   }
 
   // Remove all elements with class "prizeTrackDiv"
-  let prizeDivs = document.querySelectorAll(".prizeTrackDiv");
+  let prizeDivs = document.querySelectorAll('.prizeTrackDiv');
   prizeDivs.forEach((div) => div.remove());
 
-  let trackDivs = document.querySelectorAll(".makeStyles-mt_50-51");
+  let trackDivs = document.querySelectorAll('.makeStyles-mt_50-51');
   trackDivs.forEach((div) => div.remove());
 
-  let sponsorDivs = document.querySelectorAll(".makeStyles-root-56");
+  let sponsorDivs = document.querySelectorAll('.makeStyles-root-56');
   sponsorDivs.forEach((div) => div.remove());
 });
-
 
 for (var i = 0; i < spriteImages.length; i++) {
   var img = spriteImages[i];
