@@ -66,7 +66,7 @@ def upload():
                 {
                     '$set': {
                         "registrations.$.apply": True,
-                        "registrations.$.apply_at": datetime.datetime.utcnow(),
+                        "registrations.$.apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
                         "registrations.$.status": "applied"
                     }
                 }
