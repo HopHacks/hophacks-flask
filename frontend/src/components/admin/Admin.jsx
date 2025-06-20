@@ -95,11 +95,11 @@ const Admin = function () {
     });
   }
 
-  async function handleVaccinationDownload(userid) {
-    const response = await axios.get('/api/admin/vaccination?id=' + userid);
-    const url = response.data['url'];
-    window.open(url, '_blank');
-  }
+  // async function handleVaccinationDownload(userid) {
+  //   const response = await axios.get('/api/admin/vaccination?id=' + userid);
+  //   const url = response.data['url'];
+  //   window.open(url, '_blank');
+  // }
 
   async function getUsers() {
     const response = await axios.get('/api/admin/users' + '?query=');
