@@ -106,7 +106,7 @@ def login():
     if ("email_confirmed" in user and user["email_confirmed"]):
         alreadyReg = False
         for registrations in user['registrations']:
-            if (registrations['event'] == "Fall 2024"):
+            if (registrations['event'] == "Fall 2025"):
                 alreadyReg = True
         if (not alreadyReg):
             result = db.users.update_one({'_id': ObjectId(id)}, {'$push': {'registrations': new_reg}})

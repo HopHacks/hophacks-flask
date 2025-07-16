@@ -11,7 +11,7 @@ export default function SignUpConfirmation() {
         style={{ fontVariant: 'small-caps' }}
       >
         We are excited to have you joining our event! Please go to your profile to finish
-        registering.
+        registering and watch your email for confirmation.
       </p>
       <Link to={`/register/login`}>
         <GlowButton>Sign In</GlowButton>

@@ -97,7 +97,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Navigation = function Navigation() {
+const Navigation = function Navigation({ isLoggedIn, logout }) {
   const classes = useStyles();
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 800);
@@ -105,6 +105,15 @@ const Navigation = function Navigation() {
   const [activeSection, setActiveSection] = useState('cover-section');
   const isHome = location.pathname === '/';
   const [showNavbar, setShowNavbar] = useState(true);
+
+  const handleLogout = async () => {
+    try {
+      await logout(); // Calls your AuthProvider's logout
+      window.location.href = '/'; // Refresh to root page
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+  };
 
   // Update isMobile on window resize.
   useEffect(() => {
@@ -240,7 +249,7 @@ const Navigation = function Navigation() {
             <Button
               component={Link}
               smooth
-              to="/"
+              to="/#cover-section"
               color="inherit"
               className={classes.hophacksButton}
             >
@@ -271,19 +280,41 @@ const Navigation = function Navigation() {
               <Divider />
               {navItems}
             </Drawer>
-            <a
-              id="mlh-trust-badge"
-              className={classes.mlhBanner}
-              href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src="https://hophacks-website.s3.amazonaws.com/images/mlh-badge-2025-blue.svg"
-                alt="Major League Hacking 2024 Hackathon Season"
-                style={{ width: '100%' }}
-              />
-            </a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: 'auto' }}>
+              {isLoggedIn ? (
+                <>
+                  <Button component={Link} to="/profile" className={classes.navBtn}>
+                    <Typography variant="body2" className={classes.title}>
+                      Profile
+                    </Typography>
+                  </Button>
+                  <Button onClick={handleLogout} className={classes.navBtn}>
+                    <Typography variant="body2" className={classes.title}>
+                      Logout
+                    </Typography>
+                  </Button>
+                </>
+              ) : (
+                <Button component={Link} to="/login" className={classes.navBtn}>
+                  <Typography variant="body2" className={classes.title}>
+                    Login
+                  </Typography>
+                </Button>
+              )}
+              <a
+                id="mlh-trust-badge"
+                className={classes.mlhBanner}
+                href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=blue"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-blue.svg"
+                  alt="Major League Hacking 2026 Hackathon Season"
+                  className="w-full"
+                />
+              </a>
+            </div>
           </Toolbar>
         </AppBar>
       </div>
@@ -297,7 +328,13 @@ const Navigation = function Navigation() {
       className={`${classes.appBar} ${!showNavbar ? classes.appBarHidden : ''}`}
     >
       <Toolbar className={classes.toolbar}>
-        <Button component={Link} smooth to="/" color="inherit" className={classes.hophacksButton}>
+        <Button
+          component={Link}
+          smooth
+          to="/#cover-section"
+          color="inherit"
+          className={classes.hophacksButton}
+        >
           <img
             src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/website2025/hophacks2025logo.png"
             alt="HopHacks Logo"
@@ -305,17 +342,46 @@ const Navigation = function Navigation() {
           />
         </Button>
         <div className={classes.navItemsContainer}>{navItems}</div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginLeft: 'auto',
+            paddingRight: '110px'
+          }}
+        >
+          {isLoggedIn ? (
+            <>
+              <Button component={Link} to="/profile" className={classes.navBtn}>
+                <Typography variant="body2" className={classes.title}>
+                  Profile
+                </Typography>
+              </Button>
+              <Button onClick={handleLogout} className={classes.navBtn}>
+                <Typography variant="body2" className={classes.title}>
+                  Logout
+                </Typography>
+              </Button>
+            </>
+          ) : (
+            <Button component={Link} to="/register/login" className={classes.navBtn}>
+              <Typography variant="body2" className={classes.title}>
+                Login
+              </Typography>
+            </Button>
+          )}
+        </div>
         <a
           id="mlh-trust-badge"
           className={classes.mlhBanner}
-          href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=gray"
+          href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=blue"
           target="_blank"
           rel="noreferrer"
         >
           <img
-            src="https://hophacks-website.s3.amazonaws.com/images/mlh-badge-2025-blue.svg"
-            alt="Major League Hacking 2024 Hackathon Season"
-            style={{ width: '100%' }}
+            src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-blue.svg"
+            alt="Major League Hacking 2026 Hackathon Season"
+            className="w-full"
           />
         </a>
       </Toolbar>

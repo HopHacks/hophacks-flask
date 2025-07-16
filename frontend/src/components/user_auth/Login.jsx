@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { withAuthProps } from '../../util/auth';
 import '../../stylesheets/user_auth.css';
 
-const AuthTextField = ({ label, type = 'text', value, onChange, color, isMobile }) => (
+const AuthTextField = ({ isMobile, label, type = 'text', value, onChange, color }) => (
   <TextField
     required
     variant="standard"
@@ -19,29 +19,23 @@ const AuthTextField = ({ label, type = 'text', value, onChange, color, isMobile 
 );
 
 function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
-  const [email, setEmail] = useState(initialEmail);
+  const [email, setEmail] = useState(initialEmail ?? '');
   const [password, setPassword] = useState('');
   const [attempted, setAttempted] = useState(false);
   const history = useHistory();
   const textColor = '#061A40';
 
   useEffect(() => {
-    setEmail(initialEmail);
-  }, [initialEmail]);
-
-  useEffect(() => {
     if (isLoggedIn) {
-      history.push(email === 'admin' ? '/admin' : '/profile');
+      history.push(email === 'admin' || email === 'hophacks' ? '/admin' : '/profile');
     }
   }, [isLoggedIn, email, history]);
 
   const handleChangeEmail = (e) => {
-    e.preventDefault();
     setEmail(e.target.value);
   };
 
   const handleChangePassword = (e) => {
-    e.preventDefault();
     setPassword(e.target.value);
   };
 
@@ -49,7 +43,7 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
     e.preventDefault();
     try {
       await login(email, password);
-      history.push(email === 'admin' ? '/admin' : '/profile');
+      history.push(email === 'admin' || email === 'hophacks' ? '/admin' : '/profile');
     } catch {
       setAttempted(true);
     }
@@ -72,19 +66,21 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
         </div>
         <div className="text-field">
           <AuthTextField
+            isMobile={isMobile}
             label="Email Address"
             value={email}
-            onChange={(e) => handleChangeEmail(e)}
+            onChange={handleChangeEmail}
             color={textColor}
             isMobile={isMobile}
           />
         </div>
         <div className="text-field">
           <AuthTextField
+            isMobile={isMobile}
             type="password"
             label="Password"
             value={password}
-            onChange={(e) => handleChangePassword(e)}
+            onChange={handleChangePassword}
             color={textColor}
             isMobile={isMobile}
           />
