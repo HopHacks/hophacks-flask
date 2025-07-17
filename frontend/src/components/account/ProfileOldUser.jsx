@@ -7,7 +7,7 @@ import {
   FormControl,
   FormHelperText,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 import PhoneInput from 'react-phone-number-input';
 import GlowButton from '../ui/GlowButton';
 
@@ -16,7 +16,7 @@ import SchoolAutocomplete from './SchoolAutocomplete';
 import CountryAutocomplete from './CountryAutocomplete';
 import PhoneNumber from './PhoneNumber';
 import LabeledTextField from '../ui/LabeledTextField';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 //import '../stylesheets/user_auth.css';
 

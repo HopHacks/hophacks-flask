@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ThemeProvider } from '@material-ui/styles';
+import { ThemeProvider } from '@mui/styles';
 import {
   Tab,
   Tabs,
@@ -11,7 +11,7 @@ import {
   Grid,
   Container,
   Box
-} from '@material-ui/core';
+} from '@mui/material';
 import { OrganizerCard } from './OrganizerCard';
 import { AlumniCard } from './AlumniCard';
 import theme from './teamTheme';

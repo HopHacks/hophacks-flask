@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../stylesheets/cover.css';
 import GlowButton from '../ui/GlowButton';
-import { ArrowDownward } from '@material-ui/icons';
+import { ArrowDownward } from '@mui/icons-material';
 
 export default function Cover() {
   return (

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
-import Pencil from '@material-ui/icons/Create';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import Pencil from '@mui/icons-material/Create';
 import { withAuthCheck } from '../../util/auth.jsx';
-import List from '@material-ui/core/List';
+import List from '@mui/material/List';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import FormDialog from './FormDialog';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';

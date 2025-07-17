@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import TextField from '@material-ui/core/TextField';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
+import Dialog from '@mui/material/Dialog';
+import TextField from '@mui/material/TextField';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { withAuthProps } from '../util/auth';
 import { useHistory } from 'react-router-dom';
-import { IconButton, Typography } from '@material-ui/core';
+import { IconButton, Typography } from '@mui/material';
 import ResetPassword from './ResetPasswordDialog';
-import CloseIcon from '@material-ui/icons/Close';
-import { makeStyles } from '@material-ui/core/styles';
+import CloseIcon from '@mui/icons-material/Close';
+import { makeStyles } from '@mui/styles';
 
 function Login(props) {
   const useStyles = makeStyles({

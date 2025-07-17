@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LabeledTextField from '../ui/LabeledTextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Autocomplete from '@mui/material/Autocomplete';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SchoolAutocomplete = function SchoolAutocomplete({ school, setSchool }) {
   const [open, setOpen] = useState(false);

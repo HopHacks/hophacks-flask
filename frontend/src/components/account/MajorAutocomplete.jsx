@@ -1,6 +1,6 @@
 import React from 'react';
 import LabeledTextField from '../ui/LabeledTextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const MajorAutocomplete = function MajorAutocomplete({ setMajor, major }) {
   const majors = [

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Typography, Box, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Card, Typography, Box, Button } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 
 const useStyles = makeStyles(() => ({

@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import { makeStyles } from '@mui/styles';
+import Typography from '@mui/material/Typography';
+import { Grid } from '@mui/material';
+import Box from '@mui/material/Box';
 
 const useStyles = makeStyles({
   root: {

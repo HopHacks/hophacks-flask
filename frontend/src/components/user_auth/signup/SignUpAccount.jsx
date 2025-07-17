@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import '../../../stylesheets/user_auth.css';
 import GlowButton from '../../ui/GlowButton';

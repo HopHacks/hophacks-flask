@@ -1,8 +1,8 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import { Typography } from '@material-ui/core';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import { Typography } from '@mui/material';
 import './../stylesheets/home.css';
 
 const Footer = function Footer() {

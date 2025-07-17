@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
-import Card from '@material-ui/core/Card';
-import { Container } from '@material-ui/core';
+import Card from '@mui/material/Card';
+import { Container } from '@mui/material';
 
 function SponsorPrizes() {
   const [prizes, setPrizes] = useState([]);

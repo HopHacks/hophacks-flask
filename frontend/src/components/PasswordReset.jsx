@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import '../stylesheets/user_auth.css';
 
 export default function PasswordReset(props) {

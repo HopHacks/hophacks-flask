@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem, Typography, Grid, FormControl, FormHelperText } from '@material-ui/core';
+import { MenuItem, Typography, Grid, FormControl, FormHelperText } from '@mui/material';
 import PhoneInput from 'react-phone-number-input';
 import GlowButton from '../../ui/GlowButton';
 

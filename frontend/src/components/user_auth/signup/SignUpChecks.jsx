@@ -7,8 +7,8 @@ import {
   Checkbox,
   FormGroup,
   FormControlLabel
-} from '@material-ui/core';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+} from '@mui/material';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LabeledTextField from '../../ui/LabeledTextField';
 import '../../../stylesheets/user_auth.css';
 import GlowButton from '../../ui/GlowButton';

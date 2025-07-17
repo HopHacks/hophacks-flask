@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { withAuthCheck } from '../util/auth.jsx';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 
 const Events = function Events(props) {
   const [eventsList, setEventsList] = useState([]); // list of events

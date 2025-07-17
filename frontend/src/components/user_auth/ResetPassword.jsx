@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import LabeledTextField from '../ui/LabeledTextField';
 import { Link } from 'react-router-dom';
 import '../../stylesheets/user_auth.css';

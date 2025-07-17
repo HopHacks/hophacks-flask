@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import EastIcon from '@material-ui/icons/ArrowForward';
+import EastIcon from '@mui/icons-material/ArrowForward';
 
 import './AlumniCard.css';
 

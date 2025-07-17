@@ -1,10 +1,10 @@
 // https://hophacks-website.s3.amazonaws.com/images/cloud1.png
 
 import React from 'react';
-// import Box from '@material-ui/core/Box';
-import { Container } from '@material-ui/core';
-import { Box } from '@material-ui/core';
-// import { makeStyles } from '@material-ui/core/styles';
+// import Box from '@mui/material/Box';
+import { Container } from '@mui/material';
+import { Box } from '@mui/material';
+// import { makeStyles } from '@mui/styles';
 
 export default function AboutSeparation() {
   function img(url) {

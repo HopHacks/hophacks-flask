@@ -1,5 +1,5 @@
 import React from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function img(url) {
   return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;

@@ -1,6 +1,6 @@
 import React from 'react';
 import LabeledTextField from '../ui/LabeledTextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const CountryAutocomplete = function CountryAutocomplete({ country, setCountry }) {
   const countries = [

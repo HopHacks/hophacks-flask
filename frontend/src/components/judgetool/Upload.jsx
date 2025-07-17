@@ -3,8 +3,8 @@ import axios from 'axios';
 import bsCustomFileInput from 'bs-custom-file-input'; //plugin for displaying selected file
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Card from '@material-ui/core/Card';
-import { Container } from '@material-ui/core';
+import Card from '@mui/material/Card';
+import { Container } from '@mui/material';
 
 class Upload extends Component {
   state = {

@@ -1,7 +1,7 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import CardMedia from '@material-ui/core/CardMedia';
-import { makeStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+import CardMedia from '@mui/material/CardMedia';
+import { makeStyles } from '@mui/styles';
 import { motion, useTransform, useViewportScroll } from 'framer-motion/dist/framer-motion';
 import { useState, useEffect } from 'react';
 

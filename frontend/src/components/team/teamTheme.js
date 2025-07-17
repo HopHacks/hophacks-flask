@@ -1,8 +1,8 @@
 // src/theme/index.js
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material';
 import { colors } from './teamColors';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       light: colors.primaryLight,

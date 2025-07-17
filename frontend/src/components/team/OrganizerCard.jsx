@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import EastIcon from '@material-ui/icons/ArrowForward';
+import EastIcon from '@mui/icons-material/ArrowForward';
 import './OrganizerCard.css';
 
 export const OrganizerCard = ({

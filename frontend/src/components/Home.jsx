@@ -5,7 +5,7 @@ import AboutSection from './home/About';
 import HomeSection from './home/HomeSection';
 import Stats from './flashback/HackathonStats2024';
 import SectionParagraph from './ui/SectionParagraph';
-import { ArrowRightAlt } from '@material-ui/icons';
+import { ArrowRightAlt } from '@mui/icons-material';
 // import PrizesSection from './home/Prizes';
 import FaqAccordion from './home/FaqAccordian';
 
