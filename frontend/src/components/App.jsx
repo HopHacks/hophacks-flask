@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { ParallaxProvider } from 'react-scroll-parallax';
 
@@ -57,25 +57,19 @@ export default function App() {
                 <div>
                   <Nav />
 
-                  <Switch>
-                    <Route path="/assignments" component={Assignments} />
-                    <Route path="/upload" component={Upload} />
-                    <Route path="/upload-sponsors" component={UploadSponsors} />
-                    <Route path="/sponsor-prizes" component={SponsorPrizes} />
-                    <Route path="/tables" component={TablesAndRooms} />
+                  <Routes>
+                    <Route path="/assignments" element={<Assignments />} />
+                    <Route path="/upload" element={<Upload />} />
+                    <Route path="/upload-sponsors" element={<UploadSponsors />} />
+                    <Route path="/sponsor-prizes" element={<SponsorPrizes />} />
+                    <Route path="/tables" element={<TablesAndRooms />} />
 
-                    <Route exact path="/admin">
-                      <Admin />
-                    </Route>
+                    <Route path="/admin" element={<Admin />} />
 
-                    <Route exact path="/admin/announcementpanel">
-                      <AnnouncementPanel />
-                    </Route>
+                    <Route path="/admin/announcementpanel" element={<AnnouncementPanel />} />
 
                     {/* <Route path="/account/profile" component={Profile} /> */}
-                    <Route path="/profile">
-                      <Profile isMobile={isMobile} />
-                    </Route>
+                    <Route path="/profile" element={<Profile isMobile={isMobile} />} />
 
                     {/*<Route path="/announcements/detail">
                       <AnnouncementDetails />
@@ -85,9 +79,7 @@ export default function App() {
                       <Announcements />
                     </Route>*/}
 
-                    <Route exact path="/home">
-                      <Home />
-                    </Route>
+                    <Route path="/home" element={<Home />} />
 
                     {/* TODO: replace this with new register page */}
                     {/* <Route path="/register">
@@ -102,24 +94,16 @@ export default function App() {
                       <RSVP />
                     </Route>
                     */}
-                    <Route path="/confirm_email/:token" component={EmailConfirmation} />
+                    <Route path="/confirm_email/:token" element={<EmailConfirmation />} />
 
-                    <Route path="/reset_password/:token" component={PasswordReset} />
-                    <Route path="/team">
-                      <Team />
-                    </Route>
+                    <Route path="/reset_password/:token" element={<PasswordReset />} />
+                    <Route path="/team" element={<Team />} />
 
-                    <Route path="/register/login">
-                      <Login isMobile={isMobile} />
-                    </Route>
+                    <Route path="/register/login" element={<Login isMobile={isMobile} />} />
 
-                    <Route path="/register/signup">
-                      <SignUp isMobile={isMobile} />
-                    </Route>
+                    <Route path="/register/signup" element={<SignUp isMobile={isMobile} />} />
 
-                    <Route path="/register/resetpassword">
-                      <ResetPassword isMobile={isMobile} />
-                    </Route>
+                    <Route path="/register/resetpassword" element={<ResetPassword isMobile={isMobile} />} />
 
                     {/*<Route path="/teamMatching" isMobile={isMobile}>
                       <TeamMatchingPage isMobile={isMobile} />
@@ -129,14 +113,10 @@ export default function App() {
                       <Tracks />
                     </Route> */}
 
-                    <Route path="/Recap">
-                      <Recap />
-                    </Route>
+                    <Route path="/Recap" element={<Recap />} />
 
-                    <Route path="/">
-                      <Home isMobile={isMobile} />
-                    </Route>
-                  </Switch>
+                    <Route path="/" element={<Home isMobile={isMobile} />} />
+                  </Routes>
                 </div>
               </Router>
             </AuthProvider>

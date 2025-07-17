@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { withAuthProps } from '../util/auth';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IconButton, Typography } from '@mui/material';
 import ResetPassword from './ResetPasswordDialog';
 import CloseIcon from '@mui/icons-material/Close';
@@ -62,7 +62,7 @@ function Login(props) {
   /* State for handling login modal */
   const [loginDialogOpen, setLoginDialogOpen] = useState(props.fromConfirmEmail ? true : false);
 
-  let history = useHistory();
+  let navigate = useNavigate();
 
   async function handleLogin(event) {
     event.preventDefault();
@@ -71,9 +71,9 @@ function Login(props) {
       await props.login(email, password);
 
       if (email !== 'admin') {
-        history.push('/profile');
+        navigate('/profile');
       } else {
-        history.push('/admin');
+        navigate('/admin');
       }
       setLoginDialogOpen(false);
     } catch (error) {

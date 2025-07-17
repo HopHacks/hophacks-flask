@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField } from '@mui/material';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { withAuthProps } from '../../util/auth';
 import '../../stylesheets/user_auth.css';
 
@@ -22,14 +22,14 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
   const [email, setEmail] = useState(initialEmail ?? '');
   const [password, setPassword] = useState('');
   const [attempted, setAttempted] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const textColor = '#061A40';
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push(email === 'admin' || email === 'hophacks' ? '/admin' : '/profile');
+      navigate(email === 'admin' || email === 'hophacks' ? '/admin' : '/profile');
     }
-  }, [isLoggedIn, email, history]);
+  }, [isLoggedIn, email, navigate]);
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -43,7 +43,7 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
     e.preventDefault();
     try {
       await login(email, password);
-      history.push(email === 'admin' || email === 'hophacks' ? '/admin' : '/profile');
+      navigate(email === 'admin' || email === 'hophacks' ? '/admin' : '/profile');
     } catch {
       setAttempted(true);
     }

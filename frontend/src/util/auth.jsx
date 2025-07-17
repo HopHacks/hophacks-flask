@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const AuthContext = React.createContext();
 
@@ -114,7 +114,7 @@ function withAuthCheck(WrappedComponent) {
         {props.isLoggedIn === null ? (
           <p>Checking login...</p>
         ) : props.isLoggedIn === false ? (
-          <Redirect to="/register/login" />
+            <Navigate to="/register/login" replace />
         ) : (
           <WrappedComponent {...props} />
         )}
