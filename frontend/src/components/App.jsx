@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { ParallaxProvider } from 'react-scroll-parallax';
 
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { theme } from '../util/theme';
@@ -49,7 +49,7 @@ export default function App() {
   return (
     <>
       <ParallaxProvider>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <AuthProvider>
             <CssBaseline />
             <Router>
@@ -139,7 +139,7 @@ export default function App() {
               </div>
             </Router>
           </AuthProvider>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </ParallaxProvider>
     </>
   );
