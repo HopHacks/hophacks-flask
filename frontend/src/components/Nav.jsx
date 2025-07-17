@@ -264,6 +264,7 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
               color="inherit"
               aria-label="menu"
               onClick={() => setIsDrawerOpen(true)}
+              size="large"
             >
               <MenuIcon />
             </IconButton>
@@ -273,7 +274,11 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
               classes={{ paper: classes.drawerPaper }}
             >
               <div>
-                <IconButton onClick={() => setIsDrawerOpen(false)} className={classes.icon}>
+                <IconButton
+                  onClick={() => setIsDrawerOpen(false)}
+                  className={classes.icon}
+                  size="large"
+                >
                   <ChevronLeftIcon />
                 </IconButton>
               </div>

@@ -503,7 +503,7 @@ export default function Register() {
         md={7}
         direction="row"
         alignItems="center"
-        justify="center"
+        justifyContent="center"
       >
         <Grid container item spacing={0} xs={12}>
           <Grid item xs={5}>
@@ -634,7 +634,7 @@ export default function Register() {
         md={5}
         direction="row"
         alignItems="center"
-        justify="center"
+        justifyContent="center"
       >
         <Grid item xs={12}>
           <FormControl required variant="standard" style={{ minWidth: 300, maxWidth: 300 }}>
@@ -685,7 +685,7 @@ export default function Register() {
           </TextField>
         </Grid>
 
-        <Grid container item xs={12} direction="row" alignItems="center" justify="center">
+        <Grid container item xs={12} direction="row" alignItems="center" justifyContent="center">
           <Grid item xs={11} md={7}>
             <TextField
               required
@@ -761,7 +761,7 @@ export default function Register() {
         {communication}
       </Grid>
 
-      <Grid item container xs={12} direction="column" alignItems="center" justify="center">
+      <Grid item container xs={12} direction="column" alignItems="center" justifyContent="center">
         <Grid item>
           <Typography style={{ color: 'red' }}>{profileSubmitMsg}</Typography>
         </Grid>

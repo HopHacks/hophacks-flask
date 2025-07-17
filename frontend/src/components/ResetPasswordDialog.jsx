@@ -58,14 +58,14 @@ function ResetPassword() {
       <DialogContent>
         <DialogContentText>Reset your password here</DialogContentText>
         <TextField
+          variant="standard"
           autoFocus
           margin="dense"
           id="name"
           label="Email Address"
           type="email"
           fullWidth
-          onChange={(e) => setResetEmail(e.target.value)}
-        />
+          onChange={(e) => setResetEmail(e.target.value)} />
       </DialogContent>
 
       <DialogActions>

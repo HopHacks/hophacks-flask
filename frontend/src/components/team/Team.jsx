@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ThemeProvider } from '@mui/styles';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import {
   Tab,
   Tabs,
@@ -120,53 +120,27 @@ export default function TeamPage() {
   const sortedAlumni = sortAlumni(filteredAlumni, sortOrder);
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className="flex flex-col justify-center items-center">
-        {/* Header */}
-        <div className={classes.header}>
-          <Typography variant="h3" className={classes.title}>
-            Our Team
-          </Typography>
-          <Typography className={classes.subtitle}>
-            Meet the team that organizes HopHacks
-          </Typography>
-        </div>
+    <StyledEngineProvider injectFirst>(
+      <ThemeProvider theme={theme}>
+        <div className="flex flex-col justify-center items-center">
+          {/* Header */}
+          <div className={classes.header}>
+            <Typography variant="h3" className={classes.title}>
+              Our Team
+            </Typography>
+            <Typography className={classes.subtitle}>
+              Meet the team that organizes HopHacks
+            </Typography>
+          </div>
 
-        {/* Filters */}
-        <Box className={classes.dropdownContainer}>
-          <FormControl className={classes.formControl} variant="outlined">
-            <Select
-              value={view}
-              onChange={(e) => setView(e.target.value)}
-              classes={{ root: classes.selectRoot }}
-              MenuProps={{
-                classes: { paper: classes.selectMenu },
-                anchorOrigin: {
-                  vertical: 'bottom',
-                  horizontal: 'left'
-                },
-                getContentAnchorEl: null
-              }}
-            >
-              <MenuItem value="Current Organizers">Current Organizers</MenuItem>
-              <MenuItem value="Alumni">Alumni</MenuItem>
-            </Select>
-          </FormControl>
-
-          <TextField
-            placeholder="I'm looking for..."
-            variant="outlined"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={classes.textField}
-          />
-
-          {view === 'Alumni' && (
+          {/* Filters */}
+          <Box className={classes.dropdownContainer}>
             <FormControl className={classes.formControl} variant="outlined">
               <Select
-                value={sortOrder}
+                variant="standard"
+                value={view}
+                onChange={(e) => setView(e.target.value)}
                 classes={{ root: classes.selectRoot }}
-                onChange={(e) => setSortOrder(e.target.value)}
                 MenuProps={{
                   classes: { paper: classes.selectMenu },
                   anchorOrigin: {
@@ -174,27 +148,61 @@ export default function TeamPage() {
                     horizontal: 'left'
                   },
                   getContentAnchorEl: null
-                }}
-              >
-                <MenuItem value="asc">Year (Ascending)</MenuItem>
-                <MenuItem value="desc">Year (Descending)</MenuItem>
+                }}>
+                <MenuItem value="Current Organizers">Current Organizers</MenuItem>
+                <MenuItem value="Alumni">Alumni</MenuItem>
               </Select>
             </FormControl>
-          )}
-        </Box>
 
-        {/* Tabs */}
-        {view === 'Current Organizers' && (
-          <Box className={classes.tabsContainer}>
-            <Tabs
-              value={tabIndex}
-              onChange={(e, newIndex) => handleSetTabIndex(newIndex, true)}
-              variant="scrollable"
-              scrollButtons="auto"
-              TabIndicatorProps={{ style: { display: 'none' } }}
-            >
-              {['All', 'Directors', 'Design', 'Logistics', 'Marketing', 'Sponsors', 'Website'].map(
-                (label) => (
+            <TextField
+              placeholder="I'm looking for..."
+              variant="outlined"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={classes.textField}
+            />
+
+            {view === 'Alumni' && (
+              <FormControl className={classes.formControl} variant="outlined">
+                <Select
+                  variant="standard"
+                  value={sortOrder}
+                  classes={{ root: classes.selectRoot }}
+                  onChange={(e) => setSortOrder(e.target.value)}
+                  MenuProps={{
+                    classes: { paper: classes.selectMenu },
+                    anchorOrigin: {
+                      vertical: 'bottom',
+                      horizontal: 'left'
+                    },
+                    getContentAnchorEl: null
+                  }}>
+                  <MenuItem value="asc">Year (Ascending)</MenuItem>
+                  <MenuItem value="desc">Year (Descending)</MenuItem>
+                </Select>
+              </FormControl>
+            )}
+          </Box>
+
+          {/* Tabs */}
+          {view === 'Current Organizers' && (
+            <Box className={classes.tabsContainer}>
+              <Tabs
+                value={tabIndex}
+                onChange={(e, newIndex) => handleSetTabIndex(newIndex, true)}
+                variant="scrollable"
+                scrollButtons="auto"
+                TabIndicatorProps={{ style: { display: 'none' } }}
+              >
+                {[
+                  'All',
+                  'Directors',
+                  'Design',
+                  'Logistics',
+                  'Marketing',
+                  'Sponsors',
+                  'Website'
+                ].map((label) => (
                   <Tab
                     key={label}
                     label={label}
@@ -203,62 +211,62 @@ export default function TeamPage() {
                       selected: classes.tabSelected
                     }}
                   />
-                )
-              )}
-            </Tabs>
-          </Box>
-        )}
+                ))}
+              </Tabs>
+            </Box>
+          )}
 
-        {/* Team/Alumni Cards */}
-        <Container className={classes.container}>
-          <Grid container spacing={2} className={classes.gridContainer}>
-            {view === 'Current Organizers' && currentTeam && (
-              <div className="w-full flex items-center justify-center py-3">
-                <SubteamPhoto teamName={currentTeam.name} />
-              </div>
-            )}
-            {view === 'Current Organizers' &&
-              currentTeam &&
-              filteredTeams.map((member) => (
-                <Grid item key={member.name}>
-                  {member.role === 'Faculty Advisor' ? (
+          {/* Team/Alumni Cards */}
+          <Container className={classes.container}>
+            <Grid container spacing={2} className={classes.gridContainer}>
+              {view === 'Current Organizers' && currentTeam && (
+                <div className="w-full flex items-center justify-center py-3">
+                  <SubteamPhoto teamName={currentTeam.name} />
+                </div>
+              )}
+              {view === 'Current Organizers' &&
+                currentTeam &&
+                filteredTeams.map((member) => (
+                  <Grid item key={member.name}>
+                    {member.role === 'Faculty Advisor' ? (
+                      <AlumniCard
+                        name={member.name}
+                        position={member.role ?? 'Alumnus'}
+                        year={0}
+                        image={nameToURL(member.name)}
+                      />
+                    ) : (
+                      <OrganizerCard
+                        name={member.name}
+                        position={member.role ?? teams[tabIndex].defaultRole}
+                        image={nameToURL(member.name)}
+                        github={member.github ?? ''}
+                        linkedin={member.linkedin ?? ''}
+                        hometown={member.hometown ?? ''}
+                        major_year={`${member.major}, ${member.year}`}
+                        funfact={member.funFact ?? ''}
+                      />
+                    )}
+                  </Grid>
+                ))}
+
+              {view === 'Alumni' &&
+                sortedAlumni.map((member) => (
+                  <Grid item key={member.name}>
                     <AlumniCard
                       name={member.name}
                       position={member.role ?? 'Alumnus'}
-                      year={0}
-                      image={nameToURL(member.name)}
-                    />
-                  ) : (
-                    <OrganizerCard
-                      name={member.name}
-                      position={member.role ?? teams[tabIndex].defaultRole}
-                      image={nameToURL(member.name)}
+                      image={member.image ?? 'default'}
                       github={member.github ?? ''}
                       linkedin={member.linkedin ?? ''}
-                      hometown={member.hometown ?? ''}
-                      major_year={`${member.major}, ${member.year}`}
-                      funfact={member.funFact ?? ''}
+                      year={member.year ?? ''}
                     />
-                  )}
-                </Grid>
-              ))}
-
-            {view === 'Alumni' &&
-              sortedAlumni.map((member) => (
-                <Grid item key={member.name}>
-                  <AlumniCard
-                    name={member.name}
-                    position={member.role ?? 'Alumnus'}
-                    image={member.image ?? 'default'}
-                    github={member.github ?? ''}
-                    linkedin={member.linkedin ?? ''}
-                    year={member.year ?? ''}
-                  />
-                </Grid>
-              ))}
-          </Grid>
-        </Container>
-      </div>
-    </ThemeProvider>
+                  </Grid>
+                ))}
+            </Grid>
+          </Container>
+        </div>
+      </ThemeProvider>)
+    </StyledEngineProvider>
   );
 }

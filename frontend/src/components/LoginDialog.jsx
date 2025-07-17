@@ -105,7 +105,12 @@ function Login(props) {
           {' '}
           LOGIN{' '}
         </Typography>
-        <IconButton aria-label="close" className={classes.closeButton} onClick={handleLoginClose}>
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={handleLoginClose}
+          size="large"
+        >
           {' '}
           <CloseIcon />
         </IconButton>
@@ -113,6 +118,7 @@ function Login(props) {
       <DialogActions></DialogActions>
       <DialogContent>
         <TextField
+          variant="standard"
           autoFocus
           margin="dense"
           id="name"
@@ -120,9 +126,9 @@ function Login(props) {
           type="email"
           fullWidth
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          onChange={(e) => setEmail(e.target.value)} />
         <TextField
+          variant="standard"
           margin="dense"
           id="password"
           label="Password"
@@ -130,8 +136,7 @@ function Login(props) {
           fullWidth
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          onKeyPress={(event) => handleKey(event)}
-        />
+          onKeyPress={(event) => handleKey(event)} />
         <p>{attempted ? 'Incorrect Username or Password' : ''}</p>
       </DialogContent>
       <Button onClick={handleLogin} className={classes.loginButton}>

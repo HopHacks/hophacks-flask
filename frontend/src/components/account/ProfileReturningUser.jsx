@@ -549,16 +549,16 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
 
   const GenderForm = (
     <form>
-      <FormControl>
+      <FormControl variant="standard">
         <InputLabel id="demo-simple-select-label">Gender</InputLabel>
         <Select
+          variant="standard"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={gender}
           onChange={(e) => {
             setGender(e.target.value);
-          }}
-        >
+          }}>
           <MenuItem value="Male">Male</MenuItem>
           <MenuItem value="Female">Female</MenuItem>
           <MenuItem value="Non-Binary">Non-Binary</MenuItem>
@@ -584,16 +584,16 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
 
   const EthnicityForm = (
     <form>
-      <FormControl>
+      <FormControl variant="standard">
         <InputLabel id="demo-simple-select-label">Ethnicity</InputLabel>
         <Select
+          variant="standard"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={ethnicity}
           onChange={(e) => {
             setEthnicity(e.target.value);
-          }}
-        >
+          }}>
           <MenuItem value="American Indian or Alaska Native">
             American Indian or Alaska Native
           </MenuItem>
@@ -653,16 +653,16 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
 
   const ProgramForm = (
     <form>
-      <FormControl>
+      <FormControl variant="standard">
         <InputLabel id="demo-simple-select-label">Level of Study</InputLabel>
         <Select
+          variant="standard"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={grad}
           onChange={(e) => {
             setGrad(e.target.value);
-          }}
-        >
+          }}>
           <MenuItem value="Undergraduate University (2 year - community college or similar)">
             Undergraduate University (2 year - community college or similar)
           </MenuItem>
@@ -698,16 +698,16 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   const GraduationForm = (
     <div>
       <form>
-        <FormControl>
+        <FormControl variant="standard">
           <InputLabel id="demo-simple-select-label">Month</InputLabel>
           <Select
+            variant="standard"
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={grad_month}
             onChange={(e) => {
               setGrad_month(e.target.value);
-            }}
-          >
+            }}>
             <MenuItem value="01">01</MenuItem>
             <MenuItem value="02">02</MenuItem>
             <MenuItem value="03">03</MenuItem>
@@ -725,16 +725,16 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       </form>
 
       <form>
-        <FormControl>
+        <FormControl variant="standard">
           <InputLabel id="demo-simple-select-label">Year</InputLabel>
           <Select
+            variant="standard"
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={grad_year}
             onChange={(e) => {
               setGrad_year(e.target.value);
-            }}
-          >
+            }}>
             <MenuItem value="2025">2025</MenuItem>
             <MenuItem value="2026">2026</MenuItem>
             <MenuItem value="2027">2027</MenuItem>
@@ -751,19 +751,19 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     <form className="w-full max-w-md">
       {' '}
       {/* Optional: control form width here */}
-      <FormControl fullWidth>
+      <FormControl variant="standard" fullWidth>
         {' '}
         {/* This ensures Select and InputLabel stretch properly */}
         <InputLabel id="first-hackathon-label">Is this your first Hackathon?</InputLabel>
         <Select
+          variant="standard"
           labelId="first-hackathon-label"
           id="first-hackathon"
           value={first_hackathon}
           label="Is this your first Hackathon?"
           onChange={(e) => {
             setFirst_hackathon(e.target.value);
-          }}
-        >
+          }}>
           <MenuItem value="Yes">Yes</MenuItem>
           <MenuItem value="No">No</MenuItem>
         </Select>
@@ -775,19 +775,19 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     <form className="w-full max-w-md">
       {' '}
       {/* Optional container width */}
-      <FormControl fullWidth>
+      <FormControl variant="standard" fullWidth>
         <InputLabel id="first-hophacks-label">
           Is this your first time attending HopHacks?
         </InputLabel>
         <Select
+          variant="standard"
           labelId="first-hophacks-label"
           id="first-hophacks"
           value={first_hophacks}
           label="Is this your first time attending HopHacks?"
           onChange={(e) => {
             setFirst_hophacks(e.target.value);
-          }}
-        >
+          }}>
           <MenuItem value="Yes">Yes</MenuItem>
           <MenuItem value="No">No</MenuItem>
         </Select>
@@ -799,17 +799,17 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     <form className="w-full max-w-md">
       {' '}
       {/* Adjust width as needed */}
-      <FormControl fullWidth>
+      <FormControl variant="standard" fullWidth>
         <InputLabel id="learn-about-us-label">How did you hear about us?</InputLabel>
         <Select
+          variant="standard"
           labelId="learn-about-us-label"
           id="learn-about-us"
           value={learn_about_us}
           label="How did you hear about us?"
           onChange={(e) => {
             setLearn_about_us(e.target.value);
-          }}
-        >
+          }}>
           <MenuItem value="Instagram">Instagram</MenuItem>
           <MenuItem value="Facebook">Facebook</MenuItem>
           <MenuItem value="Linkedin">LinkedIn</MenuItem>

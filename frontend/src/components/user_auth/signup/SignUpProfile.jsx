@@ -84,7 +84,6 @@ export default function SignUpProfile({
       >
         2. Basic Info
       </p>
-
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <LabeledTextField label="First Name" onChange={(e) => setFirst_name(e.target.value)} />
@@ -108,7 +107,7 @@ export default function SignUpProfile({
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <FormControl required style={{ width: '100%' }}>
+          <FormControl variant="standard" required style={{ width: '100%' }}>
             <SchoolAutocomplete school={school} setSchool={setSchool} />
           </FormControl>
           <FormHelperText style={{ color: SECONDARY_COLOR }}>
@@ -167,9 +166,7 @@ export default function SignUpProfile({
           </LabeledTextField>
         </Grid>
       </Grid>
-
       <Typography className="card-text-red mt-4">{profileSubmitMsg}</Typography>
-
       <div
         style={{
           display: 'flex',

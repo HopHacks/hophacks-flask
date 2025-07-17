@@ -233,7 +233,7 @@ export default function ProfileOldUser({
 
               {/* Row 3: School and Level - better proportions */}
               <Grid item xs={12} md={8}>
-                <FormControl required style={{ width: '100%' }}>
+                <FormControl variant="standard" required style={{ width: '100%' }}>
                   <SchoolAutocomplete school={school} setSchool={setSchool} />
                 </FormControl>
                 <FormHelperText style={{ color: SECONDARY_COLOR }}>

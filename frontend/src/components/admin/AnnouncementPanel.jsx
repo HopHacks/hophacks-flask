@@ -336,7 +336,7 @@ const Panel = function () {
             </div>
           </div>
         </Grid>
-        <Grid container item xs={12} direction="row" justify="flex-start">
+        <Grid container item xs={12} direction="row" justifyContent="flex-start">
           <Button
             variant="contained"
             color="white"

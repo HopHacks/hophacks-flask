@@ -51,7 +51,7 @@ const FormDialog = function FormDialog({
           }}
         />
         <CardActions>
-          <IconButton>
+          <IconButton size="large">
             <EditIcon fontSize="small" color="primary" onClick={handleClickOpen} />
             <Dialog open={dialogopen} onClose={handleClose} aria-labelledby="form-dialog-title">
               <DialogTitle id="form-dialog-title">{title}</DialogTitle>

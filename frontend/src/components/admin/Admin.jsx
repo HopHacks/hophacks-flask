@@ -320,6 +320,7 @@ const Admin = function () {
     <FormControl variant="outlined" style={{ minWidth: 220 }}>
       <InputLabel>Status</InputLabel>
       <Select
+        variant="standard"
         onChange={(e) => {
           handleNewStatus(e.target.value);
         }}
@@ -328,8 +329,7 @@ const Admin = function () {
           backgroundColor: 'rgba(219, 226, 237, 0.50)',
           borderRadius: '10px',
           height: '50px'
-        }}
-      >
+        }}>
         <MenuItem value="All">All</MenuItem>
         <MenuItem value="applied">Applied</MenuItem>
         <MenuItem value="accepted">Accepted</MenuItem>
@@ -346,6 +346,7 @@ const Admin = function () {
     <FormControl variant="outlined" style={{ minWidth: 220 }}>
       <InputLabel>Sort</InputLabel>
       <Select
+        variant="standard"
         onChange={(e) => {
           handleNewSort(e.target.value);
         }}
@@ -354,8 +355,7 @@ const Admin = function () {
           backgroundColor: 'rgba(219, 226, 237, 0.50)',
           borderRadius: '10px',
           height: '50px'
-        }}
-      >
+        }}>
         <MenuItem value="Yes">A - Z</MenuItem>
         <MenuItem value="No">No</MenuItem>
       </Select>

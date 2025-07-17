@@ -1,37 +1,31 @@
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(4)
-  },
-  accordion: {
-    backgroundColor: 'rgba(255, 233, 242, 0.32)', // semi-opaque
-    color: 'white',
-    marginBottom: theme.spacing(1),
-    '&:before': {
-      display: 'none'
-    },
-    transition: 'background-color 0.3s ease',
-    '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, 0.15)' // slightly darker on hover
-    }
-  },
-  summary: {
-    fontWeight: 600,
-    fontSize: '2rem'
-  },
-  details: {
-    fontSize: '1.2rem',
-    lineHeight: 1.5
-  }
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     padding: theme.spacing(4)
+//   },
+//   accordion: {
+//     backgroundColor: 'rgba(255, 233, 242, 0.32)', // semi-opaque
+//     color: 'white',
+//     marginBottom: theme.spacing(1),
+//     '&:before': {
+//       display: 'none'
+//     },
+//     transition: 'background-color 0.3s ease',
+//     '&:hover': {
+//       backgroundColor: 'rgba(255, 255, 255, 0.15)' // slightly darker on hover
+//     }
+//   },
+//   summary: {
+//     fontWeight: 600,
+//     fontSize: '2rem'
+//   },
+//   details: {
+//     fontSize: '1.2rem',
+//     lineHeight: 1.5
+//   }
+// }));
 
 const linkClass = 'underline hover:text-blue-600 transition-colors duration-300';
 
@@ -147,20 +141,41 @@ const faqData = [
 ];
 
 export default function FaqAccordion() {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <Box sx={{ p: 4 }}>
       {faqData.map(({ question, answer }, index) => (
-        <Accordion key={index} className={classes.accordion}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon style={{ color: 'white' }} />}>
-            <Typography className={classes.summary}>{question}</Typography>
+        <Accordion
+          key={index}
+          sx={{
+            backgroundColor: 'rgba(255, 233, 242, 0.32)',
+            color: 'white',
+            mb: 1,
+            '&:before': {
+              display: 'none'
+            },
+            transition: 'background-color 0.3s ease',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.15)'
+            }
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon sx={{ color: 'white' }} />}
+            sx={{
+              fontWeight: 600,
+              fontSize: '2rem'
+            }}
+          >
+            <Typography>{question}</Typography>
           </AccordionSummary>
-          <AccordionDetails>
-            <Typography className={classes.details}>{answer}</Typography>
+          <AccordionDetails sx={{
+            fontSize: '1.2rem',
+            lineHeight: 1.5
+          }}>
+            <Typography>{answer}</Typography>
           </AccordionDetails>
         </Accordion>
       ))}
-    </div>
+    </Box>
   );
 }

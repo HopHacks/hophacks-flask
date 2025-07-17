@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { ParallaxProvider } from 'react-scroll-parallax';
 
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { theme } from '../util/theme';
@@ -49,97 +49,99 @@ export default function App() {
   return (
     <>
       <ParallaxProvider>
-        <ThemeProvider theme={theme}>
-          <AuthProvider>
-            <CssBaseline />
-            <Router>
-              <div>
-                <Nav />
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <AuthProvider>
+              <CssBaseline />
+              <Router>
+                <div>
+                  <Nav />
 
-                <Switch>
-                  <Route path="/assignments" component={Assignments} />
-                  <Route path="/upload" component={Upload} />
-                  <Route path="/upload-sponsors" component={UploadSponsors} />
-                  <Route path="/sponsor-prizes" component={SponsorPrizes} />
-                  <Route path="/tables" component={TablesAndRooms} />
+                  <Switch>
+                    <Route path="/assignments" component={Assignments} />
+                    <Route path="/upload" component={Upload} />
+                    <Route path="/upload-sponsors" component={UploadSponsors} />
+                    <Route path="/sponsor-prizes" component={SponsorPrizes} />
+                    <Route path="/tables" component={TablesAndRooms} />
 
-                  <Route exact path="/admin">
-                    <Admin />
-                  </Route>
+                    <Route exact path="/admin">
+                      <Admin />
+                    </Route>
 
-                  <Route exact path="/admin/announcementpanel">
-                    <AnnouncementPanel />
-                  </Route>
+                    <Route exact path="/admin/announcementpanel">
+                      <AnnouncementPanel />
+                    </Route>
 
-                  {/* <Route path="/account/profile" component={Profile} /> */}
-                  <Route path="/profile">
-                    <Profile isMobile={isMobile} />
-                  </Route>
+                    {/* <Route path="/account/profile" component={Profile} /> */}
+                    <Route path="/profile">
+                      <Profile isMobile={isMobile} />
+                    </Route>
 
-                  {/*<Route path="/announcements/detail">
-                    <AnnouncementDetails />
-                  </Route>
+                    {/*<Route path="/announcements/detail">
+                      <AnnouncementDetails />
+                    </Route>
 
-                  <Route path="/announcements">
-                    <Announcements />
-                  </Route>*/}
+                    <Route path="/announcements">
+                      <Announcements />
+                    </Route>*/}
 
-                  <Route exact path="/home">
-                    <Home />
-                  </Route>
+                    <Route exact path="/home">
+                      <Home />
+                    </Route>
 
-                  {/* TODO: replace this with new register page */}
-                  {/* <Route path="/register">
-                    <Register isMobile={isMobile}/>
-                  </Route> */}
+                    {/* TODO: replace this with new register page */}
+                    {/* <Route path="/register">
+                      <Register isMobile={isMobile}/>
+                    </Route> */}
 
-                  {/*<Route path="/recruiting">
-                    <Recruiting />
-                  </Route>
-                  
-                  <Route path="/rsvp">
-                    <RSVP />
-                  </Route>
-                  */}
-                  <Route path="/confirm_email/:token" component={EmailConfirmation} />
+                    {/*<Route path="/recruiting">
+                      <Recruiting />
+                    </Route>
+                    
+                    <Route path="/rsvp">
+                      <RSVP />
+                    </Route>
+                    */}
+                    <Route path="/confirm_email/:token" component={EmailConfirmation} />
 
-                  <Route path="/reset_password/:token" component={PasswordReset} />
-                  <Route path="/team">
-                    <Team />
-                  </Route>
+                    <Route path="/reset_password/:token" component={PasswordReset} />
+                    <Route path="/team">
+                      <Team />
+                    </Route>
 
-                  <Route path="/register/login">
-                    <Login isMobile={isMobile} />
-                  </Route>
+                    <Route path="/register/login">
+                      <Login isMobile={isMobile} />
+                    </Route>
 
-                  <Route path="/register/signup">
-                    <SignUp isMobile={isMobile} />
-                  </Route>
+                    <Route path="/register/signup">
+                      <SignUp isMobile={isMobile} />
+                    </Route>
 
-                  <Route path="/register/resetpassword">
-                    <ResetPassword isMobile={isMobile} />
-                  </Route>
+                    <Route path="/register/resetpassword">
+                      <ResetPassword isMobile={isMobile} />
+                    </Route>
 
-                  {/*<Route path="/teamMatching" isMobile={isMobile}>
-                    <TeamMatchingPage isMobile={isMobile} />
-                  </Route>*/}
+                    {/*<Route path="/teamMatching" isMobile={isMobile}>
+                      <TeamMatchingPage isMobile={isMobile} />
+                    </Route>*/}
 
-                  {/* <Route path="/tracks">
-                    <Tracks />
-                  </Route> */}
+                    {/* <Route path="/tracks">
+                      <Tracks />
+                    </Route> */}
 
-                  <Route path="/Recap">
-                    <Recap />
-                  </Route>
+                    <Route path="/Recap">
+                      <Recap />
+                    </Route>
 
-                  <Route path="/">
-                    <Home isMobile={isMobile} />
-                  </Route>
-                </Switch>
-              </div>
-            </Router>
-          </AuthProvider>
-        </ThemeProvider>
+                    <Route path="/">
+                      <Home isMobile={isMobile} />
+                    </Route>
+                  </Switch>
+                </div>
+              </Router>
+            </AuthProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </ParallaxProvider>
     </>
   );

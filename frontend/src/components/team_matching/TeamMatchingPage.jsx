@@ -422,9 +422,9 @@ function TeamMatchingPage(props) {
       <Typography className={classes.title}>Find Your Team(mates)!</Typography>
       {!props.isLoggedIn ? (
         // All the components and layout for logged-in users
-        <>
+        (<>
           <Typography className={classes.title}>Please login first</Typography>
-        </>
+        </>)
       ) : (
         <>
           <AppBar position="static" className={classes.appBar}>
@@ -439,7 +439,7 @@ function TeamMatchingPage(props) {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton>
+                        <IconButton size="large">
                           <SearchIcon />
                         </IconButton>
                       </InputAdornment>
@@ -459,14 +459,14 @@ function TeamMatchingPage(props) {
                 >
                   <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel>Sort</InputLabel>
-                    <Select onChange={handleSortChange}>
+                    <Select variant="standard" onChange={handleSortChange}>
                       <MenuItem value="az">A-Z</MenuItem>
                       <MenuItem value="za">Z-A</MenuItem>
                     </Select>
                   </FormControl>
                   <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel>Status</InputLabel>
-                    <Select onChange={handleFilterChange}>
+                    <Select variant="standard" onChange={handleFilterChange}>
                       <MenuItem value="all">All</MenuItem>
                       <MenuItem value="open">Open</MenuItem>
                       <MenuItem value="closed">Closed</MenuItem>
@@ -490,7 +490,7 @@ function TeamMatchingPage(props) {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton>
+                        <IconButton size="large">
                           <SearchIcon />
                         </IconButton>
                       </InputAdornment>
@@ -510,14 +510,14 @@ function TeamMatchingPage(props) {
                 >
                   <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel>Sort</InputLabel>
-                    <Select onChange={handleSortChange}>
+                    <Select variant="standard" onChange={handleSortChange}>
                       <MenuItem value="az">A-Z</MenuItem>
                       <MenuItem value="za">Z-A</MenuItem>
                     </Select>
                   </FormControl>
                   <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel>Status</InputLabel>
-                    <Select onChange={handleFilterChange}>
+                    <Select variant="standard" onChange={handleFilterChange}>
                       <MenuItem value="all">All</MenuItem>
                       <MenuItem value="open">Open</MenuItem>
                       <MenuItem value="closed">Closed</MenuItem>
@@ -544,6 +544,7 @@ function TeamMatchingPage(props) {
             <DialogTitle className={classes.dialogTitle}>Post Your Team Card</DialogTitle>
             <DialogContent>
               <TextField
+                variant="standard"
                 autoFocus
                 margin="dense"
                 id="name"
@@ -557,9 +558,9 @@ function TeamMatchingPage(props) {
                 }}
                 InputLabelProps={{
                   className: classes.dialogInputLabel
-                }}
-              />
+                }} />
               <TextField
+                variant="standard"
                 autoFocus
                 margin="dense"
                 id="name"
@@ -573,9 +574,9 @@ function TeamMatchingPage(props) {
                 }}
                 InputLabelProps={{
                   className: classes.dialogInputLabel
-                }}
-              />
+                }} />
               <TextField
+                variant="standard"
                 autoFocus
                 margin="dense"
                 id="name"
@@ -589,14 +590,14 @@ function TeamMatchingPage(props) {
                 }}
                 InputLabelProps={{
                   className: classes.dialogInputLabel
-                }}
-              />
+                }} />
 
               {/* Tags Input */}
               <div
                 style={{ display: 'flex', alignItems: 'center', marginTop: '1em', width: '100%' }}
               >
                 <TextField
+                  variant="standard"
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={handleTagInputKeyDown}
@@ -608,8 +609,7 @@ function TeamMatchingPage(props) {
                   InputLabelProps={{
                     className: classes.dialogInputLabel
                   }}
-                  style={{ width: '90%', marginRight: '1%' }}
-                />
+                  style={{ width: '90%', marginRight: '1%' }} />
                 <IconButton size="small" className={classes.addTagButton} onClick={addTag}>
                   <AddIcon />
                 </IconButton>
