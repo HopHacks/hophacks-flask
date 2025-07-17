@@ -10,7 +10,6 @@ export default function SubteamPhoto({ teamName }) {
   const validTeam = ['All', 'Website', 'Design'].includes(teamName);
 
   useEffect(() => {
-    console.log({ teamName });
     // Reset states when team changes
     setLoading(true);
     setError(false);

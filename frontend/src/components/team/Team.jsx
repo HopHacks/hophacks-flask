@@ -15,13 +15,13 @@ import {
 import { OrganizerCard } from './OrganizerCard';
 import { AlumniCard } from './AlumniCard';
 import theme from './teamTheme';
-import useStyles from './TeamStyles';
+// import useStyles from './TeamStyles';
 import { nameToURL, filterTeamMembers, sortAlumni } from './teamHelpers';
 import '../../stylesheets/team.css';
 import SubteamPhoto from './SubteamPhoto';
 
 export default function TeamPage() {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
   const [teams, setTeams] = useState([]);
   const [alumni, setAlumni] = useState([]);
@@ -113,42 +113,77 @@ export default function TeamPage() {
     ? filterTeamMembers(currentTeam.members, searchQuery)
     : [];
 
-  console.log(currentTeam);
-
   // Filter and sort alumni
   const filteredAlumni = alumni ? filterTeamMembers(alumni, searchQuery) : [];
   const sortedAlumni = sortAlumni(filteredAlumni, sortOrder);
 
   return (
-    <StyledEngineProvider injectFirst>(
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <div className="flex flex-col justify-center items-center">
           {/* Header */}
-          <div className={classes.header}>
-            <Typography variant="h3" className={classes.title}>
+          <Box sx={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            paddingTop: 10
+          }}>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 'bold',
+                color: 'white',
+                paddingBottom: 0.5
+              }}
+            >
               Our Team
             </Typography>
-            <Typography className={classes.subtitle}>
+            <Typography sx={{
+              color: 'white',
+              paddingBottom: 3.5,
+              fontWeight: 'bold',
+              letterSpacing: '1px'
+            }}>
               Meet the team that organizes HopHacks
             </Typography>
-          </div>
+          </Box>
 
           {/* Filters */}
-          <Box className={classes.dropdownContainer}>
-            <FormControl className={classes.formControl} variant="outlined">
+          <Box sx={{
+            display: 'flex',
+            width: '90%',
+            maxWidth: 700,
+            gap: 2,
+            padding: 2,
+            alignItems: 'center'
+          }}>
+            <FormControl
+              variant="outlined"
+              sx={{
+                backgroundColor: '#ffb51f',
+                borderRadius: '16px',
+                color: 'white',
+                fontWeight: 'bold'
+              }}
+            >
               <Select
                 variant="standard"
                 value={view}
                 onChange={(e) => setView(e.target.value)}
-                classes={{ root: classes.selectRoot }}
+                sx={{
+                  color: 'white',
+                  fontWeight: 600,
+                  padding: 1
+                }}
                 MenuProps={{
-                  classes: { paper: classes.selectMenu },
                   anchorOrigin: {
                     vertical: 'bottom',
                     horizontal: 'left'
                   },
                   getContentAnchorEl: null
-                }}>
+                }}
+              >
                 <MenuItem value="Current Organizers">Current Organizers</MenuItem>
                 <MenuItem value="Alumni">Alumni</MenuItem>
               </Select>
@@ -159,24 +194,45 @@ export default function TeamPage() {
               variant="outlined"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={classes.textField}
+              sx={{
+                minWidth: (theme) => theme.custom?.teamPage.textField.minWidth || 150,
+                flexGrow: 1,
+                backgroundColor: '#ffffff',
+                borderRadius: '16px',
+                '& .MuiInputBase-root': {
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px'
+                }
+              }}
             />
 
             {view === 'Alumni' && (
-              <FormControl className={classes.formControl} variant="outlined">
+              <FormControl
+                variant="outlined"
+                sx={{
+                  backgroundColor: '#ffb51f',
+                  borderRadius: '16px',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  padding: 1
+                }}
+              >
                 <Select
                   variant="standard"
                   value={sortOrder}
-                  classes={{ root: classes.selectRoot }}
                   onChange={(e) => setSortOrder(e.target.value)}
+                  sx={{
+                    color: 'white',
+                    fontWeight: 600
+                  }}
                   MenuProps={{
-                    classes: { paper: classes.selectMenu },
                     anchorOrigin: {
                       vertical: 'bottom',
                       horizontal: 'left'
                     },
                     getContentAnchorEl: null
-                  }}>
+                  }}
+                >
                   <MenuItem value="asc">Year (Ascending)</MenuItem>
                   <MenuItem value="desc">Year (Descending)</MenuItem>
                 </Select>
@@ -186,7 +242,12 @@ export default function TeamPage() {
 
           {/* Tabs */}
           {view === 'Current Organizers' && (
-            <Box className={classes.tabsContainer}>
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              minWidth: '200px',
+              width: '75%'
+            }}>
               <Tabs
                 value={tabIndex}
                 onChange={(e, newIndex) => handleSetTabIndex(newIndex, true)}
@@ -206,9 +267,18 @@ export default function TeamPage() {
                   <Tab
                     key={label}
                     label={label}
-                    classes={{
-                      root: classes.tabRoot,
-                      selected: classes.tabSelected
+                    sx={{
+                      borderBottom: '2px solid rgba(255, 255, 255, 0.1)',
+                      transition: 'border-color 0.3s ease',
+                      fontWeight: 500,
+                      fontSize: '.8rem',
+                      color: '#ffffff',
+                      minWidth: 80,
+                      padding: '6px 12px',
+                      '&.Mui-selected': {
+                        borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
+                        color: '#ffffff'
+                      }
                     }}
                   />
                 ))}
@@ -217,8 +287,20 @@ export default function TeamPage() {
           )}
 
           {/* Team/Alumni Cards */}
-          <Container className={classes.container}>
-            <Grid container spacing={2} className={classes.gridContainer}>
+          <Container sx={{
+            height: 'fit-content',
+            minHeight: (theme) => theme.custom?.teamPage.container.minHeight || '404px',
+            margin: '16px auto',
+            padding: '16px'
+          }}>
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
               {view === 'Current Organizers' && currentTeam && (
                 <div className="w-full flex items-center justify-center py-3">
                   <SubteamPhoto teamName={currentTeam.name} />
@@ -266,7 +348,7 @@ export default function TeamPage() {
             </Grid>
           </Container>
         </div>
-      </ThemeProvider>)
+      </ThemeProvider>
     </StyledEngineProvider>
   );
 }

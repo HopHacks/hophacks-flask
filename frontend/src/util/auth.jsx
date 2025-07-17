@@ -15,7 +15,7 @@ function AuthProvider(props) {
   let refreshInterval;
 
   const myVariable = process.env.REACT_APP_BACKENDURL;
-  console.log(myVariable);
+
   if (myVariable != undefined) {
     axios.defaults.baseURL = myVariable;
   }
@@ -34,14 +34,12 @@ function AuthProvider(props) {
       setLoggedIn(true);
       setTimeout(refreshToken, 60000);
     } catch {
-      console.log('Refresh failed');
       setLoggedIn(false);
     }
   }
 
   // Login to page
   async function login(email, password) {
-    console.log('hello');
     const response = await axios.post('/api/auth/login', {
       username: email,
       password: password
@@ -68,7 +66,7 @@ function AuthProvider(props) {
     try {
       await axios.get(url);
     } catch (error) {
-      console.log('Error logging out, perhaps already logged out?');
+      // console.log('Error logging out, perhaps already logged out?');
     }
   }
 
