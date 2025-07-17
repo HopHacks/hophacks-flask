@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useHistory } from 'react-router-dom'; // ✅ this works in v5
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import MatchList from './MatchList';
 import { withAuthProps } from '../../util/auth.jsx';
 import '../../stylesheets/TeamMatching.css';
 
 function TeamMatching({ isLoggedIn }) {
-  const history = useHistory(); // ✅ get history object
+  const history = useHistory(); 
 
   const [users, setUsers] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,7 +55,7 @@ function TeamMatching({ isLoggedIn }) {
   const currentUser = users[currentIndex];
 
   return (
-    <div className="team-matching">
+    <div className="team-matching mt-20">
       <div className="team-matching-container">
         <div className="toggle-buttons" style={{ textAlign: 'center', marginBottom: '1rem' }}>
           <button onClick={() => history.push('/profile')}>← Back to Profile</button>

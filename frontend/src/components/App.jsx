@@ -39,7 +39,7 @@ import Recap from './recap.jsx';
 // import SignUpImage from './user_auth/signup/SignUpImage.jsx';
 
 import ResetPassword from './user_auth/ResetPassword';
-import TeamMatchingPage from './team_matching/TeamMatchingSwipe';
+import TeamMatching from './team_matching/TeamMatching';
 
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -122,7 +122,7 @@ export default function App() {
                   </Route>
 
                   <Route path="/team-matching" isMobile={isMobile}>
-                    <TeamMatchingPage isMobile={isMobile} />
+                    <TeamMatching isMobile={isMobile} />
                   </Route>
 
                   {/* <Route path="/tracks">

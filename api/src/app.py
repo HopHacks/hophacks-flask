@@ -107,9 +107,4 @@ def create_app(config_file='config/config.json'):
     app.register_blueprint(discord_api, url_prefix='/api/discord')
     app.register_blueprint(teammatch_api, url_prefix='/api/teammatch')
     
-    
-
-
-
-
     return app

@@ -109,12 +109,6 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     setResumeFile(e.target.files[0]);
   }
 
-  const history = useHistory();
-
-  const navigateToTeamMatching = () => {
-    history.push('/team-matching');
-  };
-
   async function handleResumeSubmit(e) {
     e.preventDefault();
     const data = new FormData();

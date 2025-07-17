@@ -6,6 +6,95 @@ from bson import ObjectId
 
 teammatch_api = Blueprint('teammatch_api', __name__)
 
+@teammatch_api.route('/has_team_profile', methods=['GET'])
+@jwt_required
+def has_team_profile():
+    user_id = ObjectId(get_jwt_identity())
+    user = db.users.find_one({"_id": user_id})
+
+    has_team_matching = "team_matching" in user and bool(user["team_matching_profile"])
+
+    return jsonify({"in_team_matching": has_team_matching}), 200
+
+
+@teammatch_api.route('/team_profile', methods=['POST'])
+@jwt_required
+def create_team_profile():
+    user_id = ObjectId(get_jwt_identity())
+    profile = request.get_json()
+
+    required_fields = ["name", "year", "school", "major", "preferred_role", "skills", "interests", "bio"]
+
+    missing = [field for field in required_fields if field not in profile]
+    if missing:
+        return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+
+    db.users.update_one(
+        {"_id": user_id},
+        {"$set": {"team_matching.team_matching_profile": profile}}
+    )
+
+    return jsonify({"message": "Team matching profile created/updated"}), 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def serialize_user(user):
     user["_id"] = str(user["_id"])
     team_data = user.get("teammatch", {})
@@ -20,7 +109,7 @@ def serialize_user(user):
     return {
         "id": user["_id"],
         "username": user.get("username", ""),
-        "profile": user.get("profile", {}),
+        "team_matching_profile": user.get("team_matching_profile", {}),
         "swipes": swipes,
         "matches": matches
     }
