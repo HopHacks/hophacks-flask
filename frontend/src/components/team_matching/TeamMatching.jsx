@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TeamMatchingWelcome from './TeamMatchingWelcome';
 import { withAuthCheck } from '../../util/auth.jsx';
-// import TeamProfileBuilder from './TeamProfileBuilder';
+import TeamProfileBuilder from './TeamProfileBuilder';
 // import SwipeView from './SwipeView';
 // import MatchListView from './MatchListView';
 import axios from 'axios';
@@ -56,7 +56,7 @@ const TeamMatching = function TeamMatching(props){
           <div
             className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center"
           >
-            {/* <TeamProfileBuilder onComplete={() => setStage('swipe')} /> */}
+            <TeamProfileBuilder onComplete={() => setStage('swipe')} />
           </div>
         );
       case 'swipe':
