@@ -58,7 +58,6 @@ function HackathonStats2024({ modifiedTitle }) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          console.log('intersection');
           // observer.disconnect();
         } else {
           setInView(false);

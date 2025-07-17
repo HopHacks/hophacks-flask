@@ -84,29 +84,29 @@ export default function SignUpProfile({
       >
         2. Basic Info
       </p>
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+      <Grid container sx={{ width: '100%' }} spacing={4}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <LabeledTextField label="First Name" onChange={(e) => setFirst_name(e.target.value)} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <LabeledTextField label="Last Name" onChange={(e) => setLast_name(e.target.value)} />
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <LabeledTextField label="Age" type="number" onChange={(e) => setAge(e.target.value)} />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <LabeledTextField label="Gender" onChange={(e) => setGender(e.target.value)} select>
             {renderMenuItems(genders)}
           </LabeledTextField>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <LabeledTextField label="Ethnicity" onChange={(e) => setEthnicity(e.target.value)} select>
             {renderMenuItems(ethnicities)}
           </LabeledTextField>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <FormControl variant="standard" required style={{ width: '100%' }}>
             <SchoolAutocomplete school={school} setSchool={setSchool} />
           </FormControl>
@@ -115,7 +115,7 @@ export default function SignUpProfile({
           </FormHelperText>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <MajorAutocomplete major={major} setMajor={setMajor} />
           <FormHelperText style={{ color: SECONDARY_COLOR }}>
             {"* If your major is not in the list, choose 'other majors'"}
@@ -123,7 +123,7 @@ export default function SignUpProfile({
         </Grid>
 
         {school === 'Other Schools' && (
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <LabeledTextField
               label="Other School"
               value={otherSchool}
@@ -132,11 +132,11 @@ export default function SignUpProfile({
           </Grid>
         )}
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <CountryAutocomplete setCountry={setCountry} />
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <PhoneInput
             international
             withCountryCallingCode
@@ -146,12 +146,12 @@ export default function SignUpProfile({
           />
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <LabeledTextField label="Level of Study" onChange={(e) => setGrad(e.target.value)} select>
             {renderMenuItems(gradLevels)}
           </LabeledTextField>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <LabeledTextField
             label="Grad Month"
             onChange={(e) => setGrad_month(e.target.value)}
@@ -160,7 +160,7 @@ export default function SignUpProfile({
             {renderMenuItems(months)}
           </LabeledTextField>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <LabeledTextField label="Grad Year" onChange={(e) => setGrad_year(e.target.value)} select>
             {renderMenuItems(years)}
           </LabeledTextField>

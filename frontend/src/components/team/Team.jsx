@@ -309,13 +309,15 @@ export default function TeamPage() {
               {view === 'Current Organizers' &&
                 currentTeam &&
                 filteredTeams.map((member) => (
-                  <Grid item key={member.name}>
+                  <Grid key={member.name}>
                     {member.role === 'Faculty Advisor' ? (
                       <AlumniCard
                         name={member.name}
                         position={member.role ?? 'Alumnus'}
-                        year={0}
                         image={nameToURL(member.name)}
+                        github={''}
+                        linkedin={''}
+                        year={0}
                       />
                     ) : (
                       <OrganizerCard
@@ -334,7 +336,7 @@ export default function TeamPage() {
 
               {view === 'Alumni' &&
                 sortedAlumni.map((member) => (
-                  <Grid item key={member.name}>
+                  <Grid key={member.name}>
                     <AlumniCard
                       name={member.name}
                       position={member.role ?? 'Alumnus'}

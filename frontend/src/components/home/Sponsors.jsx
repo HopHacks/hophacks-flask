@@ -126,8 +126,8 @@ export default function Sponsors() {
           }}
         >
           {/* Gold Sponsors */}
-          <Grid container spacing={3} className={classes.gridRow}>
-            <Grid item>
+          <Grid container sx={{ width: '100%' }} spacing={3} className={classes.gridRow}>
+            <Grid>
               <SponsorBox
                 size={sizes.gold}
                 backgroundColor="#D9D9D9"
@@ -138,8 +138,8 @@ export default function Sponsors() {
           </Grid>
 
           {/* Sable Sponsors */}
-          <Grid container spacing={3} className={classes.gridRow}>
-            <Grid item>
+          <Grid container sx={{ width: '100%' }} spacing={3} className={classes.gridRow}>
+            <Grid>
               <SponsorBox
                 size={sizes.sable}
                 backgroundColor="#23580A"
@@ -150,8 +150,8 @@ export default function Sponsors() {
           </Grid>
 
           {/* Blue Sponsors */}
-          <Grid container spacing={3} className={classes.gridRow}>
-            <Grid item>
+          <Grid container sx={{ width: '100%' }} spacing={3} className={classes.gridRow}>
+            <Grid>
               <SponsorBox
                 size={sizes.blue}
                 backgroundColor="#1D539F"
@@ -162,8 +162,8 @@ export default function Sponsors() {
           </Grid>
 
           {/* Red/starter sponsors */}
-          <Grid container spacing={3} className={classes.gridRow}>
-            <Grid item>
+          <Grid container sx={{ width: '100%' }} spacing={3} className={classes.gridRow}>
+            <Grid>
               <SponsorBox
                 size={sizes.starter}
                 backgroundColor="#E73427"

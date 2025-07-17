@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 import { Typography } from '@mui/material';
 import './../stylesheets/home.css';
 
@@ -13,14 +14,14 @@ const Footer = function Footer() {
   return (
     <Box pt={5} bgcolor="#172745" color="white">
       <Container maxWidth="lg">
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={4}>
-            <Grid container direction="column" alignItems="center" justifyContent="center">
+        <Grid container sx={{ width: '100%' }} spacing={3}>
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <Stack alignItems="center" justifyContent="center">
               <img src={img('Hophacks_logo_clean.png')} style={{ width: '100px' }} />
-            </Grid>
+            </Stack>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <Grid container direction="column" alignItems="center" justifyContent="center">
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <Stack alignItems="center" justifyContent="center" spacing={1}>
               <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 <a
                   href="mailto:hophacks@gmail.com"
@@ -29,16 +30,10 @@ const Footer = function Footer() {
                   hophacks@gmail.com
                 </a>
               </Typography>
-            </Grid>
-            <Grid container direction="column" alignItems="center" justifyContent="center">
               <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>Malone Hall</Typography>
-            </Grid>
-            <Grid container direction="column" alignItems="center" justifyContent="center">
               <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 Johns Hopkins University
               </Typography>
-            </Grid>
-            <Grid container direction="column" alignItems="center" justifyContent="center">
               <Typography style={{ fontFamily: 'Inter', fontSize: 18 }}>
                 <a
                   href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
@@ -47,12 +42,12 @@ const Footer = function Footer() {
                   MLH Code of Conduct
                 </a>
               </Typography>
-            </Grid>
+            </Stack>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <Grid container direction="column" alignItems="center" justifyContent="center">
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <Stack alignItems="center" justifyContent="center" spacing={2}>
               <Typography style={{ fontFamily: 'Inter', fontSize: 20 }}>Follow Us</Typography>
-              <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
+              <Box display="flex" justifyContent="center" alignItems="center">
                 <a href="https://www.facebook.com/HopHacks" title="Facebook">
                   <img
                     src={img('footer/fb-icon.png')}
@@ -75,9 +70,9 @@ const Footer = function Footer() {
                   />
                 </a>
               </Box>
-            </Grid>
+            </Stack>
           </Grid>
-          <Grid item xs={12}></Grid>
+          <Grid size={{ xs: 12 }}></Grid>
         </Grid>
       </Container>
     </Box>

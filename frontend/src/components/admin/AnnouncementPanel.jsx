@@ -19,6 +19,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -122,11 +123,11 @@ const Panel = function () {
       .map((announc, index) => (
         <TableRow key={index}>
           <TableCell className={classes.cell} style={{ width: '1000%' }} scope="row">
-            <Grid container>
-              <Grid item xs={8} lg={10}>
+            <Grid container sx={{ width: '100%' }}>
+              <Grid size={{ xs: 8, lg: 10 }}>
                 {announc.title}
               </Grid>
-              <Grid item sm={1.5} lg={1}>
+              <Grid size={{ sm: 1.5, lg: 1 }}>
                 <Button
                   variant="contained"
                   color="white"
@@ -146,7 +147,7 @@ const Panel = function () {
                   Edit
                 </Button>
               </Grid>
-              <Grid item sm={1.5} lg={1}>
+              <Grid size={{ sm: 1.5, lg: 1 }}>
                 <Button
                   variant="contained"
                   color="white"
@@ -198,8 +199,8 @@ const Panel = function () {
   }
   function makeAnnouncement() {
     return (
-      <Grid container item spacing={1} xs={10} sm={8} className={classes.left}>
-        <Grid container item spacing={1} direction="column" alignItems="center">
+      <Grid container sx={{ width: '100%' }} spacing={1} size={{ xs: 10, sm: 8 }} className={classes.left}>
+        <Stack spacing={1} alignItems="center">
           <Dialog
             open={open}
             keepMounted
@@ -335,8 +336,8 @@ const Panel = function () {
               </div>
             </div>
           </div>
-        </Grid>
-        <Grid container item xs={12} direction="row" justifyContent="flex-start">
+        </Stack>
+        <Stack size={{ xs: 12 }} direction="row" justifyContent="flex-start" spacing={2}>
           <Button
             variant="contained"
             color="white"
@@ -353,7 +354,7 @@ const Panel = function () {
           >
             Cancel
           </Button>
-        </Grid>
+        </Stack>
       </Grid>
     );
   }
@@ -472,14 +473,14 @@ const Panel = function () {
   };
   return (
     <>
-      <Grid container className={classes.panel}>
-        <Grid item xs={12}>
+      <Grid container sx={{ width: '100%' }} className={classes.panel}>
+        <Grid size={{ xs: 12 }}>
           <Typography variant="h4" align="center" className={classes.title}>
             Announcement Panel
           </Typography>
         </Grid>
         {makeAnnouncement()}
-        <Grid container xs={10} sm={6} className={classes.right}>
+        <Grid container sx={{ width: '100%' }} size={{ xs: 10, sm: 6 }} className={classes.right}>
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
               <TableBody>{populateAnnouncements({ page })}</TableBody>

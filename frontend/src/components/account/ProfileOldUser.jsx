@@ -184,16 +184,16 @@ export default function ProfileOldUser({
                 Be sure to fill out any new fields, and upload your latest resume on the next page.
               </p>
             </div>
-            <Grid container spacing={4}>
+            <Grid container sx={{ flexGrow: 1 }} spacing={4}>
               {/* Row 1: Name fields */}
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <LabeledTextField
                   label="First Name"
                   value={first_name}
                   onChange={(e) => setFirst_name(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <LabeledTextField
                   label="Last Name"
                   value={last_name}
@@ -202,7 +202,7 @@ export default function ProfileOldUser({
               </Grid>
 
               {/* Row 2: Personal info - 3 equal columns */}
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <LabeledTextField
                   label="Age"
                   type="number"
@@ -210,7 +210,7 @@ export default function ProfileOldUser({
                   onChange={(e) => setAge(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <LabeledTextField
                   label="Gender"
                   value={gender}
@@ -220,7 +220,7 @@ export default function ProfileOldUser({
                   {renderMenuItems(genders)}
                 </LabeledTextField>
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <LabeledTextField
                   label="Ethnicity"
                   value={ethnicity}
@@ -232,7 +232,7 @@ export default function ProfileOldUser({
               </Grid>
 
               {/* Row 3: School and Level - better proportions */}
-              <Grid item xs={12} md={8}>
+              <Grid size={{ xs: 12, md: 8 }}>
                 <FormControl variant="standard" required style={{ width: '100%' }}>
                   <SchoolAutocomplete school={school} setSchool={setSchool} />
                 </FormControl>
@@ -240,7 +240,7 @@ export default function ProfileOldUser({
                   {"* If your school is not in the list, choose 'other schools'"}
                 </FormHelperText>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <LabeledTextField
                   label="Level of Study"
                   value={grad}
@@ -252,7 +252,7 @@ export default function ProfileOldUser({
               </Grid>
 
               {/* Row 4: Major - full width */}
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <MajorAutocomplete major={major} setMajor={setMajor} />
                 <FormHelperText style={{ color: SECONDARY_COLOR }}>
                   {"* If your major is not in the list, choose 'other majors'"}
@@ -261,7 +261,7 @@ export default function ProfileOldUser({
 
               {/* Conditional Other School field */}
               {school === 'Other Schools' && (
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <LabeledTextField
                     label="Other School"
                     value={otherSchool}
@@ -271,10 +271,10 @@ export default function ProfileOldUser({
               )}
 
               {/* Row 5: Country and Phone */}
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <CountryAutocomplete setCountry={setCountry} country={country} />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <PhoneInput
                   international
                   withCountryCallingCode
@@ -285,7 +285,7 @@ export default function ProfileOldUser({
               </Grid>
 
               {/* Row 6: Graduation info - 3 equal columns */}
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <LabeledTextField
                   label="Grad Month"
                   value={grad_month}
@@ -295,7 +295,7 @@ export default function ProfileOldUser({
                   {renderMenuItems(months)}
                 </LabeledTextField>
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <LabeledTextField
                   label="Grad Year"
                   value={grad_year}
@@ -305,7 +305,7 @@ export default function ProfileOldUser({
                   {renderMenuItems(years)}
                 </LabeledTextField>
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <LabeledTextField
                   label="LinkedIn URL"
                   value={linkedIn}
@@ -350,8 +350,8 @@ export default function ProfileOldUser({
               </p>
             </div>
 
-            <Grid container spacing={4}>
-              <Grid item xs={12}>
+            <Grid container sx={{ flexGrow: 1 }} spacing={4}>
+              <Grid size={{ xs: 12 }}>
                 <div className="text-field">
                   <CustomCheckbox
                     checked={resumeChecked}

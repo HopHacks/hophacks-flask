@@ -265,9 +265,9 @@ export default function Announcements() {
 
   function fourRecentEvents() {
     return (
-      <Grid container spacing={2}>
+      <Grid container sx={{ width: '100%' }} spacing={2}>
         {recentFourAnnouncements.map((announcement, index) => (
-          <Grid item xs={6} key={index}>
+          <Grid size={{ xs: 6 }} key={index}>
             {RecentEvent(announcement)}
           </Grid>
         ))}
@@ -292,30 +292,30 @@ export default function Announcements() {
     >
       <Container fixed className={classes.container}>
         <Box py={2}>
-          <Grid container spacing={4}>
-            {/* <Grid item>
+          <Grid container sx={{ width: '100%' }} spacing={4}>
+            {/* <Grid>
             {title}
           </Grid> */}
 
-            <Grid container spacing={2}>
-              <Grid item xs={0.5}></Grid>
-              <Grid item xs={12}>
+            <Grid container sx={{ width: '100%' }} spacing={2}>
+              <Grid size={{ xs: 0.5 }}></Grid>
+              <Grid size={{ xs: 12 }}>
                 {ImportantEvent()}
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 {fourRecentEvents()}
               </Grid>
             </Grid>
 
-            <Grid item></Grid>
+            <Grid></Grid>
 
-            <Grid container>
-              <Grid item xs={12}>
+            <Grid container sx={{ width: '100%' }}>
+              <Grid size={{ xs: 12 }}>
                 {table()}
               </Grid>
             </Grid>
 
-            <Grid item></Grid>
+            <Grid></Grid>
           </Grid>
         </Box>
       </Container>

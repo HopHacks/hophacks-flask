@@ -30,8 +30,8 @@ export default function PasswordReset({ isMobile }) {
 
   return (
     <div className="root">
-      <Grid container justifyContent="center">
-        <Grid item xs={12}>
+      <Grid container sx={{ width: '100%' }} justifyContent="center">
+        <Grid size={{ xs: 12 }}>
           <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
             <div
               className="min-w-[300px] max-w-[700px] w-[70%] flex flex-col justify-center rounded-2xl p-10 m-5"

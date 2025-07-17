@@ -7,6 +7,7 @@ import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import MajorAutocomplete from './MajorAutocomplete';
 import SchoolAutocomplete from './SchoolAutocomplete';
 import Checkbox from '@mui/material/Checkbox';
@@ -268,20 +269,20 @@ export default function Register() {
   //     justifyContent="center"
   //     style={{ minHeight: '35rem' }}
   //   >
-  //     <Grid item xs={0} md={1} lg={1} />
-  //     <Grid item xs={12} md={5} lg={5} align="center">
+  //     <Grid xs={0} md={1} lg={1} />
+  //     <Grid xs={12} md={5} lg={5} align="center">
   //       <img
   //         id="graphic"
   //         src={`https://hophacks-website.s3.amazonaws.com/images/register-graphic.png`}
   //       />
   //     </Grid>
   //     <Grid id="register" item xs={12} md={5} lg={5} align="center">
-  //       <Grid container>
-  //         <Grid item xs={12}>
+  //       <Grid container sx={{ width: '100%' }}>
+  //         <Grid xs={12}>
   //           <h4 style={{ marginBottom: 15 }}>Register</h4>
   //         </Grid>
-  //         <Grid container spacing={1}>
-  //           <Grid item xs={12}>
+  //         <Grid container sx={{ width: '100%' }} spacing={1}>
+  //           <Grid xs={12}>
   //             <TextField
   //               required
   //               id="standard-basic"
@@ -295,7 +296,7 @@ export default function Register() {
   //               }}
   //             />
   //           </Grid>
-  //           <Grid item xs={12}>
+  //           <Grid xs={12}>
   //             <TextField
   //               type={'password'}
   //               required
@@ -310,7 +311,7 @@ export default function Register() {
   //               }}
   //             />
   //           </Grid>
-  //           <Grid item xs={12}>
+  //           <Grid xs={12}>
   //             <TextField
   //               type={'password'}
   //               required
@@ -326,7 +327,7 @@ export default function Register() {
   //             />
   //             <Typography style={{ color: 'red' }}>{confirmMsg}</Typography>
   //           </Grid>
-  //           <Grid item xs={12}>
+  //           <Grid xs={12}>
   //             <Button
   //               variant="contained"
   //               color="primary"
@@ -341,7 +342,7 @@ export default function Register() {
   //         </Grid>
   //       </Grid>
   //     </Grid>
-  //     <Grid item xs={0} md={1} lg={1} />
+  //     <Grid xs={0} md={1} lg={1} />
   //   </Grid>
   // );
   const handleResumeCheckBox = (event) => {
@@ -494,19 +495,17 @@ export default function Register() {
   );
 
   const personalInfo = (
-    <Grid container>
+    <Grid container sx={{ width: '100%' }}>
       <Grid
         container
-        item
         spacing={2}
-        sm={12}
-        md={7}
+        size={{ sm: 12, md: 7 }}
         direction="row"
         alignItems="center"
         justifyContent="center"
       >
-        <Grid container item spacing={0} xs={12}>
-          <Grid item xs={5}>
+        <Grid container sx={{ width: '100%' }} spacing={0} size={{ xs: 12 }}>
+          <Grid size={{ xs: 5 }}>
             <TextField
               required
               id="standard-basic"
@@ -521,7 +520,7 @@ export default function Register() {
             />
           </Grid>
 
-          <Grid item xs={7}>
+          <Grid size={{ xs: 7 }}>
             <TextField
               required
               id="standard-basic"
@@ -537,8 +536,8 @@ export default function Register() {
           </Grid>
         </Grid>
 
-        <Grid container item spacing={0} xs={12}>
-          <Grid item xs={5}>
+        <Grid container sx={{ width: '100%' }} spacing={0} size={{ xs: 12 }}>
+          <Grid size={{ xs: 5 }}>
             <TextField
               required
               id="standard-basic"
@@ -555,7 +554,7 @@ export default function Register() {
             />
           </Grid>
 
-          <Grid item xs={7}>
+          <Grid size={{ xs: 7 }}>
             <TextField
               required
               variant="standard"
@@ -581,7 +580,7 @@ export default function Register() {
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <TextField
             required
             variant="standard"
@@ -616,7 +615,7 @@ export default function Register() {
           </TextField>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <PhoneInput
             international
             withCountryCallingCode
@@ -630,13 +629,12 @@ export default function Register() {
       <Grid
         container
         spacing={0}
-        xs={6}
-        md={5}
+        size={{ xs: 6, md: 5 }}
         direction="row"
         alignItems="center"
         justifyContent="center"
       >
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <FormControl required variant="standard" style={{ minWidth: 300, maxWidth: 300 }}>
             <SchoolAutocomplete school={school} setSchool={setSchool} />
           </FormControl>
@@ -645,14 +643,14 @@ export default function Register() {
           </FormHelperText>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <MajorAutocomplete major={major} setMajor={setMajor} />
           <FormHelperText style={{ fontSize: 9, color: 'black', width: 300 }}>
             * If your major is not in the list, choose &apos;other majors&apos;
           </FormHelperText>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <TextField
             required
             variant="standard"
@@ -685,8 +683,8 @@ export default function Register() {
           </TextField>
         </Grid>
 
-        <Grid container item xs={12} direction="row" alignItems="center" justifyContent="center">
-          <Grid item xs={11} md={7}>
+        <Grid container sx={{ width: '100%' }} size={{ xs: 12 }} direction="row" alignItems="center" justifyContent="center">
+          <Grid size={{ xs: 11, md: 7 }}>
             <TextField
               required
               variant="standard"
@@ -721,7 +719,7 @@ export default function Register() {
             </TextField>
           </Grid>
 
-          <Grid item xs={1} md={5}>
+          <Grid size={{ xs: 1, md: 5 }}>
             <TextField
               required
               variant="standard"
@@ -754,33 +752,29 @@ export default function Register() {
         </Grid>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid size={{ xs: 12 }}>
         {resume}
         {codeOfConduct}
         {eventLogistics}
         {communication}
       </Grid>
 
-      <Grid item container xs={12} direction="column" alignItems="center" justifyContent="center">
-        <Grid item>
-          <Typography style={{ color: 'red' }}>{profileSubmitMsg}</Typography>
-        </Grid>
+      <Stack size={{ xs: 12 }} direction="column" alignItems="center" justifyContent="center" spacing={2}>
+        <Typography style={{ color: 'red' }}>{profileSubmitMsg}</Typography>
 
-        <Grid item>
-          <Button
-            variant="contained"
-            justifyContent="center"
-            color="primary"
-            size="large"
-            disabled={!enabledButton}
-            onClick={() => {
-              handleProfileNext();
-            }}
-          >
-            Submit
-          </Button>
-        </Grid>
-      </Grid>
+        <Button
+          variant="contained"
+          justifyContent="center"
+          color="primary"
+          size="large"
+          disabled={!enabledButton}
+          onClick={() => {
+            handleProfileNext();
+          }}
+        >
+          Submit
+        </Button>
+      </Stack>
     </Grid>
   );
 

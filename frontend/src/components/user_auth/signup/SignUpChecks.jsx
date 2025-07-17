@@ -83,9 +83,9 @@ const SignUpChecks = ({
       >
         3. Additional Info
       </p>
-      <Grid container spacing={isMobile ? 2 : 5}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
+      <Grid container sx={{ width: '100%' }} spacing={isMobile ? 2 : 5}>
+        <Grid container sx={{ width: '100%' }} spacing={2}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <LabeledTextField
               label="Is this your first time attending a hackathon?"
               onChange={(e) => setFirst_hackathon(e.target.value)}
@@ -96,7 +96,7 @@ const SignUpChecks = ({
             </LabeledTextField>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <LabeledTextField
               label="Is this your first time attending HopHacks?"
               onChange={(e) => setFirst_hophacks(e.target.value)}
@@ -107,7 +107,7 @@ const SignUpChecks = ({
             </LabeledTextField>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <LabeledTextField
               label="How did you learn about us?"
               onChange={(e) => setLearn_about_us(e.target.value)}
@@ -131,7 +131,7 @@ const SignUpChecks = ({
               ))}
             </LabeledTextField>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <LabeledTextField
               label="Link to LinkedIn Profile"
               required={true}
@@ -139,7 +139,7 @@ const SignUpChecks = ({
             />
           </Grid>
         </Grid>
-        <Grid item xs={12} style={{ textAlign: isMobile ? 'center' : 'left' }}>
+        <Grid size={{ xs: 12 }} style={{ textAlign: isMobile ? 'center' : 'left' }}>
           <label htmlFor="upload-resume">
             <input
               style={{ display: 'none' }}
@@ -164,7 +164,7 @@ const SignUpChecks = ({
           </label>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <div className="text-field">
             <CustomCheckbox
               checked={resumeChecked}
