@@ -1,77 +1,97 @@
 import React, { useState, useEffect } from 'react';
 import TeamMatchingWelcome from './TeamMatchingWelcome';
-import { withAuthCheck } from '../../util/auth.jsx';
 import TeamProfileBuilder from './TeamProfileBuilder';
-// import SwipeView from './SwipeView';
-// import MatchListView from './MatchListView';
+import TeamMatchingPause from './TeamMatchingPause';
+import { withAuthCheck } from '../../util/auth.jsx';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
-const TeamMatching = function TeamMatching(props){
+
+const TeamMatching = function TeamMatching(props) {
   const [stage, setStage] = useState('loading');
-  const [userProfile, setUserProfile] = useState(null);
+  const [isSwipingLive, setIsSwipingLive] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
-    console.log("TeamMatching props:", props);
+    const fetchSwipingStatus = async () => {
+      try {
+        // Example: fetch from backend if swiping is live or not
+        const res = await axios.get('/api/teammatch/swiping_status');
+        setIsSwipingLive(res.data.is_live);
+      } catch (e) {
+        console.error('Failed to fetch swiping status:', e);
+        // fallback to false or true as you wish
+        setIsSwipingLive(false);
+      }
+    };
+
+    fetchSwipingStatus();
+  }, []);
+
+  useEffect(() => {
     const checkTeamProfile = async () => {
       try {
         const res = await axios.get('/api/teammatch/has_team_profile');
         if (res.data.in_team_matching) {
-          setStage('swipe');
+          if (isSwipingLive) {
+            setStage('swipe');
+          } else {
+            setStage('pause'); // show pause screen if swiping not live yet
+          }
         } else {
-          setStage('welcome'); // show welcome only if they haven't opted in
+          setStage('welcome'); // no profile, start flow
         }
       } catch (e) {
         console.error('Failed to check team profile:', e);
-        setStage('loading'); // fallback
+        setStage('loading');
       }
     };
 
-    if (!props.isLoggedIn) {
-      setStage('loading'); // still checking login status
-    } else if (props.isLoggedIn) {
+    if (props.isLoggedIn) {
       checkTeamProfile();
+    } else {
+      setStage('loading');
     }
-  }, [props.isLoggedIn]);
+  }, [props.isLoggedIn, isSwipingLive]);
 
   const renderStage = () => {
     switch (stage) {
       case 'loading':
         return (
-          <div
-            className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center flex items-center justify-center"
-          >
+          <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center flex items-center justify-center">
             <span className="text-white text-xl">Loading...</span>
           </div>
         );
       case 'welcome':
         return (
-          <div
-            className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center"
-          >
-             <TeamMatchingWelcome onContinue={() => setStage('build')} />
+          <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
+            <TeamMatchingWelcome onContinue={() => setStage('build')} />
           </div>
         );
       case 'build':
         return (
-          <div
-            className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center"
-          >
-            <TeamProfileBuilder onComplete={() => setStage('swipe')} />
+          <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
+            <TeamProfileBuilder onComplete={() => {
+              // After profile creation, go to pause because swiping not live yet
+              setStage('pause');
+            }} />
+          </div>
+        );
+      case 'pause':
+        return (
+          <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
+            <TeamMatchingPause onContinue={() => history.push('/profile')} />
           </div>
         );
       case 'swipe':
         return (
-          <div
-            className="min-h-screen bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center"
-          >
+          <div className="min-h-screen bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center">
             {/* <SwipeView onViewMatches={() => setStage('matches')} /> */}
           </div>
         );
       case 'matches':
         return (
-          <div
-            className="min-h-screen bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center"
-          >
+          <div className="min-h-screen bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center">
             {/* <MatchListView onBack={() => setStage('swipe')} /> */}
           </div>
         );

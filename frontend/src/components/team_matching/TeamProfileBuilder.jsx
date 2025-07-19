@@ -15,6 +15,7 @@ const TeamProfileBuilder = ({ onComplete }) => {
     bio: '',
     github: '',
     linkedin: '',
+    pfp: ''
   });
 
   const [loading, setLoading] = useState(true);
@@ -31,6 +32,7 @@ const TeamProfileBuilder = ({ onComplete }) => {
           ...prev,
           first_name: profile.first_name || '',
           last_name: profile.last_name || '',
+          pfp: profile.pfp || '',
           school: profile.school || '',
           major: profile.major || '',
           linkedin: profile.linkedIn || '',
@@ -76,7 +78,7 @@ const TeamProfileBuilder = ({ onComplete }) => {
       return;
     }
     try {
-      await axios.post('/api/teammatch/profile/create', formData);
+      await axios.post('/api/teammatch/create', formData);
       onComplete();
     } catch (err) {
       console.error('Error submitting team matching profile', err);

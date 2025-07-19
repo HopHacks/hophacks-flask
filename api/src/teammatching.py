@@ -12,22 +12,39 @@ def has_team_profile():
     user_id = ObjectId(get_jwt_identity())
     user = db.users.find_one({"_id": user_id})
 
-    has_team_matching = "team_matching" in user and bool(user["team_matching_profile"])
+    has_team_matching = "team_matching" in user and bool(user["team_matching"])
 
     return jsonify({"in_team_matching": has_team_matching}), 200
 
 
-@teammatch_api.route('/team_profile', methods=['POST'])
+@teammatch_api.route('/create', methods=['POST'])
 @jwt_required
 def create_team_profile():
     user_id = ObjectId(get_jwt_identity())
+    user = db.users.find_one({"_id": user_id})
     profile = request.get_json()
 
-    required_fields = ["name", "year", "school", "major", "preferred_role", "skills", "interests", "bio"]
+    required_fields = [
+        "first_name",
+        "last_name",
+        "year",
+        "school",
+        "major",
+        "preferred_role",
+        "skills",
+        "interests",
+        "bio"
+    ]
 
-    missing = [field for field in required_fields if field not in profile]
+    missing = [field for field in required_fields if field not in profile or profile[field] in [None, '', []]]
     if missing:
-        return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+        return jsonify({"error": f"Missing or empty fields: {', '.join(missing)}"}), 400
+
+    # Inject username into the profile from the user document, so it can be used in swipes field
+    if not user or 'username' not in user:
+        return jsonify({"error": "Username not found for user"}), 400
+
+    profile["username"] = user["username"]
 
     db.users.update_one(
         {"_id": user_id},
@@ -37,6 +54,9 @@ def create_team_profile():
     return jsonify({"message": "Team matching profile created/updated"}), 200
 
 
+@teammatch_api.route('/swiping_status', methods=['GET'])
+def swiping_status():
+    return jsonify({"is_live": False}), 200
 
 
 
