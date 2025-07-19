@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TeamMatchingWelcome from './TeamMatchingWelcome';
 import TeamProfileBuilder from './TeamProfileBuilder';
 import TeamMatchingPause from './TeamMatchingPause';
+import TeamMatchingDashboard from './TeamMatchingDashboard.jsx';
 import { withAuthCheck } from '../../util/auth.jsx';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -34,7 +35,7 @@ const TeamMatching = function TeamMatching(props) {
         const res = await axios.get('/api/teammatch/has_team_profile');
         if (res.data.in_team_matching) {
           if (isSwipingLive) {
-            setStage('swipe');
+            setStage('dashboard');
           } else {
             setStage('pause'); // show pause screen if swiping not live yet
           }
@@ -77,21 +78,28 @@ const TeamMatching = function TeamMatching(props) {
             }} />
           </div>
         );
+			case 'dashboard':
+				return (
+          <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
+            <TeamMatchingDashboard setStage={setStage} />
+          </div>
+        );
       case 'pause':
         return (
           <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
             <TeamMatchingPause onContinue={() => history.push('/profile')} />
           </div>
         );
+    
       case 'swipe':
         return (
-          <div className="min-h-screen bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center">
+          <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
             {/* <SwipeView onViewMatches={() => setStage('matches')} /> */}
           </div>
         );
       case 'matches':
         return (
-          <div className="min-h-screen bg-[url('https://hophacks-recap.s3.us-east-1.amazonaws.com/recap-bg.png')] bg-cover bg-center">
+          <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
             {/* <MatchListView onBack={() => setStage('swipe')} /> */}
           </div>
         );
