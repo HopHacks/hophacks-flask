@@ -4,6 +4,7 @@ import TeamProfileBuilder from './TeamProfileBuilder';
 import TeamMatchingPause from './TeamMatchingPause';
 import TeamMatchingDashboard from './TeamMatchingDashboard.jsx';
 import TeamMatchingSwipe from './TeamMatchingSwipe.jsx';
+import TeamMatchingMatches from './TeamMatchingMatches.jsx';
 import { withAuthCheck } from '../../util/auth.jsx';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -101,7 +102,7 @@ const TeamMatching = function TeamMatching(props) {
       case 'matches':
         return (
           <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
-            {/* <MatchListView onBack={() => setStage('swipe')} /> */}
+            <TeamMatchingMatches setStage={setStage}/>
           </div>
         );
       default:

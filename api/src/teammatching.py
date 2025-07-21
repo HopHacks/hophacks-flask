@@ -116,16 +116,27 @@ def swipe():
 @jwt_required
 def get_matches():
     user_id = ObjectId(get_jwt_identity())
+
+    # Get list of matched user IDs from the current user
     user = db.users.find_one({"_id": user_id}, {"team_matching.matches": 1})
     match_ids = user.get("team_matching", {}).get("matches", []) if user else []
 
-    non_admins = db.users.find({
+    # Find matched users and return only their team_matching_profile
+    matched_users = db.users.find({
         "_id": {"$in": match_ids},
-        "is_admin": {"$ne": True}
+        "is_admin": {"$ne": True},
+        "team_matching.team_matching_profile": {"$exists": True}
+    }, {
+        "team_matching.team_matching_profile": 1
     })
 
-    matches = [str(u["_id"]) for u in non_admins]
-    return jsonify(matches), 200
+    profiles = [
+        u["team_matching"]["team_matching_profile"]
+        for u in matched_users
+        if "team_matching" in u and "team_matching_profile" in u["team_matching"]
+    ]
+
+    return jsonify(profiles), 200
 
 @teammatch_api.route('/potential_matches', methods=['GET'])
 @jwt_required
