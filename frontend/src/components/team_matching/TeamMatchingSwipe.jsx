@@ -72,9 +72,9 @@ function TeamMatchingSwipe({ setStage }) {
         {matchMessage && <div className="bg-green-600 p-3 rounded-lg">{matchMessage}</div>}
         {error && <div className="bg-red-600 p-3 rounded-lg">{error}</div>}
 
-        {/* Stack of cards */}
-        <div className="relative w-full flex justify-center items-center">
-          <div className="relative w-full max-w-md aspect-[3/4]">
+        {/* Stack of cards - Fixed height container to prevent overflow */}
+        <div className="relative w-full flex justify-center items-center mb-6">
+          <div className="relative w-full max-w-md h-[600px]">
             {/* Render all visible cards in absolute positioning */}
             <AnimatePresence>
               {/* Next card (background) */}
@@ -131,8 +131,8 @@ function TeamMatchingSwipe({ setStage }) {
           </div>
         </div>
 
-        {/* Swipe Buttons */}
-        <div className="flex justify-between gap-4">
+        {/* Swipe Buttons - Now positioned below the card container */}
+        <div className="flex justify-between gap-4 relative z-20">
           <button
             onClick={() => handleSwipe('left')}
             className="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold text-xl"

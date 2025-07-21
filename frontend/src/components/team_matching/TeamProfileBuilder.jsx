@@ -9,7 +9,8 @@ const TeamProfileBuilder = ({ onComplete }) => {
     year: '',
     school: '',
     major: '',
-    preferred_role: '',
+    preferred_roles: [], 
+    preferred_contact: '',
     skills: [],
     interests: [],
     bio: '',
@@ -65,12 +66,23 @@ const TeamProfileBuilder = ({ onComplete }) => {
   };
 
   const isFormValid = () => {
-    const requiredFields = ['first_name', 'last_name', 'year', 'school', 'major', 'preferred_role', 'bio'];
+    const requiredFields = ['first_name', 'last_name', 'year', 'school', 'major', 'bio', 'preferred_contact'];
     for (let field of requiredFields) {
       if (!formData[field]) return false;
     }
+    if (formData.preferred_roles.length === 0) return false;
     return true;
   };
+
+  const handleRoleChange = (role) => {
+    setFormData(prev => ({
+      ...prev,
+      preferred_roles: prev.preferred_roles.includes(role)
+        ? prev.preferred_roles.filter(r => r !== role)
+        : [...prev.preferred_roles, role]
+    }));
+  };
+
 
   const handleSubmit = async () => {
     if (!isFormValid()) {
@@ -119,21 +131,22 @@ const TeamProfileBuilder = ({ onComplete }) => {
             <input name="major" value={formData.major} onChange={handleChange} className="p-2 rounded bg-white text-black w-full" />
           </div>
           <div>
-            <label className="text-white mb-1 block">Preferred Role</label>
-            <select name="preferred_role" value={formData.preferred_role} onChange={handleChange} className="p-2 rounded bg-white text-black w-full">
-              <option value="">Select Preferred Role</option>
-              <option value="Designer">Designer</option>
-              <option value="Frontend Developer">Frontend Developer</option>
-              <option value="Backend Developer">Backend Developer</option>
-              <option value="Full Stack Developer">Full Stack Developer</option>
-              <option value="Product Manager">Product Manager</option>
-              <option value="Hardware Hacker">Hardware Hacker</option>
-              <option value="DevOps/Infrastructure">DevOps/Infrastructure</option>
+            <label className="text-white mb-1 block">Preferred Contact</label>
+            <select
+              name="preferred_contact"
+              value={formData.preferred_contact}
+              onChange={handleChange}
+              className="p-2 rounded bg-white text-black w-full"
+            >
+              <option value="">Select Contact Method</option>
+              <option value="Email">Email</option>
+              <option value="Phone">Phone</option>
             </select>
           </div>
           <div>
             <label className="text-white mb-1 block">GitHub</label>
-            <input name="github" value={formData.github} onChange={handleChange} className="p-2 rounded bg-white text-black w-full" />
+            <input name="github" value={formData.github} onChange={handleChange} placeholder="https://github.com/yourusername"
+ className="p-2 rounded bg-white text-black w-full" />
           </div>
           <div>
             <label className="text-white mb-1 block">LinkedIn</label>
@@ -141,15 +154,35 @@ const TeamProfileBuilder = ({ onComplete }) => {
           </div>
         </div>
 
-        <div className="mt-4">
+        {/* Preferred Roles */}
+        <div className="mt-6">
+          <label className="block mb-3 font-semibold text-white">Preferred Role(s)</label>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {['Designer', 'Frontend Developer', 'Backend Developer', 'Full Stack Developer', 'Product Manager', 'Hardware Hacker', 'DevOps/Infrastructure', 'Data Scientist', 'Other'].map(role => (
+              <label key={role} className="flex items-center text-white cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.preferred_roles.includes(role)}
+                  onChange={() => handleRoleChange(role)}
+                  className="mr-2 w-4 h-4"
+                />
+                <span className="text-sm">{role}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Bio */}
+        <div className="mt-6">
           <label className="block mb-2 font-semibold text-white">Short Bio (max 300 characters)</label>
           <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Tell us about yourself..." className="w-full p-2 rounded bg-white text-black" rows={4} />
         </div>
 
+        {/* Skills */}
         <div className="mt-4">
           <label className="block mb-2 font-semibold text-white">Skills (max 5)</label>
           <div className="flex gap-2 mb-2">
-            <input value={skillInput} onChange={e => setSkillInput(e.target.value)} placeholder="Add skill" className="p-2 rounded bg-white text-black flex-1" />
+            <input value={skillInput} onChange={e => setSkillInput(e.target.value)} placeholder="e.g. React, Python" className="p-2 rounded bg-white text-black flex-1" />
             <button onClick={() => addTag('skills', skillInput, setSkillInput)} className="bg-blue-600 px-4 py-2 rounded text-white">Add</button>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -161,10 +194,11 @@ const TeamProfileBuilder = ({ onComplete }) => {
           </div>
         </div>
 
+        {/* Interests */}
         <div className="mt-4">
           <label className="block mb-2 font-semibold text-white">Interests (max 5)</label>
           <div className="flex gap-2 mb-2">
-            <input value={interestInput} onChange={e => setInterestInput(e.target.value)} placeholder="Add interest" className="p-2 rounded bg-white text-black flex-1" />
+            <input value={interestInput} onChange={e => setInterestInput(e.target.value)} placeholder="e.g. AI, ML, FinTech" className="p-2 rounded bg-white text-black flex-1" />
             <button onClick={() => addTag('interests', interestInput, setInterestInput)} className="bg-blue-600 px-4 py-2 rounded text-white">Add</button>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -181,6 +215,7 @@ const TeamProfileBuilder = ({ onComplete }) => {
             Submit
           </GlowButton>
         </div>
+
       </div>
     </div>
   );

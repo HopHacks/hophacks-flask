@@ -49,6 +49,11 @@ function TeamMatchingMatches({ setStage }) {
                 {match.graduation_year && (
                   <p className="text-sm">Class of {match.graduation_year}</p>
                 )}
+                {match.preferred_contact && (
+                  <p className="text-sm mt-2">
+                    <span className="font-medium">Preferred Contact:</span> {match.preferred_contact}
+                  </p>
+                )}
               </div>
             ))}
           </div>

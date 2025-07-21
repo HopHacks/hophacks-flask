@@ -24,27 +24,43 @@ def create_team_profile():
     user = db.users.find_one({"_id": user_id})
     profile = request.get_json()
 
+    print(profile)
+
     required_fields = [
         "first_name",
         "last_name",
         "year",
         "school",
         "major",
-        "preferred_role",
+        "preferred_roles",
         "skills",
         "interests",
-        "bio"
+        "bio",
+        "preferred_contact"
     ]
 
     missing = [field for field in required_fields if field not in profile or profile[field] in [None, '', []]]
     if missing:
         return jsonify({"error": f"Missing or empty fields: {', '.join(missing)}"}), 400
 
-    # Inject username into the profile from the user document, so it can be used in swipes field
+    print("here")
+    # Inject username for swiping logic
     if not user or 'username' not in user:
         return jsonify({"error": "Username not found for user"}), 400
 
     profile["username"] = user["username"]
+
+    # Set the preferred form of contact based on method selected
+    method = profile["preferred_contact"]
+    if method.lower() == "phone":
+        phone = user.get("profile", {}).get("phone_number")
+        if not phone:
+            return jsonify({"error": "Phone number not found in user profile"}), 400
+        profile["preferred_contact"] = phone
+    elif method.lower() == "email":
+        profile["preferred_contact"] = user["username"]
+    else:
+        return jsonify({"error": "Invalid preferred_contact"}), 400
 
     db.users.update_one(
         {"_id": user_id},
@@ -52,6 +68,7 @@ def create_team_profile():
     )
 
     return jsonify({"message": "Team matching profile created/updated"}), 200
+
 
 @teammatch_api.route('/swiping_status', methods=['GET'])
 def swiping_status():
