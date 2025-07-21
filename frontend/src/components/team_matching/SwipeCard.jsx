@@ -1,14 +1,27 @@
-import React from 'react';
-
 function SwipeCard({ user }) {
   const profile = user.team_matching_profile || {};
 
+  let stage, body, accent, accessory, object;
+  if (profile.pfp) {
+    const parts = profile.pfp.split('_');
+    [stage, body, , accent, accessory, object] = parts.map(Number);
+  }
+
   return (
-    <div className="absolute bg-white w-full h-full rounded-xl p-6 text-black shadow-lg overflow-y-auto">
-      <h2 className="text-2xl font-bold mb-1">
-        {profile.first_name} {profile.last_name}
-      </h2>
+    <div className="bg-white p-6 rounded-xl shadow-md text-black w-full">
+      {/* Profile Picture */}
+      {profile.pfp && (
+        <img
+          src={`https://hophacks-website.s3.us-east-1.amazonaws.com/pfps/${stage}_${body}_1_${accent}_${accessory}_${object}.png`}
+          alt="Profile"
+          className="w-full h-48 object-contain mb-4 rounded-md"
+        />
+      )}
+
+      {/* Profile Info */}
+      <h2 className="text-2xl font-bold">{profile.first_name} {profile.last_name}</h2>
       <p className="text-sm text-gray-600 mb-2">{profile.year} • {profile.school}</p>
+
       <p><strong>Major:</strong> {profile.major}</p>
       <p><strong>Role:</strong> {profile.preferred_role}</p>
 
@@ -30,7 +43,10 @@ function SwipeCard({ user }) {
         </div>
       </div>
 
-      <p className="mt-3"><strong>Bio:</strong> {profile.bio}</p>
+      <div className="mt-2">
+        <p className="font-semibold">Bio:</p>
+        <p>{profile.bio}</p>
+      </div>
 
       <div className="mt-4 flex gap-4">
         {profile.github && (
@@ -47,5 +63,7 @@ function SwipeCard({ user }) {
     </div>
   );
 }
+
+
 
 export default SwipeCard;

@@ -8,7 +8,7 @@ function TeamMatchingSwipe({ setStage }) {
   const [index, setIndex] = useState(0);
   const [matchMessage, setMatchMessage] = useState('');
   const [error, setError] = useState('');
-  const [swipeDirection, setSwipeDirection] = useState(null); // 👈 new
+  const [swipeDirection, setSwipeDirection] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -26,7 +26,7 @@ function TeamMatchingSwipe({ setStage }) {
     const currentUser = users[index];
     if (!currentUser) return;
 
-    setSwipeDirection(direction); // 👈 update direction for exit animation
+    setSwipeDirection(direction);
 
     try {
       const res = await axios.post('/api/teammatch/swipe', {
@@ -35,24 +35,29 @@ function TeamMatchingSwipe({ setStage }) {
       });
 
       if (res.data.match) {
-        setMatchMessage(`🎉 You matched with ${currentUser.team_matching_profile?.first_name || 'someone'}!`);
+        setMatchMessage(
+          `🎉 You matched with ${currentUser.team_matching_profile?.first_name || 'someone'}!`
+        );
       } else {
         setMatchMessage('');
       }
 
       setTimeout(() => {
         setIndex((prev) => prev + 1);
-        setSwipeDirection(null); // reset
-      }, 200); // let exit animation finish
+        setSwipeDirection(null);
+      }, 200);
     } catch (err) {
       console.error('Swipe error:', err);
     }
   };
 
   const currentUser = users[index];
+  const nextUser = users[index + 1];
 
   return (
-    <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover flex justify-center items-center pt-20 px-4">
+    <div
+      className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover flex justify-center items-start pt-20 px-4"
+    >
       <div className="bg-[#001d4ccc] rounded-2xl p-8 w-full max-w-2xl shadow-xl space-y-6 text-white">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Find Teammates</h1>
@@ -67,35 +72,66 @@ function TeamMatchingSwipe({ setStage }) {
         {matchMessage && <div className="bg-green-600 p-3 rounded-lg">{matchMessage}</div>}
         {error && <div className="bg-red-600 p-3 rounded-lg">{error}</div>}
 
-        <div className="relative h-[30rem] flex items-center justify-center">
-          <AnimatePresence>
-            {currentUser ? (
-              <motion.div
-                key={currentUser.id}
-                className="absolute bg-white w-full h-full rounded-xl p-6 text-black shadow-lg overflow-y-auto"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{
-                  opacity: 0,
-                  x: swipeDirection === 'right' ? 200 : swipeDirection === 'left' ? -200 : 0
-                }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(e, info) => {
-                  if (info.offset.x > 100) handleSwipe('right');
-                  else if (info.offset.x < -100) handleSwipe('left');
-                }}
-              >
-                <SwipeCard user={currentUser} />
-              </motion.div>
-            ) : (
-              <div className="text-center text-white text-lg font-semibold">
-                No more users to show 🎉
-              </div>
-            )}
-          </AnimatePresence>
+        {/* Stack of cards */}
+        <div className="relative w-full flex justify-center items-center">
+          <div className="relative w-full max-w-md aspect-[3/4]">
+            {/* Render all visible cards in absolute positioning */}
+            <AnimatePresence>
+              {/* Next card (background) */}
+              {nextUser && (
+                <motion.div
+                  key={`bg-${nextUser.id}`}
+                  className="absolute inset-0 z-0"
+                  style={{ pointerEvents: 'none' }}
+                  initial={{ opacity: 0.6, scale: 0.95, y: 8 }}
+                  animate={{ opacity: 0.6, scale: 0.95, y: 8 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="rounded-xl overflow-hidden shadow-md h-full">
+                    <SwipeCard user={nextUser} />
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Current card (draggable) */}
+              {currentUser ? (
+                <motion.div
+                  key={currentUser.id}
+                  className="absolute inset-0 z-10"
+                  initial={{ opacity: 1, scale: 1, y: 0 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{
+                    opacity: 0,
+                    x:
+                      swipeDirection === 'right'
+                        ? 200
+                        : swipeDirection === 'left'
+                        ? -200
+                        : 0,
+                  }}
+                  transition={{ duration: 0.25 }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  onDragEnd={(e, info) => {
+                    if (info.offset.x > 100) handleSwipe('right');
+                    else if (info.offset.x < -100) handleSwipe('left');
+                  }}
+                  layout
+                >
+                  <div className="w-full h-full">
+                    <SwipeCard user={currentUser} />
+                  </div>
+                </motion.div>
+              ) : (
+                <div className="absolute inset-0 z-10 text-center text-white text-lg font-semibold flex items-center justify-center">
+                  No more users to show 🎉
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
+        {/* Swipe Buttons */}
         <div className="flex justify-between gap-4">
           <button
             onClick={() => handleSwipe('left')}
