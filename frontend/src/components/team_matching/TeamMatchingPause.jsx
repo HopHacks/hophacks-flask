@@ -12,12 +12,11 @@ const TeamMatchingPause = ({ onContinue }) => {
           Thanks for creating a Team Matching Profile!
         </h1>
         <p className="text-white text-md md:text-lg text-center mb-6">
-          We’ll notify you when Team Matching opens so you can start swiping and building your dream team.
+          We’ll notify you when Team Matching opens so you can start swiping and building your dream
+          team.
         </p>
         <div className="flex justify-center">
-          <GlowButton onClick={onContinue}>
-            Go Back
-          </GlowButton>
+          <GlowButton onClick={onContinue}>Go Back</GlowButton>
         </div>
       </div>
     </div>

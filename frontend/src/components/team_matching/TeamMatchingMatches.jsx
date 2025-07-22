@@ -37,10 +37,7 @@ function TeamMatchingMatches({ setStage }) {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {matches.map((match, index) => (
-              <div
-                key={index}
-                className="bg-white/10 rounded-xl p-4 shadow-md"
-              >
+              <div key={index} className="bg-white/10 rounded-xl p-4 shadow-md">
                 <h2 className="text-xl font-semibold mb-1">
                   {match.first_name} {match.last_name}
                 </h2>
@@ -51,7 +48,8 @@ function TeamMatchingMatches({ setStage }) {
                 )}
                 {match.preferred_contact && (
                   <p className="text-sm mt-2">
-                    <span className="font-medium">Preferred Contact:</span> {match.preferred_contact}
+                    <span className="font-medium">Preferred Contact:</span>{' '}
+                    {match.preferred_contact}
                   </p>
                 )}
               </div>

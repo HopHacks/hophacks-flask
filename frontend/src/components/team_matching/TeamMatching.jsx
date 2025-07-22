@@ -9,7 +9,6 @@ import { withAuthCheck } from '../../util/auth.jsx';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-
 const TeamMatching = function TeamMatching(props) {
   const [stage, setStage] = useState('loading');
   const [isSwipingLive, setIsSwipingLive] = useState(false);
@@ -74,14 +73,16 @@ const TeamMatching = function TeamMatching(props) {
       case 'build':
         return (
           <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
-            <TeamProfileBuilder onComplete={() => {
-              // After profile creation, go to pause because swiping not live yet
-              setStage('pause');
-            }} />
+            <TeamProfileBuilder
+              onComplete={() => {
+                // After profile creation, go to pause because swiping not live yet
+                setStage('pause');
+              }}
+            />
           </div>
         );
-			case 'dashboard':
-				return (
+      case 'dashboard':
+        return (
           <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
             <TeamMatchingDashboard setStage={setStage} />
           </div>
@@ -92,17 +93,17 @@ const TeamMatching = function TeamMatching(props) {
             <TeamMatchingPause onContinue={() => history.push('/profile')} />
           </div>
         );
-    
+
       case 'swipe':
         return (
           <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
-            <TeamMatchingSwipe setStage={setStage}/>
+            <TeamMatchingSwipe setStage={setStage} />
           </div>
         );
       case 'matches':
         return (
           <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center">
-            <TeamMatchingMatches setStage={setStage}/>
+            <TeamMatchingMatches setStage={setStage} />
           </div>
         );
       default:

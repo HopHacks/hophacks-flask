@@ -12,12 +12,12 @@ const TeamMatchingWelcome = ({ onContinue }) => {
           Welcome to Team Matching!
         </h1>
         <p className="text-white text-md md:text-lg text-center mb-6">
-          You&apos;re about to build a profile that helps you match with other hackers based on your skills, interests, and preferred role. Once your profile is created, you&apos;ll be able to swipe on potential teammates and form your dream team.
+          You&apos;re about to build a profile that helps you match with other hackers based on your
+          skills, interests, and preferred role. Once your profile is created, you&apos;ll be able
+          to swipe on potential teammates and form your dream team.
         </p>
         <div className="flex justify-center">
-          <GlowButton onClick={onContinue}>
-            Opt In
-          </GlowButton>
+          <GlowButton onClick={onContinue}>Opt In</GlowButton>
         </div>
       </div>
     </div>

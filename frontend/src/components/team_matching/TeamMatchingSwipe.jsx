@@ -31,7 +31,7 @@ function TeamMatchingSwipe({ setStage }) {
     try {
       const res = await axios.post('/api/teammatch/swipe', {
         target_id: currentUser.id,
-        action: direction,
+        action: direction
       });
 
       if (res.data.match) {
@@ -55,9 +55,7 @@ function TeamMatchingSwipe({ setStage }) {
   const nextUser = users[index + 1];
 
   return (
-    <div
-      className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover flex justify-center items-start pt-20 px-4"
-    >
+    <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover flex justify-center items-start pt-20 px-4">
       <div className="bg-[#001d4ccc] rounded-2xl p-8 w-full max-w-2xl shadow-xl space-y-6 text-white">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Find Teammates</h1>
@@ -102,12 +100,7 @@ function TeamMatchingSwipe({ setStage }) {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{
                     opacity: 0,
-                    x:
-                      swipeDirection === 'right'
-                        ? 200
-                        : swipeDirection === 'left'
-                        ? -200
-                        : 0,
+                    x: swipeDirection === 'right' ? 200 : swipeDirection === 'left' ? -200 : 0
                   }}
                   transition={{ duration: 0.25 }}
                   drag="x"
