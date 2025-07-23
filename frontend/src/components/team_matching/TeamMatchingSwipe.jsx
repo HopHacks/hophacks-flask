@@ -9,6 +9,7 @@ function TeamMatchingSwipe({ setStage }) {
   const [matchMessage, setMatchMessage] = useState('');
   const [error, setError] = useState('');
   const [swipeDirection, setSwipeDirection] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -57,14 +58,51 @@ function TeamMatchingSwipe({ setStage }) {
   return (
     <div className="min-h-screen bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover flex justify-center items-start pt-20 px-4">
       <div className="bg-[#001d4ccc] rounded-2xl p-8 w-full max-w-2xl shadow-xl space-y-6 text-white">
-        <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Find Teammates</h1>
-          <button
-            onClick={() => setStage('dashboard')}
-            className="text-sm bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-medium"
-          >
-            ← Back
-          </button>
+          <div className="flex space-x-2">
+            {/* Filters Button */}
+            <div className="relative">
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="text-sm bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg font-medium"
+              >
+                Filters
+              </button>
+              
+              {/* Filters Dropdown */}
+              {showFilters && (
+                <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-30">
+                  <button
+                    onClick={() => {
+                      handleSwipe('left');
+                      setShowFilters(false);
+                    }}
+                    className="block w-full text-left px-3 py-2 hover:bg-gray-700"
+                  >
+                    Remove Passed Profiles
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleSwipe('right');
+                      setShowFilters(false);
+                    }}
+                    className="block w-full text-left px-3 py-2 hover:bg-gray-700"
+                  >
+                    Show Passed Profiles
+                  </button>
+                </div>
+              )}
+            </div>
+            
+            {/* Back Button */}
+            <button
+              onClick={() => setStage('dashboard')}
+              className="text-sm bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-medium"
+            >
+              ← Back
+            </button>
+          </div>
         </div>
 
         {matchMessage && <div className="bg-green-600 p-3 rounded-lg">{matchMessage}</div>}
