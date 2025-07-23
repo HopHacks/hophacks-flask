@@ -12,16 +12,23 @@ function TeamMatchingSwipe({ setStage }) {
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get('/api/teammatch/potential_matches');
-        setUsers(res.data);
-      } catch (err) {
-        setError('Failed to load potential teammates.');
-      }
-    };
     fetchUsers();
   }, []);
+
+  const fetchUsers = async (showLeft = false) => {
+    try {
+      const res = await axios.get('/api/teammatch/potential_matches', {
+        params: {  // Correct way to pass query parameters
+          show_left: showLeft
+        }
+      });
+      setUsers(res.data);
+      setIndex(0);  // Reset to first card
+      setMatchMessage('');  // Clear any match messages
+    } catch (err) {
+      setError('Failed to load potential teammates.');
+    }
+  };
 
   const handleSwipe = async (direction) => {
     const currentUser = users[index];
@@ -75,21 +82,12 @@ function TeamMatchingSwipe({ setStage }) {
                 <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-30">
                   <button
                     onClick={() => {
-                      handleSwipe('left');
                       setShowFilters(false);
+                      fetchUsers(true);
                     }}
                     className="block w-full text-left px-3 py-2 hover:bg-gray-700"
                   >
-                    Remove Passed Profiles
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleSwipe('right');
-                      setShowFilters(false);
-                    }}
-                    className="block w-full text-left px-3 py-2 hover:bg-gray-700"
-                  >
-                    Show Passed Profiles
+                    Refresh
                   </button>
                 </div>
               )}
