@@ -157,15 +157,20 @@ def get_matches():
 
 @teammatch_api.route('/potential_matches', methods=['GET'])
 @jwt_required
-def get_potential_matches():
+def get_potential_matches():  # Remove the argument here
     current_user_id = ObjectId(get_jwt_identity())
     current_user = db.users.find_one({"_id": current_user_id})
 
     if not current_user:
         return jsonify({"error": "User not found"}), 404
 
+    show_left = request.args.get('show_left', 'false').lower() == 'true'
+    
     swiped = current_user.get("team_matching", {}).get("swipes", {})
-    swiped_ids = swiped.get("left", []) + swiped.get("right", []) + [current_user_id]
+    if show_left:
+        swiped_ids = swiped.get("right", []) + [current_user_id]
+    else:
+        swiped_ids = swiped.get("left", []) + swiped.get("right", []) + [current_user_id]
 
     users = list(db.users.find({
         "_id": {"$nin": swiped_ids},
