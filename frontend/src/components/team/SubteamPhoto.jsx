@@ -7,7 +7,7 @@ const teamToUrl = (teamName) => {
 export default function SubteamPhoto({ teamName }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const validTeam = ['All', 'Website', 'Design'].includes(teamName);
+  const validTeam = ['All', 'Website', 'Design', 'Logistics', 'Marketing', 'Sponsors'].includes(teamName);
 
   useEffect(() => {
     console.log({ teamName });

@@ -40,7 +40,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx,md,json}\"",
     "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx,md,json}\" --fix",
-    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,md,json}\""
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,md,json}\"",
+    "clean": "rm -rf node_modules && rm -rf package-lock.json"
   },
   "browserslist": {
     "production": [
