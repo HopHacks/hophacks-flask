@@ -58,7 +58,7 @@ const Admin = function () {
   const [allUsers, setAllUsers] = useState([]);
   const [alphaOrder, setAlphaOrder] = useState('No');
   const [dateSort, setDateSort] = useState('No'); // New state for date sorting
-  
+
   useEffect(() => {
     getUsers();
     //performFiltering();
@@ -170,18 +170,17 @@ const Admin = function () {
 
     // Apply search query
     if (query !== '') {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.profile.first_name.toLowerCase().includes(query.toLowerCase()) ||
-        user.profile.last_name.toLowerCase().includes(query.toLowerCase()) ||
-        user.username.toLowerCase().includes(query.toLowerCase())
+      filteredUsers = filteredUsers.filter(
+        (user) =>
+          user.profile.first_name.toLowerCase().includes(query.toLowerCase()) ||
+          user.profile.last_name.toLowerCase().includes(query.toLowerCase()) ||
+          user.username.toLowerCase().includes(query.toLowerCase())
       );
     }
 
     // Apply sorting
     if (alphaOrder === 'Yes') {
-      filteredUsers.sort((a, b) =>
-        a.profile.first_name.localeCompare(b.profile.first_name)
-      );
+      filteredUsers.sort((a, b) => a.profile.first_name.localeCompare(b.profile.first_name));
     } else if (dateSort === 'Newest') {
       filteredUsers.sort((a, b) => {
         const dateA = a.fall2025_apply_at ? new Date(a.fall2025_apply_at) : new Date(0);
@@ -207,18 +206,17 @@ const Admin = function () {
 
     // Apply search query
     if (query !== '') {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.profile.first_name.toLowerCase().includes(query.toLowerCase()) ||
-        user.profile.last_name.toLowerCase().includes(query.toLowerCase()) ||
-        user.username.toLowerCase().includes(query.toLowerCase())
+      filteredUsers = filteredUsers.filter(
+        (user) =>
+          user.profile.first_name.toLowerCase().includes(query.toLowerCase()) ||
+          user.profile.last_name.toLowerCase().includes(query.toLowerCase()) ||
+          user.username.toLowerCase().includes(query.toLowerCase())
       );
     }
 
     // Apply sorting
     if (alphaOrder === 'Yes') {
-      filteredUsers.sort((a, b) =>
-        a.profile.first_name.localeCompare(b.profile.first_name)
-      );
+      filteredUsers.sort((a, b) => a.profile.first_name.localeCompare(b.profile.first_name));
     } else if (dateSort === 'Newest') {
       filteredUsers.sort((a, b) => {
         const dateA = a.fall2025_apply_at ? new Date(a.fall2025_apply_at) : new Date(0);
