@@ -43,7 +43,6 @@ def create_team_profile():
     if missing:
         return jsonify({"error": f"Missing or empty fields: {', '.join(missing)}"}), 400
 
-    print("here")
     # Inject username for swiping logic
     if not user or 'username' not in user:
         return jsonify({"error": "Username not found for user"}), 400
