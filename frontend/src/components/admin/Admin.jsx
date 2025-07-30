@@ -23,6 +23,10 @@ const useStyles = makeStyles(() => ({
   pagination: {
     marginTop: '3%',
     marginLeft: '40%'
+  },
+  table: {
+    width: '100%',
+    tableLayout: 'fixed'
   }
 }));
 
@@ -53,6 +57,8 @@ const Admin = function () {
   const [status, setStatus] = useState('All');
   const [allUsers, setAllUsers] = useState([]);
   const [alphaOrder, setAlphaOrder] = useState('No');
+  const [dateSort, setDateSort] = useState('No'); // New state for date sorting
+  
   useEffect(() => {
     getUsers();
     //performFiltering();
@@ -95,23 +101,12 @@ const Admin = function () {
     });
   }
 
-  // async function handleVaccinationDownload(userid) {
-  //   const response = await axios.get('/api/admin/vaccination?id=' + userid);
-  //   const url = response.data['url'];
-  //   window.open(url, '_blank');
-  // }
-
   async function getUsers() {
     const response = await axios.get('/api/admin/users' + '?query=');
     setAllUsers(response.data.users);
     setusers(performFiltering2(response.data.users));
     //setusers(response.data.users);
   }
-
-  // async function sendAllRsvpEmails(){
-  //   const response = await axios.post('/api/registrations/rsvp/info/all');
-  //   alert("All Emails Sent")
-  // }
 
   async function acceptUser(id) {
     await axios.post('/api/registrations/accept', {
@@ -156,55 +151,89 @@ const Admin = function () {
     setAlphaOrder(value);
     performFiltering();
   }
+
+  function handleNewDateSort(value) {
+    setDateSort(value);
+    performFiltering();
+  }
+
   function newQuery(value) {
     setQuery(value);
     performFiltering();
   }
 
   function performFiltering() {
-    if (alphaOrder == 'Yes') {
-      const sortedUsers = [...allUsers].sort((a, b) =>
+    let filteredUsers = [...allUsers];
+
+    // Apply status filter
+    filteredUsers = filteredUsers.filter((user) => filterUser(user));
+
+    // Apply search query
+    if (query !== '') {
+      filteredUsers = filteredUsers.filter((user) =>
+        user.profile.first_name.toLowerCase().includes(query.toLowerCase()) ||
+        user.profile.last_name.toLowerCase().includes(query.toLowerCase()) ||
+        user.username.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    // Apply sorting
+    if (alphaOrder === 'Yes') {
+      filteredUsers.sort((a, b) =>
         a.profile.first_name.localeCompare(b.profile.first_name)
       );
-      if (query == '') {
-        setusers(sortedUsers.filter((user) => filterUser(user)));
-      } else {
-        const searchedusers = sortedUsers.filter((user) => user.profile.first_name.includes(query));
-        setusers(searchedusers);
-      }
-    } else {
-      if (query == '') {
-        setusers([...allUsers].filter((user) => filterUser(user)));
-      } else {
-        const searchedusers = [...allUsers].filter((user) =>
-          user.profile.first_name.includes(query)
-        );
-        setusers(searchedusers);
-      }
+    } else if (dateSort === 'Newest') {
+      filteredUsers.sort((a, b) => {
+        const dateA = a.fall2025_apply_at ? new Date(a.fall2025_apply_at) : new Date(0);
+        const dateB = b.fall2025_apply_at ? new Date(b.fall2025_apply_at) : new Date(0);
+        return dateB - dateA; // Newest first
+      });
+    } else if (dateSort === 'Oldest') {
+      filteredUsers.sort((a, b) => {
+        const dateA = a.fall2025_apply_at ? new Date(a.fall2025_apply_at) : new Date(0);
+        const dateB = b.fall2025_apply_at ? new Date(b.fall2025_apply_at) : new Date(0);
+        return dateA - dateB; // Oldest first
+      });
     }
+
+    setusers(filteredUsers);
   }
 
   function performFiltering2(allUsersInput) {
-    if (alphaOrder == 'Yes') {
-      const sortedUsers = [...allUsersInput].sort((a, b) =>
+    let filteredUsers = [...allUsersInput];
+
+    // Apply status filter
+    filteredUsers = filteredUsers.filter((user) => filterUser(user));
+
+    // Apply search query
+    if (query !== '') {
+      filteredUsers = filteredUsers.filter((user) =>
+        user.profile.first_name.toLowerCase().includes(query.toLowerCase()) ||
+        user.profile.last_name.toLowerCase().includes(query.toLowerCase()) ||
+        user.username.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    // Apply sorting
+    if (alphaOrder === 'Yes') {
+      filteredUsers.sort((a, b) =>
         a.profile.first_name.localeCompare(b.profile.first_name)
       );
-      if (query == '') {
-        return sortedUsers.filter((user) => filterUser(user));
-      } else {
-        const searchedusers = sortedUsers.filter((user) => user.profile.first_name.includes(query));
-        return searchedusers;
-      }
-    } else {
-      if (query == '') {
-        return [...allUsersInput].filter((user) => filterUser(user));
-      } else {
-        const searchedusers = [...allUsers].filter((user) =>
-          user.profile.first_name.includes(query)
-        );
-        return searchedusers;
-      }
+    } else if (dateSort === 'Newest') {
+      filteredUsers.sort((a, b) => {
+        const dateA = a.fall2025_apply_at ? new Date(a.fall2025_apply_at) : new Date(0);
+        const dateB = b.fall2025_apply_at ? new Date(b.fall2025_apply_at) : new Date(0);
+        return dateB - dateA; // Newest first
+      });
+    } else if (dateSort === 'Oldest') {
+      filteredUsers.sort((a, b) => {
+        const dateA = a.fall2025_apply_at ? new Date(a.fall2025_apply_at) : new Date(0);
+        const dateB = b.fall2025_apply_at ? new Date(b.fall2025_apply_at) : new Date(0);
+        return dateA - dateB; // Oldest first
+      });
     }
+
+    return filteredUsers;
   }
 
   function filterUser(user) {
@@ -239,20 +268,29 @@ const Admin = function () {
 
   useEffect(() => {
     performFiltering();
-  }, [alphaOrder, status, query]);
+  }, [alphaOrder, status, query, dateSort]); // Added dateSort to dependency array
 
   function populateUsers() {
     return users.map((user, index) => (
       <TableRow key={index}>
-        <StyledTableCell component="th" scope="row">
+        <StyledTableCell component="th" scope="row" style={{ width: '15%' }}>
           {user.username}
         </StyledTableCell>
-        <StyledTableCell>{user.profile.first_name}</StyledTableCell>
-        <StyledTableCell>{user.profile.last_name}</StyledTableCell>
-        <StyledTableCell>{user.profile.school}</StyledTableCell>
-        <StyledTableCell>{getStatus(user)}</StyledTableCell>
+        <StyledTableCell style={{ width: '12%' }}>{user.profile.first_name}</StyledTableCell>
+        <StyledTableCell style={{ width: '12%' }}>{user.profile.last_name}</StyledTableCell>
+        <StyledTableCell style={{ width: '15%' }}>{user.profile.school}</StyledTableCell>
+        <StyledTableCell style={{ width: '12%' }}>{getStatus(user)}</StyledTableCell>
+        <StyledTableCell style={{ width: '12%' }}>
+          {user.fall2025_apply_at
+            ? new Date(user.fall2025_apply_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })
+            : 'N/A'}
+        </StyledTableCell>
 
-        <StyledTableCell>
+        <StyledTableCell style={{ width: '8%' }}>
           <Button
             onClick={() => {
               acceptUser(user.id);
@@ -264,7 +302,7 @@ const Admin = function () {
             Accept
           </Button>
         </StyledTableCell>
-        <StyledTableCell>
+        <StyledTableCell style={{ width: '8%' }}>
           <Button
             onClick={() => {
               rejectUser(user.id);
@@ -276,7 +314,7 @@ const Admin = function () {
             Reject
           </Button>
         </StyledTableCell>
-        <StyledTableCell align="right">
+        <StyledTableCell style={{ width: '8%' }}>
           <Button
             onClick={() => {
               checkInUser(user.id);
@@ -288,7 +326,7 @@ const Admin = function () {
             Check in
           </Button>
         </StyledTableCell>
-        <StyledTableCell>
+        <StyledTableCell style={{ width: '4%' }}>
           <Tooltip title="Resume">
             <Button onClick={() => handleResumeDownload(user.id)}>
               <InsertDriveFileOutlinedIcon
@@ -300,7 +338,7 @@ const Admin = function () {
           </Tooltip>
         </StyledTableCell>
 
-        <StyledTableCell>
+        <StyledTableCell style={{ width: '4%' }}>
           <Tooltip title="LinkedIn">
             <Button onClick={() => window.open(user.profile.linkedIn, '_blank')}>
               <AssignmentOutlinedIcon
@@ -343,12 +381,15 @@ const Admin = function () {
 
   const OrderPicker = (
     <FormControl variant="outlined" style={{ minWidth: 220 }}>
-      <InputLabel>Sort</InputLabel>
+      <InputLabel>Sort by Name</InputLabel>
       <Select
         onChange={(e) => {
           handleNewSort(e.target.value);
+          if (e.target.value === 'Yes') {
+            setDateSort('No'); // Reset date sort when name sort is selected
+          }
         }}
-        defaultValue={'No'}
+        value={alphaOrder}
         style={{
           backgroundColor: 'rgba(219, 226, 237, 0.50)',
           borderRadius: '10px',
@@ -361,38 +402,47 @@ const Admin = function () {
     </FormControl>
   );
 
+  const DateSortPicker = (
+    <FormControl variant="outlined" style={{ minWidth: 220 }}>
+      <InputLabel>Sort by Date</InputLabel>
+      <Select
+        onChange={(e) => {
+          handleNewDateSort(e.target.value);
+          if (e.target.value !== 'No') {
+            setAlphaOrder('No'); // Reset name sort when date sort is selected
+          }
+        }}
+        value={dateSort}
+        style={{
+          backgroundColor: 'rgba(219, 226, 237, 0.50)',
+          borderRadius: '10px',
+          height: '50px'
+        }}
+      >
+        <MenuItem value="No">No</MenuItem>
+        <MenuItem value="Newest">Newest First</MenuItem>
+        <MenuItem value="Oldest">Oldest First</MenuItem>
+      </Select>
+    </FormControl>
+  );
+
   const table = (
     <div>
       <TableContainer>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <HeaderTableCell>Email</HeaderTableCell>
-              <HeaderTableCell
-                style={{
-                  minWidth: 130
-                }}
-              >
-                First Name
-              </HeaderTableCell>
-              <HeaderTableCell
-                style={{
-                  minWidth: 130
-                }}
-              >
-                Last Name
-              </HeaderTableCell>
-              <HeaderTableCell>School</HeaderTableCell>
-              <HeaderTableCell>Status</HeaderTableCell>
-              <HeaderTableCell>Actions</HeaderTableCell>
-              <HeaderTableCell></HeaderTableCell>
-              <HeaderTableCell
-                style={{
-                  minWidth: 130
-                }}
-              ></HeaderTableCell>
-              <HeaderTableCell></HeaderTableCell>
-              <HeaderTableCell></HeaderTableCell>
+              <HeaderTableCell style={{ width: '15%' }}>Email</HeaderTableCell>
+              <HeaderTableCell style={{ width: '12%' }}>First Name</HeaderTableCell>
+              <HeaderTableCell style={{ width: '12%' }}>Last Name</HeaderTableCell>
+              <HeaderTableCell style={{ width: '15%' }}>School</HeaderTableCell>
+              <HeaderTableCell style={{ width: '12%' }}>Status</HeaderTableCell>
+              <HeaderTableCell style={{ width: '12%' }}>Applied At</HeaderTableCell>
+              <HeaderTableCell style={{ width: '8%' }}>Accept</HeaderTableCell>
+              <HeaderTableCell style={{ width: '8%' }}>Reject</HeaderTableCell>
+              <HeaderTableCell style={{ width: '8%' }}>Check In</HeaderTableCell>
+              <HeaderTableCell style={{ width: '4%' }}>Resume</HeaderTableCell>
+              <HeaderTableCell style={{ width: '4%' }}>LinkedIn</HeaderTableCell>
             </TableRow>
           </TableHead>
           <TableBody>{populateUsers()}</TableBody>
@@ -404,9 +454,6 @@ const Admin = function () {
   return (
     <Container fixed style={{ marginTop: '80px' }}>
       <Box style={{ backgroundColor: 'white' }} padding="1rem">
-        {/* <>
-        <button onClick={() => sendAllRsvpEmails()}>Send Rsvp Email</button>
-      </> */}
         <Box display="flex" gap="1rem" marginBottom="1rem">
           <button
             onClick={handleRSVPAndAcceptedResumeDownload}
@@ -436,14 +483,14 @@ const Admin = function () {
           </button>
         </Box>
         Number of users: {users.length}
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box display="flex" alignItems="center" justifyContent="space-between" gap="1rem">
           <TextField
             value={query}
             label="Search"
             onChange={(e) => newQuery(e.target.value)}
             variant="outlined"
             style={{
-              width: '60%',
+              width: '40%',
               backgroundColor: 'rgba(219, 226, 237, 0.50)',
               borderRadius: '10px',
               height: '50px'
@@ -461,6 +508,7 @@ const Admin = function () {
             }}
           />
           {OrderPicker}
+          {DateSortPicker}
           {StatusPicker}
         </Box>
         <div>{populateUsers}</div>
