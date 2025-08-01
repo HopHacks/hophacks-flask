@@ -79,6 +79,26 @@ def get_all_users_account():
                             }
                         }
                     }
+                },
+                "fall2025_apply_at": {
+                    "$let": {
+                        "vars": {
+                            "fall2025_registration": {
+                                "$filter": {
+                                    "input": "$registrations",
+                                    "as": "registration",
+                                    "cond": {"$eq": ["$$registration.event", event_name]}
+                                }
+                            }
+                        },
+                        "in": {
+                            "$cond": {
+                                "if": {"$gt": [{"$size": "$$fall2025_registration"}, 0]},
+                                "then": {"$arrayElemAt": ["$$fall2025_registration.apply_at", 0]},
+                                "else": None
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -93,7 +113,7 @@ def get_all_users_account():
     
     for document in cursor:
         if not document['is_admin']:
-            users.append({'id': str(document['_id']), 'username': str(document['username']), 'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations'], 'resume': document.get("resume"), 'vaccination': document.get("vaccination")})
+            users.append({'id': str(document['_id']), 'username': str(document['username']), 'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations'], 'resume': document.get("resume"), 'vaccination': document.get("vaccination"), 'fall2025_apply_at': document.get('fall2025_apply_at')})
         
 
 
