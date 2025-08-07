@@ -45,54 +45,52 @@ jobs:
           rsync -avz --exclude='node_modules' ./frontend ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/hophacks-flask-new/
           rsync -avz --exclude='__pycache__' ./api ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/hophacks-flask-new/
 
-      - name: SSH and build + swap on EC2
+      - name: SSH and build + deploy on EC2
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            set -e  # Exit on any error
+            set -e
 
             NEW_DIR=~/hophacks-flask-new
             LIVE_DIR=~/hophacks-flask
-            BACKUP_DIR=~/hophacks-flask-backup-$(date +%Y%m%d%H%M%S)
 
             echo "Building frontend..."
-
-            # Build frontend in new dir
             cd $NEW_DIR/frontend
-            source ~/.bashrc
-            npm install --legacy-peer-deps
+            npm ci --legacy-peer-deps
             npm run build
 
-            echo "Build succeeded."
+            echo "Setting up backend..."
+            cd $NEW_DIR/api
 
-            # Backup current live directory if it exists
-            if [ -d "$LIVE_DIR" ]; then
-              echo "Backing up current live version to $BACKUP_DIR"
-              mv $LIVE_DIR $BACKUP_DIR
-            fi
+            # Remove any existing venv in the new folder, create fresh
+            rm -rf venv
+            python3 -m venv venv
+            source venv/bin/activate
+            pip install -r requirements.txt
 
-            # Swap new dir to live dir
-            echo "Promoting new version to live."
+            echo "Build successful. Cleaning up old deployment..."
+
+            # Remove the old live deployment (only after success)
+            rm -rf $LIVE_DIR
+
+            # Promote new version to live
             mv $NEW_DIR $LIVE_DIR
 
-            # Kill old backend/frontend sessions
-            echo "Killing old frontend and backend sessions..."
+            # Kill old processes just in case (safe even if already deleted)
             killall gunicorn || true
             killall node || true
             tmux kill-session -t backend || true
             tmux kill-session -t frontend || true
-            echo "Successfully killed old frontend and backend sessions."
 
-            # Start backend tmux session
+            # Start backend
             echo "Starting backend tmux session..."
-            cd $LIVE_DIR/api/src
-            tmux new-session -d -s backend 'source ../../venv/bin/activate; gunicorn -w 1 "app:create_app()" -b 127.0.0.1:8000; bash'
-            echo "Successfully started backend tmux session."
+            cd $LIVE_DIR/api
+            source venv/bin/activate
+            tmux new-session -d -s backend 'gunicorn -w 1 "app:create_app()" -b 127.0.0.1:8000; bash'
 
-            # Start frontend tmux session
+            # Start frontend
             echo "Starting frontend tmux session..."
             cd $LIVE_DIR/frontend
             tmux new-session -d -s frontend 'serve -s build; bash'
-            echo "Successfully started frontend tmux session."
 
             echo "Deployment complete."
           EOF
