@@ -16,8 +16,11 @@ const Footer = function Footer() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <Grid container alignItems="center" justifyContent="center">
-              <img src={img('Hophacks_logo_clean.png')} style={{ width: '100px', marginRight: '20px' }} />
-              <a 
+              <img
+                src={img('Hophacks_logo_clean.png')}
+                style={{ width: '100px', marginRight: '20px' }}
+              />
+              <a
                 href="https://mlh.link/MLH-PureButtons-hackathons"
                 target="_blank"
                 rel="noopener noreferrer"
