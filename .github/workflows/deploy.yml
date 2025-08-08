@@ -62,11 +62,27 @@ jobs:
             echo "Setting up backend..."
             cd $NEW_DIR/api
 
+            # Use pyenv to switch to Python 3.9.10
+            export PYENV_ROOT="$HOME/.pyenv"
+            export PATH="$PYENV_ROOT/bin:$PATH"
+            eval "$(pyenv init --path)"
+            eval "$(pyenv init -)"
+            pyenv shell 3.9.10
+
             # Remove any existing venv in the new folder, create fresh
             rm -rf venv
-            python3 -m venv venv
+            python -m venv venv
             source venv/bin/activate
-            pip install -r requirements.txt
+            pip install -r requirements-2025.txt
+
+            # Preserve config.json
+            CONFIG_PATH=$LIVE_DIR/api/src/config/config.json
+            if [ -f "$CONFIG_PATH" ]; then
+              cp "$CONFIG_PATH" /tmp/config.json.bak
+            else:
+              echo "Error: config.json not found in $LIVE_DIR/api/src/config/"
+              exit 1
+            fi
 
             echo "Build successful. Cleaning up old deployment..."
 
@@ -75,6 +91,14 @@ jobs:
 
             # Promote new version to live
             mv $NEW_DIR $LIVE_DIR
+
+            # Restore config.json
+            if [ -f "/tmp/config.json.bak" ]; then
+              cp /tmp/config.json.bak $LIVE_DIR/api/src/config/config.json
+            else:
+              echo "Error: config.json not found in /tmp/"
+              exit 1
+            fi
 
             # Kill old processes just in case (safe even if already deleted)
             killall gunicorn || true
