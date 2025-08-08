@@ -167,7 +167,7 @@ def assignments():
         sub_dicts = [{k: v for k, v in row.items()} for row \
                      in csv.DictReader(sub_string)]
         submissions = []
-        print("hello")
+
         print(sub_dicts)
         for x in sub_dicts:
             if x['Project Title'] != "Untitled" and x['Project Title'] != "SAMPLE":
