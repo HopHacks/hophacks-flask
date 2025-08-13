@@ -271,14 +271,15 @@ const Admin = function () {
   function populateUsers() {
     return users.map((user, index) => (
       <TableRow key={index}>
-        <StyledTableCell component="th" scope="row" style={{ width: '15%' }}>
+        <StyledTableCell component="th" scope="row" style={{ width: '14%' }}>
           {user.username}
         </StyledTableCell>
-        <StyledTableCell style={{ width: '12%' }}>{user.profile.first_name}</StyledTableCell>
-        <StyledTableCell style={{ width: '12%' }}>{user.profile.last_name}</StyledTableCell>
-        <StyledTableCell style={{ width: '15%' }}>{user.profile.school}</StyledTableCell>
-        <StyledTableCell style={{ width: '12%' }}>{getStatus(user)}</StyledTableCell>
-        <StyledTableCell style={{ width: '12%' }}>
+        <StyledTableCell style={{ width: '11%' }}>{user.profile.first_name}</StyledTableCell>
+        <StyledTableCell style={{ width: '11%' }}>{user.profile.last_name}</StyledTableCell>
+        <StyledTableCell style={{ width: '8%' }}>{user.profile.age || 'N/A'}</StyledTableCell>
+        <StyledTableCell style={{ width: '14%' }}>{user.profile.school}</StyledTableCell>
+        <StyledTableCell style={{ width: '11%' }}>{getStatus(user)}</StyledTableCell>
+        <StyledTableCell style={{ width: '11%' }}>
           {user.fall2025_apply_at
             ? new Date(user.fall2025_apply_at).toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -288,7 +289,7 @@ const Admin = function () {
             : 'N/A'}
         </StyledTableCell>
 
-        <StyledTableCell style={{ width: '8%' }}>
+        <StyledTableCell style={{ width: '7%' }}>
           <Button
             onClick={() => {
               acceptUser(user.id);
@@ -300,7 +301,7 @@ const Admin = function () {
             Accept
           </Button>
         </StyledTableCell>
-        <StyledTableCell style={{ width: '8%' }}>
+        <StyledTableCell style={{ width: '7%' }}>
           <Button
             onClick={() => {
               rejectUser(user.id);
@@ -312,7 +313,7 @@ const Admin = function () {
             Reject
           </Button>
         </StyledTableCell>
-        <StyledTableCell style={{ width: '8%' }}>
+        <StyledTableCell style={{ width: '7%' }}>
           <Button
             onClick={() => {
               checkInUser(user.id);
@@ -324,7 +325,7 @@ const Admin = function () {
             Check in
           </Button>
         </StyledTableCell>
-        <StyledTableCell style={{ width: '4%' }}>
+        <StyledTableCell style={{ width: '5%' }}>
           <Tooltip title="Resume">
             <Button onClick={() => handleResumeDownload(user.id)}>
               <InsertDriveFileOutlinedIcon
@@ -336,7 +337,7 @@ const Admin = function () {
           </Tooltip>
         </StyledTableCell>
 
-        <StyledTableCell style={{ width: '4%' }}>
+        <StyledTableCell style={{ width: '5%' }}>
           <Tooltip title="LinkedIn">
             <Button onClick={() => window.open(user.profile.linkedIn, '_blank')}>
               <AssignmentOutlinedIcon
@@ -430,17 +431,18 @@ const Admin = function () {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <HeaderTableCell style={{ width: '15%' }}>Email</HeaderTableCell>
-              <HeaderTableCell style={{ width: '12%' }}>First Name</HeaderTableCell>
-              <HeaderTableCell style={{ width: '12%' }}>Last Name</HeaderTableCell>
-              <HeaderTableCell style={{ width: '15%' }}>School</HeaderTableCell>
-              <HeaderTableCell style={{ width: '12%' }}>Status</HeaderTableCell>
-              <HeaderTableCell style={{ width: '12%' }}>Applied At</HeaderTableCell>
-              <HeaderTableCell style={{ width: '8%' }}>Accept</HeaderTableCell>
-              <HeaderTableCell style={{ width: '8%' }}>Reject</HeaderTableCell>
-              <HeaderTableCell style={{ width: '8%' }}>Check In</HeaderTableCell>
-              <HeaderTableCell style={{ width: '4%' }}>Resume</HeaderTableCell>
-              <HeaderTableCell style={{ width: '4%' }}>LinkedIn</HeaderTableCell>
+              <HeaderTableCell style={{ width: '14%' }}>Email</HeaderTableCell>
+              <HeaderTableCell style={{ width: '11%' }}>First Name</HeaderTableCell>
+              <HeaderTableCell style={{ width: '11%' }}>Last Name</HeaderTableCell>
+              <HeaderTableCell style={{ width: '8%' }}>Age</HeaderTableCell>
+              <HeaderTableCell style={{ width: '14%' }}>School</HeaderTableCell>
+              <HeaderTableCell style={{ width: '11%' }}>Status</HeaderTableCell>
+              <HeaderTableCell style={{ width: '11%' }}>Applied At</HeaderTableCell>
+              <HeaderTableCell style={{ width: '7%' }}>Accept</HeaderTableCell>
+              <HeaderTableCell style={{ width: '7%' }}>Reject</HeaderTableCell>
+              <HeaderTableCell style={{ width: '7%' }}>Check In</HeaderTableCell>
+              <HeaderTableCell style={{ width: '5%' }}>Resume</HeaderTableCell>
+              <HeaderTableCell style={{ width: '5%' }}>LinkedIn</HeaderTableCell>
             </TableRow>
           </TableHead>
           <TableBody>{populateUsers()}</TableBody>
@@ -450,7 +452,7 @@ const Admin = function () {
   );
 
   return (
-    <Container fixed style={{ marginTop: '80px' }}>
+    <Container maxWidth={false} style={{ marginTop: '80px', width: '100%' }}>
       <Box style={{ backgroundColor: 'white' }} padding="1rem">
         <Box display="flex" gap="1rem" marginBottom="1rem">
           <button
