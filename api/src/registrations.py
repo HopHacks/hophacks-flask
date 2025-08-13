@@ -66,6 +66,17 @@ def send_acceptances(users):
             msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
             conn.send(msg)
 
+def send_rejections(user):
+    with mail.connect() as conn:
+        email = user["username"]
+        subject = "Status Update - HopHacks.com"
+        msg = Message(recipients=[email],
+                        sender="team@hophacks.com",
+                        subject=subject)
+        msg.body = "Thanks for applying, unfortunately we weren't able to accept you into HopHacks."
+        msg.html = render_template('email_rejection.html', first_name=user['profile']['first_name'])
+        conn.send(msg)
+
 def send_apply_confirm(email, name):
     msg = Message("Received Application - HopHacks.com",
     sender="team@hophacks.com",
@@ -276,11 +287,11 @@ def reject():
 
     """
     event = request.json["event"]
-    user = request.json["user"]
+    user_id = request.json["user"]
 
     result = db.users.update_one(
         {
-            '_id': ObjectId(user),
+            '_id': ObjectId(user_id),
             'registrations.event' : event
         },
         {
@@ -290,6 +301,10 @@ def reject():
             }
         }
     )
+
+    user = db.users.find_one({'_id': ObjectId(user_id)})
+    if user:
+        send_rejections(user)
 
     return jsonify({"num_changed": result.modified_count}), 200
 
