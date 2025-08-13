@@ -55,7 +55,7 @@ function Login(props) {
   });
   const classes = useStyles();
   /* State for handling login */
-  const [email, setEmail] = useState(props.email);
+  const [email, setEmail] = useState(() => props.email || '');
   const [password, setPassword] = useState('');
   const [attempted, setAttempted] = useState(false);
 
@@ -130,7 +130,6 @@ function Login(props) {
           fullWidth
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          onKeyPress={(event) => handleKey(event)}
         />
         <p>{attempted ? 'Incorrect Username or Password' : ''}</p>
       </DialogContent>
