@@ -56,13 +56,9 @@ function HackathonStats2024({ modifiedTitle }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        console.log('hey dude');
         if (entry.isIntersecting) {
           setInView(true);
-          console.log('intersection');
-          // observer.disconnect();
         } else {
-          console.log('nope');
           setInView(false);
         }
       },
