@@ -8,6 +8,7 @@ import SectionParagraph from './ui/SectionParagraph';
 import { ArrowRightAlt } from '@material-ui/icons';
 // import PrizesSection from './home/Prizes';
 import FaqAccordion from './home/FaqAccordian';
+import Schedule from './home/Schedule';
 
 export default function Home() {
   return (
@@ -41,6 +42,9 @@ export default function Home() {
                 </SectionParagraph>
               </a>
             </div>
+          </HomeSection>
+          <HomeSection id={'schedule-section'} darkerBg={true}>
+            <Schedule />
           </HomeSection>
           <HomeSection id={'faq-section'}>
             <div className="min-h-dvh">
