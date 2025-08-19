@@ -82,7 +82,7 @@ jobs:
             CONFIG_PATH=$LIVE_DIR/api/src/config/config.json
             if [ -f "$CONFIG_PATH" ]; then
               cp "$CONFIG_PATH" /tmp/config.json.bak
-            else:
+            else
               echo "Error: config.json not found in $LIVE_DIR/api/src/config/"
               exit 1
             fi
@@ -98,7 +98,7 @@ jobs:
             # Restore config.json
             if [ -f "/tmp/config.json.bak" ]; then
               cp /tmp/config.json.bak $LIVE_DIR/api/src/config/config.json
-            else:
+            else
               echo "Error: config.json not found in /tmp/"
               exit 1
             fi
