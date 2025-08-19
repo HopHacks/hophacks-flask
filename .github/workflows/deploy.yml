@@ -59,7 +59,6 @@ jobs:
             echo "Cleaning frontend build cache..."
             rm -rf node_modules/.cache
             rm -rf node_modules
-            rm -rf package-lock.json
             npm ci --legacy-peer-deps
             npm run build
 
