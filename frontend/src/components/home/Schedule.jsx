@@ -63,7 +63,7 @@ const Schedule = () => {
         //   duration: 0,
         //   type: 'announcement'
         // },
-        { 
+        {
           time: '9:00 PM',
           event: 'Hacking Begins!',
           location: 'Hodson',
@@ -121,7 +121,8 @@ const Schedule = () => {
           emoji: '🍕',
           type: 'food'
         },
-        { time: '11:00 PM',
+        {
+          time: '11:00 PM',
           event: 'Sponsors Hall Closes',
           location: 'Levering Hall',
           duration: 0,
@@ -163,7 +164,7 @@ const Schedule = () => {
           emoji: '🚀',
           type: 'main'
         },
-        { 
+        {
           time: '12:00 PM',
           event: 'Lunch',
           location: 'Levering Hall - Great Hall',
@@ -313,13 +314,13 @@ const Schedule = () => {
 
   const getScheduleHeight = (dayKey) => {
     if (dayKey === 'fri') return (24 - 16) * 60; // 4 PM to midnight = 8 hours = 480px
-    if (dayKey === 'sun') return (16 - 8) * 60;  // 8 AM to 4 PM = 8 hours = 480px
+    if (dayKey === 'sun') return (16 - 8) * 60; // 8 AM to 4 PM = 8 hours = 480px
     return (24 - 8) * 60; // 8 AM to midnight = 16 hours = 960px
   };
 
   const eventTypes = ['time', 'main', 'food', 'workshop', 'announcement'];
-  const groupedEvents = eventTypes.map(type =>
-    eventsWithLayout.filter(event => event.type === type)
+  const groupedEvents = eventTypes.map((type) =>
+    eventsWithLayout.filter((event) => event.type === type)
   );
 
   return (
@@ -357,10 +358,12 @@ const Schedule = () => {
         </div>
 
         <div className="flex w-full mb-8 gap-4 pt-4">
-
-          {['⏰ Time', '📣 Announcement', '💠 Main', '🍽️ Food', '🛠️ Workshop'].map(type => (
+          {['⏰ Time', '📣 Announcement', '💠 Main', '🍽️ Food', '🛠️ Workshop'].map((type) => (
             <div key={type} className="flex-1 rounded-xl bg-white border-t border-blue-800">
-              <div className="text-center text-lg font-bold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat' }}>
+              <div
+                className="text-center text-lg font-bold text-gray-700 mb-2"
+                style={{ fontFamily: 'Montserrat' }}
+              >
                 {type.charAt(0).toUpperCase() + type.slice(1)}
               </div>
             </div>
@@ -368,7 +371,6 @@ const Schedule = () => {
         </div>
 
         <div className="flex w-full" style={{ minHeight: `${getScheduleHeight(selectedDay)}px` }}>
-
           {/* Scrollable schedule grid */}
           <div
             ref={scheduleRef}
@@ -396,7 +398,10 @@ const Schedule = () => {
             ))}
 
             {/* Event columns */}
-            <div className="relative flex w-full" style={{ height: `${getScheduleHeight(selectedDay)}px` }}>
+            <div
+              className="relative flex w-full"
+              style={{ height: `${getScheduleHeight(selectedDay)}px` }}
+            >
               {/* Time column */}
               <div className="relative flex-1 border-l border-yellow-500 bg-[#FFE194]">
                 {getTimeSlotsForDay(selectedDay).map((slot, index) => (
@@ -419,7 +424,7 @@ const Schedule = () => {
               {['announcement', 'main', 'food', 'workshop'].map((type, colIdx) => (
                 <div key={type} className="relative flex-1 border-l border-blue-800">
                   {eventsWithLayout
-                    .filter(event => event.type === type)
+                    .filter((event) => event.type === type)
                     .map((event) => {
                       const topPixels = event.startMinutes;
                       const heightPixels = event.heightMinutes;
@@ -441,7 +446,13 @@ const Schedule = () => {
                               fontFamily: 'Montserrat'
                             }}
                           >
-                            <span role="img" aria-label="announcement" style={{ fontSize: '1.2em' }}>📢</span>
+                            <span
+                              role="img"
+                              aria-label="announcement"
+                              style={{ fontSize: '1.2em' }}
+                            >
+                              📢
+                            </span>
                             <span className="font-semibold">{displayText}</span>
                           </div>
                         );
@@ -468,7 +479,8 @@ const Schedule = () => {
                                 style={{
                                   fontFamily: 'Montserrat',
                                   display: '-webkit-box',
-                                  WebkitLineClamp: heightPixels < 40 ? 2 : heightPixels < 60 ? 3 : 4,
+                                  WebkitLineClamp:
+                                    heightPixels < 40 ? 2 : heightPixels < 60 ? 3 : 4,
                                   WebkitBoxOrient: 'vertical',
                                   wordBreak: 'break-word'
                                 }}
