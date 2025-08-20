@@ -1,0 +1,124 @@
+name: Deploy Frontend & Backend to EC2 on Merge to Main
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+
+          if [ -z "${{ secrets.EC2_SSH_KEY }}" ]; then
+            echo "Error: EC2_SSH_KEY is not set!"
+            exit 1
+          fi
+
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          if [ -z "${{ secrets.EC2_HOST }}" ]; then
+            echo "EC2_HOST is not set!"
+            exit 1
+          fi
+
+          echo "Scanning SSH host key for ${{ secrets.EC2_HOST }}..."
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts || {
+            echo "ssh-keyscan failed for ${{ secrets.EC2_HOST }}"
+            exit 1
+          }
+
+      - name: Rsync code to EC2 (new folder)
+        run: |
+          if [ -z "${{ secrets.EC2_USER }}" ]; then
+            echo "EC2_USER is not set!"
+            exit 1
+          fi
+          rsync -avz --exclude='node_modules' ./frontend ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/hophacks-flask-new/
+          rsync -avz --exclude='__pycache__' ./api ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/hophacks-flask-new/
+
+      - name: SSH and build + deploy on EC2
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+
+            NEW_DIR=~/hophacks-flask-new
+            LIVE_DIR=~/hophacks-flask
+
+            echo "Building frontend..."
+            cd $NEW_DIR/frontend
+            echo "Cleaning frontend build cache..."
+            rm -rf node_modules/.cache
+            rm -rf node_modules
+            npm ci --legacy-peer-deps
+            npm run build
+
+            echo "Setting up backend..."
+            cd $NEW_DIR/api
+
+            # Use pyenv to switch to Python 3.9.10
+            export PYENV_ROOT="$HOME/.pyenv"
+            export PATH="$PYENV_ROOT/bin:$PATH"
+            eval "$(pyenv init --path)"
+            eval "$(pyenv init -)"
+            pyenv shell 3.9.10
+
+            # Remove any existing venv in the new folder, create fresh
+            rm -rf venv
+            python -m venv venv
+            source venv/bin/activate
+            pip install -r requirements-2025.txt
+
+            # Preserve config.json
+            CONFIG_PATH=$LIVE_DIR/api/src/config/config.json
+            if [ -f "$CONFIG_PATH" ]; then
+              cp "$CONFIG_PATH" /tmp/config.json.bak
+            else
+              echo "Error: config.json not found in $LIVE_DIR/api/src/config/"
+              exit 1
+            fi
+
+            echo "Build successful. Cleaning up old deployment..."
+
+            # Remove the old live deployment (only after success)
+            rm -rf $LIVE_DIR
+
+            # Promote new version to live
+            mv $NEW_DIR $LIVE_DIR
+
+            # Restore config.json
+            if [ -f "/tmp/config.json.bak" ]; then
+              cp /tmp/config.json.bak $LIVE_DIR/api/src/config/config.json
+            else
+              echo "Error: config.json not found in /tmp/"
+              exit 1
+            fi
+
+            # Kill old processes just in case (safe even if already deleted)
+            killall gunicorn || true
+            killall node || true
+            tmux kill-session -t backend || true
+            tmux kill-session -t frontend || true
+
+            # Start backend
+            echo "Starting backend tmux session..."
+            cd $LIVE_DIR/api
+            source venv/bin/activate
+            tmux new-session -d -s backend 'gunicorn -w 1 "app:create_app()" -b 127.0.0.1:8000; bash'
+
+            # Start frontend
+            echo "Starting frontend tmux session..."
+            cd $LIVE_DIR/frontend
+            tmux new-session -d -s frontend 'serve -s build; bash'
+
+            echo "Deployment complete."
+          EOF

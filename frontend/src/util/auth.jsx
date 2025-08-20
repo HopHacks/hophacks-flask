@@ -41,7 +41,6 @@ function AuthProvider(props) {
 
   // Login to page
   async function login(email, password) {
-    console.log('hello');
     const response = await axios.post('/api/auth/login', {
       username: email,
       password: password
