@@ -1,403 +1,526 @@
-import React from 'react';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-const useStyles = makeStyles({
-  margin: {
-    marginBottom: '13px'
-  },
-  color: {
-    backgroundColor: 'rgba(6, 26, 64, 1)'
-  },
-  body: {
-    maxHeight: '150px',
-    overflow: 'auto'
-  },
-  title: {
-    fontSize: '3rem',
-    color: '#061a40',
-    fontFamily: 'Inter',
-    fontWeight: 'bold',
-    fontStyle: 'italic'
-  },
-  schedule: {
-    backgroundColor: 'rgba(45, 153, 224, 1)',
-    fontStyle: 'italic'
-  },
-  font: {
-    fontFamily: 'Inter',
-    color: 'rgba(6, 26, 64, 1)',
-    backgroundColor: 'transparent',
-    fontWeight: 'bold',
-    '&.Mui-selected': {
-      color: 'rgba(6, 26, 64, 1)',
-      fontWeight: 'bold'
+import { emphasize } from '@material-ui/core';
+import React, { useState, useEffect, useRef } from 'react';
+
+const SectionHeader = ({ children, className }) => (
+  <h2 className={`text-4xl font-bold mb-8 ${className}`} style={{ fontFamily: 'Montserrat' }}>
+    {children}
+  </h2>
+);
+
+const Schedule = () => {
+  const [selectedDay, setSelectedDay] = useState('fri');
+  const [clickedEvent, setClickedEvent] = useState(null);
+  const scheduleRef = useRef(null);
+
+  const scheduleData = {
+    fri: {
+      title: 'Friday, Sep 12',
+      events: [
+        {
+          time: '6:00 PM',
+          event: 'Check-in',
+          location: 'Levering Hall - Glass Pavilion',
+          duration: 2,
+          emoji: '💫',
+          type: 'main'
+        },
+        {
+          time: '6:30 PM',
+          event: 'Dinner',
+          location: 'Levering Hall - Glass Pavilion',
+          duration: 1.5,
+          emoji: '🍕',
+          type: 'food'
+        },
+        {
+          time: '8:00 PM',
+          event: 'Opening Ceremony',
+          location: 'Levering Hall - Glass Pavilion',
+          duration: 0.75,
+          emoji: '🎉',
+          type: 'main'
+        },
+        {
+          time: '8:45 PM',
+          event: 'Team Building',
+          location: 'Levering Hall - Glass Pavilion',
+          duration: 0.25,
+          emoji: '🤝',
+          type: 'main'
+        },
+        {
+          time: '9:00 PM',
+          event: 'Workshops TBA!',
+          location: 'TBD',
+          duration: 3,
+          emoji: '🛠️',
+          type: 'workshop'
+        },
+        // {
+        //   time: '9:00 PM',
+        //   event: 'Sponsor Hall Opens',
+        //   location: 'Levering Hall - Great Hall',
+        //   duration: 0,
+        //   type: 'announcement'
+        // },
+        {
+          time: '9:00 PM',
+          event: 'Hacking Begins!',
+          location: 'Hodson',
+          duration: 0,
+          type: 'announcement'
+        },
+        // {
+        //   time: '11:00 PM',
+        //   event: 'Sleeping Rooms Open',
+        //   location: 'Hodson',
+        //   duration: 0,
+        //   type: 'announcement'
+        // },
+        {
+          time: '11:00 PM',
+          event: 'Sponsors Hall Closes',
+          location: 'Levering Hall',
+          duration: 0,
+          type: 'announcement'
+        }
+      ]
     },
-    fontSize: '15px'
-  },
-  titleFont: {
-    fontFamily: 'Inter',
-    fontStyle: 'italic',
-    color: 'rgba(255, 255, 255, 1)',
-    backgroundColor: 'transparent',
-    fontWeight: 'bolder',
-    '&.Mui-selected': {
-      color: 'rgba(6, 26, 64, 1)',
-      fontWeight: 'bolder'
+    sat: {
+      title: 'Saturday, Sep 13',
+      events: [
+        {
+          time: '9:00 AM',
+          event: 'Breakfast',
+          location: 'Levering Hall - Glass Pavilion',
+          duration: 1,
+          emoji: '🥞',
+          type: 'food'
+        },
+        {
+          time: '9:00 AM',
+          event: 'Workshops TBA!',
+          location: 'TBD',
+          duration: 14,
+          emoji: '🛠️',
+          type: 'workshop'
+        },
+        {
+          time: '2:00 PM',
+          event: 'Lunch',
+          location: 'Levering Hall - Glass Pavilion',
+          duration: 1.5,
+          emoji: '🌯',
+          type: 'food'
+        },
+        {
+          time: '8:00 PM',
+          event: 'Dinner',
+          location: 'Levering Hall - Glass Pavilion',
+          duration: 2,
+          emoji: '🍕',
+          type: 'food'
+        },
+        {
+          time: '11:00 PM',
+          event: 'Sponsors Hall Closes',
+          location: 'Levering Hall',
+          duration: 0,
+          type: 'announcement'
+        }
+      ]
     },
-    fontSize: '15px'
-  },
-  divFont: {
-    fontFamily: 'Inter',
-    color: 'rgba(6, 26, 64, 1)',
-    height: '35px',
-    fontSize: '15px',
-    fontWeight: 'bold'
-  },
-  indicator: {
-    backgroundColor: 'rgba(250, 192, 19, 1)'
-  },
-  selected: {
-    backgroundColor: 'rgba(250, 192, 19, 1)',
-    color: 'rgba(250, 192, 19, 1)'
-  }
-});
-// TODO: update table cells with the new schedule and/or create a better style of table
-export default function Schedule() {
-  const classes = useStyles();
-  const [day, setDay] = React.useState('fri');
-  const handleChange = (event, newDay) => {
-    setDay(newDay);
+    sun: {
+      title: 'Sunday, Sep 14',
+      events: [
+        {
+          time: '8:30 AM',
+          event: 'Submissions Due (Soft Deadline)',
+          location: 'Devpost',
+          duration: 0,
+          type: 'announcement'
+        },
+        // {
+        //   time: '8:45 AM',
+        //   event: 'All Coding Stops (Hard Deadline)',
+        //   location: 'Devpost',
+        //   duration: 0,
+        //   type: 'announcement'
+        // },
+        {
+          time: '9:00 AM',
+          event: 'Breakfast',
+          location: 'Levering Hall - Great Hall',
+          duration: 1,
+          emoji: '🥞',
+          type: 'food'
+        },
+        // { time: '9:00 AM', event: 'Sleeping Rooms Close', location: 'Hodson 203', duration: 0 },
+        {
+          time: '10:00 AM',
+          event: 'Science Fair',
+          location: 'Hodson',
+          duration: 2,
+          emoji: '🚀',
+          type: 'main'
+        },
+        {
+          time: '12:00 PM',
+          event: 'Lunch',
+          location: 'Levering Hall - Great Hall',
+          duration: 1,
+          emoji: '🌯',
+          type: 'food'
+        },
+        {
+          time: '1:15 PM',
+          event: 'Top 10 Demos & Judging',
+          location: 'Hodson Hall - Auditorium (Hodson 110)',
+          duration: 1.25,
+          emoji: '🌟',
+          type: 'main'
+        },
+        {
+          time: '2:30 PM',
+          event: 'Awards & Closing Ceremony',
+          location: 'Hodson Hall - Auditorium (Hodson 110)',
+          duration: 0.5,
+          emoji: '🏆',
+          type: 'main'
+        }
+      ]
+    }
   };
-  return (
-    <Box py={2} id="schedule" marginTop={'10rem'}>
-      <Typography className={classes.title} variant="h4" gutterBottom>
-        Schedule
-      </Typography>
-      <Typography
-        className={classes.divFont}
-        style={{ color: 'rgba(6, 26, 64, 1)', fontWeight: 'bold', fontStyle: 'italic' }}
-      >
-        All times in EDT (GMT-4)
-      </Typography>
 
-      <TableContainer
-        component={Paper}
-        style={{ width: '100%', backgroundColor: 'rgba(45, 153, 224, 1)' }}
-        align="center"
-        sx={{ maxHeight: 440 }}
-      >
-        <Tabs
-          value={day}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-          fullWidth={true}
-          className={classes.schedule}
-          classes={{ indicator: classes.indicator }}
-          style={{
-            width: '100%',
-            backgroundColor: 'transparent',
-            color: 'white'
-          }}
-          variant="fullWidth"
-        >
-          <Tab
-            label="[Day 1]"
-            value="fri"
-            className={classes.font}
-            style={{
-              textTransform: 'none'
-            }}
-          />
-          <Tab
-            label="[Day 2]"
-            value="sat"
-            className={classes.font}
-            style={{
-              textTransform: 'none'
-            }}
-          />
-          <Tab
-            label="[Day 3]"
-            value="sun"
-            className={classes.font}
-            style={{
-              textTransform: 'none'
-            }}
-          />
-        </Tabs>
-        <Table
-          className={classes.table}
-          aria-label="simple table"
-          style={{ backgroundColor: 'rgba(217, 217, 217, 0.1)' }}
-        >
-          <TableHead className={classes.schedule}>
-            <TableRow>
-              <TableCell className={classes.titleFont}>Time</TableCell>
-              <TableCell className={classes.titleFont}>Event</TableCell>
-              <TableCell className={classes.titleFont}>Location</TableCell>
-            </TableRow>
-          </TableHead>
-          {day === 'fri' && (
-            <TableBody className={classes.body}>
-              <TableRow className={classes.bodycolor}>
-                <TableCell className={classes.font}>6:00 PM</TableCell>
-                <TableCell className={classes.font}>Check-in Begins </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Hall - Glass Pavilion
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  6:30 PM
-                </TableCell>
-                <TableCell className={classes.font}>Dinner</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Hall - Glass Pavilion
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  8:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>Opening Ceremony</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson Hall - Auditorium (Hodson 110)
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  8:45 PM
-                </TableCell>
-                <TableCell className={classes.font}>Team Building</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 101
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  9:00 PM
-                </TableCell>
-                <TableCell className={classes.font}> Sponsor Hall Opens</TableCell>
-                <TableCell width="40%" align="left" className={classes.font}>
-                  Levering Hall - Great Hall
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  9:00 PM
-                </TableCell>
-                <TableCell className={classes.font}> Hacking Begins!</TableCell>
-                <TableCell width="40%" align="left" className={classes.font}>
-                  Hodson 210, 211, 213, 216, 301, 303, 311, 315
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  9:00 PM
-                </TableCell>
-                <TableCell className={classes.font}> PST Workshop</TableCell>
-                <TableCell width="40%" align="left" className={classes.font}>
-                  Hodson 313
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  10:00 PM
-                </TableCell>
-                <TableCell className={classes.font}> CBID Workshop - CBID Track </TableCell>
-                <TableCell width="40%" align="left" className={classes.font}>
-                  Hodson 316
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>11:00 PM</TableCell>
-                <TableCell className={classes.font}> Sponsor Hall Closes </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Hall - Great Hall
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>11:00 PM</TableCell>
-                <TableCell className={classes.font}> Sleeping Rooms Open </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 203
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          )}
-          {day === 'sat' && (
-            <TableBody className={classes.body}>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  9:00 AM
-                </TableCell>
-                <TableCell className={classes.font}>Breakfast</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Lounge
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  11:00 AM
-                </TableCell>
-                <TableCell className={classes.font}>JHU IT Workshop - Real World SDLC</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 313
-                </TableCell>
-              </TableRow>
+  const generateTimeSlots = () => {
+    const slots = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const time24 = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+        const period = hour < 12 ? 'AM' : 'PM';
+        const time12 = `${hour12}:${minute.toString().padStart(2, '0')} ${period}`;
+        slots.push({ time24, time12, hour, minute });
+      }
+    }
+    return slots;
+  };
 
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  12:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>
-                  {' '}
-                  Bloomberg Technical Interview Workshop{' '}
-                </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 316
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  2:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>Lunch</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Lounge
-                </TableCell>
-              </TableRow>
+  const timeSlots = generateTimeSlots();
+  const currentSchedule = scheduleData[selectedDay];
 
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  3:00 PM
-                </TableCell>
-                <TableCell className={classes.font}> Marshall Wace Workshop </TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 313
-                </TableCell>
-              </TableRow>
+  const timeToMinutes = (timeStr) => {
+    const [time, period] = timeStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
 
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  4:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>MLH Workshop - MS Paint Bob Ross</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson Hall - Auditorium (Hodson 110)
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  8:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>Dinner</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Hall - Glass Pavilion
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.font}>
-                <TableCell className={classes.font}>11:00 PM</TableCell>
-                <TableCell className={classes.font}> Sponsor Hall Closes</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Hall - Great Hall
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          )}
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
 
-          {day === 'sun' && (
-            <TableBody className={classes.body}>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  8:30 AM
-                </TableCell>
-                <TableCell className={classes.font}>Submissions Due (Soft Deadline)</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Devpost
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  8:45 AM
-                </TableCell>
-                <TableCell className={classes.font}>All Coding Stops (Hard Deadline)</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Devpost
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  9:00 AM
-                </TableCell>
-                <TableCell className={classes.font}>Breakfast</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Hall - Great Hall
-                </TableCell>
-              </TableRow>
+    return hours * 60 + minutes;
+  };
 
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  9:00 AM
-                </TableCell>
-                <TableCell className={classes.font}>Sleeping Rooms Close</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 203
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  10:00 AM
-                </TableCell>
-                <TableCell className={classes.font}>Presentations Fair</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson 210, 211, 213, 216, 301, 303, 311, 315
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  12:00 PM
-                </TableCell>
-                <TableCell className={classes.font}>Lunch</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Levering Hall - Great Hall
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  1:15 PM
-                </TableCell>
-                <TableCell className={classes.font}>Top 10 Demos & Judging</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson Hall - Auditorium (Hodson 110)
-                </TableCell>
-              </TableRow>
+  const scrollToFirstEvent = () => {
+    if (currentSchedule.events.length > 0 && scheduleRef.current) {
+      const firstEventTime = timeToMinutes(currentSchedule.events[0].time);
+      const scrollPosition = (firstEventTime / (24 * 60)) * 1440 - 50;
+      scheduleRef.current.scrollTop = Math.max(0, scrollPosition);
+    }
+  };
 
-              <TableRow className={classes.bodycolor}>
-                <TableCell width="20%" className={classes.font}>
-                  2:30 PM
-                </TableCell>
-                <TableCell className={classes.font}>Awards & Closing Ceremony</TableCell>
-                <TableCell align="left" className={classes.font}>
-                  Hodson Hall - Auditorium (Hodson 110)
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          )}
-        </Table>
-      </TableContainer>
-    </Box>
+  useEffect(() => {
+    const timer = setTimeout(scrollToFirstEvent, 100);
+    return () => clearTimeout(timer);
+  }, [selectedDay]);
+
+  const getEventColor = (event, index) => {
+    return 'bg-blue-400';
+  };
+
+  const calculateOptimalTimeGridWidth = () => {
+    if (!currentSchedule.events.length) return 8;
+
+    const maxBubbleHeight = Math.max(
+      ...currentSchedule.events.map((event) => Math.max(event.duration * 60, 30))
+    );
+
+    const baseWidth = 8;
+    const additionalWidth = Math.floor(maxBubbleHeight / 60) * 1;
+    return Math.min(baseWidth + additionalWidth, 16);
+  };
+
+  const getDayStartOffset = (dayKey) => {
+    if (dayKey === 'fri') return 16 * 60; // 4 PM
+    return 8 * 60; // 8 AM
+  };
+
+  const calculateEventLayout = (events, dayKey) => {
+    const startOffset = getDayStartOffset(dayKey);
+    const eventsWithLayout = events.map((event, index) => ({
+      ...event,
+      index,
+      startMinutes: timeToMinutes(event.time) - startOffset,
+      heightMinutes: Math.max(event.duration * 60, 30)
+    }));
+
+    eventsWithLayout.sort((a, b) => a.startMinutes - b.startMinutes);
+
+    const columns = [];
+
+    eventsWithLayout.forEach((event) => {
+      event.endMinutes = event.startMinutes + event.heightMinutes;
+
+      let columnIndex = 0;
+      while (columnIndex < columns.length) {
+        const column = columns[columnIndex];
+        const hasOverlap = column.some(
+          (existingEvent) =>
+            event.startMinutes < existingEvent.endMinutes &&
+            event.endMinutes > existingEvent.startMinutes
+        );
+
+        if (!hasOverlap) {
+          break;
+        }
+        columnIndex++;
+      }
+
+      if (columnIndex >= columns.length) {
+        columns.push([]);
+      }
+
+      event.column = columnIndex;
+      event.totalColumns = Math.max(columns.length, columnIndex + 1);
+      columns[columnIndex].push(event);
+    });
+    const maxColumns = columns.length;
+    eventsWithLayout.forEach((event) => {
+      event.totalColumns = maxColumns;
+    });
+
+    return eventsWithLayout;
+  };
+
+  const eventsWithLayout = calculateEventLayout(currentSchedule.events, selectedDay);
+
+  const getTimeSlotsForDay = (dayKey) => {
+    if (dayKey === 'fri') {
+      return timeSlots.filter((slot) => slot.minute === 0 && slot.hour >= 16);
+    }
+    if (dayKey === 'sun') {
+      return timeSlots.filter((slot) => slot.minute === 0 && slot.hour >= 8 && slot.hour <= 16);
+    }
+    return timeSlots.filter((slot) => slot.minute === 0 && slot.hour >= 8);
+  };
+
+  const getScheduleHeight = (dayKey) => {
+    if (dayKey === 'fri') return (24 - 16) * 60; // 4 PM to midnight = 8 hours = 480px
+    if (dayKey === 'sun') return (16 - 8) * 60; // 8 AM to 4 PM = 8 hours = 480px
+    return (24 - 8) * 60; // 8 AM to midnight = 16 hours = 960px
+  };
+
+  const eventTypes = ['time', 'main', 'food', 'workshop', 'announcement'];
+  const groupedEvents = eventTypes.map((type) =>
+    eventsWithLayout.filter((event) => event.type === type)
   );
-}
+
+  return (
+    <div className="w-full max-w-7xl mx-auto p-8">
+      <SectionHeader className="text-center text-white">Schedule</SectionHeader>
+
+      <div
+        className="rounded-3xl overflow-hidden shadow-2xl"
+        style={{
+          background: 'bg-blue-900'
+        }}
+      >
+        <div className="flex w-full">
+          {Object.entries(scheduleData).map(([key, data], idx, arr) => (
+            <React.Fragment key={key}>
+              <button
+                onClick={() => setSelectedDay(key)}
+                className={`flex-1 p-6 font-bold text-xl transition-all duration-300 ${
+                  selectedDay === key
+                    ? 'FFE194 text-white shadow-inner'
+                    : 'bg-blue-900 text-white hover:FFE194'
+                }`}
+                style={{ fontFamily: 'Montserrat' }}
+              >
+                {data.title}
+              </button>
+              {/* Add vertical divider except after last button */}
+              {idx < arr.length - 1 && (
+                <div className="flex items-center justify-center">
+                  <div className="h-12 w-0.5 bg-white opacity-40 mx-auto" />
+                </div>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+
+        <div className="flex w-full mb-8 gap-4 pt-4">
+          {['⏰ Time', '📣 Announcement', '💠 Main', '🍽️ Food', '🛠️ Workshop'].map((type) => (
+            <div key={type} className="flex-1 rounded-xl bg-white border-t border-blue-800">
+              <div
+                className="text-center text-lg font-bold text-gray-700 mb-2"
+                style={{ fontFamily: 'Montserrat' }}
+              >
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex w-full" style={{ minHeight: `${getScheduleHeight(selectedDay)}px` }}>
+          {/* Scrollable schedule grid */}
+          <div
+            ref={scheduleRef}
+            className="relative overflow-y-auto"
+            style={{
+              background: '#FFE194',
+              height: `${getScheduleHeight(selectedDay)}px`,
+              flex: 1
+            }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget || e.target.closest('.absolute.w-full.border-t')) {
+                setClickedEvent(null);
+              }
+            }}
+          >
+            {/* Time grid lines */}
+            {getTimeSlotsForDay(selectedDay).map((slot, index) => (
+              <div
+                key={index}
+                className="absolute w-full border-t border-yellow-500"
+                style={{
+                  top: `${(slot.hour - (selectedDay === 'fri' ? 16 : selectedDay === 'sun' ? 8 : 8)) * 60}px`
+                }}
+              />
+            ))}
+
+            {/* Event columns */}
+            <div
+              className="relative flex w-full"
+              style={{ height: `${getScheduleHeight(selectedDay)}px` }}
+            >
+              {/* Time column */}
+              <div className="relative flex-1 border-l border-yellow-500 bg-[#FFE194]">
+                {getTimeSlotsForDay(selectedDay).map((slot, index) => (
+                  <div
+                    key={index}
+                    className="absolute text-sm font-semibold text-gray-700"
+                    style={{
+                      top: `${(slot.hour - (selectedDay === 'fri' ? 16 : selectedDay === 'sun' ? 8 : 8)) * 60}px`,
+                      left: '10%',
+                      width: '80%',
+                      fontFamily: 'Montserrat'
+                    }}
+                  >
+                    {slot.time12}
+                  </div>
+                ))}
+              </div>
+
+              {/* Other event columns */}
+              {['announcement', 'main', 'food', 'workshop'].map((type, colIdx) => (
+                <div key={type} className="relative flex-1 border-l border-blue-800">
+                  {eventsWithLayout
+                    .filter((event) => event.type === type)
+                    .map((event) => {
+                      const topPixels = event.startMinutes;
+                      const heightPixels = event.heightMinutes;
+                      const displayText = `${event.emoji ? event.emoji + ' ' : ''}${event.time}: ${event.event}`;
+                      const isClicked = clickedEvent === event.index;
+
+                      // Announcements as icon bubbles
+                      if (event.type === 'announcement') {
+                        return (
+                          <div
+                            key={event.index}
+                            className="absolute flex items-center gap-2 px-3 py-2 rounded-full bg-yellow-500 text-white shadow-lg"
+                            style={{
+                              top: `${topPixels - 10}px`,
+                              left: '50%',
+                              transform: 'translateX(-50%)',
+                              width: 'fit-content',
+                              zIndex: 30,
+                              fontFamily: 'Montserrat'
+                            }}
+                          >
+                            <span
+                              role="img"
+                              aria-label="announcement"
+                              style={{ fontSize: '1.2em' }}
+                            >
+                              📢
+                            </span>
+                            <span className="font-semibold">{displayText}</span>
+                          </div>
+                        );
+                      }
+
+                      // Regular event block
+                      return (
+                        <div key={event.index} className="relative">
+                          <div
+                            className={`absolute rounded-lg text-white shadow-lg border-2 border-white-900 ${getEventColor(event, event.index)} hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer ${isClicked ? 'border-2 border-blue-900' : ''}`}
+                            style={{
+                              top: `${topPixels}px`,
+                              height: `${heightPixels}px`,
+                              left: '10%',
+                              width: '80%',
+                              zIndex: isClicked ? 20 : 10,
+                              padding: heightPixels < 40 ? '4px' : '8px'
+                            }}
+                            onClick={() => setClickedEvent(isClicked ? null : event.index)}
+                          >
+                            <div className="h-full w-full flex items-center justify-center text-center">
+                              <div
+                                className={`font-semibold leading-tight overflow-hidden`}
+                                style={{
+                                  fontFamily: 'Montserrat',
+                                  display: '-webkit-box',
+                                  WebkitLineClamp:
+                                    heightPixels < 40 ? 2 : heightPixels < 60 ? 3 : 4,
+                                  WebkitBoxOrient: 'vertical',
+                                  wordBreak: 'break-word'
+                                }}
+                              >
+                                {displayText}
+                              </div>
+                            </div>
+                          </div>
+                          {isClicked && (
+                            <div
+                              className="absolute bg-gray-800 text-white px-3 py-2 rounded-lg shadow-xl border-2 border-white z-30 min-w-max"
+                              style={{
+                                top: `${topPixels + heightPixels + 8}px`,
+                                left: '10%',
+                                maxWidth: '200px',
+                                fontFamily: 'Montserrat'
+                              }}
+                            >
+                              <div className="text-xs font-medium">Location:</div>
+                              <div className="text-sm font-semibold">{event.location}</div>
+                              <div
+                                className="absolute w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-800"
+                                style={{
+                                  top: '-4px',
+                                  left: '12px'
+                                }}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Schedule;
