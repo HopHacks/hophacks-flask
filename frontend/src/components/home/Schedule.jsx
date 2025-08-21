@@ -1,4 +1,3 @@
-import { emphasize } from '@material-ui/core';
 import React, { useState, useEffect, useRef } from 'react';
 
 const SectionHeader = ({ children, className }) => (
@@ -232,20 +231,8 @@ const Schedule = () => {
     return () => clearTimeout(timer);
   }, [selectedDay]);
 
-  const getEventColor = (event, index) => {
+  const getEventColor = () => {
     return 'bg-blue-400';
-  };
-
-  const calculateOptimalTimeGridWidth = () => {
-    if (!currentSchedule.events.length) return 8;
-
-    const maxBubbleHeight = Math.max(
-      ...currentSchedule.events.map((event) => Math.max(event.duration * 60, 30))
-    );
-
-    const baseWidth = 8;
-    const additionalWidth = Math.floor(maxBubbleHeight / 60) * 1;
-    return Math.min(baseWidth + additionalWidth, 16);
   };
 
   const getDayStartOffset = (dayKey) => {
@@ -318,11 +305,6 @@ const Schedule = () => {
     return (24 - 8) * 60; // 8 AM to midnight = 16 hours = 960px
   };
 
-  const eventTypes = ['time', 'main', 'food', 'workshop', 'announcement'];
-  const groupedEvents = eventTypes.map((type) =>
-    eventsWithLayout.filter((event) => event.type === type)
-  );
-
   return (
     <div className="w-full max-w-7xl mx-auto p-8">
       <SectionHeader className="text-center text-white">Schedule</SectionHeader>
@@ -340,7 +322,7 @@ const Schedule = () => {
                 onClick={() => setSelectedDay(key)}
                 className={`flex-1 p-6 font-bold text-xl transition-all duration-300 ${
                   selectedDay === key
-                    ? 'FFE194 text-white shadow-inner'
+                    ? 'bg-yellow-500 FFE194 text-white shadow-inner'
                     : 'bg-blue-900 text-white hover:FFE194'
                 }`}
                 style={{ fontFamily: 'Montserrat' }}
@@ -357,7 +339,7 @@ const Schedule = () => {
           ))}
         </div>
 
-        <div className="flex w-full mb-8 gap-4 pt-4">
+        <div className="flex w-full gap-4 pl-4 pr-4 pt-4 pb-4 bg-yellow-500">
           {['⏰ Time', '📣 Announcement', '💠 Main', '🍽️ Food', '🛠️ Workshop'].map((type) => (
             <div key={type} className="flex-1 rounded-xl bg-white border-t border-blue-800">
               <div
@@ -421,7 +403,7 @@ const Schedule = () => {
               </div>
 
               {/* Other event columns */}
-              {['announcement', 'main', 'food', 'workshop'].map((type, colIdx) => (
+              {['announcement', 'main', 'food', 'workshop'].map((type) => (
                 <div key={type} className="relative flex-1 border-l border-blue-800">
                   {eventsWithLayout
                     .filter((event) => event.type === type)

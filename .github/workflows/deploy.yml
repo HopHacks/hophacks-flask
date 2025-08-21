@@ -111,8 +111,8 @@ jobs:
 
             # Start backend
             echo "Starting backend tmux session..."
-            cd $LIVE_DIR/api
-            source venv/bin/activate
+            cd $LIVE_DIR/api/src
+            source ../venv/bin/activate
             tmux new-session -d -s backend 'gunicorn -w 1 "app:create_app()" -b 127.0.0.1:8000; bash'
 
             # Start frontend
