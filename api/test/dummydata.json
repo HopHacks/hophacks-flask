@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Alice Nguyen",
+    "username": "alice123",
+    "email": "alice@example.com",
+    "school": "Johns Hopkins University",
+    "technical_skills": ["React", "HTML", "CSS", "JavaScript", "Figma"],
+    "preferred_specialty": "Frontend",
+    "teammate_preferences": "Someone strong in backend and APIs",
+    "favorite_song": "Good Days - SZA",
+    "favorite_show": "The Bear"
+  },
+  {
+    "name": "Bob Kim",
+    "username": "bobk",
+    "email": "bob@example.com",
+    "school": "MIT",
+    "technical_skills": ["Python", "Flask", "MongoDB", "Docker", "Redis"],
+    "preferred_specialty": "Backend",
+    "teammate_preferences": "Communicative and flexible teammate",
+    "favorite_song": "Lose Yourself - Eminem",
+    "favorite_show": "Breaking Bad"
+  },
+  {
+    "name": "Carla Singh",
+    "username": "carlacodes",
+    "email": "carla@example.com",
+    "school": "Stanford University",
+    "technical_skills": ["TensorFlow", "Pandas", "Python", "Numpy"],
+    "preferred_specialty": "ML Engineer",
+    "teammate_preferences": "Collaborative and curious",
+    "favorite_song": "Midnight City - M83",
+    "favorite_show": "Black Mirror"
+  },
+  {
+    "name": "Derek Johnson",
+    "username": "devderek",
+    "email": "derek@example.com",
+    "school": "University of Texas",
+    "technical_skills": ["AWS", "Kubernetes", "Go", "Terraform", "Linux"],
+    "preferred_specialty": "DevOps",
+    "teammate_preferences": "Someone organized and focused",
+    "favorite_song": "Money Trees - Kendrick Lamar",
+    "favorite_show": "Mr. Robot"
+  },
+  {
+    "name": "Emily Zhao",
+    "username": "emz",
+    "email": "emily@example.com",
+    "school": "RISD",
+    "technical_skills": ["Figma", "Illustrator", "CSS", "Sketch"],
+    "preferred_specialty": "Designer",
+    "teammate_preferences": "Creative and passionate teammates",
+    "favorite_song": "Dancing Queen - ABBA",
+    "favorite_show": "The Great British Bake Off"
+  },
+  {
+    "name": "Frank Patel",
+    "username": "frankios",
+    "email": "frank@example.com",
+    "school": "Harvard",
+    "technical_skills": ["Swift", "iOS", "Xcode", "Core Data"],
+    "preferred_specialty": "Mobile Developer",
+    "teammate_preferences": "People who give good feedback",
+    "favorite_song": "Blinding Lights - The Weeknd",
+    "favorite_show": "Severance"
+  },
+  {
+    "name": "Grace Lee",
+    "username": "gracelee",
+    "email": "grace@example.com",
+    "school": "Carnegie Mellon",
+    "technical_skills": ["SQL", "Tableau", "Python", "Excel"],
+    "preferred_specialty": "Data Analyst",
+    "teammate_preferences": "Friendly and reliable teammates",
+    "favorite_song": "Levitating - Dua Lipa",
+    "favorite_show": "How I Met Your Mother"
+  },
+  {
+    "name": "Henry Cho",
+    "username": "henrydev",
+    "email": "henry@example.com",
+    "school": "Georgia Tech",
+    "technical_skills": ["Java", "Spring Boot", "PostgreSQL", "REST APIs"],
+    "preferred_specialty": "Backend",
+    "teammate_preferences": "Someone who documents well",
+    "favorite_song": "Bohemian Rhapsody - Queen",
+    "favorite_show": "Suits"
+  },
+  {
+    "name": "Ivy Martinez",
+    "username": "ivycreative",
+    "email": "ivy@example.com",
+    "school": "Parsons",
+    "technical_skills": ["Three.js", "WebGL", "CSS", "JS"],
+    "preferred_specialty": "Creative Developer",
+    "teammate_preferences": "Visual thinker with creative energy",
+    "favorite_song": "Electric Feel - MGMT",
+    "favorite_show": "Arcane"
+  },
+  {
+    "name": "Jack Lin",
+    "username": "jacklin",
+    "email": "jack@example.com",
+    "school": "USC",
+    "technical_skills": ["Unity", "C#", "Maya", "Animation"],
+    "preferred_specialty": "Game Developer",
+    "teammate_preferences": "Someone who plays well with others",
+    "favorite_song": "Take On Me - a-ha",
+    "favorite_show": "The Last of Us"
+  }
+]

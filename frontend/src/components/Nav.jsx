@@ -288,6 +288,11 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
                       Profile
                     </Typography>
                   </Button>
+                  <Button component={Link} to="/team-matching" className={classes.navBtn}>
+                    <Typography variant="body2" className={classes.title}>
+                      Team Matching
+                    </Typography>
+                  </Button>
                   <Button onClick={handleLogout} className={classes.navBtn}>
                     <Typography variant="body2" className={classes.title}>
                       Logout
@@ -355,6 +360,11 @@ const Navigation = function Navigation({ isLoggedIn, logout }) {
               <Button component={Link} to="/profile" className={classes.navBtn}>
                 <Typography variant="body2" className={classes.title}>
                   Profile
+                </Typography>
+              </Button>
+              <Button component={Link} to="/team-matching" className={classes.navBtn}>
+                <Typography variant="body2" className={classes.title}>
+                  Team Matching
                 </Typography>
               </Button>
               <Button onClick={handleLogout} className={classes.navBtn}>
