@@ -56,6 +56,9 @@ jobs:
 
             echo "Building frontend..."
             cd $NEW_DIR/frontend
+            echo "Cleaning frontend build cache..."
+            rm -rf node_modules/.cache
+            rm -rf node_modules
             npm ci --legacy-peer-deps
             npm run build
 
@@ -79,7 +82,7 @@ jobs:
             CONFIG_PATH=$LIVE_DIR/api/src/config/config.json
             if [ -f "$CONFIG_PATH" ]; then
               cp "$CONFIG_PATH" /tmp/config.json.bak
-            else:
+            else
               echo "Error: config.json not found in $LIVE_DIR/api/src/config/"
               exit 1
             fi
@@ -95,7 +98,7 @@ jobs:
             # Restore config.json
             if [ -f "/tmp/config.json.bak" ]; then
               cp /tmp/config.json.bak $LIVE_DIR/api/src/config/config.json
-            else:
+            else
               echo "Error: config.json not found in /tmp/"
               exit 1
             fi
@@ -108,8 +111,8 @@ jobs:
 
             # Start backend
             echo "Starting backend tmux session..."
-            cd $LIVE_DIR/api
-            source venv/bin/activate
+            cd $LIVE_DIR/api/src
+            source ../venv/bin/activate
             tmux new-session -d -s backend 'gunicorn -w 1 "app:create_app()" -b 127.0.0.1:8000; bash'
 
             # Start frontend
