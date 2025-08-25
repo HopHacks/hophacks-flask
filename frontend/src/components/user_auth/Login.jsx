@@ -71,7 +71,6 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
             value={email}
             onChange={handleChangeEmail}
             color={textColor}
-            isMobile={isMobile}
           />
         </div>
         <div className="text-field">
@@ -82,7 +81,6 @@ function Login({ isMobile, email: initialEmail, login, isLoggedIn }) {
             value={password}
             onChange={handleChangePassword}
             color={textColor}
-            isMobile={isMobile}
           />
         </div>
         <div className="flex flex-col items-center">
