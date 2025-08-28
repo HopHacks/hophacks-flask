@@ -46,8 +46,8 @@ const useStyles = makeStyles({
     padding: 0
   },
   sponsorImage: {
-    width: '100%',
-    height: 'auto',
+    width: 'auto',
+    height: '100%',
     objectFit: 'contain'
   },
   labelText: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles({
 function SponsorBox({ imageUrl, size }) {
   const classes = useStyles();
   return (
-    <div className={classes.sponsorBox} style={{ width: size.width }}>
+    <div className={classes.sponsorBox} style={{ height: size.height }}>
       <img src={imageUrl} className={classes.sponsorImage} alt="sponsor" />
     </div>
   );
@@ -78,9 +78,9 @@ export default function Sponsors() {
   const img = (url) => 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
 
   const sizes = {
-    large: { height: '80px' },
-    medium: { height: '10px' },
-    small: { height: '30px' }
+    large: { height: '130px' },
+    medium: { height: '70px' },
+    small: { height: '50px' }
   };
 
   return (
@@ -134,7 +134,7 @@ export default function Sponsors() {
             <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/pava.png')} />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/roblox.png')} />
+            <SponsorBox size={{ height: '30px' }} imageUrl={img('sponsors-2025/roblox.png')} />
           </Grid>
           <Grid item>
             <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/jhu_cs.png')} />
