@@ -86,7 +86,7 @@ export default function Sponsors() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 p-8 md:py-8 md:px-8 overflow-x-hidden">
+    <div className="w-full max-w-7xl mx-auto px-4 p-8 md:py-8 md:px-8 sm:px-0 overflow-x-hidden">
       <SectionHeader className="text-left mb-20">Sponsors</SectionHeader>
       <Grid
         container
