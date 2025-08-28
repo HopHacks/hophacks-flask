@@ -65,7 +65,7 @@ const useStyles = makeStyles({
     fontWeight: 'bold'
   },
   gridRow: {
-    marginBottom: '20px', // Adjust this value to set the spacing between rows
+    marginBottom: '20px', // spacing between rows
     justifyContent: 'center' // Center the grid items
   }
 });
@@ -94,12 +94,11 @@ export default function Sponsors() {
     return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
   }
   const sizes = {
-    gold: { width: '400px', height: '300px' },
-    sable: { width: '270px', height: '270px' },
-    blue: { width: '220px', height: '200px' },
-    starter: { width: '150px', height: '150px' }
+    large: { width: '520px', height: '220px' }, // Bloomberg / Marshall Wace
+    medium: { width: '360px', height: '180px' }, // SpacetimeDB / Orcava / Pilgrim / Commure
+    small: { width: '300px', height: '160px' } // Others
   };
-  // TODO: redo sponsors section
+
   return (
     <div className={classes.root}>
       <div className="hero">
@@ -115,7 +114,7 @@ export default function Sponsors() {
             hophacks.sponsors@gmail.com
           </a>
         </Typography>
-        {/* <div className={classes.comingSoon}>Coming Soon!</div> */}
+
         <Grid
           container
           spacing={3}
@@ -125,50 +124,90 @@ export default function Sponsors() {
             justifyContent: 'center'
           }}
         >
-          {/* Gold Sponsors */}
+          {/* Row 1 — Bloomberg (single large centered) */}
           <Grid container spacing={3} className={classes.gridRow}>
             <Grid item>
               <SponsorBox
-                size={sizes.gold}
-                backgroundColor="#D9D9D9"
+                size={sizes.large}
                 borderColor="#F8B92A"
-                imageUrl={img('sponsor/png/marshall_wace.png')}
+                imageUrl={img('sponsors-2025/bloomberg.png')}
               />
             </Grid>
           </Grid>
 
-          {/* Sable Sponsors */}
+          {/* Row 2 — Marshall Wace (single centered) */}
           <Grid container spacing={3} className={classes.gridRow}>
             <Grid item>
               <SponsorBox
-                size={sizes.sable}
-                backgroundColor="#23580A"
+                size={sizes.large}
+                borderColor="#F8B92A"
+                imageUrl={img('sponsors-2025/marshall_wace.png')}
+              />
+            </Grid>
+          </Grid>
+
+          {/* Row 3 — SpacetimeDB (left) & circular mark (right) */}
+          <Grid container spacing={3} className={classes.gridRow}>
+            <Grid item>
+              <SponsorBox
+                size={sizes.medium}
                 borderColor="#23580A"
-                imageUrl={img('sponsor/png/it_hori.png')}
+                imageUrl={img('sponsors-2025/spacetimedb.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.medium}
+                borderColor="#23580A"
+                imageUrl={img('sponsors-2025/orcava.png')}
               />
             </Grid>
           </Grid>
 
-          {/* Blue Sponsors */}
+          {/* Row 4 — commure (left) & PILGRIM (right) */}
           <Grid container spacing={3} className={classes.gridRow}>
             <Grid item>
               <SponsorBox
-                size={sizes.blue}
-                backgroundColor="#1D539F"
+                size={sizes.medium}
                 borderColor="#1D539F"
-                imageUrl={img('sponsor/png/cbid.png')}
+                imageUrl={img('sponsors-2025/commure.png')}
+              />
+            </Grid>
+            <Grid item>
+              <SponsorBox
+                size={sizes.medium}
+                borderColor="#1D539F"
+                imageUrl={img('sponsors-2025/pilgrim.png')}
               />
             </Grid>
           </Grid>
 
-          {/* Red/starter sponsors */}
           <Grid container spacing={3} className={classes.gridRow}>
             <Grid item>
               <SponsorBox
-                size={sizes.starter}
-                backgroundColor="#E73427"
+                size={sizes.small}
                 borderColor="#E73427"
-                imageUrl={img('sponsor/png/jhfcu.png')}
+                imageUrl={img('sponsors-2025/small_1.png')}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} className={classes.gridRow}>
+            <Grid item>
+              <SponsorBox
+                size={sizes.small}
+                borderColor="#E73427"
+                imageUrl={img('sponsors-2025/small_2.png')}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} className={classes.gridRow}>
+            <Grid item>
+              <SponsorBox
+                size={sizes.small}
+                borderColor="#E73427"
+                imageUrl={img('sponsors-2025/small_3.png')}
               />
             </Grid>
           </Grid>
