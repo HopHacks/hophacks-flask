@@ -2,6 +2,7 @@ import Cover from './home/Cover';
 import RegisterSection from './home/Register';
 import Footer from './Footer';
 import AboutSection from './home/About';
+import SponsorsSection from './home/Sponsors';
 import HomeSection from './home/HomeSection';
 import Stats from './flashback/HackathonStats2024';
 import SectionParagraph from './ui/SectionParagraph';
@@ -31,6 +32,9 @@ export default function Home() {
           </HomeSection>
           <HomeSection id={'about-section'} darkerBg={true}>
             <AboutSection />
+          </HomeSection>
+          <HomeSection id={'sponsors-section'} darkerBg={true}>
+            <SponsorsSection />
           </HomeSection>
           <HomeSection id={'stats-section'} darkerBg={true}>
             <div className="flex flex-col min-h-dvh justify-center items-center w-full">

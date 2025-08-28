@@ -1,13 +1,10 @@
-import React from 'react';
+import SectionHeader from '../../components/ui/SectionHeader';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import SectionParagraph from '../ui/SectionParagraph';
 import { Grid } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
-  root: {
-    marginTop: '50px' // Space above the entire component
-  },
+  root: { marginTop: '50px' },
   sponsorTitle: {
     fontSize: '3rem',
     color: '#061a40',
@@ -20,7 +17,7 @@ const useStyles = makeStyles({
     fontFamily: 'Inter',
     fontWeight: 'bold',
     fontStyle: 'italic',
-    marginBottom: '30px' // Space below the title box
+    marginBottom: '30px'
   },
   contact: {
     fontFamily: 'Inter',
@@ -29,7 +26,7 @@ const useStyles = makeStyles({
     fontSize: '1rem',
     margin: '0.5rem',
     color: '#1D539F',
-    marginBottom: '40px' // Space below the title box
+    marginBottom: '40px'
   },
   comingSoon: {
     fontFamily: 'Inter',
@@ -40,20 +37,19 @@ const useStyles = makeStyles({
     color: '#1D539F'
   },
   sponsorBox: {
-    width: '250px',
-    height: '250px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'white',
-    borderRadius: '5px',
-    overflow: 'hidden',
-    position: 'relative',
-    border: '20px solid'
+    background: 'transparent',
+    border: 'none',
+    margin: '0.5rem',
+    padding: 0,
+    maxWidth: '100%'
   },
   sponsorImage: {
-    maxWidth: '80%',
-    maxHeight: '80%',
+    width: 'auto',
+    height: '100%',
+    maxWidth: '100%',
     objectFit: 'contain'
   },
   labelText: {
@@ -65,24 +61,15 @@ const useStyles = makeStyles({
     fontWeight: 'bold'
   },
   gridRow: {
-    marginBottom: '20px', // Adjust this value to set the spacing between rows
-    justifyContent: 'center' // Center the grid items
+    marginBottom: '20px',
+    justifyContent: 'center'
   }
 });
 
-function SponsorBox({ imageUrl, borderColor, size }) {
+function SponsorBox({ imageUrl, size }) {
   const classes = useStyles();
-
   return (
-    <div
-      className={classes.sponsorBox}
-      style={{
-        backgroundColor: '#cbc2cb',
-        borderColor,
-        width: size.width,
-        height: size.height
-      }}
-    >
+    <div className={classes.sponsorBox} style={{ height: size.height }}>
       <img src={imageUrl} className={classes.sponsorImage} alt="sponsor" />
     </div>
   );
@@ -90,90 +77,149 @@ function SponsorBox({ imageUrl, borderColor, size }) {
 
 export default function Sponsors() {
   const classes = useStyles();
-  function img(url) {
-    return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-  }
+  const img = (url) => 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
+
   const sizes = {
-    gold: { width: '400px', height: '300px' },
-    sable: { width: '270px', height: '270px' },
-    blue: { width: '220px', height: '200px' },
-    starter: { width: '150px', height: '150px' }
+    large: { height: '130px' },
+    medium: { height: '70px' },
+    small: { height: '50px' }
   };
-  // TODO: redo sponsors section
+
   return (
-    <div className={classes.root}>
-      <div className="hero">
-        <Box display="flex" className="sponsor-title">
-          <div className={classes.title}>Sponsors</div>
-        </Box>
-        <Typography
-          className={classes.divFont}
-          style={{ color: 'rgba(6, 26, 64, 1)', fontWeight: 'bold', fontStyle: 'italic' }}
-        >
-          Interested in sponsoring HopHacks? Email us at
-          <a className={classes.contact} href={`mailto:hophacks.sponsors@gmail.com`}>
-            hophacks.sponsors@gmail.com
-          </a>
-        </Typography>
-        {/* <div className={classes.comingSoon}>Coming Soon!</div> */}
+    <div className="w-full max-w-7xl mx-auto px-4 p-8 md:py-8 md:px-8 sm:px-0 overflow-x-hidden">
+      <SectionHeader className="text-left mb-20">Sponsors</SectionHeader>
+      <Grid
+        container
+        spacing={3}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: 0,
+          width: '100%'
+        }}
+      >
+        {/* Row 1 — Bloomberg */}
         <Grid
           container
           spacing={3}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
         >
-          {/* Gold Sponsors */}
-          <Grid container spacing={3} className={classes.gridRow}>
-            <Grid item>
-              <SponsorBox
-                size={sizes.gold}
-                backgroundColor="#D9D9D9"
-                borderColor="#F8B92A"
-                imageUrl={img('sponsor/png/marshall_wace.png')}
-              />
-            </Grid>
-          </Grid>
-
-          {/* Sable Sponsors */}
-          <Grid container spacing={3} className={classes.gridRow}>
-            <Grid item>
-              <SponsorBox
-                size={sizes.sable}
-                backgroundColor="#23580A"
-                borderColor="#23580A"
-                imageUrl={img('sponsor/png/it_hori.png')}
-              />
-            </Grid>
-          </Grid>
-
-          {/* Blue Sponsors */}
-          <Grid container spacing={3} className={classes.gridRow}>
-            <Grid item>
-              <SponsorBox
-                size={sizes.blue}
-                backgroundColor="#1D539F"
-                borderColor="#1D539F"
-                imageUrl={img('sponsor/png/cbid.png')}
-              />
-            </Grid>
-          </Grid>
-
-          {/* Red/starter sponsors */}
-          <Grid container spacing={3} className={classes.gridRow}>
-            <Grid item>
-              <SponsorBox
-                size={sizes.starter}
-                backgroundColor="#E73427"
-                borderColor="#E73427"
-                imageUrl={img('sponsor/png/jhfcu.png')}
-              />
-            </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.large} imageUrl={img('sponsors-2025/bloomberg.png')} />
           </Grid>
         </Grid>
-      </div>
+
+        {/* Row 2 — Marshall Wace */}
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
+          <Grid item>
+            <SponsorBox size={sizes.large} imageUrl={img('sponsors-2025/marshall_wace.png')} />
+          </Grid>
+        </Grid>
+
+        {/* Row 3 — SpacetimeDB & Orcava */}
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
+          <Grid item>
+            <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/spacetimedb.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/orcava.png')} />
+          </Grid>
+        </Grid>
+
+        {/* Row 4 — Commure & PILGRIM */}
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
+          <Grid item>
+            <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/commure.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/pilgrim.png')} />
+          </Grid>
+        </Grid>
+
+        {/* Row 5 */}
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/broccoli_ai.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/pava.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={{ height: '30px' }} imageUrl={img('sponsors-2025/roblox.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/jhu_cs.png')} />
+          </Grid>
+        </Grid>
+
+        {/* Row 6 */}
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/mentormates.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/apl.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/beid.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/scm.png')} />
+          </Grid>
+        </Grid>
+
+        {/* Row 7 */}
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/restruct.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/jhu_meche.png')} />
+          </Grid>
+          <Grid item>
+            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/mlh.png')} />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <SectionParagraph className="mt-10 text-center text-sm">
+        Interested in sponsoring HopHacks? Email us at{' '}
+        <a className="underline" href={`mailto:hophacks.sponsors@gmail.com`}>
+          hophacks.sponsors@gmail.com
+        </a>
+      </SectionParagraph>
     </div>
   );
 }

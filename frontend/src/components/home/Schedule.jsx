@@ -315,38 +315,33 @@ const Schedule = () => {
           background: 'bg-blue-900'
         }}
       >
-        <div className="flex w-full">
-          {Object.entries(scheduleData).map(([key, data], idx, arr) => (
-            <React.Fragment key={key}>
-              <button
-                onClick={() => setSelectedDay(key)}
-                className={`flex-1 p-6 font-bold text-xl transition-all duration-300 ${
-                  selectedDay === key
-                    ? 'bg-yellow-500 FFE194 text-white shadow-inner'
-                    : 'bg-blue-900 text-white hover:FFE194'
-                }`}
-                style={{ fontFamily: 'Montserrat' }}
-              >
-                {data.title}
-              </button>
-              {/* Add vertical divider except after last button */}
-              {idx < arr.length - 1 && (
-                <div className="flex items-center justify-center">
-                  <div className="h-12 w-0.5 bg-white opacity-40 mx-auto" />
-                </div>
-              )}
-            </React.Fragment>
+        <div className="flex w-full overflow-hidden">
+          {Object.entries(scheduleData).map(([key, data], idx) => (
+            <button
+              key={key}
+              onClick={() => setSelectedDay(key)}
+              className={[
+                'flex-1 min-w-0 p-6 font-bold text-xl transition-all duration-300',
+                idx > 0 && 'border-l border-white/40',
+                selectedDay === key
+                  ? 'bg-yellow-500 text-white shadow-inner'
+                  : 'bg-blue-900 text-white hover:bg-blue-800'
+              ].join(' ')}
+              style={{ fontFamily: 'Montserrat' }}
+            >
+              <span className="block truncate">{data.title}</span>
+            </button>
           ))}
         </div>
 
-        <div className="flex w-full gap-4 pl-4 pr-4 pt-4 pb-4 bg-yellow-500">
+        <div className="grid grid-cols-5 gap-4 pl-4 pr-4 pt-4 pb-4 bg-yellow-500">
           {['⏰ Time', '📣 Announcement', '💠 Main', '🍽️ Food', '🛠️ Workshop'].map((type) => (
-            <div key={type} className="flex-1 rounded-xl bg-white border-t border-blue-800">
+            <div key={type} className="rounded-xl bg-white border-t border-blue-800">
               <div
                 className="text-center text-lg font-bold text-gray-700 mb-2"
                 style={{ fontFamily: 'Montserrat' }}
               >
-                {type.charAt(0).toUpperCase() + type.slice(1)}
+                {type}
               </div>
             </div>
           ))}
@@ -356,10 +351,10 @@ const Schedule = () => {
           {/* Scrollable schedule grid */}
           <div
             ref={scheduleRef}
-            className="relative overflow-y-auto"
+            className="relative"
             style={{
               background: '#FFE194',
-              height: `${getScheduleHeight(selectedDay)}px`,
+              height: `${getScheduleHeight(selectedDay) + 30}px`,
               flex: 1
             }}
             onClick={(e) => {
