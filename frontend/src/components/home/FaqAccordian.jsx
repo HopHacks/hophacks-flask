@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(4)
+    padding: theme.spacing(2)
   },
   accordion: {
     backgroundColor: 'rgba(255, 233, 242, 0.32)', // semi-opaque

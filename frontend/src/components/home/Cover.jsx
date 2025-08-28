@@ -5,7 +5,7 @@ import { ArrowDownward } from '@material-ui/icons';
 
 export default function Cover() {
   return (
-    <div className="flex flex-col items-start px-20 text-left lg:ml-[30%] md:ml-[30%] mt-[2%] h-full">
+    <div className="flex flex-col items-start px-4 text-left lg:ml-[30%] md:ml-[30%] mt-[2%] h-full">
       <div className="headerRow">
         <div className="textLine">
           <span className="larger-letter">H</span>OP

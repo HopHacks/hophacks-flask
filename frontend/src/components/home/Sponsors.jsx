@@ -43,11 +43,13 @@ const useStyles = makeStyles({
     background: 'transparent',
     border: 'none',
     margin: '0.5rem',
-    padding: 0
+    padding: 0,
+    maxWidth: '100%'
   },
   sponsorImage: {
     width: 'auto',
     height: '100%',
+    maxWidth: '100%',
     objectFit: 'contain'
   },
   labelText: {
@@ -84,29 +86,50 @@ export default function Sponsors() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-8">
+    <div className="w-full max-w-7xl mx-auto px-4 p-8 md:py-8 md:px-8 overflow-x-hidden">
       <SectionHeader className="text-left mb-20">Sponsors</SectionHeader>
       <Grid
         container
         spacing={3}
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: 0,
+          width: '100%'
+        }}
       >
         {/* Row 1 — Bloomberg */}
-        <Grid container spacing={3} className={classes.gridRow}>
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
           <Grid item>
             <SponsorBox size={sizes.large} imageUrl={img('sponsors-2025/bloomberg.png')} />
           </Grid>
         </Grid>
 
         {/* Row 2 — Marshall Wace */}
-        <Grid container spacing={3} className={classes.gridRow}>
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
           <Grid item>
             <SponsorBox size={sizes.large} imageUrl={img('sponsors-2025/marshall_wace.png')} />
           </Grid>
         </Grid>
 
         {/* Row 3 — SpacetimeDB & Orcava */}
-        <Grid container spacing={3} className={classes.gridRow}>
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
           <Grid item>
             <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/spacetimedb.png')} />
           </Grid>
@@ -116,7 +139,12 @@ export default function Sponsors() {
         </Grid>
 
         {/* Row 4 — Commure & PILGRIM */}
-        <Grid container spacing={3} className={classes.gridRow}>
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
           <Grid item>
             <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/commure.png')} />
           </Grid>
@@ -126,7 +154,12 @@ export default function Sponsors() {
         </Grid>
 
         {/* Row 5 */}
-        <Grid container spacing={3} className={classes.gridRow}>
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
           <Grid item>
             <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/broccoli_ai.png')} />
           </Grid>
@@ -142,7 +175,12 @@ export default function Sponsors() {
         </Grid>
 
         {/* Row 6 */}
-        <Grid container spacing={3} className={classes.gridRow}>
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
           <Grid item>
             <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/mentormates.png')} />
           </Grid>
@@ -158,7 +196,12 @@ export default function Sponsors() {
         </Grid>
 
         {/* Row 7 */}
-        <Grid container spacing={3} className={classes.gridRow}>
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridRow}
+          style={{ margin: 0, width: '100%' }}
+        >
           <Grid item>
             <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/restruct.png')} />
           </Grid>
@@ -170,8 +213,9 @@ export default function Sponsors() {
           </Grid>
         </Grid>
       </Grid>
+
       <SectionParagraph className="mt-10 text-center text-sm">
-        Interested in sponsoring HopHacks? Email us at {''}
+        Interested in sponsoring HopHacks? Email us at{' '}
         <a className="underline" href={`mailto:hophacks.sponsors@gmail.com`}>
           hophacks.sponsors@gmail.com
         </a>
