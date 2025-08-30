@@ -18,13 +18,13 @@ const Lightbulb = ({ text }) => {
             </feMerge>
           </filter>
         </defs>
-        <circle cx="96" cy="96" r="80" fill="#FFDD82" filter="url(#glow)" />
+        <circle cx="96" cy="96" r="80" fill="#FFD300" filter="url(#glow)" />
 
-        <rect x="68" y="190" width="56" height="8" fill="white" rx="5" />
-        <rect x="68" y="198" width="56" height="8" fill="white" rx="5" />
-        <rect x="68" y="206" width="56" height="8" fill="white" rx="5" />
-        <rect x="76" y="200" width="40" height="22" fill="white" rx="40" />
-        <rect x="68" y="152" width="56" height="30" fill="#FFDD82" rx="5" filter="url(#glow)" />
+        <rect x="68" y="190" width="56" height="8" fill="#E0F7FA" rx="5" />
+        <rect x="68" y="198" width="56" height="8" fill="#E0F7FA" rx="5" />
+        <rect x="68" y="206" width="56" height="8" fill="#E0F7FA" rx="5" />
+        <rect x="76" y="200" width="40" height="22" fill="#E0F7FA" rx="40" />
+        <rect x="68" y="152" width="56" height="30" fill="#FFD300" rx="5" filter="url(#glow)" />
       </svg>
       <div
         className="absolute inset-0 flex items-center justify-center"
