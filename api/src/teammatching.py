@@ -71,7 +71,7 @@ def create_team_profile():
 
 @teammatch_api.route('/swiping_status', methods=['GET'])
 def swiping_status():
-    return jsonify({"is_live": False}), 200
+    return jsonify({"is_live": True}), 200
 
 def serialize_user(user):
     user["_id"] = str(user["_id"])
