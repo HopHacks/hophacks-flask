@@ -1,12 +1,17 @@
 const LightBulb = ({ text, fullText, isHovered }) => {
   const getFontSize = (text) => {
-    if (text.length > 25) return 'text-xs';
-    if (text.length > 15) return 'text-sm';
-    if (text.length > 10) return 'text-base';
-    return 'text-lg';
+    if (isHovered) {
+      if (text.length > 25) return 'text-xs';
+      if (text.length > 15) return 'text-sm';
+      if (text.length > 10) return 'text-base';
+    }
+    return 'text-xl';
   };
 
   const displayText = isHovered ? fullText : text;
+  const renderedText = !isHovered
+    ? text.split(' ').map((word, i) => <div key={i}>{word}</div>)
+    : displayText;
 
   return (
     <div className="relative w-48 h-64">
@@ -47,11 +52,10 @@ const LightBulb = ({ text, fullText, isHovered }) => {
           filter={`url(#glow-${isHovered ? 'bright' : 'normal'})`}
           className="transition-all duration-300"
         />
-
+        <rect x="76" y="198" width="40" height="22" fill="#B2EBF2" rx="40" />
         <rect x="68" y="190" width="56" height="8" fill="#E0F7FA" rx="5" />
-        <rect x="68" y="198" width="56" height="8" fill="#E0F7FA" rx="5" />
-        <rect x="68" y="206" width="56" height="8" fill="#E0F7FA" rx="5" />
-        <rect x="76" y="200" width="40" height="22" fill="#E0F7FA" rx="40" />
+        <rect x="68" y="197" width="56" height="8" fill="#E0F7FA" rx="5" />
+        <rect x="68" y="204" width="56" height="8" fill="#E0F7FA" rx="5" />
       </svg>
       <div
         className="absolute inset-0 flex items-center justify-center"
@@ -62,7 +66,7 @@ const LightBulb = ({ text, fullText, isHovered }) => {
             className={`font-bold text-black leading-tight break-words transition-all duration-300 ${getFontSize(displayText)}`}
             style={{ fontFamily: 'Montserrat' }}
           >
-            {displayText}
+            {renderedText}
           </span>
         </div>
       </div>

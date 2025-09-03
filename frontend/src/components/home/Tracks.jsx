@@ -10,12 +10,12 @@ const Tracks = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const trackData = [
-    { short: 'Hardware + AR Track', full: 'Best Use of AI+AR for Maternal Wellness' },
-    { short: 'Gaming Track', full: 'Best Use of SpacetimeDB' },
-    { short: 'Healthcare Track', full: 'Best Healthcare Hack' },
-    { short: 'Defense Track', full: 'Biosecurity Challenge' },
-    { short: 'Social Good Track', full: 'Best Application to Support Philanthropic Goals' },
-    { short: 'Data Driven Track', full: 'Best Data Visualization' }
+    { short: 'Hardware + AR', full: 'Best Use of AI+AR for Maternal Wellness' },
+    { short: 'Gaming', full: 'Best Use of SpacetimeDB' },
+    { short: 'Healthcare', full: 'Best Healthcare Hack' },
+    { short: 'Defense', full: 'Biosecurity Challenge' },
+    { short: 'Social Good', full: 'Best Application to Support Philanthropic Goals' },
+    { short: 'Data Driven', full: 'Best Data Visualization' }
   ];
 
   return (
