@@ -116,7 +116,11 @@ export default function Sponsors() {
           style={{ margin: 0, width: '100%' }}
         >
           <Grid item>
-            <SponsorBox size={sizes.large} imageUrl={img('sponsors-2025/bloomberg.png')} link="https://www.bloomberg.com/company/values/tech-at-bloomberg/"/>
+            <SponsorBox
+              size={sizes.large}
+              imageUrl={img('sponsors-2025/bloomberg.png')}
+              link="https://www.bloomberg.com/company/values/tech-at-bloomberg/"
+            />
           </Grid>
         </Grid>
 
@@ -128,7 +132,11 @@ export default function Sponsors() {
           style={{ margin: 0, width: '100%' }}
         >
           <Grid item>
-            <SponsorBox size={sizes.large} imageUrl={img('sponsors-2025/marshall_wace.png')} link="https://www.mwam.com/"/>
+            <SponsorBox
+              size={sizes.large}
+              imageUrl={img('sponsors-2025/marshall_wace.png')}
+              link="https://www.mwam.com/"
+            />
           </Grid>
         </Grid>
 
@@ -140,10 +148,18 @@ export default function Sponsors() {
           style={{ margin: 0, width: '100%' }}
         >
           <Grid item>
-            <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/spacetimedb.png')} link="https://spacetimedb.com/" />
+            <SponsorBox
+              size={sizes.medium}
+              imageUrl={img('sponsors-2025/spacetimedb.png')}
+              link="https://spacetimedb.com/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/orcava.png')} link="https://orcava.ai/" />
+            <SponsorBox
+              size={sizes.medium}
+              imageUrl={img('sponsors-2025/orcava.png')}
+              link="https://orcava.ai/"
+            />
           </Grid>
         </Grid>
 
@@ -155,10 +171,18 @@ export default function Sponsors() {
           style={{ margin: 0, width: '100%' }}
         >
           <Grid item>
-            <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/commure.png')} link="https://www.commure.com/"/>
+            <SponsorBox
+              size={sizes.medium}
+              imageUrl={img('sponsors-2025/commure.png')}
+              link="https://www.commure.com/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.medium} imageUrl={img('sponsors-2025/pilgrim.png')} link="https://pilgrimlabs.com/"/>
+            <SponsorBox
+              size={sizes.medium}
+              imageUrl={img('sponsors-2025/pilgrim.png')}
+              link="https://pilgrimlabs.com/"
+            />
           </Grid>
         </Grid>
 
@@ -170,16 +194,32 @@ export default function Sponsors() {
           style={{ margin: 0, width: '100%' }}
         >
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/broccoli_ai.png')} link="https://www.broccoli.com/"/>
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/broccoli_ai.png')}
+              link="https://www.broccoli.com/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/pava.png')} link="https://pavacenter.jhu.edu/"/>
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/pava.png')}
+              link="https://pavacenter.jhu.edu/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={{ height: '30px' }} imageUrl={img('sponsors-2025/roblox.png')} link="https://www.roblox.com/" />
+            <SponsorBox
+              size={{ height: '30px' }}
+              imageUrl={img('sponsors-2025/roblox.png')}
+              link="https://www.roblox.com/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/jhu_cs.png')} link="https://www.cs.jhu.edu/"/>
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/jhu_cs.png')}
+              link="https://www.cs.jhu.edu/"
+            />
           </Grid>
         </Grid>
 
@@ -191,16 +231,32 @@ export default function Sponsors() {
           style={{ margin: 0, width: '100%' }}
         >
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/mentormates.png')} link="https://www.mentormates.ai/"/>
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/mentormates.png')}
+              link="https://www.mentormates.ai/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/apl.png')} link="https://www.jhuapl.edu/"/>
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/apl.png')}
+              link="https://www.jhuapl.edu/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/beid.png')} link="https://cbid.bme.jhu.edu/"/>
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/beid.png')}
+              link="https://cbid.bme.jhu.edu/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/scm.png')} link="https://www.scm-lp.com/"/>
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/scm.png')}
+              link="https://www.scm-lp.com/"
+            />
           </Grid>
         </Grid>
 
@@ -215,10 +271,18 @@ export default function Sponsors() {
             <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/restruct.png')} />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/jhu_meche.png')} link="https://me.jhu.edu/" />
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/jhu_meche.png')}
+              link="https://me.jhu.edu/"
+            />
           </Grid>
           <Grid item>
-            <SponsorBox size={sizes.small} imageUrl={img('sponsors-2025/mlh.png')} link="https://mlh.io/"/>
+            <SponsorBox
+              size={sizes.small}
+              imageUrl={img('sponsors-2025/mlh.png')}
+              link="https://mlh.io/"
+            />
           </Grid>
         </Grid>
       </Grid>
