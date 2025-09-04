@@ -42,8 +42,11 @@ export default function Register() {
       <SectionParagraph className="mt-10 text-center text-sm">
         Sign Up for Pre / Post Hackathon Events!
       </SectionParagraph>
-      <GlowButton onClick={() => window.open(`https://forms.gle/55JXivSoY17R8xsw9`)} className="inline-flex items-center justify-center px-4 py-2 text-base max-w-[3000px] w-fit lg:whitespace-nowrap">
-          HopHacks X PAVA: Hacking 101 & From Hack to Startup
+      <GlowButton
+        onClick={() => window.open(`https://forms.gle/55JXivSoY17R8xsw9`)}
+        className="inline-flex items-center justify-center px-4 py-2 text-base max-w-[3000px] w-fit lg:whitespace-nowrap"
+      >
+        HopHacks X PAVA: Hacking 101 & From Hack to Startup
       </GlowButton>
     </div>
   );
