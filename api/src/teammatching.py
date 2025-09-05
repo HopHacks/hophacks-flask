@@ -168,7 +168,8 @@ def get_potential_matches():
 
     users = list(db.users.find({
         "_id": {"$nin": swiped_ids},
-        "is_admin": {"$ne": True}
+        "is_admin": {"$ne": True},
+        "team_matching": {"$exists": True, "$ne": {}} 
     }))
 
     return jsonify([serialize_user(u) for u in users]), 200
