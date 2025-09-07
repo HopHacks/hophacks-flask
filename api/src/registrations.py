@@ -388,8 +388,7 @@ def rsvp_rsvp():
     :status 500: Another unknown error
     """
 
-
-
+    return jsonify({"msg": "no more rsvps"} , 500)
 
     event = request.json["event"] # name of event
     id = get_jwt_identity()
@@ -419,7 +418,6 @@ def rsvp_rsvp():
         return jsonify({"msg": "no such event exists"}), 400
     else:
         return jsonify({"msg": "unknown error"}), 500 
-    # return jsonify({"msg": "no more rsvps"} , 500)
 
 
 @registrations_api.route('/rsvp/cancel', methods = ['POST'])
