@@ -71,7 +71,7 @@ def create_team_profile():
 
 @teammatch_api.route('/swiping_status', methods=['GET'])
 def swiping_status():
-    return jsonify({"is_live": False}), 200
+    return jsonify({"is_live": True}), 200
 
 def serialize_user(user):
     user["_id"] = str(user["_id"])
@@ -168,7 +168,8 @@ def get_potential_matches():
 
     users = list(db.users.find({
         "_id": {"$nin": swiped_ids},
-        "is_admin": {"$ne": True}
+        "is_admin": {"$ne": True},
+        "team_matching": {"$exists": True, "$ne": {}} 
     }))
 
     return jsonify([serialize_user(u) for u in users]), 200
