@@ -10,6 +10,7 @@ import { ArrowRightAlt } from '@material-ui/icons';
 // import PrizesSection from './home/Prizes';
 import FaqAccordion from './home/FaqAccordian';
 import Schedule from './home/Schedule';
+import Tracks from './home/Tracks';
 
 export default function Home() {
   return (
@@ -49,6 +50,9 @@ export default function Home() {
           </HomeSection>
           <HomeSection id={'schedule-section'} darkerBg={true}>
             <Schedule />
+          </HomeSection>
+          <HomeSection id={'tracks-section'} darkerBg={true}>
+            <Tracks />
           </HomeSection>
           <HomeSection id={'faq-section'}>
             <div className="min-h-dvh">
