@@ -20,9 +20,9 @@ import SignUpImage from '../user_auth/signup/SignUpImage.jsx';
 
 import '../../stylesheets/profile.css';
 
-function img(url) {
+/*function img(url) {
   return 'https://hophacks-website.s3.amazonaws.com' + '/images/' + url;
-}
+}*/
 
 //current users
 const ProfileReturningUser = function ProfileReturningUser(props) {
@@ -88,10 +88,13 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
   };
 
   const currentEvent = 'Fall 2025';
-  const rsvpStatus = "RSVPed! You're all set; you can also cancel your RSVP anytime.";
+  const rsvpStatus =
+    "RSVPed! You're all set, if you want to cancel your RSVP please email us at hophacks@gmail.com"; // TEMP CHANGE, change message for next year
   const acceptedStatus =
     'You have been accepted to HopHacks. Please RSVP if you plan on participating!';
   const appCompleteStatus = 'Application complete!';
+  const waitlistStatus =
+    'You are currently waitlisted for hophacks and your spot is NOT guaranteed. Please arrive at 7:30 PM at Glass Pavilion for check-in and we will see if we can take you off the waitlist.';
 
   async function getResumeFileName() {
     /* If we are not logged in, don't bother trying to access endpoint (we'll get a 401) */
@@ -196,10 +199,10 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     }
   }
 
-  function openPhotoRelease(event) {
+  /*function openPhotoRelease(event) {
     event.preventDefault();
     window.open(img('JHU_Photo-and-Video-Release_20192.pdf'), '_blank');
-  }
+  }*/
 
   async function handleProfileSave() {
     if (!props.isLoggedIn) return;
@@ -253,7 +256,8 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
         } else if (registration.rsvp) {
           setStatus(rsvpStatus);
         } else if (registration.accept) {
-          setStatus(acceptedStatus);
+          //setStatus(acceptedStatus);
+          setStatus(waitlistStatus); // TEMP: set everyone to waitlist status who hasnt RSVPed
         } else {
           setStatus(appCompleteStatus);
         }
@@ -272,7 +276,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
     }
   }
 
-  async function rsvp(event) {
+  /*async function rsvp(event) {
     try {
       await axios.post('/api/registrations/rsvp/rsvp', { event: event });
       setStatus(rsvpStatus);
@@ -280,16 +284,16 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
       // maybe TODO: more descriptive error messages depending on error code?
       alert('Failed');
     }
-  }
+  }*/
 
-  async function cancel(event) {
+  /*async function cancel(event) {
     try {
       await axios.post('/api/registrations/rsvp/cancel', { event: event });
       setStatus(acceptedStatus);
     } catch (e) {
       alert('Failed');
     }
-  }
+  }*/
 
   useEffect(() => {
     getStatus();
@@ -325,7 +329,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
         </p>
       );
     } else if (status === acceptedStatus) {
-      return (
+      /*return (
         <>
           <GlowButton
             onClick={() => rsvp(currentEvent)}
@@ -346,9 +350,9 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
           </a>
           <span>.</span>
         </>
-      );
+      );*/
     } else if (status === rsvpStatus) {
-      return (
+      /*return (
         <>
           <GlowButton
             onClick={() => cancel(currentEvent)}
@@ -363,7 +367,7 @@ const ProfileReturningUser = function ProfileReturningUser(props) {
             Cancel RSVP
           </GlowButton>
         </>
-      );
+      );*/
     }
   }
 
