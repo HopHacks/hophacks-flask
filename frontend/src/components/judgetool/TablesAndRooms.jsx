@@ -31,8 +31,7 @@ function TablesAndRooms() {
   let teams = Object.values(roomAssignment);
 
   return (
-    <Container
-      fixed
+    <Container fixed 
       style={{
         display: 'flex',
         justifyContent: 'center',
