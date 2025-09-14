@@ -47,12 +47,15 @@ function Assignments() {
   }
 
   return (
-    <Container fixed style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh'
-        }}>
+    <Container
+      fixed
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
+      }}
+    >
       <Card style={{ backgroundColor: '#d1e9ff' }}>
         <div>
           <Table bordered hover>
