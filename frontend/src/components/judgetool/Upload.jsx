@@ -73,9 +73,29 @@ class Upload extends Component {
 
   render() {
     return (
-      <Container fixed>
-        <Card style={{ backgroundColor: '#d1e9ff' }}>
-          <Form action="" name="form" encType="multipart/form-data" onSubmit={this.onFileUpload}>
+      <Container
+        fixed
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh"
+        }}
+      >
+        <Card
+          style={{
+            backgroundColor: "#d1e9ff",
+            padding: "2rem",
+            width: "60%",
+            maxWidth: "600px"
+          }}
+        >
+          <Form
+            action=""
+            name="form"
+            encType="multipart/form-data"
+            onSubmit={this.onFileUpload}
+          >
             <h2>Submissions (.csv)</h2>
             <Form.File
               name="sfile"
@@ -83,7 +103,7 @@ class Upload extends Component {
               id="custom-file"
               label="Choose file"
               accept=".csv"
-              style={{ width: '60%' }}
+              style={{ width: "100%" }}
               custom
             />
             <h2>List of judges (.txt)</h2>
@@ -93,7 +113,7 @@ class Upload extends Component {
               id="custom-file"
               label="Choose file"
               accept=".txt"
-              style={{ width: '60%' }}
+              style={{ width: "100%" }}
               custom
             />
             <h2>Number of judges per team</h2>
@@ -104,7 +124,7 @@ class Upload extends Component {
               onChange={this.onNumberChange}
               type="text"
               placeholder="Enter a number"
-              style={{ width: '60%' }}
+              style={{ width: "100%" }}
             />
             <Form.Text className="text-muted">
               Must be less than or equal to the total number of judges.
@@ -116,16 +136,17 @@ class Upload extends Component {
               id="custom-file"
               label="Choose file"
               accept=".csv"
-              style={{ width: '60%' }}
+              style={{ width: "100%" }}
               custom
             />
             <br /> <br />
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" style={{ width: "100%" }}>
               Submit
             </Button>
           </Form>
         </Card>
       </Container>
+
     );
   }
 }
