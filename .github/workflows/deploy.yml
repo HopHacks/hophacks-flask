@@ -48,7 +48,7 @@ jobs:
 
       - name: SSH and build + deploy on EC2
         run: |
-          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -T ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             set -e
 
             NEW_DIR=~/hophacks-flask-new
@@ -57,6 +57,7 @@ jobs:
             echo "Building frontend..."
             cd $NEW_DIR/frontend
             echo "Cleaning frontend build cache..."
+            pkill -f "node|webpack|vite|next|react-scripts" 2>/dev/null || true
             rm -rf node_modules/.cache
             rm -rf node_modules
             npm ci --legacy-peer-deps
