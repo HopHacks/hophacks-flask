@@ -47,7 +47,12 @@ function Assignments() {
   }
 
   return (
-    <Container fixed>
+    <Container fixed style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh'
+        }}>
       <Card style={{ backgroundColor: '#d1e9ff' }}>
         <div>
           <Table bordered hover>
@@ -68,7 +73,9 @@ function Assignments() {
                         {submissions[judges.indexOf(judge)].map((sub) => {
                           return (
                             <li style={{ marginBottom: '2px' }} key={sub}>
-                              {tables[sub]}. {sub} ({dict[sub]})
+                              {tables[sub]}. {String(sub).replace(/^\d+-/, '')} ({dict[sub]})
+                              <br />
+                              hophacks-fall-2025.devpost.com/submissions/{sub}
                             </li>
                           );
                         })}

@@ -31,7 +31,14 @@ function TablesAndRooms() {
   let teams = Object.values(roomAssignment);
 
   return (
-    <Container fixed>
+    <Container fixed 
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
+      }}
+    >
       <Card style={{ backgroundColor: '#d1e9ff' }}>
         <div>
           <Table bordered hover>
@@ -52,7 +59,7 @@ function TablesAndRooms() {
                         {teams[rooms.indexOf(room)].map((team) => {
                           return (
                             <li style={{ margin: '2px' }} key={team}>
-                              {tables[team]}. {team}
+                              {tables[team]}. {String(team).replace(/^\d+-/, '')}
                             </li>
                           );
                         })}

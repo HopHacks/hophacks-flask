@@ -42,8 +42,6 @@ def get_rooms():
 
 
 def assign_tables(submissions):
-    # print("submissions")
-    # print(submissions)
     tables = {}
     i = 1
     for x in submissions:
@@ -57,7 +55,6 @@ def assign_rooms(room_file):
     dicts = [{k: v for k, v in row.items()} for row \
                  in csv.DictReader(file_string)]
     rooms = {}
-    print(dicts)
     for i in dicts:
         rooms[i['Room']] = i['Capacity']
 
@@ -146,7 +143,7 @@ def assignments():
         if 'sfile' not in request.files \
            or 'jfile' not in request.files \
            or 'room_file' not in request.files:
-                return jsonify({"msg : error"}), 500
+                return jsonify({"msg : error (files found)"}), 500
 
         sub_file = request.files['sfile']
         judge_file = request.files['jfile']
@@ -155,23 +152,23 @@ def assignments():
         try:
             per_team = int(request.form['ifile'])
         except ValueError as e:
-            return jsonify({"msg : error"}), 500
+            return jsonify({f"msg : error ({e})"}), 500
 
         if not (sub_file and allowed_file(sub_file.filename)) \
            or not (judge_file and allowed_file(judge_file.filename)) \
            or not (room_file and allowed_file(room_file.filename)):
-            return jsonify({"msg : error"}), 500
+            return jsonify({"msg : error (files not allowed)"}), 500
 
         sub_string = sub_file.read().decode('utf-8-sig').splitlines()
-        print(sub_string)
+
         sub_dicts = [{k: v for k, v in row.items()} for row \
                      in csv.DictReader(sub_string)]
         submissions = []
 
-        print(sub_dicts)
         for x in sub_dicts:
-            if x['Project Title'] != "Untitled" and x['Project Title'] != "SAMPLE":
-                submissions.append(x['Project Title'])
+            if x['Project Title'] != "Untitled" and x['Project Title'] != "SAMPLE" and x['Submission Url']:
+                url_project_name = x['Submission Url'].rstrip("/").split("/")[-1]
+                submissions.append(url_project_name)
         random.Random(0).shuffle(submissions)
 
         assign_tables(submissions)
