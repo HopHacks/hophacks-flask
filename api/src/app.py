@@ -109,4 +109,8 @@ def create_app(config_file='config/config.json'):
     app.register_blueprint(discord_api, url_prefix='/api/discord')
     app.register_blueprint(teammatch_api, url_prefix='/api/teammatch')
     
+    #for playwright tests
+    @app.route('/')
+    def health_check():
+        return "Server is ready", 200
     return app
