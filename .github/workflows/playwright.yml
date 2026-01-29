@@ -18,10 +18,10 @@ jobs:
       PW_BACKEND_URL: http://localhost:5000
 
     steps:
-      # Checkout repo
+      #checkout repo
       - uses: actions/checkout@v4
 
-      # ---------- Node / Frontend ----------
+      #node/frontend
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -38,7 +38,7 @@ jobs:
         run: npm run build
         working-directory: frontend
 
-      # ---------- Python / Backend ----------
+      #python/backend
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -50,7 +50,7 @@ jobs:
           pip install -r requirements-2025.txt
         working-directory: api
 
-      # ---------- Playwright ----------
+      #playwright
       - name: Install deps
         run: npm ci
 
@@ -60,7 +60,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
-      # ---------- Artifacts ----------
+      #artifacts
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4

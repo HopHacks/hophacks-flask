@@ -23,10 +23,10 @@ export default defineConfig({
     { name: 'webkit', use: { ...devices['Desktop Safari'] } },
   ],
 
-  // Start BOTH servers for E2E
+  //start servers
   webServer: [
     {
-      // Frontend
+      //frontend
       command: process.env.PW_FRONTEND_CMD || 'npm start',
       cwd: './frontend',
       url: FRONTEND_URL,
@@ -34,12 +34,11 @@ export default defineConfig({
       timeout: 120 * 1000,
       env: {
         ...process.env,
-        // Make React talk to backend during E2E
         REACT_APP_BACKENDURL: BACKEND_URL,
       },
     },
     {
-      // Backend
+      //backend
       command: FLASK_COMMAND,
       cwd: './api/src',
       url: BACKEND_URL,
