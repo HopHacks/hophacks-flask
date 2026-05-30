@@ -1,0 +1,102 @@
+.
+├── README.md
+├── docs
+│   ├── Makefile
+│   ├── README.md
+│   ├── make.bat
+│   └── source
+│       ├── accounts.rst
+│       ├── auth.rst
+│       ├── conf.py
+│       ├── index.rst
+│       ├── registrations.rst
+│       └── resumes.rst
+├── requirements-2025.txt
+├── requirements.txt
+├── requirements2.txt
+├── src
+│   ├── __pycache__
+│   │   ├── accounts.cpython-39.pyc
+│   │   ├── admin.cpython-39.pyc
+│   │   ├── announcements.cpython-39.pyc
+│   │   ├── app.cpython-39.pyc
+│   │   ├── assign.cpython-39.pyc
+│   │   ├── auth.cpython-39.pyc
+│   │   ├── db.cpython-39.pyc
+│   │   ├── discord.cpython-39.pyc
+│   │   ├── events.cpython-39.pyc
+│   │   ├── mail.cpython-39.pyc
+│   │   ├── registrations.cpython-39.pyc
+│   │   ├── resumes.cpython-39.pyc
+│   │   ├── slack.cpython-39.pyc
+│   │   ├── teammatch.cpython-39.pyc
+│   │   ├── teammatching.cpython-39.pyc
+│   │   └── vaccination.cpython-39.pyc
+│   ├── accounts.py
+│   ├── admin.py
+│   ├── announcements.py
+│   ├── app.py
+│   ├── assign.py
+│   ├── auth.py
+│   ├── config
+│   │   ├── config.json
+│   │   ├── config.py
+│   │   └── config_admin.py
+│   ├── db.py
+│   ├── discord.py
+│   ├── event.txt
+│   ├── events.py
+│   ├── mail.py
+│   ├── old_teammatching
+│   │   └── teammatch.py
+│   ├── registrations.py
+│   ├── resumes.py
+│   ├── slack.py
+│   ├── teammatching.py
+│   ├── templates
+│   │   ├── email_acceptance.html
+│   │   ├── email_apply_confirm.html
+│   │   ├── email_confirmation.html
+│   │   ├── email_rejection.html
+│   │   ├── email_reset.html
+│   │   ├── email_template.html
+│   │   ├── fonts
+│   │   │   └── VCR_OSD_MONO_1.001.ttf
+│   │   ├── images
+│   │   │   ├── discord-icon.png
+│   │   │   ├── hophacks-logo-transparent.png
+│   │   │   ├── hophacks-logo.png
+│   │   │   ├── image-1.png
+│   │   │   ├── image-2.png
+│   │   │   ├── image-3.png
+│   │   │   └── image-8.jpg
+│   │   ├── old template
+│   │   │   ├── email_acceptance.html
+│   │   │   ├── email_apply_confirm.html
+│   │   │   ├── email_confirmation.html
+│   │   │   ├── email_reset.html
+│   │   │   └── email_template.html
+│   │   └── rsvpinfo.html
+│   ├── util
+│   │   ├── __pycache__
+│   │   │   ├── algorithm.cpython-39.pyc
+│   │   │   ├── decorators.cpython-39.pyc
+│   │   │   ├── errors.cpython-39.pyc
+│   │   │   ├── logging.cpython-39.pyc
+│   │   │   └── reset_tokens.cpython-39.pyc
+│   │   ├── algorithm.py
+│   │   ├── decorators.py
+│   │   └── reset_tokens.py
+│   └── vaccination.py
+├── test
+│   ├── conftest.py
+│   ├── dummydata.json
+│   ├── test.json
+│   ├── test_admin.py
+│   ├── test_auth.py
+│   ├── test_reg.py
+│   ├── test_users.py
+│   └── utils.py
+└── tree.txt
+
+14 directories, 86 files
