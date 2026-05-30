@@ -1,0 +1,12 @@
+@theme {
+  /* Colors */
+  --color-bg:              #7FB2E7;
+  --color-bg-light:        #ADCCE7;
+  --color-text-primary:    #E1EAEE;
+  --color-green-dark:      #6B9C7A;
+  --color-green-light:     #9FCF6C;
+
+  /* Fonts — update once typefaces are decided */
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-display: Arial, Helvetica, sans-serif;
+}
