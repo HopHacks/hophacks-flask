@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import NotificationForm from '../hero/NotificationForm';
-import HeroTitle from '../hero/HeroTitle';
-import SocialLinks from '../hero/SocialLinks';
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import NotificationForm from "../hero/NotificationForm";
+import HeroTitle from "../hero/HeroTitle";
+import SocialLinks from "../hero/SocialLinks";
 
 const HERO_LAYERS = {
-  backClouds: '/hero/back-clouds.webp',
-  floatingRocks: '/hero/layer2-floating-rocks.webp',
-  grass: '/hero/layer3-grass.webp',
-  gilman: '/hero/layer4-gilman.webp',
-  trees: '/hero/layer5-trees.webp',
-  bluebird: '/hero/layer6-bluebird.webp',
-  frontLeftCloud: '/hero/front-left-cloud.png',
-  frontRightCloud: '/hero/front-right-cloud.png'
+  backClouds: "/hero/back-clouds.webp",
+  floatingRocks: "/hero/layer2-floating-rocks.webp",
+  grass: "/hero/layer3-grass.webp",
+  gilman: "/hero/layer4-gilman.webp",
+  trees: "/hero/layer5-trees.webp",
+  bluebird: "/hero/layer6-bluebird.webp",
+  frontLeftCloud: "/hero/front-left-cloud.png",
+  frontRightCloud: "/hero/front-right-cloud.png",
 } as const;
 
 function SceneLayer({
   src,
   alt,
   priority = false,
-  className = ''
+  className = "",
 }: {
   src: string;
   alt: string;
@@ -51,13 +51,13 @@ export default function HeroSection() {
       setPageLoaded(true);
     }
 
-    if (document.readyState === 'complete') {
+    if (document.readyState === "complete") {
       handleLoad();
       return;
     }
 
-    window.addEventListener('load', handleLoad);
-    return () => window.removeEventListener('load', handleLoad);
+    window.addEventListener("load", handleLoad);
+    return () => window.removeEventListener("load", handleLoad);
   }, []);
 
   useEffect(() => {
@@ -71,7 +71,12 @@ export default function HeroSection() {
     <div className="relative h-full min-h-screen w-full overflow-hidden bg-bg">
       <SocialLinks />
 
-      <SceneLayer src={HERO_LAYERS.backClouds} alt="" priority className="z-[1]" />
+      <SceneLayer
+        src={HERO_LAYERS.backClouds}
+        alt=""
+        priority
+        className="z-[1]"
+      />
 
       <div className="absolute inset-0 z-[2] animate-hero-float motion-reduce:animate-none">
         <SceneLayer src={HERO_LAYERS.floatingRocks} alt="" priority />
@@ -93,7 +98,9 @@ export default function HeroSection() {
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 z-40 transition-transform duration-hero-cloud ease-hero-cloud will-change-transform motion-reduce:transition-none ${
-          cloudsParted ? '-translate-x-full motion-reduce:opacity-0' : 'translate-x-0'
+          cloudsParted
+            ? "-translate-x-full motion-reduce:opacity-0"
+            : "translate-x-0"
         }`}
       >
         <Image
@@ -108,7 +115,9 @@ export default function HeroSection() {
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 z-40 transition-transform duration-hero-cloud ease-hero-cloud will-change-transform motion-reduce:transition-none ${
-          cloudsParted ? 'translate-x-full motion-reduce:opacity-0' : 'translate-x-0'
+          cloudsParted
+            ? "translate-x-full motion-reduce:opacity-0"
+            : "translate-x-0"
         }`}
       >
         <Image

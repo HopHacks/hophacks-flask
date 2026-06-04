@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, {
   createContext,
@@ -7,9 +7,9 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  useState
-} from 'react';
-import axios from 'axios';
+  useState,
+} from "react";
+import axios from "axios";
 
 type AuthContextValue = {
   isLoggedIn: boolean | null; // null = checking
@@ -28,12 +28,12 @@ function configureAxios() {
 }
 
 function setAuthHeader(tok: string | null) {
-  if (tok) axios.defaults.headers.common['Authorization'] = `Bearer ${tok}`;
-  else delete axios.defaults.headers.common['Authorization'];
+  if (tok) axios.defaults.headers.common["Authorization"] = `Bearer ${tok}`;
+  else delete axios.defaults.headers.common["Authorization"];
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const refreshTimer = useRef<number | null>(null);
 
@@ -51,14 +51,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         refreshToken();
       }, ms);
     },
-    [clearTimer]
+    [clearTimer],
   );
 
   const refreshToken = useCallback(async () => {
     if (isLoggedIn === false) return;
 
     try {
-      const res = await axios.get('/api/auth/session/refresh');
+      const res = await axios.get("/api/auth/session/refresh");
       const tok = res.data?.access_token as string;
 
       setAuthHeader(tok);
@@ -68,7 +68,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       scheduleRefresh(60_000);
     } catch {
       setAuthHeader(null);
-      setToken('');
+      setToken("");
       setIsLoggedIn(false);
       clearTimer();
     }
@@ -76,9 +76,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = useCallback(
     async (email: string, password: string) => {
-      const res = await axios.post('/api/auth/login', {
+      const res = await axios.post("/api/auth/login", {
         username: email,
-        password
+        password,
       });
 
       const tok = res.data?.access_token as string;
@@ -88,17 +88,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       scheduleRefresh(60_000);
     },
-    [scheduleRefresh]
+    [scheduleRefresh],
   );
 
   const logout = useCallback(async () => {
     setAuthHeader(null);
-    setToken('');
+    setToken("");
     setIsLoggedIn(false);
     clearTimer();
 
     try {
-      await axios.get('/api/auth/session/logout');
+      await axios.get("/api/auth/session/logout");
     } catch {
       // ignore
     }
@@ -112,7 +112,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({ isLoggedIn, token, login, logout, refreshToken }),
-    [isLoggedIn, token, login, logout, refreshToken]
+    [isLoggedIn, token, login, logout, refreshToken],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -120,6 +120,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within <AuthProvider />');
+  if (!ctx) throw new Error("useAuth must be used within <AuthProvider />");
   return ctx;
 }

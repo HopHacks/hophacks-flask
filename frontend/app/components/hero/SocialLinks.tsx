@@ -1,22 +1,22 @@
-import { FaInstagram, FaLinkedinIn } from 'react-icons/fa6';
-import { SiLinktree } from 'react-icons/si';
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
+import { SiLinktree } from "react-icons/si";
 
 const SOCIAL_LINKS = [
   {
-    label: 'HopHacks Linktree',
-    href: 'https://linktr.ee/hophacks',
-    Icon: SiLinktree
+    label: "HopHacks Linktree",
+    href: "https://linktr.ee/hophacks",
+    Icon: SiLinktree,
   },
   {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/hophacks/?hl=en',
-    Icon: FaInstagram
+    label: "Instagram",
+    href: "https://www.instagram.com/hophacks/?hl=en",
+    Icon: FaInstagram,
   },
   {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/hophacks/',
-    Icon: FaLinkedinIn
-  }
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/hophacks/",
+    Icon: FaLinkedinIn,
+  },
 ] as const;
 
 export default function SocialLinks() {

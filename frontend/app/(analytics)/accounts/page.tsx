@@ -42,15 +42,32 @@ export default function AccountsPage() {
           </thead>
           <tbody className="text-slate-800">
             {[
-              { name: 'Ari Patel', school: 'Johns Hopkins', major: 'CS', event: 'HopHacks 2025' },
-              { name: 'Mina Lopez', school: 'UMD', major: 'Data Science', event: 'HopHacks 2024' },
-              { name: 'Noah Kim', school: 'Towson', major: 'Cybersecurity', event: 'HopHacks 2025' }
+              {
+                name: "Ari Patel",
+                school: "Johns Hopkins",
+                major: "CS",
+                event: "HopHacks 2025",
+              },
+              {
+                name: "Mina Lopez",
+                school: "UMD",
+                major: "Data Science",
+                event: "HopHacks 2024",
+              },
+              {
+                name: "Noah Kim",
+                school: "Towson",
+                major: "Cybersecurity",
+                event: "HopHacks 2025",
+              },
             ].map((row) => (
               <tr key={row.name} className="border-b border-slate-100">
                 <td className="px-6 py-4">{row.name}</td>
                 <td className="px-6 py-4">{row.school}</td>
                 <td className="px-6 py-4">{row.major}</td>
-                <td className="px-6 py-4 text-right text-slate-500">{row.event}</td>
+                <td className="px-6 py-4 text-right text-slate-500">
+                  {row.event}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -60,9 +77,13 @@ export default function AccountsPage() {
         <div className="flex items-center justify-between px-6 py-4 text-sm text-slate-500">
           <div>Showing 10 records</div>
           <div className="flex items-center gap-6">
-            <button className="text-slate-700 hover:text-slate-900">Previous</button>
+            <button className="text-slate-700 hover:text-slate-900">
+              Previous
+            </button>
             <div className="w-6 h-6 border rounded border-slate-200 bg-slate-100" />
-            <button className="text-slate-700 hover:text-slate-900">Next</button>
+            <button className="text-slate-700 hover:text-slate-900">
+              Next
+            </button>
           </div>
         </div>
       </div>

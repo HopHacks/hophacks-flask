@@ -1,6 +1,6 @@
-import DashboardHeader from '@/components/analytics/DashboardHeader';
-import StatCard from '@/components/analytics/StatCard';
-import Panel from '@/components/analytics/Panel';
+import DashboardHeader from "@/components/analytics/DashboardHeader";
+import StatCard from "@/components/analytics/StatCard";
+import Panel from "@/components/analytics/Panel";
 
 export default function StatsPage() {
   return (
@@ -22,7 +22,9 @@ export default function StatsPage() {
             Graph goes here
           </div>
 
-          <p className="mt-2 text-xs text-slate-500">Male 46% • Female 53% • Other 1%</p>
+          <p className="mt-2 text-xs text-slate-500">
+            Male 46% • Female 53% • Other 1%
+          </p>
         </Panel>
 
         <Panel title="School Ratios">
@@ -40,7 +42,9 @@ export default function StatsPage() {
             Graph goes here
           </div>
 
-          <p className="mt-2 text-xs text-slate-500">FR 16% • SO 33% • JR 25% • SR 18% • Grad 8%</p>
+          <p className="mt-2 text-xs text-slate-500">
+            FR 16% • SO 33% • JR 25% • SR 18% • Grad 8%
+          </p>
         </Panel>
       </div>
 
@@ -52,7 +56,9 @@ export default function StatsPage() {
               Graph goes here
             </div>
 
-            <p className="mt-2 text-xs text-slate-500">CS • DS • CE • BioE • EE • Other</p>
+            <p className="mt-2 text-xs text-slate-500">
+              CS • DS • CE • BioE • EE • Other
+            </p>
           </Panel>
         </div>
       </div>

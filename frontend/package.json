@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "format": "prettier \"**/*.{js,jsx,ts,tsx}\" --write --ignore-path .prettierignore",
+    "format:check": "prettier \"**/*.{js,jsx,ts,tsx}\" --check --ignore-path .prettierignore"
   },
   "dependencies": {
     "axios": "^1.13.5",
@@ -22,6 +24,7 @@
     "@types/react-dom": "^19",
     "eslint": "^10.0.0",
     "eslint-config-next": "^0.2.4",
+    "prettier": "3.5.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
