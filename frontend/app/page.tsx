@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 export default function Home() {
   return (
     <main>
-      <Section id="hero">
+      <Section id="hero" borderless className="overflow-hidden p-0">
         <HeroSection />
       </Section>
       <Section id="about">

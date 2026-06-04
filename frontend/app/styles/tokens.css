@@ -1,12 +1,103 @@
+@font-face {
+  font-family: Balabeloo;
+  src: url('/fonts/Balabeloo Pro Regular Font.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url('/fonts/Poppins%20Regular%20Real%20Estate%20Flyer.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   /* Colors */
-  --color-bg:              #7FB2E7;
-  --color-bg-light:        #ADCCE7;
-  --color-text-primary:    #E1EAEE;
-  --color-green-dark:      #6B9C7A;
-  --color-green-light:     #9FCF6C;
+  --color-bg: #7fb2e7;
+  --color-bg-light: #adcce7;
+  --color-text-primary: #e1eaee;
+  --color-green-dark: #6b9c7a;
+  --color-green-light: #9fcf6c;
 
-  /* Fonts — update once typefaces are decided */
-  --font-sans: Arial, Helvetica, sans-serif;
-  --font-display: Arial, Helvetica, sans-serif;
+  /* Local fonts in public/fonts/ */
+  --font-display: Balabeloo, cursive;
+  --font-sans: Poppins, ui-sans-serif, sans-serif;
+
+  /* Hero motion */
+  --ease-hero-cloud: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-hero-cloud: 8s;
+  --animate-hero-float: hero-float 5.5s ease-in-out infinite;
+
+  @keyframes hero-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-22px);
+    }
+  }
+}
+
+@layer base {
+  html,
+  body {
+    font-family: Poppins, ui-sans-serif, sans-serif;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font-family: inherit;
+  }
+}
+
+@utility text-shadow-hero-title {
+  text-shadow:
+    0 2px 24px rgb(255 255 255 / 0.25),
+    0 4px 32px rgb(127 178 231 / 0.35);
+}
+
+@utility object-cover-bottom {
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+@utility duration-hero-cloud {
+  --tw-duration: var(--duration-hero-cloud);
+  transition-duration: var(--duration-hero-cloud);
+}
+
+@utility input-sketch {
+  border: 2px solid rgb(255 255 255 / 0.9);
+  background-color: transparent;
+  color: rgb(255 255 255);
+  font-family: Poppins, ui-sans-serif, sans-serif;
+  outline: none;
+
+  &::placeholder {
+    color: rgb(255 255 255 / 0.75);
+  }
+
+  &:focus {
+    background-color: rgb(255 255 255 / 0.08);
+  }
+}
+
+@utility btn-sketch {
+  border: 2px solid rgb(255 255 255 / 0.9);
+  background-color: transparent;
+  color: rgb(255 255 255);
+  font-family: Poppins, ui-sans-serif, sans-serif;
+  font-weight: 400;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: rgb(255 255 255 / 0.12);
+  }
 }

@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         refreshToken();
       }, ms);
     },
-    [clearTimer]
+    [clearTimer],
   );
 
   const refreshToken = useCallback(async () => {
@@ -88,7 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       scheduleRefresh(60_000);
     },
-    [scheduleRefresh]
+    [scheduleRefresh],
   );
 
   const logout = useCallback(async () => {
@@ -112,7 +112,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({ isLoggedIn, token, login, logout, refreshToken }),
-    [isLoggedIn, token, login, logout, refreshToken]
+    [isLoggedIn, token, login, logout, refreshToken],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
