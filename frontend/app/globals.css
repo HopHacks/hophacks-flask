@@ -2,7 +2,5 @@
 @import "./styles/tokens.css";
 
 body {
-  background-color: #7FB2E7;
-  color: #E1EAEE;
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-bg font-sans text-text-primary;
 }
