@@ -42,9 +42,9 @@ export default function AccountsPage() {
           </thead>
           <tbody className="text-slate-800">
             {[
-              { name: "Ari Patel", school: "Johns Hopkins", major: "CS", event: "HopHacks 2025" },
-              { name: "Mina Lopez", school: "UMD", major: "Data Science", event: "HopHacks 2024" },
-              { name: "Noah Kim", school: "Towson", major: "Cybersecurity", event: "HopHacks 2025" },
+              { name: 'Ari Patel', school: 'Johns Hopkins', major: 'CS', event: 'HopHacks 2025' },
+              { name: 'Mina Lopez', school: 'UMD', major: 'Data Science', event: 'HopHacks 2024' },
+              { name: 'Noah Kim', school: 'Towson', major: 'Cybersecurity', event: 'HopHacks 2025' }
             ].map((row) => (
               <tr key={row.name} className="border-b border-slate-100">
                 <td className="px-6 py-4">{row.name}</td>

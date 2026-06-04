@@ -11,13 +11,13 @@ interface SectionProps {
 export default function Section({
   id,
   children,
-  className = "",
-  borderless = false,
+  className = '',
+  borderless = false
 }: SectionProps) {
   return (
     <section
       id={id}
-      className={`w-full min-h-screen bg-bg ${DEBUG_SECTIONS && !borderless ? "border border-black" : ""} ${className}`}
+      className={`w-full min-h-screen bg-bg ${DEBUG_SECTIONS && !borderless ? 'border border-black' : ''} ${className}`}
     >
       {children}
     </section>

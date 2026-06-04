@@ -1,6 +1,6 @@
-import DashboardHeader from "@/components/analytics/DashboardHeader";
-import StatCard from "@/components/analytics/StatCard";
-import Panel from "@/components/analytics/Panel";
+import DashboardHeader from '@/components/analytics/DashboardHeader';
+import StatCard from '@/components/analytics/StatCard';
+import Panel from '@/components/analytics/Panel';
 
 export default function DashboardPage() {
   return (
@@ -20,9 +20,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-center w-full h-64 text-sm border border-dashed rounded-lg border-slate-300 bg-slate-100 text-slate-500">
             Chart goes here
           </div>
-          <div className="mt-3 text-xs text-slate-500">
-            Tip: drop in Recharts/Chart.js later.
-          </div>
+          <div className="mt-3 text-xs text-slate-500">Tip: drop in Recharts/Chart.js later.</div>
         </Panel>
       </div>
 

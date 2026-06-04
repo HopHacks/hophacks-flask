@@ -1,8 +1,8 @@
-import Section from "./components/Section";
-import HeroSection from "./components/sections/HeroSection";
-import AboutSection from "./components/sections/AboutSection";
-import TracksSection from "./components/sections/TracksSection";
-import Footer from "./components/Footer";
+import Section from './components/Section';
+import HeroSection from './components/sections/HeroSection';
+import AboutSection from './components/sections/AboutSection';
+import TracksSection from './components/sections/TracksSection';
+import Footer from './components/Footer';
 
 export default function Home() {
   return (

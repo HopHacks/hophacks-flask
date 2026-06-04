@@ -1,6 +1,6 @@
 @font-face {
   font-family: Balabeloo;
-  src: url("/fonts/Balabeloo Pro Regular Font.ttf") format("truetype");
+  src: url('/fonts/Balabeloo Pro Regular Font.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: Poppins;
-  src: url("/fonts/Poppins%20Regular%20Real%20Estate%20Flyer.ttf") format("truetype");
+  src: url('/fonts/Poppins%20Regular%20Real%20Estate%20Flyer.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

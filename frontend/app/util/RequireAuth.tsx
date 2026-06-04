@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "./auth";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from './auth';
 
 export function RequireAuth({ children }: { children: React.ReactNode }) {
   const { isLoggedIn } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoggedIn === false) router.push("/register/login");
+    if (isLoggedIn === false) router.push('/register/login');
   }, [isLoggedIn, router]);
 
   if (isLoggedIn === null) return <p>Checking login...</p>;
