@@ -1,4 +1,4 @@
-import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
+import { FaDiscord, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { SiLinktree } from "react-icons/si";
 
 const SOCIAL_LINKS = [
@@ -16,6 +16,11 @@ const SOCIAL_LINKS = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/company/hophacks/",
     Icon: FaLinkedinIn,
+  },
+  {
+    label: "Discord",
+    href: "https://discord.gg/Asrs9WCzQ",
+    Icon: FaDiscord,
   },
 ] as const;
 
