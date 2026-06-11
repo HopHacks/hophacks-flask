@@ -34,7 +34,8 @@ export const FAQ_ENTRIES: FaqEntry[] = [
     answer: (
       <>
         This year, HopHacks is held at Hodson Hall and the Glass Pavilion on the
-        Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be found{" "}
+        Johns Hopkins Homewood Campus in Baltimore, MD. A campus map can be
+        found{" "}
         <a
           className={linkClass}
           href="https://drive.google.com/file/d/1aEulGqVSH3nPV2BXU90W8V-tDlFH-bRx/view?usp=sharing"
@@ -70,8 +71,8 @@ export const FAQ_ENTRIES: FaqEntry[] = [
     question: "Will there be travel reimbursement?",
     answer: (
       <>
-        We will not be offering individual travel reimbursements. However, please
-        see the busing interest form in our{" "}
+        We will not be offering individual travel reimbursements. However,
+        please see the busing interest form in our{" "}
         <a
           className={linkClass}
           href="https://linktr.ee/hophacks"

@@ -40,9 +40,7 @@ export default function ResetPasswordPage() {
       setMessage("Password reset successfully!");
     } catch {
       setIsError(true);
-      setMessage(
-        "Unable to reset password. It may have already been changed.",
-      );
+      setMessage("Unable to reset password. It may have already been changed.");
     }
   }
 

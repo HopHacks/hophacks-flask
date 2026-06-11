@@ -2,7 +2,12 @@
 
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FaChevronLeft, FaChevronRight, FaPause, FaPlay } from "react-icons/fa6";
+import {
+  FaChevronLeft,
+  FaChevronRight,
+  FaPause,
+  FaPlay,
+} from "react-icons/fa6";
 
 import TrackCard from "../tracks/TrackCard";
 import { TRACK_ENTRIES } from "../tracks/tracksData";
