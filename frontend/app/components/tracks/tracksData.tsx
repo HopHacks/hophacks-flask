@@ -28,7 +28,9 @@ export const TRACK_ENTRIES: TrackEntry[] = [
   {
     title: "Idea 4",
     blurb: "Placeholder track — description coming soon.",
-    accent: "bg-bg-light",
+    // bg-bg-light is near-invisible on the sky background; white reads as a
+    // snow/cloud island instead.
+    accent: "bg-white/90",
   },
   {
     title: "Idea 5",
