@@ -56,7 +56,7 @@ source hophacks-env/bin/activate
 Then install the requirements (with your virtual environment activated)
 
 ```bash
-pip install -r requirements-2025.txt # requirements and requirements2 are deprecated
+pip install -r requirements-2026.txt # requirements and requirements2 are deprecated
 ```
 
 #### 3. Configuration
