@@ -21,6 +21,7 @@
   --color-text-primary: #e1eaee;
   --color-green-dark: #6b9c7a;
   --color-green-light: #9fcf6c;
+  --color-recap-gold: #ffb51f;
 
   /* Local fonts in public/fonts/ */
   --font-display: Balabeloo, cursive;
@@ -54,6 +55,11 @@
   textarea,
   select {
     font-family: inherit;
+  }
+
+  select option {
+    background-color: #ffffff;
+    color: #061a40;
   }
 }
 
