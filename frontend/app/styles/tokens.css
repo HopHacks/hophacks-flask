@@ -42,6 +42,37 @@
       transform: translateY(-22px);
     }
   }
+
+  /* Tracks island motion — bob and counterphase ground shadow share one
+     duration so each island stays phase-locked to its own shadow. */
+  --animate-island-float: island-float 6s ease-in-out infinite;
+  --animate-island-shadow: island-shadow 6s ease-in-out infinite;
+
+  @keyframes island-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* translateX(-50%) restated in every step: the animation replaces the
+     element's transform, so centering must live inside the keyframes. */
+  @keyframes island-shadow {
+    0%,
+    100% {
+      transform: translateX(-50%) scaleX(1);
+      opacity: 0.9;
+    }
+
+    50% {
+      transform: translateX(-50%) scaleX(0.78);
+      opacity: 0.55;
+    }
+  }
 }
 
 @layer base {

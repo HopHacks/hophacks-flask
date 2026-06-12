@@ -7,8 +7,7 @@ import { useAuth } from "@/app/util/auth";
 
 // ---- Shared button/input styles ----
 
-const INPUT_CLS =
-  "input-sketch rounded px-3 py-2 w-full";
+const INPUT_CLS = "input-sketch rounded px-3 py-2 w-full";
 const BTN_PRIMARY =
   "px-5 py-3 text-xl font-bold rounded-2xl bg-[#ffb51f] text-white shadow-[0_0_30px_rgba(255,181,31,0.3)] hover:shadow-[0_0_40px_rgba(255,181,31,0.5)] transition-shadow duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
 const BTN_SECONDARY =
@@ -443,7 +442,9 @@ function StepChecks({
             recruiting purposes. I also consent to this{" "}
             <a
               href={S3_IMG("JHU_Photo-and-Video-Release_20192.pdf")}
-              onClick={openLink(S3_IMG("JHU_Photo-and-Video-Release_20192.pdf"))}
+              onClick={openLink(
+                S3_IMG("JHU_Photo-and-Video-Release_20192.pdf"),
+              )}
               className="underline hover:text-blue-300"
             >
               photo release form
@@ -708,7 +709,11 @@ function StepImage({
           </div>
         </div>
         <div className="grid grid-cols-3 gap-4">
-          <ScrollSelect selected={stage} setSelected={setStage} category="stage" />
+          <ScrollSelect
+            selected={stage}
+            setSelected={setStage}
+            category="stage"
+          />
           <ScrollSelect
             selected={accessory}
             setSelected={setAccessory}
@@ -769,8 +774,7 @@ function StepConfirmation() {
 
 // ---- Validation helpers ----
 
-const EMAIL_RE =
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_RE =
   /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 const AGE_RE = /^[0-9]+$/;
