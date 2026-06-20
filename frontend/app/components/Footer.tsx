@@ -20,7 +20,7 @@ const SOCIAL_LINKS: { label: string; href: string; Icon: IconType }[] = [
 ];
 
 const linkClass =
-  "transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80";
+  "transition-colors hover:text-white hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80";
 
 export default function Footer() {
   return (
@@ -54,8 +54,7 @@ export default function Footer() {
           <span>Johns Hopkins University</span>
           <a
             className={linkClass}
-            href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
-            target="_blank"
+            href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"            target="_blank"
             rel="noopener noreferrer"
           >
             MLH Code of Conduct
