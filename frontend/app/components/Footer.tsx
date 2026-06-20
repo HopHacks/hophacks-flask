@@ -54,7 +54,8 @@ export default function Footer() {
           <span>Johns Hopkins University</span>
           <a
             className={linkClass}
-            href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"            target="_blank"
+            href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"            
+            target="_blank"
             rel="noopener noreferrer"
           >
             MLH Code of Conduct
