@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import InterestForm from "../interest/InterestForm";
+import Link from "next/link";
 import HeroTitle from "../hero/HeroTitle";
 import SocialLinks from "../hero/SocialLinks";
 
@@ -89,7 +89,12 @@ export default function HeroSection() {
           <p className="text-base font-normal text-white/90 sm:text-lg">
             Get notified when applications open.
           </p>
-          <InterestForm compact />
+          <Link
+            href="/register/interest"
+            className="relative z-50 rounded-2xl bg-recap-gold px-6 py-3 text-base font-bold text-white shadow-[0_0_30px_rgba(255,181,31,0.35)] transition-shadow duration-300 hover:shadow-[0_0_45px_rgba(255,181,31,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
+          >
+            Pre-Register
+          </Link>
         </div>
 
         <SceneLayer src={HERO_LAYERS.bluebird} alt="" priority />
