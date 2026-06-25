@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import NotificationForm from "../hero/NotificationForm";
+import InterestForm from "../interest/InterestForm";
 import HeroTitle from "../hero/HeroTitle";
 import SocialLinks from "../hero/SocialLinks";
 
@@ -89,7 +89,7 @@ export default function HeroSection() {
           <p className="text-base font-normal text-white/90 sm:text-lg">
             Get notified when applications open.
           </p>
-          <NotificationForm />
+          <InterestForm compact />
         </div>
 
         <SceneLayer src={HERO_LAYERS.bluebird} alt="" priority />
