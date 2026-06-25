@@ -28,7 +28,7 @@ export default function SocialLinks() {
   return (
     <nav
       aria-label="Social links"
-      className="absolute right-4 top-4 z-50 flex items-center gap-4 sm:right-8 sm:top-8"
+      className="absolute left-4 top-4 z-50 flex items-center gap-4 sm:left-8 sm:top-8"
     >
       {SOCIAL_LINKS.map(({ label, href, Icon }) => (
         <a
