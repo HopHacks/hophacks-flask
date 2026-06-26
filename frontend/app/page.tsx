@@ -18,7 +18,7 @@ export default function Home() {
       <Section id="tracks">
         <TracksSection />
       </Section> */}
-      <Section id="faq">
+      <Section borderless id="faq">
         <FaqSection />
       </Section>
       <Footer />
