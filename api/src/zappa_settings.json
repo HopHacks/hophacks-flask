@@ -1,6 +1,6 @@
 {
   "production": {
-    "app_function": "wsgi.app",
+    "app_function": "handler.app",
     "aws_region": "us-east-1",
     "s3_bucket": "hophacks-zappa-deployments",
     "project_name": "hophacks-api",

@@ -22,7 +22,11 @@ jobs:
       - name: Install dependencies
         working-directory: api
         run: |
+          python -m venv .venv
+          source .venv/bin/activate
           pip install -r requirements-2026.txt
+          echo "VIRTUAL_ENV=$(pwd)/.venv" >> $GITHUB_ENV
+          echo "$(pwd)/.venv/bin" >> $GITHUB_PATH
 
       - name: Write production config.json
         run: |
@@ -73,4 +77,4 @@ jobs:
       - name: Deploy with Zappa
         working-directory: api/src
         run: |
-          zappa update production || zappa deploy production
+          zappa update production
