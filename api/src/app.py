@@ -42,7 +42,8 @@ def create_app(config_file='config/config.json'):
     get_opt_config(app, config, 'SLACK_WEBHOOK')
     get_opt_config(app, config, 'DISCORD_WEBHOOK')
 
-    CORS(app, origins=[app.config['BASE_URL'].rstrip('/')], supports_credentials=True)
+    cors_origins = [o.strip() for o in config.get('CORS_ORIGINS', app.config['BASE_URL']).split(',')]
+    CORS(app, origins=cors_origins, supports_credentials=True)
 
     get_opt_config(app, config, 'MAIL_SERVER')
     get_opt_config(app, config, 'MAIL_PORT')
