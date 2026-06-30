@@ -29,8 +29,6 @@ def get_req_config(app, config, key):
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
 
-
-    CORS(app)
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
@@ -43,6 +41,8 @@ def create_app(config_file='config/config.json'):
     get_req_config(app, config, 'BASE_URL')
     get_opt_config(app, config, 'SLACK_WEBHOOK')
     get_opt_config(app, config, 'DISCORD_WEBHOOK')
+
+    CORS(app, origins=[app.config['BASE_URL'].rstrip('/')], supports_credentials=True)
 
     get_opt_config(app, config, 'MAIL_SERVER')
     get_opt_config(app, config, 'MAIL_PORT')
