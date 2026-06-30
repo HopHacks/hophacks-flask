@@ -6,6 +6,7 @@
     "project_name": "hophacks-api",
     "runtime": "python3.9",
     "slim_handler": false,
+    "cors": true,
     "exclude": [
       "*.pyc",
       "__pycache__",
