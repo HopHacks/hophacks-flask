@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import HeroEventInfo from "../hero/HeroEventInfo";
 import HeroTitle from "../hero/HeroTitle";
 import SocialLinks from "../hero/SocialLinks";
 
@@ -84,8 +85,13 @@ export default function HeroSection() {
         <SceneLayer src={HERO_LAYERS.gilman} alt="" priority />
         <SceneLayer src={HERO_LAYERS.trees} alt="" priority />
 
-        <div className="absolute inset-x-0 bottom-[clamp(9rem,26vh,17rem)] z-10 flex flex-col items-center gap-3 px-6 text-center font-sans">
+        {/* Title stays pinned to the grass/gilman seam; CTA block grows below without shifting it */}
+        <div className="absolute inset-x-0 bottom-[clamp(15rem,calc(26vh+6rem),23rem)] z-10 flex justify-center px-6 text-center">
           <HeroTitle />
+        </div>
+
+        <div className="absolute inset-x-0 bottom-[clamp(6.5rem,calc(26vh-2rem),14.5rem)] z-10 flex flex-col items-center gap-2.5 px-6 text-center font-sans sm:gap-3">
+          <HeroEventInfo />
           <p className="text-base font-normal text-white/90 sm:text-lg">
             Get notified when applications open.
           </p>
