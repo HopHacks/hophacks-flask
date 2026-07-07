@@ -2,8 +2,8 @@ from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
 from mail import mail
 from db import db
-from slack import slack_client
-from discord import discord_client
+from slack_integration import slack_client
+from discord_integration import discord_client
 from flask_cors import CORS
 
 import json
@@ -91,8 +91,8 @@ def create_app(config_file='config/config.json'):
     from assign import assign_api
     from announcements import announcements_api
     from events import events_api
-    from slack import slack_api
-    from discord import discord_api
+    from slack_integration import slack_api
+    from discord_integration import discord_api
     from teammatching import teammatch_api
 
 
