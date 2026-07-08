@@ -1,1 +1,4 @@
-public
+.next
+out
+build
+node_modules
