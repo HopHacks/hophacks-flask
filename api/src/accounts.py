@@ -11,16 +11,13 @@ from flask import Blueprint, request, Response, current_app, render_template, js
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_mail import Message, Mail
 from registrations import send_apply_confirm
+from config.event import EVENT_NAME
 
 import bcrypt
 import jwt
-import json
 import datetime
 from bson import ObjectId
 import pytz
-
-import boto3
-from werkzeug.utils import secure_filename
 
 
 accounts_api = Blueprint('accounts', __name__)
@@ -29,16 +26,15 @@ accounts_api = Blueprint('accounts', __name__)
 # mail = Mail(app)
 # email_client_accounts = email_client()
 
-profile_keys = ["first_name", "last_name", "gender", "major", "phone_number",
-"ethnicity", "grad", "is_jhu", "grad_month", "grad_year", "country"]
+# MLH-required profile fields, enforced at account creation. Optional demographic
+# fields (gender, pronouns, race_ethnicity, dietary_restrictions, major, shipping,
+# etc.) are stored verbatim when present but are not required here.
+profile_keys = ["first_name", "last_name", "age", "phone_number",
+                "school", "level_of_study", "country"]
 
-ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
-BUCKET = 'hophacks-resume'
+# MLH consent checkboxes that MUST be affirmatively accepted to register.
+mlh_required_consents = ["mlh_code_of_conduct", "mlh_data_sharing"]
 
-# remove weird directories just in case
-def check_filename(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Sends confirmation email with JWT-Token in URL for verification, returns secret key used
 # Note this secret key is based of the current user's hashed password, this way when the Password
@@ -144,46 +140,37 @@ def create():
     :status 409: User alreay exists
 
     """
-    # Registrations are currently closed. Short-circuit and refuse new account creation.
-    return Response('Registrations are closed', status=403)
-
-    if 'json_file' not in request.form:
+    if (request.json is None):
         return Response('Data not in json format', status=400)
 
-    json_info = json.loads(request.form['json_file'])
-    print(json_info)
+    username = request.json.get('username')
+    password = request.json.get('password')
+    confirm_url = request.json.get('confirm_url')
+    profile = request.json.get('profile')
 
-    username = json_info['username']
-    password = json_info['password'].encode()
-    confirm_url = json_info['confirm_url']
-    profile = json_info['profile']
+    if (username is None or password is None or confirm_url is None or profile is None):
+        return Response('Missing required field', status=400)
+
+    # Normalize the email so letter-casing can never create duplicate accounts
+    # (login matches the username case-insensitively).
+    username = username.strip().lower()
+
+    if (not validate_profile(request)):
+        return Response('Missing required profile field', status=400)
+
+    # MLH Member Events require affirmative agreement to the Code of Conduct and
+    # the data-sharing/privacy terms before a registration is valid.
+    for consent in mlh_required_consents:
+        if (profile.get(consent) is not True):
+            return Response('Required MLH agreement not accepted', status=400)
 
     if (db.users.find_one({'username': username})):
         return Response('User already exists!', status=409)
 
     salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(password, salt)
+    hashed = bcrypt.hashpw(password.encode(), salt)
     confirm_secret = send_confirmation_email(username, hashed, confirm_url, profile["first_name"])
 
-    resume_link = ''
-    if 'file' in request.files:
-        
-        file = request.files['file']
-
-        file_name = file.filename
-
-        if file.filename == '':
-            file_name = 'resume'
-
-        file_name = secure_filename(file_name)
-        if (file and check_filename(file.filename)):
-
-            #s3 = boto3.client('s3')
-            #object_name = 'Fall-2025/{}-{}'.format(id, file_name)
-            #s3.upload_fileobj(file, BUCKET, object_name)
-
-            resume_link = file_name
-    
     db.users.insert_one({
         'username': username,
         'hashed': hashed,
@@ -194,7 +181,7 @@ def create():
         'reset_secret': '',
         'is_admin': False,
         'registrations': [],
-        'resume': resume_link,
+        'resume': '',
         "updated": True,
     })
 
@@ -556,20 +543,26 @@ def confirm_email():
 
     eastern = pytz.timezone("America/New_York")
 
-    eventFile = open("event.txt", "r")
-    
-    new_reg = {
-        "event": eventFile.read(), # update 
-        "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
-        "accept": False,
-        "checkin": False,
-        "status": "applied"
-    }
+    # Confirming email completes the application (the full profile was already
+    # captured at account creation), so create the event registration in the
+    # "applied" state. Re-confirming must not create a duplicate registration.
+    user = db.users.find_one({'username': email})
+    already_registered = any(
+        reg.get('event') == EVENT_NAME for reg in user.get('registrations', [])
+    )
 
+    if (not already_registered):
+        new_reg = {
+            "event": EVENT_NAME,
+            "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
+            "accept": False,
+            "checkin": False,
+            "rsvp": False,
+            "status": "applied"
+        }
+        db.users.update_one({'username': email}, {'$push': {'registrations': new_reg}})
+        send_apply_confirm(user['username'], user['profile']['first_name'])
 
-    id = get_jwt_identity()
-    result = db.users.update_one({'username' : email}, {'$push': {'registrations': new_reg}})
-    send_apply_confirm(user['username'], user['profile']['first_name'])
     return jsonify({"msg": "Email Confirmed", "email": email}), 200
 
 @accounts_api.route('/reset_password', methods = ['POST'])
