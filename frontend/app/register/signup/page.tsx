@@ -4,6 +4,22 @@ import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "@/app/util/auth";
+import Combobox from "@/app/components/form/Combobox";
+import COUNTRIES from "./data/countries";
+import {
+  AGES,
+  LEVELS_OF_STUDY,
+  MAJORS,
+  PRONOUNS,
+  DIETARY,
+  TSHIRT_SIZES,
+  UNDERREPRESENTED,
+} from "./data/options";
+
+// Large MLH schools list is code-split and loaded on first focus of the field.
+const loadSchools = () =>
+  import("./data/schools.json").then((m) => m.default as string[]);
+const OTHER_SCHOOL = "Other (not listed)";
 
 // ---- Shared button/input styles ----
 
@@ -84,33 +100,20 @@ function StepAccount({
 // ---- Step 2: Profile ----
 
 const GENDERS = [
-  "Male",
-  "Female",
+  "Man",
+  "Woman",
   "Non-Binary",
-  "Transgender",
-  "Intersex",
-  "Not listed",
-  "Prefer not to disclose",
+  "Prefer to self-describe",
+  "Prefer not to answer",
 ];
 const ETHNICITIES = [
-  "American Indian or Alaska Native",
-  "Asian",
+  "American Indian or Alaskan Native",
+  "Asian / Pacific Islander",
   "Black or African American",
-  "Hispanic, Latino or Spanish Origin",
-  "Middle Eastern or North African",
-  "Native Hawaiian or Other Pacific Islander",
-  "White",
-  "Multiethnic",
-  "Prefer not to disclose",
-];
-const GRAD_LEVELS = [
-  "Undergraduate University (2 year - community college or similar)",
-  "Undergraduate University (3+ year)",
-  "Graduate University (Masters, Professional, Doctoral, etc)",
-  "Code School / Bootcamp",
-  "Other Vocational / Trade Program or Apprenticeship",
-  "Post Doctorate",
-  "Other",
+  "Hispanic",
+  "White / Caucasian",
+  "Multiple ethnicity / Other",
+  "Prefer not to answer",
 ];
 const MONTHS = Array.from({ length: 12 }, (_, i) =>
   String(i + 1).padStart(2, "0"),
@@ -120,17 +123,21 @@ const YEARS = ["2024", "2025", "2026", "2027", "2028", "2029", "2030"];
 type StepProfileProps = {
   setFirst_name: (v: string) => void;
   setLast_name: (v: string) => void;
+  age: string;
   setAge: (v: string) => void;
   setGender: (v: string) => void;
   setEthnicity: (v: string) => void;
   setPhone_number: (v: string) => void;
   school: string;
   setSchool: (v: string) => void;
+  otherSchool: string;
+  setOtherSchool: (v: string) => void;
   major: string;
   setMajor: (v: string) => void;
   setGrad: (v: string) => void;
   setGrad_month: (v: string) => void;
   setGrad_year: (v: string) => void;
+  country: string;
   setCountry: (v: string) => void;
   errorMsg: string;
   onNext: () => void;
@@ -140,17 +147,21 @@ type StepProfileProps = {
 function StepProfile({
   setFirst_name,
   setLast_name,
+  age,
   setAge,
   setGender,
   setEthnicity,
   setPhone_number,
   school,
   setSchool,
+  otherSchool,
+  setOtherSchool,
   major,
   setMajor,
   setGrad,
   setGrad_month,
   setGrad_year,
+  country,
   setCountry,
   errorMsg,
   onNext,
@@ -177,14 +188,20 @@ function StepProfile({
           onChange={(e) => setLast_name(e.target.value)}
           className={INPUT_CLS}
         />
-        <input
-          type="number"
-          placeholder="Age"
+        <select
+          value={age}
           onChange={(e) => setAge(e.target.value)}
           className={INPUT_CLS}
-          min={0}
-          max={120}
-        />
+        >
+          <option value="" disabled>
+            Age
+          </option>
+          {AGES.map((a) => (
+            <option key={a} value={a}>
+              {a}
+            </option>
+          ))}
+        </select>
         <select
           defaultValue=""
           onChange={(e) => setGender(e.target.value)}
@@ -219,25 +236,40 @@ function StepProfile({
           onChange={(e) => setPhone_number(e.target.value)}
           className={INPUT_CLS}
         />
-        <input
-          type="text"
-          placeholder="School"
+        <Combobox
           value={school}
-          onChange={(e) => setSchool(e.target.value)}
-          className={INPUT_CLS}
+          onChange={setSchool}
+          loadOptions={loadSchools}
+          placeholder="School"
         />
-        <input
-          type="text"
-          placeholder="Major"
+        {school === OTHER_SCHOOL && (
+          <input
+            type="text"
+            placeholder="Enter your school"
+            value={otherSchool}
+            onChange={(e) => setOtherSchool(e.target.value)}
+            className={INPUT_CLS}
+          />
+        )}
+        <select
           value={major}
           onChange={(e) => setMajor(e.target.value)}
           className={INPUT_CLS}
-        />
-        <input
-          type="text"
-          placeholder="Country"
-          onChange={(e) => setCountry(e.target.value)}
-          className={INPUT_CLS}
+        >
+          <option value="" disabled>
+            Field of Study
+          </option>
+          {MAJORS.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <Combobox
+          value={country}
+          onChange={setCountry}
+          options={COUNTRIES}
+          placeholder="Country of Residence"
         />
         <select
           defaultValue=""
@@ -247,7 +279,7 @@ function StepProfile({
           <option value="" disabled>
             Level of Study
           </option>
-          {GRAD_LEVELS.map((g) => (
+          {LEVELS_OF_STUDY.map((g) => (
             <option key={g} value={g}>
               {g}
             </option>
@@ -301,6 +333,10 @@ type StepChecksProps = {
   setFirst_hackathon: (v: string) => void;
   setFirst_hophacks: (v: string) => void;
   setLearn_about_us: (v: string) => void;
+  setPronouns: (v: string) => void;
+  setDietary: (v: string) => void;
+  setTshirt: (v: string) => void;
+  setUnderrepresented: (v: string) => void;
   setLinkedIn: (v: string) => void;
   resumeFile: File | null;
   setResumeFile: (f: File | null) => void;
@@ -342,6 +378,10 @@ function StepChecks({
   setFirst_hackathon,
   setFirst_hophacks,
   setLearn_about_us,
+  setPronouns,
+  setDietary,
+  setTshirt,
+  setUnderrepresented,
   setLinkedIn,
   resumeFile,
   setResumeFile,
@@ -400,6 +440,68 @@ function StepChecks({
           {HOW_OPTIONS.map((h) => (
             <option key={h} value={h}>
               {h}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <p className="text-white/70 text-xs -mb-2">
+        The following demographic fields are optional.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <select
+          defaultValue=""
+          onChange={(e) => setPronouns(e.target.value)}
+          className={INPUT_CLS}
+        >
+          <option value="" disabled>
+            Pronouns (optional)
+          </option>
+          {PRONOUNS.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </select>
+        <select
+          defaultValue=""
+          onChange={(e) => setUnderrepresented(e.target.value)}
+          className={INPUT_CLS}
+        >
+          <option value="" disabled>
+            Underrepresented group? (optional)
+          </option>
+          {UNDERREPRESENTED.map((u) => (
+            <option key={u} value={u}>
+              {u}
+            </option>
+          ))}
+        </select>
+        <select
+          defaultValue=""
+          onChange={(e) => setDietary(e.target.value)}
+          className={INPUT_CLS}
+        >
+          <option value="" disabled>
+            Dietary restrictions (optional)
+          </option>
+          {DIETARY.map((d) => (
+            <option key={d} value={d}>
+              {d}
+            </option>
+          ))}
+        </select>
+        <select
+          defaultValue=""
+          onChange={(e) => setTshirt(e.target.value)}
+          className={INPUT_CLS}
+        >
+          <option value="" disabled>
+            T-shirt size (optional)
+          </option>
+          {TSHIRT_SIZES.map((t) => (
+            <option key={t} value={t}>
+              {t}
             </option>
           ))}
         </select>
@@ -762,11 +864,11 @@ function StepConfirmation() {
         to finish registering and watch your email for confirmation.
       </p>
       <Link
-        href="/register/login"
+        href="/profile"
         className={BTN_PRIMARY}
         style={{ fontVariant: "small-caps" }}
       >
-        Sign In
+        Go to My Profile
       </Link>
     </div>
   );
@@ -777,7 +879,6 @@ function StepConfirmation() {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_RE =
   /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
-const AGE_RE = /^[0-9]+$/;
 
 // ---- Main page ----
 
@@ -807,6 +908,7 @@ export default function SignUpPage() {
   const [ethnicity, setEthnicity] = useState("");
   const [phone_number, setPhone_number] = useState("");
   const [school, setSchool] = useState("");
+  const [otherSchool, setOtherSchool] = useState("");
   const [major, setMajor] = useState("");
   const [grad, setGrad] = useState("");
   const [grad_month, setGrad_month] = useState("");
@@ -817,6 +919,10 @@ export default function SignUpPage() {
   const [first_hackathon, setFirst_hackathon] = useState("");
   const [first_hophacks, setFirst_hophacks] = useState("");
   const [learn_about_us, setLearn_about_us] = useState("");
+  const [pronouns, setPronouns] = useState("");
+  const [dietary, setDietary] = useState("");
+  const [tshirt, setTshirt] = useState("");
+  const [underrepresented, setUnderrepresented] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeChecked, setResumeChecked] = useState(false);
@@ -878,6 +984,10 @@ export default function SignUpPage() {
       setErrorMsg("* Please enter a valid last name.");
       return;
     }
+    if (!age) {
+      setErrorMsg("* Please select your age.");
+      return;
+    }
     if (!gender) {
       setErrorMsg("* Please select a gender.");
       return;
@@ -892,6 +1002,10 @@ export default function SignUpPage() {
     }
     if (!school) {
       setErrorMsg("* Please enter your school.");
+      return;
+    }
+    if (school === OTHER_SCHOOL && !otherSchool) {
+      setErrorMsg("* Please enter your school name.");
       return;
     }
     if (!ethnicity) {
@@ -949,61 +1063,59 @@ export default function SignUpPage() {
       );
       return;
     }
-    if (!AGE_RE.test(age)) {
-      setErrorMsg("* Age must be an integer value.");
-      return;
-    }
     setErrorMsg("");
     setActivePage(IMAGE);
   }
 
   async function handleImageNext() {
-    if (!resumeFile) return;
-
-    const data = new FormData();
-    data.append("file", resumeFile);
-    data.append(
-      "json_file",
-      JSON.stringify({
-        username,
-        password,
-        confirm_url: `${window.location.protocol}//${window.location.host}/confirm_email`,
-        profile: {
-          first_name,
-          last_name,
-          gender,
-          age,
-          major,
-          phone_number,
-          school,
-          otherSchool: "",
-          ethnicity,
-          grad,
-          is_jhu: school === "Johns Hopkins University",
-          grad_month,
-          grad_year,
-          mlh_emails: communicationChecked,
-          first_hackathon,
-          first_hophacks,
-          learn_about_us,
-          country,
-          linkedIn,
-          pfp: `${stage}_${body}_1_${accent}_${accessory}_${avatarObject}`,
-        },
-      }),
-    );
+    const profile = {
+      first_name,
+      last_name,
+      age,
+      phone_number,
+      school,
+      otherSchool: school === OTHER_SCHOOL ? otherSchool : "",
+      level_of_study: grad,
+      country,
+      gender,
+      race_ethnicity: ethnicity,
+      major,
+      grad_month,
+      grad_year,
+      is_jhu: school === "Johns Hopkins University",
+      pronouns,
+      dietary_restrictions: dietary,
+      tshirt_size: tshirt,
+      underrepresented_group: underrepresented,
+      first_hackathon,
+      first_hophacks,
+      learn_about_us,
+      linkedin_url: linkedIn,
+      pfp: `${stage}_${body}_1_${accent}_${accessory}_${avatarObject}`,
+      mlh_code_of_conduct: conductCodeChecked,
+      mlh_data_sharing: eventLogisticsChecked,
+      mlh_marketing_emails: communicationChecked,
+      resume_photo_release: resumeChecked,
+    };
 
     try {
       setSubmitting(true);
-      await axios.post("/api/accounts/create", data);
+      await axios.post("/api/accounts/create", {
+        username,
+        password,
+        confirm_url: `${window.location.protocol}//${window.location.host}/confirm_email`,
+        profile,
+      });
 
       try {
         await login(username, password);
-        const resumeData = new FormData();
-        resumeData.append("file", resumeFile);
-        await axios.post("/api/resumes/", resumeData);
+        if (resumeFile) {
+          const resumeData = new FormData();
+          resumeData.append("file", resumeFile);
+          await axios.post("/api/resumes/", resumeData);
+        }
       } catch {
-        // login or resume upload failed — still show confirmation
+        // Account exists; login/resume upload can be retried by signing in.
       }
     } catch {
       setErrorMsg("Error creating account. Please try again.");
@@ -1047,17 +1159,21 @@ export default function SignUpPage() {
           <StepProfile
             setFirst_name={setFirst_name}
             setLast_name={setLast_name}
+            age={age}
             setAge={setAge}
             setGender={setGender}
             setEthnicity={setEthnicity}
             setPhone_number={setPhone_number}
             school={school}
             setSchool={setSchool}
+            otherSchool={otherSchool}
+            setOtherSchool={setOtherSchool}
             major={major}
             setMajor={setMajor}
             setGrad={setGrad}
             setGrad_month={setGrad_month}
             setGrad_year={setGrad_year}
+            country={country}
             setCountry={setCountry}
             errorMsg={errorMsg}
             onNext={handleProfileNext}
@@ -1072,6 +1188,10 @@ export default function SignUpPage() {
             setFirst_hackathon={setFirst_hackathon}
             setFirst_hophacks={setFirst_hophacks}
             setLearn_about_us={setLearn_about_us}
+            setPronouns={setPronouns}
+            setDietary={setDietary}
+            setTshirt={setTshirt}
+            setUnderrepresented={setUnderrepresented}
             setLinkedIn={setLinkedIn}
             resumeFile={resumeFile}
             setResumeFile={setResumeFile}
