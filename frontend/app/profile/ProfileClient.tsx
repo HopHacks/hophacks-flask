@@ -192,16 +192,10 @@ export default function ProfileClient() {
   const view = statusView(emailConfirmed, registration);
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover bg-center p-5">
-      <div
-        className="w-full min-w-[300px] max-w-[640px] rounded-2xl p-8 sm:p-10"
-        style={{ backgroundColor: "rgba(0, 29, 76, 0.9)" }}
-      >
+    <div className="flex min-h-dvh flex-col items-center justify-center p-5">
+      <div className="w-full min-w-[300px] max-w-[640px] rounded-2xl border border-white/25 bg-white/10 p-8 backdrop-blur-sm motion-safe:animate-rise sm:p-10">
         <div className="mb-6 flex items-center justify-between">
-          <h1
-            className="font-display text-3xl text-white sm:text-4xl"
-            style={{ fontVariant: "small-caps" }}
-          >
+          <h1 className="font-display text-3xl text-white text-shadow-hero-title sm:text-4xl">
             {profile?.first_name
               ? `Hi, ${profile.first_name}!`
               : "Your Profile"}

@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 
-const INPUT_CLS = "input-sketch rounded px-3 py-2 w-full";
+const INPUT_CLS = "input-sketch w-full rounded-lg px-4 py-2.5 text-base";
 
 type Props = {
   value: string;
