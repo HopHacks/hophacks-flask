@@ -30,7 +30,9 @@ def create_app(config_file='config/config.json'):
     app = Flask(__name__)
 
 
-    CORS(app)
+    # Credentials must be allowed: the frontend sends the refresh-token cookie
+    # and Authorization header cross-origin (axios withCredentials=true).
+    CORS(app, supports_credentials=True)
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
