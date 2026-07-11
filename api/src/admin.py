@@ -8,7 +8,11 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from bson import ObjectId
 
 import boto3
+import csv
+import io
 from werkzeug.utils import secure_filename
+
+from config.event import EVENT_NAME, EVENT_SLUG
 
 admin_api = Blueprint('admin', __name__)
 
@@ -39,8 +43,8 @@ def get_all_users_account():
 #         {"registrations": {"$elemMatch": {"event": "Fall 2024"}}}
 #     ]
 # })
-    query = request.args.get("query")
-    event_name = "Fall 2025"
+    query = request.args.get("query") or ""
+    event_name = EVENT_NAME
 
     cursor = db.users.aggregate([
         {
@@ -53,14 +57,14 @@ def get_all_users_account():
                             {"profile.last_name": {"$regex": ".*" + query + ".*", "$options": "i"}}
                         ]
                     },
-                    # Filter users who have a 'Fall 2025' registration
+                    # Filter users who have a 'Fall 2026' registration
                     {"registrations": {"$elemMatch": {"event": event_name}}}
                 ]
             }
         },
         {
             "$addFields": {
-                "fall2025_rsvp_time": {
+                "current_rsvp_time": {
                     "$let": {
                         "vars": {
                             "fall2025_registration": {
@@ -80,7 +84,7 @@ def get_all_users_account():
                         }
                     }
                 },
-                "fall2025_apply_at": {
+                "apply_at": {
                     "$let": {
                         "vars": {
                             "fall2025_registration": {
@@ -104,7 +108,7 @@ def get_all_users_account():
         },
         {
             "$sort": {
-                "fall2025_rsvp_time": ASCENDING  # Sort by RSVP time for Fall 2025 if it exists
+                "current_rsvp_time": ASCENDING  # Sort by RSVP time for Fall 2026 if it exists
             }
         }
     ])
@@ -113,7 +117,7 @@ def get_all_users_account():
     
     for document in cursor:
         if not document['is_admin']:
-            users.append({'id': str(document['_id']), 'username': str(document['username']), 'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations'], 'resume': document.get("resume"), 'vaccination': document.get("vaccination"), 'fall2025_apply_at': document.get('fall2025_apply_at')})
+            users.append({'id': str(document['_id']), 'username': str(document['username']), 'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations'], 'resume': document.get("resume"), 'vaccination': document.get("vaccination"), 'apply_at': document.get('apply_at')})
         
 
 
@@ -132,7 +136,7 @@ def get_resume():
         return jsonify({'msg': 'no resume uploaded!'}, 404)
 
     s3 = boto3.client('s3')
-    object_name = 'Fall-2025/{}-{}'.format(id, user['resume'])
+    object_name = '{}/{}-{}'.format(EVENT_SLUG, id, user['resume'])
 
     url = s3.generate_presigned_url('get_object',
                                      Params={'Bucket': 'hophacks-resume', 'Key': object_name},
@@ -159,5 +163,106 @@ def get_vac():
                                      Params={'Bucket': 'hophacks-vaccinations', 'Key': object_name},
                                      ExpiresIn=600)
     return jsonify({'url': url})
+
+
+@admin_api.route('/stats', methods=['GET'])
+@jwt_required
+@check_admin
+def stats():
+    """Aggregate registrant demographics for the current event.
+
+    Powers the admin dashboard charts (sponsor decks). Counts each registrant
+    once by their current-event registration.
+
+    :resjson total: number of registrants for the current event
+    :resjson by_status: counts keyed by registration status
+    :resjson by_school / by_level_of_study / by_country / by_gender /
+        by_race_ethnicity: counts keyed by that demographic field
+    """
+    users = db.users.find({
+        'is_admin': {'$ne': True},
+        'registrations.event': EVENT_NAME
+    })
+
+    total = 0
+    by_status = {}
+    by_school = {}
+    by_level_of_study = {}
+    by_country = {}
+    by_gender = {}
+    by_race_ethnicity = {}
+
+    def bump(counter, value):
+        key = value if value not in (None, "") else "Unknown"
+        counter[key] = counter.get(key, 0) + 1
+
+    for user in users:
+        reg = next((r for r in user.get('registrations', []) if r.get('event') == EVENT_NAME), None)
+        if reg is None:
+            continue
+        total += 1
+        profile = user.get('profile', {})
+        bump(by_status, reg.get('status'))
+        bump(by_school, profile.get('school'))
+        bump(by_level_of_study, profile.get('level_of_study'))
+        bump(by_country, profile.get('country'))
+        bump(by_gender, profile.get('gender'))
+        bump(by_race_ethnicity, profile.get('race_ethnicity'))
+
+    return jsonify({
+        'total': total,
+        'by_status': by_status,
+        'by_school': by_school,
+        'by_level_of_study': by_level_of_study,
+        'by_country': by_country,
+        'by_gender': by_gender,
+        'by_race_ethnicity': by_race_ethnicity,
+    }), 200
+
+
+@admin_api.route('/export', methods=['GET'])
+@jwt_required
+@check_admin
+def export_csv():
+    """Export current-event registrants as a CSV attachment."""
+    users = db.users.find({
+        'is_admin': {'$ne': True},
+        'registrations.event': EVENT_NAME
+    })
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow([
+        'email', 'first_name', 'last_name', 'school', 'level_of_study',
+        'country', 'age', 'status', 'apply_at', 'rsvp', 'checked_in',
+        'dietary_restrictions', 'tshirt_size'
+    ])
+
+    for user in users:
+        reg = next((r for r in user.get('registrations', []) if r.get('event') == EVENT_NAME), None)
+        if reg is None:
+            continue
+        profile = user.get('profile', {})
+        writer.writerow([
+            user.get('username', ''),
+            profile.get('first_name', ''),
+            profile.get('last_name', ''),
+            profile.get('school', ''),
+            profile.get('level_of_study', ''),
+            profile.get('country', ''),
+            profile.get('age', ''),
+            reg.get('status', ''),
+            reg.get('apply_at', ''),
+            reg.get('rsvp', False),
+            reg.get('checkin', False),
+            profile.get('dietary_restrictions', ''),
+            profile.get('tshirt_size', ''),
+        ])
+
+    return Response(
+        output.getvalue(),
+        mimetype='text/csv',
+        headers={'Content-Disposition': 'attachment; filename=hophacks_registrants.csv'}
+    )
 
 

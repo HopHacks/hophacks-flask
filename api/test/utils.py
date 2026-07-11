@@ -10,31 +10,44 @@ def add_admin_account(client, db):
         'hashed': hashed,
         'refresh_tokens': [],
         'profile': {},
-        'is_admin' : True
+        'is_admin': True
     })
+
 
 admin_login_json = {
     "username": "admin",
     "password": "admin"
 }
 
+
+def _profile(first_name, last_name, school, **overrides):
+    """Build an MLH-compliant registration profile with sensible defaults."""
+    profile = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "age": "20",
+        "phone_number": "8888888888",
+        "school": school,
+        "level_of_study": "Undergraduate University (3+ year)",
+        "country": "United States of America",
+        # optional demographic fields
+        "gender": "Prefer not to answer",
+        "major": "Computer science, computer engineering, or software engineering",
+        "race_ethnicity": "Asian / Pacific Islander",
+        # MLH consent checkboxes
+        "mlh_code_of_conduct": True,
+        "mlh_data_sharing": True,
+        "mlh_marketing_emails": False,
+    }
+    profile.update(overrides)
+    return profile
+
+
 create_json = {
     "username": "a",
     "password": "a",
     "confirm_url": "test.com/confirm",
-    "profile": {
-        "first_name": "Andrew",
-        "last_name": "Wong",
-        "gender": "male",
-        "major": "Computer Science",
-        "phone_number": "8888888888",
-        "school": "Cornell University",
-        "ethnicity": "Asian/Pacific Islander",
-        "grad": "ugrad",
-        "is_jhu": False,
-        "grad_month": "05",
-        "grad_year": "2022"
-    }
+    "profile": _profile("Andrew", "Wong", "Cornell University"),
 }
 
 login_json = {
@@ -46,19 +59,7 @@ create_json2 = {
     "username": "b",
     "password": "b",
     "confirm_url": "test.com/confirm",
-    "profile": {
-        "first_name": "Elaine",
-        "last_name": "Wong",
-        "gender": "female",
-        "major": "Computer Science",
-        "phone_number": "8888888888",
-        "school": "Jooby Hooby University",
-        "ethnicity": "Asian/Pacific Islander",
-        "grad": "ugrad",
-        "is_jhu": True,
-        "grad_month": "05",
-        "grad_year": "2022"
-    }
+    "profile": _profile("Elaine", "Wong", "Johns Hopkins University"),
 }
 
 login_json2 = {
@@ -70,22 +71,25 @@ create_json3 = {
     "username": "c",
     "password": "c",
     "confirm_url": "test.com/confirm",
-    "profile": {
-        "first_name": "Jason",
-        "last_name": "Zhang",
-        "gender": "female",
-        "major": "Computer Science",
-        "phone_number": "8888888888",
-        "school": "Jooby Hooby University",
-        "ethnicity": "Asian/Pacific Islander",
-        "grad": "ugrad",
-        "is_jhu": True,
-        "grad_month": "05",
-        "grad_year": "2022"
-    }
+    "profile": _profile("Jason", "Zhang", "Johns Hopkins University"),
 }
 
 login_json3 = {
     "username": "c",
     "password": "c"
+}
+
+# Negative variants: required MLH consents not accepted.
+create_json_no_coc = {
+    "username": "d",
+    "password": "d",
+    "confirm_url": "test.com/confirm",
+    "profile": _profile("Dana", "Cho", "Cornell University", mlh_code_of_conduct=False),
+}
+
+create_json_no_data = {
+    "username": "e",
+    "password": "e",
+    "confirm_url": "test.com/confirm",
+    "profile": _profile("Evan", "Diaz", "Cornell University", mlh_data_sharing=False),
 }

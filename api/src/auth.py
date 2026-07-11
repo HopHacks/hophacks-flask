@@ -86,31 +86,9 @@ def login():
             }
         }}
     )
-    
-    user = db.users.find_one({'_id': ObjectId(id)})
 
-
-    # eastern = pytz.timezone("America/New_York")
-
-    eventFile = open("event.txt", "r")
-    
-    new_reg = {
-        "event": eventFile.read(), # update 
-        # "apply_at": ,
-        "accept": False,
-        "checkin": False,
-        "status": "email_confirmed",
-        "apply": False
-    }
-
-    if ("email_confirmed" in user and user["email_confirmed"]):
-        alreadyReg = False
-        for registrations in user['registrations']:
-            if (registrations['event'] == "Fall 2025"):
-                alreadyReg = True
-        if (not alreadyReg):
-            result = db.users.update_one({'_id': ObjectId(id)}, {'$push': {'registrations': new_reg}})
-            result = db.users.update_one({'_id': ObjectId(id)}, {'$set': {'resume': ""}})
+    # Registration for the event is created when the user confirms their email
+    # (see accounts.confirm_email), so login does not touch registrations.
     resp = jsonify(ret)
 
     # secure = true?, max_age?

@@ -87,13 +87,13 @@ export default function HeroSection() {
         <div className="absolute inset-x-0 bottom-[clamp(9rem,26vh,17rem)] z-10 flex flex-col items-center gap-3 px-6 text-center font-sans">
           <HeroTitle />
           <p className="text-base font-normal text-white/90 sm:text-lg">
-            Get notified when applications open.
+            Applications are open — register now.
           </p>
           <Link
-            href="/register/interest"
+            href="/register/signup"
             className="relative z-50 rounded-2xl bg-recap-gold px-6 py-3 text-base font-bold text-white shadow-[0_0_30px_rgba(255,181,31,0.35)] transition-shadow duration-300 hover:shadow-[0_0_45px_rgba(255,181,31,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
           >
-            Pre-Register
+            Register Now
           </Link>
         </div>
 

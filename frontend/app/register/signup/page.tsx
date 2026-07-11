@@ -4,14 +4,126 @@ import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "@/app/util/auth";
+import Combobox from "@/app/components/form/Combobox";
+import COUNTRIES from "./data/countries";
+import {
+  AGES,
+  LEVELS_OF_STUDY,
+  MAJORS,
+  PRONOUNS,
+  DIETARY,
+  TSHIRT_SIZES,
+  UNDERREPRESENTED,
+} from "./data/options";
 
-// ---- Shared button/input styles ----
+// Large MLH schools list is code-split and loaded on first focus of the field.
+const loadSchools = () =>
+  import("./data/schools.json").then((m) => m.default as string[]);
+const OTHER_SCHOOL = "Other (not listed)";
 
-const INPUT_CLS = "input-sketch rounded px-3 py-2 w-full";
+// ---- Shared styles (homepage design language) ----
+
+const INPUT_CLS = "input-sketch w-full rounded-lg px-4 py-2.5 text-base";
 const BTN_PRIMARY =
-  "px-5 py-3 text-xl font-bold rounded-2xl bg-[#ffb51f] text-white shadow-[0_0_30px_rgba(255,181,31,0.3)] hover:shadow-[0_0_40px_rgba(255,181,31,0.5)] transition-shadow duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
+  "rounded-2xl bg-recap-gold px-6 py-3 text-lg font-bold text-white shadow-[0_0_30px_rgba(255,181,31,0.3)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(255,181,31,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
 const BTN_SECONDARY =
-  "btn-sketch px-5 py-3 text-xl font-bold rounded-2xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
+  "btn-sketch rounded-2xl px-6 py-3 text-lg font-bold cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
+const CARD_CLS =
+  "w-full rounded-2xl border border-white/25 bg-white/10 p-6 backdrop-blur-sm sm:p-8 motion-safe:animate-rise";
+
+// ---- Small layout helpers ----
+
+function Field({
+  label,
+  optional,
+  children,
+}: {
+  label: string;
+  optional?: boolean;
+  children: React.ReactNode;
+}) {
+  // The control is nested inside the <label> so the two are implicitly
+  // associated (screen readers announce the label; clicking it focuses).
+  return (
+    <label className="flex flex-col gap-1.5">
+      <span className="text-sm font-semibold text-white">
+        {label}
+        {optional && (
+          <span className="ml-1.5 font-normal text-white/65">(optional)</span>
+        )}
+      </span>
+      {children}
+    </label>
+  );
+}
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="border-b border-white/20 pb-2 text-lg font-bold text-white">
+      {children}
+    </h3>
+  );
+}
+
+function ErrorNote({ msg }: { msg: string }) {
+  if (!msg) return null;
+  return (
+    <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
+      {msg}
+    </p>
+  );
+}
+
+const STEP_LABELS = ["Account", "Basic Info", "Additional Info", "Avatar"];
+
+function StepProgress({ current }: { current: number }) {
+  return (
+    <div className="mb-6 flex flex-col items-center gap-2">
+      <p className="text-sm text-white/90">
+        Step {current + 1} of {STEP_LABELS.length} · {STEP_LABELS[current]}
+      </p>
+      <div className="flex gap-2">
+        {STEP_LABELS.map((label, i) => (
+          <div
+            key={label}
+            className={`h-1.5 w-12 rounded-full transition-colors ${
+              i <= current ? "bg-recap-gold" : "bg-white/30"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Select({
+  value,
+  onChange,
+  options,
+  placeholder = "Select…",
+}: {
+  value?: string;
+  onChange: (v: string) => void;
+  options: readonly string[];
+  placeholder?: string;
+}) {
+  return (
+    <select
+      {...(value === undefined ? { defaultValue: "" } : { value })}
+      onChange={(e) => onChange(e.target.value)}
+      className={INPUT_CLS}
+    >
+      <option value="" disabled>
+        {placeholder}
+      </option>
+      {options.map((o) => (
+        <option key={o} value={o}>
+          {o}
+        </option>
+      ))}
+    </select>
+  );
+}
 
 // ---- Step 1: Account ----
 
@@ -37,39 +149,39 @@ function StepAccount({
   onNext,
 }: StepAccountProps) {
   return (
-    <div className="flex flex-col gap-4">
-      <p
-        className="font-bold text-white text-xl text-center mb-2"
-        style={{ fontVariant: "small-caps" }}
-      >
-        1. Enter Credentials
-      </p>
-      <input
-        type="email"
-        placeholder="Email Address"
-        value={username}
-        onChange={(e) => setUsername(e.target.value.toLowerCase())}
-        className={INPUT_CLS}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className={INPUT_CLS}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        value={passwordConfirm}
-        onChange={(e) => setPasswordConfirm(e.target.value)}
-        className={INPUT_CLS}
-        required
-      />
-      {confirmMsg && <p className="text-red-400 text-sm">{confirmMsg}</p>}
-      <div className="flex justify-between mt-2">
+    <div className="flex flex-col gap-5">
+      <Field label="Email address">
+        <input
+          type="email"
+          placeholder="you@school.edu"
+          value={username}
+          onChange={(e) => setUsername(e.target.value.toLowerCase())}
+          className={INPUT_CLS}
+          required
+        />
+      </Field>
+      <Field label="Password">
+        <input
+          type="password"
+          placeholder="6–25 characters, one number and one special character"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className={INPUT_CLS}
+          required
+        />
+      </Field>
+      <Field label="Confirm password">
+        <input
+          type="password"
+          placeholder="Re-enter your password"
+          value={passwordConfirm}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
+          className={INPUT_CLS}
+          required
+        />
+      </Field>
+      <ErrorNote msg={confirmMsg} />
+      <div className="mt-1 flex items-center justify-between">
         <Link href="/register/login" className={BTN_SECONDARY}>
           Back
         </Link>
@@ -81,56 +193,49 @@ function StepAccount({
   );
 }
 
-// ---- Step 2: Profile ----
+// ---- Step 2: Basic info (MLH-required core) ----
 
 const GENDERS = [
-  "Male",
-  "Female",
+  "Man",
+  "Woman",
   "Non-Binary",
-  "Transgender",
-  "Intersex",
-  "Not listed",
-  "Prefer not to disclose",
+  "Prefer to self-describe",
+  "Prefer not to answer",
 ];
 const ETHNICITIES = [
-  "American Indian or Alaska Native",
-  "Asian",
+  "American Indian or Alaskan Native",
+  "Asian / Pacific Islander",
   "Black or African American",
-  "Hispanic, Latino or Spanish Origin",
-  "Middle Eastern or North African",
-  "Native Hawaiian or Other Pacific Islander",
-  "White",
-  "Multiethnic",
-  "Prefer not to disclose",
-];
-const GRAD_LEVELS = [
-  "Undergraduate University (2 year - community college or similar)",
-  "Undergraduate University (3+ year)",
-  "Graduate University (Masters, Professional, Doctoral, etc)",
-  "Code School / Bootcamp",
-  "Other Vocational / Trade Program or Apprenticeship",
-  "Post Doctorate",
-  "Other",
+  "Hispanic",
+  "White / Caucasian",
+  "Multiple ethnicity / Other",
+  "Prefer not to answer",
 ];
 const MONTHS = Array.from({ length: 12 }, (_, i) =>
   String(i + 1).padStart(2, "0"),
 );
-const YEARS = ["2024", "2025", "2026", "2027", "2028", "2029", "2030"];
+const YEARS = ["2026", "2027", "2028", "2029", "2030", "2031"];
 
 type StepProfileProps = {
+  first_name: string;
   setFirst_name: (v: string) => void;
+  last_name: string;
   setLast_name: (v: string) => void;
+  age: string;
   setAge: (v: string) => void;
   setGender: (v: string) => void;
   setEthnicity: (v: string) => void;
+  phone_number: string;
   setPhone_number: (v: string) => void;
   school: string;
   setSchool: (v: string) => void;
-  major: string;
+  otherSchool: string;
+  setOtherSchool: (v: string) => void;
   setMajor: (v: string) => void;
   setGrad: (v: string) => void;
   setGrad_month: (v: string) => void;
   setGrad_year: (v: string) => void;
+  country: string;
   setCountry: (v: string) => void;
   errorMsg: string;
   onNext: () => void;
@@ -138,152 +243,123 @@ type StepProfileProps = {
 };
 
 function StepProfile({
+  first_name,
   setFirst_name,
+  last_name,
   setLast_name,
+  age,
   setAge,
   setGender,
   setEthnicity,
+  phone_number,
   setPhone_number,
   school,
   setSchool,
-  major,
+  otherSchool,
+  setOtherSchool,
   setMajor,
   setGrad,
   setGrad_month,
   setGrad_year,
+  country,
   setCountry,
   errorMsg,
   onNext,
   onBack,
 }: StepProfileProps) {
   return (
-    <div className="flex flex-col gap-3">
-      <p
-        className="font-bold text-white text-xl text-center mb-2"
-        style={{ fontVariant: "small-caps" }}
-      >
-        2. Basic Info
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <input
-          type="text"
-          placeholder="First Name"
-          onChange={(e) => setFirst_name(e.target.value)}
-          className={INPUT_CLS}
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          onChange={(e) => setLast_name(e.target.value)}
-          className={INPUT_CLS}
-        />
-        <input
-          type="number"
-          placeholder="Age"
-          onChange={(e) => setAge(e.target.value)}
-          className={INPUT_CLS}
-          min={0}
-          max={120}
-        />
-        <select
-          defaultValue=""
-          onChange={(e) => setGender(e.target.value)}
-          className={INPUT_CLS}
-        >
-          <option value="" disabled>
-            Gender
-          </option>
-          {GENDERS.map((g) => (
-            <option key={g} value={g}>
-              {g}
-            </option>
-          ))}
-        </select>
-        <select
-          defaultValue=""
-          onChange={(e) => setEthnicity(e.target.value)}
-          className={INPUT_CLS}
-        >
-          <option value="" disabled>
-            Ethnicity
-          </option>
-          {ETHNICITIES.map((e) => (
-            <option key={e} value={e}>
-              {e}
-            </option>
-          ))}
-        </select>
+    <div className="flex flex-col gap-5">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <Field label="First name">
+          <input
+            type="text"
+            placeholder="First name"
+            value={first_name}
+            onChange={(e) => setFirst_name(e.target.value)}
+            className={INPUT_CLS}
+          />
+        </Field>
+        <Field label="Last name">
+          <input
+            type="text"
+            placeholder="Last name"
+            value={last_name}
+            onChange={(e) => setLast_name(e.target.value)}
+            className={INPUT_CLS}
+          />
+        </Field>
+      </div>
+
+      <Field label="Age">
+        <Select value={age} onChange={setAge} options={AGES} />
+      </Field>
+
+      <Field label="Phone number">
         <input
           type="tel"
-          placeholder="Phone Number (e.g. +1 555 000 0000)"
+          placeholder="+1 555 000 0000"
+          value={phone_number}
           onChange={(e) => setPhone_number(e.target.value)}
           className={INPUT_CLS}
         />
-        <input
-          type="text"
-          placeholder="School"
+      </Field>
+
+      <Field label="School">
+        <Combobox
           value={school}
-          onChange={(e) => setSchool(e.target.value)}
-          className={INPUT_CLS}
+          onChange={setSchool}
+          loadOptions={loadSchools}
+          placeholder="Start typing your school…"
         />
-        <input
-          type="text"
-          placeholder="Major"
-          value={major}
-          onChange={(e) => setMajor(e.target.value)}
-          className={INPUT_CLS}
-        />
-        <input
-          type="text"
-          placeholder="Country"
-          onChange={(e) => setCountry(e.target.value)}
-          className={INPUT_CLS}
-        />
-        <select
-          defaultValue=""
-          onChange={(e) => setGrad(e.target.value)}
-          className={INPUT_CLS}
-        >
-          <option value="" disabled>
-            Level of Study
-          </option>
-          {GRAD_LEVELS.map((g) => (
-            <option key={g} value={g}>
-              {g}
-            </option>
-          ))}
-        </select>
-        <select
-          defaultValue=""
-          onChange={(e) => setGrad_month(e.target.value)}
-          className={INPUT_CLS}
-        >
-          <option value="" disabled>
-            Grad Month
-          </option>
-          {MONTHS.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
-        <select
-          defaultValue=""
-          onChange={(e) => setGrad_year(e.target.value)}
-          className={INPUT_CLS}
-        >
-          <option value="" disabled>
-            Grad Year
-          </option>
-          {YEARS.map((y) => (
-            <option key={y} value={y}>
-              {y}
-            </option>
-          ))}
-        </select>
+      </Field>
+      {school === OTHER_SCHOOL && (
+        <Field label="School name">
+          <input
+            type="text"
+            placeholder="Enter your school"
+            value={otherSchool}
+            onChange={(e) => setOtherSchool(e.target.value)}
+            className={INPUT_CLS}
+          />
+        </Field>
+      )}
+
+      <Field label="Level of study">
+        <Select onChange={setGrad} options={LEVELS_OF_STUDY} />
+      </Field>
+
+      <div className="grid grid-cols-2 gap-5">
+        <Field label="Graduation month">
+          <Select onChange={setGrad_month} options={MONTHS} />
+        </Field>
+        <Field label="Graduation year">
+          <Select onChange={setGrad_year} options={YEARS} />
+        </Field>
       </div>
-      {errorMsg && <p className="text-red-400 text-sm mt-1">{errorMsg}</p>}
-      <div className="flex justify-between mt-2">
+
+      <Field label="Country of residence">
+        <Combobox
+          value={country}
+          onChange={setCountry}
+          options={COUNTRIES}
+          placeholder="Start typing your country…"
+        />
+      </Field>
+
+      <Field label="Field of study">
+        <Select onChange={setMajor} options={MAJORS} />
+      </Field>
+
+      <Field label="Gender">
+        <Select onChange={setGender} options={GENDERS} />
+      </Field>
+
+      <Field label="Race / ethnicity">
+        <Select onChange={setEthnicity} options={ETHNICITIES} />
+      </Field>
+
+      <ErrorNote msg={errorMsg} />
+      <div className="mt-1 flex items-center justify-between">
         <button type="button" className={BTN_SECONDARY} onClick={onBack}>
           Back
         </button>
@@ -295,27 +371,7 @@ function StepProfile({
   );
 }
 
-// ---- Step 3: Checks ----
-
-type StepChecksProps = {
-  setFirst_hackathon: (v: string) => void;
-  setFirst_hophacks: (v: string) => void;
-  setLearn_about_us: (v: string) => void;
-  setLinkedIn: (v: string) => void;
-  resumeFile: File | null;
-  setResumeFile: (f: File | null) => void;
-  resumeChecked: boolean;
-  setResumeChecked: (v: boolean) => void;
-  conductCodeChecked: boolean;
-  setConductCodeChecked: (v: boolean) => void;
-  eventLogisticsChecked: boolean;
-  setEventLogisticsChecked: (v: boolean) => void;
-  communicationChecked: boolean;
-  setCommunicationChecked: (v: boolean) => void;
-  errorMsg: string;
-  onNext: () => void;
-  onBack: () => void;
-};
+// ---- Step 3: Additional info + agreements ----
 
 const openLink = (url: string) => (e: React.MouseEvent) => {
   e.preventDefault();
@@ -338,10 +394,64 @@ const HOW_OPTIONS = [
   "Other",
 ];
 
+const YES_NO = ["Yes", "No"];
+
+type StepChecksProps = {
+  setFirst_hackathon: (v: string) => void;
+  setFirst_hophacks: (v: string) => void;
+  setLearn_about_us: (v: string) => void;
+  setPronouns: (v: string) => void;
+  setDietary: (v: string) => void;
+  setTshirt: (v: string) => void;
+  setUnderrepresented: (v: string) => void;
+  linkedIn: string;
+  setLinkedIn: (v: string) => void;
+  resumeFile: File | null;
+  setResumeFile: (f: File | null) => void;
+  resumeChecked: boolean;
+  setResumeChecked: (v: boolean) => void;
+  conductCodeChecked: boolean;
+  setConductCodeChecked: (v: boolean) => void;
+  eventLogisticsChecked: boolean;
+  setEventLogisticsChecked: (v: boolean) => void;
+  communicationChecked: boolean;
+  setCommunicationChecked: (v: boolean) => void;
+  errorMsg: string;
+  onNext: () => void;
+  onBack: () => void;
+};
+
+function Check({
+  checked,
+  onChange,
+  children,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-white/20 bg-white/5 px-4 py-3 transition-colors hover:bg-white/10">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="mt-1 h-4 w-4 shrink-0 accent-[#ffb51f]"
+      />
+      <span className="text-sm leading-relaxed text-white">{children}</span>
+    </label>
+  );
+}
+
 function StepChecks({
   setFirst_hackathon,
   setFirst_hophacks,
   setLearn_about_us,
+  setPronouns,
+  setDietary,
+  setTshirt,
+  setUnderrepresented,
+  linkedIn,
   setLinkedIn,
   resumeFile,
   setResumeFile,
@@ -358,61 +468,53 @@ function StepChecks({
   onBack,
 }: StepChecksProps) {
   return (
-    <div className="flex flex-col gap-4">
-      <p
-        className="font-bold text-white text-xl text-center mb-2"
-        style={{ fontVariant: "small-caps" }}
-      >
-        3. Additional Info
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <select
-          defaultValue=""
-          onChange={(e) => setFirst_hackathon(e.target.value)}
-          className={INPUT_CLS}
-        >
-          <option value="" disabled>
-            First hackathon?
-          </option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-        <select
-          defaultValue=""
-          onChange={(e) => setFirst_hophacks(e.target.value)}
-          className={INPUT_CLS}
-        >
-          <option value="" disabled>
-            First HopHacks?
-          </option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-        <select
-          defaultValue=""
-          onChange={(e) => setLearn_about_us(e.target.value)}
-          className={INPUT_CLS}
-        >
-          <option value="" disabled>
-            How did you hear about us?
-          </option>
-          {HOW_OPTIONS.map((h) => (
-            <option key={h} value={h}>
-              {h}
-            </option>
-          ))}
-        </select>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
+        <SectionTitle>About you</SectionTitle>
+        <Field label="Is this your first hackathon?">
+          <Select onChange={setFirst_hackathon} options={YES_NO} />
+        </Field>
+        <Field label="Is this your first time at HopHacks?">
+          <Select onChange={setFirst_hophacks} options={YES_NO} />
+        </Field>
+        <Field label="How did you hear about us?">
+          <Select onChange={setLearn_about_us} options={HOW_OPTIONS} />
+        </Field>
+        <Field label="LinkedIn profile URL">
+          <input
+            type="url"
+            placeholder="https://linkedin.com/in/you"
+            value={linkedIn}
+            onChange={(e) => setLinkedIn(e.target.value)}
+            className={INPUT_CLS}
+          />
+        </Field>
       </div>
 
-      <input
-        type="url"
-        placeholder="LinkedIn Profile URL"
-        onChange={(e) => setLinkedIn(e.target.value)}
-        className={INPUT_CLS}
-      />
+      <div className="flex flex-col gap-5">
+        <SectionTitle>A little more about you</SectionTitle>
+        <p className="-mt-2 text-sm text-white/75">
+          These are optional — answer only what you're comfortable with.
+        </p>
+        <Field label="Pronouns" optional>
+          <Select onChange={setPronouns} options={PRONOUNS} />
+        </Field>
+        <Field
+          label="Do you identify as part of an underrepresented group in tech?"
+          optional
+        >
+          <Select onChange={setUnderrepresented} options={UNDERREPRESENTED} />
+        </Field>
+        <Field label="Dietary restrictions" optional>
+          <Select onChange={setDietary} options={DIETARY} />
+        </Field>
+        <Field label="T-shirt size" optional>
+          <Select onChange={setTshirt} options={TSHIRT_SIZES} />
+        </Field>
+      </div>
 
-      <div>
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Resume</SectionTitle>
         <label className="cursor-pointer">
           <input
             type="file"
@@ -420,117 +522,81 @@ function StepChecks({
             className="hidden"
             onChange={(e) => setResumeFile(e.target.files?.[0] ?? null)}
           />
-          <span className="inline-block px-4 py-2 bg-white text-[#061A40] font-semibold rounded cursor-pointer hover:bg-gray-100 transition-colors">
-            Upload Resume*
+          <span className="inline-block rounded-lg bg-white px-4 py-2 font-semibold text-[#2a4785] transition-colors hover:bg-gray-100">
+            Upload resume (PDF/DOC)
           </span>
           {resumeFile && (
-            <span className="ml-3 text-white">{resumeFile.name}</span>
+            <span className="ml-3 text-sm text-white">{resumeFile.name}</span>
           )}
         </label>
       </div>
 
-      <div className="flex flex-col gap-3 text-white text-sm">
-        <label className="flex items-start gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={resumeChecked}
-            onChange={(e) => setResumeChecked(e.target.checked)}
-            className="mt-1 shrink-0"
-          />
-          <span>
-            * I authorize HopHacks to send my resume to our event sponsors for
-            recruiting purposes. I also consent to this{" "}
-            <a
-              href={S3_IMG("JHU_Photo-and-Video-Release_20192.pdf")}
-              onClick={openLink(
-                S3_IMG("JHU_Photo-and-Video-Release_20192.pdf"),
-              )}
-              className="underline hover:text-blue-300"
-            >
-              photo release form
-            </a>
-            .
-          </span>
-        </label>
-        <label className="flex items-start gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={conductCodeChecked}
-            onChange={(e) => setConductCodeChecked(e.target.checked)}
-            className="mt-1 shrink-0"
-          />
-          <span>
-            * I have read and understand the{" "}
-            <a
-              href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
-              onClick={openLink(
-                "https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md",
-              )}
-              className="underline hover:text-blue-300"
-            >
-              MLH Code of Conduct
-            </a>
-            .
-          </span>
-        </label>
-        <label className="flex items-start gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={eventLogisticsChecked}
-            onChange={(e) => setEventLogisticsChecked(e.target.checked)}
-            className="mt-1 shrink-0"
-          />
-          <span>
-            * I authorize you to share my application with MLH for
-            administration in line with the{" "}
-            <a
-              href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
-              onClick={openLink(
-                "https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md",
-              )}
-              className="underline hover:text-blue-300"
-            >
-              MLH Privacy Policy
-            </a>
-            . I further agree to the{" "}
-            <a
-              href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
-              onClick={openLink(
-                "https://github.com/MLH/mlh-policies/blob/main/contest-terms.md",
-              )}
-              className="underline hover:text-blue-300"
-            >
-              MLH Terms
-            </a>{" "}
-            and{" "}
-            <a
-              href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
-              onClick={openLink(
-                "https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md",
-              )}
-              className="underline hover:text-blue-300"
-            >
-              Privacy Policy
-            </a>
-            .
-          </span>
-        </label>
-        <label className="flex items-start gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={communicationChecked}
-            onChange={(e) => setCommunicationChecked(e.target.checked)}
-            className="mt-1 shrink-0"
-          />
-          <span>
-            (Optional) I authorize MLH to send me occasional emails about
-            relevant events and opportunities.
-          </span>
-        </label>
+      <div className="flex flex-col gap-3">
+        <SectionTitle>Agreements</SectionTitle>
+        <Check checked={resumeChecked} onChange={setResumeChecked}>
+          I authorize HopHacks to send my resume to our event sponsors for
+          recruiting purposes. I also consent to this{" "}
+          <a
+            href={S3_IMG("JHU_Photo-and-Video-Release_20192.pdf")}
+            onClick={openLink(S3_IMG("JHU_Photo-and-Video-Release_20192.pdf"))}
+            className="underline hover:text-white/80"
+          >
+            photo release form
+          </a>
+          .
+        </Check>
+        <Check checked={conductCodeChecked} onChange={setConductCodeChecked}>
+          I have read and agree to the{" "}
+          <a
+            href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+            onClick={openLink(
+              "https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md",
+            )}
+            className="underline hover:text-white/80"
+          >
+            MLH Code of Conduct
+          </a>
+          .
+        </Check>
+        <Check
+          checked={eventLogisticsChecked}
+          onChange={setEventLogisticsChecked}
+        >
+          I authorize you to share my application/registration information with
+          Major League Hacking for event administration, ranking, and MLH
+          administration in line with the{" "}
+          <a
+            href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+            onClick={openLink(
+              "https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md",
+            )}
+            className="underline hover:text-white/80"
+          >
+            MLH Privacy Policy
+          </a>
+          . I further agree to the terms of both the{" "}
+          <a
+            href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+            onClick={openLink(
+              "https://github.com/MLH/mlh-policies/blob/main/contest-terms.md",
+            )}
+            className="underline hover:text-white/80"
+          >
+            MLH Contest Terms and Conditions
+          </a>{" "}
+          and the MLH Privacy Policy.
+        </Check>
+        <Check
+          checked={communicationChecked}
+          onChange={setCommunicationChecked}
+        >
+          (Optional) I authorize MLH to send me occasional emails about relevant
+          events, career opportunities, and community announcements.
+        </Check>
       </div>
 
-      {errorMsg && <p className="text-red-400 text-sm">{errorMsg}</p>}
-      <div className="flex justify-between mt-2">
+      <ErrorNote msg={errorMsg} />
+      <div className="mt-1 flex items-center justify-between">
         <button type="button" className={BTN_SECONDARY} onClick={onBack}>
           Back
         </button>
@@ -542,7 +608,7 @@ function StepChecks({
   );
 }
 
-// ---- Step 4: Avatar builder (ported from SignUpImage.jsx) ----
+// ---- Step 4: Avatar builder ----
 
 const AVATAR_CATEGORIES = {
   stage: { range: [0, 2] as [number, number] },
@@ -578,14 +644,14 @@ function ColorPicker({
       {colors.map((color, index) => (
         <div
           key={color}
-          className="w-7 h-7 rounded-full cursor-pointer border-2 border-white/30 hover:border-white transition-colors"
+          className="h-7 w-7 cursor-pointer rounded-full border-2 border-white/30 transition-colors hover:border-white"
           style={{ backgroundColor: color }}
           onClick={() => onSelect(index + 1)}
         />
       ))}
       {category === "Accent" && (
         <div
-          className="w-7 h-7 rounded-full cursor-pointer border-2 border-white/30 hover:border-white flex items-center justify-center text-white text-xs"
+          className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-2 border-white/30 text-xs text-white hover:border-white"
           onClick={() => onSelect(0)}
         >
           ×
@@ -612,20 +678,22 @@ function ScrollSelect({
     setSelected(selected <= range[0] ? range[1] : selected - 1);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <p className="text-white font-bold pb-3">{category}</p>
+    <div className="flex w-full flex-col items-center justify-center">
+      <p className="pb-3 font-bold capitalize text-white">{category}</p>
       <div className="flex flex-col items-center">
         <button type="button" onClick={handleIncrement} className="w-8 pb-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/select-arrow.svg"
-            className="w-full h-auto max-h-full object-contain"
+            className="h-auto max-h-full w-full object-contain"
             alt="increment"
           />
         </button>
         <button type="button" onClick={handleDecrement} className="w-8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/select-arrow.svg"
-            className="w-full h-auto max-h-full object-contain rotate-180"
+            className="h-auto max-h-full w-full rotate-180 object-contain"
             alt="decrement"
           />
         </button>
@@ -671,63 +739,61 @@ function StepImage({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="w-full bg-[#5997CC] rounded-[40px] p-6 md:p-8 grid grid-rows-[auto_1fr] gap-6 md:gap-8 max-w-4xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white aspect-square rounded-[24px] flex items-center justify-center p-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="w-full h-full object-contain"
-              src={`https://hophacks-website.s3.us-east-1.amazonaws.com/pfps/${stage}_${body}_1_${accent}_${accessory}_${object}.png`}
-              alt="Profile avatar"
-            />
-          </div>
-          <div className="flex flex-col justify-between space-y-4 py-2">
-            <div className="bg-[rgba(225,233,242,.32)] rounded-lg text-white text-center font-bold text-lg md:text-xl p-3">
-              Customize your blue jay!
-            </div>
-            <div className="flex justify-center gap-2">
-              {(["Body", "Accent"] as ColorCategory[]).map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  className={`flex-1 rounded-md text-white font-semibold py-2 transition ${
-                    colorSelector === cat
-                      ? "bg-[#2885D4]"
-                      : "bg-white/20 hover:bg-white/30"
-                  }`}
-                  onClick={() => setColorSelector(cat)}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-            <ColorPicker
-              onSelect={colorSelector === "Body" ? setBody : setAccent}
-              colors={COLOR_CATEGORIES[colorSelector].colors}
-              category={colorSelector}
-            />
-          </div>
+      <p className="text-center text-lg font-bold text-white">
+        Customize your blue jay!
+      </p>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="flex aspect-square items-center justify-center rounded-2xl bg-white p-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="h-full w-full object-contain"
+            src={`https://hophacks-website.s3.us-east-1.amazonaws.com/pfps/${stage}_${body}_1_${accent}_${accessory}_${object}.png`}
+            alt="Profile avatar"
+          />
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <ScrollSelect
-            selected={stage}
-            setSelected={setStage}
-            category="stage"
+        <div className="flex flex-col justify-center gap-5">
+          <div className="flex justify-center gap-2">
+            {(["Body", "Accent"] as ColorCategory[]).map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                className={`flex-1 rounded-lg py-2 font-semibold text-white transition ${
+                  colorSelector === cat
+                    ? "bg-recap-gold"
+                    : "bg-white/20 hover:bg-white/30"
+                }`}
+                onClick={() => setColorSelector(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <ColorPicker
+            onSelect={colorSelector === "Body" ? setBody : setAccent}
+            colors={COLOR_CATEGORIES[colorSelector].colors}
+            category={colorSelector}
           />
-          <ScrollSelect
-            selected={accessory}
-            setSelected={setAccessory}
-            category="accessory"
-          />
-          <ScrollSelect
-            selected={object}
-            setSelected={setObject}
-            category="object"
-          />
+          <div className="grid grid-cols-3 gap-4">
+            <ScrollSelect
+              selected={stage}
+              setSelected={setStage}
+              category="stage"
+            />
+            <ScrollSelect
+              selected={accessory}
+              setSelected={setAccessory}
+              category="accessory"
+            />
+            <ScrollSelect
+              selected={object}
+              setSelected={setObject}
+              category="object"
+            />
+          </div>
         </div>
       </div>
-      {errorMsg && <p className="text-red-400 text-sm">{errorMsg}</p>}
-      <div className="flex justify-between">
+      <ErrorNote msg={errorMsg} />
+      <div className="mt-1 flex items-center justify-between">
         <button
           type="button"
           className={BTN_SECONDARY}
@@ -742,7 +808,7 @@ function StepImage({
           onClick={onNext}
           disabled={submitting}
         >
-          {submitting ? "Creating account..." : "Next"}
+          {submitting ? "Creating account…" : "Finish"}
         </button>
       </div>
     </div>
@@ -751,22 +817,26 @@ function StepImage({
 
 // ---- Step 5: Confirmation ----
 
-function StepConfirmation() {
+function StepConfirmation({ resumeFailed }: { resumeFailed: boolean }) {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-8">
-      <p
-        className="font-bold text-white text-2xl text-center"
-        style={{ fontVariant: "small-caps" }}
-      >
-        We are excited to have you joining our event! Please go to your profile
-        to finish registering and watch your email for confirmation.
+    <div
+      role="status"
+      className="flex w-full flex-col items-center justify-center gap-6 py-4 text-center motion-safe:animate-pop"
+    >
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-recap-gold text-4xl text-white shadow-[0_0_30px_rgba(255,181,31,0.45)]">
+        ✓
+      </div>
+      <p className="text-xl font-bold text-white">
+        You're registered! Check your email to confirm your address and complete
+        your application.
       </p>
-      <Link
-        href="/register/login"
-        className={BTN_PRIMARY}
-        style={{ fontVariant: "small-caps" }}
-      >
-        Sign In
+      {resumeFailed && (
+        <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
+          Your resume didn't upload — please re-add it from your profile.
+        </p>
+      )}
+      <Link href="/profile" className={BTN_PRIMARY}>
+        Go to My Profile
       </Link>
     </div>
   );
@@ -777,7 +847,6 @@ function StepConfirmation() {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_RE =
   /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
-const AGE_RE = /^[0-9]+$/;
 
 // ---- Main page ----
 
@@ -792,6 +861,7 @@ export default function SignUpPage() {
 
   const [activePage, setActivePage] = useState(ACCOUNT);
   const [submitting, setSubmitting] = useState(false);
+  const [resumeFailed, setResumeFailed] = useState(false);
 
   // Account
   const [username, setUsername] = useState("");
@@ -807,6 +877,7 @@ export default function SignUpPage() {
   const [ethnicity, setEthnicity] = useState("");
   const [phone_number, setPhone_number] = useState("");
   const [school, setSchool] = useState("");
+  const [otherSchool, setOtherSchool] = useState("");
   const [major, setMajor] = useState("");
   const [grad, setGrad] = useState("");
   const [grad_month, setGrad_month] = useState("");
@@ -817,6 +888,10 @@ export default function SignUpPage() {
   const [first_hackathon, setFirst_hackathon] = useState("");
   const [first_hophacks, setFirst_hophacks] = useState("");
   const [learn_about_us, setLearn_about_us] = useState("");
+  const [pronouns, setPronouns] = useState("");
+  const [dietary, setDietary] = useState("");
+  const [tshirt, setTshirt] = useState("");
+  const [underrepresented, setUnderrepresented] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeChecked, setResumeChecked] = useState(false);
@@ -878,12 +953,16 @@ export default function SignUpPage() {
       setErrorMsg("* Please enter a valid last name.");
       return;
     }
+    if (!age) {
+      setErrorMsg("* Please select your age.");
+      return;
+    }
     if (!gender) {
       setErrorMsg("* Please select a gender.");
       return;
     }
     if (!major) {
-      setErrorMsg("* Please enter your major.");
+      setErrorMsg("* Please select your field of study.");
       return;
     }
     if (!country) {
@@ -894,8 +973,12 @@ export default function SignUpPage() {
       setErrorMsg("* Please enter your school.");
       return;
     }
+    if (school === OTHER_SCHOOL && !otherSchool) {
+      setErrorMsg("* Please enter your school name.");
+      return;
+    }
     if (!ethnicity) {
-      setErrorMsg("* Please select an ethnicity.");
+      setErrorMsg("* Please select a race / ethnicity.");
       return;
     }
     if (!phone_number) {
@@ -903,7 +986,7 @@ export default function SignUpPage() {
       return;
     }
     if (!grad) {
-      setErrorMsg("* Please select a valid graduation program.");
+      setErrorMsg("* Please select your level of study.");
       return;
     }
     if (!grad_month) {
@@ -949,61 +1032,61 @@ export default function SignUpPage() {
       );
       return;
     }
-    if (!AGE_RE.test(age)) {
-      setErrorMsg("* Age must be an integer value.");
-      return;
-    }
     setErrorMsg("");
     setActivePage(IMAGE);
   }
 
   async function handleImageNext() {
-    if (!resumeFile) return;
-
-    const data = new FormData();
-    data.append("file", resumeFile);
-    data.append(
-      "json_file",
-      JSON.stringify({
-        username,
-        password,
-        confirm_url: `${window.location.protocol}//${window.location.host}/confirm_email`,
-        profile: {
-          first_name,
-          last_name,
-          gender,
-          age,
-          major,
-          phone_number,
-          school,
-          otherSchool: "",
-          ethnicity,
-          grad,
-          is_jhu: school === "Johns Hopkins University",
-          grad_month,
-          grad_year,
-          mlh_emails: communicationChecked,
-          first_hackathon,
-          first_hophacks,
-          learn_about_us,
-          country,
-          linkedIn,
-          pfp: `${stage}_${body}_1_${accent}_${accessory}_${avatarObject}`,
-        },
-      }),
-    );
+    const profile = {
+      first_name,
+      last_name,
+      age,
+      phone_number,
+      school,
+      otherSchool: school === OTHER_SCHOOL ? otherSchool : "",
+      level_of_study: grad,
+      country,
+      gender,
+      race_ethnicity: ethnicity,
+      major,
+      grad_month,
+      grad_year,
+      is_jhu: school === "Johns Hopkins University",
+      pronouns,
+      dietary_restrictions: dietary,
+      tshirt_size: tshirt,
+      underrepresented_group: underrepresented,
+      first_hackathon,
+      first_hophacks,
+      learn_about_us,
+      linkedin_url: linkedIn,
+      pfp: `${stage}_${body}_1_${accent}_${accessory}_${avatarObject}`,
+      mlh_code_of_conduct: conductCodeChecked,
+      mlh_data_sharing: eventLogisticsChecked,
+      mlh_marketing_emails: communicationChecked,
+      resume_photo_release: resumeChecked,
+    };
 
     try {
       setSubmitting(true);
-      await axios.post("/api/accounts/create", data);
+      await axios.post("/api/accounts/create", {
+        username,
+        password,
+        confirm_url: `${window.location.protocol}//${window.location.host}/confirm_email`,
+        profile,
+      });
 
       try {
         await login(username, password);
-        const resumeData = new FormData();
-        resumeData.append("file", resumeFile);
-        await axios.post("/api/resumes/", resumeData);
+        if (resumeFile) {
+          const resumeData = new FormData();
+          resumeData.append("file", resumeFile);
+          await axios.post("/api/resumes/", resumeData);
+        }
       } catch {
-        // login or resume upload failed — still show confirmation
+        // The account exists either way, so don't block signup — but the
+        // resume never reached the server; tell the user to re-add it.
+        if (resumeFile) setResumeFailed(true);
       }
     } catch {
       setErrorMsg("Error creating account. Please try again.");
@@ -1019,100 +1102,126 @@ export default function SignUpPage() {
   const isConfirmation = activePage === CONFIRMATION;
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
-      <div
-        className="min-w-[300px] max-w-[700px] w-[70%] flex flex-col rounded-2xl p-10 m-5"
-        style={{ backgroundColor: "rgba(0, 29, 76, 0.9)" }}
-      >
-        <h2
-          className="font-bold text-white text-5xl text-center mb-3"
-          style={{ fontVariant: "small-caps" }}
-        >
-          {isConfirmation ? "Profile Created" : "Create Your Profile"}
-        </h2>
+    <div className="flex min-h-dvh w-full flex-col items-center px-4 py-10 sm:py-14">
+      <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
+        {isConfirmation ? "Welcome to HopHacks!" : "Register for HopHacks"}
+      </h1>
+      <p className="mb-8 mt-1 text-center text-white/90">
+        Fall 2026 · Johns Hopkins University
+      </p>
 
-        {activePage === ACCOUNT && (
-          <StepAccount
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            passwordConfirm={passwordConfirm}
-            setPasswordConfirm={setPasswordConfirm}
-            confirmMsg={confirmMsg}
-            onNext={handleAccountNext}
-          />
+      {!isConfirmation && <StepProgress current={activePage} />}
+
+      <div className="w-full max-w-2xl">
+        <div className={CARD_CLS}>
+          {activePage === ACCOUNT && (
+            <StepAccount
+              username={username}
+              setUsername={setUsername}
+              password={password}
+              setPassword={setPassword}
+              passwordConfirm={passwordConfirm}
+              setPasswordConfirm={setPasswordConfirm}
+              confirmMsg={confirmMsg}
+              onNext={handleAccountNext}
+            />
+          )}
+          {activePage === PROFILE && (
+            <StepProfile
+              first_name={first_name}
+              setFirst_name={setFirst_name}
+              last_name={last_name}
+              setLast_name={setLast_name}
+              age={age}
+              setAge={setAge}
+              setGender={setGender}
+              setEthnicity={setEthnicity}
+              phone_number={phone_number}
+              setPhone_number={setPhone_number}
+              school={school}
+              setSchool={setSchool}
+              otherSchool={otherSchool}
+              setOtherSchool={setOtherSchool}
+              setMajor={setMajor}
+              setGrad={setGrad}
+              setGrad_month={setGrad_month}
+              setGrad_year={setGrad_year}
+              country={country}
+              setCountry={setCountry}
+              errorMsg={errorMsg}
+              onNext={handleProfileNext}
+              onBack={() => {
+                setErrorMsg("");
+                setActivePage(ACCOUNT);
+              }}
+            />
+          )}
+          {activePage === CHECKS && (
+            <StepChecks
+              setFirst_hackathon={setFirst_hackathon}
+              setFirst_hophacks={setFirst_hophacks}
+              setLearn_about_us={setLearn_about_us}
+              setPronouns={setPronouns}
+              setDietary={setDietary}
+              setTshirt={setTshirt}
+              setUnderrepresented={setUnderrepresented}
+              linkedIn={linkedIn}
+              setLinkedIn={setLinkedIn}
+              resumeFile={resumeFile}
+              setResumeFile={setResumeFile}
+              resumeChecked={resumeChecked}
+              setResumeChecked={setResumeChecked}
+              conductCodeChecked={conductCodeChecked}
+              setConductCodeChecked={setConductCodeChecked}
+              eventLogisticsChecked={eventLogisticsChecked}
+              setEventLogisticsChecked={setEventLogisticsChecked}
+              communicationChecked={communicationChecked}
+              setCommunicationChecked={setCommunicationChecked}
+              errorMsg={errorMsg}
+              onNext={handleChecksNext}
+              onBack={() => {
+                setErrorMsg("");
+                setActivePage(PROFILE);
+              }}
+            />
+          )}
+          {activePage === IMAGE && (
+            <StepImage
+              stage={stage}
+              setStage={setStage}
+              body={body}
+              setBody={setBody}
+              accent={accent}
+              setAccent={setAccent}
+              accessory={accessory}
+              setAccessory={setAccessory}
+              object={avatarObject}
+              setObject={setAvatarObject}
+              errorMsg={errorMsg}
+              submitting={submitting}
+              onNext={handleImageNext}
+              onBack={() => {
+                setErrorMsg("");
+                setActivePage(CHECKS);
+              }}
+            />
+          )}
+          {activePage === CONFIRMATION && (
+            <StepConfirmation resumeFailed={resumeFailed} />
+          )}
+        </div>
+
+        {!isConfirmation && (
+          <p className="mt-5 text-center text-sm text-white/85">
+            Already have an account?{" "}
+            <Link
+              href="/register/login"
+              className="underline underline-offset-4 hover:text-white"
+            >
+              Sign in
+            </Link>
+          </p>
         )}
-        {activePage === PROFILE && (
-          <StepProfile
-            setFirst_name={setFirst_name}
-            setLast_name={setLast_name}
-            setAge={setAge}
-            setGender={setGender}
-            setEthnicity={setEthnicity}
-            setPhone_number={setPhone_number}
-            school={school}
-            setSchool={setSchool}
-            major={major}
-            setMajor={setMajor}
-            setGrad={setGrad}
-            setGrad_month={setGrad_month}
-            setGrad_year={setGrad_year}
-            setCountry={setCountry}
-            errorMsg={errorMsg}
-            onNext={handleProfileNext}
-            onBack={() => {
-              setErrorMsg("");
-              setActivePage(ACCOUNT);
-            }}
-          />
-        )}
-        {activePage === CHECKS && (
-          <StepChecks
-            setFirst_hackathon={setFirst_hackathon}
-            setFirst_hophacks={setFirst_hophacks}
-            setLearn_about_us={setLearn_about_us}
-            setLinkedIn={setLinkedIn}
-            resumeFile={resumeFile}
-            setResumeFile={setResumeFile}
-            resumeChecked={resumeChecked}
-            setResumeChecked={setResumeChecked}
-            conductCodeChecked={conductCodeChecked}
-            setConductCodeChecked={setConductCodeChecked}
-            eventLogisticsChecked={eventLogisticsChecked}
-            setEventLogisticsChecked={setEventLogisticsChecked}
-            communicationChecked={communicationChecked}
-            setCommunicationChecked={setCommunicationChecked}
-            errorMsg={errorMsg}
-            onNext={handleChecksNext}
-            onBack={() => {
-              setErrorMsg("");
-              setActivePage(PROFILE);
-            }}
-          />
-        )}
-        {activePage === IMAGE && (
-          <StepImage
-            stage={stage}
-            setStage={setStage}
-            body={body}
-            setBody={setBody}
-            accent={accent}
-            setAccent={setAccent}
-            accessory={accessory}
-            setAccessory={setAccessory}
-            object={avatarObject}
-            setObject={setAvatarObject}
-            errorMsg={errorMsg}
-            submitting={submitting}
-            onNext={handleImageNext}
-            onBack={() => {
-              setErrorMsg("");
-              setActivePage(CHECKS);
-            }}
-          />
-        )}
-        {activePage === CONFIRMATION && <StepConfirmation />}
       </div>
     </div>
   );
