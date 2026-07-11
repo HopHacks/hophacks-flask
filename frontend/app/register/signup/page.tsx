@@ -817,7 +817,7 @@ function StepImage({
 
 // ---- Step 5: Confirmation ----
 
-function StepConfirmation() {
+function StepConfirmation({ resumeFailed }: { resumeFailed: boolean }) {
   return (
     <div
       role="status"
@@ -830,6 +830,11 @@ function StepConfirmation() {
         You're registered! Check your email to confirm your address and complete
         your application.
       </p>
+      {resumeFailed && (
+        <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
+          Your resume didn't upload — please re-add it from your profile.
+        </p>
+      )}
       <Link href="/profile" className={BTN_PRIMARY}>
         Go to My Profile
       </Link>
@@ -856,6 +861,7 @@ export default function SignUpPage() {
 
   const [activePage, setActivePage] = useState(ACCOUNT);
   const [submitting, setSubmitting] = useState(false);
+  const [resumeFailed, setResumeFailed] = useState(false);
 
   // Account
   const [username, setUsername] = useState("");
@@ -1078,7 +1084,9 @@ export default function SignUpPage() {
           await axios.post("/api/resumes/", resumeData);
         }
       } catch {
-        // Account exists; login/resume upload can be retried by signing in.
+        // The account exists either way, so don't block signup — but the
+        // resume never reached the server; tell the user to re-add it.
+        if (resumeFile) setResumeFailed(true);
       }
     } catch {
       setErrorMsg("Error creating account. Please try again.");
@@ -1198,7 +1206,9 @@ export default function SignUpPage() {
               }}
             />
           )}
-          {activePage === CONFIRMATION && <StepConfirmation />}
+          {activePage === CONFIRMATION && (
+            <StepConfirmation resumeFailed={resumeFailed} />
+          )}
         </div>
 
         {!isConfirmation && (

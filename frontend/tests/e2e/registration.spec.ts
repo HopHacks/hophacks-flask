@@ -73,16 +73,8 @@ async function fillAboutYou(page: Page) {
   await page.locator('input[type="file"]').setInputFiles(RESUME_FIXTURE);
 }
 
-test("happy path submits canonical MLH payload", async ({ page }) => {
-  const created: { payload?: unknown } = {};
-  await stubBackend(page, created);
-
-  await page.goto("/register/signup");
-  await fillAccountStep(page);
-  await fillBasicInfoStep(page);
-
-  await fillAboutYou(page);
-  // The two required MLH consents + HopHacks resume release.
+// The two required MLH consents + HopHacks resume release.
+async function checkAllConsents(page: Page) {
   await page
     .getByText("I authorize HopHacks to send my resume")
     .locator("xpath=ancestor::label")
@@ -98,11 +90,24 @@ test("happy path submits canonical MLH payload", async ({ page }) => {
     .locator("xpath=ancestor::label")
     .locator('input[type="checkbox"]')
     .check();
+}
+
+test("happy path submits canonical MLH payload", async ({ page }) => {
+  const created: { payload?: unknown } = {};
+  await stubBackend(page, created);
+
+  await page.goto("/register/signup");
+  await fillAccountStep(page);
+  await fillBasicInfoStep(page);
+
+  await fillAboutYou(page);
+  await checkAllConsents(page);
   await page.getByRole("button", { name: "Next", exact: true }).click();
 
   // Avatar step → submit.
   await page.getByRole("button", { name: "Finish", exact: true }).click();
   await expect(page.getByText("You're registered!")).toBeVisible();
+  await expect(page.getByText("resume didn't upload")).not.toBeVisible();
 
   const payload = created.payload as {
     username: string;
@@ -142,6 +147,29 @@ test("required MLH consents gate submission", async ({ page }) => {
     page.getByText("Please read the MLH Code of Conduct"),
   ).toBeVisible();
   expect(created.payload).toBeUndefined();
+});
+
+test("failed resume upload surfaces notice on confirmation", async ({
+  page,
+}) => {
+  const created: { payload?: unknown } = {};
+  await stubBackend(page, created);
+  // Registered after stubBackend, so this route wins for /api/resumes/.
+  await page.route("**/api/resumes/", (r) =>
+    r.fulfill({ status: 500, json: { msg: "s3 unavailable" } }),
+  );
+
+  await page.goto("/register/signup");
+  await fillAccountStep(page);
+  await fillBasicInfoStep(page);
+  await fillAboutYou(page);
+  await checkAllConsents(page);
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { name: "Finish", exact: true }).click();
+
+  // Signup still completes — the account was created — but the user is told.
+  await expect(page.getByText("You're registered!")).toBeVisible();
+  await expect(page.getByText("resume didn't upload")).toBeVisible();
 });
 
 test("pre-registration route redirects to signup", async ({ page }) => {
