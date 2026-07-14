@@ -6,7 +6,7 @@ hophacks-env
 build
 config.json
 
-frontend/.env
+**/.env
 
 # frontend
 node_modules

@@ -1,0 +1,17 @@
+{
+  "production": {
+    "app_function": "wsgi.app",
+    "aws_region": "us-east-1",
+    "s3_bucket": "hophacks-zappa-deployments",
+    "project_name": "hophacks-api",
+    "runtime": "python3.9",
+    "slim_handler": false,
+    "exclude": [
+      "*.pyc",
+      "__pycache__",
+      ".venv",
+      "venv",
+      "tests"
+    ]
+  }
+}

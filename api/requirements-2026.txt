@@ -10,6 +10,7 @@ cffi==1.16.0
 charset-normalizer==3.3.2
 click==8.1.7
 discord-webhook==0.16.3
+dnspython==2.1.0
 docutils==0.15.2
 Flask==1.1.2
 Flask-Cors==4.0.0
@@ -33,7 +34,7 @@ pymongo==3.11.2
 pytest==5.4.2
 python-dateutil==2.9.0.post0
 pytz==2025.1
-requests==2.31.0
+requests==2.32.0
 s3transfer==0.11.2
 six==1.16.0
 slack-sdk==3.17.0
@@ -51,3 +52,5 @@ urllib3==1.26.18
 wcwidth==0.2.13
 Werkzeug==2.0.3
 zipp==3.18.1
+zappa==0.62.1
+setuptools==82.0.1

@@ -29,10 +29,6 @@ def get_req_config(app, config, key):
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
 
-
-    # Credentials must be allowed: the frontend sends the refresh-token cookie
-    # and Authorization header cross-origin (axios withCredentials=true).
-    CORS(app, supports_credentials=True)
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
@@ -45,6 +41,8 @@ def create_app(config_file='config/config.json'):
     get_req_config(app, config, 'BASE_URL')
     get_opt_config(app, config, 'SLACK_WEBHOOK')
     get_opt_config(app, config, 'DISCORD_WEBHOOK')
+
+    CORS(app, supports_credentials=True)
 
     get_opt_config(app, config, 'MAIL_SERVER')
     get_opt_config(app, config, 'MAIL_PORT')
