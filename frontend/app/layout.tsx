@@ -4,7 +4,7 @@ import { AuthProvider } from "./util/auth";
 
 export const metadata: Metadata = {
   title: "HopHacks 2026",
-  description: "Get notified when applications open for HopHacks 2026.",
+  description: "Register now for HopHacks 2026 — Johns Hopkins' hackathon.",
 };
 
 export default function RootLayout({

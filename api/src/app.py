@@ -86,8 +86,7 @@ def create_app(config_file='config/config.json'):
     from resumes import resume_api
     from vaccination import vaccination_api
     from interest import interest_api
-    # Registrations endpoints are disabled for the current event
-    # from registrations import registrations_api
+    from registrations import registrations_api
     from assign import assign_api
     from announcements import announcements_api
     from events import events_api
@@ -102,8 +101,7 @@ def create_app(config_file='config/config.json'):
     app.register_blueprint(resume_api, url_prefix='/api/resumes')
     app.register_blueprint(vaccination_api, url_prefix='/api/vaccination')
     app.register_blueprint(interest_api, url_prefix='/api/interest')
-    # Registrations blueprint intentionally not registered
-    # app.register_blueprint(registrations_api, url_prefix='/api/registrations')
+    app.register_blueprint(registrations_api, url_prefix='/api/registrations')
     app.register_blueprint(assign_api, url_prefix='/api/judgetool')
     app.register_blueprint(announcements_api, url_prefix='/api/announcements')
     app.register_blueprint(events_api, url_prefix='/api/events')

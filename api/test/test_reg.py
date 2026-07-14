@@ -1,110 +1,99 @@
-from utils import *
+import sys
+sys.path.append('../src')
 
-event='Spring_1970'
-event2='Fall_1923'
+from config.event import EVENT_NAME
+from utils import create_json, create_json2, login_json
+from flow import register_confirmed, login_token, admin_token, bearer
 
-apply_json = {
-    'event': event,
-    'details': {
-        'pizza_preference': 'pineapple'
-    }
-}
 
-apply_json2 = {
-    'event': event2,
-    'details': {
-        'pizza_preference': 'pineapple'
-    }
-}
+def _reg(user):
+    return next(r for r in user['registrations'] if r['event'] == EVENT_NAME)
 
-# Test apply process
-def test_apply(client, test_db, test_mail):
-    # test that successful registration gives good response
-    response = client.post('/api/accounts/create', json=create_json)
-    assert response.status_code == 200
 
-    response = client.post('/api/auth/login', json=login_json)
-    assert response.status_code == 200
-    token = response.json['access_token']
+def test_accept_marks_and_emails(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    register_confirmed(client, test_mail, create_json2)
+    token = admin_token(client, test_db)
 
+    ids = [str(u['_id']) for u in test_db.users.find({'is_admin': {'$ne': True}})]
     with test_mail.record_messages() as outbox:
-
-        response = client.post('/api/registrations/apply', json=apply_json, headers={'Authorization': 'Bearer ' + token})
-        assert response.status_code == 200
-        assert len(outbox) == 1
-
-        user = test_db.users.find_one({'username': login_json['username']})
-        assert user['registrations'][0]['event'] == event
-        assert user['registrations'][0]['details'] == apply_json['details']
-        assert user['registrations'][0]['accept'] == False
-        assert user['registrations'][0]['checkin'] == False
-
-    # test that you can't apply again to the same event
-    response = client.post('/api/registrations/apply', json=apply_json, headers={'Authorization': 'Bearer ' + token})
-    assert response.status_code == 400
-
-    # test that you can do a different one
-    response = client.post('/api/registrations/apply', json=apply_json2, headers={'Authorization': 'Bearer ' + token})
-    assert response.status_code == 200
-
-def test_accept(client, test_db, test_mail):
-    # Register three accounts but apply two accounts
-    response = client.post('/api/accounts/create', json=create_json)
-    response = client.post('/api/accounts/create', json=create_json2)
-    response = client.post('/api/accounts/create', json=create_json3)
-
-    response = client.post('/api/auth/login', json=login_json)
-    token = response.json['access_token']
-    response = client.post('/api/registrations/apply', json=apply_json, headers={'Authorization': 'Bearer ' + token})
-
-    response = client.post('/api/auth/login', json=login_json2)
-    token = response.json['access_token']
-    response = client.post('/api/registrations/apply', json=apply_json, headers={'Authorization': 'Bearer ' + token})
-
-    # Login as admin
-    add_admin_account(client, test_db)
-    response = client.post('/api/auth/login', json=admin_login_json)
-    token = response.json['access_token']
-
-    users = test_db.users.find({})
-    ids = [str(user['_id']) for user in users]
-
-    accept_json = {
-        'event': event,
-        'users': ids
-    }
-
-    # Accept both accounts
-    with test_mail.record_messages() as outbox:
-        response = client.post('/api/registrations/accept', json=accept_json, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/api/registrations/accept', json={'users': ids}, headers=bearer(token))
+        assert res.status_code == 200
         assert len(outbox) == 2
 
-    # check applied accounts are marked
-    users = test_db.users.find({})
-    for user in users:
-        if (user['username'] != login_json3['username'] and user['username'] != 'admin'):
-            assert user['registrations'][0]['accept']
+    for u in test_db.users.find({'is_admin': {'$ne': True}}):
+        reg = _reg(u)
+        assert reg['accept'] is True
+        assert reg['status'] == 'accepted'
 
-def test_checkin(client, test_db):
-    response = client.post('/api/accounts/create', json=create_json)
-    response = client.post('/api/auth/login', json=login_json)
-    token = response.json['access_token']
-    response = client.post('/api/registrations/apply', json=apply_json, headers={'Authorization': 'Bearer ' + token})
 
-    user = test_db.users.find_one({})
-    user_id = str(user['_id'])
+def test_reject_marks_and_emails(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    token = admin_token(client, test_db)
+    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
 
-    add_admin_account(client, test_db)
-    response = client.post('/api/auth/login', json=admin_login_json)
-    token = response.json['access_token']
+    with test_mail.record_messages() as outbox:
+        res = client.post('/api/registrations/reject', json={'user': uid}, headers=bearer(token))
+        assert res.status_code == 200
+        assert len(outbox) == 1
 
-    checkin_json = {
-        'event': event,
-        'user': user_id
-    }
+    assert _reg(test_db.users.find_one({'username': 'a'}))['status'] == 'rejected'
 
-    response = client.post('/api/registrations/check_in', json=checkin_json, headers={'Authorization': 'Bearer ' + token})
-    assert response.status_code == 200
 
-    user = test_db.users.find_one({})
-    assert user['registrations'][0]['checkin']
+def test_waitlist_marks_and_emails(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    token = admin_token(client, test_db)
+    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+
+    with test_mail.record_messages() as outbox:
+        res = client.post('/api/registrations/waitlist', json={'users': [uid]}, headers=bearer(token))
+        assert res.status_code == 200
+        assert len(outbox) == 1
+        assert create_json['profile']['first_name'] in outbox[0].html
+
+    reg = _reg(test_db.users.find_one({'username': 'a'}))
+    assert reg['status'] == 'waitlisted'
+    assert reg['accept'] is False
+
+
+def test_waitlist_requires_admin(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    token = login_token(client, login_json)  # non-admin
+    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    res = client.post('/api/registrations/waitlist', json={'users': [uid]}, headers=bearer(token))
+    assert res.status_code == 401
+
+
+def test_waitlisted_then_accepted_enables_rsvp(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+
+    client.post('/api/registrations/waitlist', json={'users': [uid]}, headers=bearer(admin))
+    client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
+
+    user_token = login_token(client, login_json)
+    res = client.post('/api/registrations/rsvp/rsvp', json={'event': EVENT_NAME}, headers=bearer(user_token))
+    assert res.status_code == 200
+    assert _reg(test_db.users.find_one({'username': 'a'}))['status'] == 'rsvped'
+
+
+def test_checkin_marks(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
+
+    res = client.post('/api/registrations/check_in', json={'user': uid}, headers=bearer(admin))
+    assert res.status_code == 200
+    reg = _reg(test_db.users.find_one({'username': 'a'}))
+    assert reg['checkin'] is True
+    assert reg['status'] == 'checked_in'
+
+
+def test_checkin_requires_admin(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    token = login_token(client, login_json)
+    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    res = client.post('/api/registrations/check_in', json={'user': uid}, headers=bearer(token))
+    assert res.status_code == 401

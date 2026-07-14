@@ -9,6 +9,8 @@ from bson import ObjectId
 
 import datetime
 
+from config.event import EVENT_NAME
+
 registrations_api = Blueprint('registrations', __name__)
 
 # app = Flask(__name__)
@@ -76,6 +78,18 @@ def send_rejections(user):
         msg.body = "Thanks for applying, unfortunately we weren't able to accept you into HopHacks."
         msg.html = render_template('email_rejection.html', first_name=user['profile']['first_name'])
         conn.send(msg)
+
+def send_waitlist(users):
+    with mail.connect() as conn:
+        for user in users:
+            email = user["username"]
+            subject = "Waitlist Update - HopHacks.com"
+            msg = Message(recipients=[email],
+                          sender="team@hophacks.com",
+                          subject=subject)
+            msg.body = "You've been placed on the HopHacks waitlist. We'll reach out if a spot opens up."
+            msg.html = render_template('email_waitlist.html', first_name=user['profile']['first_name'])
+            conn.send(msg)
 
 def send_apply_confirm(email, name):
     msg = Message("Received Application - HopHacks.com",
@@ -189,10 +203,10 @@ def accept():
     :status 422: Not logged in
 
     """
-    if ('event' not in request.json and 'users' not in request.json):
+    if ('users' not in request.json):
         return Response('Invalid request', status=400)
 
-    event = request.json["event"]
+    event = request.json.get("event", EVENT_NAME)
     ids = [ObjectId(id) for id in request.json["users"]]
 
     result = db.users.update_many(
@@ -244,7 +258,7 @@ def check_in():
     :status 422: Not logged in
 
     """
-    event = request.json["event"]
+    event = request.json.get("event", EVENT_NAME)
     user = request.json["user"]
 
     result = db.users.update_one(
@@ -286,7 +300,7 @@ def reject():
     :status 422: Not logged in
 
     """
-    event = request.json["event"]
+    event = request.json.get("event", EVENT_NAME)
     user_id = request.json["user"]
 
     result = db.users.update_one(
@@ -305,6 +319,55 @@ def reject():
     user = db.users.find_one({'_id': ObjectId(user_id)})
     if user:
         send_rejections(user)
+
+    return jsonify({"num_changed": result.modified_count}), 200
+
+
+@registrations_api.route('/waitlist', methods = ['POST'])
+@jwt_required
+@check_admin
+def waitlist():
+    """As an admin, waitlist a list of users for an event and email them.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson users: List of user ids to move to the waitlist
+    :reqjson event: Event name (defaults to the current event)
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+
+    """
+    if ('users' not in request.json):
+        return Response('Invalid request', status=400)
+
+    event = request.json.get("event", EVENT_NAME)
+    ids = [ObjectId(id) for id in request.json["users"]]
+
+    result = db.users.update_many(
+        {
+            '_id': {'$in': ids},
+            'registrations.event': event
+        },
+        {
+            '$set': {
+                "registrations.$.status": "waitlisted",
+                "registrations.$.waitlist_at": datetime.datetime.utcnow(),
+                "registrations.$.accept": False
+            }
+        }
+    )
+
+    users = db.users.find(
+        {
+            '_id': {'$in': ids},
+            'registrations.event': event
+        }
+    )
+
+    send_waitlist(users)
 
     return jsonify({"num_changed": result.modified_count}), 200
 
@@ -388,10 +451,18 @@ def rsvp_rsvp():
     :status 500: Another unknown error
     """
 
-    return jsonify({"msg": "no more rsvps"} , 500)
-
     event = request.json["event"] # name of event
     id = get_jwt_identity()
+
+    # Validate up front: the $set below always rewrites rsvp_time, so
+    # modified_count cannot distinguish a fresh RSVP from a repeat one, and we
+    # must not email the user unless the RSVP actually succeeds.
+    current = db.users.find_one({'_id': ObjectId(id)})
+    existing = next((r for r in current.get('registrations', []) if r.get('event') == event), None)
+    if (existing is None or not existing.get('accept')):
+        return jsonify({"msg": "no such event exists"}), 400
+    if (existing.get('rsvp')):
+        return jsonify({"msg": "user already RSVPed"}), 409
     
     # only allow RSVPs to accepted events
     # update RSVP status to true in database
