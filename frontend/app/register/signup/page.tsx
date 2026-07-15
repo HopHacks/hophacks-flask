@@ -857,7 +857,7 @@ const IMAGE = 3;
 const CONFIRMATION = 4;
 
 export default function SignUpPage() {
-  const { login } = useAuth();
+  const { login, isLoggedIn } = useAuth();
 
   const [activePage, setActivePage] = useState(ACCOUNT);
   const [submitting, setSubmitting] = useState(false);
@@ -1100,6 +1100,25 @@ export default function SignUpPage() {
   }
 
   const isConfirmation = activePage === CONFIRMATION;
+
+  // A logged-in user already has an account — hide the wizard so accounts
+  // can't be double-registered. The confirmation step stays reachable
+  // because signup logs the user in right before showing it.
+  if (isLoggedIn && !isConfirmation) {
+    return (
+      <div className="flex min-h-dvh w-full flex-col items-center px-4 py-10 sm:py-14">
+        <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
+          You&apos;re already registered
+        </h1>
+        <p className="mb-8 mt-1 text-center text-white/90">
+          Fall 2026 · Johns Hopkins University
+        </p>
+        <Link href="/profile" className={BTN_PRIMARY}>
+          My Profile
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-dvh w-full flex-col items-center px-4 py-10 sm:py-14">

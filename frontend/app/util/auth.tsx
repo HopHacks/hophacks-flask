@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import axios from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 
 type AuthContextValue = {
   isLoggedIn: boolean | null; // null = checking
@@ -104,11 +104,53 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [clearTimer]);
 
+  // Initial session check — must run exactly once on mount. Depending on
+  // `refreshToken` here re-fires the effect on every isLoggedIn change
+  // (login() included), and if that immediate refresh fails the user is
+  // logged straight back out — the prod login loop.
   useEffect(() => {
     configureAxios();
     refreshToken();
     return () => clearTimer();
-  }, [refreshToken, clearTimer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Self-heal a stale access token: if any API call comes back 401 (e.g. the
+  // in-memory token expired while the tab was asleep), refresh the session
+  // once and retry the original request. Auth endpoints are excluded so a
+  // failed login/refresh can't loop.
+  useEffect(() => {
+    const id = axios.interceptors.response.use(
+      (res) => res,
+      async (error: AxiosError) => {
+        const cfg = error.config as
+          | (InternalAxiosRequestConfig & { _authRetried?: boolean })
+          | undefined;
+        const url = String(cfg?.url ?? "");
+        if (
+          !cfg ||
+          error.response?.status !== 401 ||
+          cfg._authRetried ||
+          url.includes("/api/auth/")
+        ) {
+          return Promise.reject(error);
+        }
+        cfg._authRetried = true;
+        try {
+          const res = await axios.get("/api/auth/session/refresh");
+          const tok = res.data?.access_token as string;
+          setAuthHeader(tok);
+          setToken(tok);
+          setIsLoggedIn(true);
+          cfg.headers.Authorization = `Bearer ${tok}`;
+          return axios(cfg);
+        } catch {
+          return Promise.reject(error);
+        }
+      },
+    );
+    return () => axios.interceptors.response.eject(id);
+  }, []);
 
   const value = useMemo(
     () => ({ isLoggedIn, token, login, logout, refreshToken }),
