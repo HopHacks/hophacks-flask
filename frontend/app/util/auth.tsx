@@ -104,11 +104,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [clearTimer]);
 
+  // Initial session check — must run exactly once on mount. Depending on
+  // `refreshToken` here re-fires the effect on every isLoggedIn change
+  // (login() included), and if that immediate refresh fails the user is
+  // logged straight back out — the prod login loop.
   useEffect(() => {
     configureAxios();
     refreshToken();
     return () => clearTimer();
-  }, [refreshToken, clearTimer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Self-heal a stale access token: if any API call comes back 401 (e.g. the
   // in-memory token expired while the tab was asleep), refresh the session
