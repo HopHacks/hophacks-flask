@@ -30,7 +30,7 @@ function ProfileContent() {
         <div className={CARD_CLS}>
           <ProfileForm />
 
-          <hr className="my-8 border-white/20" />
+          <hr className="my-8 border-rock-light/30" />
 
           <ResumeSection />
         </div>

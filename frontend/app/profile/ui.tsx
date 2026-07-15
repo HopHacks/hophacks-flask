@@ -10,8 +10,12 @@ export const BTN_PRIMARY =
   "rounded-2xl bg-recap-gold px-6 py-3 text-lg font-bold text-white shadow-[0_0_30px_rgba(255,181,31,0.3)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(255,181,31,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
 export const BTN_SECONDARY =
   "btn-sketch rounded-2xl px-6 py-3 text-lg font-bold cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
+// Card styled like the hero's floating islands: translucent warm stone
+// (light at the top, shadowed toward the bottom) with a mossy green top
+// edge, so it reads as part of the storybook scene rather than a flat
+// panel. Kept translucent + blurred so the sky still glows through.
 export const CARD_CLS =
-  "w-full rounded-2xl border border-white/25 bg-white/10 p-6 backdrop-blur-sm sm:p-8 motion-safe:animate-rise";
+  "w-full rounded-2xl border border-rock-light/45 border-t-4 border-t-green-light/80 bg-gradient-to-b from-rock/55 to-rock-dark/70 p-6 backdrop-blur-sm sm:p-8 motion-safe:animate-rise";
 
 export function Field({
   label,
@@ -42,7 +46,7 @@ export function Field({
 
 export function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="border-b border-white/20 pb-2 text-lg font-bold text-white">
+    <h3 className="border-b border-rock-light/30 pb-2 text-lg font-bold text-white">
       {children}
     </h3>
   );
