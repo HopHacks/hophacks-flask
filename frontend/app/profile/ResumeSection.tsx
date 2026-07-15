@@ -3,12 +3,9 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
-const ALLOWED_EXTENSIONS = ["pdf", "doc", "docx"];
+import { BTN_PRIMARY, BTN_SECONDARY, SectionTitle, ErrorNote } from "./ui";
 
-const BTN_PRIMARY =
-  "px-5 py-2.5 text-lg font-bold rounded-2xl bg-[#ffb51f] text-white shadow-[0_0_30px_rgba(255,181,31,0.3)] hover:shadow-[0_0_40px_rgba(255,181,31,0.5)] transition-shadow duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
-const BTN_SECONDARY =
-  "btn-sketch px-5 py-2.5 text-lg font-bold rounded-2xl cursor-pointer disabled:opacity-50";
+const ALLOWED_EXTENSIONS = ["pdf", "doc", "docx"];
 
 /**
  * resumes.py sometimes returns `jsonify(body, code)` — which serializes as a
@@ -104,15 +101,10 @@ export function ResumeSection() {
   }
 
   return (
-    <section className="flex flex-col gap-4">
-      <h3
-        className="text-2xl font-bold text-white text-center"
-        style={{ fontVariant: "small-caps" }}
-      >
-        Resume
-      </h3>
+    <section className="flex flex-col gap-5">
+      <SectionTitle>Resume</SectionTitle>
 
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-white">
+      <div className="flex flex-col items-center justify-center gap-3 text-white sm:flex-row">
         {savedFilename ? (
           <>
             <span>
@@ -131,7 +123,7 @@ export function ResumeSection() {
         )}
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
         <label className="cursor-pointer">
           <input
             type="file"
@@ -142,7 +134,7 @@ export function ResumeSection() {
               setMessage("");
             }}
           />
-          <span className="inline-block px-4 py-2 bg-white text-[#061A40] font-semibold rounded cursor-pointer hover:bg-gray-100 transition-colors">
+          <span className="btn-sketch inline-block cursor-pointer rounded-2xl px-6 py-3 text-lg font-bold">
             {savedFilename ? "Replace Resume" : "Choose Resume"}
           </span>
         </label>
@@ -152,20 +144,18 @@ export function ResumeSection() {
           className={BTN_PRIMARY}
           onClick={handleUpload}
           disabled={busy || !file}
-          style={{ fontVariant: "small-caps" }}
         >
-          {busy ? "Uploading..." : "Upload"}
+          {busy ? "Uploading…" : "Upload"}
         </button>
       </div>
 
+      {isError && <ErrorNote msg={message} />}
       <div className="h-5 text-center">
-        {message && (
-          <p className={isError ? "text-red-400" : "text-green-400"}>
-            {message}
-          </p>
+        {message && !isError && (
+          <p className="text-sm text-green-300">{message}</p>
         )}
       </div>
-      <p className="text-center text-sm text-gray-300">
+      <p className="-mt-4 text-center text-sm text-white/75">
         Acceptable formats: .pdf, .doc, .docx
       </p>
     </section>

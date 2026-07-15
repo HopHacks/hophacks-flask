@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { ProfileForm } from "../ProfileForm";
 import { ResumeSection } from "../ResumeSection";
+import { CARD_CLS } from "../ui";
 
 // Legacy-shaped (pre-2026) sample: old key names (`grad`, `ethnicity` —
 // renamed to `level_of_study`, `race_ethnicity`), option values not in the
@@ -97,28 +98,25 @@ function Preview() {
   if (!ready) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh py-10">
-      <div
-        className="min-w-[300px] max-w-[900px] w-[90%] flex flex-col rounded-2xl p-10 m-5"
-        style={{ backgroundColor: "rgba(0, 29, 76, 0.9)" }}
-      >
-        <div className="flex items-start justify-between mb-6">
-          <h2
-            className="text-5xl font-bold text-white"
-            style={{ fontVariant: "small-caps" }}
-          >
-            Your Profile
-          </h2>
-          <span className="text-sm font-semibold text-[#ffb51f] border border-[#ffb51f] rounded-full px-3 py-1">
-            preview — mock data
-          </span>
+    <div className="flex min-h-dvh w-full flex-col items-center px-4 py-10 sm:py-14">
+      <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
+        Your Profile
+      </h1>
+      <p className="mt-1 text-center text-white/90">
+        Fall 2026 · Johns Hopkins University
+      </p>
+      <span className="mb-8 mt-3 rounded-full border border-recap-gold px-3 py-1 text-sm font-semibold text-recap-gold">
+        preview — mock data
+      </span>
+
+      <div className="w-full max-w-2xl">
+        <div className={CARD_CLS}>
+          <ProfileForm />
+
+          <hr className="my-8 border-white/20" />
+
+          <ResumeSection />
         </div>
-
-        <ProfileForm />
-
-        <hr className="my-8 border-white/20" />
-
-        <ResumeSection />
       </div>
     </div>
   );

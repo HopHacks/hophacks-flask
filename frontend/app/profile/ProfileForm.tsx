@@ -3,12 +3,7 @@
 import { useId, useMemo } from "react";
 import { ProfileFieldDef, ProfileFieldKey, visibleFields } from "./schema";
 import { useProfile } from "./useProfile";
-
-const INPUT_CLS = "input-sketch rounded px-3 py-2 w-full";
-const BTN_PRIMARY =
-  "px-5 py-3 text-xl font-bold rounded-2xl bg-[#ffb51f] text-white shadow-[0_0_30px_rgba(255,181,31,0.3)] hover:shadow-[0_0_40px_rgba(255,181,31,0.5)] transition-shadow duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
-const BTN_SECONDARY =
-  "btn-sketch px-5 py-3 text-xl font-bold rounded-2xl cursor-pointer";
+import { INPUT_CLS, BTN_PRIMARY, BTN_SECONDARY, Field, ErrorNote } from "./ui";
 
 type FieldProps = {
   def: ProfileFieldDef;
@@ -51,6 +46,7 @@ function AutocompleteInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={INPUT_CLS}
+        placeholder={`Start typing your ${def.label.toLowerCase()}…`}
         autoComplete="off"
       />
       <datalist id={listId}>
@@ -62,47 +58,42 @@ function AutocompleteInput({
   );
 }
 
-function Field({ def, value, error, onChange }: FieldProps) {
+function ProfileField({ def, value, error, onChange }: FieldProps) {
   const isKnownOption = def.options?.includes(value) ?? false;
 
   return (
-    <div className={def.fullWidth ? "md:col-span-2" : undefined}>
-      <label className="block mb-1 text-sm font-semibold text-gray-200">
-        {def.label}
-        {!def.requiredMsg && (
-          <span className="ml-1 font-normal text-gray-400">(optional)</span>
-        )}
-      </label>
-      {def.type === "select" ? (
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={INPUT_CLS}
-        >
-          {/* Optional selects can be cleared back to empty. */}
-          <option value="" disabled={!!def.requiredMsg}>
-            Select...
-          </option>
-          {/* Stored values from older event years may not match the current
-              option list (e.g. "male" vs "Male") — keep them visible. */}
-          {value && !isKnownOption && <option value={value}>{value}</option>}
-          {def.options?.map((o) => (
-            <option key={o} value={o}>
-              {o}
+    <div className={def.fullWidth ? "sm:col-span-2" : undefined}>
+      <Field label={def.label} optional={!def.requiredMsg} error={error}>
+        {def.type === "select" ? (
+          <select
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className={INPUT_CLS}
+          >
+            {/* Optional selects can be cleared back to empty. */}
+            <option value="" disabled={!!def.requiredMsg}>
+              Select…
             </option>
-          ))}
-        </select>
-      ) : def.type === "autocomplete" ? (
-        <AutocompleteInput def={def} value={value} onChange={onChange} />
-      ) : (
-        <input
-          type={def.type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={INPUT_CLS}
-        />
-      )}
-      {error && <p className="mt-1 text-sm text-red-400">{error}</p>}
+            {/* Stored values from older event years may not match the current
+                option list (e.g. "male" vs "Man") — keep them visible. */}
+            {value && !isKnownOption && <option value={value}>{value}</option>}
+            {def.options?.map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
+          </select>
+        ) : def.type === "autocomplete" ? (
+          <AutocompleteInput def={def} value={value} onChange={onChange} />
+        ) : (
+          <input
+            type={def.type}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className={INPUT_CLS}
+          />
+        )}
+      </Field>
     </div>
   );
 }
@@ -131,7 +122,7 @@ export function ProfileForm() {
   }
 
   if (loading || !values) {
-    return <p className="text-center text-white">Loading profile...</p>;
+    return <p className="text-center text-white">Loading profile…</p>;
   }
 
   const hasErrors = Object.keys(errors).length > 0;
@@ -142,11 +133,11 @@ export function ProfileForm() {
         e.preventDefault();
         save();
       }}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-5"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         {visibleFields(values).map((def) => (
-          <Field
+          <ProfileField
             key={def.key}
             def={def}
             value={values[def.key as ProfileFieldKey]}
@@ -156,26 +147,24 @@ export function ProfileForm() {
         ))}
       </div>
 
-      <div className="flex flex-col items-center gap-2 mt-2">
+      {hasErrors && <ErrorNote msg="Please fix the highlighted fields." />}
+      {saveState === "error" && (
+        <ErrorNote msg="Could not save — please try again." />
+      )}
+
+      <div className="mt-1 flex items-center justify-center gap-4">
         <button
           type="submit"
           className={BTN_PRIMARY}
           disabled={saveState === "saving"}
-          style={{ fontVariant: "small-caps" }}
         >
-          {saveState === "saving" ? "Saving..." : "Save Profile"}
+          {saveState === "saving" ? "Saving…" : "Save Profile"}
         </button>
-        <div className="h-5 text-center">
-          {saveState === "saved" && (
-            <p className="text-green-400">Profile saved!</p>
-          )}
-          {saveState === "error" && (
-            <p className="text-red-400">Could not save — please try again.</p>
-          )}
-          {hasErrors && (
-            <p className="text-red-400">Please fix the highlighted fields.</p>
-          )}
-        </div>
+      </div>
+      <div className="h-5 text-center">
+        {saveState === "saved" && (
+          <p className="text-sm text-green-300">Profile saved!</p>
+        )}
       </div>
     </form>
   );
