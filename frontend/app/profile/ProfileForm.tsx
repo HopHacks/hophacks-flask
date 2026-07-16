@@ -60,6 +60,11 @@ function AutocompleteInput({
 
 function ProfileField({ def, value, error, onChange }: FieldProps) {
   const isKnownOption = def.options?.includes(value) ?? false;
+  const wc = def.maxWords
+    ? value.trim()
+      ? value.trim().split(/\s+/).length
+      : 0
+    : 0;
 
   return (
     <div className={def.fullWidth ? "sm:col-span-2" : undefined}>
@@ -85,6 +90,13 @@ function ProfileField({ def, value, error, onChange }: FieldProps) {
           </select>
         ) : def.type === "autocomplete" ? (
           <AutocompleteInput def={def} value={value} onChange={onChange} />
+        ) : def.type === "textarea" ? (
+          <textarea
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className={INPUT_CLS + " min-h-[140px] resize-y"}
+            rows={6}
+          />
         ) : (
           <input
             type={def.type}
@@ -94,6 +106,13 @@ function ProfileField({ def, value, error, onChange }: FieldProps) {
           />
         )}
       </Field>
+      {def.maxWords && (
+        <span
+          className={`mt-0.5 block text-xs ${wc > def.maxWords ? "text-red-300" : "text-white/60"}`}
+        >
+          {wc} / {def.maxWords} words
+        </span>
+      )}
     </div>
   );
 }
@@ -108,6 +127,7 @@ export function ProfileForm() {
     errors,
     save,
     saveState,
+    isDirty,
   } = useProfile();
 
   if (loadError) {
@@ -156,9 +176,9 @@ export function ProfileForm() {
         <button
           type="submit"
           className={BTN_PRIMARY}
-          disabled={saveState === "saving"}
+          disabled={!isDirty || saveState === "saving"}
         >
-          {saveState === "saving" ? "Saving…" : "Save Profile"}
+          {saveState === "saving" ? "Saving…" : "Save Changes"}
         </button>
       </div>
       <div className="h-5 text-center">

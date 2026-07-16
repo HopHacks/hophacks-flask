@@ -56,7 +56,7 @@ function statusView(emailConfirmed: boolean, reg: Registration | null): View {
     return {
       badge: "Pending",
       tone: "slate",
-      body: "We're finishing up your registration.",
+      body: "We're reviewing your application.",
     };
   }
   switch (reg.status) {

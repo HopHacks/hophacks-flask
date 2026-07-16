@@ -45,6 +45,11 @@ jobs:
               config['MAIL_PORT'] = int(os.environ['MAIL_PORT'])
               config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
               config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
+              config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'team@hophacks.com')
+              use_tls = os.environ.get('MAIL_USE_TLS', 'true').lower()
+              config['MAIL_USE_TLS'] = use_tls not in ('false', '0', '')
+              use_ssl = os.environ.get('MAIL_USE_SSL', 'false').lower()
+              config['MAIL_USE_SSL'] = use_ssl in ('true', '1')
           if os.environ.get('CORS_ORIGINS'):
               config['CORS_ORIGINS'] = os.environ['CORS_ORIGINS']
           if os.environ.get('SLACK_WEBHOOK'):
@@ -63,6 +68,9 @@ jobs:
           MAIL_PORT: ${{ secrets.MAIL_PORT }}
           MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
           MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_DEFAULT_SENDER: ${{ secrets.MAIL_DEFAULT_SENDER }}
+          MAIL_USE_TLS: ${{ secrets.MAIL_USE_TLS }}
+          MAIL_USE_SSL: ${{ secrets.MAIL_USE_SSL }}
           CORS_ORIGINS: ${{ secrets.CORS_ORIGINS }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

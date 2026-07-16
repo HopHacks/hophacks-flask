@@ -93,7 +93,8 @@ export type ProfileFieldType =
   | "tel"
   | "url"
   | "select"
-  | "autocomplete";
+  | "autocomplete"
+  | "textarea";
 
 export interface ProfileFieldDef {
   /** Key in the Mongo profile object (and in form state). */
@@ -108,6 +109,13 @@ export interface ProfileFieldDef {
   fullWidth?: boolean;
   /** Render (and validate) only when this returns true. */
   showIf?: (values: Record<string, string>) => boolean;
+  /** Show word count and enforce a maximum (for textarea fields). */
+  maxWords?: number;
+}
+
+export const ESSAY_WORD_LIMIT = 300;
+function wordCount(text: string): number {
+  return text.trim() ? text.trim().split(/\s+/).length : 0;
 }
 
 export const PROFILE_FIELDS = [
@@ -230,6 +238,32 @@ export const PROFILE_FIELDS = [
     validate: validateLinkedIn,
     fullWidth: true,
   },
+  {
+    key: "essay_project",
+    label:
+      "Share a project, technical or not, that you're genuinely proud of. What was the hardest decision you made, and why did you make it that way?",
+    type: "textarea",
+    requiredMsg: "* Please answer the first application question.",
+    fullWidth: true,
+    maxWords: ESSAY_WORD_LIMIT,
+    validate: (v) =>
+      wordCount(v) > ESSAY_WORD_LIMIT
+        ? `* Response must be ${ESSAY_WORD_LIMIT} words or fewer (currently ${wordCount(v)}).`
+        : null,
+  },
+  {
+    key: "essay_team",
+    label:
+      "Tell us about a time you worked in a team. What role did you play, and what were your strengths and weaknesses?",
+    type: "textarea",
+    requiredMsg: "* Please answer the second application question.",
+    fullWidth: true,
+    maxWords: ESSAY_WORD_LIMIT,
+    validate: (v) =>
+      wordCount(v) > ESSAY_WORD_LIMIT
+        ? `* Response must be ${ESSAY_WORD_LIMIT} words or fewer (currently ${wordCount(v)}).`
+        : null,
+  },
   // Optional demographics — signup collects these under "answer only what
   // you're comfortable with"; empty values are allowed here too.
   {
@@ -249,12 +283,21 @@ export const PROFILE_FIELDS = [
     label: "Dietary Restrictions",
     type: "select",
     options: DIETARY,
+    requiredMsg: "* Please select your dietary restrictions.",
+  },
+  {
+    key: "dietary_restrictions_other",
+    label: "Please describe your dietary restriction",
+    type: "text",
+    requiredMsg: "* Please describe your dietary restriction.",
+    showIf: (values) => values.dietary_restrictions === "Other",
   },
   {
     key: "tshirt_size",
     label: "T-Shirt Size",
     type: "select",
     options: TSHIRT_SIZES,
+    requiredMsg: "* Please select your t-shirt size.",
   },
 ] as const satisfies readonly ProfileFieldDef[];
 

@@ -48,6 +48,9 @@ def create_app(config_file='config/config.json'):
     get_opt_config(app, config, 'MAIL_PORT')
     get_opt_config(app, config, 'MAIL_USERNAME')
     get_opt_config(app, config, 'MAIL_PASSWORD')
+    get_opt_config(app, config, 'MAIL_DEFAULT_SENDER')
+    get_opt_config(app, config, 'MAIL_USE_TLS')
+    get_opt_config(app, config, 'MAIL_USE_SSL')
 
     app.config['SLACK_SUPPRESS_SEND'] = False
     app.config['DISCORD_SUPPRESS_SEND'] = False 

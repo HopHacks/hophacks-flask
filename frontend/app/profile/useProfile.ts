@@ -21,6 +21,7 @@ export type SaveState = "idle" | "saving" | "saved" | "error";
 export function useProfile() {
   const [rawProfile, setRawProfile] = useState<Record<string, unknown>>({});
   const [values, setValues] = useState<ProfileFormValues | null>(null);
+  const [savedValues, setSavedValues] = useState<ProfileFormValues | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [errors, setErrors] = useState<ProfileFormErrors>({});
   const [saveState, setSaveState] = useState<SaveState>("idle");
@@ -31,8 +32,10 @@ export function useProfile() {
     try {
       const res = await axios.get("/api/accounts/profile/get");
       const raw = (res.data?.profile ?? {}) as Record<string, unknown>;
+      const formValues = toFormValues(raw);
       setRawProfile(raw);
-      setValues(toFormValues(raw));
+      setValues(formValues);
+      setSavedValues(formValues);
       setLoadError(false);
     } catch {
       setLoadError(true);
@@ -66,6 +69,7 @@ export function useProfile() {
       const profile = buildApiProfile(rawProfile, values);
       await axios.post("/api/accounts/profile/update", { profile });
       setRawProfile(profile);
+      setSavedValues(values);
       setSaveState("saved");
       return true;
     } catch {
@@ -73,6 +77,11 @@ export function useProfile() {
       return false;
     }
   }, [values, rawProfile]);
+
+  const isDirty =
+    values !== null &&
+    savedValues !== null &&
+    JSON.stringify(values) !== JSON.stringify(savedValues);
 
   return {
     loading: values === null && !loadError,
@@ -83,5 +92,6 @@ export function useProfile() {
     errors,
     save,
     saveState,
+    isDirty,
   };
 }

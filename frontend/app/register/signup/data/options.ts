@@ -104,7 +104,6 @@ export const DIETARY = [
   "Halal",
   "Allergies",
   "Other",
-  "Prefer not to answer",
 ];
 
 export const UNDERREPRESENTED = ["Yes", "No", "Unsure"];

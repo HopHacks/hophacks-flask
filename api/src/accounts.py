@@ -30,7 +30,8 @@ accounts_api = Blueprint('accounts', __name__)
 # fields (gender, pronouns, race_ethnicity, dietary_restrictions, major, shipping,
 # etc.) are stored verbatim when present but are not required here.
 profile_keys = ["first_name", "last_name", "age", "phone_number",
-                "school", "level_of_study", "country"]
+                "school", "level_of_study", "country",
+                "dietary_restrictions", "tshirt_size"]
 
 # MLH consent checkboxes that MUST be affirmatively accepted to register.
 mlh_required_consents = ["mlh_code_of_conduct", "mlh_data_sharing"]

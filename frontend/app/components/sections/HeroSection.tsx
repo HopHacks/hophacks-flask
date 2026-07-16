@@ -100,7 +100,7 @@ export default function HeroSection() {
             {isLoggedIn ? (
               <>
                 <p className="text-base font-normal text-white/90 sm:text-lg">
-                  You&apos;re registered — see you there!
+                  Your application is in! You&apos;ll hear back from us shortly.
                 </p>
                 <Link href="/profile" className={CTA_CLS}>
                   My Profile
@@ -109,10 +109,10 @@ export default function HeroSection() {
             ) : isLoggedIn === false ? (
               <>
                 <p className="text-base font-normal text-white/90 sm:text-lg">
-                  Applications are open — register now.
+                  Applications are open — apply now.
                 </p>
                 <Link href="/register/signup" className={CTA_CLS}>
-                  Register Now
+                  Apply Now
                 </Link>
               </>
             ) : null}

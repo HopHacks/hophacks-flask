@@ -74,7 +74,12 @@ function ErrorNote({ msg }: { msg: string }) {
   );
 }
 
-const STEP_LABELS = ["Account", "Basic Info", "Additional Info", "Avatar"];
+const ESSAY_WORD_LIMIT = 300;
+function wordCount(text: string): number {
+  return text.trim() ? text.trim().split(/\s+/).length : 0;
+}
+
+const STEP_LABELS = ["Account", "Basic Info", "Application", "Avatar"];
 
 function StepProgress({ current }: { current: number }) {
   return (
@@ -401,11 +406,18 @@ type StepChecksProps = {
   setFirst_hophacks: (v: string) => void;
   setLearn_about_us: (v: string) => void;
   setPronouns: (v: string) => void;
+  dietary: string;
   setDietary: (v: string) => void;
+  dietaryOther: string;
+  setDietaryOther: (v: string) => void;
   setTshirt: (v: string) => void;
   setUnderrepresented: (v: string) => void;
   linkedIn: string;
   setLinkedIn: (v: string) => void;
+  essayProject: string;
+  setEssayProject: (v: string) => void;
+  essayTeam: string;
+  setEssayTeam: (v: string) => void;
   resumeFile: File | null;
   setResumeFile: (f: File | null) => void;
   resumeChecked: boolean;
@@ -448,11 +460,18 @@ function StepChecks({
   setFirst_hophacks,
   setLearn_about_us,
   setPronouns,
+  dietary,
   setDietary,
+  dietaryOther,
+  setDietaryOther,
   setTshirt,
   setUnderrepresented,
   linkedIn,
   setLinkedIn,
+  essayProject,
+  setEssayProject,
+  essayTeam,
+  setEssayTeam,
   resumeFile,
   setResumeFile,
   resumeChecked,
@@ -492,9 +511,77 @@ function StepChecks({
       </div>
 
       <div className="flex flex-col gap-5">
+        <SectionTitle>Application questions</SectionTitle>
+        <p className="-mt-2 text-sm text-white/75">
+          Both questions are required. Responses are capped at {ESSAY_WORD_LIMIT}{" "}
+          words each.
+        </p>
+        <Field label="Share a project, technical or not, that you're genuinely proud of. What was the hardest decision you made, and why did you make it that way?">
+          <>
+            <textarea
+              value={essayProject}
+              onChange={(e) => setEssayProject(e.target.value)}
+              className={INPUT_CLS + " min-h-[140px] resize-y"}
+              placeholder="Your answer…"
+              rows={6}
+            />
+            <span
+              className={`text-xs ${wordCount(essayProject) > ESSAY_WORD_LIMIT ? "text-red-300" : "text-white/60"}`}
+            >
+              {wordCount(essayProject)} / {ESSAY_WORD_LIMIT} words
+            </span>
+          </>
+        </Field>
+        <Field label="Tell us about a time you worked in a team. What role did you play, and what were your strengths and weaknesses?">
+          <>
+            <textarea
+              value={essayTeam}
+              onChange={(e) => setEssayTeam(e.target.value)}
+              className={INPUT_CLS + " min-h-[140px] resize-y"}
+              placeholder="Your answer…"
+              rows={6}
+            />
+            <span
+              className={`text-xs ${wordCount(essayTeam) > ESSAY_WORD_LIMIT ? "text-red-300" : "text-white/60"}`}
+            >
+              {wordCount(essayTeam)} / {ESSAY_WORD_LIMIT} words
+            </span>
+          </>
+        </Field>
+      </div>
+
+      <div className="flex flex-col gap-5">
+        <SectionTitle>Logistics</SectionTitle>
+        <Field label="Dietary restrictions">
+          <Select
+            value={dietary}
+            onChange={(v) => {
+              setDietary(v);
+              if (v !== "Other") setDietaryOther("");
+            }}
+            options={DIETARY}
+          />
+        </Field>
+        {dietary === "Other" && (
+          <Field label="Please describe your dietary restriction">
+            <input
+              type="text"
+              placeholder="E.g. gluten-free, nut allergy…"
+              value={dietaryOther}
+              onChange={(e) => setDietaryOther(e.target.value)}
+              className={INPUT_CLS}
+            />
+          </Field>
+        )}
+        <Field label="T-shirt size">
+          <Select onChange={setTshirt} options={TSHIRT_SIZES} />
+        </Field>
+      </div>
+
+      <div className="flex flex-col gap-5">
         <SectionTitle>A little more about you</SectionTitle>
         <p className="-mt-2 text-sm text-white/75">
-          These are optional — answer only what you're comfortable with.
+          These are optional — answer only what you&apos;re comfortable with.
         </p>
         <Field label="Pronouns" optional>
           <Select onChange={setPronouns} options={PRONOUNS} />
@@ -504,12 +591,6 @@ function StepChecks({
           optional
         >
           <Select onChange={setUnderrepresented} options={UNDERREPRESENTED} />
-        </Field>
-        <Field label="Dietary restrictions" optional>
-          <Select onChange={setDietary} options={DIETARY} />
-        </Field>
-        <Field label="T-shirt size" optional>
-          <Select onChange={setTshirt} options={TSHIRT_SIZES} />
         </Field>
       </div>
 
@@ -827,8 +908,8 @@ function StepConfirmation({ resumeFailed }: { resumeFailed: boolean }) {
         ✓
       </div>
       <p className="text-xl font-bold text-white">
-        You're registered! Check your email to confirm your address and complete
-        your application.
+        Application submitted! Check your email to confirm your address and
+        complete the process.
       </p>
       {resumeFailed && (
         <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
@@ -890,9 +971,12 @@ export default function SignUpPage() {
   const [learn_about_us, setLearn_about_us] = useState("");
   const [pronouns, setPronouns] = useState("");
   const [dietary, setDietary] = useState("");
+  const [dietaryOther, setDietaryOther] = useState("");
   const [tshirt, setTshirt] = useState("");
   const [underrepresented, setUnderrepresented] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
+  const [essayProject, setEssayProject] = useState("");
+  const [essayTeam, setEssayTeam] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeChecked, setResumeChecked] = useState(false);
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
@@ -1018,6 +1102,38 @@ export default function SignUpPage() {
       setErrorMsg("* Please enter your LinkedIn profile url.");
       return;
     }
+    if (!essayProject.trim()) {
+      setErrorMsg("* Please answer the first application question.");
+      return;
+    }
+    if (wordCount(essayProject) > ESSAY_WORD_LIMIT) {
+      setErrorMsg(
+        `* First answer must be ${ESSAY_WORD_LIMIT} words or fewer.`,
+      );
+      return;
+    }
+    if (!essayTeam.trim()) {
+      setErrorMsg("* Please answer the second application question.");
+      return;
+    }
+    if (wordCount(essayTeam) > ESSAY_WORD_LIMIT) {
+      setErrorMsg(
+        `* Second answer must be ${ESSAY_WORD_LIMIT} words or fewer.`,
+      );
+      return;
+    }
+    if (!dietary) {
+      setErrorMsg("* Please select your dietary restrictions.");
+      return;
+    }
+    if (dietary === "Other" && !dietaryOther.trim()) {
+      setErrorMsg("* Please describe your dietary restriction.");
+      return;
+    }
+    if (!tshirt) {
+      setErrorMsg("* Please select your t-shirt size.");
+      return;
+    }
     if (!resumeChecked || !resumeFile) {
       setErrorMsg("* Please upload your resume and agree to the terms.");
       return;
@@ -1054,12 +1170,15 @@ export default function SignUpPage() {
       is_jhu: school === "Johns Hopkins University",
       pronouns,
       dietary_restrictions: dietary,
+      dietary_restrictions_other: dietary === "Other" ? dietaryOther : "",
       tshirt_size: tshirt,
       underrepresented_group: underrepresented,
       first_hackathon,
       first_hophacks,
       learn_about_us,
       linkedin_url: linkedIn,
+      essay_project: essayProject,
+      essay_team: essayTeam,
       pfp: `${stage}_${body}_1_${accent}_${accessory}_${avatarObject}`,
       mlh_code_of_conduct: conductCodeChecked,
       mlh_data_sharing: eventLogisticsChecked,
@@ -1108,7 +1227,7 @@ export default function SignUpPage() {
     return (
       <div className="flex min-h-dvh w-full flex-col items-center px-4 py-10 sm:py-14">
         <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
-          You&apos;re already registered
+          You&apos;ve already applied
         </h1>
         <p className="mb-8 mt-1 text-center text-white/90">
           Fall 2026 · Johns Hopkins University
@@ -1123,7 +1242,7 @@ export default function SignUpPage() {
   return (
     <div className="flex min-h-dvh w-full flex-col items-center px-4 py-10 sm:py-14">
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
-        {isConfirmation ? "Welcome to HopHacks!" : "Register for HopHacks"}
+        {isConfirmation ? "Welcome to HopHacks!" : "Apply to HopHacks"}
       </h1>
       <p className="mb-8 mt-1 text-center text-white/90">
         Fall 2026 · Johns Hopkins University
@@ -1181,11 +1300,18 @@ export default function SignUpPage() {
               setFirst_hophacks={setFirst_hophacks}
               setLearn_about_us={setLearn_about_us}
               setPronouns={setPronouns}
+              dietary={dietary}
               setDietary={setDietary}
+              dietaryOther={dietaryOther}
+              setDietaryOther={setDietaryOther}
               setTshirt={setTshirt}
               setUnderrepresented={setUnderrepresented}
               linkedIn={linkedIn}
               setLinkedIn={setLinkedIn}
+              essayProject={essayProject}
+              setEssayProject={setEssayProject}
+              essayTeam={essayTeam}
+              setEssayTeam={setEssayTeam}
               resumeFile={resumeFile}
               setResumeFile={setResumeFile}
               resumeChecked={resumeChecked}
