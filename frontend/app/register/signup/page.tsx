@@ -392,7 +392,7 @@ const HOW_OPTIONS = [
   "Linkedin",
   "Google",
   "Major League Hacking",
-  "Email Listerv",
+  "Email Listserv",
   "Friend",
   "On Campus Flyers",
   "In Class Promotion",
@@ -513,8 +513,8 @@ function StepChecks({
       <div className="flex flex-col gap-5">
         <SectionTitle>Application questions</SectionTitle>
         <p className="-mt-2 text-sm text-white/75">
-          Both questions are required. Responses are capped at {ESSAY_WORD_LIMIT}{" "}
-          words each.
+          Both questions are required. Responses are capped at{" "}
+          {ESSAY_WORD_LIMIT} words each.
         </p>
         <Field label="Share a project, technical or not, that you're genuinely proud of. What was the hardest decision you made, and why did you make it that way?">
           <>
@@ -913,7 +913,7 @@ function StepConfirmation({ resumeFailed }: { resumeFailed: boolean }) {
       </p>
       {resumeFailed && (
         <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
-          Your resume didn't upload — please re-add it from your profile.
+          Your resume didn&apos;t upload — please re-add it from your profile.
         </p>
       )}
       <Link href="/profile" className={BTN_PRIMARY}>
@@ -1107,9 +1107,7 @@ export default function SignUpPage() {
       return;
     }
     if (wordCount(essayProject) > ESSAY_WORD_LIMIT) {
-      setErrorMsg(
-        `* First answer must be ${ESSAY_WORD_LIMIT} words or fewer.`,
-      );
+      setErrorMsg(`* First answer must be ${ESSAY_WORD_LIMIT} words or fewer.`);
       return;
     }
     if (!essayTeam.trim()) {

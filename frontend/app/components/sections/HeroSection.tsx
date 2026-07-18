@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/app/util/auth";
 import HeroTitle from "../hero/HeroTitle";
 import SocialLinks from "../hero/SocialLinks";
+import GetInvolved from "../hero/GetInvolved";
 
 const HERO_LAYERS = {
   backClouds: "/hero/back-clouds.webp",
@@ -116,6 +117,7 @@ export default function HeroSection() {
                 </Link>
               </>
             ) : null}
+            <GetInvolved />
           </div>
 
           <SceneLayer src={HERO_LAYERS.bluebird} alt="" priority />

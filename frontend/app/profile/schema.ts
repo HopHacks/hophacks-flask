@@ -55,7 +55,7 @@ const HOW_OPTIONS = [
   "Linkedin",
   "Google",
   "Major League Hacking",
-  "Email Listerv",
+  "Email Listserv",
   "Friend",
   "On Campus Flyers",
   "In Class Promotion",
