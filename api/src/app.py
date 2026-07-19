@@ -83,7 +83,9 @@ def create_app(config_file='config/config.json'):
 
     # All outbound mail relies on this default sender (Message calls do not
     # pass sender= explicitly, so the configured value actually takes effect).
-    if ('MAIL_DEFAULT_SENDER' not in app.config):
+    # Guard against present-but-empty too: deploy writes '' when the secret
+    # is unset, and flask-mail asserts on a falsy sender at send time.
+    if (not app.config.get('MAIL_DEFAULT_SENDER')):
         app.config['MAIL_DEFAULT_SENDER'] = 'team@hophacks.com'
 
     app.config['SLACK_SUPPRESS_SEND'] = False
