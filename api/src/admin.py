@@ -8,6 +8,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from bson import ObjectId
 
 import boto3
+import botocore.exceptions
 import csv
 import io
 from werkzeug.utils import secure_filename
@@ -61,6 +62,51 @@ def promote_admin():
 
     db.users.update_one({'_id': user['_id']}, {'$set': {'is_admin': True}})
     return jsonify({'msg': '{} is now an admin'.format(user['username'])}), 200
+
+
+@admin_api.route('/users', methods=['DELETE'])
+@jwt_required
+@check_admin
+def delete_user():
+    """Permanently delete an account and its S3 resume (admin-only).
+
+    Intended for test/junk registrations. Admin accounts cannot be deleted
+    through this endpoint (demote first, in the database, if ever needed).
+
+    :reqjson username: email of the account to delete
+
+    :status 200: Deleted
+    :status 400: Missing username, or target is an admin
+    :status 404: No account with that email
+    """
+    from accounts import username_filter
+    from resumes import BUCKET
+
+    username = request.json.get('username') if request.json else None
+    if (not isinstance(username, str) or not username.strip()):
+        return jsonify({'msg': 'Missing username'}), 400
+
+    user = db.users.find_one(username_filter(username.strip()))
+    if (user is None):
+        return jsonify({'msg': 'No account with that email'}), 404
+
+    if (user.get('is_admin')):
+        return jsonify({'msg': 'Refusing to delete an admin account'}), 400
+
+    if (user.get('resume')):
+        s3 = boto3.client('s3')
+        key = '{}/{}-{}'.format(EVENT_SLUG, str(user['_id']), user['resume'])
+        try:
+            s3.delete_object(Bucket=BUCKET, Key=key)
+        except botocore.exceptions.BotoCoreError:
+            # The account row is the thing that must go; an orphaned S3
+            # object is acceptable and cleanable later.
+            pass
+        except botocore.exceptions.ClientError:
+            pass
+
+    db.users.delete_one({'_id': user['_id']})
+    return jsonify({'msg': '{} deleted'.format(user['username'])}), 200
 
 @admin_api.route('/users', methods=['GET'])
 @jwt_required
