@@ -30,6 +30,13 @@ def get_req_config(app, config, key):
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
 
+    # The Vercel /api proxy may deliver slash-terminated routes with or
+    # without the trailing slash (Next's :path* rewrite does not preserve
+    # it reliably). Accept both instead of 308-redirecting, because a
+    # redirect through API Gateway loses the stage prefix and breaks the
+    # client (prod resume upload broke this way).
+    app.url_map.strict_slashes = False
+
     # Every email template shows the event name/dates; expose them as Jinja
     # globals so render_template callers never have to thread them through.
     app.jinja_env.globals.update(event_name=EVENT_NAME, event_dates=EVENT_DATES)
