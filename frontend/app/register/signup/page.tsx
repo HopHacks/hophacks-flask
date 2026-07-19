@@ -11,6 +11,7 @@ import {
   validatePhone,
 } from "@/app/profile/schema";
 import COUNTRIES from "./data/countries";
+import { EVENT_TAGLINE } from "@/app/util/event";
 import {
   AGES,
   EMAIL_RE,
@@ -1328,9 +1329,7 @@ export default function SignUpPage() {
         <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
           You&apos;ve already applied
         </h1>
-        <p className="mb-8 mt-1 text-center text-white/90">
-          Fall 2026 · Johns Hopkins University
-        </p>
+        <p className="mb-8 mt-1 text-center text-white/90">{EVENT_TAGLINE}</p>
         <Link href="/profile" className={BTN_PRIMARY}>
           My Profile
         </Link>
@@ -1343,9 +1342,7 @@ export default function SignUpPage() {
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         {isConfirmation ? "Welcome to HopHacks!" : "Apply to HopHacks"}
       </h1>
-      <p className="mb-8 mt-1 text-center text-white/90">
-        Fall 2026 · Johns Hopkins University
-      </p>
+      <p className="mb-8 mt-1 text-center text-white/90">{EVENT_TAGLINE}</p>
 
       {!isConfirmation && <StepProgress current={activePage} />}
 

@@ -5,6 +5,7 @@ from db import db
 from slack_integration import slack_client
 from discord_integration import discord_client
 from flask_cors import CORS
+from config.event import EVENT_NAME, EVENT_DATES
 
 import json
 
@@ -28,6 +29,10 @@ def get_req_config(app, config, key):
 
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
+
+    # Every email template shows the event name/dates; expose them as Jinja
+    # globals so render_template callers never have to thread them through.
+    app.jinja_env.globals.update(event_name=EVENT_NAME, event_dates=EVENT_DATES)
 
     config = json.load(open(config_file))
 

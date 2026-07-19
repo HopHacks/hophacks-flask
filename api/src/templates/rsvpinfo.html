@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light only" />
     <meta name="supported-color-schemes" content="light" />
-    <title>HopHacks Fall 2026 Event Info Email</title>
+    <title>HopHacks {{ event_name }} Event Info Email</title>
     <style type="text/css">
       /* Reset styles */
       body,
@@ -166,11 +166,32 @@
                 class="bg-light-blue"
               >
                 <img
-                  src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/HopHacks_Email_Banner_1.png"
+                  src="https://hophacks.com/images/hophacks-logo.png"
                   alt="HopHacks Logo"
-                  width="550"
+                  width="150"
                   style="display: block; max-width: 100%; height: auto"
                 />
+                <p
+                  style="
+                    margin: 18px 0 0 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #001d4c;
+                  "
+                >
+                  HopHacks {{ event_name }}
+                </p>
+                <p
+                  style="
+                    margin: 6px 0 0 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 15px;
+                    color: #333333;
+                  "
+                >
+                  {{ event_dates }} &middot; Johns Hopkins University
+                </p>
               </td>
             </tr>
 
@@ -209,7 +230,7 @@
                         "
                         class="text-muted"
                       >
-                        Thank you for RSVPing to HopHacks Fall 2026!
+                        Thank you for RSVPing to HopHacks {{ event_name }}!
                       </p>
 
                       <!-- Important highlight -->
@@ -264,7 +285,7 @@
                       <div class="info-section">
                         <p class="info-title">Discord:</p>
                         <p class="info-content">
-                          Please join the HopHacks Fall 2026 Discord <a href="http://discord.gg/8V8wmCWUhH" style="color: #0066cc; text-decoration: underline;">here</a> for the latest updates and announcements. You can get a head start on team forming if needed, and ask questions you may have!
+                          Please join the HopHacks {{ event_name }} Discord <a href="http://discord.gg/8V8wmCWUhH" style="color: #0066cc; text-decoration: underline;">here</a> for the latest updates and announcements. You can get a head start on team forming if needed, and ask questions you may have!
                         </p>
                       </div>
 
@@ -428,7 +449,7 @@
                         "
                         class="text-dark"
                       >
-                        HopHacks Fall 2026 | Johns Hopkins University<br />
+                        HopHacks {{ event_name }} | Johns Hopkins University<br />
                         To contact us, please email
                         <a
                           href="mailto:hophacks@gmail.com"

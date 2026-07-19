@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { EVENT_TAGLINE } from "@/app/util/event";
 
 // Shared styles copied from the signup page's homepage design language (see
 // the top of `app/register/signup/page.tsx`). If those change, mirror them
@@ -61,9 +62,7 @@ export default function ResetPasswordRequestPage() {
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         Reset Password
       </h1>
-      <p className="mb-8 mt-1 text-center text-white/90">
-        Fall 2026 · Johns Hopkins University
-      </p>
+      <p className="mb-8 mt-1 text-center text-white/90">{EVENT_TAGLINE}</p>
 
       <div className="w-full max-w-md">
         <div className={CARD_CLS}>

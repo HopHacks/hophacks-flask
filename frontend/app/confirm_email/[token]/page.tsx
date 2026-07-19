@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import axios, { AxiosError } from "axios";
+import { EVENT_TAGLINE } from "@/app/util/event";
 
 // ---- Shared styles (homepage design language, copied from
 // app/register/signup/page.tsx; mirror any changes) ----
@@ -45,9 +46,7 @@ export default function ConfirmEmailPage() {
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         Email Confirmation
       </h1>
-      <p className="mb-8 mt-1 text-center text-white/90">
-        Fall 2026 · Johns Hopkins University
-      </p>
+      <p className="mb-8 mt-1 text-center text-white/90">{EVENT_TAGLINE}</p>
 
       <div className="w-full max-w-2xl">
         <div className={CARD_CLS}>

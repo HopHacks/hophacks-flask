@@ -118,11 +118,32 @@
                 class="bg-light-blue"
               >
                 <img
-                  src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/HopHacks_Email_Banner_1.png"
+                  src="https://hophacks.com/images/hophacks-logo.png"
                   alt="HopHacks Logo"
-                  width="550"
+                  width="150"
                   style="display: block; max-width: 100%; height: auto"
                 />
+                <p
+                  style="
+                    margin: 18px 0 0 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #001d4c;
+                  "
+                >
+                  HopHacks {{ event_name }}
+                </p>
+                <p
+                  style="
+                    margin: 6px 0 0 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 15px;
+                    color: #333333;
+                  "
+                >
+                  {{ event_dates }} &middot; Johns Hopkins University
+                </p>
               </td>
             </tr>
 
@@ -219,7 +240,7 @@
                         "
                         class="text-dark"
                       >
-                        HopHacks Fall 2026 | Johns Hopkins University<br />
+                        HopHacks {{ event_name }} | Johns Hopkins University<br />
                         To contact us, please email
                         <a
                           href="mailto:hophacks@gmail.com"

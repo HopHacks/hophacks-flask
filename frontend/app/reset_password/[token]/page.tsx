@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { PASSWORD_RE } from "@/app/register/signup/data/options";
+import { EVENT_TAGLINE } from "@/app/util/event";
 
 // ---- Shared styles (homepage design language, copied from
 // app/register/signup/page.tsx; mirror any changes) ----
@@ -70,9 +71,7 @@ export default function ResetPasswordPage() {
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         Reset Password
       </h1>
-      <p className="mb-8 mt-1 text-center text-white/90">
-        Fall 2026 · Johns Hopkins University
-      </p>
+      <p className="mb-8 mt-1 text-center text-white/90">{EVENT_TAGLINE}</p>
 
       <div className="w-full max-w-md">
         <div className={CARD_CLS}>
