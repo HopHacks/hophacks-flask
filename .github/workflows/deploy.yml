@@ -58,6 +58,8 @@ jobs:
               config['MAIL_USE_SSL'] = use_ssl in ('true', '1')
           if os.environ.get('CORS_ORIGINS'):
               config['CORS_ORIGINS'] = os.environ['CORS_ORIGINS']
+          if os.environ.get('ADMIN_EMAILS'):
+              config['ADMIN_EMAILS'] = os.environ['ADMIN_EMAILS']
           if os.environ.get('SLACK_WEBHOOK'):
               config['SLACK_WEBHOOK'] = os.environ['SLACK_WEBHOOK']
           if os.environ.get('DISCORD_WEBHOOK'):
@@ -78,6 +80,7 @@ jobs:
           MAIL_USE_TLS: ${{ secrets.MAIL_USE_TLS }}
           MAIL_USE_SSL: ${{ secrets.MAIL_USE_SSL }}
           CORS_ORIGINS: ${{ secrets.CORS_ORIGINS }}
+          ADMIN_EMAILS: ${{ secrets.ADMIN_EMAILS }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 

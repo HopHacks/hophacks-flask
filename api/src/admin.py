@@ -24,6 +24,44 @@ admin_api = Blueprint('admin', __name__)
 def test_admin():
     return jsonify({'is_admin': True}), 200
 
+
+@admin_api.route('/admins', methods=['GET'])
+@jwt_required
+@check_admin
+def list_admins():
+    """List usernames of all admin accounts."""
+    admins = [u['username'] for u in db.users.find({'is_admin': True}, {'username': 1})]
+    return jsonify({'admins': sorted(admins)}), 200
+
+
+@admin_api.route('/admins', methods=['POST'])
+@jwt_required
+@check_admin
+def promote_admin():
+    """Grant admin to an existing account (admin-only).
+
+    :reqjson username: email of the account to promote
+
+    :status 200: Promoted (or already admin)
+    :status 400: Missing/invalid username
+    :status 404: No account with that email
+    """
+    from accounts import username_filter
+
+    username = request.json.get('username') if request.json else None
+    if (not isinstance(username, str) or not username.strip()):
+        return jsonify({'msg': 'Missing username'}), 400
+
+    user = db.users.find_one(username_filter(username.strip()))
+    if (user is None):
+        return jsonify({'msg': 'No account with that email'}), 404
+
+    if (user.get('is_admin')):
+        return jsonify({'msg': '{} is already an admin'.format(user['username'])}), 200
+
+    db.users.update_one({'_id': user['_id']}, {'$set': {'is_admin': True}})
+    return jsonify({'msg': '{} is now an admin'.format(user['username'])}), 200
+
 @admin_api.route('/users', methods=['GET'])
 @jwt_required
 @check_admin

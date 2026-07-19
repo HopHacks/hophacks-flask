@@ -1,7 +1,7 @@
 from db import db
 import re
 
-from flask import Flask, jsonify, request, Blueprint
+from flask import Flask, jsonify, request, Blueprint, current_app
 from flask_jwt_extended import (
     jwt_required, create_access_token,
     jwt_refresh_token_required, create_refresh_token,
@@ -72,6 +72,15 @@ def login():
     #if (user["email_confirmed"] == False):
         #print("not allowed")
         #return jsonify({'msg': 'Email not confirmed'}), 403
+
+    # Bootstrap: accounts listed in ADMIN_EMAILS (comma-separated config,
+    # from the deploy secret) become admins on login. This solves the
+    # no-first-admin problem; day-to-day promotion is POST /api/admin/admins.
+    if (not user.get('is_admin')):
+        allowed = current_app.config.get('ADMIN_EMAILS', '')
+        allowed = {e.strip().lower() for e in allowed.split(',') if e.strip()}
+        if (user['username'].lower() in allowed):
+            db.users.update_one({'_id': user['_id']}, {'$set': {'is_admin': True}})
 
     id = str(user['_id'])
     ret = {
