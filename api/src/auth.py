@@ -59,6 +59,9 @@ def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
 
+    if (not isinstance(username, str) or not isinstance(password, str)):
+        return jsonify({'msg': 'Bad username or password'}), 401
+
     user = db.users.find_one({'username': re.compile('^' + re.escape(username) + '$', re.IGNORECASE)})
     if (user is None):
         return jsonify({'msg': 'Bad username or password'}), 401
@@ -91,10 +94,7 @@ def login():
     # (see accounts.confirm_email), so login does not touch registrations.
     resp = jsonify(ret)
 
-    # secure = true?, max_age?
     set_refresh_cookies(resp, refresh_token)
-    print(resp)
-    print(ret)
     return resp, 200
 
 

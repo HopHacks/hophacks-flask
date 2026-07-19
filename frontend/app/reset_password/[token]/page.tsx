@@ -4,103 +4,140 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import { PASSWORD_RE } from "@/app/register/signup/data/options";
 
-const PASSWORD_RE =
-  /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+// ---- Shared styles (homepage design language, copied from
+// app/register/signup/page.tsx; mirror any changes) ----
+
+const INPUT_CLS = "input-sketch w-full rounded-lg px-4 py-2.5 text-base";
+const BTN_PRIMARY =
+  "rounded-2xl bg-recap-gold px-6 py-3 text-lg font-bold text-white shadow-[0_0_30px_rgba(255,181,31,0.3)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(255,181,31,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
+const CARD_CLS =
+  "w-full rounded-2xl border border-white/25 bg-white/10 p-6 backdrop-blur-sm sm:p-8 motion-safe:animate-rise";
+
+function ErrorNote({ msg }: { msg: string }) {
+  if (!msg) return null;
+  return (
+    <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
+      {msg}
+    </p>
+  );
+}
 
 export default function ResetPasswordPage() {
   const { token } = useParams<{ token: string }>();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(true);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [tokenFailed, setTokenFailed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (!PASSWORD_RE.test(password)) {
-      setIsError(true);
-      setMessage(
-        "New password must be 7–25 characters long and include a digit and a special character.",
+      setError(
+        "New password must be between 8 and 25 characters, using letters, numbers, and the special characters !@#$%^&*)(+=._- with at least one number and one special character.",
       );
       return;
     }
     if (password !== confirmPassword) {
-      setIsError(true);
-      setMessage("Passwords do not match.");
+      setError("Passwords do not match.");
       return;
     }
 
+    setSubmitting(true);
     try {
       await axios.post("/api/accounts/reset_password", {
         reset_token: token,
         password,
       });
-      setIsError(false);
-      setMessage("Password reset successfully!");
+      setError("");
+      setSuccess(true);
     } catch {
-      setIsError(true);
-      setMessage("Unable to reset password. It may have already been changed.");
+      setTokenFailed(true);
+      setError(
+        "Unable to reset password. The link may be invalid, expired, or already used.",
+      );
+    } finally {
+      setSubmitting(false);
     }
   }
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
-      <div
-        className="min-w-[300px] max-w-[700px] w-[70%] flex flex-col rounded-2xl p-10"
-        style={{ backgroundColor: "rgba(0, 29, 76, 0.9)" }}
-      >
-        <h2
-          className="font-bold text-white text-4xl text-center mb-4"
-          style={{ fontVariant: "small-caps" }}
-        >
-          Reset Password
-        </h2>
+    <div className="flex min-h-dvh w-full flex-col items-center px-4 pb-10 pt-28 sm:py-14">
+      <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
+        Reset Password
+      </h1>
+      <p className="mb-8 mt-1 text-center text-white/90">
+        Fall 2026 · Johns Hopkins University
+      </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <input
-            type="password"
-            placeholder="New Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="input-sketch rounded px-3 py-2 w-full"
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            className="input-sketch rounded px-3 py-2 w-full"
-          />
+      <div className="w-full max-w-md">
+        <div className={CARD_CLS}>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-semibold text-white">
+                New Password
+              </span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className={INPUT_CLS}
+              />
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-semibold text-white">
+                Confirm Password
+              </span>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className={INPUT_CLS}
+              />
+            </label>
 
-          {message && (
-            <p
-              className={`text-center text-sm ${isError ? "text-red-400" : "text-green-400"}`}
-            >
-              {message}
-            </p>
-          )}
-
-          <div className="flex flex-col items-center gap-4">
-            <button
-              type="submit"
-              className="px-5 py-4 text-2xl font-bold rounded-2xl bg-[#ffb51f] cursor-pointer text-white shadow-[0_0_40px_rgba(255,181,31,0.3)] transition-shadow duration-300 hover:shadow-[0_0_50px_rgba(255,181,31,0.5)] max-w-[200px] min-w-[150px] w-[30%]"
-              style={{ fontVariant: "small-caps" }}
-            >
-              Submit
-            </button>
-            {!isError && (
-              <Link
-                href="/register/login"
-                className="text-gray-200 transition-all hover:text-gray-400"
-              >
-                Back to Sign In
-              </Link>
+            <ErrorNote msg={error} />
+            {success && (
+              <p className="text-center text-sm text-green-300">
+                Password reset successfully! You can now sign in with your new
+                password.
+              </p>
             )}
-          </div>
-        </form>
+
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className={BTN_PRIMARY}
+                disabled={submitting || success}
+              >
+                {submitting ? "Resetting…" : "Submit"}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <p className="mt-5 flex items-center justify-center gap-6 text-center text-sm text-white/85">
+          <Link
+            href="/register/login"
+            className="underline underline-offset-4 hover:text-white"
+          >
+            Back to Sign In
+          </Link>
+          {tokenFailed && (
+            <Link
+              href="/register/resetpassword"
+              className="underline underline-offset-4 hover:text-white"
+            >
+              Request a new reset link
+            </Link>
+          )}
+        </p>
       </div>
     </div>
   );

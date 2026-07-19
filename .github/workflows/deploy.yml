@@ -38,8 +38,10 @@ jobs:
               'SECRET_KEY': os.environ['FLASK_SECRET_KEY'],
               'MONGO_URI': os.environ['MONGO_URI'],
               'MONGO_DB_NAME': os.environ['MONGO_DB_NAME'],
-              'BASE_URL': os.environ['BASE_URL'],
           }
+          # BASE_URL is optional (app.py falls back to per-request URLs).
+          if os.environ.get('BASE_URL'):
+              config['BASE_URL'] = os.environ['BASE_URL']
           # Require the full credential set; a half-configured mailer (e.g.
           # server set but password pending) must stay suppressed, not 500.
           if os.environ.get('MAIL_SERVER') and os.environ.get('MAIL_PASSWORD'):

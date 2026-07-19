@@ -2,8 +2,9 @@
 // exact wording MLH publishes so demographic data stays standardized.
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Length floor must match the API's password_min_length (api/src/accounts.py).
 export const PASSWORD_RE =
-  /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
+  /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{8,25}$/;
 
 export const AGES = [
   "Under 18",

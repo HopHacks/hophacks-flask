@@ -14,9 +14,12 @@ from registrations import send_apply_confirm
 from config.event import EVENT_NAME
 
 import bcrypt
+import json
 import jwt
+import re
 import datetime
 from bson import ObjectId
+from urllib.parse import urlsplit
 import pytz
 
 
@@ -36,24 +39,60 @@ profile_keys = ["first_name", "last_name", "age", "phone_number",
 # MLH consent checkboxes that MUST be affirmatively accepted to register.
 mlh_required_consents = ["mlh_code_of_conduct", "mlh_data_sharing"]
 
+# Application essays, required at account creation (the signup form enforces
+# the same word limit client-side).
+required_essay_keys = ["essay_project", "essay_team"]
+essay_word_limit = 300
+
+# Server-side account constraints. bcrypt only uses the first 72 bytes of a
+# password, so longer inputs are rejected instead of silently truncated.
+email_re = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+password_min_length = 8
+password_max_bytes = 72
+
+# Upper bound on the JSON-serialized profile, so a direct API call cannot
+# mass-assign an arbitrarily large document into the user record.
+profile_max_json_bytes = 50000
+
+
+# Emailed confirm/reset links are built from a client-supplied URL, so its
+# origin must be one of ours (LINK_ORIGINS, set in app.py). Otherwise an
+# unauthenticated caller could make us send users an official-looking email
+# whose link delivers a live token to an attacker's server.
+def link_url_allowed(url):
+    try:
+        parts = urlsplit(url)
+    except ValueError:
+        return False
+    if (parts.scheme not in ('http', 'https') or not parts.netloc):
+        return False
+    origin = (parts.scheme + '://' + parts.netloc).lower()
+    return origin in current_app.config['LINK_ORIGINS']
+
+
+# Case-insensitive exact-match filter for usernames. Login matches usernames
+# case-insensitively, so duplicate checks and lookups must do the same
+# (accounts created before emails were normalized can be stored mixed-case).
+def username_filter(username):
+    return {'username': re.compile('^' + re.escape(username) + '$', re.IGNORECASE)}
+
 
 # Sends confirmation email with JWT-Token in URL for verification, returns secret key used
 # Note this secret key is based of the current user's hashed password, this way when the Password
 # is changed the link becomes invalid!
-def send_reset_email(email, hashed, base_url):
+def send_reset_email(email, hashed, base_url, first_name):
     eastern = pytz.timezone("America/New_York")
     secret = hashed.decode('utf-8') + '-' + str(pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern).timestamp())
     token = create_reset_token(email, secret)
     link = base_url + "/" + token.decode('utf-8')
 
     msg = Message("Reset Your Password - HopHacks.com",
-      sender="team@hophacks.com",
       recipients=[email])
 
-    msg.body = 'Hello,\nYou or someone else has requested that a new password'\
+    msg.body = 'Hello,\nYou or someone else has requested that a new password '\
                'be generated for your account. If you made this request, then '\
                'please follow this link: ' + link
-    msg.html = render_template('email_reset.html', link=link)
+    msg.html = render_template('email_reset.html', link=link, first_name=first_name)
     mail.send(msg)
 
     return secret
@@ -66,7 +105,6 @@ def send_confirmation_email(email, hashed, base_url, firstName):
     link = base_url + "/" + token.decode('utf-8')
 
     msg = Message("Confirm your Email - HopHacks.com",
-      sender="team@hophacks.com",
       recipients=[email])
 
     msg.body = 'Hello,\nClick the following link to confirm your email ' + link
@@ -82,7 +120,6 @@ def validate_profile(request):
     profile = request.json['profile']
     for key in profile_keys:
         if (key not in profile):
-            print(key)
             return False
 
     # TODO do more here?
@@ -152,9 +189,20 @@ def create():
     if (username is None or password is None or confirm_url is None or profile is None):
         return Response('Missing required field', status=400)
 
+    if (not isinstance(confirm_url, str) or not link_url_allowed(confirm_url)):
+        return Response('confirm_url origin is not allowed', status=400)
+
     # Normalize the email so letter-casing can never create duplicate accounts
     # (login matches the username case-insensitively).
-    username = username.strip().lower()
+    username = str(username).strip().lower()
+
+    if (not email_re.match(username)):
+        return Response('Username must be a valid email address', status=400)
+
+    if (not isinstance(password, str) or len(password) < password_min_length):
+        return Response('Password must be at least 8 characters', status=400)
+    if (len(password.encode()) > password_max_bytes):
+        return Response('Password is too long', status=400)
 
     if (not validate_profile(request)):
         return Response('Missing required profile field', status=400)
@@ -165,7 +213,19 @@ def create():
         if (profile.get(consent) is not True):
             return Response('Required MLH agreement not accepted', status=400)
 
-    if (db.users.find_one({'username': username})):
+    # Essays are required to apply; enforce the same word limit as the form.
+    for key in required_essay_keys:
+        essay = profile.get(key)
+        if (not isinstance(essay, str) or not essay.strip()):
+            return Response('Missing required essay', status=400)
+        if (len(essay.split()) > essay_word_limit):
+            return Response('Essay is over the word limit', status=400)
+
+    # Bound the overall profile size (stored verbatim otherwise).
+    if (len(json.dumps(profile)) > profile_max_json_bytes):
+        return Response('Profile is too large', status=400)
+
+    if (db.users.find_one(username_filter(username))):
         return Response('User already exists!', status=409)
 
     salt = bcrypt.gensalt()
@@ -219,7 +279,7 @@ def check_user(username):
     if (username is None):
         return Response('no query username', status=400)
 
-    user = db.users.find_one({'username': username})
+    user = db.users.find_one(username_filter(username.strip()))
     if (user is None):
         return jsonify({"exist": False}), 200
 
@@ -457,7 +517,10 @@ def confirm_email_req():
 
     """
     id = get_jwt_identity()
-    confirm_url = request.json['confirm_url']
+    confirm_url = request.json.get('confirm_url') if request.json else None
+
+    if (not isinstance(confirm_url, str) or not link_url_allowed(confirm_url)):
+        return jsonify({"msg": "Missing or disallowed confirm_url"}), 400
 
     user = db.users.find_one({'_id': ObjectId(id)})
 
@@ -466,7 +529,7 @@ def confirm_email_req():
 
     confirm_secret = send_confirmation_email(user['username'], user['hashed'], confirm_url, user['profile']['first_name'])
 
-    db.users.update(
+    db.users.update_one(
         {'_id': ObjectId(id)},
         {'$set': {'confirm_secret': confirm_secret}}
     )
@@ -502,17 +565,28 @@ def reset_password_req():
 
     """
 
-    email = request.json['username']
-    reset_url = request.json['reset_url']
+    email = request.json.get('username') if request.json else None
+    reset_url = request.json.get('reset_url') if request.json else None
 
-    user = db.users.find_one({'username': email})
+    if (not isinstance(email, str) or not isinstance(reset_url, str)):
+        return jsonify({"msg": "Missing username or reset_url"}), 400
+
+    if (not link_url_allowed(reset_url)):
+        return jsonify({"msg": "reset_url origin is not allowed"}), 400
+
+    # Match the username case-insensitively, like login does, so a user who
+    # types their email with different casing still gets the reset email.
+    user = db.users.find_one(username_filter(email.strip()))
 
     # Note we don't want to reveal if user exists
     if (user is None):
         return jsonify({"msg": "email sent"}), 200
 
-    reset_secret = send_reset_email(user['username'], user['hashed'], reset_url)
-    db.users.update(
+    reset_secret = send_reset_email(
+        user['username'], user['hashed'], reset_url,
+        user.get('profile', {}).get('first_name', '')
+    )
+    db.users.update_one(
         {'_id': ObjectId(user['_id'])},
         {'$set': {'reset_secret': reset_secret}}
     )
@@ -530,9 +604,34 @@ def confirm_email():
 
     """
 
-    token = request.json['confirm_token'];
-    email = jwt.decode(token, verify=False)['id']
+    token = request.json.get('confirm_token') if request.json else None
+    if (not isinstance(token, str)):
+        return jsonify({"msg": "Bad request"}), 400
+
+    # The unverified payload only locates the user; the token signature is
+    # verified against that user's stored secret below.
+    try:
+        email = jwt.decode(token, verify=False).get('id')
+    except jwt.PyJWTError:
+        return jsonify({"msg": "Bad request"}), 400
+
+    if (not isinstance(email, str)):
+        return jsonify({"msg": "Bad request"}), 400
+
     user = db.users.find_one({'username': email})
+    if (user is None):
+        return jsonify({"msg": "Bad request"}), 400
+
+    # Idempotent: re-clicking a confirmation link (refresh, second tab) must
+    # not surface an error after the email was already confirmed.
+    if (user['email_confirmed']):
+        return jsonify({"msg": "Email already confirmed", "email": email}), 200
+
+    # An empty confirm_secret means no confirmation is outstanding. Reject
+    # before signature verification: PyJWT verifies HS256 against the empty
+    # string, so a token self-signed with '' would otherwise pass.
+    if (not user.get('confirm_secret')):
+        return jsonify({"msg": "Bad request"}), 400
 
     if (not read_confim_token(token, user['confirm_secret'])):
         return jsonify({"msg": "Bad request"}), 400
@@ -579,18 +678,43 @@ def reset_password():
 
     """
 
-    password = request.json['password'].encode()
+    password = request.json.get('password') if request.json else None
+    token = request.json.get('reset_token') if request.json else None
 
-    token = request.json['reset_token']
-    email = jwt.decode(token, verify=False)['id']
+    if (not isinstance(password, str) or not isinstance(token, str)):
+        return jsonify({"msg": "Bad request"}), 400
+
+    if (len(password) < password_min_length):
+        return jsonify({"msg": "Password must be at least 8 characters"}), 400
+    if (len(password.encode()) > password_max_bytes):
+        return jsonify({"msg": "Password is too long"}), 400
+
+    # The unverified payload only locates the user; the token signature is
+    # verified against that user's stored secret below.
+    try:
+        email = jwt.decode(token, verify=False).get('id')
+    except jwt.PyJWTError:
+        return jsonify({"msg": "Bad request"}), 400
+
+    if (not isinstance(email, str)):
+        return jsonify({"msg": "Bad request"}), 400
 
     user = db.users.find_one({'username': email})
+    if (user is None):
+        return jsonify({"msg": "Bad request"}), 400
+
+    # Users who never requested a reset (or whose reset was consumed) have
+    # reset_secret == ''. Reject before signature verification: PyJWT
+    # verifies HS256 against the empty string, so a token self-signed with
+    # '' would otherwise take over any such account.
+    if (not user.get('reset_secret')):
+        return jsonify({"msg": "Bad request"}), 400
 
     if (not read_reset_token(token, user['reset_secret'])):
         return jsonify({"msg": "Bad request"}), 400
 
     salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(password, salt)
+    hashed = bcrypt.hashpw(password.encode(), salt)
 
     db.users.update_one(
         {'_id': ObjectId(user['_id'])},

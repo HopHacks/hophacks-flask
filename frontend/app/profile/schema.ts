@@ -66,7 +66,7 @@ const YES_NO = ["Yes", "No"];
 
 // ---- Field-level validators ----
 
-function validatePhone(value: string): string | null {
+export function validatePhone(value: string): string | null {
   // Lenient E.164-ish check (7-15 digits, optional +/spacing/punctuation).
   // The legacy frontend used react-phone-number-input's isValidPhoneNumber;
   // swap that in here if stricter validation is wanted.
@@ -78,7 +78,7 @@ function validatePhone(value: string): string | null {
   return null;
 }
 
-function validateLinkedIn(value: string): string | null {
+export function validateLinkedIn(value: string): string | null {
   const v = value.trim();
   if (/\s/.test(v) || !v.includes(".")) {
     return "* Please enter a valid LinkedIn URL.";
@@ -348,8 +348,13 @@ export function buildApiProfile(
     ...raw,
     ...values,
     // Mirror signup: `otherSchool` only carries a value when `school` is the
-    // "Other (not listed)" sentinel.
+    // "Other (not listed)" sentinel, and `dietary_restrictions_other` only
+    // when "Other" is selected, so stale free text never reaches catering.
     otherSchool: values.school === OTHER_SCHOOL ? values.otherSchool : "",
+    dietary_restrictions_other:
+      values.dietary_restrictions === "Other"
+        ? values.dietary_restrictions_other
+        : "",
     is_jhu: isJhuSchool(values.school),
   };
 }

@@ -70,6 +70,14 @@ async function fillAboutYou(page: Page) {
   await page
     .getByLabel("LinkedIn profile URL")
     .fill("https://linkedin.com/in/e2e");
+  await page
+    .getByLabel("Share a project, technical or not")
+    .fill("I built a small compiler and chose a simple IR over speed.");
+  await page
+    .getByLabel("Tell us about a time you worked in a team")
+    .fill("I led a four person team and learned to delegate testing.");
+  await page.getByLabel("Dietary restrictions").selectOption("None");
+  await page.getByLabel("T-shirt size").selectOption("M");
   await page.locator('input[type="file"]').setInputFiles(RESUME_FIXTURE);
 }
 
@@ -106,7 +114,7 @@ test("happy path submits canonical MLH payload", async ({ page }) => {
 
   // Avatar step → submit.
   await page.getByRole("button", { name: "Finish", exact: true }).click();
-  await expect(page.getByText("You're registered!")).toBeVisible();
+  await expect(page.getByText("Application submitted!")).toBeVisible();
   await expect(page.getByText("resume didn't upload")).not.toBeVisible();
 
   const payload = created.payload as {
@@ -124,6 +132,40 @@ test("happy path submits canonical MLH payload", async ({ page }) => {
   expect(payload.profile.mlh_data_sharing).toBe(true);
   expect(payload.profile.mlh_marketing_emails).toBe(false);
   expect(payload.profile.is_jhu).toBe(true);
+  expect(payload.profile.dietary_restrictions).toBe("None");
+  expect(payload.profile.tshirt_size).toBe("M");
+  expect(payload.profile.essay_project).toContain("compiler");
+  expect(payload.profile.essay_team).toContain("team");
+});
+
+test("essay over the word limit blocks the application step", async ({
+  page,
+}) => {
+  const created: { payload?: unknown } = {};
+  await stubBackend(page, created);
+
+  await page.goto("/register/signup");
+  await fillAccountStep(page);
+  await fillBasicInfoStep(page);
+  await fillAboutYou(page);
+  await checkAllConsents(page);
+
+  await page
+    .getByLabel("Share a project, technical or not")
+    .fill(Array.from({ length: 301 }, (_, i) => `word${i}`).join(" "));
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+
+  await expect(
+    page.getByText("First answer must be 300 words or fewer"),
+  ).toBeVisible();
+  expect(created.payload).toBeUndefined();
+
+  // Trimming back under the limit unblocks the step.
+  await page
+    .getByLabel("Share a project, technical or not")
+    .fill("A short answer under the limit.");
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByText("Customize your blue jay!")).toBeVisible();
 });
 
 test("required MLH consents gate submission", async ({ page }) => {
@@ -168,19 +210,23 @@ test("failed resume upload surfaces notice on confirmation", async ({
   await page.getByRole("button", { name: "Finish", exact: true }).click();
 
   // Signup still completes — the account was created — but the user is told.
-  await expect(page.getByText("You're registered!")).toBeVisible();
+  await expect(page.getByText("Application submitted!")).toBeVisible();
   await expect(page.getByText("resume didn't upload")).toBeVisible();
 });
 
 test("pre-registration route redirects to signup", async ({ page }) => {
   await page.goto("/register/interest");
   await page.waitForURL("**/register/signup");
-  await expect(page.getByText("Register for HopHacks")).toBeVisible();
+  await expect(page.getByText("Apply to HopHacks")).toBeVisible();
 });
 
-test("hero CTA points at registration", async ({ page }) => {
+test("hero CTA points at the application", async ({ page }) => {
+  // The CTA only renders once the session check resolves as logged out.
+  await page.route("**/api/auth/session/refresh", (r) =>
+    r.fulfill({ status: 401, json: { msg: "no session" } }),
+  );
   await page.goto("/");
-  const cta = page.getByRole("link", { name: "Register Now" });
+  const cta = page.getByRole("link", { name: "Apply Now" });
   await expect(cta).toBeVisible();
   await expect(cta).toHaveAttribute("href", "/register/signup");
 });
