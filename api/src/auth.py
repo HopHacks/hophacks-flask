@@ -11,6 +11,7 @@ from flask_jwt_extended import (
 import bcrypt
 from bson.objectid import ObjectId
 from registrations import send_apply_confirm
+from accounts import username_filter
 
 auth_api = Blueprint('auth', __name__)
 
@@ -59,7 +60,10 @@ def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
 
-    user = db.users.find_one({'username': re.compile('^' + re.escape(username) + '$', re.IGNORECASE)})
+    if (not isinstance(username, str) or not isinstance(password, str)):
+        return jsonify({'msg': 'Bad username or password'}), 401
+
+    user = db.users.find_one(username_filter(username))
     if (user is None):
         return jsonify({'msg': 'Bad username or password'}), 401
 
@@ -91,10 +95,7 @@ def login():
     # (see accounts.confirm_email), so login does not touch registrations.
     resp = jsonify(ret)
 
-    # secure = true?, max_age?
     set_refresh_cookies(resp, refresh_token)
-    print(resp)
-    print(ret)
     return resp, 200
 
 

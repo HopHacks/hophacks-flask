@@ -5,6 +5,7 @@ from db import db
 from slack_integration import slack_client
 from discord_integration import discord_client
 from flask_cors import CORS
+from config.event import EVENT_NAME, EVENT_DATES
 
 import json
 
@@ -29,6 +30,10 @@ def get_req_config(app, config, key):
 def create_app(config_file='config/config.json'):
     app = Flask(__name__)
 
+    # Every email template shows the event name/dates; expose them as Jinja
+    # globals so render_template callers never have to thread them through.
+    app.jinja_env.globals.update(event_name=EVENT_NAME, event_dates=EVENT_DATES)
+
     config = json.load(open(config_file))
 
     get_req_config(app, config, 'DEBUG')
@@ -38,11 +43,35 @@ def create_app(config_file='config/config.json'):
     get_req_config(app, config, 'MONGO_URI')
     get_req_config(app, config, 'MONGO_DB_NAME')
     get_req_config(app, config, 'TESTING')
-    get_req_config(app, config, 'BASE_URL')
+    # BASE_URL is optional: confirm/reset links are built from the request's
+    # confirm_url/reset_url, so nothing reads it at runtime today.
+    get_opt_config(app, config, 'BASE_URL')
     get_opt_config(app, config, 'SLACK_WEBHOOK')
     get_opt_config(app, config, 'DISCORD_WEBHOOK')
 
-    CORS(app, supports_credentials=True)
+    # Restrict credentialed CORS to an explicit origin whitelist. Reflecting
+    # any Origin with supports_credentials=True would let any site drive
+    # credentialed requests (e.g. session refresh) for a logged-in user.
+    get_opt_config(app, config, 'CORS_ORIGINS')
+    if ('CORS_ORIGINS' in app.config):
+        origins = [o.strip() for o in app.config['CORS_ORIGINS'].split(',') if o.strip()]
+    else:
+        origins = [
+            'https://hophacks.com',
+            'https://www.hophacks.com',
+            'http://localhost:3000',
+            'http://localhost:3100',
+        ]
+    # Normalize to bare lowercase scheme://host so LINK_ORIGINS matching (which
+    # compares an urlsplit-derived origin) tolerates a trailing slash or casing
+    # in the CORS_ORIGINS secret instead of silently rejecting every link.
+    origins = [o.rstrip('/').lower() for o in origins]
+    CORS(app, supports_credentials=True, origins=origins)
+
+    # Confirm/reset emails embed a client-supplied URL. Only these origins
+    # (the same allowlist as CORS) may appear in mailed links, so an attacker
+    # cannot make us email users a token-bearing link to their own domain.
+    app.config['LINK_ORIGINS'] = origins
 
     get_opt_config(app, config, 'MAIL_SERVER')
     get_opt_config(app, config, 'MAIL_PORT')
@@ -51,6 +80,11 @@ def create_app(config_file='config/config.json'):
     get_opt_config(app, config, 'MAIL_DEFAULT_SENDER')
     get_opt_config(app, config, 'MAIL_USE_TLS')
     get_opt_config(app, config, 'MAIL_USE_SSL')
+
+    # All outbound mail relies on this default sender (Message calls do not
+    # pass sender= explicitly, so the configured value actually takes effect).
+    if ('MAIL_DEFAULT_SENDER' not in app.config):
+        app.config['MAIL_DEFAULT_SENDER'] = 'team@hophacks.com'
 
     app.config['SLACK_SUPPRESS_SEND'] = False
     app.config['DISCORD_SUPPRESS_SEND'] = False 
@@ -70,8 +104,16 @@ def create_app(config_file='config/config.json'):
     # Configurations that are always the same
     app.config['JWT_TOKEN_LOCATION'] =  ['cookies', 'headers']
     app.config['JWT_REFRESH_COOKIE_PATH'] = '/api/auth/session'
-    app.config['JWT_COOKIE_CSRF_PROTECT '] = False
+    # CSRF protection is deliberately off for the cookie flow: the refresh
+    # cookie is only accepted on GET /session/refresh and /session/logout,
+    # and the frontend does not send an X-CSRF-TOKEN header. Revisit before
+    # adding any cookie-authenticated mutating endpoint.
+    app.config['JWT_COOKIE_CSRF_PROTECT'] = False
     app.config['JWT_CSRF_IN_COOKIES'] = False
+    # Refresh cookie hardening: HTTPS-only outside of dev, and explicit
+    # SameSite=Lax rather than relying on browser defaults.
+    app.config['JWT_COOKIE_SECURE'] = not app.config['DEBUG']
+    app.config['JWT_COOKIE_SAMESITE'] = 'Lax'
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
     # Pass configurations to extensions

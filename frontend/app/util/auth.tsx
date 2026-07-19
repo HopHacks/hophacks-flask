@@ -22,10 +22,23 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 function configureAxios() {
-  const baseURL = process.env.NEXT_PUBLIC_BACKENDURL; // set this in .env.local
-  if (baseURL) axios.defaults.baseURL = baseURL;
+  // NEXT_PUBLIC_BACKENDURL (set in .env.local) is a dev-only escape hatch:
+  // an absolute cross-site baseURL bypasses the same-origin /api rewrite in
+  // next.config.ts, and browsers then drop the HttpOnly refresh cookie (the
+  // prod login loop). Ignore it in production so a leftover Vercel env var
+  // can't silently break session refresh.
+  const baseURL = process.env.NEXT_PUBLIC_BACKENDURL;
+  if (baseURL && process.env.NODE_ENV !== "production") {
+    axios.defaults.baseURL = baseURL;
+  }
   axios.defaults.withCredentials = true; // important if refresh uses cookies
 }
+
+// Configure at module load, not in an effect: pages fire API calls from
+// their own mount effects (e.g. the emailed confirm-link POST), and React
+// runs child effects before AuthProvider's, so effect-time setup comes too
+// late for the very first request on a hard page load.
+configureAxios();
 
 function setAuthHeader(tok: string | null) {
   if (tok) axios.defaults.headers.common["Authorization"] = `Bearer ${tok}`;
@@ -109,7 +122,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // (login() included), and if that immediate refresh fails the user is
   // logged straight back out — the prod login loop.
   useEffect(() => {
-    configureAxios();
     refreshToken();
     return () => clearTimer();
     // eslint-disable-next-line react-hooks/exhaustive-deps

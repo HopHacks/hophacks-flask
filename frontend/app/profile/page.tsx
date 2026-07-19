@@ -6,6 +6,7 @@ import { RequireAuth } from "@/app/util/RequireAuth";
 import { useAuth } from "@/app/util/auth";
 import { ProfileForm } from "./ProfileForm";
 import { ResumeSection } from "./ResumeSection";
+import { StatusSection } from "./StatusSection";
 import { CARD_CLS } from "./ui";
 
 function ProfileContent() {
@@ -18,7 +19,7 @@ function ProfileContent() {
   }
 
   return (
-    <div className="flex min-h-dvh w-full flex-col items-center px-4 py-10 sm:py-14">
+    <div className="flex min-h-dvh w-full flex-col items-center px-4 pb-10 pt-28 sm:py-14">
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         Your Profile
       </h1>
@@ -28,9 +29,13 @@ function ProfileContent() {
 
       <div className="w-full max-w-2xl">
         <div className={CARD_CLS}>
+          <StatusSection />
+
+          <hr className="my-8 border-white/20" />
+
           <ProfileForm />
 
-          <hr className="my-8 border-rock-light/30" />
+          <hr className="my-8 border-white/20" />
 
           <ResumeSection />
         </div>
