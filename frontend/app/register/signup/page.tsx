@@ -1320,10 +1320,13 @@ export default function SignUpPage() {
 
   const isConfirmation = activePage === CONFIRMATION;
 
-  // A logged-in user already has an account — hide the wizard so accounts
+  // A logged-in user already has an account; hide the wizard so accounts
   // can't be double-registered. The confirmation step stays reachable
-  // because signup logs the user in right before showing it.
-  if (isLoggedIn && !isConfirmation) {
+  // because signup logs the user in right before showing it, and the
+  // submitting window is exempt: login() flips isLoggedIn mid-flight
+  // (before the resume upload finishes), which otherwise flashes this
+  // screen between Finish and the confirmation step.
+  if (isLoggedIn && !isConfirmation && !submitting) {
     return (
       <div className="flex min-h-dvh w-full flex-col items-center px-4 pb-10 pt-28 sm:py-14">
         <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
