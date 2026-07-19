@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Some Flask endpoints are slash-terminated (/api/resumes/, /api/admin/).
+  // Without this, Next 308-redirects them to the slashless form BEFORE the
+  // /api rewrite runs, and the redirect chain through API Gateway drops the
+  // stage prefix — resume upload/download broke in prod this way. Flask
+  // accepts both forms (strict_slashes disabled in create_app).
+  skipTrailingSlashRedirect: true,
   // Same-origin /api proxy so the HttpOnly refresh-token cookie is always
   // first-party (cross-site cookies to the raw API Gateway URL are dropped
   // by browsers, which kills session refresh — the prod login loop).
