@@ -2,8 +2,8 @@ import { test, expect, Page } from "@playwright/test";
 
 // Stubbed-backend specs for the account pages users reach from emails and
 // after signup: email confirmation, login/logout, password reset, and the
-// profile page. Mirrors the pattern in registration.spec.ts — these exercise
-// the page contracts, not the API (the API has its own pytest suite).
+// profile page. Mirrors the pattern in registration.spec.ts (these exercise
+// the page contracts, not the API; the API has its own pytest suite).
 
 async function stubLoggedOut(page: Page) {
   await page.route("**/api/auth/session/refresh", (r) =>
@@ -87,8 +87,9 @@ test("confirm email tells an already-confirmed user they're set", async ({
   page,
 }) => {
   await stubLoggedOut(page);
+  // The API answers a re-confirm with 200 (idempotent), not an error.
   await page.route("**/api/accounts/confirm_email", (r) =>
-    r.fulfill({ status: 400, json: { msg: "Email is already confirmed" } }),
+    r.fulfill({ status: 200, json: { msg: "Email already confirmed" } }),
   );
 
   await page.goto("/confirm_email/reused-token");

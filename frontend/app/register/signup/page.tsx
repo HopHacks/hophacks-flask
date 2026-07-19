@@ -1099,7 +1099,7 @@ export default function SignUpPage() {
         return;
       }
     } catch {
-      // If the check fails, allow proceeding — the create endpoint will catch duplicates
+      // If the check fails, allow proceeding; the create endpoint will catch duplicates.
     } finally {
       setChecking(false);
     }

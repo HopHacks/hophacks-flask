@@ -57,6 +57,10 @@ def create_app(config_file='config/config.json'):
             'http://localhost:3000',
             'http://localhost:3100',
         ]
+    # Normalize to bare lowercase scheme://host so LINK_ORIGINS matching (which
+    # compares an urlsplit-derived origin) tolerates a trailing slash or casing
+    # in the CORS_ORIGINS secret instead of silently rejecting every link.
+    origins = [o.rstrip('/').lower() for o in origins]
     CORS(app, supports_credentials=True, origins=origins)
 
     # Confirm/reset emails embed a client-supplied URL. Only these origins

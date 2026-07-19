@@ -204,6 +204,9 @@ def create():
     if (len(password.encode()) > password_max_bytes):
         return Response('Password is too long', status=400)
 
+    if (not isinstance(profile, dict)):
+        return Response('Invalid profile', status=400)
+
     if (not validate_profile(request)):
         return Response('Missing required profile field', status=400)
 
@@ -523,11 +526,13 @@ def confirm_email_req():
         return jsonify({"msg": "Missing or disallowed confirm_url"}), 400
 
     user = db.users.find_one({'_id': ObjectId(id)})
+    if (user is None):
+        return jsonify({"msg": "Account not found"}), 404
 
     if (user["email_confirmed"]):
         return jsonify({"msg": "Email already confirmed" }), 400
 
-    confirm_secret = send_confirmation_email(user['username'], user['hashed'], confirm_url, user['profile']['first_name'])
+    confirm_secret = send_confirmation_email(user['username'], user['hashed'], confirm_url, user['profile'].get('first_name', ''))
 
     db.users.update_one(
         {'_id': ObjectId(id)},
@@ -661,7 +666,7 @@ def confirm_email():
             "status": "applied"
         }
         db.users.update_one({'username': email}, {'$push': {'registrations': new_reg}})
-        send_apply_confirm(user['username'], user['profile']['first_name'])
+        send_apply_confirm(user['username'], user['profile'].get('first_name', ''))
 
     return jsonify({"msg": "Email Confirmed", "email": email}), 200
 
