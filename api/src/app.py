@@ -53,6 +53,7 @@ def create_app(config_file='config/config.json'):
     # BASE_URL is optional: confirm/reset links are built from the request's
     # confirm_url/reset_url, so nothing reads it at runtime today.
     get_opt_config(app, config, 'BASE_URL')
+    get_opt_config(app, config, 'ADMIN_EMAILS')
     get_opt_config(app, config, 'SLACK_WEBHOOK')
     get_opt_config(app, config, 'DISCORD_WEBHOOK')
 

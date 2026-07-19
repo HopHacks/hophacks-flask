@@ -67,6 +67,17 @@ export async function getStats(): Promise<AdminStats> {
   return r.data;
 }
 
+export async function getAdmins(): Promise<string[]> {
+  const r = await axios.get("/api/admin/admins");
+  return r.data.admins ?? [];
+}
+
+/** Promote an existing account to admin. Resolves to the server message. */
+export async function promoteAdmin(username: string): Promise<string> {
+  const r = await axios.post("/api/admin/admins", { username });
+  return r.data.msg ?? "promoted";
+}
+
 export async function downloadCsv(): Promise<void> {
   const r = await axios.get("/api/admin/export", { responseType: "blob" });
   const url = URL.createObjectURL(r.data);

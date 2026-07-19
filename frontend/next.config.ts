@@ -20,6 +20,16 @@ const nextConfig: NextConfig = {
   //   the deployed site). Production builds also ignore
   //   NEXT_PUBLIC_BACKENDURL entirely (see configureAxios in
   //   app/util/auth.tsx).
+  // The admin console used to live at three separate routes.
+  async redirects() {
+    return ["/overview", "/applications", "/stats", "/accounts"].map(
+      (source) => ({
+        source,
+        destination: "/admin",
+        permanent: false,
+      }),
+    );
+  },
   async rewrites() {
     const target =
       process.env.BACKEND_ORIGIN ??
