@@ -67,6 +67,10 @@ export async function getStats(): Promise<AdminStats> {
   return r.data;
 }
 
+/** Permanently delete a non-admin account (test/junk registrations). */
+export const deleteUser = (username: string) =>
+  axios.delete("/api/admin/users", { data: { username } });
+
 export async function getAdmins(): Promise<string[]> {
   const r = await axios.get("/api/admin/admins");
   return r.data.admins ?? [];
