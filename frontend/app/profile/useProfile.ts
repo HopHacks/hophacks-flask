@@ -21,7 +21,9 @@ export type SaveState = "idle" | "saving" | "saved" | "error";
 export function useProfile() {
   const [rawProfile, setRawProfile] = useState<Record<string, unknown>>({});
   const [values, setValues] = useState<ProfileFormValues | null>(null);
-  const [savedValues, setSavedValues] = useState<ProfileFormValues | null>(null);
+  const [savedValues, setSavedValues] = useState<ProfileFormValues | null>(
+    null,
+  );
   const [loadError, setLoadError] = useState(false);
   const [errors, setErrors] = useState<ProfileFormErrors>({});
   const [saveState, setSaveState] = useState<SaveState>("idle");
