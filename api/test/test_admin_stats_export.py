@@ -17,8 +17,8 @@ def test_stats_aggregation(client, test_db, test_mail):
     register_confirmed(client, test_mail, create_json3)  # c - Johns Hopkins
     admin = admin_token(client, test_db)
 
-    a_id = str(test_db.users.find_one({'username': 'a'})['_id'])
-    b_id = str(test_db.users.find_one({'username': 'b'})['_id'])
+    a_id = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
+    b_id = str(test_db.users.find_one({'username': 'b@test.com'})['_id'])
     client.post('/api/registrations/accept', json={'users': [a_id, b_id]}, headers=bearer(admin))
 
     res = client.get('/api/admin/stats', headers=bearer(admin))
@@ -52,5 +52,5 @@ def test_export_csv_content(client, test_db, test_mail):
     assert res.mimetype == 'text/csv'
     lines = [l for l in res.get_data(as_text=True).splitlines() if l.strip()]
     assert lines[0].startswith('email,first_name,last_name')
-    assert any(line.startswith('a,') for line in lines[1:])
+    assert any(line.startswith('a@test.com,') for line in lines[1:])
     assert len(lines) == 2  # header + one registrant

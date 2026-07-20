@@ -24,6 +24,6 @@ def test_login_does_not_create_registration(client, test_db, test_mail):
     # Registration is owned by confirm_email; repeated logins must not add rows.
     client.post("/api/auth/login", json=login_json)
     client.post("/api/auth/login", json=login_json)
-    user = test_db.users.find_one({'username': "a"})
+    user = test_db.users.find_one({'username': "a@test.com"})
     event_regs = [r for r in user["registrations"] if r["event"] == EVENT_NAME]
     assert len(event_regs) == 1

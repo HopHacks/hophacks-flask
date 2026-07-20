@@ -1,7 +1,7 @@
 from db import db
 import re
 
-from flask import Flask, jsonify, request, Blueprint
+from flask import Flask, jsonify, request, Blueprint, current_app
 from flask_jwt_extended import (
     jwt_required, create_access_token,
     jwt_refresh_token_required, create_refresh_token,
@@ -11,6 +11,7 @@ from flask_jwt_extended import (
 import bcrypt
 from bson.objectid import ObjectId
 from registrations import send_apply_confirm
+from accounts import username_filter
 
 auth_api = Blueprint('auth', __name__)
 
@@ -59,7 +60,10 @@ def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
 
-    user = db.users.find_one({'username': re.compile('^' + re.escape(username) + '$', re.IGNORECASE)})
+    if (not isinstance(username, str) or not isinstance(password, str)):
+        return jsonify({'msg': 'Bad username or password'}), 401
+
+    user = db.users.find_one(username_filter(username))
     if (user is None):
         return jsonify({'msg': 'Bad username or password'}), 401
 
@@ -68,6 +72,15 @@ def login():
     #if (user["email_confirmed"] == False):
         #print("not allowed")
         #return jsonify({'msg': 'Email not confirmed'}), 403
+
+    # Bootstrap: accounts listed in ADMIN_EMAILS (comma-separated config,
+    # from the deploy secret) become admins on login. This solves the
+    # no-first-admin problem; day-to-day promotion is POST /api/admin/admins.
+    if (not user.get('is_admin')):
+        allowed = current_app.config.get('ADMIN_EMAILS', '')
+        allowed = {e.strip().lower() for e in allowed.split(',') if e.strip()}
+        if (user['username'].lower() in allowed):
+            db.users.update_one({'_id': user['_id']}, {'$set': {'is_admin': True}})
 
     id = str(user['_id'])
     ret = {
@@ -91,10 +104,7 @@ def login():
     # (see accounts.confirm_email), so login does not touch registrations.
     resp = jsonify(ret)
 
-    # secure = true?, max_age?
     set_refresh_cookies(resp, refresh_token)
-    print(resp)
-    print(ret)
     return resp, 200
 
 

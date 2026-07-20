@@ -30,20 +30,20 @@ def test_accept_marks_and_emails(client, test_db, test_mail):
 def test_reject_marks_and_emails(client, test_db, test_mail):
     register_confirmed(client, test_mail, create_json)
     token = admin_token(client, test_db)
-    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
 
     with test_mail.record_messages() as outbox:
         res = client.post('/api/registrations/reject', json={'user': uid}, headers=bearer(token))
         assert res.status_code == 200
         assert len(outbox) == 1
 
-    assert _reg(test_db.users.find_one({'username': 'a'}))['status'] == 'rejected'
+    assert _reg(test_db.users.find_one({'username': 'a@test.com'}))['status'] == 'rejected'
 
 
 def test_waitlist_marks_and_emails(client, test_db, test_mail):
     register_confirmed(client, test_mail, create_json)
     token = admin_token(client, test_db)
-    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
 
     with test_mail.record_messages() as outbox:
         res = client.post('/api/registrations/waitlist', json={'users': [uid]}, headers=bearer(token))
@@ -51,7 +51,7 @@ def test_waitlist_marks_and_emails(client, test_db, test_mail):
         assert len(outbox) == 1
         assert create_json['profile']['first_name'] in outbox[0].html
 
-    reg = _reg(test_db.users.find_one({'username': 'a'}))
+    reg = _reg(test_db.users.find_one({'username': 'a@test.com'}))
     assert reg['status'] == 'waitlisted'
     assert reg['accept'] is False
 
@@ -59,7 +59,7 @@ def test_waitlist_marks_and_emails(client, test_db, test_mail):
 def test_waitlist_requires_admin(client, test_db, test_mail):
     register_confirmed(client, test_mail, create_json)
     token = login_token(client, login_json)  # non-admin
-    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
     res = client.post('/api/registrations/waitlist', json={'users': [uid]}, headers=bearer(token))
     assert res.status_code == 401
 
@@ -67,7 +67,7 @@ def test_waitlist_requires_admin(client, test_db, test_mail):
 def test_waitlisted_then_accepted_enables_rsvp(client, test_db, test_mail):
     register_confirmed(client, test_mail, create_json)
     admin = admin_token(client, test_db)
-    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
 
     client.post('/api/registrations/waitlist', json={'users': [uid]}, headers=bearer(admin))
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -75,18 +75,18 @@ def test_waitlisted_then_accepted_enables_rsvp(client, test_db, test_mail):
     user_token = login_token(client, login_json)
     res = client.post('/api/registrations/rsvp/rsvp', json={'event': EVENT_NAME}, headers=bearer(user_token))
     assert res.status_code == 200
-    assert _reg(test_db.users.find_one({'username': 'a'}))['status'] == 'rsvped'
+    assert _reg(test_db.users.find_one({'username': 'a@test.com'}))['status'] == 'rsvped'
 
 
 def test_checkin_marks(client, test_db, test_mail):
     register_confirmed(client, test_mail, create_json)
     admin = admin_token(client, test_db)
-    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
 
     res = client.post('/api/registrations/check_in', json={'user': uid}, headers=bearer(admin))
     assert res.status_code == 200
-    reg = _reg(test_db.users.find_one({'username': 'a'}))
+    reg = _reg(test_db.users.find_one({'username': 'a@test.com'}))
     assert reg['checkin'] is True
     assert reg['status'] == 'checked_in'
 
@@ -94,6 +94,6 @@ def test_checkin_marks(client, test_db, test_mail):
 def test_checkin_requires_admin(client, test_db, test_mail):
     register_confirmed(client, test_mail, create_json)
     token = login_token(client, login_json)
-    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
     res = client.post('/api/registrations/check_in', json={'user': uid}, headers=bearer(token))
     assert res.status_code == 401

@@ -9,6 +9,7 @@ import {
   waitlist,
   reject,
   checkIn,
+  deleteUser,
   openResume,
   downloadCsv,
   getUsers,
@@ -304,6 +305,22 @@ export default function ApplicationsPage() {
                           Resume
                         </button>
                       ) : null}
+                      <button
+                        disabled={isBusy}
+                        className="rounded border border-red-300 px-2 py-1 text-red-600 hover:bg-red-50 disabled:opacity-50"
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              `Permanently delete ${u.username}? This removes the account and resume; it cannot be undone.`,
+                            )
+                          )
+                            run("Deleted.", () => deleteUser(u.username), [
+                              u.id,
+                            ]);
+                        }}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </td>
                 </tr>

@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAuth } from "@/app/util/auth";
 import HeroTitle from "../hero/HeroTitle";
 import SocialLinks from "../hero/SocialLinks";
+import GetInvolved from "../hero/GetInvolved";
 
 const HERO_LAYERS = {
   backClouds: "/hero/back-clouds.webp",
@@ -42,7 +44,13 @@ function SceneLayer({
   );
 }
 
+const CTA_CLS =
+  "relative z-50 rounded-2xl bg-recap-gold px-6 py-3 text-base font-bold text-white shadow-[0_0_30px_rgba(255,181,31,0.35)] transition-shadow duration-300 hover:shadow-[0_0_45px_rgba(255,181,31,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80";
+
 export default function HeroSection() {
+  // null while the session check is in flight — render no CTA yet so a
+  // logged-in user never sees a "Register Now" flash.
+  const { isLoggedIn } = useAuth();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [cloudsParted, setCloudsParted] = useState(false);
 
@@ -90,15 +98,26 @@ export default function HeroSection() {
 
           <div className="absolute inset-x-0 bottom-[clamp(9rem,26vh,17rem)] z-10 flex flex-col items-center gap-3 px-6 text-center font-sans">
             <HeroTitle />
-            <p className="text-base font-normal text-white/90 sm:text-lg">
-              Applications are open — register now.
-            </p>
-            <Link
-              href="/register/signup"
-              className="relative z-50 rounded-2xl bg-recap-gold px-6 py-3 text-base font-bold text-white shadow-[0_0_30px_rgba(255,181,31,0.35)] transition-shadow duration-300 hover:shadow-[0_0_45px_rgba(255,181,31,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
-            >
-              Register Now
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <p className="text-base font-normal text-white/90 sm:text-lg">
+                  Your application is in! You&apos;ll hear back from us shortly.
+                </p>
+                <Link href="/profile" className={CTA_CLS}>
+                  My Profile
+                </Link>
+              </>
+            ) : isLoggedIn === false ? (
+              <>
+                <p className="text-base font-normal text-white/90 sm:text-lg">
+                  Applications are open — apply now.
+                </p>
+                <Link href="/register/signup" className={CTA_CLS}>
+                  Apply Now
+                </Link>
+              </>
+            ) : null}
+            <GetInvolved />
           </div>
 
           <SceneLayer src={HERO_LAYERS.bluebird} alt="" priority />

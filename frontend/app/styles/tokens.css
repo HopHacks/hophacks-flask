@@ -24,6 +24,13 @@
   --color-green-light: #9fcf6c;
   --color-recap-gold: #ffb51f;
 
+  /* Earthy tones sampled from the hero's floating-rock artwork
+     (public/hero/layer2-floating-rocks.webp) — used to warm up
+     logged-in surfaces like the profile card. */
+  --color-rock-light: #cbb9a6;
+  --color-rock: #93796a;
+  --color-rock-dark: #4f4139;
+
   /* Local fonts in public/fonts/ */
   --font-display: Balabeloo, cursive;
   --font-sans: Poppins, ui-sans-serif, sans-serif;

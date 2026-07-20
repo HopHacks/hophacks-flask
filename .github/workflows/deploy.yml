@@ -38,15 +38,28 @@ jobs:
               'SECRET_KEY': os.environ['FLASK_SECRET_KEY'],
               'MONGO_URI': os.environ['MONGO_URI'],
               'MONGO_DB_NAME': os.environ['MONGO_DB_NAME'],
-              'BASE_URL': os.environ['BASE_URL'],
           }
-          if os.environ.get('MAIL_SERVER'):
+          # BASE_URL is optional (app.py falls back to per-request URLs).
+          if os.environ.get('BASE_URL'):
+              config['BASE_URL'] = os.environ['BASE_URL']
+          # Require the full credential set; a half-configured mailer (e.g.
+          # server set but password pending) must stay suppressed, not 500.
+          if os.environ.get('MAIL_SERVER') and os.environ.get('MAIL_PASSWORD'):
               config['MAIL_SERVER'] = os.environ['MAIL_SERVER']
               config['MAIL_PORT'] = int(os.environ['MAIL_PORT'])
               config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
               config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
+              # 'or' (not get-default): unset secrets reach here as empty
+              # strings, and an empty sender/flag must fall back, not pass.
+              config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER') or 'team@hophacks.com'
+              use_tls = (os.environ.get('MAIL_USE_TLS') or 'true').lower()
+              config['MAIL_USE_TLS'] = use_tls not in ('false', '0')
+              use_ssl = (os.environ.get('MAIL_USE_SSL') or 'false').lower()
+              config['MAIL_USE_SSL'] = use_ssl in ('true', '1')
           if os.environ.get('CORS_ORIGINS'):
               config['CORS_ORIGINS'] = os.environ['CORS_ORIGINS']
+          if os.environ.get('ADMIN_EMAILS'):
+              config['ADMIN_EMAILS'] = os.environ['ADMIN_EMAILS']
           if os.environ.get('SLACK_WEBHOOK'):
               config['SLACK_WEBHOOK'] = os.environ['SLACK_WEBHOOK']
           if os.environ.get('DISCORD_WEBHOOK'):
@@ -63,7 +76,11 @@ jobs:
           MAIL_PORT: ${{ secrets.MAIL_PORT }}
           MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
           MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_DEFAULT_SENDER: ${{ secrets.MAIL_DEFAULT_SENDER }}
+          MAIL_USE_TLS: ${{ secrets.MAIL_USE_TLS }}
+          MAIL_USE_SSL: ${{ secrets.MAIL_USE_SSL }}
           CORS_ORIGINS: ${{ secrets.CORS_ORIGINS }}
+          ADMIN_EMAILS: ${{ secrets.ADMIN_EMAILS }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 

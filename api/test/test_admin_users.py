@@ -11,7 +11,7 @@ def test_users_no_query_ok(client, test_db, test_mail):
     # No ?query= must not 500 (regression: None string concatenation in regex)
     res = client.get('/api/admin/users', headers=bearer(admin))
     assert res.status_code == 200
-    assert 'a' in [u['username'] for u in res.json['users']]
+    assert 'a@test.com' in [u['username'] for u in res.json['users']]
 
 
 def test_users_returns_current_event_registrants(client, test_db, test_mail):

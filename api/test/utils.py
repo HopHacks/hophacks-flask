@@ -30,10 +30,15 @@ def _profile(first_name, last_name, school, **overrides):
         "school": school,
         "level_of_study": "Undergraduate University (3+ year)",
         "country": "United States of America",
+        "dietary_restrictions": "None",
+        "tshirt_size": "M",
         # optional demographic fields
         "gender": "Prefer not to answer",
         "major": "Computer science, computer engineering, or software engineering",
         "race_ethnicity": "Asian / Pacific Islander",
+        # application essays (required at create)
+        "essay_project": "A project idea worth building.",
+        "essay_team": "Looking to meet a great team.",
         # MLH consent checkboxes
         "mlh_code_of_conduct": True,
         "mlh_data_sharing": True,
@@ -44,52 +49,52 @@ def _profile(first_name, last_name, school, **overrides):
 
 
 create_json = {
-    "username": "a",
-    "password": "a",
-    "confirm_url": "test.com/confirm",
+    "username": "a@test.com",
+    "password": "password-a",
+    "confirm_url": "http://localhost:3000/confirm",
     "profile": _profile("Andrew", "Wong", "Cornell University"),
 }
 
 login_json = {
-    "username": "a",
-    "password": "a"
+    "username": "a@test.com",
+    "password": "password-a"
 }
 
 create_json2 = {
-    "username": "b",
-    "password": "b",
-    "confirm_url": "test.com/confirm",
+    "username": "b@test.com",
+    "password": "password-b",
+    "confirm_url": "http://localhost:3000/confirm",
     "profile": _profile("Elaine", "Wong", "Johns Hopkins University"),
 }
 
 login_json2 = {
-    "username": "b",
-    "password": "b"
+    "username": "b@test.com",
+    "password": "password-b"
 }
 
 create_json3 = {
-    "username": "c",
-    "password": "c",
-    "confirm_url": "test.com/confirm",
+    "username": "c@test.com",
+    "password": "password-c",
+    "confirm_url": "http://localhost:3000/confirm",
     "profile": _profile("Jason", "Zhang", "Johns Hopkins University"),
 }
 
 login_json3 = {
-    "username": "c",
-    "password": "c"
+    "username": "c@test.com",
+    "password": "password-c"
 }
 
 # Negative variants: required MLH consents not accepted.
 create_json_no_coc = {
-    "username": "d",
-    "password": "d",
-    "confirm_url": "test.com/confirm",
+    "username": "d@test.com",
+    "password": "password-d",
+    "confirm_url": "http://localhost:3000/confirm",
     "profile": _profile("Dana", "Cho", "Cornell University", mlh_code_of_conduct=False),
 }
 
 create_json_no_data = {
-    "username": "e",
-    "password": "e",
-    "confirm_url": "test.com/confirm",
+    "username": "e@test.com",
+    "password": "password-e",
+    "confirm_url": "http://localhost:3000/confirm",
     "profile": _profile("Evan", "Diaz", "Cornell University", mlh_data_sharing=False),
 }

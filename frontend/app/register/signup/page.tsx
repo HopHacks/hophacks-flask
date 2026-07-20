@@ -6,9 +6,17 @@ import axios from "axios";
 import { useAuth } from "@/app/util/auth";
 import Combobox from "@/app/components/form/Combobox";
 import HomeLink from "@/app/components/HomeLink";
+import {
+  isJhuSchool,
+  validateLinkedIn,
+  validatePhone,
+} from "@/app/profile/schema";
 import COUNTRIES from "./data/countries";
+import { EVENT_TAGLINE } from "@/app/util/event";
 import {
   AGES,
+  EMAIL_RE,
+  PASSWORD_RE,
   LEVELS_OF_STUDY,
   MAJORS,
   PRONOUNS,
@@ -75,7 +83,12 @@ function ErrorNote({ msg }: { msg: string }) {
   );
 }
 
-const STEP_LABELS = ["Account", "Basic Info", "Additional Info", "Avatar"];
+const ESSAY_WORD_LIMIT = 300;
+function wordCount(text: string): number {
+  return text.trim() ? text.trim().split(/\s+/).length : 0;
+}
+
+const STEP_LABELS = ["Account", "Basic Info", "Application", "Avatar"];
 
 function StepProgress({ current }: { current: number }) {
   return (
@@ -103,14 +116,14 @@ function Select({
   options,
   placeholder = "Select…",
 }: {
-  value?: string;
+  value: string;
   onChange: (v: string) => void;
   options: readonly string[];
   placeholder?: string;
 }) {
   return (
     <select
-      {...(value === undefined ? { defaultValue: "" } : { value })}
+      value={value}
       onChange={(e) => onChange(e.target.value)}
       className={INPUT_CLS}
     >
@@ -136,6 +149,7 @@ type StepAccountProps = {
   passwordConfirm: string;
   setPasswordConfirm: (v: string) => void;
   confirmMsg: string;
+  checking: boolean;
   onNext: () => void;
 };
 
@@ -147,10 +161,17 @@ function StepAccount({
   passwordConfirm,
   setPasswordConfirm,
   confirmMsg,
+  checking,
   onNext,
 }: StepAccountProps) {
   return (
-    <div className="flex flex-col gap-5">
+    <form
+      className="flex flex-col gap-5"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onNext();
+      }}
+    >
       <Field label="Email address">
         <input
           type="email"
@@ -164,7 +185,7 @@ function StepAccount({
       <Field label="Password">
         <input
           type="password"
-          placeholder="6–25 characters, one number and one special character"
+          placeholder="8–25 characters, one number and one special character"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className={INPUT_CLS}
@@ -186,11 +207,11 @@ function StepAccount({
         <Link href="/register/login" className={BTN_SECONDARY}>
           Back
         </Link>
-        <button type="button" className={BTN_PRIMARY} onClick={onNext}>
-          Next
+        <button type="submit" className={BTN_PRIMARY} disabled={checking}>
+          {checking ? "Checking…" : "Next"}
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
@@ -224,7 +245,9 @@ type StepProfileProps = {
   setLast_name: (v: string) => void;
   age: string;
   setAge: (v: string) => void;
+  gender: string;
   setGender: (v: string) => void;
+  ethnicity: string;
   setEthnicity: (v: string) => void;
   phone_number: string;
   setPhone_number: (v: string) => void;
@@ -232,9 +255,13 @@ type StepProfileProps = {
   setSchool: (v: string) => void;
   otherSchool: string;
   setOtherSchool: (v: string) => void;
+  major: string;
   setMajor: (v: string) => void;
+  grad: string;
   setGrad: (v: string) => void;
+  grad_month: string;
   setGrad_month: (v: string) => void;
+  grad_year: string;
   setGrad_year: (v: string) => void;
   country: string;
   setCountry: (v: string) => void;
@@ -250,7 +277,9 @@ function StepProfile({
   setLast_name,
   age,
   setAge,
+  gender,
   setGender,
+  ethnicity,
   setEthnicity,
   phone_number,
   setPhone_number,
@@ -258,9 +287,13 @@ function StepProfile({
   setSchool,
   otherSchool,
   setOtherSchool,
+  major,
   setMajor,
+  grad,
   setGrad,
+  grad_month,
   setGrad_month,
+  grad_year,
   setGrad_year,
   country,
   setCountry,
@@ -269,7 +302,13 @@ function StepProfile({
   onBack,
 }: StepProfileProps) {
   return (
-    <div className="flex flex-col gap-5">
+    <form
+      className="flex flex-col gap-5"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onNext();
+      }}
+    >
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Field label="First name">
           <input
@@ -326,15 +365,19 @@ function StepProfile({
       )}
 
       <Field label="Level of study">
-        <Select onChange={setGrad} options={LEVELS_OF_STUDY} />
+        <Select value={grad} onChange={setGrad} options={LEVELS_OF_STUDY} />
       </Field>
 
       <div className="grid grid-cols-2 gap-5">
         <Field label="Graduation month">
-          <Select onChange={setGrad_month} options={MONTHS} />
+          <Select
+            value={grad_month}
+            onChange={setGrad_month}
+            options={MONTHS}
+          />
         </Field>
         <Field label="Graduation year">
-          <Select onChange={setGrad_year} options={YEARS} />
+          <Select value={grad_year} onChange={setGrad_year} options={YEARS} />
         </Field>
       </div>
 
@@ -348,15 +391,19 @@ function StepProfile({
       </Field>
 
       <Field label="Field of study">
-        <Select onChange={setMajor} options={MAJORS} />
+        <Select value={major} onChange={setMajor} options={MAJORS} />
       </Field>
 
       <Field label="Gender">
-        <Select onChange={setGender} options={GENDERS} />
+        <Select value={gender} onChange={setGender} options={GENDERS} />
       </Field>
 
       <Field label="Race / ethnicity">
-        <Select onChange={setEthnicity} options={ETHNICITIES} />
+        <Select
+          value={ethnicity}
+          onChange={setEthnicity}
+          options={ETHNICITIES}
+        />
       </Field>
 
       <ErrorNote msg={errorMsg} />
@@ -364,11 +411,11 @@ function StepProfile({
         <button type="button" className={BTN_SECONDARY} onClick={onBack}>
           Back
         </button>
-        <button type="button" className={BTN_PRIMARY} onClick={onNext}>
+        <button type="submit" className={BTN_PRIMARY}>
           Next
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
@@ -388,7 +435,7 @@ const HOW_OPTIONS = [
   "Linkedin",
   "Google",
   "Major League Hacking",
-  "Email Listerv",
+  "Email Listserv",
   "Friend",
   "On Campus Flyers",
   "In Class Promotion",
@@ -398,15 +445,28 @@ const HOW_OPTIONS = [
 const YES_NO = ["Yes", "No"];
 
 type StepChecksProps = {
+  first_hackathon: string;
   setFirst_hackathon: (v: string) => void;
+  first_hophacks: string;
   setFirst_hophacks: (v: string) => void;
+  learn_about_us: string;
   setLearn_about_us: (v: string) => void;
+  pronouns: string;
   setPronouns: (v: string) => void;
+  dietary: string;
   setDietary: (v: string) => void;
+  dietaryOther: string;
+  setDietaryOther: (v: string) => void;
+  tshirt: string;
   setTshirt: (v: string) => void;
+  underrepresented: string;
   setUnderrepresented: (v: string) => void;
   linkedIn: string;
   setLinkedIn: (v: string) => void;
+  essayProject: string;
+  setEssayProject: (v: string) => void;
+  essayTeam: string;
+  setEssayTeam: (v: string) => void;
   resumeFile: File | null;
   setResumeFile: (f: File | null) => void;
   resumeChecked: boolean;
@@ -445,15 +505,28 @@ function Check({
 }
 
 function StepChecks({
+  first_hackathon,
   setFirst_hackathon,
+  first_hophacks,
   setFirst_hophacks,
+  learn_about_us,
   setLearn_about_us,
+  pronouns,
   setPronouns,
+  dietary,
   setDietary,
+  dietaryOther,
+  setDietaryOther,
+  tshirt,
   setTshirt,
+  underrepresented,
   setUnderrepresented,
   linkedIn,
   setLinkedIn,
+  essayProject,
+  setEssayProject,
+  essayTeam,
+  setEssayTeam,
   resumeFile,
   setResumeFile,
   resumeChecked,
@@ -469,17 +542,35 @@ function StepChecks({
   onBack,
 }: StepChecksProps) {
   return (
-    <div className="flex flex-col gap-6">
+    <form
+      className="flex flex-col gap-6"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onNext();
+      }}
+    >
       <div className="flex flex-col gap-5">
         <SectionTitle>About you</SectionTitle>
         <Field label="Is this your first hackathon?">
-          <Select onChange={setFirst_hackathon} options={YES_NO} />
+          <Select
+            value={first_hackathon}
+            onChange={setFirst_hackathon}
+            options={YES_NO}
+          />
         </Field>
         <Field label="Is this your first time at HopHacks?">
-          <Select onChange={setFirst_hophacks} options={YES_NO} />
+          <Select
+            value={first_hophacks}
+            onChange={setFirst_hophacks}
+            options={YES_NO}
+          />
         </Field>
         <Field label="How did you hear about us?">
-          <Select onChange={setLearn_about_us} options={HOW_OPTIONS} />
+          <Select
+            value={learn_about_us}
+            onChange={setLearn_about_us}
+            options={HOW_OPTIONS}
+          />
         </Field>
         <Field label="LinkedIn profile URL">
           <input
@@ -493,24 +584,90 @@ function StepChecks({
       </div>
 
       <div className="flex flex-col gap-5">
+        <SectionTitle>Application questions</SectionTitle>
+        <p className="-mt-2 text-sm text-white/75">
+          Both questions are required. Responses are capped at{" "}
+          {ESSAY_WORD_LIMIT} words each.
+        </p>
+        <Field label="Share a project, technical or not, that you're genuinely proud of. What was the hardest decision you made, and why did you make it that way?">
+          <>
+            <textarea
+              value={essayProject}
+              onChange={(e) => setEssayProject(e.target.value)}
+              className={INPUT_CLS + " min-h-[140px] resize-y"}
+              placeholder="Your answer…"
+              rows={6}
+            />
+            <span
+              className={`text-xs ${wordCount(essayProject) > ESSAY_WORD_LIMIT ? "text-red-300" : "text-white/60"}`}
+            >
+              {wordCount(essayProject)} / {ESSAY_WORD_LIMIT} words
+            </span>
+          </>
+        </Field>
+        <Field label="Tell us about a time you worked in a team. What role did you play, and what were your strengths and weaknesses?">
+          <>
+            <textarea
+              value={essayTeam}
+              onChange={(e) => setEssayTeam(e.target.value)}
+              className={INPUT_CLS + " min-h-[140px] resize-y"}
+              placeholder="Your answer…"
+              rows={6}
+            />
+            <span
+              className={`text-xs ${wordCount(essayTeam) > ESSAY_WORD_LIMIT ? "text-red-300" : "text-white/60"}`}
+            >
+              {wordCount(essayTeam)} / {ESSAY_WORD_LIMIT} words
+            </span>
+          </>
+        </Field>
+      </div>
+
+      <div className="flex flex-col gap-5">
+        <SectionTitle>Logistics</SectionTitle>
+        <Field label="Dietary restrictions">
+          <Select
+            value={dietary}
+            onChange={(v) => {
+              setDietary(v);
+              if (v !== "Other") setDietaryOther("");
+            }}
+            options={DIETARY}
+          />
+        </Field>
+        {dietary === "Other" && (
+          <Field label="Please describe your dietary restriction">
+            <input
+              type="text"
+              placeholder="E.g. gluten-free, nut allergy…"
+              value={dietaryOther}
+              onChange={(e) => setDietaryOther(e.target.value)}
+              className={INPUT_CLS}
+            />
+          </Field>
+        )}
+        <Field label="T-shirt size">
+          <Select value={tshirt} onChange={setTshirt} options={TSHIRT_SIZES} />
+        </Field>
+      </div>
+
+      <div className="flex flex-col gap-5">
         <SectionTitle>A little more about you</SectionTitle>
         <p className="-mt-2 text-sm text-white/75">
-          These are optional — answer only what you're comfortable with.
+          These are optional — answer only what you&apos;re comfortable with.
         </p>
         <Field label="Pronouns" optional>
-          <Select onChange={setPronouns} options={PRONOUNS} />
+          <Select value={pronouns} onChange={setPronouns} options={PRONOUNS} />
         </Field>
         <Field
           label="Do you identify as part of an underrepresented group in tech?"
           optional
         >
-          <Select onChange={setUnderrepresented} options={UNDERREPRESENTED} />
-        </Field>
-        <Field label="Dietary restrictions" optional>
-          <Select onChange={setDietary} options={DIETARY} />
-        </Field>
-        <Field label="T-shirt size" optional>
-          <Select onChange={setTshirt} options={TSHIRT_SIZES} />
+          <Select
+            value={underrepresented}
+            onChange={setUnderrepresented}
+            options={UNDERREPRESENTED}
+          />
         </Field>
       </div>
 
@@ -601,11 +758,11 @@ function StepChecks({
         <button type="button" className={BTN_SECONDARY} onClick={onBack}>
           Back
         </button>
-        <button type="button" className={BTN_PRIMARY} onClick={onNext}>
+        <button type="submit" className={BTN_PRIMARY}>
           Next
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
@@ -739,7 +896,13 @@ function StepImage({
   const [colorSelector, setColorSelector] = useState<ColorCategory>("Body");
 
   return (
-    <div className="flex flex-col gap-6">
+    <form
+      className="flex flex-col gap-6"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onNext();
+      }}
+    >
       <p className="text-center text-lg font-bold text-white">
         Customize your blue jay!
       </p>
@@ -803,16 +966,11 @@ function StepImage({
         >
           Back
         </button>
-        <button
-          type="button"
-          className={BTN_PRIMARY}
-          onClick={onNext}
-          disabled={submitting}
-        >
+        <button type="submit" className={BTN_PRIMARY} disabled={submitting}>
           {submitting ? "Creating account…" : "Finish"}
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
@@ -828,12 +986,12 @@ function StepConfirmation({ resumeFailed }: { resumeFailed: boolean }) {
         ✓
       </div>
       <p className="text-xl font-bold text-white">
-        You're registered! Check your email to confirm your address and complete
-        your application.
+        Application submitted! Check your email to confirm your address and
+        complete the process.
       </p>
       {resumeFailed && (
         <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
-          Your resume didn't upload — please re-add it from your profile.
+          Your resume didn&apos;t upload — please re-add it from your profile.
         </p>
       )}
       <Link href="/profile" className={BTN_PRIMARY}>
@@ -842,12 +1000,6 @@ function StepConfirmation({ resumeFailed }: { resumeFailed: boolean }) {
     </div>
   );
 }
-
-// ---- Validation helpers ----
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PASSWORD_RE =
-  /^(?=.*[0-9])(?=.*[!@#$%^&*)(+=._-])[a-zA-Z0-9!@#$%^&*)(+=._-]{6,25}$/;
 
 // ---- Main page ----
 
@@ -858,9 +1010,10 @@ const IMAGE = 3;
 const CONFIRMATION = 4;
 
 export default function SignUpPage() {
-  const { login } = useAuth();
+  const { login, isLoggedIn } = useAuth();
 
   const [activePage, setActivePage] = useState(ACCOUNT);
+  const [checking, setChecking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [resumeFailed, setResumeFailed] = useState(false);
 
@@ -891,9 +1044,12 @@ export default function SignUpPage() {
   const [learn_about_us, setLearn_about_us] = useState("");
   const [pronouns, setPronouns] = useState("");
   const [dietary, setDietary] = useState("");
+  const [dietaryOther, setDietaryOther] = useState("");
   const [tshirt, setTshirt] = useState("");
   const [underrepresented, setUnderrepresented] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
+  const [essayProject, setEssayProject] = useState("");
+  const [essayTeam, setEssayTeam] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeChecked, setResumeChecked] = useState(false);
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
@@ -913,32 +1069,41 @@ export default function SignUpPage() {
   // ---- Step handlers ----
 
   async function handleAccountNext() {
-    if (!username || !password || !passwordConfirm) {
+    // Trim before validating: pasted emails (mobile autocomplete) often
+    // carry a trailing space, and the backend trims on its side too.
+    const email = username.trim();
+    if (email !== username) setUsername(email);
+    if (!email || !password || !passwordConfirm) {
       setConfirmMsg("* Required field cannot be empty");
       return;
     }
-    if (!EMAIL_RE.test(username)) {
+    if (!EMAIL_RE.test(email)) {
       setConfirmMsg("Please enter a valid email address.");
       return;
     }
-    try {
-      const response = await axios.get(`/api/accounts/check/${username}`);
-      if (response.data.exist) {
-        setConfirmMsg("Email is already in use.");
-        return;
-      }
-    } catch {
-      // If the check fails, allow proceeding — the create endpoint will catch duplicates
-    }
     if (!PASSWORD_RE.test(password)) {
       setConfirmMsg(
-        "Please enter a password between 7 to 25 characters which contain at least one numeric digit and a special character.",
+        "Please enter a password between 8 and 25 characters, using letters, numbers, and the special characters !@#$%^&*)(+=._- with at least one number and one special character.",
       );
       return;
     }
     if (password !== passwordConfirm) {
       setConfirmMsg("Confirm password must match with the password.");
       return;
+    }
+    setChecking(true);
+    try {
+      const response = await axios.get(
+        `/api/accounts/check/${encodeURIComponent(email)}`,
+      );
+      if (response.data.exist) {
+        setConfirmMsg("Email is already in use.");
+        return;
+      }
+    } catch {
+      // If the check fails, allow proceeding; the create endpoint will catch duplicates.
+    } finally {
+      setChecking(false);
     }
     setConfirmMsg("");
     setErrorMsg("");
@@ -982,8 +1147,11 @@ export default function SignUpPage() {
       setErrorMsg("* Please select a race / ethnicity.");
       return;
     }
-    if (!phone_number) {
-      setErrorMsg("* Please enter a valid phone number.");
+    const phoneErr = phone_number
+      ? validatePhone(phone_number)
+      : "* Please enter a valid phone number.";
+    if (phoneErr) {
+      setErrorMsg(phoneErr);
       return;
     }
     if (!grad) {
@@ -1015,8 +1183,41 @@ export default function SignUpPage() {
       setErrorMsg("* Please select how you heard about us.");
       return;
     }
-    if (!linkedIn) {
-      setErrorMsg("* Please enter your LinkedIn profile url.");
+    const linkedInErr = linkedIn
+      ? validateLinkedIn(linkedIn)
+      : "* Please enter your LinkedIn profile url.";
+    if (linkedInErr) {
+      setErrorMsg(linkedInErr);
+      return;
+    }
+    if (!essayProject.trim()) {
+      setErrorMsg("* Please answer the first application question.");
+      return;
+    }
+    if (wordCount(essayProject) > ESSAY_WORD_LIMIT) {
+      setErrorMsg(`* First answer must be ${ESSAY_WORD_LIMIT} words or fewer.`);
+      return;
+    }
+    if (!essayTeam.trim()) {
+      setErrorMsg("* Please answer the second application question.");
+      return;
+    }
+    if (wordCount(essayTeam) > ESSAY_WORD_LIMIT) {
+      setErrorMsg(
+        `* Second answer must be ${ESSAY_WORD_LIMIT} words or fewer.`,
+      );
+      return;
+    }
+    if (!dietary) {
+      setErrorMsg("* Please select your dietary restrictions.");
+      return;
+    }
+    if (dietary === "Other" && !dietaryOther.trim()) {
+      setErrorMsg("* Please describe your dietary restriction.");
+      return;
+    }
+    if (!tshirt) {
+      setErrorMsg("* Please select your t-shirt size.");
       return;
     }
     if (!resumeChecked || !resumeFile) {
@@ -1052,15 +1253,18 @@ export default function SignUpPage() {
       major,
       grad_month,
       grad_year,
-      is_jhu: school === "Johns Hopkins University",
+      is_jhu: isJhuSchool(school),
       pronouns,
       dietary_restrictions: dietary,
+      dietary_restrictions_other: dietary === "Other" ? dietaryOther : "",
       tshirt_size: tshirt,
       underrepresented_group: underrepresented,
       first_hackathon,
       first_hophacks,
       learn_about_us,
       linkedin_url: linkedIn,
+      essay_project: essayProject,
+      essay_team: essayTeam,
       pfp: `${stage}_${body}_1_${accent}_${accessory}_${avatarObject}`,
       mlh_code_of_conduct: conductCodeChecked,
       mlh_data_sharing: eventLogisticsChecked,
@@ -1089,8 +1293,23 @@ export default function SignUpPage() {
         // resume never reached the server; tell the user to re-add it.
         if (resumeFile) setResumeFailed(true);
       }
-    } catch {
-      setErrorMsg("Error creating account. Please try again.");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        // Retrying can never succeed here: the account already exists, or a
+        // lost response means an earlier attempt did go through. Point the
+        // user at the Sign in link under the card instead.
+        setErrorMsg(
+          "This email is already registered. Use the Sign in link below to log in instead.",
+        );
+      } else if (
+        axios.isAxiosError(error) &&
+        typeof error.response?.data === "string" &&
+        error.response.data
+      ) {
+        setErrorMsg(error.response.data);
+      } else {
+        setErrorMsg("Error creating account. Please try again.");
+      }
       setSubmitting(false);
       return;
     }
@@ -1102,15 +1321,33 @@ export default function SignUpPage() {
 
   const isConfirmation = activePage === CONFIRMATION;
 
+  // A logged-in user already has an account; hide the wizard so accounts
+  // can't be double-registered. The confirmation step stays reachable
+  // because signup logs the user in right before showing it, and the
+  // submitting window is exempt: login() flips isLoggedIn mid-flight
+  // (before the resume upload finishes), which otherwise flashes this
+  // screen between Finish and the confirmation step.
+  if (isLoggedIn && !isConfirmation && !submitting) {
+    return (
+      <div className="flex min-h-dvh w-full flex-col items-center px-4 pb-10 pt-28 sm:py-14">
+        <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
+          You&apos;ve already applied
+        </h1>
+        <p className="mb-8 mt-1 text-center text-white/90">{EVENT_TAGLINE}</p>
+        <Link href="/profile" className={BTN_PRIMARY}>
+          My Profile
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="relative flex min-h-dvh w-full flex-col items-center px-4 pb-10 pt-24 sm:pb-14 sm:pt-20">
       <HomeLink />
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
-        {isConfirmation ? "Welcome to HopHacks!" : "Register for HopHacks"}
+        {isConfirmation ? "Welcome to HopHacks!" : "Apply to HopHacks"}
       </h1>
-      <p className="mb-8 mt-1 text-center text-white/90">
-        Fall 2026 · Johns Hopkins University
-      </p>
+      <p className="mb-8 mt-1 text-center text-white/90">{EVENT_TAGLINE}</p>
 
       {!isConfirmation && <StepProgress current={activePage} />}
 
@@ -1125,6 +1362,7 @@ export default function SignUpPage() {
               passwordConfirm={passwordConfirm}
               setPasswordConfirm={setPasswordConfirm}
               confirmMsg={confirmMsg}
+              checking={checking}
               onNext={handleAccountNext}
             />
           )}
@@ -1136,7 +1374,9 @@ export default function SignUpPage() {
               setLast_name={setLast_name}
               age={age}
               setAge={setAge}
+              gender={gender}
               setGender={setGender}
+              ethnicity={ethnicity}
               setEthnicity={setEthnicity}
               phone_number={phone_number}
               setPhone_number={setPhone_number}
@@ -1144,9 +1384,13 @@ export default function SignUpPage() {
               setSchool={setSchool}
               otherSchool={otherSchool}
               setOtherSchool={setOtherSchool}
+              major={major}
               setMajor={setMajor}
+              grad={grad}
               setGrad={setGrad}
+              grad_month={grad_month}
               setGrad_month={setGrad_month}
+              grad_year={grad_year}
               setGrad_year={setGrad_year}
               country={country}
               setCountry={setCountry}
@@ -1160,15 +1404,28 @@ export default function SignUpPage() {
           )}
           {activePage === CHECKS && (
             <StepChecks
+              first_hackathon={first_hackathon}
               setFirst_hackathon={setFirst_hackathon}
+              first_hophacks={first_hophacks}
               setFirst_hophacks={setFirst_hophacks}
+              learn_about_us={learn_about_us}
               setLearn_about_us={setLearn_about_us}
+              pronouns={pronouns}
               setPronouns={setPronouns}
+              dietary={dietary}
               setDietary={setDietary}
+              dietaryOther={dietaryOther}
+              setDietaryOther={setDietaryOther}
+              tshirt={tshirt}
               setTshirt={setTshirt}
+              underrepresented={underrepresented}
               setUnderrepresented={setUnderrepresented}
               linkedIn={linkedIn}
               setLinkedIn={setLinkedIn}
+              essayProject={essayProject}
+              setEssayProject={setEssayProject}
+              essayTeam={essayTeam}
+              setEssayTeam={setEssayTeam}
               resumeFile={resumeFile}
               setResumeFile={setResumeFile}
               resumeChecked={resumeChecked}
