@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/app/util/auth";
+import HomeLink from "@/app/components/HomeLink";
 
 export default function LoginPage() {
   const { login, isLoggedIn } = useAuth();
@@ -27,7 +28,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
+    <div className="relative flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
+      <HomeLink />
       <div
         className="min-w-[300px] max-w-[700px] w-[70%] flex flex-col rounded-2xl p-10"
         style={{ backgroundColor: "rgba(0, 29, 76, 0.9)" }}

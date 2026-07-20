@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/util/auth";
 import { CURRENT_EVENT } from "@/app/util/event";
+import HomeLink from "@/app/components/HomeLink";
 
 const BTN_PRIMARY =
   "px-5 py-3 text-lg font-bold rounded-2xl bg-[#ffb51f] text-white shadow-[0_0_30px_rgba(255,181,31,0.3)] hover:shadow-[0_0_40px_rgba(255,181,31,0.5)] transition-shadow duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
@@ -192,7 +193,8 @@ export default function ProfileClient() {
   const view = statusView(emailConfirmed, registration);
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center p-5">
+    <div className="relative flex min-h-dvh flex-col items-center justify-center p-5 pt-16 sm:pt-5">
+      <HomeLink />
       <div className="w-full min-w-[300px] max-w-[640px] rounded-2xl border border-white/25 bg-white/10 p-8 backdrop-blur-sm motion-safe:animate-rise sm:p-10">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="font-display text-3xl text-white text-shadow-hero-title sm:text-4xl">
