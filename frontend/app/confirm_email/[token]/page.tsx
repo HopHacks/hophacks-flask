@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import HomeLink from "@/app/components/HomeLink";
 
 export default function ConfirmEmailPage() {
   const { token } = useParams<{ token: string }>();
@@ -27,7 +28,8 @@ export default function ConfirmEmailPage() {
   }, [token]);
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
+    <div className="relative flex flex-col items-center justify-center bg-[url('https://hophacks-website.s3.us-east-1.amazonaws.com/images/auth/auth_bg.png')] bg-cover min-h-dvh">
+      <HomeLink />
       <div
         className="min-w-[300px] max-w-[700px] w-[70%] flex flex-col items-center rounded-2xl p-10 m-5 gap-6"
         style={{ backgroundColor: "rgba(0, 29, 76, 0.9)" }}
