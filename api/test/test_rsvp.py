@@ -13,7 +13,7 @@ def _reg(user):
 def _accept_self(client, test_db, test_mail):
     register_confirmed(client, test_mail, create_json)
     admin = admin_token(client, test_db)
-    uid = str(test_db.users.find_one({'username': 'a'})['_id'])
+    uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
     return login_token(client, login_json)
 
@@ -31,7 +31,7 @@ def test_rsvp_success(client, test_db, test_mail):
         res = client.post('/api/registrations/rsvp/rsvp', json={'event': EVENT_NAME}, headers=bearer(token))
         assert res.status_code == 200
         assert len(outbox) == 1
-    reg = _reg(test_db.users.find_one({'username': 'a'}))
+    reg = _reg(test_db.users.find_one({'username': 'a@test.com'}))
     assert reg['rsvp'] is True
     assert reg['status'] == 'rsvped'
 
@@ -48,7 +48,7 @@ def test_rsvp_cancel(client, test_db, test_mail):
     client.post('/api/registrations/rsvp/rsvp', json={'event': EVENT_NAME}, headers=bearer(token))
     res = client.post('/api/registrations/rsvp/cancel', json={'event': EVENT_NAME}, headers=bearer(token))
     assert res.status_code == 200
-    reg = _reg(test_db.users.find_one({'username': 'a'}))
+    reg = _reg(test_db.users.find_one({'username': 'a@test.com'}))
     assert reg['rsvp'] is False
     assert reg['status'] == 'accepted'
 

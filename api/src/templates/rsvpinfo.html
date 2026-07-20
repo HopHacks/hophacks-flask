@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light only" />
     <meta name="supported-color-schemes" content="light" />
-    <title>HopHacks Fall 2026 Event Info Email</title>
+    <title>HopHacks {{ event_name }} Event Info Email</title>
     <style type="text/css">
       /* Reset styles */
       body,
@@ -166,11 +166,32 @@
                 class="bg-light-blue"
               >
                 <img
-                  src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/HopHacks_Email_Banner_1.png"
+                  src="https://hophacks.com/images/hophacks-logo.png"
                   alt="HopHacks Logo"
-                  width="550"
+                  width="150"
                   style="display: block; max-width: 100%; height: auto"
                 />
+                <p
+                  style="
+                    margin: 18px 0 0 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #001d4c;
+                  "
+                >
+                  HopHacks {{ event_name }}
+                </p>
+                <p
+                  style="
+                    margin: 6px 0 0 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 15px;
+                    color: #333333;
+                  "
+                >
+                  {{ event_dates }} &middot; Johns Hopkins University
+                </p>
               </td>
             </tr>
 
@@ -209,7 +230,7 @@
                         "
                         class="text-muted"
                       >
-                        Thank you for RSVPing to HopHacks Fall 2026!
+                        Thank you for RSVPing to HopHacks {{ event_name }}!
                       </p>
 
                       <!-- Important highlight -->
@@ -254,9 +275,9 @@
                       <div class="info-section">
                         <p class="info-title">Time:</p>
                         <p class="info-content">
-                          Tentatively, check-in will begin on September 12th (Friday) at 6:00PM, and the Opening Ceremony is at 8:00PM!<br><br>
+                          Tentatively, check-in will begin at 6:00PM on the first day of the hackathon, and the Opening Ceremony is at 8:00PM!<br><br>
                           <strong>Note:</strong> Our check-in process is still being finalized, so be on the lookout for another email in the week leading up to the hackathon with final check-in info!<br><br>
-                          Additionally, please plan to leave at 2:30PM or later on September 14th (Sunday) so you have time to attend the Closing Ceremony.
+                          Additionally, please plan to leave at 2:30PM or later on the final day of the hackathon so you have time to attend the Closing Ceremony.
                         </p>
                       </div>
 
@@ -264,7 +285,7 @@
                       <div class="info-section">
                         <p class="info-title">Discord:</p>
                         <p class="info-content">
-                          Please join the HopHacks Fall 2026 Discord <a href="http://discord.gg/8V8wmCWUhH" style="color: #0066cc; text-decoration: underline;">here</a> for the latest updates and announcements. You can get a head start on team forming if needed, and ask questions you may have!
+                          Please join the HopHacks {{ event_name }} Discord <a href="http://discord.gg/8V8wmCWUhH" style="color: #0066cc; text-decoration: underline;">here</a> for the latest updates and announcements. You can get a head start on team forming if needed, and ask questions you may have!
                         </p>
                       </div>
 
@@ -428,7 +449,7 @@
                         "
                         class="text-dark"
                       >
-                        HopHacks Fall 2026 | Johns Hopkins University<br />
+                        HopHacks {{ event_name }} | Johns Hopkins University<br />
                         To contact us, please email
                         <a
                           href="mailto:hophacks@gmail.com"
@@ -437,66 +458,44 @@
                         >hophacks@gmail.com</a>
                       </p>
 
-                      <!-- Social media icons -->
-                      <table
-                        border="0"
-                        cellpadding="0"
-                        cellspacing="0"
-                        align="center"
+                      <!-- Social links -->
+                      <p
+                        style="
+                          margin: 0;
+                          font-family:
+                            Arial, &quot;Helvetica Neue&quot;, Helvetica,
+                            sans-serif;
+                          font-size: 14px;
+                          line-height: 21px;
+                          color: #333333;
+                          text-align: center;
+                        "
+                        class="text-dark"
                       >
-                        <tr>
-                          <td align="center" style="padding: 0 5px">
-                            <a
-                              href="https://www.instagram.com/hophacks/?hl=en"
-                              target="_blank"
-                            >
-                              <img
-                                src="https://wodlub.stripocdn.email/content/assets/img/social-icons/logo-colored/instagram-logo-colored.png"
-                                alt="Instagram"
-                                width="32"
-                                height="32"
-                                style="display: block"
-                              />
-                            </a>
-                          </td>
-                          <td align="center" style="padding: 0 5px">
-                            <a
-                              href="https://www.facebook.com/HopHacks/"
-                              target="_blank"
-                            >
-                              <img
-                                src="https://wodlub.stripocdn.email/content/assets/img/social-icons/logo-colored/facebook-logo-colored.png"
-                                alt="Facebook"
-                                width="32"
-                                height="32"
-                                style="display: block"
-                              />
-                            </a>
-                          </td>
-                          <td align="center" style="padding: 0 5px">
-                            <a href="https://hophacks.com" target="_blank">
-                              <img
-                                src="https://wodlub.stripocdn.email/content/assets/img/other-icons/logo-colored/link-logo-colored.png"
-                                alt="Website"
-                                width="32"
-                                height="32"
-                                style="display: block"
-                              />
-                            </a>
-                          </td>
-                          <td align="center" style="padding: 0 5px">
-                            <a href="mailto:hophacks@gmail.com">
-                              <img
-                                src="https://wodlub.stripocdn.email/content/assets/img/other-icons/logo-colored/mail-logo-colored.png"
-                                alt="Email"
-                                width="32"
-                                height="32"
-                                style="display: block"
-                              />
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
+                        <a
+                          href="https://www.instagram.com/hophacks/?hl=en"
+                          target="_blank"
+                          style="color: #333333; text-decoration: underline"
+                          class="text-dark"
+                          >Instagram</a
+                        >
+                        |
+                        <a
+                          href="https://www.facebook.com/HopHacks/"
+                          target="_blank"
+                          style="color: #333333; text-decoration: underline"
+                          class="text-dark"
+                          >Facebook</a
+                        >
+                        |
+                        <a
+                          href="https://hophacks.com"
+                          target="_blank"
+                          style="color: #333333; text-decoration: underline"
+                          class="text-dark"
+                          >hophacks.com</a
+                        >
+                      </p>
                     </td>
                   </tr>
                 </table>

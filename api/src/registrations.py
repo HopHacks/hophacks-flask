@@ -48,7 +48,6 @@ def send_rsvp_info(users):
             email = user["username"]
             subject = "RSVP Event Info - Hophacks.com"
             msg = Message(recipients=[email],
-                          sender="team@hophacks.com",
                           subject=subject)
 
             msg.body = 'Thank you for confirming your spot to attend Hophacks in-person!'
@@ -61,7 +60,6 @@ def send_acceptances(users):
             email = user["username"]
             subject = "Acceptance Letter - Hophacks.com"
             msg = Message(recipients=[email],
-                          sender="team@hophacks.com",
                           subject=subject)
 
             msg.body = 'Congrats on being accepted to HopHacks!'
@@ -73,7 +71,6 @@ def send_rejections(user):
         email = user["username"]
         subject = "Status Update - HopHacks.com"
         msg = Message(recipients=[email],
-                        sender="team@hophacks.com",
                         subject=subject)
         msg.body = "Thanks for applying, unfortunately we weren't able to accept you into HopHacks."
         msg.html = render_template('email_rejection.html', first_name=user['profile']['first_name'])
@@ -85,7 +82,6 @@ def send_waitlist(users):
             email = user["username"]
             subject = "Waitlist Update - HopHacks.com"
             msg = Message(recipients=[email],
-                          sender="team@hophacks.com",
                           subject=subject)
             msg.body = "You've been placed on the HopHacks waitlist. We'll reach out if a spot opens up."
             msg.html = render_template('email_waitlist.html', first_name=user['profile']['first_name'])
@@ -93,7 +89,6 @@ def send_waitlist(users):
 
 def send_apply_confirm(email, name):
     msg = Message("Received Application - HopHacks.com",
-    sender="team@hophacks.com",
     recipients=[email])
 
     msg.body = 'Thanks for applying to hophacks!'

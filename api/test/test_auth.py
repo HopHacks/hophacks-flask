@@ -6,9 +6,9 @@ from utils import create_json, login_json, login_json2
 def test_bad_login(client):
     response = client.post("/api/accounts/create", json=create_json)
     assert response.status_code == 200
-    response = client.post("/api/auth/login", json={"username": "a", "password": "b"})
+    response = client.post("/api/auth/login", json={"username": "a@test.com", "password": "wrong-password"})
     assert response.status_code == 401
-    response = client.post("/api/auth/login", json={"username": "b", "password": "b"})
+    response = client.post("/api/auth/login", json={"username": "b@test.com", "password": "password-b"})
     assert response.status_code == 401
 
 # This test is a bit monolithic oops
