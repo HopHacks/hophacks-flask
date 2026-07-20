@@ -434,7 +434,7 @@ const HOW_OPTIONS = [
   "Linkedin",
   "Google",
   "Major League Hacking",
-  "Email Listerv",
+  "Email Listserv",
   "Friend",
   "On Campus Flyers",
   "In Class Promotion",
@@ -990,7 +990,7 @@ function StepConfirmation({ resumeFailed }: { resumeFailed: boolean }) {
       </p>
       {resumeFailed && (
         <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
-          Your resume didn't upload — please re-add it from your profile.
+          Your resume didn&apos;t upload — please re-add it from your profile.
         </p>
       )}
       <Link href="/profile" className={BTN_PRIMARY}>
