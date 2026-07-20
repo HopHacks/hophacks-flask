@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "@/app/util/auth";
+import HomeLink from "@/app/components/HomeLink";
 import { EVENT_TAGLINE } from "@/app/util/event";
 
 // Shared styles copied from the signup page's homepage design language (see
@@ -74,6 +75,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-dvh w-full flex-col items-center px-4 pb-10 pt-28 sm:py-14">
+      <HomeLink />
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         Sign In
       </h1>

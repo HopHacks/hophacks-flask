@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { RequireAuth } from "@/app/util/RequireAuth";
 import { useAuth } from "@/app/util/auth";
+import HomeLink from "@/app/components/HomeLink";
 import { ProfileForm } from "./ProfileForm";
 import { ResumeSection } from "./ResumeSection";
 import { StatusSection } from "./StatusSection";
@@ -20,6 +21,7 @@ function ProfileContent() {
 
   return (
     <div className="flex min-h-dvh w-full flex-col items-center px-4 pb-10 pt-28 sm:py-14">
+      <HomeLink />
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         Your Profile
       </h1>
