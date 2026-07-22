@@ -5,11 +5,13 @@ import Overview from "./panels/Overview";
 import Applications from "./panels/Applications";
 import Stats from "./panels/Stats";
 import Admins from "./panels/Admins";
+import JudgeTool from "./panels/JudgeTool";
 
 const TABS = [
   { key: "overview", label: "Overview", panel: <Overview /> },
   { key: "applications", label: "Applications", panel: <Applications /> },
   { key: "stats", label: "Stats", panel: <Stats /> },
+  { key: "judgetool", label: "Judge Tool", panel: <JudgeTool /> },
   { key: "admins", label: "Admins", panel: <Admins /> },
 ] as const;
 
@@ -28,7 +30,7 @@ export default function AdminPage() {
             </div>
             <div className="text-xs text-slate-600">Admin Console</div>
           </div>
-          <nav className="flex gap-2">
+          <nav className="flex flex-wrap gap-2">
             {TABS.map((t) => (
               <button
                 key={t.key}
