@@ -110,7 +110,7 @@ export default function HeroSection() {
             ) : isLoggedIn === false ? (
               <>
                 <p className="text-base font-normal text-white/90 sm:text-lg">
-                  Applications are open — apply now.
+                  September 18&ndash;20, 2026 &middot; Baltimore, MD
                 </p>
                 <Link href="/register/signup" className={CTA_CLS}>
                   Apply Now
