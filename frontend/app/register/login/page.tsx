@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "@/app/util/auth";
+import { getIsAdmin } from "@/app/util/adminApi";
 import HomeLink from "@/app/components/HomeLink";
 import { EVENT_TAGLINE } from "@/app/util/event";
 
@@ -42,6 +43,10 @@ function ErrorNote({ msg }: { msg: string }) {
   );
 }
 
+async function postLoginPath(): Promise<string> {
+  return (await getIsAdmin()) ? "/admin" : "/profile";
+}
+
 export default function LoginPage() {
   const { login, isLoggedIn } = useAuth();
   const router = useRouter();
@@ -50,8 +55,16 @@ export default function LoginPage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
+  // Already authenticated (e.g. refresh cookie) — send admins to the console.
   useEffect(() => {
-    if (isLoggedIn) router.push("/profile");
+    if (isLoggedIn !== true) return;
+    let cancelled = false;
+    postLoginPath().then((path) => {
+      if (!cancelled) router.replace(path);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [isLoggedIn, router]);
 
   async function handleLogin(e: React.FormEvent) {
@@ -60,7 +73,7 @@ export default function LoginPage() {
     setErrorMsg("");
     try {
       await login(email, password);
-      router.push("/profile");
+      router.push(await postLoginPath());
     } catch (error) {
       // Only a 401 means bad credentials; anything else (network failure,
       // 5xx) is on us, so don't send users into password-reset loops.
