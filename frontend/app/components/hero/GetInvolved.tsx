@@ -85,7 +85,7 @@ export default function GetInvolved() {
         aria-controls="get-involved-sponsor-bubble"
         onClick={() => toggle("sponsor")}
       >
-        Interested in sponsoring?
+        Interested in partnering?
         <Caret open={open === "sponsor"} />
       </button>
 
