@@ -200,7 +200,7 @@ def get_all_users_account():
     users = []
     
     for document in cursor:
-        if not document['is_admin']:
+        if not document.get('is_admin'):
             users.append({'id': str(document['_id']), 'username': str(document['username']), 'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations'], 'resume': document.get("resume"), 'vaccination': document.get("vaccination"), 'apply_at': document.get('apply_at')})
         
 

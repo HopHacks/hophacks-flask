@@ -62,3 +62,13 @@ def test_rsvp_view(client, test_db, test_mail):
     client.post('/api/registrations/rsvp/rsvp', json={'event': EVENT_NAME}, headers=bearer(token))
     res = client.get('/api/registrations/rsvp/view', headers=bearer(token))
     assert EVENT_NAME in res.json['rsvpList']
+
+
+def test_rsvp_status_with_no_registrations_returns_false(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    token = login_token(client, login_json)
+    # Regression: an empty registrations list used to IndexError into a 500
+    test_db.users.update_one({'username': 'a@test.com'}, {'$set': {'registrations': []}})
+    res = client.get('/api/registrations/rsvp/status', headers=bearer(token))
+    assert res.status_code == 200
+    assert res.json['status'] is False

@@ -21,3 +21,13 @@ def test_users_returns_current_event_registrants(client, test_db, test_mail):
     assert res.status_code == 200
     assert len(res.json['users']) == 1
     assert res.json['users'][0]['apply_at'] is not None
+
+
+def test_users_tolerates_missing_is_admin(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    # Regression: legacy docs without is_admin used to KeyError into a 500
+    test_db.users.update_one({'username': 'a@test.com'}, {'$unset': {'is_admin': ''}})
+    res = client.get('/api/admin/users', headers=bearer(admin))
+    assert res.status_code == 200
+    assert 'a@test.com' in [u['username'] for u in res.json['users']]
