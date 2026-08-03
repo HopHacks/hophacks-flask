@@ -131,7 +131,7 @@ export default function ApplicationsPage() {
           `skipped ${outcome.skipped.length} (already decided or RSVP'd/checked in)`,
         );
       if (outcome.failed.length > 0)
-        parts.push(`failed ${outcome.failed.length}, kept selected — retry`);
+        parts.push(`failed ${outcome.failed.length}, kept selected for retry`);
       setMessage(`${parts.join(" · ")}.`);
     } catch {
       setMessage("Action failed. Please try again.");
