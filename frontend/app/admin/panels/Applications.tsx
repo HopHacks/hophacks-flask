@@ -5,9 +5,11 @@ import StatCard from "@/components/analytics/StatCard";
 import StatusBadge from "@/components/analytics/StatusBadge";
 import {
   AdminUser,
+  DecisionOutcome,
   accept,
   waitlist,
   reject,
+  revert,
   checkIn,
   deleteUser,
   openResume,
@@ -111,27 +113,66 @@ export default function ApplicationsPage() {
     }
   }
 
-  function bulk(action: "accept" | "waitlist" | "reject") {
+  async function runDecision(
+    verb: string,
+    fn: (ids: string[]) => Promise<DecisionOutcome>,
+    ids: string[],
+  ) {
+    setBusy((prev) => new Set([...prev, ...ids]));
+    setMessage("");
+    try {
+      const outcome = await fn(ids);
+      await load();
+      // Keep failed ids selected so one more click retries exactly those.
+      setSelected(new Set(outcome.failed));
+      const parts = [`${verb} ${outcome.num_changed}`];
+      if (outcome.skipped.length > 0)
+        parts.push(
+          `skipped ${outcome.skipped.length} (already decided or RSVP'd/checked in)`,
+        );
+      if (outcome.failed.length > 0)
+        parts.push(`failed ${outcome.failed.length}, kept selected — retry`);
+      setMessage(`${parts.join(" · ")}.`);
+    } catch {
+      setMessage("Action failed. Please try again.");
+    } finally {
+      setBusy((prev) => {
+        const next = new Set(prev);
+        ids.forEach((i) => next.delete(i));
+        return next;
+      });
+    }
+  }
+
+  const DECISIONS = {
+    accept: { verb: "Accepted", fn: accept, emails: true },
+    waitlist: { verb: "Waitlisted", fn: waitlist, emails: true },
+    reject: { verb: "Rejected", fn: reject, emails: true },
+    revert: { verb: "Reverted", fn: revert, emails: false },
+  } as const;
+
+  function bulk(action: keyof typeof DECISIONS) {
     const ids = [...selected];
     if (ids.length === 0) return;
-    const verb =
-      action === "accept"
-        ? "Accept"
-        : action === "waitlist"
-          ? "Waitlist"
-          : "Reject";
+    const { verb, fn, emails } = DECISIONS[action];
+    const warning = emails ? "This emails all of them." : "No emails are sent.";
     if (
       !window.confirm(
-        `${verb} ${ids.length} applicant(s)? This emails all of them.`,
+        `${verb.replace(/ed$/, "")} ${ids.length} applicant(s)? ${warning}`,
       )
     )
       return;
-    if (action === "accept")
-      run(`Accepted ${ids.length}.`, () => accept(ids), ids);
-    else if (action === "waitlist")
-      run(`Waitlisted ${ids.length}.`, () => waitlist(ids), ids);
-    else
-      run(`Rejected ${ids.length}.`, () => Promise.all(ids.map(reject)), ids);
+    runDecision(verb, fn, ids);
+  }
+
+  function rowDecision(action: keyof typeof DECISIONS, u: AdminUser) {
+    const { verb, fn, emails } = DECISIONS[action];
+    const name = `${field(u, "first_name")} ${field(u, "last_name")}`.trim();
+    const prompt = emails
+      ? `${verb.replace(/ed$/, "")} and email ${name} (${u.username})?`
+      : `Revert ${name} (${u.username}) to Applied? No email is sent.`;
+    if (!window.confirm(prompt)) return;
+    runDecision(verb, fn, [u.id]);
   }
 
   return (
@@ -214,6 +255,12 @@ export default function ApplicationsPage() {
             Reject
           </button>
           <button
+            className="rounded border border-slate-500 px-3 py-1 hover:bg-slate-700"
+            onClick={() => bulk("revert")}
+          >
+            Revert
+          </button>
+          <button
             className="ml-2 text-slate-300 hover:text-white"
             onClick={() => setSelected(new Set())}
           >
@@ -261,30 +308,21 @@ export default function ApplicationsPage() {
                       <button
                         disabled={isBusy}
                         className="rounded bg-green-600 px-2 py-1 text-white hover:bg-green-500 disabled:opacity-50"
-                        onClick={() =>
-                          run("Accepted.", () => accept([u.id]), [u.id])
-                        }
+                        onClick={() => rowDecision("accept", u)}
                       >
                         Accept
                       </button>
                       <button
                         disabled={isBusy}
                         className="rounded bg-amber-500 px-2 py-1 text-white hover:bg-amber-400 disabled:opacity-50"
-                        onClick={() =>
-                          run("Waitlisted.", () => waitlist([u.id]), [u.id])
-                        }
+                        onClick={() => rowDecision("waitlist", u)}
                       >
                         Waitlist
                       </button>
                       <button
                         disabled={isBusy}
                         className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-500 disabled:opacity-50"
-                        onClick={() => {
-                          if (
-                            window.confirm("Reject and email this applicant?")
-                          )
-                            run("Rejected.", () => reject(u.id), [u.id]);
-                        }}
+                        onClick={() => rowDecision("reject", u)}
                       >
                         Reject
                       </button>
@@ -296,6 +334,13 @@ export default function ApplicationsPage() {
                         }
                       >
                         Check in
+                      </button>
+                      <button
+                        disabled={isBusy}
+                        className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                        onClick={() => rowDecision("revert", u)}
+                      >
+                        Revert
                       </button>
                       {u.resume ? (
                         <button

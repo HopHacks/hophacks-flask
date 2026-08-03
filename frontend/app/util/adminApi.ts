@@ -45,15 +45,43 @@ export async function getUsers(query = ""): Promise<AdminUser[]> {
   return r.data.users ?? [];
 }
 
+export type DecisionOutcome = {
+  num_changed: number;
+  skipped: string[];
+  failed: string[];
+};
+
+/* One request must stay well under API Gateway's 29s cap since the backend
+   sends decision emails synchronously; 20 ids per chunk is a wide margin. */
+const DECISION_CHUNK = 20;
+
+async function postDecision(
+  path: string,
+  ids: string[],
+): Promise<DecisionOutcome> {
+  const outcome: DecisionOutcome = { num_changed: 0, skipped: [], failed: [] };
+  for (let i = 0; i < ids.length; i += DECISION_CHUNK) {
+    const chunk = ids.slice(i, i + DECISION_CHUNK);
+    try {
+      const r = await axios.post(path, { users: chunk, event: CURRENT_EVENT });
+      outcome.num_changed += r.data.num_changed ?? 0;
+      outcome.skipped.push(...(r.data.skipped ?? []));
+    } catch {
+      outcome.failed.push(...chunk);
+    }
+  }
+  return outcome;
+}
+
 export const accept = (ids: string[]) =>
-  axios.post("/api/registrations/accept", { users: ids, event: CURRENT_EVENT });
+  postDecision("/api/registrations/accept", ids);
 export const waitlist = (ids: string[]) =>
-  axios.post("/api/registrations/waitlist", {
-    users: ids,
-    event: CURRENT_EVENT,
-  });
-export const reject = (id: string) =>
-  axios.post("/api/registrations/reject", { user: id, event: CURRENT_EVENT });
+  postDecision("/api/registrations/waitlist", ids);
+export const reject = (ids: string[]) =>
+  postDecision("/api/registrations/reject", ids);
+/** Reset registrations to "applied" without emailing (misclick recovery). */
+export const revert = (ids: string[]) =>
+  postDecision("/api/registrations/revert", ids);
 export const checkIn = (id: string) =>
   axios.post("/api/registrations/check_in", { user: id, event: CURRENT_EVENT });
 
