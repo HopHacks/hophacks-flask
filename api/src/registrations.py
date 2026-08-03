@@ -54,38 +54,74 @@ def send_rsvp_info(users):
             msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
             conn.send(msg)
 
-def send_acceptances(users):
-     with mail.connect() as conn:
-        for user in users:
-            email = user["username"]
-            subject = "Acceptance Letter - Hophacks.com"
-            msg = Message(recipients=[email],
-                          subject=subject)
+def _send_decision_emails(users, subject, body, template):
+    """Email each user; one SMTP failure must not abort the rest of the batch.
 
-            msg.body = 'Congrats on being accepted to HopHacks!'
-            msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
-            conn.send(msg)
-
-def send_rejections(user):
+    Returns the number of failed sends so endpoints can surface it.
+    """
+    failures = 0
     with mail.connect() as conn:
-        email = user["username"]
-        subject = "Status Update - HopHacks.com"
-        msg = Message(recipients=[email],
-                        subject=subject)
-        msg.body = "Thanks for applying, unfortunately we weren't able to accept you into HopHacks."
-        msg.html = render_template('email_rejection.html', first_name=user['profile']['first_name'])
-        conn.send(msg)
+        for user in users:
+            try:
+                msg = Message(recipients=[user["username"]],
+                              subject=subject)
+                msg.body = body
+                msg.html = render_template(template, first_name=user['profile']['first_name'])
+                conn.send(msg)
+            except Exception:
+                failures += 1
+    return failures
+
+def send_acceptances(users):
+    return _send_decision_emails(
+        users,
+        "Acceptance Letter - Hophacks.com",
+        'Congrats on being accepted to HopHacks!',
+        'email_acceptance.html')
+
+def send_rejections(users):
+    return _send_decision_emails(
+        users,
+        "Status Update - HopHacks.com",
+        "Thanks for applying, unfortunately we weren't able to accept you into HopHacks.",
+        'email_rejection.html')
 
 def send_waitlist(users):
-    with mail.connect() as conn:
-        for user in users:
-            email = user["username"]
-            subject = "Waitlist Update - HopHacks.com"
-            msg = Message(recipients=[email],
-                          subject=subject)
-            msg.body = "You've been placed on the HopHacks waitlist. We'll reach out if a spot opens up."
-            msg.html = render_template('email_waitlist.html', first_name=user['profile']['first_name'])
-            conn.send(msg)
+    return _send_decision_emails(
+        users,
+        "Waitlist Update - HopHacks.com",
+        "You've been placed on the HopHacks waitlist. We'll reach out if a spot opens up.",
+        'email_waitlist.html')
+
+def apply_decision(ids, event, guard_statuses, set_fields, unset_fields=None):
+    """Transition each user's <event> registration unless its status is in
+    guard_statuses. The guard lives inside the atomic filter, so a repeat
+    request can never re-transition (or re-email) a user. $nin treats a
+    missing status field as eligible, which keeps legacy docs decidable.
+
+    Returns (changed_users, skipped_ids); changed docs are pre-update.
+    """
+    update = {'$set': set_fields}
+    if unset_fields:
+        update['$unset'] = unset_fields
+
+    changed, skipped = [], []
+    for raw_id in ids:
+        doc = db.users.find_one_and_update(
+            {
+                '_id': ObjectId(raw_id),
+                'registrations': {'$elemMatch': {
+                    'event': event,
+                    'status': {'$nin': guard_statuses}
+                }}
+            },
+            update
+        )
+        if doc is None:
+            skipped.append(raw_id)
+        else:
+            changed.append(doc)
+    return changed, skipped
 
 def send_apply_confirm(email, name):
     msg = Message("Received Application - HopHacks.com",
@@ -202,32 +238,21 @@ def accept():
         return Response('Invalid request', status=400)
 
     event = request.json.get("event", EVENT_NAME)
-    ids = [ObjectId(id) for id in request.json["users"]]
 
-    result = db.users.update_many(
+    changed, skipped = apply_decision(
+        request.json["users"], event,
+        ["accepted", "rsvped", "checked_in"],
         {
-            '_id': {'$in': ids},
-            'registrations.event' : event
-        },
-        {
-            '$set': {
-                "registrations.$.accept": True,
-                "registrations.$.accept_at": datetime.datetime.utcnow(),
-                "registrations.$.status": "accepted"
-            }
+            "registrations.$.accept": True,
+            "registrations.$.accept_at": datetime.datetime.utcnow(),
+            "registrations.$.status": "accepted"
         }
     )
 
-    users = db.users.find(
-        {
-            '_id': {'$in': ids},
-            'registrations.event' : event
-        }
-    )
+    failures = send_acceptances(changed)
 
-    send_acceptances(users)
-
-    return jsonify({"num_changed": result.modified_count}), 200
+    return jsonify({"num_changed": len(changed), "skipped": skipped,
+                    "email_failures": failures}), 200
 
 
 @registrations_api.route('/check_in', methods = ['POST'])
@@ -276,46 +301,52 @@ def check_in():
 @jwt_required
 @check_admin
 def reject():
-    """As an admin user,reject user in to an event
+    """As an admin, reject a list of users for an event and email them.
+
+    Also clears the accept flag so a previously accepted user cannot RSVP.
 
     :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
 
-    :reqjson user: User id to be reject
-    :reqjson event: Semester and year, for exmaple ``Spring_2020``
+    :reqjson users: List of user ids to mark as rejected
+    :reqjson user: Single user id (legacy alternative to ``users``)
+    :reqjson event: Event name (defaults to the current event)
 
     .. sourcecode:: json
 
         {
-            "user": "XuiJJ8rJRrbNJZ3Nb",
+            "users": ["XuiJJ8rJRrbNJZ3Nb", "GF42GBb238BGO"],
             "event": "Spring_2020"
         }
 
     :status 200: Successful
+    :status 400: Invalid request
     :status 401: Not logged in as admin
     :status 422: Not logged in
 
     """
-    event = request.json.get("event", EVENT_NAME)
-    user_id = request.json["user"]
+    if ('users' in request.json):
+        ids = request.json['users']
+    elif ('user' in request.json):
+        ids = [request.json['user']]
+    else:
+        return Response('Invalid request', status=400)
 
-    result = db.users.update_one(
+    event = request.json.get("event", EVENT_NAME)
+
+    changed, skipped = apply_decision(
+        ids, event,
+        ["rejected", "rsvped", "checked_in"],
         {
-            '_id': ObjectId(user_id),
-            'registrations.event' : event
-        },
-        {
-            '$set': {
-                "registrations.$.reject_at": datetime.datetime.utcnow(),
-                "registrations.$.status": "rejected"
-            }
+            "registrations.$.accept": False,
+            "registrations.$.reject_at": datetime.datetime.utcnow(),
+            "registrations.$.status": "rejected"
         }
     )
 
-    user = db.users.find_one({'_id': ObjectId(user_id)})
-    if user:
-        send_rejections(user)
+    failures = send_rejections(changed)
 
-    return jsonify({"num_changed": result.modified_count}), 200
+    return jsonify({"num_changed": len(changed), "skipped": skipped,
+                    "email_failures": failures}), 200
 
 
 @registrations_api.route('/waitlist', methods = ['POST'])
@@ -339,32 +370,70 @@ def waitlist():
         return Response('Invalid request', status=400)
 
     event = request.json.get("event", EVENT_NAME)
-    ids = [ObjectId(id) for id in request.json["users"]]
 
-    result = db.users.update_many(
+    changed, skipped = apply_decision(
+        request.json["users"], event,
+        ["waitlisted", "rsvped", "checked_in"],
         {
-            '_id': {'$in': ids},
-            'registrations.event': event
+            "registrations.$.status": "waitlisted",
+            "registrations.$.waitlist_at": datetime.datetime.utcnow(),
+            "registrations.$.accept": False
+        }
+    )
+
+    failures = send_waitlist(changed)
+
+    return jsonify({"num_changed": len(changed), "skipped": skipped,
+                    "email_failures": failures}), 200
+
+
+@registrations_api.route('/revert', methods = ['POST'])
+@jwt_required
+@check_admin
+def revert():
+    """As an admin, silently reset users' registrations to "applied".
+
+    Recovery path for a misclicked decision: restores the fresh-registration
+    shape (accounts.confirm_email) and sends no email. This is also the only
+    way out of the rsvped / checked_in statuses, which the decision endpoints
+    refuse to touch.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson users: List of user ids to reset
+    :reqjson event: Event name (defaults to the current event)
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+
+    """
+    if ('users' not in request.json):
+        return Response('Invalid request', status=400)
+
+    event = request.json.get("event", EVENT_NAME)
+
+    changed, skipped = apply_decision(
+        request.json["users"], event,
+        ["applied"],
+        {
+            "registrations.$.accept": False,
+            "registrations.$.rsvp": False,
+            "registrations.$.checkin": False,
+            "registrations.$.status": "applied"
         },
         {
-            '$set': {
-                "registrations.$.status": "waitlisted",
-                "registrations.$.waitlist_at": datetime.datetime.utcnow(),
-                "registrations.$.accept": False
-            }
+            "registrations.$.accept_at": "",
+            "registrations.$.waitlist_at": "",
+            "registrations.$.reject_at": "",
+            "registrations.$.rsvp_time": "",
+            "registrations.$.checkin_at": ""
         }
     )
 
-    users = db.users.find(
-        {
-            '_id': {'$in': ids},
-            'registrations.event': event
-        }
-    )
-
-    send_waitlist(users)
-
-    return jsonify({"num_changed": result.modified_count}), 200
+    return jsonify({"num_changed": len(changed), "skipped": skipped,
+                    "email_failures": 0}), 200
 
 
 @registrations_api.route('/rsvp/view', methods = ['GET'])
@@ -412,7 +481,11 @@ def rsvp_status():
     id = get_jwt_identity()
     user = db.users.find_one({'_id' : ObjectId(id)})
 
-    eventInfo = user["registrations"][0] # only need to check first one, because there should only be one entry
+    regs = user.get("registrations") or []
+    if (len(regs) == 0):
+        return jsonify({"status": False}), 200
+
+    eventInfo = regs[0] # only need to check first one, because there should only be one entry
     if("rsvp" not in eventInfo or eventInfo["rsvp"] == False):
         return jsonify({"status":False}),200 
     elif(eventInfo["rsvp"] == True):
