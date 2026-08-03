@@ -46,7 +46,7 @@ def send_rsvp_info(users):
      with mail.connect() as conn:
         for user in users:
             email = user["username"]
-            subject = "RSVP Event Info - Hophacks.com"
+            subject = "RSVP Event Info - HopHacks.com"
             msg = Message(recipients=[email],
                           subject=subject)
 
@@ -75,7 +75,7 @@ def _send_decision_emails(users, subject, body, template):
 def send_acceptances(users):
     return _send_decision_emails(
         users,
-        "Acceptance Letter - Hophacks.com",
+        "Acceptance Letter - HopHacks.com",
         'Congrats on being accepted to HopHacks!',
         'email_acceptance.html')
 
