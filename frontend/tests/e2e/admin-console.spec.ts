@@ -158,8 +158,8 @@ test("a dismissed confirm dialog sends nothing", async ({ page }) => {
 });
 
 test("bulk accept chunks into requests of 20", async ({ page }) => {
-  const statuses = new Map(
-    Array.from({ length: 25 }, (_, i) => [`id-${i}`, "applied"] as const),
+  const statuses = new Map<string, string>(
+    Array.from({ length: 25 }, (_, i) => [`id-${i}`, "applied"]),
   );
   await stubAdminConsole(page, statuses);
   page.on("dialog", (d) => d.accept());
@@ -191,8 +191,8 @@ test("bulk accept chunks into requests of 20", async ({ page }) => {
 test("partial failure is reported and failed rows stay selected", async ({
   page,
 }) => {
-  const statuses = new Map(
-    Array.from({ length: 25 }, (_, i) => [`id-${i}`, "applied"] as const),
+  const statuses = new Map<string, string>(
+    Array.from({ length: 25 }, (_, i) => [`id-${i}`, "applied"]),
   );
   await stubAdminConsole(page, statuses);
   page.on("dialog", (d) => d.accept());
