@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import StatCard from "@/components/analytics/StatCard";
 import StatusBadge from "@/components/analytics/StatusBadge";
 import {
@@ -32,6 +32,24 @@ const STATUS_FILTERS = [
   ["email_not_confirmed", "Email not confirmed"],
 ] as const;
 
+/** One application response. Whitespace is preserved so paragraphs survive. */
+function EssayBlock({ label, text }: { label: string; text: string }) {
+  return (
+    <div>
+      <div className="mb-1 text-xs font-medium uppercase tracking-wide text-slate-500">
+        {label}
+      </div>
+      {text ? (
+        <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-800">
+          {text}
+        </p>
+      ) : (
+        <p className="text-sm italic text-slate-400">No response on file.</p>
+      )}
+    </div>
+  );
+}
+
 export default function ApplicationsPage() {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,6 +59,16 @@ export default function ApplicationsPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState<Set<string>>(new Set());
   const [message, setMessage] = useState("");
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
+  function toggleExpanded(id: string) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   const load = useCallback(async () => {
     try {
@@ -286,89 +314,137 @@ export default function ApplicationsPage() {
             {paged.map((u) => {
               const status = deriveStatus(u);
               const isBusy = busy.has(u.id);
+              const isExpanded = expanded.has(u.id);
               return (
-                <tr key={u.id} className="border-b border-slate-100">
-                  <td className="px-4 py-3">
-                    <input
-                      type="checkbox"
-                      checked={selected.has(u.id)}
-                      onChange={() => toggle(u.id)}
-                    />
-                  </td>
-                  <td className="px-4 py-3">
-                    {field(u, "first_name")} {field(u, "last_name")}
-                  </td>
-                  <td className="px-4 py-3 text-slate-500">{u.username}</td>
-                  <td className="px-4 py-3">{field(u, "school") || "—"}</td>
-                  <td className="px-4 py-3">
-                    <StatusBadge status={status} />
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex justify-end gap-1.5 text-xs">
+                <Fragment key={u.id}>
+                  <tr className="border-b border-slate-100">
+                    <td className="px-4 py-3">
+                      <input
+                        type="checkbox"
+                        checked={selected.has(u.id)}
+                        onChange={() => toggle(u.id)}
+                      />
+                    </td>
+                    <td className="px-4 py-3">
                       <button
-                        disabled={isBusy}
-                        className="rounded bg-green-600 px-2 py-1 text-white hover:bg-green-500 disabled:opacity-50"
-                        onClick={() => rowDecision("accept", u)}
+                        type="button"
+                        className="text-left hover:underline"
+                        aria-expanded={isExpanded}
+                        onClick={() => toggleExpanded(u.id)}
+                        title="Show application responses"
                       >
-                        Accept
+                        <span className="mr-1.5 inline-block text-slate-400">
+                          {isExpanded ? "▾" : "▸"}
+                        </span>
+                        {field(u, "first_name")} {field(u, "last_name")}
                       </button>
-                      <button
-                        disabled={isBusy}
-                        className="rounded bg-amber-500 px-2 py-1 text-white hover:bg-amber-400 disabled:opacity-50"
-                        onClick={() => rowDecision("waitlist", u)}
-                      >
-                        Waitlist
-                      </button>
-                      <button
-                        disabled={isBusy}
-                        className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-500 disabled:opacity-50"
-                        onClick={() => rowDecision("reject", u)}
-                      >
-                        Reject
-                      </button>
-                      <button
-                        disabled={isBusy}
-                        className="rounded bg-indigo-600 px-2 py-1 text-white hover:bg-indigo-500 disabled:opacity-50"
-                        onClick={() =>
-                          run("Checked in.", () => checkIn(u.id), [u.id])
-                        }
-                      >
-                        Check in
-                      </button>
-                      <button
-                        disabled={isBusy}
-                        className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-                        onClick={() => rowDecision("revert", u)}
-                      >
-                        Revert
-                      </button>
-                      {u.resume ? (
+                    </td>
+                    <td className="px-4 py-3 text-slate-500">{u.username}</td>
+                    <td className="px-4 py-3">{field(u, "school") || "—"}</td>
+                    <td className="px-4 py-3">
+                      <StatusBadge status={status} />
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex justify-end gap-1.5 text-xs">
                         <button
-                          className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50"
-                          onClick={() => openResume(u.id)}
+                          disabled={isBusy}
+                          className="rounded bg-green-600 px-2 py-1 text-white hover:bg-green-500 disabled:opacity-50"
+                          onClick={() => rowDecision("accept", u)}
                         >
-                          Resume
+                          Accept
                         </button>
-                      ) : null}
-                      <button
-                        disabled={isBusy}
-                        className="rounded border border-red-300 px-2 py-1 text-red-600 hover:bg-red-50 disabled:opacity-50"
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              `Permanently delete ${u.username}? This removes the account and resume; it cannot be undone.`,
+                        <button
+                          disabled={isBusy}
+                          className="rounded bg-amber-500 px-2 py-1 text-white hover:bg-amber-400 disabled:opacity-50"
+                          onClick={() => rowDecision("waitlist", u)}
+                        >
+                          Waitlist
+                        </button>
+                        <button
+                          disabled={isBusy}
+                          className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-500 disabled:opacity-50"
+                          onClick={() => rowDecision("reject", u)}
+                        >
+                          Reject
+                        </button>
+                        <button
+                          disabled={isBusy}
+                          className="rounded bg-indigo-600 px-2 py-1 text-white hover:bg-indigo-500 disabled:opacity-50"
+                          onClick={() =>
+                            run("Checked in.", () => checkIn(u.id), [u.id])
+                          }
+                        >
+                          Check in
+                        </button>
+                        <button
+                          disabled={isBusy}
+                          className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                          onClick={() => rowDecision("revert", u)}
+                        >
+                          Revert
+                        </button>
+                        {u.resume ? (
+                          <button
+                            className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50"
+                            onClick={() => openResume(u.id)}
+                          >
+                            Resume
+                          </button>
+                        ) : null}
+                        <button
+                          disabled={isBusy}
+                          className="rounded border border-red-300 px-2 py-1 text-red-600 hover:bg-red-50 disabled:opacity-50"
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                `Permanently delete ${u.username}? This removes the account and resume; it cannot be undone.`,
+                              )
                             )
-                          )
-                            run("Deleted.", () => deleteUser(u.username), [
-                              u.id,
-                            ]);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                              run("Deleted.", () => deleteUser(u.username), [
+                                u.id,
+                              ]);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  {isExpanded && (
+                    <tr className="border-b border-slate-100 bg-slate-50/70">
+                      <td />
+                      <td colSpan={5} className="px-4 pb-5 pt-1">
+                        <div className="max-w-3xl space-y-4">
+                          <EssayBlock
+                            label="A project you're proud of, and the hardest decision you made"
+                            text={field(u, "essay_project")}
+                          />
+                          <EssayBlock
+                            label="A time you worked in a team, your role, strengths and weaknesses"
+                            text={field(u, "essay_team")}
+                          />
+                          <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-500">
+                            <span>
+                              Level: {field(u, "level_of_study") || "—"}
+                            </span>
+                            <span>Major: {field(u, "major") || "—"}</span>
+                            <span>Country: {field(u, "country") || "—"}</span>
+                            {field(u, "linkedin_url") ? (
+                              <a
+                                href={field(u, "linkedin_url")}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-blue-600 hover:underline"
+                              >
+                                LinkedIn
+                              </a>
+                            ) : null}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
               );
             })}
             {!loading && paged.length === 0 && (

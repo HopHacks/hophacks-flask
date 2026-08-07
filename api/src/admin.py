@@ -319,7 +319,7 @@ def export_csv():
     writer.writerow([
         'email', 'first_name', 'last_name', 'school', 'level_of_study',
         'country', 'age', 'status', 'apply_at', 'rsvp', 'checked_in',
-        'dietary_restrictions', 'tshirt_size'
+        'dietary_restrictions', 'tshirt_size', 'essay_project', 'essay_team'
     ])
 
     for user in users:
@@ -341,6 +341,8 @@ def export_csv():
             reg.get('checkin', False),
             profile.get('dietary_restrictions', ''),
             profile.get('tshirt_size', ''),
+            profile.get('essay_project', ''),
+            profile.get('essay_team', ''),
         ])
 
     return Response(

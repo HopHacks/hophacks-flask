@@ -19,7 +19,15 @@ function makeUser(id: string, first: string, last: string, status: string) {
   return {
     id,
     username: `${first.toLowerCase()}@e2e.com`,
-    profile: { first_name: first, last_name: last, school: "JHU" },
+    profile: {
+      first_name: first,
+      last_name: last,
+      school: "JHU",
+      essay_project: `${first} built a thing.\n\nSecond paragraph.`,
+      essay_team: `${first} worked on a team.`,
+      major: "Computer science",
+      linkedin_url: "https://linkedin.com/in/e2e",
+    },
     email_confirmed: true,
     registrations: [{ event: "Fall 2026", status }],
     resume: null,
@@ -52,6 +60,59 @@ async function openApplications(page: Page) {
   await page.goto("/admin");
   await page.getByRole("button", { name: "Applications" }).click();
 }
+
+test("expanding a row shows both application responses", async ({ page }) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+
+  await openApplications(page);
+
+  // Collapsed by default so the table stays scannable.
+  await expect(page.getByText("User0 built a thing.")).toBeHidden();
+
+  await page.getByRole("button", { name: /User0 Tester/ }).click();
+  await expect(page.getByText("User0 built a thing.")).toBeVisible();
+  await expect(page.getByText("User0 worked on a team.")).toBeVisible();
+  await expect(page.getByRole("link", { name: "LinkedIn" })).toHaveAttribute(
+    "href",
+    "https://linkedin.com/in/e2e",
+  );
+
+  // Decision buttons stay reachable while reading.
+  await expect(
+    page.getByRole("button", { name: "Accept", exact: true }),
+  ).toBeVisible();
+
+  await page.getByRole("button", { name: /User0 Tester/ }).click();
+  await expect(page.getByText("User0 built a thing.")).toBeHidden();
+});
+
+test("a row with no essays on file says so", async ({ page }) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  // Legacy account: registered before the essays were required.
+  await page.route("**/api/admin/users*", (r) =>
+    r.fulfill({
+      json: {
+        users: [
+          {
+            id: "id-ada",
+            username: "legacy@e2e.com",
+            profile: { first_name: "Legacy", last_name: "User" },
+            email_confirmed: true,
+            registrations: [{ event: "Fall 2026", status: "applied" }],
+            resume: null,
+            apply_at: null,
+          },
+        ],
+      },
+    }),
+  );
+
+  await openApplications(page);
+  await page.getByRole("button", { name: /Legacy User/ }).click();
+  await expect(page.getByText("No response on file.")).toHaveCount(2);
+});
 
 test("admin accepts an applicant who RSVPs; revert returns them to Applied", async ({
   page,
