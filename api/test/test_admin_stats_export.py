@@ -1,6 +1,9 @@
 import sys
 sys.path.append('../src')
 
+import csv
+import io
+
 from utils import create_json, create_json2, create_json3, login_json
 from flow import register_confirmed, login_token, admin_token, bearer
 
@@ -54,3 +57,31 @@ def test_export_csv_content(client, test_db, test_mail):
     assert lines[0].startswith('email,first_name,last_name')
     assert any(line.startswith('a@test.com,') for line in lines[1:])
     assert len(lines) == 2  # header + one registrant
+
+
+def test_export_includes_essays(client, test_db, test_mail):
+    """Admins read application responses out of the export, so they must ship."""
+    register_confirmed(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    res = client.get('/api/admin/export', headers=bearer(admin))
+
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert len(rows) == 1
+    profile = create_json['profile']
+    assert rows[0]['essay_project'] == profile['essay_project']
+    assert rows[0]['essay_team'] == profile['essay_team']
+
+
+def test_export_handles_missing_essays(client, test_db, test_mail):
+    """Legacy accounts predate the essay fields; the export must not break."""
+    register_confirmed(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    test_db.users.update_one(
+        {'username': 'a@test.com'},
+        {'$unset': {'profile.essay_project': '', 'profile.essay_team': ''}})
+
+    res = client.get('/api/admin/export', headers=bearer(admin))
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['essay_project'] == ''
+    assert rows[0]['essay_team'] == ''
