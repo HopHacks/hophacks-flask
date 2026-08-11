@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import axios from "axios";
 import { CURRENT_EVENT } from "@/app/util/event";
 import { BTN_PRIMARY, BTN_SECONDARY, SectionTitle, ErrorNote } from "./ui";
@@ -22,7 +23,7 @@ type View = {
   badge: string;
   tone: keyof typeof TONES;
   body: string;
-  action?: "confirm" | "rsvp" | "cancel";
+  action?: "confirm" | "rsvp" | "cancel" | "apply";
 };
 
 function statusView(emailConfirmed: boolean, reg: Registration | null): View {
@@ -30,15 +31,18 @@ function statusView(emailConfirmed: boolean, reg: Registration | null): View {
     return {
       badge: "Email not confirmed",
       tone: "amber",
-      body: "Confirm your email to complete your application. Check your inbox, or resend the confirmation below.",
+      body: "Confirm your email before submitting your application. Check your inbox, or resend the confirmation below.",
       action: "confirm",
     };
   }
+  // No registration means the account exists but the application was never
+  // submitted — the two are separate steps.
   if (!reg) {
     return {
-      badge: "Pending",
-      tone: "slate",
-      body: "We're reviewing your application.",
+      badge: "Application not submitted",
+      tone: "amber",
+      body: "You have a profile, but we haven't received your application yet. Answer the two application questions to finish.",
+      action: "apply",
     };
   }
   switch (reg.status) {
@@ -198,6 +202,11 @@ export function StatusSection() {
 
       {view.action && (
         <div className="flex flex-wrap gap-3">
+          {view.action === "apply" && (
+            <Link href="/apply" className={BTN_PRIMARY}>
+              Finish your application
+            </Link>
+          )}
           {view.action === "confirm" && (
             <button
               type="button"

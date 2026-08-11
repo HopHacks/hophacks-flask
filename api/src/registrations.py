@@ -8,10 +8,45 @@ from flask_mail import Message, Mail
 from bson import ObjectId
 
 import datetime
+import pytz
 
 from config.event import EVENT_NAME
 
 registrations_api = Blueprint('registrations', __name__)
+
+# The free-response application questions. They are stored on the user's
+# profile, but they belong to the application: they are written by /apply and
+# frozen afterwards (see accounts.update_profile).
+REQUIRED_ESSAY_KEYS = ["essay_project", "essay_team"]
+ESSAY_WORD_LIMIT = 300
+
+
+def validate_essays(answers):
+    """Check both free responses. Returns an error string, or None if valid."""
+    for key in REQUIRED_ESSAY_KEYS:
+        essay = answers.get(key)
+        if (not isinstance(essay, str) or not essay.strip()):
+            return 'Missing required essay'
+        if (len(essay.split()) > ESSAY_WORD_LIMIT):
+            return 'Essay is over the word limit'
+    return None
+
+
+def find_registration(user, event):
+    """The user's registration subdocument for an event, or None."""
+    for reg in (user.get('registrations') or []):
+        if (reg.get('event') == event):
+            return reg
+    return None
+
+
+def has_submitted(user, event):
+    """True once the user has submitted their application for an event.
+
+    A registration only exists after /apply, so its presence *is* the
+    submitted flag; there is no separate field to keep in sync.
+    """
+    return find_registration(user, event) is not None
 
 # app = Flask(__name__)
 # app.config.from_json("config/config.json")
@@ -165,50 +200,155 @@ def get_registrations():
 
     return jsonify({'registrations': user['registrations']}), 200
 
-"""
-REPLACED WITH EMAIL CONFIRMATION 
 @registrations_api.route('/apply', methods = ['POST'])
 @jwt_required
 def apply():
-    
-    As a user, apply to an event
+    """Submit the application: the free-response answers.
+
+    Creating an account only makes a profile. This is the second, separate
+    step that turns that profile into an application, so the registration it
+    creates doubles as the "submitted" flag and its ``apply_at`` is the
+    submission date. The answers are frozen afterwards
+    (``accounts.update_profile`` rejects edits once a registration exists).
 
     :reqheader Authorization: ``Bearer <JWT Token>``
 
-    :reqjson event: Semester and year, for example 'Spring_2020'
-    :reqjson details: other event specific information that can change (ie. shirt size and stuff)
+    :reqjson essay_project: Answer to the first application question
+    :reqjson essay_team: Answer to the second application question
 
-    :status 200: Sucessfully registered
-    :status 400: Missing field in request or already registered
+    Example input:
+
+    .. sourcecode:: json
+
+        {
+            "essay_project": "...",
+            "essay_team": "..."
+        }
+
+    :status 200: Application submitted
+    :status 400: Missing json, or an answer is blank or over the word limit
+    :status 403: Email is not confirmed yet
+    :status 409: Application was already submitted
     :status 422: Not logged in
-    
-    if ('event' not in request.json or 'details' not in request.json):
-        return Response('Invalid request', status=400)
+
+    """
+    if (request.json is None):
+        return jsonify({"msg": "Data not in json format"}), 400
+
+    error = validate_essays(request.json)
+    if (error):
+        return jsonify({"msg": error}), 400
 
     id = get_jwt_identity()
-    event = request.json["event"]
-    details = request.json["details"]
-
-    user = db.users.find_one({'_id' : ObjectId(id)})
-
-    # fancy way to check event isn't already there
-    if len(list(filter(lambda reg: reg['event'] == event, user['registrations']))) != 0:
-        return Response('Invalid request, already applied to {}'.format(event), status=400)
+    eastern = pytz.timezone("America/New_York")
 
     new_reg = {
-        "event": event,
-        "apply_at": datetime.datetime.utcnow(),
+        "event": EVENT_NAME,
+        "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
         "accept": False,
         "checkin": False,
-        "details": details,
+        "rsvp": False,
+        "status": "applied"
     }
 
-    result = db.users.update_one({'_id' : ObjectId(id)}, {'$push': {'registrations': new_reg}})
-    send_apply_confirm(user['username'], user['profile']['first_name'])
+    # One atomic write: the email-confirmed and not-already-applied guards live
+    # in the filter, so two concurrent submissions cannot both push a
+    # registration (nor both send the confirmation email).
+    user = db.users.find_one_and_update(
+        {
+            '_id': ObjectId(id),
+            'email_confirmed': True,
+            'registrations': {'$not': {'$elemMatch': {'event': EVENT_NAME}}}
+        },
+        {
+            '$set': {
+                'profile.essay_project': request.json['essay_project'],
+                'profile.essay_team': request.json['essay_team']
+            },
+            '$push': {'registrations': new_reg}
+        }
+    )
 
-    return jsonify({"num_changed": result.modified_count}), 200
+    # Only on failure do we pay for a second read, to say *why* it failed.
+    if (user is None):
+        existing = db.users.find_one({'_id': ObjectId(id)})
+        if (existing is None):
+            return jsonify({"msg": "user not found?"}), 404
+        if (not existing.get('email_confirmed')):
+            return jsonify({"msg": "Confirm your email before submitting"}), 403
+        return jsonify({"msg": "Application already submitted"}), 409
 
-"""
+    # The submission is already durable at this point. A dead SMTP session must
+    # not turn it into a 500: the user would be told their application failed,
+    # and every retry would then hit the 409 above. Gmail caps us around 500
+    # sends/day, so this fails for real during a submission rush.
+    email_sent = True
+    try:
+        send_apply_confirm(user['username'], user.get('profile', {}).get('first_name', ''))
+    except Exception:
+        email_sent = False
+
+    return jsonify({"msg": "application submitted", "email_sent": email_sent}), 200
+
+
+@registrations_api.route('/apply/draft', methods = ['POST'])
+@jwt_required
+def apply_draft():
+    """Save an in-progress answer without submitting.
+
+    Writes only the two essay fields, by dot path, so a draft save can never
+    disturb the rest of the profile (``/accounts/profile/update`` replaces the
+    whole profile subdocument and rejects the older profile shapes that
+    pre-2026 accounts still have).
+
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :reqjson essay_project: Draft answer to the first question (may be blank)
+    :reqjson essay_team: Draft answer to the second question (may be blank)
+
+    :status 200: Draft saved
+    :status 400: Missing json, or an answer is over the word limit
+    :status 409: Application already submitted; its answers cannot be changed
+    :status 422: Not logged in
+
+    """
+    if (request.json is None):
+        return jsonify({"msg": "Data not in json format"}), 400
+
+    updates = {}
+    for key in REQUIRED_ESSAY_KEYS:
+        if (key not in request.json):
+            continue
+        draft = request.json[key]
+        # Drafts may be blank -- completeness is /apply's job -- but the word
+        # limit still applies so nothing unsubmittable can be stored.
+        if (not isinstance(draft, str)):
+            return jsonify({"msg": "Invalid essay"}), 400
+        if (len(draft.split()) > ESSAY_WORD_LIMIT):
+            return jsonify({"msg": "Essay is over the word limit"}), 400
+        updates['profile.' + key] = draft
+
+    if (not updates):
+        return jsonify({"msg": "Nothing to save"}), 400
+
+    id = get_jwt_identity()
+
+    # Same guard as the lock in accounts.update_profile: once submitted, the
+    # answers are frozen.
+    result = db.users.update_one(
+        {
+            '_id': ObjectId(id),
+            'registrations': {'$not': {'$elemMatch': {'event': EVENT_NAME}}}
+        },
+        {'$set': updates}
+    )
+
+    if (result.matched_count == 0):
+        return jsonify({"msg": "Your application has been submitted and can no longer be edited"}), 409
+
+    return jsonify({"msg": "draft saved"}), 200
+
+
 @registrations_api.route('/accept', methods = ['POST'])
 @jwt_required
 @check_admin

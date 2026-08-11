@@ -36,7 +36,8 @@ def _profile(first_name, last_name, school, **overrides):
         "gender": "Prefer not to answer",
         "major": "Computer science, computer engineering, or software engineering",
         "race_ethnicity": "Asian / Pacific Islander",
-        # application essays (required at create)
+        # application essays: drafts until POST /api/registrations/apply
+        # submits them (create no longer requires or reads these)
         "essay_project": "A project idea worth building.",
         "essay_team": "Looking to meet a great team.",
         # MLH consent checkboxes

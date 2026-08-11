@@ -3,7 +3,7 @@ sys.path.append('../src')
 
 from config.event import EVENT_NAME
 from utils import create_json, login_json
-from flow import register_confirmed, login_token, admin_token, bearer
+from flow import register_applied, login_token, admin_token, bearer
 
 
 def _reg(user):
@@ -11,7 +11,7 @@ def _reg(user):
 
 
 def _accept_self(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -19,7 +19,7 @@ def _accept_self(client, test_db, test_mail):
 
 
 def test_rsvp_requires_acceptance(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = login_token(client, login_json)
     res = client.post('/api/registrations/rsvp/rsvp', json={'event': EVENT_NAME}, headers=bearer(token))
     assert res.status_code == 400
@@ -65,7 +65,7 @@ def test_rsvp_view(client, test_db, test_mail):
 
 
 def test_rsvp_status_with_no_registrations_returns_false(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = login_token(client, login_json)
     # Regression: an empty registrations list used to IndexError into a 500
     test_db.users.update_one({'username': 'a@test.com'}, {'$set': {'registrations': []}})

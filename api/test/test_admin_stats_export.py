@@ -5,19 +5,19 @@ import csv
 import io
 
 from utils import create_json, create_json2, create_json3, login_json
-from flow import register_confirmed, login_token, admin_token, bearer
+from flow import register_applied, login_token, admin_token, bearer
 
 
 def test_stats_requires_admin(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = login_token(client, login_json)
     assert client.get('/api/admin/stats', headers=bearer(token)).status_code == 401
 
 
 def test_stats_aggregation(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)   # a - Cornell
-    register_confirmed(client, test_mail, create_json2)  # b - Johns Hopkins
-    register_confirmed(client, test_mail, create_json3)  # c - Johns Hopkins
+    register_applied(client, test_mail, create_json)   # a - Cornell
+    register_applied(client, test_mail, create_json2)  # b - Johns Hopkins
+    register_applied(client, test_mail, create_json3)  # c - Johns Hopkins
     admin = admin_token(client, test_db)
 
     a_id = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
@@ -35,20 +35,20 @@ def test_stats_aggregation(client, test_db, test_mail):
 
 
 def test_stats_excludes_admin(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     res = client.get('/api/admin/stats', headers=bearer(admin))
     assert res.json['total'] == 1
 
 
 def test_export_requires_admin(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = login_token(client, login_json)
     assert client.get('/api/admin/export', headers=bearer(token)).status_code == 401
 
 
 def test_export_csv_content(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     res = client.get('/api/admin/export', headers=bearer(admin))
     assert res.status_code == 200
@@ -61,7 +61,7 @@ def test_export_csv_content(client, test_db, test_mail):
 
 def test_export_includes_essays(client, test_db, test_mail):
     """Admins read application responses out of the export, so they must ship."""
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     res = client.get('/api/admin/export', headers=bearer(admin))
 
@@ -74,7 +74,7 @@ def test_export_includes_essays(client, test_db, test_mail):
 
 def test_export_handles_missing_essays(client, test_db, test_mail):
     """Legacy accounts predate the essay fields; the export must not break."""
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     test_db.users.update_one(
         {'username': 'a@test.com'},

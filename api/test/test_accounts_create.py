@@ -139,18 +139,15 @@ def test_create_weak_password_400(client, test_db):
     assert test_db.users.count_documents({}) == 0
 
 
-def test_create_missing_or_oversized_essay_400(client, test_db):
-    for key in ("essay_project", "essay_team"):
-        bad = copy.deepcopy(create_json)
-        del bad["profile"][key]
-        assert client.post("/api/accounts/create", json=bad).status_code == 400
+def test_create_does_not_require_essays(client, test_db):
+    # Creating an account only makes a profile; the free responses are
+    # submitted separately via POST /api/registrations/apply.
+    payload = copy.deepcopy(create_json)
+    del payload["profile"]["essay_project"]
+    del payload["profile"]["essay_team"]
 
-        bad = copy.deepcopy(create_json)
-        bad["profile"][key] = "   "
-        assert client.post("/api/accounts/create", json=bad).status_code == 400
+    assert client.post("/api/accounts/create", json=payload).status_code == 200
 
-        bad = copy.deepcopy(create_json)
-        bad["profile"][key] = "word " * 301
-        assert client.post("/api/accounts/create", json=bad).status_code == 400
-
-    assert test_db.users.count_documents({}) == 0
+    user = test_db.users.find_one({'username': "a@test.com"})
+    assert "essay_project" not in user["profile"]
+    assert user["registrations"] == []

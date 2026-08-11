@@ -31,7 +31,28 @@ function makeUser(id: string, first: string, last: string, status: string) {
     email_confirmed: true,
     registrations: [{ event: "Fall 2026", status }],
     resume: null,
+    apply_at: "2026-08-08T14:00:00+00:00",
+    submitted: true,
+  };
+}
+
+/** Confirmed account with no registration: a profile, never an application. */
+function makeProfileOnlyUser(id: string, first: string) {
+  return {
+    id,
+    username: `${first.toLowerCase()}@e2e.com`,
+    profile: {
+      first_name: first,
+      last_name: "Tester",
+      school: "JHU",
+      essay_project: "Half an answer, saved as a draft.",
+      essay_team: "",
+    },
+    email_confirmed: true,
+    registrations: [],
+    resume: null,
     apply_at: null,
+    submitted: false,
   };
 }
 
@@ -103,6 +124,7 @@ test("a row with no essays on file says so", async ({ page }) => {
             registrations: [{ event: "Fall 2026", status: "applied" }],
             resume: null,
             apply_at: null,
+            submitted: true,
           },
         ],
       },
@@ -112,6 +134,88 @@ test("a row with no essays on file says so", async ({ page }) => {
   await openApplications(page);
   await page.getByRole("button", { name: /Legacy User/ }).click();
   await expect(page.getByText("No response on file.")).toHaveCount(2);
+});
+
+test("a submitted row shows the date applied", async ({ page }) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+
+  await openApplications(page);
+  await expect(
+    page.getByRole("columnheader", { name: "Applied" }),
+  ).toBeVisible();
+  await expect(page.getByRole("cell", { name: /Aug 8, 2026/ })).toBeVisible();
+});
+
+test("a profile-only account is flagged, dated blank, and marked draft", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  await page.route("**/api/admin/users*", (r) =>
+    r.fulfill({
+      json: {
+        users: [
+          makeUser("id-ada", "Applied", "Tester", "applied"),
+          makeProfileOnlyUser("id-pat", "Pat"),
+        ],
+      },
+    }),
+  );
+
+  await openApplications(page);
+
+  const patRow = page.getByRole("row", { name: /Pat Tester/ });
+  await expect(patRow.getByText("Not submitted")).toBeVisible();
+  await expect(
+    patRow.getByRole("cell", { name: "—", exact: true }),
+  ).toBeVisible();
+
+  // Their saved text is a draft, and must never read as a submission.
+  await page.getByRole("button", { name: /Pat Tester/ }).click();
+  await expect(page.getByText("Draft — not submitted")).toBeVisible();
+  await expect(
+    page.getByText("Half an answer, saved as a draft."),
+  ).toBeVisible();
+
+  // Filtering isolates them.
+  await page.getByRole("combobox").selectOption("not_submitted");
+  await expect(page.getByRole("button", { name: /Pat Tester/ })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /Applied Tester/ }),
+  ).toHaveCount(0);
+});
+
+test("a profile-only account offers no decision to make", async ({ page }) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  await page.route("**/api/admin/users*", (r) =>
+    r.fulfill({
+      json: {
+        users: [
+          makeUser("id-ada", "Applied", "Tester", "applied"),
+          makeProfileOnlyUser("id-pat", "Pat"),
+        ],
+      },
+    }),
+  );
+
+  await openApplications(page);
+
+  // There is no application to accept, waitlist, or reject yet — and no way
+  // to sweep them into a bulk decision either.
+  const patRow = page.getByRole("row", { name: /Pat Tester/ });
+  await expect(patRow.getByRole("button", { name: "Accept" })).toHaveCount(0);
+  await expect(patRow.getByRole("button", { name: "Revert" })).toHaveCount(0);
+  await expect(patRow.getByRole("checkbox")).toBeDisabled();
+  // Deleting a junk account still works.
+  await expect(patRow.getByRole("button", { name: "Delete" })).toBeVisible();
+
+  const appliedRow = page.getByRole("row", { name: /Applied Tester/ });
+  await expect(
+    appliedRow.getByRole("button", { name: "Accept" }),
+  ).toBeVisible();
+  await expect(appliedRow.getByRole("checkbox")).toBeEnabled();
 });
 
 test("admin accepts an applicant who RSVPs; revert returns them to Applied", async ({

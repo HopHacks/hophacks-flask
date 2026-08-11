@@ -10,7 +10,7 @@ from util.decorators import check_admin
 from flask import Blueprint, request, Response, current_app, render_template, jsonify, Flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_mail import Message, Mail
-from registrations import send_apply_confirm
+from registrations import has_submitted, REQUIRED_ESSAY_KEYS, ESSAY_WORD_LIMIT
 from config.event import EVENT_NAME
 
 import bcrypt
@@ -38,11 +38,6 @@ profile_keys = ["first_name", "last_name", "age", "phone_number",
 
 # MLH consent checkboxes that MUST be affirmatively accepted to register.
 mlh_required_consents = ["mlh_code_of_conduct", "mlh_data_sharing"]
-
-# Application essays, required at account creation (the signup form enforces
-# the same word limit client-side).
-required_essay_keys = ["essay_project", "essay_team"]
-essay_word_limit = 300
 
 # Server-side account constraints. bcrypt only uses the first 72 bytes of a
 # password, so longer inputs are rejected instead of silently truncated.
@@ -216,13 +211,9 @@ def create():
         if (profile.get(consent) is not True):
             return Response('Required MLH agreement not accepted', status=400)
 
-    # Essays are required to apply; enforce the same word limit as the form.
-    for key in required_essay_keys:
-        essay = profile.get(key)
-        if (not isinstance(essay, str) or not essay.strip()):
-            return Response('Missing required essay', status=400)
-        if (len(essay.split()) > essay_word_limit):
-            return Response('Essay is over the word limit', status=400)
+    # The application essays are NOT required here: creating an account only
+    # makes a profile. They are submitted separately, and irreversibly, via
+    # POST /api/registrations/apply.
 
     # Bound the overall profile size (stored verbatim otherwise).
     if (len(json.dumps(profile)) > profile_max_json_bytes):
@@ -424,8 +415,16 @@ def update_profile():
             }
         }
 
+    The two application essays live on the profile but belong to the
+    application. Before submitting they can be edited freely (the apply page
+    saves drafts through here); once ``/api/registrations/apply`` has run they
+    are frozen, so any request that would change one is rejected. The frontend
+    re-sends the whole fetched document on every save, so an unchanged essay
+    must still be accepted.
+
     :status 200: Profile edited successfully
     :status 400: No json or ``application/json`` header, or field missing
+    :status 409: Application already submitted; its answers cannot be changed
     :status 422: Not logged in
 
     """
@@ -434,7 +433,34 @@ def update_profile():
     if not validate_profile(request):
         return Response("invalid profile object", status=400)
 
-    db.users.update_one({'_id': ObjectId(id)}, {'$set': {'profile' : request.json['profile']}})
+    profile = request.json['profile']
+
+    if (len(json.dumps(profile)) > profile_max_json_bytes):
+        return Response('Profile is too large', status=400)
+
+    user = db.users.find_one({'_id': ObjectId(id)})
+    if (user is None):
+        return jsonify({"msg": "user not found?"}), 404
+
+    stored = user.get('profile', {})
+    submitted = has_submitted(user, EVENT_NAME)
+
+    for key in REQUIRED_ESSAY_KEYS:
+        if (key not in profile):
+            continue
+        essay = profile[key]
+        if (submitted):
+            if (essay != stored.get(key)):
+                return jsonify({"msg": "Your application has been submitted and can no longer be edited"}), 409
+            continue
+        # Pre-submit these are drafts, so blank is fine, but the word limit
+        # still applies -- /apply would reject an over-long answer anyway.
+        if (not isinstance(essay, str)):
+            return Response('Invalid essay', status=400)
+        if (len(essay.split()) > ESSAY_WORD_LIMIT):
+            return Response('Essay is over the word limit', status=400)
+
+    db.users.update_one({'_id': ObjectId(id)}, {'$set': {'profile' : profile}})
     return jsonify({"msg": "updated!"}), 200
 
 
@@ -600,7 +626,8 @@ def reset_password_req():
 @accounts_api.route('/confirm_email', methods = ['POST'])
 def confirm_email():
     """Confirm email using the token from the email sent by ``/api/accounts/create``
-    and ``/api/accounts/confirm_email/request``. Confirming completes the user's application.
+    and ``/api/accounts/confirm_email/request``. Confirming verifies the address; the
+    application itself is submitted separately via ``/api/registrations/apply``.
 
     :reqjson confirm_token: Token from confirmation email link.
 
@@ -646,28 +673,10 @@ def confirm_email():
         {'$set': {'confirm_secret': '', 'email_confirmed': True}}
     )
 
-    eastern = pytz.timezone("America/New_York")
-
-    # Confirming email completes the application (the full profile was already
-    # captured at account creation), so create the event registration in the
-    # "applied" state. Re-confirming must not create a duplicate registration.
-    user = db.users.find_one({'username': email})
-    already_registered = any(
-        reg.get('event') == EVENT_NAME for reg in user.get('registrations', [])
-    )
-
-    if (not already_registered):
-        new_reg = {
-            "event": EVENT_NAME,
-            "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
-            "accept": False,
-            "checkin": False,
-            "rsvp": False,
-            "status": "applied"
-        }
-        db.users.update_one({'username': email}, {'$push': {'registrations': new_reg}})
-        send_apply_confirm(user['username'], user['profile'].get('first_name', ''))
-
+    # Confirming only verifies the address; it does not apply the user to the
+    # event. The registration is created when they submit their free responses
+    # (see registrations.apply), which is what makes "submitted an application"
+    # distinguishable from "created a profile".
     return jsonify({"msg": "Email Confirmed", "email": email}), 200
 
 @accounts_api.route('/reset_password', methods = ['POST'])

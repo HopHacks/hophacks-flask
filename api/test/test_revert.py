@@ -3,7 +3,7 @@ sys.path.append('../src')
 
 from config.event import EVENT_NAME
 from utils import create_json, login_json
-from flow import register_confirmed, login_token, admin_token, bearer
+from flow import register_applied, login_token, admin_token, bearer
 
 
 def _reg(user):
@@ -15,7 +15,7 @@ def _uid(test_db, username='a@test.com'):
 
 
 def test_revert_requires_admin(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = login_token(client, login_json)
     uid = _uid(test_db)
     res = client.post('/api/registrations/revert', json={'users': [uid]}, headers=bearer(token))
@@ -23,7 +23,7 @@ def test_revert_requires_admin(client, test_db, test_mail):
 
 
 def test_revert_accepted_resets_and_sends_no_email(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -45,7 +45,7 @@ def test_revert_accepted_resets_and_sends_no_email(client, test_db, test_mail):
 
 
 def test_revert_rsvped_resets_flags(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -66,7 +66,7 @@ def test_revert_rsvped_resets_flags(client, test_db, test_mail):
 
 
 def test_revert_checked_in_resets(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -82,7 +82,7 @@ def test_revert_checked_in_resets(client, test_db, test_mail):
 
 
 def test_revert_applied_is_skipped(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
 
@@ -93,7 +93,7 @@ def test_revert_applied_is_skipped(client, test_db, test_mail):
 
 
 def test_revert_then_accept_reissues_email(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
 
