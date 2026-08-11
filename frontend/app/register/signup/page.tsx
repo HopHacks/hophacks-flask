@@ -83,12 +83,9 @@ function ErrorNote({ msg }: { msg: string }) {
   );
 }
 
-const ESSAY_WORD_LIMIT = 300;
-function wordCount(text: string): number {
-  return text.trim() ? text.trim().split(/\s+/).length : 0;
-}
-
-const STEP_LABELS = ["Account", "Basic Info", "Application", "Avatar"];
+// Signup creates a profile, nothing more. The application's free-response
+// questions are answered separately on /apply, after the email is confirmed.
+const STEP_LABELS = ["Account", "Basic Info", "About You", "Avatar"];
 
 function StepProgress({ current }: { current: number }) {
   return (
@@ -463,10 +460,6 @@ type StepChecksProps = {
   setUnderrepresented: (v: string) => void;
   linkedIn: string;
   setLinkedIn: (v: string) => void;
-  essayProject: string;
-  setEssayProject: (v: string) => void;
-  essayTeam: string;
-  setEssayTeam: (v: string) => void;
   resumeFile: File | null;
   setResumeFile: (f: File | null) => void;
   resumeChecked: boolean;
@@ -523,10 +516,6 @@ function StepChecks({
   setUnderrepresented,
   linkedIn,
   setLinkedIn,
-  essayProject,
-  setEssayProject,
-  essayTeam,
-  setEssayTeam,
   resumeFile,
   setResumeFile,
   resumeChecked,
@@ -580,46 +569,6 @@ function StepChecks({
             onChange={(e) => setLinkedIn(e.target.value)}
             className={INPUT_CLS}
           />
-        </Field>
-      </div>
-
-      <div className="flex flex-col gap-5">
-        <SectionTitle>Application questions</SectionTitle>
-        <p className="-mt-2 text-sm text-white/75">
-          Both questions are required. Responses are capped at{" "}
-          {ESSAY_WORD_LIMIT} words each.
-        </p>
-        <Field label="Share a project, technical or not, that you're genuinely proud of. What was the hardest decision you made, and why did you make it that way?">
-          <>
-            <textarea
-              value={essayProject}
-              onChange={(e) => setEssayProject(e.target.value)}
-              className={INPUT_CLS + " min-h-[140px] resize-y"}
-              placeholder="Your answer…"
-              rows={6}
-            />
-            <span
-              className={`text-xs ${wordCount(essayProject) > ESSAY_WORD_LIMIT ? "text-red-300" : "text-white/60"}`}
-            >
-              {wordCount(essayProject)} / {ESSAY_WORD_LIMIT} words
-            </span>
-          </>
-        </Field>
-        <Field label="Tell us about a time you worked in a team. What role did you play, and what were your strengths and weaknesses?">
-          <>
-            <textarea
-              value={essayTeam}
-              onChange={(e) => setEssayTeam(e.target.value)}
-              className={INPUT_CLS + " min-h-[140px] resize-y"}
-              placeholder="Your answer…"
-              rows={6}
-            />
-            <span
-              className={`text-xs ${wordCount(essayTeam) > ESSAY_WORD_LIMIT ? "text-red-300" : "text-white/60"}`}
-            >
-              {wordCount(essayTeam)} / {ESSAY_WORD_LIMIT} words
-            </span>
-          </>
         </Field>
       </div>
 
@@ -986,16 +935,20 @@ function StepConfirmation({ resumeFailed }: { resumeFailed: boolean }) {
         ✓
       </div>
       <p className="text-xl font-bold text-white">
-        Application submitted! Check your email to confirm your address and
-        complete the process.
+        Profile created! Check your email to confirm your address, then finish
+        your application.
+      </p>
+      <p className="text-white/90">
+        Two short questions are all that&apos;s left. Your application only
+        counts once you submit them.
       </p>
       {resumeFailed && (
         <p className="rounded-lg border border-red-300/40 bg-red-500/25 px-4 py-2 text-sm text-white">
           Your resume didn&apos;t upload — please re-add it from your profile.
         </p>
       )}
-      <Link href="/profile" className={BTN_PRIMARY}>
-        Go to My Profile
+      <Link href="/apply" className={BTN_PRIMARY}>
+        Finish your application
       </Link>
     </div>
   );
@@ -1048,8 +1001,6 @@ export default function SignUpPage() {
   const [tshirt, setTshirt] = useState("");
   const [underrepresented, setUnderrepresented] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
-  const [essayProject, setEssayProject] = useState("");
-  const [essayTeam, setEssayTeam] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeChecked, setResumeChecked] = useState(false);
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
@@ -1190,24 +1141,6 @@ export default function SignUpPage() {
       setErrorMsg(linkedInErr);
       return;
     }
-    if (!essayProject.trim()) {
-      setErrorMsg("* Please answer the first application question.");
-      return;
-    }
-    if (wordCount(essayProject) > ESSAY_WORD_LIMIT) {
-      setErrorMsg(`* First answer must be ${ESSAY_WORD_LIMIT} words or fewer.`);
-      return;
-    }
-    if (!essayTeam.trim()) {
-      setErrorMsg("* Please answer the second application question.");
-      return;
-    }
-    if (wordCount(essayTeam) > ESSAY_WORD_LIMIT) {
-      setErrorMsg(
-        `* Second answer must be ${ESSAY_WORD_LIMIT} words or fewer.`,
-      );
-      return;
-    }
     if (!dietary) {
       setErrorMsg("* Please select your dietary restrictions.");
       return;
@@ -1263,8 +1196,6 @@ export default function SignUpPage() {
       first_hophacks,
       learn_about_us,
       linkedin_url: linkedIn,
-      essay_project: essayProject,
-      essay_team: essayTeam,
       pfp: `${stage}_${body}_1_${accent}_${accessory}_${avatarObject}`,
       mlh_code_of_conduct: conductCodeChecked,
       mlh_data_sharing: eventLogisticsChecked,
@@ -1422,10 +1353,6 @@ export default function SignUpPage() {
               setUnderrepresented={setUnderrepresented}
               linkedIn={linkedIn}
               setLinkedIn={setLinkedIn}
-              essayProject={essayProject}
-              setEssayProject={setEssayProject}
-              essayTeam={essayTeam}
-              setEssayTeam={setEssayTeam}
               resumeFile={resumeFile}
               setResumeFile={setResumeFile}
               resumeChecked={resumeChecked}

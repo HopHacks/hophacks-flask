@@ -3,7 +3,7 @@ sys.path.append('../src')
 
 from config.event import EVENT_NAME
 from utils import create_json, create_json2, login_json
-from flow import register_confirmed, login_token, admin_token, bearer
+from flow import register_applied, login_token, admin_token, bearer
 
 
 def _reg(user):
@@ -11,8 +11,8 @@ def _reg(user):
 
 
 def test_accept_marks_and_emails(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
-    register_confirmed(client, test_mail, create_json2)
+    register_applied(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json2)
     token = admin_token(client, test_db)
 
     ids = [str(u['_id']) for u in test_db.users.find({'is_admin': {'$ne': True}})]
@@ -28,7 +28,7 @@ def test_accept_marks_and_emails(client, test_db, test_mail):
 
 
 def test_reject_marks_and_emails(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = admin_token(client, test_db)
     uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
 
@@ -41,7 +41,7 @@ def test_reject_marks_and_emails(client, test_db, test_mail):
 
 
 def test_waitlist_marks_and_emails(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = admin_token(client, test_db)
     uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
 
@@ -57,7 +57,7 @@ def test_waitlist_marks_and_emails(client, test_db, test_mail):
 
 
 def test_waitlist_requires_admin(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = login_token(client, login_json)  # non-admin
     uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
     res = client.post('/api/registrations/waitlist', json={'users': [uid]}, headers=bearer(token))
@@ -65,7 +65,7 @@ def test_waitlist_requires_admin(client, test_db, test_mail):
 
 
 def test_waitlisted_then_accepted_enables_rsvp(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
 
@@ -79,7 +79,7 @@ def test_waitlisted_then_accepted_enables_rsvp(client, test_db, test_mail):
 
 
 def test_checkin_marks(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -92,7 +92,7 @@ def test_checkin_marks(client, test_db, test_mail):
 
 
 def test_checkin_requires_admin(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     token = login_token(client, login_json)
     uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
     res = client.post('/api/registrations/check_in', json={'user': uid}, headers=bearer(token))
@@ -104,7 +104,7 @@ def _uid(test_db, username='a@test.com'):
 
 
 def test_accept_twice_sends_one_email(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
 
@@ -119,8 +119,8 @@ def test_accept_twice_sends_one_email(client, test_db, test_mail):
 
 
 def test_accept_mixed_batch_emails_only_transitioned(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
-    register_confirmed(client, test_mail, create_json2)
+    register_applied(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json2)
     admin = admin_token(client, test_db)
     uid_a = _uid(test_db)
     uid_b = _uid(test_db, 'b@test.com')
@@ -135,7 +135,7 @@ def test_accept_mixed_batch_emails_only_transitioned(client, test_db, test_mail)
 
 
 def test_accept_skips_rsvped(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -153,7 +153,7 @@ def test_accept_skips_rsvped(client, test_db, test_mail):
 
 
 def test_waitlist_twice_sends_one_email(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
 
@@ -168,7 +168,7 @@ def test_waitlist_twice_sends_one_email(client, test_db, test_mail):
 
 
 def test_waitlist_skips_rsvped(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -186,8 +186,8 @@ def test_waitlist_skips_rsvped(client, test_db, test_mail):
 
 
 def test_reject_bulk_marks_and_emails(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
-    register_confirmed(client, test_mail, create_json2)
+    register_applied(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json2)
     admin = admin_token(client, test_db)
     ids = [_uid(test_db), _uid(test_db, 'b@test.com')]
 
@@ -204,7 +204,7 @@ def test_reject_bulk_marks_and_emails(client, test_db, test_mail):
 
 
 def test_reject_clears_accept_and_blocks_rsvp(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
     client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
@@ -220,7 +220,7 @@ def test_reject_clears_accept_and_blocks_rsvp(client, test_db, test_mail):
 
 
 def test_reject_twice_sends_one_email(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
 
@@ -235,8 +235,8 @@ def test_reject_twice_sends_one_email(client, test_db, test_mail):
 
 
 def test_reject_skips_rsvped(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
-    register_confirmed(client, test_mail, create_json2)
+    register_applied(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json2)
     admin = admin_token(client, test_db)
     uid_a = _uid(test_db)
     uid_b = _uid(test_db, 'b@test.com')
@@ -255,7 +255,7 @@ def test_reject_skips_rsvped(client, test_db, test_mail):
 
 
 def test_rejected_then_accepted_allowed(client, test_db, test_mail):
-    register_confirmed(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
     uid = _uid(test_db)
 

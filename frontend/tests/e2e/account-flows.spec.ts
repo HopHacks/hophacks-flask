@@ -75,7 +75,7 @@ test("confirm email posts the token and reports success", async ({ page }) => {
   });
 
   await page.goto("/confirm_email/e2e-confirm-token");
-  await expect(page.getByText("Email confirmed!")).toBeVisible();
+  await expect(page.getByText("Email confirmed! One step left.")).toBeVisible();
   expect(confirm.payload).toEqual({ confirm_token: "e2e-confirm-token" });
   await expect(page.getByRole("link", { name: "Sign In" })).toHaveAttribute(
     "href",
@@ -282,6 +282,37 @@ test("profile page loads the saved application and saves edits", async ({
   // whole profile object).
   expect(update.payload?.profile?.tshirt_size).toBe("M");
   expect(update.payload?.profile?.is_jhu).toBe(true);
+  // The free responses belong to the application, not the profile: the form
+  // must not offer them, but must still round-trip the stored answers.
+  expect(update.payload?.profile?.essay_project).toBe("A project answer.");
+  await expect(
+    page.getByLabel("Share a project, technical or not"),
+  ).toHaveCount(0);
+});
+
+test("a confirmed user who never applied is pushed to finish", async ({
+  page,
+}) => {
+  await stubLoggedIn(page);
+  await page.route("**/api/accounts/profile/get", (r) =>
+    r.fulfill({ json: { profile: PROFILE_FIXTURE } }),
+  );
+  await page.route("**/api/resumes/filename", (r) =>
+    r.fulfill({ json: { filename: "resume.pdf" } }),
+  );
+  await page.route("**/api/accounts/profile/email_confirmed", (r) =>
+    r.fulfill({ json: { email_confirmed: true } }),
+  );
+  // No registration for the current event: a profile, not an application.
+  await page.route("**/api/registrations/get", (r) =>
+    r.fulfill({ json: { registrations: [] } }),
+  );
+
+  await page.goto("/profile");
+  await expect(page.getByText("Application not submitted")).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Finish your application" }),
+  ).toHaveAttribute("href", "/apply");
 });
 
 test("unconfirmed email surfaces the resend action", async ({ page }) => {

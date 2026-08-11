@@ -16,8 +16,10 @@ import {
   downloadCsv,
   getUsers,
   deriveStatus,
+  formatAppliedAt,
   field,
 } from "@/app/util/adminApi";
+import { ESSAY_QUESTIONS } from "@/app/util/essays";
 
 const PAGE_SIZE = 25;
 
@@ -29,6 +31,7 @@ const STATUS_FILTERS = [
   ["rsvped", "RSVP'd"],
   ["checked_in", "Checked in"],
   ["rejected", "Rejected"],
+  ["not_submitted", "Not submitted"],
   ["email_not_confirmed", "Email not confirmed"],
 ] as const;
 
@@ -221,6 +224,13 @@ export default function ApplicationsPage() {
         <StatCard title="Waitlisted" value={String(counts.waitlisted ?? 0)} />
         <StatCard title="RSVP'd" value={String(counts.rsvped ?? 0)} />
         <StatCard title="Checked in" value={String(counts.checked_in ?? 0)} />
+        <StatCard
+          title="Profile only"
+          value={String(
+            (counts.not_submitted ?? 0) + (counts.email_not_confirmed ?? 0),
+          )}
+          subtitle="no application submitted"
+        />
       </div>
 
       {/* Toolbar */}
@@ -307,6 +317,7 @@ export default function ApplicationsPage() {
               <th className="px-4 py-3 text-left font-medium">Email</th>
               <th className="px-4 py-3 text-left font-medium">School</th>
               <th className="px-4 py-3 text-left font-medium">Status</th>
+              <th className="px-4 py-3 text-left font-medium">Applied</th>
               <th className="px-4 py-3 text-right font-medium">Actions</th>
             </tr>
           </thead>
@@ -323,6 +334,12 @@ export default function ApplicationsPage() {
                         type="checkbox"
                         checked={selected.has(u.id)}
                         onChange={() => toggle(u.id)}
+                        disabled={!u.submitted}
+                        title={
+                          u.submitted
+                            ? undefined
+                            : "No application submitted yet"
+                        }
                       />
                     </td>
                     <td className="px-4 py-3">
@@ -344,45 +361,54 @@ export default function ApplicationsPage() {
                     <td className="px-4 py-3">
                       <StatusBadge status={status} />
                     </td>
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-500">
+                      {formatAppliedAt(u) || "—"}
+                    </td>
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-1.5 text-xs">
-                        <button
-                          disabled={isBusy}
-                          className="rounded bg-green-600 px-2 py-1 text-white hover:bg-green-500 disabled:opacity-50"
-                          onClick={() => rowDecision("accept", u)}
-                        >
-                          Accept
-                        </button>
-                        <button
-                          disabled={isBusy}
-                          className="rounded bg-amber-500 px-2 py-1 text-white hover:bg-amber-400 disabled:opacity-50"
-                          onClick={() => rowDecision("waitlist", u)}
-                        >
-                          Waitlist
-                        </button>
-                        <button
-                          disabled={isBusy}
-                          className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-500 disabled:opacity-50"
-                          onClick={() => rowDecision("reject", u)}
-                        >
-                          Reject
-                        </button>
-                        <button
-                          disabled={isBusy}
-                          className="rounded bg-indigo-600 px-2 py-1 text-white hover:bg-indigo-500 disabled:opacity-50"
-                          onClick={() =>
-                            run("Checked in.", () => checkIn(u.id), [u.id])
-                          }
-                        >
-                          Check in
-                        </button>
-                        <button
-                          disabled={isBusy}
-                          className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-                          onClick={() => rowDecision("revert", u)}
-                        >
-                          Revert
-                        </button>
+                        {/* There is no application to decide on until one is
+                            submitted; the API would just skip these. */}
+                        {u.submitted && (
+                          <>
+                            <button
+                              disabled={isBusy}
+                              className="rounded bg-green-600 px-2 py-1 text-white hover:bg-green-500 disabled:opacity-50"
+                              onClick={() => rowDecision("accept", u)}
+                            >
+                              Accept
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              className="rounded bg-amber-500 px-2 py-1 text-white hover:bg-amber-400 disabled:opacity-50"
+                              onClick={() => rowDecision("waitlist", u)}
+                            >
+                              Waitlist
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-500 disabled:opacity-50"
+                              onClick={() => rowDecision("reject", u)}
+                            >
+                              Reject
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              className="rounded bg-indigo-600 px-2 py-1 text-white hover:bg-indigo-500 disabled:opacity-50"
+                              onClick={() =>
+                                run("Checked in.", () => checkIn(u.id), [u.id])
+                              }
+                            >
+                              Check in
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                              onClick={() => rowDecision("revert", u)}
+                            >
+                              Revert
+                            </button>
+                          </>
+                        )}
                         {u.resume ? (
                           <button
                             className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50"
@@ -413,16 +439,20 @@ export default function ApplicationsPage() {
                   {isExpanded && (
                     <tr className="border-b border-slate-100 bg-slate-50/70">
                       <td />
-                      <td colSpan={5} className="px-4 pb-5 pt-1">
+                      <td colSpan={6} className="px-4 pb-5 pt-1">
                         <div className="max-w-3xl space-y-4">
-                          <EssayBlock
-                            label="A project you're proud of, and the hardest decision you made"
-                            text={field(u, "essay_project")}
-                          />
-                          <EssayBlock
-                            label="A time you worked in a team, your role, strengths and weaknesses"
-                            text={field(u, "essay_team")}
-                          />
+                          {!u.submitted && (
+                            <p className="text-xs font-medium uppercase tracking-wide text-orange-700">
+                              Draft — not submitted
+                            </p>
+                          )}
+                          {ESSAY_QUESTIONS.map((q) => (
+                            <EssayBlock
+                              key={q.key}
+                              label={q.shortLabel}
+                              text={field(u, q.key)}
+                            />
+                          ))}
                           <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-500">
                             <span>
                               Level: {field(u, "level_of_study") || "—"}
@@ -450,7 +480,7 @@ export default function ApplicationsPage() {
             {!loading && paged.length === 0 && (
               <tr>
                 <td
-                  colSpan={6}
+                  colSpan={7}
                   className="px-4 py-10 text-center text-slate-400"
                 >
                   No registrants match.
@@ -460,7 +490,7 @@ export default function ApplicationsPage() {
             {loading && (
               <tr>
                 <td
-                  colSpan={6}
+                  colSpan={7}
                   className="px-4 py-10 text-center text-slate-400"
                 >
                   Loading…

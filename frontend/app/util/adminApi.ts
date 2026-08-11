@@ -16,7 +16,10 @@ export type AdminUser = {
   email_confirmed: boolean;
   registrations: Registration[];
   resume?: string | null;
+  /** When the application was submitted; null for profile-only accounts. */
   apply_at?: string | null;
+  /** Whether an application was submitted at all (vs. just a profile). */
+  submitted?: boolean;
 };
 
 export type AdminStats = {
@@ -122,11 +125,31 @@ export async function downloadCsv(): Promise<void> {
   URL.revokeObjectURL(url);
 }
 
-/** Current-event status for an applicant, with email-confirmation short-circuit. */
+/**
+ * Current-event status for an applicant.
+ *
+ * The ladder is deliberate: an unconfirmed email outranks everything, then a
+ * confirmed account with no registration is a profile whose application was
+ * never submitted, and only after that does the registration's own status
+ * apply.
+ */
 export function deriveStatus(user: AdminUser): string {
   if (!user.email_confirmed) return "email_not_confirmed";
   const reg = user.registrations?.find((r) => r.event === CURRENT_EVENT);
-  return reg?.status ?? "unknown";
+  if (!reg) return "not_submitted";
+  return reg.status ?? "unknown";
+}
+
+/** Submission date, formatted for the table. Empty for profile-only accounts. */
+export function formatAppliedAt(user: AdminUser): string {
+  if (!user.apply_at) return "";
+  const date = new Date(user.apply_at);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }
 
 /** Safe string accessor for loosely-typed profile fields. */

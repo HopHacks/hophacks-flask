@@ -65,11 +65,11 @@ export default function ConfirmEmailPage() {
                   ✓
                 </div>
                 <p className="text-xl font-bold text-white">
-                  Email confirmed! Your application is in.
+                  Email confirmed! One step left.
                 </p>
                 <p className="text-white/90">
-                  We'll email you once decisions go out. Sign in any time to
-                  update your profile or resume.
+                  You have a profile, but your application isn't submitted yet.
+                  Sign in to answer the two application questions.
                 </p>
               </>
             )}
@@ -80,7 +80,8 @@ export default function ConfirmEmailPage() {
                   This email is already confirmed.
                 </p>
                 <p className="text-white/90">
-                  Your application is all set. Sign in to view your status.
+                  Sign in to submit your application, or to check its status if
+                  you already have.
                 </p>
               </>
             )}

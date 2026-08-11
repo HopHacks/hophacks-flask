@@ -7,7 +7,7 @@ from utils import create_json, login_json
 from test_users import extract_token
 
 
-def test_confirm_creates_applied_registration(client, test_db, test_mail):
+def test_confirm_does_not_create_registration(client, test_db, test_mail):
     with test_mail.record_messages() as outbox:
         assert client.post("/api/accounts/create", json=create_json).status_code == 200
         token = extract_token(outbox[-1], create_json['confirm_url'])
@@ -17,21 +17,17 @@ def test_confirm_creates_applied_registration(client, test_db, test_mail):
     user = test_db.users.find_one({'username': "a@test.com"})
     assert user["email_confirmed"] is True
 
-    regs = user["registrations"]
-    assert len(regs) == 1
-    reg = regs[0]
-    assert reg["event"] == EVENT_NAME
-    assert reg["status"] == "applied"
-    assert reg["accept"] is False
-    assert reg["checkin"] is False
-    assert reg["rsvp"] is False
-    assert reg["apply_at"] is not None
+    # Confirming verifies the address and nothing more. The application is a
+    # separate, explicit act (POST /api/registrations/apply), which is what
+    # makes "submitted" distinguishable from "made a profile".
+    assert user["registrations"] == []
 
 
-def test_confirm_does_not_duplicate_existing_registration(client, test_db, test_mail):
+def test_confirm_leaves_an_existing_registration_alone(client, test_db, test_mail):
     with test_mail.record_messages() as outbox:
         assert client.post("/api/accounts/create", json=create_json).status_code == 200
-        # Simulate the user already having a registration for the current event.
+        # A user who applied before re-confirming (e.g. resent link) keeps the
+        # one registration they already have.
         test_db.users.update_one(
             {'username': "a@test.com"},
             {'$push': {'registrations': {"event": EVENT_NAME, "status": "applied"}}},
@@ -59,8 +55,7 @@ def test_confirm_twice_is_idempotent(client, test_db, test_mail):
     assert res.json["msg"] == "Email already confirmed"
 
     user = test_db.users.find_one({'username': "a@test.com"})
-    event_regs = [r for r in user["registrations"] if r["event"] == EVENT_NAME]
-    assert len(event_regs) == 1
+    assert user["email_confirmed"] is True
 
 
 def test_confirm_malformed_token_400(client, test_db):

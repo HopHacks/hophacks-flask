@@ -6,6 +6,7 @@ const STYLES: Record<string, string> = {
   rsvped: "bg-blue-100 text-blue-800 border-blue-200",
   checked_in: "bg-indigo-100 text-indigo-800 border-indigo-200",
   email_not_confirmed: "bg-zinc-100 text-zinc-600 border-zinc-200",
+  not_submitted: "bg-orange-100 text-orange-800 border-orange-200",
   unknown: "bg-slate-100 text-slate-500 border-slate-200",
 };
 
@@ -17,6 +18,7 @@ const LABELS: Record<string, string> = {
   rsvped: "RSVP'd",
   checked_in: "Checked in",
   email_not_confirmed: "Email not confirmed",
+  not_submitted: "Not submitted",
   unknown: "Unknown",
 };
 

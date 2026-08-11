@@ -109,13 +109,6 @@ export interface ProfileFieldDef {
   fullWidth?: boolean;
   /** Render (and validate) only when this returns true. */
   showIf?: (values: Record<string, string>) => boolean;
-  /** Show word count and enforce a maximum (for textarea fields). */
-  maxWords?: number;
-}
-
-export const ESSAY_WORD_LIMIT = 300;
-function wordCount(text: string): number {
-  return text.trim() ? text.trim().split(/\s+/).length : 0;
 }
 
 export const PROFILE_FIELDS = [
@@ -238,32 +231,8 @@ export const PROFILE_FIELDS = [
     validate: validateLinkedIn,
     fullWidth: true,
   },
-  {
-    key: "essay_project",
-    label:
-      "Share a project, technical or not, that you're genuinely proud of. What was the hardest decision you made, and why did you make it that way?",
-    type: "textarea",
-    requiredMsg: "* Please answer the first application question.",
-    fullWidth: true,
-    maxWords: ESSAY_WORD_LIMIT,
-    validate: (v) =>
-      wordCount(v) > ESSAY_WORD_LIMIT
-        ? `* Response must be ${ESSAY_WORD_LIMIT} words or fewer (currently ${wordCount(v)}).`
-        : null,
-  },
-  {
-    key: "essay_team",
-    label:
-      "Tell us about a time you worked in a team. What role did you play, and what were your strengths and weaknesses?",
-    type: "textarea",
-    requiredMsg: "* Please answer the second application question.",
-    fullWidth: true,
-    maxWords: ESSAY_WORD_LIMIT,
-    validate: (v) =>
-      wordCount(v) > ESSAY_WORD_LIMIT
-        ? `* Response must be ${ESSAY_WORD_LIMIT} words or fewer (currently ${wordCount(v)}).`
-        : null,
-  },
+  // The two free-response questions are deliberately absent: they belong to
+  // the application, not the profile, and are answered (once) on /apply.
   // Optional demographics — signup collects these under "answer only what
   // you're comfortable with"; empty values are allowed here too.
   {

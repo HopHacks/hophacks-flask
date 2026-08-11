@@ -70,12 +70,6 @@ async function fillAboutYou(page: Page) {
   await page
     .getByLabel("LinkedIn profile URL")
     .fill("https://linkedin.com/in/e2e");
-  await page
-    .getByLabel("Share a project, technical or not")
-    .fill("I built a small compiler and chose a simple IR over speed.");
-  await page
-    .getByLabel("Tell us about a time you worked in a team")
-    .fill("I led a four person team and learned to delegate testing.");
   await page.getByLabel("Dietary restrictions").selectOption("None");
   await page.getByLabel("T-shirt size").selectOption("M");
   await page.locator('input[type="file"]').setInputFiles(RESUME_FIXTURE);
@@ -114,8 +108,11 @@ test("happy path submits canonical MLH payload", async ({ page }) => {
 
   // Avatar step → submit.
   await page.getByRole("button", { name: "Finish", exact: true }).click();
-  await expect(page.getByText("Application submitted!")).toBeVisible();
+  await expect(page.getByText("Profile created!")).toBeVisible();
   await expect(page.getByText("resume didn't upload")).not.toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Finish your application" }),
+  ).toHaveAttribute("href", "/apply");
 
   const payload = created.payload as {
     username: string;
@@ -134,38 +131,26 @@ test("happy path submits canonical MLH payload", async ({ page }) => {
   expect(payload.profile.is_jhu).toBe(true);
   expect(payload.profile.dietary_restrictions).toBe("None");
   expect(payload.profile.tshirt_size).toBe("M");
-  expect(payload.profile.essay_project).toContain("compiler");
-  expect(payload.profile.essay_team).toContain("team");
+  // Signup creates a profile only — the free responses are submitted later,
+  // on /apply, which is what makes an application distinguishable.
+  expect(payload.profile).not.toHaveProperty("essay_project");
+  expect(payload.profile).not.toHaveProperty("essay_team");
 });
 
-test("essay over the word limit blocks the application step", async ({
-  page,
-}) => {
+test("signup never asks the application questions", async ({ page }) => {
   const created: { payload?: unknown } = {};
   await stubBackend(page, created);
 
   await page.goto("/register/signup");
   await fillAccountStep(page);
   await fillBasicInfoStep(page);
-  await fillAboutYou(page);
-  await checkAllConsents(page);
-
-  await page
-    .getByLabel("Share a project, technical or not")
-    .fill(Array.from({ length: 301 }, (_, i) => `word${i}`).join(" "));
-  await page.getByRole("button", { name: "Next", exact: true }).click();
 
   await expect(
-    page.getByText("First answer must be 300 words or fewer"),
-  ).toBeVisible();
-  expect(created.payload).toBeUndefined();
-
-  // Trimming back under the limit unblocks the step.
-  await page
-    .getByLabel("Share a project, technical or not")
-    .fill("A short answer under the limit.");
-  await page.getByRole("button", { name: "Next", exact: true }).click();
-  await expect(page.getByText("Customize your blue jay!")).toBeVisible();
+    page.getByLabel("Share a project, technical or not"),
+  ).toHaveCount(0);
+  await expect(
+    page.getByLabel("Tell us about a time you worked in a team"),
+  ).toHaveCount(0);
 });
 
 test("required MLH consents gate submission", async ({ page }) => {
@@ -210,7 +195,7 @@ test("failed resume upload surfaces notice on confirmation", async ({
   await page.getByRole("button", { name: "Finish", exact: true }).click();
 
   // Signup still completes — the account was created — but the user is told.
-  await expect(page.getByText("Application submitted!")).toBeVisible();
+  await expect(page.getByText("Profile created!")).toBeVisible();
   await expect(page.getByText("resume didn't upload")).toBeVisible();
 });
 
