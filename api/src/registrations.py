@@ -107,11 +107,20 @@ def _send_decision_emails(users, subject, body, template):
                 failures += 1
     return failures
 
+# Gauges per-school demand so we know where to send buses. Interest only, no
+# commitment. Mirrored in email_acceptance.html; keep the two in sync.
+BUSING_FORM_URL = "https://forms.gle/HiTgXEvLA9BG8T5t6"
+
 def send_acceptances(users):
     return _send_decision_emails(
         users,
         "Acceptance Letter - HopHacks.com",
-        'Congrats on being accepted to HopHacks!',
+        # The plain-text alternative is what clients with HTML disabled show,
+        # so every link in the HTML needs to survive here too.
+        'Congrats on being accepted to HopHacks! RSVP at '
+        'https://hophacks.com/profile to confirm your spot.\n\n'
+        'Traveling from out of town? Let us know you are interested in a bus '
+        'to campus (no commitment): ' + BUSING_FORM_URL,
         'email_acceptance.html')
 
 def send_rejections(users):
