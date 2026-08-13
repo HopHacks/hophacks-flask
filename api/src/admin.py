@@ -13,7 +13,7 @@ import csv
 import io
 from werkzeug.utils import secure_filename
 
-from config.event import EVENT_NAME, EVENT_SLUG
+from config.event import EVENT_NAME, EVENT_SLUG, EVENT_CYCLE_START
 
 admin_api = Blueprint('admin', __name__)
 
@@ -141,8 +141,18 @@ def get_all_users_account():
                             {"profile.last_name": {"$regex": ".*" + query + ".*", "$options": "i"}}
                         ]
                     },
-                    # Filter users who have a 'Fall 2026' registration
-                    {"registrations": {"$elemMatch": {"event": event_name}}}
+                    # Everyone who submitted an application, plus accounts
+                    # created this cycle that never did -- the console has to
+                    # be able to show "made a profile, never applied". Scoping
+                    # the second half by account age matters: db.users spans
+                    # every year since 2021, and without it every dormant old
+                    # account would show up as an unfinished 2026 application.
+                    # ObjectIds embed their creation time, so this needs no new
+                    # field and rides the _id index.
+                    {"$or": [
+                        {"registrations": {"$elemMatch": {"event": event_name}}},
+                        {"_id": {"$gte": ObjectId.from_datetime(EVENT_CYCLE_START)}}
+                    ]}
                 ]
             }
         },
@@ -153,7 +163,7 @@ def get_all_users_account():
                         "vars": {
                             "fall2025_registration": {
                                 "$filter": {
-                                    "input": "$registrations",
+                                    "input": {"$ifNull": ["$registrations", []]},
                                     "as": "registration",
                                     "cond": {"$eq": ["$$registration.event", event_name]}
                                 }
@@ -173,7 +183,7 @@ def get_all_users_account():
                         "vars": {
                             "fall2025_registration": {
                                 "$filter": {
-                                    "input": "$registrations",
+                                    "input": {"$ifNull": ["$registrations", []]},
                                     "as": "registration",
                                     "cond": {"$eq": ["$$registration.event", event_name]}
                                 }
@@ -187,12 +197,33 @@ def get_all_users_account():
                             }
                         }
                     }
+                },
+                # A registration for the current event only exists once the user
+                # submitted their application (registrations.apply), so its
+                # presence is the submitted flag.
+                "submitted": {
+                    "$gt": [
+                        {
+                            "$size": {
+                                "$filter": {
+                                    "input": {"$ifNull": ["$registrations", []]},
+                                    "as": "registration",
+                                    "cond": {"$eq": ["$$registration.event", event_name]}
+                                }
+                            }
+                        },
+                        0
+                    ]
                 }
             }
         },
         {
+            # The review queue: submitted applications first, oldest submission
+            # first, so reviewing can start without waiting for a deadline.
+            # Profile-only accounts (null apply_at) fall to the bottom.
             "$sort": {
-                "current_rsvp_time": ASCENDING  # Sort by RSVP time for Fall 2026 if it exists
+                "submitted": DESCENDING,
+                "apply_at": ASCENDING
             }
         }
     ])
@@ -200,8 +231,10 @@ def get_all_users_account():
     users = []
     
     for document in cursor:
-        if not document['is_admin']:
-            users.append({'id': str(document['_id']), 'username': str(document['username']), 'profile': document['profile'], 'email_confirmed': document['email_confirmed'], 'registrations': document['registrations'], 'resume': document.get("resume"), 'vaccination': document.get("vaccination"), 'apply_at': document.get('apply_at')})
+        if not document.get('is_admin'):
+            # `or {}` / `or []`, not .get(key, default): legacy docs store an
+            # explicit None for these, which a default would not replace.
+            users.append({'id': str(document['_id']), 'username': str(document['username']), 'profile': document.get('profile') or {}, 'email_confirmed': bool(document.get('email_confirmed')), 'registrations': document.get('registrations') or [], 'resume': document.get("resume"), 'vaccination': document.get("vaccination"), 'apply_at': document.get('apply_at'), 'submitted': document.get('submitted', False)})
         
 
 
@@ -319,7 +352,7 @@ def export_csv():
     writer.writerow([
         'email', 'first_name', 'last_name', 'school', 'level_of_study',
         'country', 'age', 'status', 'apply_at', 'rsvp', 'checked_in',
-        'dietary_restrictions', 'tshirt_size'
+        'dietary_restrictions', 'tshirt_size', 'essay_project', 'essay_team'
     ])
 
     for user in users:
@@ -341,6 +374,8 @@ def export_csv():
             reg.get('checkin', False),
             profile.get('dietary_restrictions', ''),
             profile.get('tshirt_size', ''),
+            profile.get('essay_project', ''),
+            profile.get('essay_team', ''),
         ])
 
     return Response(

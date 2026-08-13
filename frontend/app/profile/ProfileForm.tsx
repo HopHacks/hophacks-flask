@@ -60,11 +60,6 @@ function AutocompleteInput({
 
 function ProfileField({ def, value, error, onChange }: FieldProps) {
   const isKnownOption = def.options?.includes(value) ?? false;
-  const wc = def.maxWords
-    ? value.trim()
-      ? value.trim().split(/\s+/).length
-      : 0
-    : 0;
 
   return (
     <div className={def.fullWidth ? "sm:col-span-2" : undefined}>
@@ -106,13 +101,6 @@ function ProfileField({ def, value, error, onChange }: FieldProps) {
           />
         )}
       </Field>
-      {def.maxWords && (
-        <span
-          className={`mt-0.5 block text-xs ${wc > def.maxWords ? "text-red-300" : "text-white/60"}`}
-        >
-          {wc} / {def.maxWords} words
-        </span>
-      )}
     </div>
   );
 }

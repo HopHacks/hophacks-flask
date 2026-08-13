@@ -7,12 +7,34 @@ from utils import add_admin_account, admin_login_json
 
 
 def register_confirmed(client, test_mail, payload):
-    """Create an account and confirm its email, leaving it in 'applied' state."""
+    """Create an account and confirm its email: a profile, with no application.
+
+    Confirming no longer applies the user to the event, so accounts left here
+    have no registration at all.
+    """
     with test_mail.record_messages() as outbox:
         assert client.post('/api/accounts/create', json=payload).status_code == 200
         token = extract_token(outbox[-1], payload['confirm_url'])
         assert client.post('/api/accounts/confirm_email',
                            json={'confirm_token': token}).status_code == 200
+
+
+def register_applied(client, test_mail, payload):
+    """Take an account all the way through submission, into 'applied' state.
+
+    Submits the essays that the payload's profile carries, so the stored
+    answers match the fixture either way.
+    """
+    register_confirmed(client, test_mail, payload)
+    token = login_token(client, {'username': payload['username'],
+                                 'password': payload['password']})
+    profile = payload['profile']
+    res = client.post('/api/registrations/apply',
+                      json={'essay_project': profile['essay_project'],
+                            'essay_team': profile['essay_team']},
+                      headers=bearer(token))
+    assert res.status_code == 200
+    return token
 
 
 def login_token(client, login_payload):

@@ -1,21 +1,25 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import StatCard from "@/components/analytics/StatCard";
 import StatusBadge from "@/components/analytics/StatusBadge";
 import {
   AdminUser,
+  DecisionOutcome,
   accept,
   waitlist,
   reject,
+  revert,
   checkIn,
   deleteUser,
   openResume,
   downloadCsv,
   getUsers,
   deriveStatus,
+  formatAppliedAt,
   field,
 } from "@/app/util/adminApi";
+import { ESSAY_QUESTIONS } from "@/app/util/essays";
 
 const PAGE_SIZE = 25;
 
@@ -27,8 +31,27 @@ const STATUS_FILTERS = [
   ["rsvped", "RSVP'd"],
   ["checked_in", "Checked in"],
   ["rejected", "Rejected"],
+  ["not_submitted", "Not submitted"],
   ["email_not_confirmed", "Email not confirmed"],
 ] as const;
+
+/** One application response. Whitespace is preserved so paragraphs survive. */
+function EssayBlock({ label, text }: { label: string; text: string }) {
+  return (
+    <div>
+      <div className="mb-1 text-xs font-medium uppercase tracking-wide text-slate-500">
+        {label}
+      </div>
+      {text ? (
+        <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-800">
+          {text}
+        </p>
+      ) : (
+        <p className="text-sm italic text-slate-400">No response on file.</p>
+      )}
+    </div>
+  );
+}
 
 export default function ApplicationsPage() {
   const [users, setUsers] = useState<AdminUser[]>([]);
@@ -39,6 +62,16 @@ export default function ApplicationsPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState<Set<string>>(new Set());
   const [message, setMessage] = useState("");
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
+  function toggleExpanded(id: string) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   const load = useCallback(async () => {
     try {
@@ -111,27 +144,66 @@ export default function ApplicationsPage() {
     }
   }
 
-  function bulk(action: "accept" | "waitlist" | "reject") {
+  async function runDecision(
+    verb: string,
+    fn: (ids: string[]) => Promise<DecisionOutcome>,
+    ids: string[],
+  ) {
+    setBusy((prev) => new Set([...prev, ...ids]));
+    setMessage("");
+    try {
+      const outcome = await fn(ids);
+      await load();
+      // Keep failed ids selected so one more click retries exactly those.
+      setSelected(new Set(outcome.failed));
+      const parts = [`${verb} ${outcome.num_changed}`];
+      if (outcome.skipped.length > 0)
+        parts.push(
+          `skipped ${outcome.skipped.length} (already decided or RSVP'd/checked in)`,
+        );
+      if (outcome.failed.length > 0)
+        parts.push(`failed ${outcome.failed.length}, kept selected for retry`);
+      setMessage(`${parts.join(" · ")}.`);
+    } catch {
+      setMessage("Action failed. Please try again.");
+    } finally {
+      setBusy((prev) => {
+        const next = new Set(prev);
+        ids.forEach((i) => next.delete(i));
+        return next;
+      });
+    }
+  }
+
+  const DECISIONS = {
+    accept: { verb: "Accepted", fn: accept, emails: true },
+    waitlist: { verb: "Waitlisted", fn: waitlist, emails: true },
+    reject: { verb: "Rejected", fn: reject, emails: true },
+    revert: { verb: "Reverted", fn: revert, emails: false },
+  } as const;
+
+  function bulk(action: keyof typeof DECISIONS) {
     const ids = [...selected];
     if (ids.length === 0) return;
-    const verb =
-      action === "accept"
-        ? "Accept"
-        : action === "waitlist"
-          ? "Waitlist"
-          : "Reject";
+    const { verb, fn, emails } = DECISIONS[action];
+    const warning = emails ? "This emails all of them." : "No emails are sent.";
     if (
       !window.confirm(
-        `${verb} ${ids.length} applicant(s)? This emails all of them.`,
+        `${verb.replace(/ed$/, "")} ${ids.length} applicant(s)? ${warning}`,
       )
     )
       return;
-    if (action === "accept")
-      run(`Accepted ${ids.length}.`, () => accept(ids), ids);
-    else if (action === "waitlist")
-      run(`Waitlisted ${ids.length}.`, () => waitlist(ids), ids);
-    else
-      run(`Rejected ${ids.length}.`, () => Promise.all(ids.map(reject)), ids);
+    runDecision(verb, fn, ids);
+  }
+
+  function rowDecision(action: keyof typeof DECISIONS, u: AdminUser) {
+    const { verb, fn, emails } = DECISIONS[action];
+    const name = `${field(u, "first_name")} ${field(u, "last_name")}`.trim();
+    const prompt = emails
+      ? `${verb.replace(/ed$/, "")} and email ${name} (${u.username})?`
+      : `Revert ${name} (${u.username}) to Applied? No email is sent.`;
+    if (!window.confirm(prompt)) return;
+    runDecision(verb, fn, [u.id]);
   }
 
   return (
@@ -152,6 +224,13 @@ export default function ApplicationsPage() {
         <StatCard title="Waitlisted" value={String(counts.waitlisted ?? 0)} />
         <StatCard title="RSVP'd" value={String(counts.rsvped ?? 0)} />
         <StatCard title="Checked in" value={String(counts.checked_in ?? 0)} />
+        <StatCard
+          title="Profile only"
+          value={String(
+            (counts.not_submitted ?? 0) + (counts.email_not_confirmed ?? 0),
+          )}
+          subtitle="no application submitted"
+        />
       </div>
 
       {/* Toolbar */}
@@ -214,6 +293,12 @@ export default function ApplicationsPage() {
             Reject
           </button>
           <button
+            className="rounded border border-slate-500 px-3 py-1 hover:bg-slate-700"
+            onClick={() => bulk("revert")}
+          >
+            Revert
+          </button>
+          <button
             className="ml-2 text-slate-300 hover:text-white"
             onClick={() => setSelected(new Set())}
           >
@@ -232,6 +317,7 @@ export default function ApplicationsPage() {
               <th className="px-4 py-3 text-left font-medium">Email</th>
               <th className="px-4 py-3 text-left font-medium">School</th>
               <th className="px-4 py-3 text-left font-medium">Status</th>
+              <th className="px-4 py-3 text-left font-medium">Applied</th>
               <th className="px-4 py-3 text-right font-medium">Actions</th>
             </tr>
           </thead>
@@ -239,97 +325,162 @@ export default function ApplicationsPage() {
             {paged.map((u) => {
               const status = deriveStatus(u);
               const isBusy = busy.has(u.id);
+              const isExpanded = expanded.has(u.id);
               return (
-                <tr key={u.id} className="border-b border-slate-100">
-                  <td className="px-4 py-3">
-                    <input
-                      type="checkbox"
-                      checked={selected.has(u.id)}
-                      onChange={() => toggle(u.id)}
-                    />
-                  </td>
-                  <td className="px-4 py-3">
-                    {field(u, "first_name")} {field(u, "last_name")}
-                  </td>
-                  <td className="px-4 py-3 text-slate-500">{u.username}</td>
-                  <td className="px-4 py-3">{field(u, "school") || "—"}</td>
-                  <td className="px-4 py-3">
-                    <StatusBadge status={status} />
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex justify-end gap-1.5 text-xs">
-                      <button
-                        disabled={isBusy}
-                        className="rounded bg-green-600 px-2 py-1 text-white hover:bg-green-500 disabled:opacity-50"
-                        onClick={() =>
-                          run("Accepted.", () => accept([u.id]), [u.id])
+                <Fragment key={u.id}>
+                  <tr className="border-b border-slate-100">
+                    <td className="px-4 py-3">
+                      <input
+                        type="checkbox"
+                        checked={selected.has(u.id)}
+                        onChange={() => toggle(u.id)}
+                        disabled={!u.submitted}
+                        title={
+                          u.submitted
+                            ? undefined
+                            : "No application submitted yet"
                         }
-                      >
-                        Accept
-                      </button>
+                      />
+                    </td>
+                    <td className="px-4 py-3">
                       <button
-                        disabled={isBusy}
-                        className="rounded bg-amber-500 px-2 py-1 text-white hover:bg-amber-400 disabled:opacity-50"
-                        onClick={() =>
-                          run("Waitlisted.", () => waitlist([u.id]), [u.id])
-                        }
+                        type="button"
+                        className="text-left hover:underline"
+                        aria-expanded={isExpanded}
+                        onClick={() => toggleExpanded(u.id)}
+                        title="Show application responses"
                       >
-                        Waitlist
+                        <span className="mr-1.5 inline-block text-slate-400">
+                          {isExpanded ? "▾" : "▸"}
+                        </span>
+                        {field(u, "first_name")} {field(u, "last_name")}
                       </button>
-                      <button
-                        disabled={isBusy}
-                        className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-500 disabled:opacity-50"
-                        onClick={() => {
-                          if (
-                            window.confirm("Reject and email this applicant?")
-                          )
-                            run("Rejected.", () => reject(u.id), [u.id]);
-                        }}
-                      >
-                        Reject
-                      </button>
-                      <button
-                        disabled={isBusy}
-                        className="rounded bg-indigo-600 px-2 py-1 text-white hover:bg-indigo-500 disabled:opacity-50"
-                        onClick={() =>
-                          run("Checked in.", () => checkIn(u.id), [u.id])
-                        }
-                      >
-                        Check in
-                      </button>
-                      {u.resume ? (
+                    </td>
+                    <td className="px-4 py-3 text-slate-500">{u.username}</td>
+                    <td className="px-4 py-3">{field(u, "school") || "—"}</td>
+                    <td className="px-4 py-3">
+                      <StatusBadge status={status} />
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-500">
+                      {formatAppliedAt(u) || "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex justify-end gap-1.5 text-xs">
+                        {/* There is no application to decide on until one is
+                            submitted; the API would just skip these. */}
+                        {u.submitted && (
+                          <>
+                            <button
+                              disabled={isBusy}
+                              className="rounded bg-green-600 px-2 py-1 text-white hover:bg-green-500 disabled:opacity-50"
+                              onClick={() => rowDecision("accept", u)}
+                            >
+                              Accept
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              className="rounded bg-amber-500 px-2 py-1 text-white hover:bg-amber-400 disabled:opacity-50"
+                              onClick={() => rowDecision("waitlist", u)}
+                            >
+                              Waitlist
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-500 disabled:opacity-50"
+                              onClick={() => rowDecision("reject", u)}
+                            >
+                              Reject
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              className="rounded bg-indigo-600 px-2 py-1 text-white hover:bg-indigo-500 disabled:opacity-50"
+                              onClick={() =>
+                                run("Checked in.", () => checkIn(u.id), [u.id])
+                              }
+                            >
+                              Check in
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                              onClick={() => rowDecision("revert", u)}
+                            >
+                              Revert
+                            </button>
+                          </>
+                        )}
+                        {u.resume ? (
+                          <button
+                            className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50"
+                            onClick={() => openResume(u.id)}
+                          >
+                            Resume
+                          </button>
+                        ) : null}
                         <button
-                          className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50"
-                          onClick={() => openResume(u.id)}
-                        >
-                          Resume
-                        </button>
-                      ) : null}
-                      <button
-                        disabled={isBusy}
-                        className="rounded border border-red-300 px-2 py-1 text-red-600 hover:bg-red-50 disabled:opacity-50"
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              `Permanently delete ${u.username}? This removes the account and resume; it cannot be undone.`,
+                          disabled={isBusy}
+                          className="rounded border border-red-300 px-2 py-1 text-red-600 hover:bg-red-50 disabled:opacity-50"
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                `Permanently delete ${u.username}? This removes the account and resume; it cannot be undone.`,
+                              )
                             )
-                          )
-                            run("Deleted.", () => deleteUser(u.username), [
-                              u.id,
-                            ]);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                              run("Deleted.", () => deleteUser(u.username), [
+                                u.id,
+                              ]);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  {isExpanded && (
+                    <tr className="border-b border-slate-100 bg-slate-50/70">
+                      <td />
+                      <td colSpan={6} className="px-4 pb-5 pt-1">
+                        <div className="max-w-3xl space-y-4">
+                          {!u.submitted && (
+                            <p className="text-xs font-medium uppercase tracking-wide text-orange-700">
+                              Draft — not submitted
+                            </p>
+                          )}
+                          {ESSAY_QUESTIONS.map((q) => (
+                            <EssayBlock
+                              key={q.key}
+                              label={q.shortLabel}
+                              text={field(u, q.key)}
+                            />
+                          ))}
+                          <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-500">
+                            <span>
+                              Level: {field(u, "level_of_study") || "—"}
+                            </span>
+                            <span>Major: {field(u, "major") || "—"}</span>
+                            <span>Country: {field(u, "country") || "—"}</span>
+                            {field(u, "linkedin_url") ? (
+                              <a
+                                href={field(u, "linkedin_url")}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-blue-600 hover:underline"
+                              >
+                                LinkedIn
+                              </a>
+                            ) : null}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
               );
             })}
             {!loading && paged.length === 0 && (
               <tr>
                 <td
-                  colSpan={6}
+                  colSpan={7}
                   className="px-4 py-10 text-center text-slate-400"
                 >
                   No registrants match.
@@ -339,7 +490,7 @@ export default function ApplicationsPage() {
             {loading && (
               <tr>
                 <td
-                  colSpan={6}
+                  colSpan={7}
                   className="px-4 py-10 text-center text-slate-400"
                 >
                   Loading…

@@ -1,6 +1,11 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
+
+/* Mobile Safari hangs or crashes the tab when a <datalist> holds thousands
+   of options (the schools list is ~9.7k), so only a capped, pre-filtered
+   slice is ever mounted; the browser then matches within that slice. */
+const MAX_VISIBLE_OPTIONS = 50;
 
 const INPUT_CLS = "input-sketch w-full rounded-lg px-4 py-2.5 text-base";
 
@@ -41,6 +46,13 @@ export default function Combobox({
     }
   }
 
+  const visible = useMemo(() => {
+    const all = loaded ?? [];
+    const q = value.trim().toLowerCase();
+    const matches = q ? all.filter((o) => o.toLowerCase().includes(q)) : all;
+    return matches.slice(0, MAX_VISIBLE_OPTIONS);
+  }, [loaded, value]);
+
   return (
     <>
       <input
@@ -55,7 +67,7 @@ export default function Combobox({
         autoComplete="off"
       />
       <datalist id={listId}>
-        {(loaded ?? []).map((opt) => (
+        {visible.map((opt) => (
           <option key={opt} value={opt} />
         ))}
       </datalist>
