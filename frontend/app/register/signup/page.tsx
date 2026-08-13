@@ -12,7 +12,7 @@ import {
   validatePhone,
 } from "@/app/profile/schema";
 import COUNTRIES from "./data/countries";
-import { EVENT_TAGLINE } from "@/app/util/event";
+import { APPLICATION_DEADLINE, EVENT_TAGLINE } from "@/app/util/event";
 import {
   AGES,
   EMAIL_RE,
@@ -1278,7 +1278,16 @@ export default function SignUpPage() {
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         {isConfirmation ? "Welcome to HopHacks!" : "Apply to HopHacks"}
       </h1>
-      <p className="mb-8 mt-1 text-center text-white/90">{EVENT_TAGLINE}</p>
+      <p
+        className={`mt-1 text-center text-white/90 ${isConfirmation ? "mb-8" : ""}`}
+      >
+        {EVENT_TAGLINE}
+      </p>
+      {!isConfirmation && (
+        <p className="mb-8 mt-1 text-center text-sm font-medium text-white/85 sm:text-base">
+          Applications due {APPLICATION_DEADLINE}
+        </p>
+      )}
 
       {!isConfirmation && <StepProgress current={activePage} />}
 

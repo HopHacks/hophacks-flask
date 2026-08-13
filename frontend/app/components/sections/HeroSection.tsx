@@ -7,6 +7,7 @@ import { useAuth } from "@/app/util/auth";
 import HeroTitle from "../hero/HeroTitle";
 import SocialLinks from "../hero/SocialLinks";
 import GetInvolved from "../hero/GetInvolved";
+import { APPLICATION_DEADLINE } from "@/app/util/event";
 
 const HERO_LAYERS = {
   backClouds: "/hero/back-clouds.webp",
@@ -111,6 +112,9 @@ export default function HeroSection() {
               <>
                 <p className="text-base font-normal text-white/90 sm:text-lg">
                   September 18&ndash;20, 2026 &middot; Baltimore, MD
+                </p>
+                <p className="text-sm font-medium text-white/85 sm:text-base">
+                  Applications due {APPLICATION_DEADLINE}
                 </p>
                 <Link href="/register/signup" className={CTA_CLS}>
                   Apply Now
