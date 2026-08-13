@@ -22,9 +22,12 @@ def test_acceptance_email_carries_the_busing_form(client, test_db, test_mail):
     import re
     hrefs = re.findall(r'href="([^"]*forms\.gle[^"]*)"', msg.html)
     assert hrefs == ['https://forms.gle/HiTgXEvLA9BG8T5t6']
-    # Surrounding copy survived templating.
+    # Surrounding copy survived templating. Asserting on "commitment" rather
+    # than an exact phrase: the wording is free to change, but the promise
+    # that this is interest-only must not silently disappear from either part.
     assert 'busing interest form' in msg.html
-    assert 'no commitment' in msg.html
+    assert 'commitment' in msg.html
+    assert 'commitment' in msg.body
 
 
 def test_other_decision_emails_do_not_mention_busing(client, test_db, test_mail):

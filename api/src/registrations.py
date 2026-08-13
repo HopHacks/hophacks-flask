@@ -117,10 +117,13 @@ def send_acceptances(users):
         "Acceptance Letter - HopHacks.com",
         # The plain-text alternative is what clients with HTML disabled show,
         # so every link in the HTML needs to survive here too.
-        'Congrats on being accepted to HopHacks! RSVP at '
-        'https://hophacks.com/profile to confirm your spot.\n\n'
-        'Traveling from out of town? Let us know you are interested in a bus '
-        'to campus (no commitment): ' + BUSING_FORM_URL,
+        "Congrats on being accepted to HopHacks! RSVP at "
+        "https://hophacks.com/profile to confirm your spot.\n\n"
+        "We're gauging interest in chartered buses to campus. Filling out the "
+        "busing interest form has no commitment attached, and the more "
+        "students from your school who respond, the more likely we are to add "
+        "a stop there. Pick-up times, locations, and ticketing details will "
+        "follow later.\n\n" + BUSING_FORM_URL,
         'email_acceptance.html')
 
 def send_rejections(users):
