@@ -14,7 +14,10 @@ def check_admin(endpoint_func):
     def wrapper(*args, **kwargs):
         id = get_jwt_identity()
         user = db.users.find_one({'_id': ObjectId(id)})
-        if (not (user and user['is_admin'])):
+        # .get, not ['is_admin']: legacy accounts predate the field, and a
+        # KeyError here would surface as an opaque 500 on every admin action
+        # rather than a clean "you are not an admin".
+        if (not (user and user.get('is_admin'))):
             return jsonify({'msg': 'This endpoint requires admin access'}), 401
 
         return endpoint_func(*args, **kwargs)
