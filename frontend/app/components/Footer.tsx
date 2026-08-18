@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import CodeOfConductModal from "./CodeOfConductModal";
 import SocialIconLinks from "./SocialIconLinks";
 
@@ -28,6 +29,9 @@ export default function Footer() {
           </a>
           <span>Malone Hall</span>
           <span>Johns Hopkins University</span>
+          <Link className={linkClass} href="/team">
+            Our Team
+          </Link>
           <CodeOfConductModal triggerClassName={linkClass} />
         </div>
 
