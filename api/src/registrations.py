@@ -90,26 +90,61 @@ def send_rsvp_info(users):
             conn.send(msg)
 
 def _send_decision_emails(users, subject, body, template):
-    """Email each user; one SMTP failure must not abort the rest of the batch.
+    """Email each user. Never raises: a decision is already committed to the
+    database by the time we get here, so no mail problem may undo it.
 
-    Returns the number of failed sends so endpoints can surface it.
+    Returns the list of users whose email did NOT send, so callers can record
+    and report exactly who still needs one.
     """
-    failures = 0
-    with mail.connect() as conn:
-        for user in users:
-            try:
-                msg = Message(recipients=[user["username"]],
-                              subject=subject)
-                msg.body = body
-                msg.html = render_template(template, first_name=user['profile']['first_name'])
-                conn.send(msg)
-            except Exception:
-                failures += 1
-    return failures
+    users = list(users)
+    sent = set()
+    try:
+        with mail.connect() as conn:
+            for user in users:
+                try:
+                    msg = Message(recipients=[user["username"]],
+                                  subject=subject)
+                    msg.body = body
+                    msg.html = render_template(template, first_name=user.get('profile', {}).get('first_name', ''))
+                    conn.send(msg)
+                    sent.add(str(user['_id']))
+                except Exception:
+                    # One bad recipient; keep going with the rest.
+                    pass
+    except Exception:
+        # The SMTP session could not be opened, or died mid-batch (Gmail
+        # enforces a daily send cap). This used to escape the endpoint as a
+        # 500 *after* apply_decision had already written the new statuses,
+        # leaving people accepted in the database whom we had never emailed
+        # and could no longer re-email, because the status guard skipped
+        # them on every retry. Whatever is not confirmed sent is reported
+        # as unsent instead, and the decision itself stands.
+        pass
+
+    return [u for u in users if str(u['_id']) not in sent]
 
 # Gauges per-school demand so we know where to send buses. Interest only, no
 # commitment. Mirrored in email_acceptance.html; keep the two in sync.
 BUSING_FORM_URL = "https://forms.gle/HiTgXEvLA9BG8T5t6"
+
+def mark_acceptance_email(users, unsent_ids, event):
+    """Record, per user, whether their acceptance email actually went out.
+
+    Without this the failure is invisible: an accepted applicant who never
+    got their letter looks identical to one who did, and the status guard
+    means re-accepting them is a no-op. The console reads this flag to show
+    who is still waiting, and /resend_acceptance uses it to fix them.
+    """
+    for ids, was_sent in (
+        ([u['_id'] for u in users if str(u['_id']) not in unsent_ids], True),
+        ([u['_id'] for u in users if str(u['_id']) in unsent_ids], False),
+    ):
+        if (ids):
+            db.users.update_many(
+                {'_id': {'$in': ids}, 'registrations.event': event},
+                {'$set': {'registrations.$.accept_email_sent': was_sent}}
+            )
+
 
 def send_acceptances(users):
     return _send_decision_emails(
@@ -401,10 +436,58 @@ def accept():
         }
     )
 
-    failures = send_acceptances(changed)
+    unsent = send_acceptances(changed)
+    mark_acceptance_email(changed, {str(u['_id']) for u in unsent}, event)
 
     return jsonify({"num_changed": len(changed), "skipped": skipped,
-                    "email_failures": failures}), 200
+                    "email_failures": len(unsent)}), 200
+
+
+@registrations_api.route('/resend_acceptance', methods = ['POST'])
+@jwt_required
+@check_admin
+def resend_acceptance():
+    """Re-send the acceptance email to users who are already accepted.
+
+    Recovery path for a batch whose emails failed (see
+    ``_send_decision_emails``). Deliberately does not touch anyone's status,
+    so it is safe to run repeatedly -- unlike revert-then-re-accept, which
+    would clear an RSVP that the applicant had already made.
+
+    Only users currently in the ``accepted`` state are eligible: anyone who
+    has since RSVPed or checked in evidently received their letter.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson users: List of user ids to email again
+    :reqjson event: Event name (defaults to the current event)
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+
+    """
+    if ('users' not in request.json):
+        return Response('Invalid request', status=400)
+
+    event = request.json.get("event", EVENT_NAME)
+    requested = request.json["users"]
+
+    targets = list(db.users.find({
+        '_id': {'$in': [ObjectId(i) for i in requested]},
+        'registrations': {'$elemMatch': {'event': event, 'status': 'accepted'}}
+    }))
+
+    eligible = {str(u['_id']) for u in targets}
+    skipped = [i for i in requested if i not in eligible]
+
+    unsent = send_acceptances(targets)
+    mark_acceptance_email(targets, {str(u['_id']) for u in unsent}, event)
+
+    return jsonify({"num_changed": len(targets) - len(unsent),
+                    "skipped": skipped,
+                    "email_failures": len(unsent)}), 200
 
 
 @registrations_api.route('/check_in', methods = ['POST'])
@@ -495,7 +578,7 @@ def reject():
         }
     )
 
-    failures = send_rejections(changed)
+    failures = len(send_rejections(changed))
 
     return jsonify({"num_changed": len(changed), "skipped": skipped,
                     "email_failures": failures}), 200
@@ -533,7 +616,7 @@ def waitlist():
         }
     )
 
-    failures = send_waitlist(changed)
+    failures = len(send_waitlist(changed))
 
     return jsonify({"num_changed": len(changed), "skipped": skipped,
                     "email_failures": failures}), 200

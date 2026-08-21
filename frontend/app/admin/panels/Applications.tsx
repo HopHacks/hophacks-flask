@@ -10,12 +10,14 @@ import {
   waitlist,
   reject,
   revert,
+  resendAcceptance,
   checkIn,
   deleteUser,
   openResume,
   downloadCsv,
   getUsers,
   deriveStatus,
+  acceptEmailFailed,
   formatAppliedAt,
   field,
 } from "@/app/util/adminApi";
@@ -32,6 +34,7 @@ const STATUS_FILTERS = [
   ["checked_in", "Checked in"],
   ["rejected", "Rejected"],
   ["not_submitted", "Not submitted"],
+  ["email_not_sent", "Accepted · email not sent"],
   ["email_not_confirmed", "Email not confirmed"],
 ] as const;
 
@@ -99,8 +102,11 @@ export default function ApplicationsPage() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return users.filter((u) => {
-      if (statusFilter !== "all" && deriveStatus(u) !== statusFilter)
+      if (statusFilter === "email_not_sent") {
+        if (!acceptEmailFailed(u)) return false;
+      } else if (statusFilter !== "all" && deriveStatus(u) !== statusFilter) {
         return false;
+      }
       if (!q) return true;
       const hay = `${field(u, "first_name")} ${field(u, "last_name")} ${
         u.username
@@ -163,6 +169,12 @@ export default function ApplicationsPage() {
         );
       if (outcome.failed.length > 0)
         parts.push(`failed ${outcome.failed.length}, kept selected for retry`);
+      // Loud, because the decision still stands when this happens: those
+      // people are accepted and do not know it.
+      if (outcome.emailFailures > 0)
+        parts.push(
+          `⚠ ${outcome.emailFailures} email(s) did NOT send — filter to "Accepted · email not sent" and use Resend email`,
+        );
       setMessage(`${parts.join(" · ")}.`);
     } catch {
       setMessage("Action failed. Please try again.");
@@ -180,13 +192,19 @@ export default function ApplicationsPage() {
     waitlist: { verb: "Waitlisted", fn: waitlist, emails: true },
     reject: { verb: "Rejected", fn: reject, emails: true },
     revert: { verb: "Reverted", fn: revert, emails: false },
+    resend: { verb: "Re-emailed", fn: resendAcceptance, emails: true },
   } as const;
 
   function bulk(action: keyof typeof DECISIONS) {
     const ids = [...selected];
     if (ids.length === 0) return;
     const { verb, fn, emails } = DECISIONS[action];
-    const warning = emails ? "This emails all of them." : "No emails are sent.";
+    const warning =
+      action === "resend"
+        ? "This re-sends the acceptance email. Nobody's status changes."
+        : emails
+          ? "This emails all of them."
+          : "No emails are sent.";
     if (
       !window.confirm(
         `${verb.replace(/ed$/, "")} ${ids.length} applicant(s)? ${warning}`,
@@ -224,6 +242,11 @@ export default function ApplicationsPage() {
         <StatCard title="Waitlisted" value={String(counts.waitlisted ?? 0)} />
         <StatCard title="RSVP'd" value={String(counts.rsvped ?? 0)} />
         <StatCard title="Checked in" value={String(counts.checked_in ?? 0)} />
+        <StatCard
+          title="Email not sent"
+          value={String(users.filter(acceptEmailFailed).length)}
+          subtitle="accepted, never notified"
+        />
         <StatCard
           title="Profile only"
           value={String(
@@ -299,6 +322,12 @@ export default function ApplicationsPage() {
             Revert
           </button>
           <button
+            className="rounded bg-sky-600 px-3 py-1 hover:bg-sky-500"
+            onClick={() => bulk("resend")}
+          >
+            Resend email
+          </button>
+          <button
             className="ml-2 text-slate-300 hover:text-white"
             onClick={() => setSelected(new Set())}
           >
@@ -360,6 +389,14 @@ export default function ApplicationsPage() {
                     <td className="px-4 py-3">{field(u, "school") || "—"}</td>
                     <td className="px-4 py-3">
                       <StatusBadge status={status} />
+                      {acceptEmailFailed(u) && (
+                        <span
+                          className="ml-1.5 inline-flex whitespace-nowrap rounded-full border border-red-200 bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800"
+                          title="Accepted, but the acceptance email did not send. They do not know yet."
+                        >
+                          email not sent
+                        </span>
+                      )}
                     </td>
                     <td className="whitespace-nowrap px-4 py-3 text-slate-500">
                       {formatAppliedAt(u) || "—"}

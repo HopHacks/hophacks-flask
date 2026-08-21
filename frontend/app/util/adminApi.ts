@@ -7,6 +7,9 @@ export type Registration = {
   accept?: boolean;
   rsvp?: boolean;
   checkin?: boolean;
+  /** False when the acceptance email failed to send. Undefined on rows
+      decided before we started recording it. */
+  accept_email_sent?: boolean;
 };
 
 export type AdminUser = {
@@ -52,6 +55,10 @@ export type DecisionOutcome = {
   num_changed: number;
   skipped: string[];
   failed: string[];
+  /** Users whose status changed but whose email did not send. Surfacing this
+      matters: it used to be returned by the API and silently dropped here,
+      so a batch could accept everyone and email no one with no warning. */
+  emailFailures: number;
 };
 
 /* One request must stay well under API Gateway's 29s cap since the backend
@@ -62,13 +69,19 @@ async function postDecision(
   path: string,
   ids: string[],
 ): Promise<DecisionOutcome> {
-  const outcome: DecisionOutcome = { num_changed: 0, skipped: [], failed: [] };
+  const outcome: DecisionOutcome = {
+    num_changed: 0,
+    skipped: [],
+    failed: [],
+    emailFailures: 0,
+  };
   for (let i = 0; i < ids.length; i += DECISION_CHUNK) {
     const chunk = ids.slice(i, i + DECISION_CHUNK);
     try {
       const r = await axios.post(path, { users: chunk, event: CURRENT_EVENT });
       outcome.num_changed += r.data.num_changed ?? 0;
       outcome.skipped.push(...(r.data.skipped ?? []));
+      outcome.emailFailures += r.data.email_failures ?? 0;
     } catch {
       outcome.failed.push(...chunk);
     }
@@ -85,6 +98,9 @@ export const reject = (ids: string[]) =>
 /** Reset registrations to "applied" without emailing (misclick recovery). */
 export const revert = (ids: string[]) =>
   postDecision("/api/registrations/revert", ids);
+/** Re-send the acceptance email to already-accepted users; no status change. */
+export const resendAcceptance = (ids: string[]) =>
+  postDecision("/api/registrations/resend_acceptance", ids);
 export const checkIn = (id: string) =>
   axios.post("/api/registrations/check_in", { user: id, event: CURRENT_EVENT });
 
@@ -150,6 +166,12 @@ export function formatAppliedAt(user: AdminUser): string {
     month: "short",
     day: "numeric",
   });
+}
+
+/** True when we know the acceptance email did not reach this applicant. */
+export function acceptEmailFailed(user: AdminUser): boolean {
+  const reg = user.registrations?.find((r) => r.event === CURRENT_EVENT);
+  return reg?.status === "accepted" && reg?.accept_email_sent === false;
 }
 
 /** Safe string accessor for loosely-typed profile fields. */

@@ -391,3 +391,108 @@ test("partial failure is reported and failed rows stay selected", async ({
     5,
   );
 });
+
+// --- Regression: acceptance emails that silently fail to send ---
+
+function makeAcceptedNoEmail(id: string, first: string) {
+  return {
+    id,
+    username: `${first.toLowerCase()}@e2e.com`,
+    profile: { first_name: first, last_name: "Tester", school: "JHU" },
+    email_confirmed: true,
+    registrations: [
+      {
+        event: "Fall 2026",
+        status: "accepted",
+        accept_email_sent: false,
+        apply_at: "2026-08-08T14:00:00+00:00",
+      },
+    ],
+    resume: null,
+    apply_at: "2026-08-08T14:00:00+00:00",
+    submitted: true,
+  };
+}
+
+test("an accepted applicant whose email failed is flagged and filterable", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  await page.route("**/api/admin/users*", (r) =>
+    r.fulfill({
+      json: {
+        users: [
+          makeUser("id-ok", "Fine", "Tester", "accepted"),
+          makeAcceptedNoEmail("id-stuck", "Stuck"),
+        ],
+      },
+    }),
+  );
+
+  await openApplications(page);
+
+  const stuck = page.getByRole("row", { name: /Stuck Tester/ });
+  await expect(stuck.getByText("email not sent")).toBeVisible();
+  // The applicant who did get their letter must not be flagged.
+  const fine = page.getByRole("row", { name: /Fine Tester/ });
+  await expect(fine.getByText("email not sent")).toHaveCount(0);
+
+  await page.getByRole("combobox").selectOption("email_not_sent");
+  await expect(
+    page.getByRole("button", { name: /Stuck Tester/ }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: /Fine Tester/ })).toHaveCount(
+    0,
+  );
+});
+
+test("a batch whose emails fail warns loudly instead of reporting success", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  // The API accepts everyone but sends nothing -- the incident's signature.
+  await page.route("**/api/registrations/accept", (r) =>
+    r.fulfill({ json: { num_changed: 1, skipped: [], email_failures: 1 } }),
+  );
+  page.on("dialog", (d) => d.accept());
+
+  await openApplications(page);
+  await page.getByRole("button", { name: "Accept", exact: true }).click();
+
+  await expect(page.getByText(/did NOT send/)).toBeVisible();
+});
+
+test("resend re-emails the selected applicants without changing status", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  await page.route("**/api/admin/users*", (r) =>
+    r.fulfill({ json: { users: [makeAcceptedNoEmail("id-stuck", "Stuck")] } }),
+  );
+  const sent: { payload?: { users?: string[] } } = {};
+  await page.route("**/api/registrations/resend_acceptance", async (r) => {
+    sent.payload = r.request().postDataJSON();
+    await r.fulfill({
+      json: { num_changed: 1, skipped: [], email_failures: 0 },
+    });
+  });
+  const dialogs: string[] = [];
+  page.on("dialog", (d) => {
+    dialogs.push(d.message());
+    d.accept();
+  });
+
+  await openApplications(page);
+  await page
+    .getByRole("row", { name: /Stuck Tester/ })
+    .getByRole("checkbox")
+    .check();
+  await page.getByRole("button", { name: "Resend email" }).click();
+
+  expect(dialogs[0]).toContain("Nobody's status changes");
+  expect(sent.payload?.users).toEqual(["id-stuck"]);
+  await expect(page.getByText(/Re-emailed 1/)).toBeVisible();
+});
