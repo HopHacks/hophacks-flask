@@ -85,3 +85,52 @@ def test_export_handles_missing_essays(client, test_db, test_mail):
     rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
     assert rows[0]['essay_project'] == ''
     assert rows[0]['essay_team'] == ''
+
+
+def test_export_includes_other_free_text(client, test_db, test_mail):
+    """The "Other" options store the real answer in a companion field.
+
+    Exporting the choice without its text loses the actual school name and
+    the actual dietary restriction, which is what catering and swag need.
+    """
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one({'username': 'a@test.com'}, {'$set': {
+        'profile.school': 'Other (not listed)',
+        'profile.otherSchool': 'Ada Lovelace Institute',
+        'profile.dietary_restrictions': 'Other',
+        'profile.dietary_restrictions_other': 'No shellfish, severe',
+    }})
+    admin = admin_token(client, test_db)
+
+    res = client.get('/api/admin/export', headers=bearer(admin))
+    assert res.status_code == 200
+
+    rows = list(csv.DictReader(io.StringIO(res.data.decode())))
+    assert rows[0]['other_school'] == 'Ada Lovelace Institute'
+    assert rows[0]['dietary_restrictions_other'] == 'No shellfish, severe'
+    # The choice itself is still exported alongside its text.
+    assert rows[0]['school'] == 'Other (not listed)'
+    assert rows[0]['dietary_restrictions'] == 'Other'
+
+
+def test_export_other_columns_blank_when_unused(client, test_db, test_mail):
+    """Most applicants pick a listed option; those cells are empty, not missing."""
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+
+    res = client.get('/api/admin/export', headers=bearer(admin))
+    rows = list(csv.DictReader(io.StringIO(res.data.decode())))
+    assert rows[0]['other_school'] == ''
+    assert rows[0]['dietary_restrictions_other'] == ''
+
+
+def test_export_header_and_row_widths_match(client, test_db, test_mail):
+    """A column added to one list and not the other silently shifts every
+    field after it, which is worse than a missing column."""
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+
+    res = client.get('/api/admin/export', headers=bearer(admin))
+    rows = list(csv.reader(io.StringIO(res.data.decode())))
+    header, first = rows[0], rows[1]
+    assert len(header) == len(first), (len(header), len(first))
