@@ -19,7 +19,7 @@ const SOCIAL_LINKS = [
   },
   {
     label: "Discord",
-    href: "https://discord.gg/Asrs9WCzQ",
+    href: "https://discord.com/invite/CgQWn2saP9",
     Icon: FaDiscord,
   },
 ] as const;
