@@ -96,11 +96,15 @@ export const SEXUALITY = [
   "Prefer not to answer",
 ];
 
+// Shared by the signup wizard and the profile form. Catering reads the
+// exported values, so keep each option something a kitchen can act on.
+// "Other" pairs with the free-text `dietary_restrictions_other`.
 export const DIETARY = [
   "None",
   "Vegetarian",
   "Vegan",
   "Celiac Disease",
+  "Gluten Allergy",
   "Kosher",
   "Halal",
   "Allergies",

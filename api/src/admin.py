@@ -349,10 +349,15 @@ def export_csv():
 
     output = io.StringIO()
     writer = csv.writer(output)
+    # The two "Other" options store the real answer in a companion free-text
+    # field. Exporting the choice without its text loses the actual school
+    # name and the actual dietary restriction, which is exactly what catering
+    # and swag need.
     writer.writerow([
-        'email', 'first_name', 'last_name', 'school', 'level_of_study',
-        'country', 'age', 'status', 'apply_at', 'rsvp', 'checked_in',
-        'dietary_restrictions', 'tshirt_size', 'essay_project', 'essay_team'
+        'email', 'first_name', 'last_name', 'school', 'other_school',
+        'level_of_study', 'country', 'age', 'status', 'apply_at', 'rsvp',
+        'checked_in', 'dietary_restrictions', 'dietary_restrictions_other',
+        'tshirt_size', 'essay_project', 'essay_team'
     ])
 
     for user in users:
@@ -365,6 +370,7 @@ def export_csv():
             profile.get('first_name', ''),
             profile.get('last_name', ''),
             profile.get('school', ''),
+            profile.get('otherSchool', ''),
             profile.get('level_of_study', ''),
             profile.get('country', ''),
             profile.get('age', ''),
@@ -373,6 +379,7 @@ def export_csv():
             reg.get('rsvp', False),
             reg.get('checkin', False),
             profile.get('dietary_restrictions', ''),
+            profile.get('dietary_restrictions_other', ''),
             profile.get('tshirt_size', ''),
             profile.get('essay_project', ''),
             profile.get('essay_team', ''),
