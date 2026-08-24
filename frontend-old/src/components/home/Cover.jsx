@@ -53,7 +53,7 @@ export default function Cover() {
         </a>
         {/* Discord */}
         <a
-          href="https://discord.gg/8V8wmCWUhH"
+          href="https://discord.com/invite/CgQWn2saP9"
           target="_blank"
           rel="noopener noreferrer"
           className="relative inline-block group"

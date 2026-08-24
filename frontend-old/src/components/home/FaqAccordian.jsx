@@ -134,7 +134,7 @@ const faqData = [
         Please email hophacks@gmail.com or ask your question in our{' '}
         <a
           className={linkClass}
-          href="https://discord.com/invite/8V8wmCWUhH"
+          href="https://discord.com/invite/CgQWn2saP9"
           target="_blank"
           rel="noreferrer"
         >

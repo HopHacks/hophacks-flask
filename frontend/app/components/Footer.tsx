@@ -16,8 +16,8 @@ export default function Footer() {
           <Image
             src="/images/hophacks-logo.png"
             alt="HopHacks logo"
-            width={242}
-            height={177}
+            width={836}
+            height={836}
             className="h-auto w-24"
           />
         </div>

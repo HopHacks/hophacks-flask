@@ -12,8 +12,8 @@ export default function HomeLink() {
       <Image
         src="/images/hophacks-logo.png"
         alt=""
-        width={242}
-        height={177}
+        width={836}
+        height={836}
         className="h-8 w-auto"
       />
       <span className="font-display text-2xl font-normal tracking-wide text-white">
