@@ -7,8 +7,79 @@ export interface AlumnusEntry {
   year: number;
 }
 
-// Ported from frontend-old/public/data/alumni.json.
+// Ported from frontend-old/public/data/alumni.json, plus 2025-26 organizers
+// who have since graduated/stepped down (moved from teams.ts).
 export const ALUMNI: AlumnusEntry[] = [
+  {
+    name: "Lucy Wu",
+    role: "Director",
+    image: "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Lucy+Wu.jpg",
+    github: "https://github.com/lucywu12",
+    linkedin: "https://www.linkedin.com/in/lucy-wu-012/",
+    year: 2026,
+  },
+  {
+    name: "Jennifer Li",
+    role: "Design Lead",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jennifer+Li.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/jenniferli7437/",
+    year: 2026,
+  },
+  {
+    name: "Leon Xu",
+    role: "Website",
+    image: "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Leon+Xu.jpg",
+    github: "https://github.com/Hanliang-Xu",
+    linkedin: "https://www.linkedin.com/in/hanliang-xu-b79062239/",
+    year: 2026,
+  },
+  {
+    name: "Jacob Gutsin",
+    role: "Logistics Lead",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jacob+Gutsin.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/jacob-gutsin/",
+    year: 2027,
+  },
+  {
+    name: "Yeo Eun Yoon (Jasmine)",
+    role: "Sponsors",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Yeo+Eun+Yoon+(Jasmine).jpg",
+    github: "https://github.com/cherringly",
+    linkedin: "https://www.linkedin.com/in/jasmineyoon04",
+    year: 2027,
+  },
+  {
+    name: "Jin Hong Moon",
+    role: "Website",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jin+Hong+Moon.jpg",
+    github: "https://github.com/jmo-on",
+    linkedin: "https://www.linkedin.com/in/jayden-moonjh/",
+    year: 2027,
+  },
+  {
+    name: "Lijia Lin",
+    role: "Logistics",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Lijia+Lin.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/lijia-lin/",
+    year: 2028,
+  },
+  {
+    name: "Mary Zhang",
+    role: "Sponsors",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Mary+Zhang.jpg",
+    github: "https://github.com/cherringly",
+    linkedin: "https://www.linkedin.com/in/mary-zhang-student/",
+    year: 2028,
+  },
   {
     name: "Akhil Deo",
     role: "JHU",
