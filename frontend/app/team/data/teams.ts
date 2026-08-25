@@ -72,12 +72,6 @@ export const TEAMS: Subteam[] = [
         major: "Computer Science",
         year: "2027",
       },
-      {
-        name: "Michael Schmalz",
-        photo: "/images/team/michael-schmalz.jpg",
-        funFact:
-          "Michael is a rising sophomore majoring in Computer Science and Applied Math. He's also a member of the Quant Club and enjoys working out, playing soccer, and playing poker.",
-      },
     ],
   },
   {
@@ -142,7 +136,6 @@ export const TEAMS: Subteam[] = [
     name: "Website",
     defaultRole: "Website",
     members: [
-      { name: "Jayden Moon", role: "Website Advisor" },
       {
         name: "David Benjamin",
         role: "Website Lead",
@@ -171,6 +164,12 @@ export const TEAMS: Subteam[] = [
         year: "2028",
       },
       { name: "Christian Yoon" },
+      {
+        name: "Michael Schmalz",
+        photo: "/images/team/michael-schmalz.jpg",
+        funFact:
+          "Michael is a rising sophomore majoring in Computer Science and Applied Math. He's also a member of the Quant Club and enjoys working out, playing soccer, and playing poker.",
+      },
       {
         name: "Naavya Jain",
         photo: "/images/team/naavya-jain.jpg",
