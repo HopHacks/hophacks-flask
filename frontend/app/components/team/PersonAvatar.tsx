@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function initials(name: string): string {
   return name
@@ -20,6 +20,17 @@ export default function PersonAvatar({
   src?: string;
 }) {
   const [errored, setErrored] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    // Same-origin 404s can resolve before hydration attaches onError below,
+    // so the failure event fires on a listener-less DOM node and is lost.
+    // Catch that case by checking the already-settled image on mount too.
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) {
+      setErrored(true);
+    }
+  }, [src]);
 
   if (!src || errored) {
     return (
@@ -35,6 +46,7 @@ export default function PersonAvatar({
   return (
     // eslint-disable-next-line @next/next/no-img-element -- remote S3 photos, not in next.config image domains
     <img
+      ref={imgRef}
       src={src}
       alt=""
       onError={() => setErrored(true)}

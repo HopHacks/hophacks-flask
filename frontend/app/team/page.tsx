@@ -153,6 +153,7 @@ export default function TeamPage() {
                 funFact={member.funFact}
                 github={member.github}
                 linkedin={member.linkedin}
+                photo={member.photo}
               />
             ),
           )}

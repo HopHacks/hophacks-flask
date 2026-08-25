@@ -14,6 +14,7 @@ export default function OrganizerCard({
   funFact,
   github,
   linkedin,
+  photo,
 }: {
   name: string;
   role: string;
@@ -23,13 +24,14 @@ export default function OrganizerCard({
   funFact?: string;
   github?: string;
   linkedin?: string;
+  photo?: string;
 }) {
   const majorYear = [major, year].filter(Boolean).join(", ");
 
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-white/25 bg-white/10 p-5 backdrop-blur-sm">
       <div className="flex items-start gap-4">
-        <PersonAvatar name={name} src={nameToPhotoUrl(name)} />
+        <PersonAvatar name={name} src={photo ?? nameToPhotoUrl(name)} />
         <div className="min-w-0 flex-1">
           <h3 className="truncate font-display text-lg text-white">{name}</h3>
           <p className="text-sm text-white/80">{role}</p>
