@@ -1,6 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "hophacks-organizers.s3.us-east-1.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "hophacks-website.s3.amazonaws.com",
+      },
+    ],
+  },
   // Some Flask endpoints are slash-terminated (/api/resumes/, /api/admin/).
   // Without this, Next 308-redirects them to the slashless form BEFORE the
   // /api rewrite runs, and the redirect chain through API Gateway drops the
