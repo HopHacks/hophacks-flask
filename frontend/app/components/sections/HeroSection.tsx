@@ -99,6 +99,12 @@ export default function HeroSection() {
             >
               Register Now
             </Link>
+            <Link
+              href="/team"
+              className="relative z-50 text-sm text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
+            >
+              Meet the team
+            </Link>
           </div>
 
           <SceneLayer src={HERO_LAYERS.bluebird} alt="" priority />
