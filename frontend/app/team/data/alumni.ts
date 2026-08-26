@@ -12,7 +12,7 @@ export interface AlumnusEntry {
 export const ALUMNI: AlumnusEntry[] = [
   {
     name: "Lucy Wu",
-    role: "Director",
+    role: "",
     image: "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Lucy+Wu.jpg",
     github: "https://github.com/lucywu12",
     linkedin: "https://www.linkedin.com/in/lucy-wu-012/",
@@ -20,7 +20,7 @@ export const ALUMNI: AlumnusEntry[] = [
   },
   {
     name: "Jennifer Li",
-    role: "Design Lead",
+    role: "",
     image:
       "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jennifer+Li.jpg",
     github: null,
@@ -29,7 +29,7 @@ export const ALUMNI: AlumnusEntry[] = [
   },
   {
     name: "Leon Xu",
-    role: "Website",
+    role: "",
     image: "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Leon+Xu.jpg",
     github: "https://github.com/Hanliang-Xu",
     linkedin: "https://www.linkedin.com/in/hanliang-xu-b79062239/",
@@ -37,7 +37,7 @@ export const ALUMNI: AlumnusEntry[] = [
   },
   {
     name: "Jacob Gutsin",
-    role: "Logistics Lead",
+    role: "",
     image:
       "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jacob+Gutsin.jpg",
     github: null,
@@ -46,7 +46,7 @@ export const ALUMNI: AlumnusEntry[] = [
   },
   {
     name: "Yeo Eun Yoon (Jasmine)",
-    role: "Sponsors",
+    role: "",
     image:
       "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Yeo+Eun+Yoon+(Jasmine).jpg",
     github: "https://github.com/cherringly",
@@ -55,7 +55,7 @@ export const ALUMNI: AlumnusEntry[] = [
   },
   {
     name: "Jin Hong Moon",
-    role: "Website",
+    role: "",
     image:
       "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jin+Hong+Moon.jpg",
     github: "https://github.com/jmo-on",
@@ -64,7 +64,7 @@ export const ALUMNI: AlumnusEntry[] = [
   },
   {
     name: "Lijia Lin",
-    role: "Logistics",
+    role: "",
     image:
       "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Lijia+Lin.jpg",
     github: null,
@@ -73,7 +73,7 @@ export const ALUMNI: AlumnusEntry[] = [
   },
   {
     name: "Mary Zhang",
-    role: "Sponsors",
+    role: "",
     image:
       "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Mary+Zhang.jpg",
     github: "https://github.com/cherringly",
@@ -109,7 +109,7 @@ export const ALUMNI: AlumnusEntry[] = [
   },
   {
     name: "Jacky Wang",
-    role: "Website",
+    role: "",
     image:
       "https://hophacks-website.s3.amazonaws.com/images/team/img/Jacky.jpg",
     github: "https://github.com/JiaqiWang18",
