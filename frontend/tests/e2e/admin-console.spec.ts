@@ -496,3 +496,24 @@ test("resend re-emails the selected applicants without changing status", async (
   expect(sent.payload?.users).toEqual(["id-stuck"]);
   await expect(page.getByText(/Re-emailed 1/)).toBeVisible();
 });
+
+test("the not-submitted export downloads through the API", async ({ page }) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  let hits = 0;
+  await page.route("**/api/admin/export_unsubmitted", (r) => {
+    hits += 1;
+    return r.fulfill({
+      contentType: "text/csv",
+      body: "email,first_name\nnudge-me@test.com,Nudge\n",
+    });
+  });
+
+  await openApplications(page);
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Export not submitted" }).click();
+  expect((await download).suggestedFilename()).toBe(
+    "hophacks_not_submitted.csv",
+  );
+  expect(hits).toBe(1);
+});

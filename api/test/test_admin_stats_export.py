@@ -5,7 +5,7 @@ import csv
 import io
 
 from utils import create_json, create_json2, create_json3, login_json
-from flow import register_applied, login_token, admin_token, bearer
+from flow import register_confirmed, register_applied, login_token, admin_token, bearer
 
 
 def test_stats_requires_admin(client, test_db, test_mail):
@@ -134,3 +134,72 @@ def test_export_header_and_row_widths_match(client, test_db, test_mail):
     rows = list(csv.reader(io.StringIO(res.data.decode())))
     header, first = rows[0], rows[1]
     assert len(header) == len(first), (len(header), len(first))
+
+
+def test_export_unsubmitted_lists_profile_only_accounts(client, test_db, test_mail):
+    """The nudge list: this cycle's accounts that never submitted."""
+    register_confirmed(client, test_mail, create_json)   # profile only
+    register_applied(client, test_mail, create_json2)    # submitted
+    admin = admin_token(client, test_db)
+
+    res = client.get('/api/admin/export_unsubmitted', headers=bearer(admin))
+    assert res.status_code == 200
+    assert 'hophacks_not_submitted.csv' in res.headers['Content-Disposition']
+
+    rows = list(csv.DictReader(io.StringIO(res.data.decode())))
+    emails = [r['email'] for r in rows]
+    assert 'a@test.com' in emails
+    # Submitted applicants belong to the other export, not this one.
+    assert 'b@test.com' not in emails
+
+    row = next(r for r in rows if r['email'] == 'a@test.com')
+    assert row['first_name'] == 'Andrew'
+    assert row['phone_number'] == '8888888888'
+    assert row['email_confirmed'] == 'True'
+
+
+def test_export_unsubmitted_excludes_dormant_old_accounts(client, test_db, test_mail):
+    """db.users spans every year since 2021; a 2023 account that never came
+    back is not one of this cycle's dropouts."""
+    import datetime
+    from bson import ObjectId
+
+    admin = admin_token(client, test_db)
+    test_db.users.insert_one({
+        '_id': ObjectId.from_datetime(datetime.datetime(2023, 3, 1)),
+        'username': 'dormant@test.com',
+        'profile': {'first_name': 'Dormant'},
+        'email_confirmed': True, 'registrations': [], 'is_admin': False,
+    })
+
+    res = client.get('/api/admin/export_unsubmitted', headers=bearer(admin))
+    rows = list(csv.DictReader(io.StringIO(res.data.decode())))
+    assert 'dormant@test.com' not in [r['email'] for r in rows]
+
+
+def test_export_unsubmitted_survives_ragged_docs(client, test_db, test_mail):
+    """Unconfirmed signups and legacy-shaped docs must not 500 the export."""
+    import datetime
+    from bson import ObjectId
+
+    admin = admin_token(client, test_db)
+    # Signed up, never confirmed, never submitted: the most common dropout.
+    assert client.post('/api/accounts/create', json=create_json).status_code == 200
+    # A ragged doc with no profile at all.
+    test_db.users.insert_one({
+        '_id': ObjectId.from_datetime(datetime.datetime(2026, 8, 1)),
+        'username': 'ragged@test.com', 'is_admin': False,
+    })
+
+    res = client.get('/api/admin/export_unsubmitted', headers=bearer(admin))
+    assert res.status_code == 200
+    rows = {r['email']: r for r in csv.DictReader(io.StringIO(res.data.decode()))}
+    assert rows['a@test.com']['email_confirmed'] == 'False'
+    assert rows['ragged@test.com']['first_name'] == ''
+
+
+def test_export_unsubmitted_requires_admin(client, test_db, test_mail):
+    register_confirmed(client, test_mail, create_json)
+    token = login_token(client, login_json)
+    assert client.get('/api/admin/export_unsubmitted',
+                      headers=bearer(token)).status_code == 401

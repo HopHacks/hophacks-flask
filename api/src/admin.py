@@ -392,3 +392,49 @@ def export_csv():
     )
 
 
+@admin_api.route('/export_unsubmitted', methods=['GET'])
+@jwt_required
+@check_admin
+def export_unsubmitted_csv():
+    """Export accounts from this cycle that never submitted an application.
+
+    The follow-up list: name and contact for everyone who made a profile but
+    stopped short of applying, so they can be nudged before the deadline.
+    Scoped by account age the same way /users is -- db.users spans every year
+    since 2021 and dormant old accounts are not this cycle's dropouts.
+    email_confirmed is included because it changes the nudge: unconfirmed
+    users are stuck a step earlier and need the confirmation link, not the
+    application link.
+    """
+    users = db.users.find({
+        'is_admin': {'$ne': True},
+        '_id': {'$gte': ObjectId.from_datetime(EVENT_CYCLE_START)},
+        'registrations': {'$not': {'$elemMatch': {'event': EVENT_NAME}}}
+    })
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow([
+        'email', 'first_name', 'last_name', 'phone_number', 'school',
+        'other_school', 'email_confirmed'
+    ])
+
+    for user in users:
+        profile = user.get('profile') or {}
+        writer.writerow([
+            user.get('username', ''),
+            profile.get('first_name', ''),
+            profile.get('last_name', ''),
+            profile.get('phone_number', ''),
+            profile.get('school', ''),
+            profile.get('otherSchool', ''),
+            bool(user.get('email_confirmed')),
+        ])
+
+    return Response(
+        output.getvalue(),
+        mimetype='text/csv',
+        headers={'Content-Disposition': 'attachment; filename=hophacks_not_submitted.csv'}
+    )
+
+

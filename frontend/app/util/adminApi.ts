@@ -129,17 +129,27 @@ export async function promoteAdmin(username: string): Promise<string> {
   return r.data.msg ?? "promoted";
 }
 
-export async function downloadCsv(): Promise<void> {
-  const r = await axios.get("/api/admin/export", { responseType: "blob" });
+async function downloadBlob(path: string, filename: string): Promise<void> {
+  // Through axios so the Authorization header rides along; a plain <a href>
+  // to the API would arrive without it.
+  const r = await axios.get(path, { responseType: "blob" });
   const url = URL.createObjectURL(r.data);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "hophacks_registrants.csv";
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
 }
+
+/** All current-event submissions (the review/catering export). */
+export const downloadCsv = () =>
+  downloadBlob("/api/admin/export", "hophacks_registrants.csv");
+
+/** This cycle's profile-only accounts: the "nudge before the deadline" list. */
+export const downloadUnsubmittedCsv = () =>
+  downloadBlob("/api/admin/export_unsubmitted", "hophacks_not_submitted.csv");
 
 /**
  * Current-event status for an applicant.
