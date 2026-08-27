@@ -15,6 +15,7 @@ import {
   deleteUser,
   openResume,
   downloadCsv,
+  downloadUnsubmittedCsv,
   getUsers,
   deriveStatus,
   acceptEmailFailed,
@@ -289,6 +290,16 @@ export default function ApplicationsPage() {
           }
         >
           Export CSV
+        </button>
+        <button
+          type="button"
+          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+          title="Name and contact for accounts that never submitted an application"
+          onClick={() =>
+            downloadUnsubmittedCsv().catch(() => setMessage("Export failed."))
+          }
+        >
+          Export not submitted
         </button>
         <div className="ml-auto text-sm text-slate-500">{message}</div>
       </div>
