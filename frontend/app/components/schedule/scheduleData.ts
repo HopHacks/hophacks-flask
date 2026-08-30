@@ -51,7 +51,8 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "8:00 PM",
         title: "Opening Ceremony",
-        location: "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        location:
+          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
         emoji: "🎉",
         type: "main",
       },
@@ -107,7 +108,8 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "2:30 PM",
         title: "Closing Ceremony",
-        location: "3400 N Charles St, Hodson Hall Room 110, Baltimore, MD 21218",
+        location:
+          "3400 N Charles St, Hodson Hall Room 110, Baltimore, MD 21218",
         emoji: "🏆",
         type: "main",
       },

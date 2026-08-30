@@ -57,7 +57,10 @@ export default function GetInvolved() {
   }, [open]);
 
   return (
-    <div ref={rootRef} className="relative z-50 mt-4 flex w-full justify-center">
+    <div
+      ref={rootRef}
+      className="relative z-50 mt-4 flex w-full justify-center"
+    >
       <button
         type="button"
         className={PILL_CLS}
