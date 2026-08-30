@@ -18,6 +18,8 @@ export interface ScheduleDay {
   label: string;
   /** Full date shown as the day heading, e.g. "Friday, TBD". */
   date: string;
+  /** Machine-readable date (YYYY-MM-DD) used to pick the default open tab. */
+  isoDate: string;
   events: ScheduleEvent[];
 }
 
@@ -37,6 +39,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     id: "day-1",
     label: "Day 1",
     date: "Friday, September 18",
+    isoDate: "2026-09-18",
     events: [
       {
         time: "6:00–8:00 PM",
@@ -71,6 +74,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     id: "day-2",
     label: "Day 2",
     date: "Saturday, September 19",
+    isoDate: "2026-09-19",
     events: [
       {
         time: "All Day",
@@ -85,6 +89,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     id: "day-3",
     label: "Day 3",
     date: "Sunday, September 20",
+    isoDate: "2026-09-20",
     events: [
       {
         time: "9:00 AM",

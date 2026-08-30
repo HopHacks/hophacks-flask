@@ -1,12 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   EVENT_TYPE_META,
   SCHEDULE_DAYS,
   type ScheduleEventType,
 } from "../schedule/scheduleData";
+
+// Pick the tab to open by default based on today: the day matching today's date,
+// the first day if the event hasn't started, or the last day if it has passed.
+function defaultDayId(today: string): string {
+  const first = SCHEDULE_DAYS[0];
+  const last = SCHEDULE_DAYS[SCHEDULE_DAYS.length - 1];
+  if (today <= first.isoDate) return first.id;
+  if (today >= last.isoDate) return last.id;
+  // Somewhere in the middle: the most recent day that has already started.
+  for (let i = SCHEDULE_DAYS.length - 1; i >= 0; i--) {
+    if (today >= SCHEDULE_DAYS[i].isoDate) return SCHEDULE_DAYS[i].id;
+  }
+  return first.id;
+}
 
 // Small color-coded dot per event type — carries the same color signal as the
 // old frontend's schedule (frontend-old/src/components/home/Schedule.jsx) without
@@ -22,6 +36,15 @@ export default function ScheduleSection() {
   const [activeDayId, setActiveDayId] = useState(SCHEDULE_DAYS[0].id);
   const activeDay =
     SCHEDULE_DAYS.find((day) => day.id === activeDayId) ?? SCHEDULE_DAYS[0];
+
+  // Open the date-appropriate tab on mount. Done in an effect (not initial state)
+  // so server and client render the same first paint and avoid a hydration
+  // mismatch when their local dates differ.
+  useEffect(() => {
+    // "en-CA" formats as YYYY-MM-DD, matching each day's isoDate for comparison.
+    const today = new Date().toLocaleDateString("en-CA");
+    setActiveDayId(defaultDayId(today));
+  }, []);
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col justify-center px-6 py-20 sm:px-8">
