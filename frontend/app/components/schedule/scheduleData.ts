@@ -7,7 +7,6 @@ export interface ScheduleEvent {
   time: string;
   title: string;
   location: string;
-  emoji?: string;
   type: ScheduleEventType;
 }
 
@@ -23,15 +22,12 @@ export interface ScheduleDay {
   events: ScheduleEvent[];
 }
 
-/** Human-friendly labels + emoji for each event type (used for the legend/badges). */
-export const EVENT_TYPE_META: Record<
-  ScheduleEventType,
-  { label: string; emoji: string }
-> = {
-  announcement: { label: "Announcement", emoji: "📣" },
-  main: { label: "Main", emoji: "💠" },
-  food: { label: "Food", emoji: "🍽️" },
-  workshop: { label: "Workshop", emoji: "🛠️" },
+/** Human-friendly label for each event type (used for the screen-reader prefix). */
+export const EVENT_TYPE_META: Record<ScheduleEventType, { label: string }> = {
+  announcement: { label: "Announcement" },
+  main: { label: "Main" },
+  food: { label: "Food" },
+  workshop: { label: "Workshop" },
 };
 
 export const SCHEDULE_DAYS: ScheduleDay[] = [
@@ -45,7 +41,6 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         time: "6:00–8:00 PM",
         title: "Check-in",
         location: "TBD",
-        emoji: "💫",
         type: "main",
       },
       {
@@ -53,7 +48,6 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         title: "Opening Ceremony",
         location:
           "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
-        emoji: "🎉",
         type: "main",
       },
       {
@@ -66,7 +60,6 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         time: "9:00 PM",
         title: "Sponsor Hall Opens",
         location: "TBD",
-        emoji: "🤝",
         type: "announcement",
       },
     ],
@@ -81,7 +74,6 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         time: "All Day",
         title: "Hacking Continues — more events TBA",
         location: "TBD",
-        emoji: "🛠️",
         type: "workshop",
       },
     ],
@@ -102,7 +94,6 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         time: "1:00 PM",
         title: "Top 10 Demos",
         location: "TBD",
-        emoji: "🌟",
         type: "main",
       },
       {
@@ -110,7 +101,6 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         title: "Closing Ceremony",
         location:
           "3400 N Charles St, Hodson Hall Room 110, Baltimore, MD 21218",
-        emoji: "🏆",
         type: "main",
       },
     ],
