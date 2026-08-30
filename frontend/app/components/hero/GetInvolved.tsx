@@ -2,9 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const JUDGING_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSet1xISEHadRU01T-TSoJzi679BcVXe4V248XyKfeu-6fLIqg/viewform";
-
 const SPONSOR_EMAIL = "hophacks.outreach@gmail.com";
 
 // Darker gold than recap-gold so link text stays readable (WCAG AA)
@@ -39,20 +36,17 @@ function Bubble({ id, children }: { id: string; children: React.ReactNode }) {
 }
 
 export default function GetInvolved() {
-  const [open, setOpen] = useState<"judge" | "sponsor" | null>(null);
+  const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-
-  const toggle = (which: "judge" | "sponsor") =>
-    setOpen((prev) => (prev === which ? null : which));
 
   // Close the open bubble on outside click or Escape.
   useEffect(() => {
     if (!open) return;
     function onPointerDown(e: PointerEvent) {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(null);
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
     }
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(null);
+      if (e.key === "Escape") setOpen(false);
     }
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
@@ -63,47 +57,19 @@ export default function GetInvolved() {
   }, [open]);
 
   return (
-    <div
-      ref={rootRef}
-      className="relative z-50 mt-4 grid w-full grid-cols-1 gap-3 sm:grid-cols-2"
-    >
+    <div ref={rootRef} className="relative z-50 mt-4 flex w-full justify-center">
       <button
         type="button"
-        className={`${PILL_CLS} justify-self-center sm:justify-self-end`}
-        aria-expanded={open === "judge"}
-        aria-controls="get-involved-judge-bubble"
-        onClick={() => toggle("judge")}
-      >
-        Interested in judging?
-        <Caret open={open === "judge"} />
-      </button>
-
-      <button
-        type="button"
-        className={`${PILL_CLS} justify-self-center sm:justify-self-start`}
-        aria-expanded={open === "sponsor"}
+        className={PILL_CLS}
+        aria-expanded={open}
         aria-controls="get-involved-sponsor-bubble"
-        onClick={() => toggle("sponsor")}
+        onClick={() => setOpen((prev) => !prev)}
       >
         Interested in partnering?
-        <Caret open={open === "sponsor"} />
+        <Caret open={open} />
       </button>
 
-      {open === "judge" && (
-        <Bubble id="get-involved-judge-bubble">
-          Sign up to be a judge through our{" "}
-          <a
-            href={JUDGING_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={BUBBLE_LINK_CLS}
-          >
-            judging form
-          </a>
-          .
-        </Bubble>
-      )}
-      {open === "sponsor" && (
+      {open && (
         <Bubble id="get-involved-sponsor-bubble">
           We&apos;d love to hear from you! Reach out to us at{" "}
           <a href={`mailto:${SPONSOR_EMAIL}`} className={BUBBLE_LINK_CLS}>
