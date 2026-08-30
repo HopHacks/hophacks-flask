@@ -8,14 +8,14 @@ import {
   type ScheduleEventType,
 } from "../schedule/scheduleData";
 
-// Subtle accent per event type, layered over the translucent card background so
-// it reads against the blue page background in the same spirit as the old
-// frontend's color-coded schedule (frontend-old/src/components/home/Schedule.jsx).
-const TYPE_ACCENT: Record<ScheduleEventType, string> = {
-  announcement: "border-l-yellow-300/80",
-  main: "border-l-white/80",
-  food: "border-l-green-light/90",
-  workshop: "border-l-green-dark/90",
+// Small color-coded dot per event type — carries the same color signal as the
+// old frontend's schedule (frontend-old/src/components/home/Schedule.jsx) without
+// the left-border stripe, so events read as a clean list rather than tagged cards.
+const TYPE_DOT: Record<ScheduleEventType, string> = {
+  announcement: "bg-yellow-300/90",
+  main: "bg-white/90",
+  food: "bg-green-light",
+  workshop: "bg-green-dark",
 };
 
 export default function ScheduleSection() {
@@ -51,12 +51,16 @@ export default function ScheduleSection() {
               onClick={() => setActiveDayId(day.id)}
               className={`flex-1 cursor-pointer rounded-xl border px-5 py-3 text-center font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 sm:flex-none ${
                 selected
-                  ? "border-white/60 bg-white/25 text-white"
-                  : "border-white/25 bg-white/10 text-white/85 hover:bg-white/15"
+                  ? "border-white bg-white text-blue-900 shadow-lg"
+                  : "border-white/20 bg-white/[0.06] text-white/70 hover:bg-white/15 hover:text-white/90"
               }`}
             >
               <span className="block text-lg leading-tight">{day.label}</span>
-              <span className="block text-sm text-text-primary/70">
+              <span
+                className={`block text-sm ${
+                  selected ? "text-blue-900/70" : "text-text-primary/70"
+                }`}
+              >
                 {day.date}
               </span>
             </button>
@@ -76,24 +80,22 @@ export default function ScheduleSection() {
           return (
             <div
               key={`${activeDay.id}-${index}`}
-              className={`flex items-start gap-4 rounded-xl border border-l-4 border-white/25 bg-white/10 px-5 py-4 transition-colors hover:bg-white/15 ${TYPE_ACCENT[event.type]}`}
+              className="flex items-start gap-3.5 rounded-xl border border-white/20 bg-white/10 px-5 py-4 transition-colors hover:bg-white/15"
             >
               <span
                 aria-hidden="true"
-                className="mt-0.5 shrink-0 text-2xl leading-none"
-              >
-                {event.emoji ?? meta.emoji}
-              </span>
+                className={`mt-[0.5rem] size-2.5 shrink-0 rounded-full ${TYPE_DOT[event.type]}`}
+              />
               <div className="min-w-0 flex-1">
-                <div className="flex flex-col gap-x-3 gap-y-1 sm:flex-row sm:items-baseline sm:justify-between">
+                <div className="flex flex-col gap-x-3 gap-y-0.5 sm:flex-row sm:items-baseline sm:justify-between">
                   <h3 className="text-lg font-semibold text-white">
                     {event.title}
                   </h3>
-                  <span className="shrink-0 text-sm font-medium text-text-primary/80">
+                  <span className="shrink-0 text-sm font-semibold tabular-nums text-white/95">
                     {event.time}
                   </span>
                 </div>
-                <p className="mt-1 text-sm leading-relaxed text-text-primary/80">
+                <p className="mt-1 text-sm leading-relaxed text-white/75">
                   <span className="sr-only">{meta.label} — </span>
                   {event.location}
                 </p>
