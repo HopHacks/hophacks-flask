@@ -49,7 +49,7 @@ export default function ScheduleSection() {
               aria-selected={selected}
               aria-controls={`schedule-panel-${day.id}`}
               onClick={() => setActiveDayId(day.id)}
-              className={`flex-1 rounded-xl border px-5 py-3 text-center font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 sm:flex-none ${
+              className={`flex-1 cursor-pointer rounded-xl border px-5 py-3 text-center font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 sm:flex-none ${
                 selected
                   ? "border-white/60 bg-white/25 text-white"
                   : "border-white/25 bg-white/10 text-white/85 hover:bg-white/15"
