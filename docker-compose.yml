@@ -1,0 +1,58 @@
+services:
+  mongodb:
+    image: mongo:6
+    container_name: hophacks-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: hophacks
+    networks:
+      - hophacks-network
+
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: hophacks-backend
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./api/src:/app/src
+      - ./api/src/config/config.json:/app/src/config/config.json
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+    depends_on:
+      - mongodb
+    networks:
+      - hophacks-network
+    command: flask run --host=0.0.0.0 --port=5000
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: hophacks-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:5001
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+    networks:
+      - hophacks-network
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongodb_data:
+
+networks:
+  hophacks-network:
+    driver: bridge
