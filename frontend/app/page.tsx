@@ -1,6 +1,6 @@
 import Section from "./components/Section";
 import HeroSection from "./components/sections/HeroSection";
-// import AboutSection from "./components/sections/AboutSection";
+import AboutSection from "./components/sections/AboutSection";
 // import TracksSection from "./components/sections/TracksSection";
 import ScheduleSection from "./components/sections/ScheduleSection";
 import FaqSection from "./components/sections/FaqSection";
@@ -21,6 +21,9 @@ export default function Home() {
       </Section> */}
       <Section borderless id="schedule">
         <ScheduleSection />
+      </Section>
+      <Section id="about">
+        <AboutSection />
       </Section>
       <Section borderless id="faq">
         <FaqSection />
