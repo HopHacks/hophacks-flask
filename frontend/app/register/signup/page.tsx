@@ -5,6 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "@/app/util/auth";
 import Combobox from "@/app/components/form/Combobox";
+import HomeLink from "@/app/components/HomeLink";
 import COUNTRIES from "./data/countries";
 import {
   AGES,
@@ -1102,7 +1103,8 @@ export default function SignUpPage() {
   const isConfirmation = activePage === CONFIRMATION;
 
   return (
-    <div className="flex min-h-dvh w-full flex-col items-center px-4 py-10 sm:py-14">
+    <div className="relative flex min-h-dvh w-full flex-col items-center px-4 pb-10 pt-24 sm:pb-14 sm:pt-20">
+      <HomeLink />
       <h1 className="text-center font-display text-[clamp(2.25rem,6vw,3.5rem)] leading-tight text-white text-shadow-hero-title">
         {isConfirmation ? "Welcome to HopHacks!" : "Register for HopHacks"}
       </h1>
