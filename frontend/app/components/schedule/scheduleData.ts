@@ -7,7 +7,6 @@ export interface ScheduleEvent {
   time: string;
   title: string;
   location: string;
-  emoji?: string;
   type: ScheduleEventType;
 }
 
@@ -18,18 +17,17 @@ export interface ScheduleDay {
   label: string;
   /** Full date shown as the day heading, e.g. "Friday, TBD". */
   date: string;
+  /** Machine-readable date (YYYY-MM-DD) used to pick the default open tab. */
+  isoDate: string;
   events: ScheduleEvent[];
 }
 
-/** Human-friendly labels + emoji for each event type (used for the legend/badges). */
-export const EVENT_TYPE_META: Record<
-  ScheduleEventType,
-  { label: string; emoji: string }
-> = {
-  announcement: { label: "Announcement", emoji: "📣" },
-  main: { label: "Main", emoji: "💠" },
-  food: { label: "Food", emoji: "🍽️" },
-  workshop: { label: "Workshop", emoji: "🛠️" },
+/** Human-friendly label for each event type (used for the screen-reader prefix). */
+export const EVENT_TYPE_META: Record<ScheduleEventType, { label: string }> = {
+  announcement: { label: "Announcement" },
+  main: { label: "Main" },
+  food: { label: "Food" },
+  workshop: { label: "Workshop" },
 };
 
 export const SCHEDULE_DAYS: ScheduleDay[] = [
@@ -37,19 +35,19 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     id: "day-1",
     label: "Day 1",
     date: "Friday, September 18",
+    isoDate: "2026-09-18",
     events: [
       {
         time: "6:00–8:00 PM",
         title: "Check-in",
         location: "TBD",
-        emoji: "💫",
         type: "main",
       },
       {
         time: "8:00 PM",
         title: "Opening Ceremony",
-        location: "TBD",
-        emoji: "🎉",
+        location:
+          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
         type: "main",
       },
       {
@@ -62,7 +60,6 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         time: "9:00 PM",
         title: "Sponsor Hall Opens",
         location: "TBD",
-        emoji: "🤝",
         type: "announcement",
       },
     ],
@@ -71,12 +68,12 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     id: "day-2",
     label: "Day 2",
     date: "Saturday, September 19",
+    isoDate: "2026-09-19",
     events: [
       {
         time: "All Day",
         title: "Hacking Continues — more events TBA",
         location: "TBD",
-        emoji: "🛠️",
         type: "workshop",
       },
     ],
@@ -85,6 +82,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     id: "day-3",
     label: "Day 3",
     date: "Sunday, September 20",
+    isoDate: "2026-09-20",
     events: [
       {
         time: "9:00 AM",
@@ -96,14 +94,13 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         time: "1:00 PM",
         title: "Top 10 Demos",
         location: "TBD",
-        emoji: "🌟",
         type: "main",
       },
       {
         time: "2:30 PM",
         title: "Closing Ceremony",
-        location: "TBD",
-        emoji: "🏆",
+        location:
+          "3400 N Charles St, Hodson Hall Room 110, Baltimore, MD 21218",
         type: "main",
       },
     ],
