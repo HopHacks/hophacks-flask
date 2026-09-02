@@ -22,7 +22,7 @@ export default function Home() {
       <Section borderless id="schedule">
         <ScheduleSection />
       </Section>
-      <Section id="about">
+      <Section borderless id="about">
         <AboutSection />
       </Section>
       <Section borderless id="faq">
