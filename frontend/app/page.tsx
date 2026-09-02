@@ -3,6 +3,8 @@ import HeroSection from "./components/sections/HeroSection";
 import AboutSection from "./components/sections/AboutSection";
 import TracksSection from "./components/sections/TracksSection";
 import ScheduleSection from "./components/sections/ScheduleSection";
+import SponsorsSection from "./components/sections/SponsorsSection";
+import { SPONSORS } from "./components/sponsors/sponsorsData";
 import FaqSection from "./components/sections/FaqSection";
 import Footer from "./components/Footer";
 
@@ -21,6 +23,13 @@ export default function Home() {
       <Section borderless id="schedule">
         <ScheduleSection />
       </Section>
+      {/* Collapses until SPONSORS has entries, rather than showing an empty
+          full-height section. */}
+      {SPONSORS.length > 0 && (
+        <Section borderless id="sponsors">
+          <SponsorsSection />
+        </Section>
+      )}
       <Section borderless id="faq">
         <FaqSection />
       </Section>
