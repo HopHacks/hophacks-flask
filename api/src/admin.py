@@ -6,11 +6,14 @@ from flask import Blueprint, request, Response, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from bson import ObjectId
+from bson.errors import InvalidId
 
 import boto3
 import botocore.exceptions
 import csv
+import datetime
 import io
+import pytz
 from werkzeug.utils import secure_filename
 
 from config.event import EVENT_NAME, EVENT_SLUG, EVENT_CYCLE_START
@@ -438,3 +441,265 @@ def export_unsubmitted_csv():
     )
 
 
+def _object_ids(raw_ids):
+    """Parse client ids, or None if any is malformed (a 400, not a 500)."""
+    try:
+        return [ObjectId(i) for i in raw_ids]
+    except (InvalidId, TypeError):
+        return None
+
+
+@admin_api.route('/broadcast', methods=['POST'])
+@jwt_required
+@check_admin
+def broadcast():
+    """Send a one-off plain-text email to an explicit list of users.
+
+    The console chunks a large send into several of these calls, all sharing
+    one frontend-generated ``broadcast_id``, and every chunk accumulates into
+    the same audit document.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson users: List of user ids to email in this chunk
+    :reqjson subject: Subject line, without the " - HopHacks.com" suffix
+    :reqjson message: Plain-text body as typed
+    :reqjson broadcast_id: Client-generated id shared by every chunk of one send
+    :reqjson stage: Optional label for what this send was about
+
+    :resjson num_sent: How many emails actually went out
+    :resjson email_failures: How many of the requested ids were not emailed
+    :resjson failed_ids: Those ids, for the console's "Retry failed" button
+    :resjson skipped: Ids this broadcast had already emailed
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+    """
+    from registrations import send_broadcast
+
+    body = request.json
+    if (body is None):
+        return jsonify({'msg': 'Invalid request'}), 400
+
+    users = body.get('users')
+    subject = body.get('subject')
+    message = body.get('message')
+    bid = body.get('broadcast_id')
+    stage = body.get('stage')
+
+    if (not isinstance(users, list)):
+        return jsonify({'msg': 'Invalid request'}), 400
+    for value in (subject, message, bid):
+        if (not isinstance(value, str) or not value.strip()):
+            return jsonify({'msg': 'Invalid request'}), 400
+    if (stage is not None and not isinstance(stage, str)):
+        return jsonify({'msg': 'Invalid request'}), 400
+
+    ids = _object_ids(users)
+    if (ids is None):
+        return jsonify({'msg': 'Invalid request'}), 400
+
+    requested = [str(i) for i in ids]
+
+    # API Gateway cuts a Lambda off at 29s, so a chunk can finish sending and
+    # still be reported to the browser as failed -- which makes the browser
+    # re-attempt it. This guard is what makes that re-attempt safe: anyone
+    # this broadcast has already emailed is skipped, not emailed twice.
+    doc = db.broadcasts.find_one({'broadcast_id': bid})
+    already_sent = set(doc.get('sent_ids') or []) if doc else set()
+
+    skipped = [i for i in requested if i in already_sent]
+    targets = list(db.users.find(
+        {'_id': {'$in': [i for i in ids if str(i) not in already_sent]}}))
+
+    unsent = {str(u['_id']) for u in send_broadcast(targets, subject, message)}
+    sent = [str(u['_id']) for u in targets if str(u['_id']) not in unsent]
+
+    # Anything requested that we cannot confirm sent is failed, including ids
+    # with no matching account: reporting them honestly beats hiding them, and
+    # a retry will simply fail them again.
+    sent_set = set(sent)
+    failed = [i for i in requested
+              if i not in already_sent and i not in sent_set]
+
+    # $setOnInsert, not $set: chunks of one logical send share the
+    # broadcast_id, so only the first chunk defines what was sent and when.
+    db.broadcasts.update_one(
+        {'broadcast_id': bid},
+        {
+            '$setOnInsert': {
+                'broadcast_id': bid,
+                'subject': subject.strip(),
+                'message': message,
+                'stage': stage or None,
+                'sent_by': ObjectId(get_jwt_identity()),
+                'sent_at': datetime.datetime.now(pytz.utc)
+            },
+            '$addToSet': {
+                'user_ids': {'$each': requested},
+                'sent_ids': {'$each': sent},
+                'failed_ids': {'$each': failed}
+            }
+        },
+        upsert=True
+    )
+
+    # A re-attempted chunk can succeed for someone an earlier attempt recorded
+    # as failed. They have to leave failed_ids, or "Retry failed" would email
+    # them a second time. A separate update because $pull and $addToSet may
+    # not touch the same field in one.
+    if (sent):
+        db.broadcasts.update_one(
+            {'broadcast_id': bid},
+            {'$pull': {'failed_ids': {'$in': sent}}}
+        )
+
+    return jsonify({'num_sent': len(sent), 'email_failures': len(failed),
+                    'failed_ids': failed, 'skipped': skipped}), 200
+
+
+@admin_api.route('/broadcast/retry', methods=['POST'])
+@jwt_required
+@check_admin
+def broadcast_retry():
+    """Re-send a stored broadcast to the ids it failed on.
+
+    The resume path after Gmail's daily cap. The server decides who is
+    eligible -- only ids currently in the broadcast's ``failed_ids`` -- so
+    ids already sent, or never part of the send, are ignored rather than
+    trusted. That makes a double-send impossible by construction, however the
+    console chunks or repeats the request.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson broadcast_id: Id of the broadcast to resume
+    :reqjson users: Ids to attempt again
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 404: No such broadcast
+    :status 422: Not logged in
+    """
+    from registrations import send_broadcast
+
+    body = request.json
+    if (body is None):
+        return jsonify({'msg': 'Invalid request'}), 400
+
+    users = body.get('users')
+    bid = body.get('broadcast_id')
+
+    if (not isinstance(users, list)):
+        return jsonify({'msg': 'Invalid request'}), 400
+    if (not isinstance(bid, str) or not bid.strip()):
+        return jsonify({'msg': 'Invalid request'}), 400
+
+    ids = _object_ids(users)
+    if (ids is None):
+        return jsonify({'msg': 'Invalid request'}), 400
+
+    doc = db.broadcasts.find_one({'broadcast_id': bid})
+    if (doc is None):
+        return jsonify({'msg': 'No such broadcast'}), 404
+
+    still_failed = set(doc.get('failed_ids') or [])
+    eligible = [i for i in ids if str(i) in still_failed]
+    skipped = [str(i) for i in ids if str(i) not in still_failed]
+
+    # The stored subject and message, not anything the client sends back: a
+    # retry must deliver the same email the first attempt would have.
+    targets = list(db.users.find({'_id': {'$in': eligible}}))
+    unsent = {str(u['_id']) for u in send_broadcast(
+        targets, doc.get('subject') or '', doc.get('message') or '')}
+    sent = [str(u['_id']) for u in targets if str(u['_id']) not in unsent]
+
+    if (sent):
+        db.broadcasts.update_one(
+            {'broadcast_id': bid},
+            {'$pull': {'failed_ids': {'$in': sent}},
+             '$addToSet': {'sent_ids': {'$each': sent}}}
+        )
+
+    sent_set = set(sent)
+    failed = [str(i) for i in eligible if str(i) not in sent_set]
+
+    return jsonify({'num_sent': len(sent), 'email_failures': len(failed),
+                    'failed_ids': failed, 'skipped': skipped}), 200
+
+
+@admin_api.route('/broadcast/test', methods=['POST'])
+@jwt_required
+@check_admin
+def broadcast_test():
+    """Send the drafted broadcast to the logged-in admin only.
+
+    Goes down the same template path as the real send, so what the admin
+    proofreads in their inbox is exactly what recipients would get. Writes no
+    audit entry: nothing was broadcast.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson subject: Subject line, without the " - HopHacks.com" suffix
+    :reqjson message: Plain-text body as typed
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+    """
+    from registrations import send_broadcast
+
+    body = request.json
+    if (body is None):
+        return jsonify({'msg': 'Invalid request'}), 400
+
+    subject = body.get('subject')
+    message = body.get('message')
+    for value in (subject, message):
+        if (not isinstance(value, str) or not value.strip()):
+            return jsonify({'msg': 'Invalid request'}), 400
+
+    admin = db.users.find_one({'_id': ObjectId(get_jwt_identity())})
+    unsent = send_broadcast([admin], subject, message)
+
+    return jsonify({'num_sent': 0 if unsent else 1,
+                    'email_failures': len(unsent)}), 200
+
+
+@admin_api.route('/broadcast/history', methods=['GET'])
+@jwt_required
+@check_admin
+def broadcast_history():
+    """The ten most recent broadcasts, newest first.
+
+    ``failed_ids`` is part of the contract, not a detail: the console's
+    "Retry failed" button posts exactly those ids back to /broadcast/retry.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :status 200: Successful
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+    """
+    broadcasts = []
+    for doc in db.broadcasts.find().sort('sent_at', DESCENDING).limit(10):
+        sent_at = doc.get('sent_at')
+        sent_by = doc.get('sent_by')
+        failed_ids = doc.get('failed_ids') or []
+        broadcasts.append({
+            'broadcast_id': doc.get('broadcast_id'),
+            'subject': doc.get('subject'),
+            'message': doc.get('message'),
+            'stage': doc.get('stage'),
+            'sent_by': str(sent_by) if sent_by else None,
+            'sent_at': sent_at.isoformat() if sent_at else None,
+            'num_recipients': len(doc.get('user_ids') or []),
+            'num_sent': len(doc.get('sent_ids') or []),
+            'num_failed': len(failed_ids),
+            'failed_ids': failed_ids
+        })
+
+    return jsonify({'broadcasts': broadcasts}), 200
