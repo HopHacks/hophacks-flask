@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import HeroEventInfo from "../hero/HeroEventInfo";
 import { useAuth } from "@/app/util/auth";
 import HeroTitle from "../hero/HeroTitle";
 import SocialLinks from "../hero/SocialLinks";
 import GetInvolved from "../hero/GetInvolved";
-import { APPLICATION_DEADLINE } from "@/app/util/event";
 
 const HERO_LAYERS = {
   backClouds: "/hero/back-clouds.webp",
@@ -50,7 +50,7 @@ const CTA_CLS =
 
 export default function HeroSection() {
   // null while the session check is in flight — render no CTA yet so a
-  // logged-in user never sees a "Register Now" flash.
+  // logged-in user never sees a "Log In" flash.
   const { isLoggedIn } = useAuth();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [cloudsParted, setCloudsParted] = useState(false);
@@ -99,6 +99,7 @@ export default function HeroSection() {
 
           <div className="absolute inset-x-0 bottom-[clamp(9rem,26vh,17rem)] z-10 flex flex-col items-center gap-3 px-6 text-center font-sans">
             <HeroTitle />
+            <HeroEventInfo />
             {isLoggedIn ? (
               <>
                 <p className="text-base font-normal text-white/90 sm:text-lg">
@@ -109,17 +110,9 @@ export default function HeroSection() {
                 </Link>
               </>
             ) : isLoggedIn === false ? (
-              <>
-                <p className="text-base font-normal text-white/90 sm:text-lg">
-                  September 18&ndash;20, 2026 &middot; Baltimore, MD
-                </p>
-                <p className="text-sm font-medium text-white/85 sm:text-base">
-                  Applications due {APPLICATION_DEADLINE}
-                </p>
-                <Link href="/register/signup" className={CTA_CLS}>
-                  Apply Now
-                </Link>
-              </>
+              <Link href="/register/login" className={CTA_CLS}>
+                Log In
+              </Link>
             ) : null}
             <GetInvolved />
           </div>
