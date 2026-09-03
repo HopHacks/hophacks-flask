@@ -205,13 +205,13 @@ test("pre-registration route redirects to signup", async ({ page }) => {
   await expect(page.getByText("Apply to HopHacks")).toBeVisible();
 });
 
-test("hero CTA points at the application", async ({ page }) => {
+test("hero CTA points at login", async ({ page }) => {
   // The CTA only renders once the session check resolves as logged out.
   await page.route("**/api/auth/session/refresh", (r) =>
     r.fulfill({ status: 401, json: { msg: "no session" } }),
   );
   await page.goto("/");
-  const cta = page.getByRole("link", { name: "Apply Now" });
+  const cta = page.getByRole("link", { name: "Log In" });
   await expect(cta).toBeVisible();
-  await expect(cta).toHaveAttribute("href", "/register/signup");
+  await expect(cta).toHaveAttribute("href", "/register/login");
 });
