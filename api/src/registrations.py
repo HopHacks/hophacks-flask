@@ -9,6 +9,7 @@ from bson import ObjectId
 
 import datetime
 import pytz
+import re
 
 from config.event import EVENT_NAME
 
@@ -89,7 +90,7 @@ def send_rsvp_info(users):
             msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
             conn.send(msg)
 
-def _send_decision_emails(users, subject, body, template):
+def _send_decision_emails(users, subject, body, template, **template_kwargs):
     """Email each user. Never raises: a decision is already committed to the
     database by the time we get here, so no mail problem may undo it.
 
@@ -105,7 +106,12 @@ def _send_decision_emails(users, subject, body, template):
                     msg = Message(recipients=[user["username"]],
                                   subject=subject)
                     msg.body = body
-                    msg.html = render_template(template, first_name=user.get('profile', {}).get('first_name', ''))
+                    # `or {}`, not a .get default: some prod docs store an
+                    # explicit profile: None, which a default would not replace.
+                    msg.html = render_template(
+                        template,
+                        first_name=(user.get('profile') or {}).get('first_name', ''),
+                        **template_kwargs)
                     conn.send(msg)
                     sent.add(str(user['_id']))
                 except Exception:
@@ -174,6 +180,38 @@ def send_waitlist(users):
         "Waitlist Update - HopHacks.com",
         "You've been placed on the HopHacks waitlist. We'll reach out if a spot opens up.",
         'email_waitlist.html')
+
+def split_paragraphs(message):
+    """Plain text -> [[line, ...], ...], whitespace-only paragraphs dropped.
+
+    Paragraphs break on blank lines; a single newline stays a line break
+    inside its paragraph. The admin types into a plain textarea, so this is
+    the only structure the HTML email can recover from what they wrote.
+    """
+    paragraphs = []
+    for block in re.split(r'\n\s*\n', message.strip()):
+        if (block.strip()):
+            paragraphs.append(block.splitlines())
+    return paragraphs
+
+
+def send_broadcast(users, subject, message):
+    """One-off plain-text email to an explicit list of users (the admin
+    console's stage broadcast).
+
+    Shares _send_decision_emails' contract: never raises, returns the users
+    whose email did NOT send, so the console can report and retry exactly
+    those.
+    """
+    return _send_decision_emails(
+        users,
+        # Every outgoing subject carries this suffix ("Acceptance Letter -
+        # HopHacks.com"); the admin types only the topic.
+        subject.strip() + " - HopHacks.com",
+        # text/plain alternative: the typed message verbatim, unescaped.
+        message,
+        'email_broadcast.html',
+        paragraphs=split_paragraphs(message))
 
 def apply_decision(ids, event, guard_statuses, set_fields, unset_fields=None):
     """Transition each user's <event> registration unless its status is in

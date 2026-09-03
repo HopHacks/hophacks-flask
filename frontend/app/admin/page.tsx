@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Overview from "./panels/Overview";
 import Applications from "./panels/Applications";
+import Email from "./panels/Email";
 import Stats from "./panels/Stats";
 import Admins from "./panels/Admins";
 import JudgeTool from "./panels/JudgeTool";
@@ -10,6 +11,7 @@ import JudgeTool from "./panels/JudgeTool";
 const TABS = [
   { key: "overview", label: "Overview", panel: <Overview /> },
   { key: "applications", label: "Applications", panel: <Applications /> },
+  { key: "email", label: "Email", panel: <Email /> },
   { key: "stats", label: "Stats", panel: <Stats /> },
   { key: "judgetool", label: "Judge Tool", panel: <JudgeTool /> },
   { key: "admins", label: "Admins", panel: <Admins /> },

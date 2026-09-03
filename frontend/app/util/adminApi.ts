@@ -151,6 +151,122 @@ export const downloadCsv = () =>
 export const downloadUnsubmittedCsv = () =>
   downloadBlob("/api/admin/export_unsubmitted", "hophacks_not_submitted.csv");
 
+/* The six real registration statuses. deriveStatus() can also return the
+   pseudo-stages "email_not_confirmed" and "not_submitted"; both are
+   deliberately absent here because neither is a group we email. */
+export const BROADCAST_STAGES = [
+  ["applied", "Applied"],
+  ["accepted", "Accepted"],
+  ["waitlisted", "Waitlisted"],
+  ["rsvped", "RSVP'd"],
+  ["checked_in", "Checked in"],
+  ["rejected", "Rejected"],
+] as const;
+
+export type BroadcastStage = (typeof BROADCAST_STAGES)[number][0];
+
+export type BroadcastRecord = {
+  broadcast_id: string;
+  subject: string;
+  message: string;
+  stage: string | null;
+  sent_by: string;
+  sent_at: string;
+  num_recipients: number;
+  num_sent: number;
+  num_failed: number;
+  failed_ids: string[];
+};
+
+export type BroadcastOutcome = {
+  num_sent: number;
+  /** Ids the server tried and could not email (Gmail cap, bad address).
+      Retryable from the history row. */
+  failedIds: string[];
+  /** Ids whose request never got a 200 even after one re-attempt; not in the
+      server's retry list. */
+  unattempted: string[];
+};
+
+async function postBroadcastChunks(
+  path: string,
+  ids: string[],
+  body: Record<string, string>,
+): Promise<BroadcastOutcome> {
+  const outcome: BroadcastOutcome = {
+    num_sent: 0,
+    failedIds: [],
+    unattempted: [],
+  };
+  const post = async (chunk: string[]) => {
+    const r = await axios.post(path, { ...body, users: chunk });
+    outcome.num_sent += r.data.num_sent ?? 0;
+    outcome.failedIds.push(...(r.data.failed_ids ?? []));
+  };
+  for (let i = 0; i < ids.length; i += DECISION_CHUNK) {
+    const chunk = ids.slice(i, i + DECISION_CHUNK);
+    try {
+      await post(chunk);
+    } catch {
+      /* A thrown request does not mean nothing was emailed: API Gateway's 29s
+         cap can cut a chunk that already finished sending. The server records
+         sent ids against this broadcast_id and skips them, so a second attempt
+         cannot double-send, and it does recover a chunk that never arrived. */
+      try {
+        await post(chunk);
+      } catch {
+        outcome.unattempted.push(...chunk);
+      }
+    }
+  }
+  return outcome;
+}
+
+/** Email everyone in one stage. All chunks share one broadcast_id so the
+    server can dedupe re-attempts and keep a single audit row. */
+export const sendBroadcast = (args: {
+  ids: string[];
+  subject: string;
+  message: string;
+  stage: BroadcastStage;
+  broadcastId: string;
+}) =>
+  postBroadcastChunks("/api/admin/broadcast", args.ids, {
+    subject: args.subject,
+    message: args.message,
+    stage: args.stage,
+    broadcast_id: args.broadcastId,
+  });
+
+/** Re-send one past broadcast to the ids it failed on. */
+export const retryBroadcast = (broadcastId: string, ids: string[]) =>
+  postBroadcastChunks("/api/admin/broadcast/retry", ids, {
+    broadcast_id: broadcastId,
+  });
+
+/** Send the draft to the calling admin only. A failed send still comes back
+    200, so the caller must surface `false` as an error, not a success. */
+export async function sendBroadcastTest(
+  subject: string,
+  message: string,
+): Promise<boolean> {
+  const r = await axios.post("/api/admin/broadcast/test", { subject, message });
+  return r.data.num_sent === 1 && r.data.email_failures === 0;
+}
+
+export async function getBroadcastHistory(): Promise<BroadcastRecord[]> {
+  const r = await axios.get("/api/admin/broadcast/history");
+  return r.data.broadcasts ?? [];
+}
+
+/** Id shared by every chunk of one logical send. randomUUID exists only in
+    secure contexts, and the console is served over plain http in dev. */
+export function newBroadcastId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function")
+    return crypto.randomUUID();
+  return `bc-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+}
+
 /**
  * Current-event status for an applicant.
  *
