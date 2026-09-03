@@ -205,9 +205,8 @@ def send_broadcast(users, subject, message):
     """
     return _send_decision_emails(
         users,
-        # Every outgoing subject carries this suffix ("Acceptance Letter -
-        # HopHacks.com"); the admin types only the topic.
-        subject.strip() + " - HopHacks.com",
+        # The admin types only the topic; the sender is named in the suffix.
+        subject.strip() + " - HopHacks",
         # text/plain alternative: the typed message verbatim, unescaped.
         message,
         'email_broadcast.html',
