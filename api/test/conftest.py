@@ -17,6 +17,7 @@ def app():
 @pytest.fixture
 def client(app):
     db.users.delete_many({}) # clear database
+    db.broadcasts.delete_many({}) # audit docs must not leak between tests
 
     with app.test_client() as client:
         yield client

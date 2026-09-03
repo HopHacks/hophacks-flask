@@ -517,3 +517,303 @@ test("the not-submitted export downloads through the API", async ({ page }) => {
   );
   expect(hits).toBe(1);
 });
+
+// --- Stage broadcast email ---
+
+type BroadcastHistoryRow = {
+  broadcast_id: string;
+  subject: string;
+  message: string;
+  stage: string | null;
+  sent_by: string;
+  sent_at: string;
+  num_recipients: number;
+  num_sent: number;
+  num_failed: number;
+  failed_ids: string[];
+};
+
+type BroadcastSendBody = {
+  users: string[];
+  subject: string;
+  message: string;
+  stage: string;
+  broadcast_id: string;
+};
+
+// Only the history read is stubbed here; each test routes the send, retry and
+// test-send paths it cares about. Every path is routed with its own exact
+// glob: a pattern has to match the whole URL, so the send route cannot
+// swallow /broadcast/history.
+async function stubBroadcast(page: Page, history: BroadcastHistoryRow[] = []) {
+  await page.route("**/api/admin/broadcast/history", (r) =>
+    r.fulfill({ json: { broadcasts: history } }),
+  );
+}
+
+async function openEmail(page: Page) {
+  await page.goto("/admin");
+  await page.getByRole("button", { name: "Email" }).click();
+}
+
+test("recipient count follows the chosen stage", async ({ page }) => {
+  const statuses = new Map<string, string>([
+    ["id-0", "accepted"],
+    ["id-1", "accepted"],
+    ["id-2", "accepted"],
+    ["id-3", "applied"],
+    ["id-4", "applied"],
+    ["id-5", "rsvped"],
+  ]);
+  await stubAdminConsole(page, statuses);
+  await stubBroadcast(page);
+
+  await openEmail(page);
+
+  // Accepted is the default: RSVP logistics are the reason this page exists.
+  await expect(page.getByText("3 recipients")).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Send to 3 people" }),
+  ).toBeVisible();
+
+  const stage = page.getByLabel("Stage");
+  await stage.selectOption("applied");
+  await expect(page.getByText("2 recipients")).toBeVisible();
+
+  await stage.selectOption("rsvped");
+  await expect(page.getByText("1 recipient")).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Send to 1 person" }),
+  ).toBeVisible();
+
+  // Only real registration statuses are emailable; the pseudo-stages
+  // deriveStatus() invents are not groups anyone should broadcast to.
+  const options = await stage.locator("option").allTextContents();
+  expect(options).toHaveLength(6);
+  expect(options).not.toContain("Not submitted");
+  expect(options).not.toContain("Email not confirmed");
+});
+
+test("a dismissed broadcast confirm sends nothing", async ({ page }) => {
+  const statuses = new Map<string, string>([["id-0", "accepted"]]);
+  await stubAdminConsole(page, statuses);
+  await stubBroadcast(page);
+  page.on("dialog", (d) => d.dismiss());
+
+  let sends = 0;
+  await page.route("**/api/admin/broadcast", async (r) => {
+    sends += 1;
+    await r.fulfill({
+      json: { num_sent: 1, email_failures: 0, failed_ids: [], skipped: [] },
+    });
+  });
+
+  await openEmail(page);
+  await page.getByLabel("Subject").fill("RSVP deadline is this Friday");
+  await page.getByLabel("Message").fill("Please RSVP by Friday.");
+  await page.getByRole("button", { name: "Send to 1 person" }).click();
+
+  await expect(
+    page.getByRole("button", { name: "Send to 1 person" }),
+  ).toBeEnabled();
+  expect(sends).toBe(0);
+});
+
+test("a send chunks into requests of 20 under one broadcast_id", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>(
+    Array.from({ length: 25 }, (_, i) => [`id-${i}`, "accepted"]),
+  );
+  await stubAdminConsole(page, statuses);
+  await stubBroadcast(page);
+  page.on("dialog", (d) => d.accept());
+
+  const posts: BroadcastSendBody[] = [];
+  await page.route("**/api/admin/broadcast", async (r) => {
+    const body: BroadcastSendBody = r.request().postDataJSON();
+    posts.push(body);
+    await r.fulfill({
+      json: {
+        num_sent: body.users.length,
+        email_failures: 0,
+        failed_ids: [],
+        skipped: [],
+      },
+    });
+  });
+
+  await openEmail(page);
+  await page.getByLabel("Subject").fill("RSVP deadline is this Friday");
+  await page.getByLabel("Message").fill("Doors open at 5pm on Friday.");
+  await page.getByRole("button", { name: "Send to 25 people" }).click();
+
+  await expect(page.getByText("Sent 25.")).toBeVisible();
+  expect(posts.map((p) => p.users.length)).toEqual([20, 5]);
+  // One audit row per logical send, so a re-attempted chunk cannot double-send.
+  expect(new Set(posts.map((p) => p.broadcast_id)).size).toBe(1);
+  expect(posts[0].broadcast_id).toBeTruthy();
+  for (const p of posts) {
+    expect(p.subject).toBe("RSVP deadline is this Friday");
+    expect(p.message).toBe("Doors open at 5pm on Friday.");
+    expect(p.stage).toBe("accepted");
+  }
+});
+
+test("a large send warns about the Gmail daily cap", async ({ page }) => {
+  const statuses = new Map<string, string>(
+    Array.from({ length: 401 }, (_, i) => [`id-${i}`, "accepted"]),
+  );
+  await stubAdminConsole(page, statuses);
+  await stubBroadcast(page);
+  const dialogs: string[] = [];
+  page.on("dialog", (d) => {
+    dialogs.push(d.message());
+    d.accept();
+  });
+
+  let sends = 0;
+  await page.route("**/api/admin/broadcast", async (r) => {
+    const users: string[] = r.request().postDataJSON().users;
+    sends += 1;
+    await r.fulfill({
+      json: {
+        num_sent: users.length,
+        email_failures: 0,
+        failed_ids: [],
+        skipped: [],
+      },
+    });
+  });
+
+  await openEmail(page);
+  await page.getByLabel("Subject").fill("Bus times for Friday");
+  await page.getByLabel("Message").fill("The bus leaves at 7am.");
+  await page.getByRole("button", { name: "Send to 401 people" }).click();
+
+  // The cap is a warning, not a block: the send still goes out.
+  await expect(page.getByText("Sent 401.")).toBeVisible();
+  expect(dialogs[0]).toContain("roughly 500 sends per day");
+  expect(dialogs[0]).toContain("finish this send tomorrow");
+  expect(sends).toBeGreaterThanOrEqual(1);
+});
+
+test("past email failures get a retry button carrying the failed ids", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([["id-0", "accepted"]]);
+  await stubAdminConsole(page, statuses);
+  await stubBroadcast(page, [
+    {
+      broadcast_id: "bc-failed",
+      subject: "RSVP deadline is this Friday",
+      message: "Please RSVP by Friday.",
+      stage: "accepted",
+      sent_by: "admin@e2e.com",
+      sent_at: "2026-09-01T12:00:00+00:00",
+      num_recipients: 10,
+      num_sent: 8,
+      num_failed: 2,
+      failed_ids: ["id-1", "id-2"],
+    },
+    {
+      broadcast_id: "bc-clean",
+      subject: "Bus times for Friday",
+      message: "The bus leaves at 7am.",
+      stage: "rsvped",
+      sent_by: "admin@e2e.com",
+      sent_at: "2026-09-02T12:00:00+00:00",
+      num_recipients: 5,
+      num_sent: 5,
+      num_failed: 0,
+      failed_ids: [],
+    },
+  ]);
+  page.on("dialog", (d) => d.accept());
+
+  const retry: { payload?: unknown } = {};
+  await page.route("**/api/admin/broadcast/retry", async (r) => {
+    retry.payload = r.request().postDataJSON();
+    await r.fulfill({
+      json: { num_sent: 2, email_failures: 0, failed_ids: [], skipped: [] },
+    });
+  });
+
+  await openEmail(page);
+
+  // Only the row that failed offers a retry.
+  await expect(
+    page.getByRole("button", { name: "Retry failed (2)" }),
+  ).toHaveCount(1);
+  await page.getByRole("button", { name: "Retry failed (2)" }).click();
+
+  await expect(page.getByText("Retried: sent 2")).toBeVisible();
+  expect(retry.payload).toEqual({
+    broadcast_id: "bc-failed",
+    users: ["id-1", "id-2"],
+  });
+});
+
+test("a broadcast whose emails fail warns loudly instead of reporting success", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([
+    ["id-0", "accepted"],
+    ["id-1", "accepted"],
+  ]);
+  await stubAdminConsole(page, statuses);
+  await stubBroadcast(page);
+  page.on("dialog", (d) => d.accept());
+
+  // The API takes the request and emails nobody -- the incident's signature.
+  await page.route("**/api/admin/broadcast", (r) =>
+    r.fulfill({
+      json: {
+        num_sent: 0,
+        email_failures: 2,
+        failed_ids: ["id-0", "id-1"],
+        skipped: [],
+      },
+    }),
+  );
+
+  await openEmail(page);
+  await page.getByLabel("Subject").fill("RSVP deadline is this Friday");
+  await page.getByLabel("Message").fill("Please RSVP by Friday.");
+  await page.getByRole("button", { name: "Send to 2 people" }).click();
+
+  await expect(page.getByText(/did NOT send/)).toBeVisible();
+});
+
+test("a test send goes to the admin only", async ({ page }) => {
+  const statuses = new Map<string, string>([["id-0", "accepted"]]);
+  await stubAdminConsole(page, statuses);
+  await stubBroadcast(page);
+
+  let sends = 0;
+  await page.route("**/api/admin/broadcast", async (r) => {
+    sends += 1;
+    await r.fulfill({
+      json: { num_sent: 1, email_failures: 0, failed_ids: [], skipped: [] },
+    });
+  });
+  const tests: unknown[] = [];
+  await page.route("**/api/admin/broadcast/test", async (r) => {
+    tests.push(r.request().postDataJSON());
+    await r.fulfill({ json: { num_sent: 1, email_failures: 0 } });
+  });
+
+  await openEmail(page);
+  await page.getByLabel("Subject").fill("RSVP deadline is this Friday");
+  await page.getByLabel("Message").fill("Please RSVP by Friday.");
+  await page.getByRole("button", { name: "Send test to me" }).click();
+
+  await expect(page.getByText("Test email sent to you.")).toBeVisible();
+  expect(tests).toEqual([
+    {
+      subject: "RSVP deadline is this Friday",
+      message: "Please RSVP by Friday.",
+    },
+  ]);
+  expect(sends).toBe(0);
+});
