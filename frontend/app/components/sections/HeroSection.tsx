@@ -81,67 +81,6 @@ export default function HeroSection() {
     <div className="relative h-full min-h-screen w-full overflow-hidden bg-bg">
       <SocialLinks />
 
-      <SceneLayer
-        src={HERO_LAYERS.backClouds}
-        alt=""
-        priority
-        className="z-[1]"
-      />
-
-      <div className="absolute inset-0 z-[2] animate-hero-float motion-reduce:animate-none">
-        <SceneLayer src={HERO_LAYERS.floatingRocks} alt="" priority />
-        <SceneLayer src={HERO_LAYERS.grass} alt="" priority />
-        <SceneLayer src={HERO_LAYERS.gilman} alt="" priority />
-        <SceneLayer src={HERO_LAYERS.trees} alt="" priority />
-
-        {/* Title stays pinned to the grass/gilman seam; CTA block grows below without shifting it */}
-        <div className="absolute inset-x-0 bottom-[clamp(15rem,calc(26vh+6rem),23rem)] z-10 flex justify-center px-6 text-center">
-          <HeroTitle />
-        </div>
-
-        <div className="absolute inset-x-0 bottom-[clamp(6.5rem,calc(26vh-2rem),14.5rem)] z-10 flex flex-col items-center gap-2.5 px-6 text-center font-sans sm:gap-3">
-          <HeroEventInfo />
-          <p className="text-base font-normal text-white/90 sm:text-lg">
-            Get notified when applications open.
-          </p>
-          <Link
-            href="/register/interest"
-            className="relative z-50 rounded-2xl bg-recap-gold px-6 py-3 text-base font-bold text-white shadow-[0_0_30px_rgba(255,181,31,0.35)] transition-shadow duration-300 hover:shadow-[0_0_45px_rgba(255,181,31,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
-          >
-            Pre-Register
-          </Link>
-        </div>
-
-        <SceneLayer src={HERO_LAYERS.bluebird} alt="" priority />
-      </div>
-
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 z-40 transition-transform duration-hero-cloud ease-hero-cloud will-change-transform motion-reduce:transition-none ${
-          cloudsParted
-            ? "-translate-x-full motion-reduce:opacity-0"
-            : "translate-x-0"
-        }`}
-      >
-        <Image
-          src={HERO_LAYERS.frontLeftCloud}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover-bottom"
-        />
-      </div>
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 z-40 transition-transform duration-hero-cloud ease-hero-cloud will-change-transform motion-reduce:transition-none ${
-          cloudsParted
-            ? "translate-x-full motion-reduce:opacity-0"
-            : "translate-x-0"
-        }`}
-      >
-        <Image
-          src={HERO_LAYERS.frontRightCloud}
       {/* The whole scene sits slightly below the viewport top so the clock
           tower clears the social icons; the island tip crops by the same
           amount at the bottom. */}
@@ -161,6 +100,7 @@ export default function HeroSection() {
 
           <div className="absolute inset-x-0 bottom-[clamp(9rem,26vh,17rem)] z-10 flex flex-col items-center gap-3 px-6 text-center font-sans">
             <HeroTitle />
+            <HeroEventInfo />
             {isLoggedIn ? (
               <>
                 <p className="text-base font-normal text-white/90 sm:text-lg">
@@ -172,9 +112,6 @@ export default function HeroSection() {
               </>
             ) : isLoggedIn === false ? (
               <>
-                <p className="text-base font-normal text-white/90 sm:text-lg">
-                  September 18&ndash;20, 2026 &middot; Baltimore, MD
-                </p>
                 <p className="text-sm font-medium text-white/85 sm:text-base">
                   Applications due {APPLICATION_DEADLINE}
                 </p>
