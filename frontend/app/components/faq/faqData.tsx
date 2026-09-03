@@ -25,9 +25,19 @@ export const FAQ_ENTRIES: FaqEntry[] = [
       "Any university student enrolled in any undergraduate or graduate program may apply to hack. High school students may NOT participate. We will email you closer to the hackathon once we approve your application.",
   },
   {
+    question: "When are applications due?",
+    answer:
+      "Applications close on September 1, 2026. Apply early — we review applications on a rolling basis and will email you once we have a decision.",
+  },
+  {
+    question: "What are the team size requirements?",
+    answer:
+      "Hackers must compete in teams of 2–4. Solo participation is not allowed.",
+  },
+  {
     question: "I don’t have a team, how can I make one?",
     answer:
-      "We will have a team matching process after we accept hackers! You may form teams of up to four hackers, or compete solo. Additionally, we will be hosting team matching events at the start of the hackathon, so don’t worry!",
+      "We will have a team matching process after we accept hackers! Teams must have 2–4 members (no solo hackers). Additionally, we will be hosting team matching events at the start of the hackathon, so don’t worry!",
   },
   {
     question: "Where will HopHacks take place?",
@@ -114,7 +124,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
         Please email hophacks@gmail.com or ask your question in our{" "}
         <a
           className={linkClass}
-          href="https://discord.com/invite/8V8wmCWUhH"
+          href="https://discord.com/invite/CgQWn2saP9"
           target="_blank"
           rel="noopener noreferrer"
         >

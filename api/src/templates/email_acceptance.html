@@ -130,11 +130,32 @@
                 class="bg-light-blue"
               >
                 <img
-                  src="https://hophacks-website.s3.us-east-1.amazonaws.com/images/HopHacks_Email_Banner_1.png"
+                  src="https://hophacks.com/images/hophacks-logo.png"
                   alt="HopHacks Logo"
-                  width="550"
+                  width="150"
                   style="display: block; max-width: 100%; height: auto"
                 />
+                <p
+                  style="
+                    margin: 18px 0 0 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #001d4c;
+                  "
+                >
+                  HopHacks {{ event_name }}
+                </p>
+                <p
+                  style="
+                    margin: 6px 0 0 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 15px;
+                    color: #333333;
+                  "
+                >
+                  {{ event_dates }} &middot; Johns Hopkins University
+                </p>
               </td>
             </tr>
 
@@ -173,7 +194,7 @@
                         "
                         class="text-muted"
                       >
-                        Congratulations! You have been accepted to HopHacks Fall 2025. If you plan to attend, you must confirm your spot.
+                        Congratulations! You have been accepted to HopHacks {{ event_name }}. If you plan to attend, you must confirm your spot.
                       </p>
 
                       <p
@@ -186,12 +207,31 @@
                         "
                         class="text-muted"
                       >
-                        You may RSVP on your personal HopHacks page 
+                        You may RSVP on your personal HopHacks page
                         <a
                           href="https://hophacks.com/profile"
                           style="color: #0066cc; text-decoration: underline"
                         >here</a>
                         after login.
+                      </p>
+
+                      <p
+                        style="
+                          margin: 0 0 20px 0;
+                          font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+                          font-size: 16px;
+                          line-height: 24px;
+                          color: #666666;
+                        "
+                        class="text-muted"
+                      >
+                        We're gauging interest in chartered buses to campus. Filling out the
+                        <a
+                          href="https://forms.gle/HiTgXEvLA9BG8T5t6"
+                          target="_blank"
+                          style="color: #0066cc; text-decoration: underline"
+                        >busing interest form</a>
+                        has no commitment attached, and the more students from your school who respond, the more likely we are to add a stop there. Pick-up times, locations, and ticketing details will follow later.
                       </p>
 
                       <p
@@ -289,7 +329,7 @@
                         "
                         class="text-dark"
                       >
-                        HopHacks Fall 2025 | Johns Hopkins University<br />
+                        HopHacks {{ event_name }} | Johns Hopkins University<br />
                         To contact us, please email
                         <a
                           href="mailto:hophacks@gmail.com"
@@ -298,66 +338,44 @@
                         >hophacks@gmail.com</a>
                       </p>
 
-                      <!-- Social media icons -->
-                      <table
-                        border="0"
-                        cellpadding="0"
-                        cellspacing="0"
-                        align="center"
+                      <!-- Social links -->
+                      <p
+                        style="
+                          margin: 0;
+                          font-family:
+                            Arial, &quot;Helvetica Neue&quot;, Helvetica,
+                            sans-serif;
+                          font-size: 14px;
+                          line-height: 21px;
+                          color: #333333;
+                          text-align: center;
+                        "
+                        class="text-dark"
                       >
-                        <tr>
-                          <td align="center" style="padding: 0 5px">
-                            <a
-                              href="https://www.instagram.com/hophacks/?hl=en"
-                              target="_blank"
-                            >
-                              <img
-                                src="https://wodlub.stripocdn.email/content/assets/img/social-icons/logo-colored/instagram-logo-colored.png"
-                                alt="Instagram"
-                                width="32"
-                                height="32"
-                                style="display: block"
-                              />
-                            </a>
-                          </td>
-                          <td align="center" style="padding: 0 5px">
-                            <a
-                              href="https://www.facebook.com/HopHacks/"
-                              target="_blank"
-                            >
-                              <img
-                                src="https://wodlub.stripocdn.email/content/assets/img/social-icons/logo-colored/facebook-logo-colored.png"
-                                alt="Facebook"
-                                width="32"
-                                height="32"
-                                style="display: block"
-                              />
-                            </a>
-                          </td>
-                          <td align="center" style="padding: 0 5px">
-                            <a href="https://hophacks.com" target="_blank">
-                              <img
-                                src="https://wodlub.stripocdn.email/content/assets/img/other-icons/logo-colored/link-logo-colored.png"
-                                alt="Website"
-                                width="32"
-                                height="32"
-                                style="display: block"
-                              />
-                            </a>
-                          </td>
-                          <td align="center" style="padding: 0 5px">
-                            <a href="mailto:hophacks@gmail.com">
-                              <img
-                                src="https://wodlub.stripocdn.email/content/assets/img/other-icons/logo-colored/mail-logo-colored.png"
-                                alt="Email"
-                                width="32"
-                                height="32"
-                                style="display: block"
-                              />
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
+                        <a
+                          href="https://www.instagram.com/hophacks/?hl=en"
+                          target="_blank"
+                          style="color: #333333; text-decoration: underline"
+                          class="text-dark"
+                          >Instagram</a
+                        >
+                        |
+                        <a
+                          href="https://www.facebook.com/HopHacks/"
+                          target="_blank"
+                          style="color: #333333; text-decoration: underline"
+                          class="text-dark"
+                          >Facebook</a
+                        >
+                        |
+                        <a
+                          href="https://hophacks.com"
+                          target="_blank"
+                          style="color: #333333; text-decoration: underline"
+                          class="text-dark"
+                          >hophacks.com</a
+                        >
+                      </p>
                     </td>
                   </tr>
                 </table>

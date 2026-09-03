@@ -9,12 +9,16 @@ from db import db
 from mail import mail
 
 @pytest.fixture
-def client():
+def app():
     app = create_app('test.json')
     app.config['TESTING'] = True
+    yield app
 
+@pytest.fixture
+def client(app):
     db.users.delete_many({}) # clear database
-    
+    db.broadcasts.delete_many({}) # audit docs must not leak between tests
+
     with app.test_client() as client:
         yield client
 

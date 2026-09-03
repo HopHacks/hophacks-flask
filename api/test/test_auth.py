@@ -6,9 +6,9 @@ from utils import create_json, login_json, login_json2
 def test_bad_login(client):
     response = client.post("/api/accounts/create", json=create_json)
     assert response.status_code == 200
-    response = client.post("/api/auth/login", json={"username": "a", "password": "b"})
+    response = client.post("/api/auth/login", json={"username": "a@test.com", "password": "wrong-password"})
     assert response.status_code == 401
-    response = client.post("/api/auth/login", json={"username": "b", "password": "b"})
+    response = client.post("/api/auth/login", json={"username": "b@test.com", "password": "password-b"})
     assert response.status_code == 401
 
 # This test is a bit monolithic oops
@@ -26,7 +26,9 @@ def test_login(client, test_db):
     cookie = response.headers.get('Set-Cookie')
     prefix = 'refresh_token_cookie='
     refresh_token = cookie[len(prefix):cookie.index(';')]
-    assert (get_jti(refresh_token) in test_db.users.find_one({'username' : login_json['username']})["refresh_tokens"])
+    with client.application.app_context():
+        jti = get_jti(refresh_token)
+    assert (jti in test_db.users.find_one({'username' : login_json['username']})["refresh_tokens"])
 
     # Make sure access token is valid
     token = response.json["access_token"]
@@ -42,4 +44,6 @@ def test_login(client, test_db):
 
     response = client.get("/api/auth/session/logout")
     assert response.status_code == 200
-    assert (get_jti(refresh_token) not in test_db.users.find_one({'username' : login_json['username']})["refresh_tokens"])
+    with client.application.app_context():
+        jti = get_jti(refresh_token)
+    assert (jti not in test_db.users.find_one({'username' : login_json['username']})["refresh_tokens"])

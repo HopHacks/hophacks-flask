@@ -10,82 +10,92 @@ def add_admin_account(client, db):
         'hashed': hashed,
         'refresh_tokens': [],
         'profile': {},
-        'is_admin' : True
+        'is_admin': True
     })
+
 
 admin_login_json = {
     "username": "admin",
     "password": "admin"
 }
 
-create_json = {
-    "username": "a",
-    "password": "a",
-    "confirm_url": "test.com/confirm",
-    "profile": {
-        "first_name": "Andrew",
-        "last_name": "Wong",
-        "gender": "male",
-        "major": "Computer Science",
+
+def _profile(first_name, last_name, school, **overrides):
+    """Build an MLH-compliant registration profile with sensible defaults."""
+    profile = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "age": "20",
         "phone_number": "8888888888",
-        "school": "Cornell University",
-        "ethnicity": "Asian/Pacific Islander",
-        "grad": "ugrad",
-        "is_jhu": False,
-        "grad_month": "05",
-        "grad_year": "2022"
+        "school": school,
+        "level_of_study": "Undergraduate University (3+ year)",
+        "country": "United States of America",
+        "dietary_restrictions": "None",
+        "tshirt_size": "M",
+        # optional demographic fields
+        "gender": "Prefer not to answer",
+        "major": "Computer science, computer engineering, or software engineering",
+        "race_ethnicity": "Asian / Pacific Islander",
+        # application essays: drafts until POST /api/registrations/apply
+        # submits them (create no longer requires or reads these)
+        "essay_project": "A project idea worth building.",
+        "essay_team": "Looking to meet a great team.",
+        # MLH consent checkboxes
+        "mlh_code_of_conduct": True,
+        "mlh_data_sharing": True,
+        "mlh_marketing_emails": False,
     }
+    profile.update(overrides)
+    return profile
+
+
+create_json = {
+    "username": "a@test.com",
+    "password": "password-a",
+    "confirm_url": "http://localhost:3000/confirm",
+    "profile": _profile("Andrew", "Wong", "Cornell University"),
 }
 
 login_json = {
-    "username": "a",
-    "password": "a"
+    "username": "a@test.com",
+    "password": "password-a"
 }
 
 create_json2 = {
-    "username": "b",
-    "password": "b",
-    "confirm_url": "test.com/confirm",
-    "profile": {
-        "first_name": "Elaine",
-        "last_name": "Wong",
-        "gender": "female",
-        "major": "Computer Science",
-        "phone_number": "8888888888",
-        "school": "Jooby Hooby University",
-        "ethnicity": "Asian/Pacific Islander",
-        "grad": "ugrad",
-        "is_jhu": True,
-        "grad_month": "05",
-        "grad_year": "2022"
-    }
+    "username": "b@test.com",
+    "password": "password-b",
+    "confirm_url": "http://localhost:3000/confirm",
+    "profile": _profile("Elaine", "Wong", "Johns Hopkins University"),
 }
 
 login_json2 = {
-    "username": "b",
-    "password": "b"
+    "username": "b@test.com",
+    "password": "password-b"
 }
 
 create_json3 = {
-    "username": "c",
-    "password": "c",
-    "confirm_url": "test.com/confirm",
-    "profile": {
-        "first_name": "Jason",
-        "last_name": "Zhang",
-        "gender": "female",
-        "major": "Computer Science",
-        "phone_number": "8888888888",
-        "school": "Jooby Hooby University",
-        "ethnicity": "Asian/Pacific Islander",
-        "grad": "ugrad",
-        "is_jhu": True,
-        "grad_month": "05",
-        "grad_year": "2022"
-    }
+    "username": "c@test.com",
+    "password": "password-c",
+    "confirm_url": "http://localhost:3000/confirm",
+    "profile": _profile("Jason", "Zhang", "Johns Hopkins University"),
 }
 
 login_json3 = {
-    "username": "c",
-    "password": "c"
+    "username": "c@test.com",
+    "password": "password-c"
+}
+
+# Negative variants: required MLH consents not accepted.
+create_json_no_coc = {
+    "username": "d@test.com",
+    "password": "password-d",
+    "confirm_url": "http://localhost:3000/confirm",
+    "profile": _profile("Dana", "Cho", "Cornell University", mlh_code_of_conduct=False),
+}
+
+create_json_no_data = {
+    "username": "e@test.com",
+    "password": "password-e",
+    "confirm_url": "http://localhost:3000/confirm",
+    "profile": _profile("Evan", "Diaz", "Cornell University", mlh_data_sharing=False),
 }

@@ -1,5 +1,5 @@
-from registrations import send_apply_confirm
 from db import db
+from config.event import EVENT_SLUG
 
 from flask import Blueprint, request, Response, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -7,9 +7,6 @@ from bson import ObjectId
 
 import boto3
 from werkzeug.utils import secure_filename
-
-import pytz
-import datetime
 
 
 resume_api = Blueprint('resumes', __name__)
@@ -52,37 +49,17 @@ def upload():
     id = get_jwt_identity()
     user = db.users.find_one({'_id': ObjectId(id)})
 
-    # remove old resume
-    try :
-        if ('resume' in user):
-            if (user['resume'] == ""):
-                eastern = pytz.timezone("America/New_York")
-                eventFile = open("event.txt", "r")
-                result = db.users.update_many(
-                {
-                    '_id': ObjectId(id),
-                    'registrations.event' : eventFile.read()
-                },
-                {
-                    '$set': {
-                        "registrations.$.apply": True,
-                        "registrations.$.apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
-                        "registrations.$.status": "applied"
-                    }
-                }
-            )
-                send_apply_confirm(user['username'], user['profile']['first_name'])
-            else:
-                old_file_name = user['resume']
-                object_name = 'Fall-2025/{}-{}'.format(id, old_file_name)
-                s3.delete_object(Bucket=BUCKET, Key=object_name)
+    # remove the user's previous resume from S3 if they are replacing one
+    try:
+        if (user.get('resume')):
+            object_name = '{}/{}-{}'.format(EVENT_SLUG, id, user['resume'])
+            s3.delete_object(Bucket=BUCKET, Key=object_name)
     except Exception as e:
         print(e)
-        return jsonify({'msg': str(e)}, 400)
-        
+        return jsonify({'msg': str(e)}), 400
 
     # TODO make this atomic? what if the file upload doesn't work?
-    object_name = 'Fall-2025/{}-{}'.format(id, file_name)
+    object_name = '{}/{}-{}'.format(EVENT_SLUG, id, file_name)
     s3.upload_fileobj(file, BUCKET, object_name)
 
     db.users.update_one(
@@ -144,7 +121,7 @@ def download():
         return jsonify({'msg': 'no resume uploaded!'}, 404)
 
     s3 = boto3.client('s3')
-    object_name = 'Fall-2025/{}-{}'.format(id, user['resume'])
+    object_name = '{}/{}-{}'.format(EVENT_SLUG, id, user['resume'])
 
     url = s3.generate_presigned_url('get_object',
                                      Params={'Bucket': BUCKET, 'Key': object_name},

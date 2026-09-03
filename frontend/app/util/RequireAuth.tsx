@@ -12,7 +12,13 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
     if (isLoggedIn === false) router.push("/register/login");
   }, [isLoggedIn, router]);
 
-  if (isLoggedIn === null) return <p>Checking login...</p>;
+  if (isLoggedIn === null) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center">
+        <p className="text-white/80">Checking login...</p>
+      </div>
+    );
+  }
   if (isLoggedIn === false) return null;
 
   return <>{children}</>;

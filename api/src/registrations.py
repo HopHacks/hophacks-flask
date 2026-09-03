@@ -8,8 +8,46 @@ from flask_mail import Message, Mail
 from bson import ObjectId
 
 import datetime
+import pytz
+import re
+
+from config.event import EVENT_NAME
 
 registrations_api = Blueprint('registrations', __name__)
+
+# The free-response application questions. They are stored on the user's
+# profile, but they belong to the application: they are written by /apply and
+# frozen afterwards (see accounts.update_profile).
+REQUIRED_ESSAY_KEYS = ["essay_project", "essay_team"]
+ESSAY_WORD_LIMIT = 300
+
+
+def validate_essays(answers):
+    """Check both free responses. Returns an error string, or None if valid."""
+    for key in REQUIRED_ESSAY_KEYS:
+        essay = answers.get(key)
+        if (not isinstance(essay, str) or not essay.strip()):
+            return 'Missing required essay'
+        if (len(essay.split()) > ESSAY_WORD_LIMIT):
+            return 'Essay is over the word limit'
+    return None
+
+
+def find_registration(user, event):
+    """The user's registration subdocument for an event, or None."""
+    for reg in (user.get('registrations') or []):
+        if (reg.get('event') == event):
+            return reg
+    return None
+
+
+def has_submitted(user, event):
+    """True once the user has submitted their application for an event.
+
+    A registration only exists after /apply, so its presence *is* the
+    submitted flag; there is no separate field to keep in sync.
+    """
+    return find_registration(user, event) is not None
 
 # app = Flask(__name__)
 # app.config.from_json("config/config.json")
@@ -44,42 +82,169 @@ def send_rsvp_info(users):
      with mail.connect() as conn:
         for user in users:
             email = user["username"]
-            subject = "RSVP Event Info - Hophacks.com"
+            subject = "RSVP Event Info - HopHacks.com"
             msg = Message(recipients=[email],
-                          sender="team@hophacks.com",
                           subject=subject)
 
             msg.body = 'Thank you for confirming your spot to attend Hophacks in-person!'
             msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
             conn.send(msg)
 
+def _send_decision_emails(users, subject, body, template, **template_kwargs):
+    """Email each user. Never raises: a decision is already committed to the
+    database by the time we get here, so no mail problem may undo it.
+
+    Returns the list of users whose email did NOT send, so callers can record
+    and report exactly who still needs one.
+    """
+    users = list(users)
+    sent = set()
+    try:
+        with mail.connect() as conn:
+            for user in users:
+                try:
+                    msg = Message(recipients=[user["username"]],
+                                  subject=subject)
+                    msg.body = body
+                    # `or {}`, not a .get default: some prod docs store an
+                    # explicit profile: None, which a default would not replace.
+                    msg.html = render_template(
+                        template,
+                        first_name=(user.get('profile') or {}).get('first_name', ''),
+                        **template_kwargs)
+                    conn.send(msg)
+                    sent.add(str(user['_id']))
+                except Exception:
+                    # One bad recipient; keep going with the rest.
+                    pass
+    except Exception:
+        # The SMTP session could not be opened, or died mid-batch (Gmail
+        # enforces a daily send cap). This used to escape the endpoint as a
+        # 500 *after* apply_decision had already written the new statuses,
+        # leaving people accepted in the database whom we had never emailed
+        # and could no longer re-email, because the status guard skipped
+        # them on every retry. Whatever is not confirmed sent is reported
+        # as unsent instead, and the decision itself stands.
+        pass
+
+    return [u for u in users if str(u['_id']) not in sent]
+
+# Gauges per-school demand so we know where to send buses. Interest only, no
+# commitment. Mirrored in email_acceptance.html; keep the two in sync.
+BUSING_FORM_URL = "https://forms.gle/HiTgXEvLA9BG8T5t6"
+
+def mark_acceptance_email(users, unsent_ids, event):
+    """Record, per user, whether their acceptance email actually went out.
+
+    Without this the failure is invisible: an accepted applicant who never
+    got their letter looks identical to one who did, and the status guard
+    means re-accepting them is a no-op. The console reads this flag to show
+    who is still waiting, and /resend_acceptance uses it to fix them.
+    """
+    for ids, was_sent in (
+        ([u['_id'] for u in users if str(u['_id']) not in unsent_ids], True),
+        ([u['_id'] for u in users if str(u['_id']) in unsent_ids], False),
+    ):
+        if (ids):
+            db.users.update_many(
+                {'_id': {'$in': ids}, 'registrations.event': event},
+                {'$set': {'registrations.$.accept_email_sent': was_sent}}
+            )
+
+
 def send_acceptances(users):
-     with mail.connect() as conn:
-        for user in users:
-            email = user["username"]
-            subject = "Acceptance Letter - Hophacks.com"
-            msg = Message(recipients=[email],
-                          sender="team@hophacks.com",
-                          subject=subject)
+    return _send_decision_emails(
+        users,
+        "Acceptance Letter - HopHacks.com",
+        # The plain-text alternative is what clients with HTML disabled show,
+        # so every link in the HTML needs to survive here too.
+        "Congrats on being accepted to HopHacks! RSVP at "
+        "https://hophacks.com/profile to confirm your spot.\n\n"
+        "We're gauging interest in chartered buses to campus. Filling out the "
+        "busing interest form has no commitment attached, and the more "
+        "students from your school who respond, the more likely we are to add "
+        "a stop there. Pick-up times, locations, and ticketing details will "
+        "follow later.\n\n" + BUSING_FORM_URL,
+        'email_acceptance.html')
 
-            msg.body = 'Congrats on being accepted to HopHacks!'
-            msg.html = render_template('email_acceptance.html', first_name=user['profile']['first_name'])
-            conn.send(msg)
+def send_rejections(users):
+    return _send_decision_emails(
+        users,
+        "Status Update - HopHacks.com",
+        "Thanks for applying, unfortunately we weren't able to accept you into HopHacks.",
+        'email_rejection.html')
 
-def send_rejections(user):
-    with mail.connect() as conn:
-        email = user["username"]
-        subject = "Status Update - HopHacks.com"
-        msg = Message(recipients=[email],
-                        sender="team@hophacks.com",
-                        subject=subject)
-        msg.body = "Thanks for applying, unfortunately we weren't able to accept you into HopHacks."
-        msg.html = render_template('email_rejection.html', first_name=user['profile']['first_name'])
-        conn.send(msg)
+def send_waitlist(users):
+    return _send_decision_emails(
+        users,
+        "Waitlist Update - HopHacks.com",
+        "You've been placed on the HopHacks waitlist. We'll reach out if a spot opens up.",
+        'email_waitlist.html')
+
+def split_paragraphs(message):
+    """Plain text -> [[line, ...], ...], whitespace-only paragraphs dropped.
+
+    Paragraphs break on blank lines; a single newline stays a line break
+    inside its paragraph. The admin types into a plain textarea, so this is
+    the only structure the HTML email can recover from what they wrote.
+    """
+    paragraphs = []
+    for block in re.split(r'\n\s*\n', message.strip()):
+        if (block.strip()):
+            paragraphs.append(block.splitlines())
+    return paragraphs
+
+
+def send_broadcast(users, subject, message):
+    """One-off plain-text email to an explicit list of users (the admin
+    console's stage broadcast).
+
+    Shares _send_decision_emails' contract: never raises, returns the users
+    whose email did NOT send, so the console can report and retry exactly
+    those.
+    """
+    return _send_decision_emails(
+        users,
+        # Every outgoing subject carries this suffix ("Acceptance Letter -
+        # HopHacks.com"); the admin types only the topic.
+        subject.strip() + " - HopHacks.com",
+        # text/plain alternative: the typed message verbatim, unescaped.
+        message,
+        'email_broadcast.html',
+        paragraphs=split_paragraphs(message))
+
+def apply_decision(ids, event, guard_statuses, set_fields, unset_fields=None):
+    """Transition each user's <event> registration unless its status is in
+    guard_statuses. The guard lives inside the atomic filter, so a repeat
+    request can never re-transition (or re-email) a user. $nin treats a
+    missing status field as eligible, which keeps legacy docs decidable.
+
+    Returns (changed_users, skipped_ids); changed docs are pre-update.
+    """
+    update = {'$set': set_fields}
+    if unset_fields:
+        update['$unset'] = unset_fields
+
+    changed, skipped = [], []
+    for raw_id in ids:
+        doc = db.users.find_one_and_update(
+            {
+                '_id': ObjectId(raw_id),
+                'registrations': {'$elemMatch': {
+                    'event': event,
+                    'status': {'$nin': guard_statuses}
+                }}
+            },
+            update
+        )
+        if doc is None:
+            skipped.append(raw_id)
+        else:
+            changed.append(doc)
+    return changed, skipped
 
 def send_apply_confirm(email, name):
     msg = Message("Received Application - HopHacks.com",
-    sender="team@hophacks.com",
     recipients=[email])
 
     msg.body = 'Thanks for applying to hophacks!'
@@ -120,50 +285,155 @@ def get_registrations():
 
     return jsonify({'registrations': user['registrations']}), 200
 
-"""
-REPLACED WITH EMAIL CONFIRMATION 
 @registrations_api.route('/apply', methods = ['POST'])
 @jwt_required
 def apply():
-    
-    As a user, apply to an event
+    """Submit the application: the free-response answers.
+
+    Creating an account only makes a profile. This is the second, separate
+    step that turns that profile into an application, so the registration it
+    creates doubles as the "submitted" flag and its ``apply_at`` is the
+    submission date. The answers are frozen afterwards
+    (``accounts.update_profile`` rejects edits once a registration exists).
 
     :reqheader Authorization: ``Bearer <JWT Token>``
 
-    :reqjson event: Semester and year, for example 'Spring_2020'
-    :reqjson details: other event specific information that can change (ie. shirt size and stuff)
+    :reqjson essay_project: Answer to the first application question
+    :reqjson essay_team: Answer to the second application question
 
-    :status 200: Sucessfully registered
-    :status 400: Missing field in request or already registered
+    Example input:
+
+    .. sourcecode:: json
+
+        {
+            "essay_project": "...",
+            "essay_team": "..."
+        }
+
+    :status 200: Application submitted
+    :status 400: Missing json, or an answer is blank or over the word limit
+    :status 403: Email is not confirmed yet
+    :status 409: Application was already submitted
     :status 422: Not logged in
-    
-    if ('event' not in request.json or 'details' not in request.json):
-        return Response('Invalid request', status=400)
+
+    """
+    if (request.json is None):
+        return jsonify({"msg": "Data not in json format"}), 400
+
+    error = validate_essays(request.json)
+    if (error):
+        return jsonify({"msg": error}), 400
 
     id = get_jwt_identity()
-    event = request.json["event"]
-    details = request.json["details"]
-
-    user = db.users.find_one({'_id' : ObjectId(id)})
-
-    # fancy way to check event isn't already there
-    if len(list(filter(lambda reg: reg['event'] == event, user['registrations']))) != 0:
-        return Response('Invalid request, already applied to {}'.format(event), status=400)
+    eastern = pytz.timezone("America/New_York")
 
     new_reg = {
-        "event": event,
-        "apply_at": datetime.datetime.utcnow(),
+        "event": EVENT_NAME,
+        "apply_at": pytz.utc.localize(datetime.datetime.utcnow()).astimezone(eastern),
         "accept": False,
         "checkin": False,
-        "details": details,
+        "rsvp": False,
+        "status": "applied"
     }
 
-    result = db.users.update_one({'_id' : ObjectId(id)}, {'$push': {'registrations': new_reg}})
-    send_apply_confirm(user['username'], user['profile']['first_name'])
+    # One atomic write: the email-confirmed and not-already-applied guards live
+    # in the filter, so two concurrent submissions cannot both push a
+    # registration (nor both send the confirmation email).
+    user = db.users.find_one_and_update(
+        {
+            '_id': ObjectId(id),
+            'email_confirmed': True,
+            'registrations': {'$not': {'$elemMatch': {'event': EVENT_NAME}}}
+        },
+        {
+            '$set': {
+                'profile.essay_project': request.json['essay_project'],
+                'profile.essay_team': request.json['essay_team']
+            },
+            '$push': {'registrations': new_reg}
+        }
+    )
 
-    return jsonify({"num_changed": result.modified_count}), 200
+    # Only on failure do we pay for a second read, to say *why* it failed.
+    if (user is None):
+        existing = db.users.find_one({'_id': ObjectId(id)})
+        if (existing is None):
+            return jsonify({"msg": "user not found?"}), 404
+        if (not existing.get('email_confirmed')):
+            return jsonify({"msg": "Confirm your email before submitting"}), 403
+        return jsonify({"msg": "Application already submitted"}), 409
 
-"""
+    # The submission is already durable at this point. A dead SMTP session must
+    # not turn it into a 500: the user would be told their application failed,
+    # and every retry would then hit the 409 above. Gmail caps us around 500
+    # sends/day, so this fails for real during a submission rush.
+    email_sent = True
+    try:
+        send_apply_confirm(user['username'], user.get('profile', {}).get('first_name', ''))
+    except Exception:
+        email_sent = False
+
+    return jsonify({"msg": "application submitted", "email_sent": email_sent}), 200
+
+
+@registrations_api.route('/apply/draft', methods = ['POST'])
+@jwt_required
+def apply_draft():
+    """Save an in-progress answer without submitting.
+
+    Writes only the two essay fields, by dot path, so a draft save can never
+    disturb the rest of the profile (``/accounts/profile/update`` replaces the
+    whole profile subdocument and rejects the older profile shapes that
+    pre-2026 accounts still have).
+
+    :reqheader Authorization: ``Bearer <JWT Token>``
+
+    :reqjson essay_project: Draft answer to the first question (may be blank)
+    :reqjson essay_team: Draft answer to the second question (may be blank)
+
+    :status 200: Draft saved
+    :status 400: Missing json, or an answer is over the word limit
+    :status 409: Application already submitted; its answers cannot be changed
+    :status 422: Not logged in
+
+    """
+    if (request.json is None):
+        return jsonify({"msg": "Data not in json format"}), 400
+
+    updates = {}
+    for key in REQUIRED_ESSAY_KEYS:
+        if (key not in request.json):
+            continue
+        draft = request.json[key]
+        # Drafts may be blank -- completeness is /apply's job -- but the word
+        # limit still applies so nothing unsubmittable can be stored.
+        if (not isinstance(draft, str)):
+            return jsonify({"msg": "Invalid essay"}), 400
+        if (len(draft.split()) > ESSAY_WORD_LIMIT):
+            return jsonify({"msg": "Essay is over the word limit"}), 400
+        updates['profile.' + key] = draft
+
+    if (not updates):
+        return jsonify({"msg": "Nothing to save"}), 400
+
+    id = get_jwt_identity()
+
+    # Same guard as the lock in accounts.update_profile: once submitted, the
+    # answers are frozen.
+    result = db.users.update_one(
+        {
+            '_id': ObjectId(id),
+            'registrations': {'$not': {'$elemMatch': {'event': EVENT_NAME}}}
+        },
+        {'$set': updates}
+    )
+
+    if (result.matched_count == 0):
+        return jsonify({"msg": "Your application has been submitted and can no longer be edited"}), 409
+
+    return jsonify({"msg": "draft saved"}), 200
+
+
 @registrations_api.route('/accept', methods = ['POST'])
 @jwt_required
 @check_admin
@@ -189,36 +459,73 @@ def accept():
     :status 422: Not logged in
 
     """
-    if ('event' not in request.json and 'users' not in request.json):
+    if ('users' not in request.json):
         return Response('Invalid request', status=400)
 
-    event = request.json["event"]
-    ids = [ObjectId(id) for id in request.json["users"]]
+    event = request.json.get("event", EVENT_NAME)
 
-    result = db.users.update_many(
+    changed, skipped = apply_decision(
+        request.json["users"], event,
+        ["accepted", "rsvped", "checked_in"],
         {
-            '_id': {'$in': ids},
-            'registrations.event' : event
-        },
-        {
-            '$set': {
-                "registrations.$.accept": True,
-                "registrations.$.accept_at": datetime.datetime.utcnow(),
-                "registrations.$.status": "accepted"
-            }
+            "registrations.$.accept": True,
+            "registrations.$.accept_at": datetime.datetime.utcnow(),
+            "registrations.$.status": "accepted"
         }
     )
 
-    users = db.users.find(
-        {
-            '_id': {'$in': ids},
-            'registrations.event' : event
-        }
-    )
+    unsent = send_acceptances(changed)
+    mark_acceptance_email(changed, {str(u['_id']) for u in unsent}, event)
 
-    send_acceptances(users)
+    return jsonify({"num_changed": len(changed), "skipped": skipped,
+                    "email_failures": len(unsent)}), 200
 
-    return jsonify({"num_changed": result.modified_count}), 200
+
+@registrations_api.route('/resend_acceptance', methods = ['POST'])
+@jwt_required
+@check_admin
+def resend_acceptance():
+    """Re-send the acceptance email to users who are already accepted.
+
+    Recovery path for a batch whose emails failed (see
+    ``_send_decision_emails``). Deliberately does not touch anyone's status,
+    so it is safe to run repeatedly -- unlike revert-then-re-accept, which
+    would clear an RSVP that the applicant had already made.
+
+    Only users currently in the ``accepted`` state are eligible: anyone who
+    has since RSVPed or checked in evidently received their letter.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson users: List of user ids to email again
+    :reqjson event: Event name (defaults to the current event)
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+
+    """
+    if ('users' not in request.json):
+        return Response('Invalid request', status=400)
+
+    event = request.json.get("event", EVENT_NAME)
+    requested = request.json["users"]
+
+    targets = list(db.users.find({
+        '_id': {'$in': [ObjectId(i) for i in requested]},
+        'registrations': {'$elemMatch': {'event': event, 'status': 'accepted'}}
+    }))
+
+    eligible = {str(u['_id']) for u in targets}
+    skipped = [i for i in requested if i not in eligible]
+
+    unsent = send_acceptances(targets)
+    mark_acceptance_email(targets, {str(u['_id']) for u in unsent}, event)
+
+    return jsonify({"num_changed": len(targets) - len(unsent),
+                    "skipped": skipped,
+                    "email_failures": len(unsent)}), 200
 
 
 @registrations_api.route('/check_in', methods = ['POST'])
@@ -244,7 +551,7 @@ def check_in():
     :status 422: Not logged in
 
     """
-    event = request.json["event"]
+    event = request.json.get("event", EVENT_NAME)
     user = request.json["user"]
 
     result = db.users.update_one(
@@ -267,46 +574,139 @@ def check_in():
 @jwt_required
 @check_admin
 def reject():
-    """As an admin user,reject user in to an event
+    """As an admin, reject a list of users for an event and email them.
+
+    Also clears the accept flag so a previously accepted user cannot RSVP.
 
     :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
 
-    :reqjson user: User id to be reject
-    :reqjson event: Semester and year, for exmaple ``Spring_2020``
+    :reqjson users: List of user ids to mark as rejected
+    :reqjson user: Single user id (legacy alternative to ``users``)
+    :reqjson event: Event name (defaults to the current event)
 
     .. sourcecode:: json
 
         {
-            "user": "XuiJJ8rJRrbNJZ3Nb",
+            "users": ["XuiJJ8rJRrbNJZ3Nb", "GF42GBb238BGO"],
             "event": "Spring_2020"
         }
 
     :status 200: Successful
+    :status 400: Invalid request
     :status 401: Not logged in as admin
     :status 422: Not logged in
 
     """
-    event = request.json["event"]
-    user_id = request.json["user"]
+    if ('users' in request.json):
+        ids = request.json['users']
+    elif ('user' in request.json):
+        ids = [request.json['user']]
+    else:
+        return Response('Invalid request', status=400)
 
-    result = db.users.update_one(
+    event = request.json.get("event", EVENT_NAME)
+
+    changed, skipped = apply_decision(
+        ids, event,
+        ["rejected", "rsvped", "checked_in"],
         {
-            '_id': ObjectId(user_id),
-            'registrations.event' : event
-        },
-        {
-            '$set': {
-                "registrations.$.reject_at": datetime.datetime.utcnow(),
-                "registrations.$.status": "rejected"
-            }
+            "registrations.$.accept": False,
+            "registrations.$.reject_at": datetime.datetime.utcnow(),
+            "registrations.$.status": "rejected"
         }
     )
 
-    user = db.users.find_one({'_id': ObjectId(user_id)})
-    if user:
-        send_rejections(user)
+    failures = len(send_rejections(changed))
 
-    return jsonify({"num_changed": result.modified_count}), 200
+    return jsonify({"num_changed": len(changed), "skipped": skipped,
+                    "email_failures": failures}), 200
+
+
+@registrations_api.route('/waitlist', methods = ['POST'])
+@jwt_required
+@check_admin
+def waitlist():
+    """As an admin, waitlist a list of users for an event and email them.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson users: List of user ids to move to the waitlist
+    :reqjson event: Event name (defaults to the current event)
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+
+    """
+    if ('users' not in request.json):
+        return Response('Invalid request', status=400)
+
+    event = request.json.get("event", EVENT_NAME)
+
+    changed, skipped = apply_decision(
+        request.json["users"], event,
+        ["waitlisted", "rsvped", "checked_in"],
+        {
+            "registrations.$.status": "waitlisted",
+            "registrations.$.waitlist_at": datetime.datetime.utcnow(),
+            "registrations.$.accept": False
+        }
+    )
+
+    failures = len(send_waitlist(changed))
+
+    return jsonify({"num_changed": len(changed), "skipped": skipped,
+                    "email_failures": failures}), 200
+
+
+@registrations_api.route('/revert', methods = ['POST'])
+@jwt_required
+@check_admin
+def revert():
+    """As an admin, silently reset users' registrations to "applied".
+
+    Recovery path for a misclicked decision: restores the fresh-registration
+    shape (accounts.confirm_email) and sends no email. This is also the only
+    way out of the rsvped / checked_in statuses, which the decision endpoints
+    refuse to touch.
+
+    :reqheader Authorization: ``Bearer <JWT Token>``, needs to be admin account
+
+    :reqjson users: List of user ids to reset
+    :reqjson event: Event name (defaults to the current event)
+
+    :status 200: Successful
+    :status 400: Invalid request
+    :status 401: Not logged in as admin
+    :status 422: Not logged in
+
+    """
+    if ('users' not in request.json):
+        return Response('Invalid request', status=400)
+
+    event = request.json.get("event", EVENT_NAME)
+
+    changed, skipped = apply_decision(
+        request.json["users"], event,
+        ["applied"],
+        {
+            "registrations.$.accept": False,
+            "registrations.$.rsvp": False,
+            "registrations.$.checkin": False,
+            "registrations.$.status": "applied"
+        },
+        {
+            "registrations.$.accept_at": "",
+            "registrations.$.waitlist_at": "",
+            "registrations.$.reject_at": "",
+            "registrations.$.rsvp_time": "",
+            "registrations.$.checkin_at": ""
+        }
+    )
+
+    return jsonify({"num_changed": len(changed), "skipped": skipped,
+                    "email_failures": 0}), 200
 
 
 @registrations_api.route('/rsvp/view', methods = ['GET'])
@@ -354,7 +754,11 @@ def rsvp_status():
     id = get_jwt_identity()
     user = db.users.find_one({'_id' : ObjectId(id)})
 
-    eventInfo = user["registrations"][0] # only need to check first one, because there should only be one entry
+    regs = user.get("registrations") or []
+    if (len(regs) == 0):
+        return jsonify({"status": False}), 200
+
+    eventInfo = regs[0] # only need to check first one, because there should only be one entry
     if("rsvp" not in eventInfo or eventInfo["rsvp"] == False):
         return jsonify({"status":False}),200 
     elif(eventInfo["rsvp"] == True):
@@ -388,10 +792,18 @@ def rsvp_rsvp():
     :status 500: Another unknown error
     """
 
-    return jsonify({"msg": "no more rsvps"} , 500)
-
     event = request.json["event"] # name of event
     id = get_jwt_identity()
+
+    # Validate up front: the $set below always rewrites rsvp_time, so
+    # modified_count cannot distinguish a fresh RSVP from a repeat one, and we
+    # must not email the user unless the RSVP actually succeeds.
+    current = db.users.find_one({'_id': ObjectId(id)})
+    existing = next((r for r in current.get('registrations', []) if r.get('event') == event), None)
+    if (existing is None or not existing.get('accept')):
+        return jsonify({"msg": "no such event exists"}), 400
+    if (existing.get('rsvp')):
+        return jsonify({"msg": "user already RSVPed"}), 409
     
     # only allow RSVPs to accepted events
     # update RSVP status to true in database

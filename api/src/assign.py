@@ -1,238 +1,356 @@
-from util import algorithm
-from flask import (
-    Blueprint, request, jsonify, flash, redirect, render_template, url_for
-)
-import csv
-import random
+"""Judge tool API — workflow 1 (assignments, tables, rooms).
+
+Mounted at /api/judgetool.
+"""
+
+from datetime import datetime
+
+from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required
+
 from db import db
+from util.decorators import check_admin
+from util.judgetool_logic import (
+    ValidationError,
+    apply_time_constraints,
+    assign_judges,
+    assign_rooms,
+    assign_tables,
+    build_enriched_assignments,
+    build_submission_directory,
+    parse_judges_per_team,
+    parse_judges_txt,
+    parse_rooms_csv,
+    parse_submissions_csv_with_meta,
+    shuffle_submissions,
+)
+from config.event import EVENT_SLUG
 
-assign_api = Blueprint('assign', __name__)
+import csv
 
-#col: judge assignments
-#col2: sponsor prizes
-#col3: table assignments
-#col4: room assignments
+assign_api = Blueprint("assign", __name__)
 
 ALLOWED_EXTENSIONS = {"csv", "txt"}
+DEFAULT_EVENT_ID = f"hophacks-{EVENT_SLUG.lower()}"
+DEVPOST_BASE_URL = f"https://{DEFAULT_EVENT_ID}.devpost.com/submissions"
+
+TABLE_COLLECTION = "table_assignments"
+ROOM_COLLECTION = "room_assignments"
+JUDGE_COLLECTION = "judge_assignments"
+SUBMISSION_COLLECTION = "submission_directory"
 
 
 def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return (
+        filename
+        and "." in filename
+        and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    )
 
 
-def get_assignments():
-    result = db.judge.find_one({}, {'_id': 0})
-    return jsonify(result)
+def _event_id_from_request():
+    value = request.args.get("eventId") or request.form.get("eventId")
+    if value and str(value).strip():
+        return str(value).strip()
+    return DEFAULT_EVENT_ID
+
+
+def _upsert_by_event(collection, event_id, payload):
+    now = datetime.utcnow()
+    getattr(db, collection).update_one(
+        {"eventId": event_id},
+        {
+            "$set": {**payload, "updatedAt": now},
+            "$setOnInsert": {"createdAt": now},
+        },
+        upsert=True,
+    )
+
+
+# ---------- Legacy sponsor / table / room GETs (kept for old UI) ----------
 
 
 def get_sponsor_prizes():
-    result = db.sponsor.find_one({}, {'_id': 0})
+    result = db.sponsor.find_one({}, {"_id": 0})
     return jsonify(result)
 
 
 def get_tables():
-    result = db.table.find_one({}, {'_id': 0})
-    return jsonify(result)
+    event_id = _event_id_from_request()
+    doc = getattr(db, TABLE_COLLECTION).find_one({"eventId": event_id}, {"_id": 0})
+    if doc and "assignments" in doc:
+        return jsonify(doc["assignments"])
+    # Fall back to legacy flat document
+    legacy = db.table.find_one({}, {"_id": 0})
+    return jsonify(legacy)
 
 
 def get_rooms():
-    result = db.room.find_one({}, {'_id': 0})
-    return jsonify(result)
+    event_id = _event_id_from_request()
+    doc = getattr(db, ROOM_COLLECTION).find_one({"eventId": event_id}, {"_id": 0})
+    if doc and "assignments" in doc:
+        return jsonify(doc["assignments"])
+    legacy = db.room.find_one({}, {"_id": 0})
+    return jsonify(legacy)
 
 
-def assign_tables(submissions):
-    tables = {}
-    i = 1
-    for x in submissions:
-        tables[x] = i
-        i += 1
-    db.table.replace_one({}, tables, upsert=True)
+# ---------- Workflow 1 ----------
 
 
-def assign_rooms(room_file):
-    file_string = room_file.read().decode('utf-8-sig').splitlines()
-    dicts = [{k: v for k, v in row.items()} for row \
-                 in csv.DictReader(file_string)]
-    rooms = {}
-    for i in dicts:
-        rooms[i['Room']] = i['Capacity']
+@assign_api.route("/assignments", methods=["POST"])
+@jwt_required
+@check_admin
+def create_assignments():
+    try:
+        if "sfile" not in request.files:
+            return jsonify({"error": "Missing sfile (submissions CSV)"}), 400
+        if "jfile" not in request.files:
+            return jsonify({"error": "Missing jfile (judges TXT)"}), 400
+        if "room_file" not in request.files:
+            return jsonify({"error": "Missing room_file (rooms CSV)"}), 400
+        if request.form.get("ifile") is None or str(request.form.get("ifile")).strip() == "":
+            return jsonify({"error": "Missing ifile (judges per team)"}), 400
 
-    temp_tables = db.table.find_one({}, {'_id': 0})
-    tables = {v: k for k, v in temp_tables.items()}
-    assignments = {}
+        sub_file = request.files["sfile"]
+        judge_file = request.files["jfile"]
+        room_file = request.files["room_file"]
 
-    total = 0
-    for room in rooms:
-        total += int(rooms[room])
-    assignments = {}
-    counter = 1
-    end = False
-    for room in rooms:
-        assignments[room]= []
-    currCap = 0
-    i = 1
-    while i <= len(tables):
-        currCap += 4
-        for room in rooms:
-            if currCap > float(rooms[room]) * 0.8:
-                continue
-            assignments[room].append(tables[i])
-            i = i + 1
-            if i > len(tables):
-                break
-    # for room in rooms:
-    #     # print(room)
-    #     cap = int(rooms[room])
-    #     teams = int(cap/4)
-    #     i = 0
-    #     # print(room)
-    #     assignments[room] = []
-    #     # print("tables")
-    #     # print(tables)
-    #     # print("assignments")
-    #     # print(assignments)
-    #     while i < int(teams*.8):
-    #         if counter == len(tables) + 1:
-    #             end = True
-    #             break
-    #         print("room")
-    #         print(room)
-    #         print("counter")
-    #         print(counter)
-    #         # if counter in tables :
-    #         assignments[room].append(tables[counter])
-    #         i += 1
-    #         counter += 1
-    #     if end:
-    #         break
-    # print(tables)
-    db.room.replace_one({}, assignments, upsert=True)
+        if not (
+            allowed_file(sub_file.filename)
+            and allowed_file(judge_file.filename)
+            and allowed_file(room_file.filename)
+        ):
+            return jsonify({"error": "Files must be .csv or .txt as appropriate"}), 400
 
+        event_id = _event_id_from_request()
 
-def time_constraints(assignments, submissions):
-    positions = {}
-    for sub in submissions:
-        positions[sub] = {}
-        for a in assignments:
-            for item in assignments[a]:
-                if item == sub:
-                    positions[sub][a] = assignments[a].index(item)
+        submissions, csv_meta = parse_submissions_csv_with_meta(
+            sub_file.read().decode("utf-8-sig")
+        )
+        submissions = shuffle_submissions(submissions)
+        judges = parse_judges_txt(judge_file.read().decode("utf-8"))
+        rooms = parse_rooms_csv(room_file.read().decode("utf-8-sig"))
+        judges_per_team = parse_judges_per_team(request.form.get("ifile"))
 
-    for pos in positions:
-        for key_a in positions[pos]:
-            for key_b in positions[pos]:
-                if key_a == key_b:
-                    break
-                    if positions[pos][key_a] == positions[pos][key_b]:
-                        if positions[pos][key_a] < len(assignments[key_a]) - 1:
-                            assignments[key_a][positions[pos][key_a]], \
-                            assignments[key_a][positions[pos][key_a] + 1] = \
-                            assignments[key_a][positions[pos][key_a] + 1], \
-                            assignments[key_a][positions[pos][key_a]]
-                        else:
-                            assignments[key_a][positions[pos][key_a]], \
-                            assignments[key_a][0] = \
-                            assignments[key_a][0], \
-                            assignments[key_a][positions[pos][key_a]]
+        if not csv_meta.get("trackColumn"):
+            warnings_pre = [
+                'No "Opt-In Prizes" (track) column found in submissions CSV. '
+                f"Columns seen: {', '.join(csv_meta.get('columns') or [])}"
+            ]
+        else:
+            warnings_pre = []
 
+        table_assignments = assign_tables(submissions)
+        room_assignments, warnings = assign_rooms(table_assignments, rooms)
+        warnings = warnings_pre + warnings
+        judge_assignments = apply_time_constraints(
+            assign_judges(submissions, judges, judges_per_team)
+        )
+        submission_directory = build_submission_directory(
+            submissions,
+            table_assignments,
+            room_assignments,
+            DEVPOST_BASE_URL,
+        )
 
-@assign_api.route('/assignments', methods=["GET", "POST"])
-def assignments():
-    if request.method == 'POST':
-        if 'sfile' not in request.files \
-           or 'jfile' not in request.files \
-           or 'room_file' not in request.files:
-                return jsonify({"msg : error (files found)"}), 500
+        _upsert_by_event(
+            TABLE_COLLECTION, event_id, {"assignments": table_assignments}
+        )
+        _upsert_by_event(
+            ROOM_COLLECTION,
+            event_id,
+            {"assignments": room_assignments, "warnings": warnings},
+        )
+        _upsert_by_event(
+            JUDGE_COLLECTION,
+            event_id,
+            {
+                "assignments": judge_assignments,
+                "judgesPerTeam": judges_per_team,
+            },
+        )
+        _upsert_by_event(
+            SUBMISSION_COLLECTION,
+            event_id,
+            {
+                "submissions": submission_directory,
+                "csvMeta": csv_meta,
+            },
+        )
 
-        sub_file = request.files['sfile']
-        judge_file = request.files['jfile']
-        room_file = request.files['room_file']
+        # Keep legacy flat collections in sync for older consumers
+        db.table.replace_one({}, table_assignments, upsert=True)
+        db.room.replace_one({}, room_assignments, upsert=True)
+        db.judge.replace_one({}, judge_assignments, upsert=True)
 
-        try:
-            per_team = int(request.form['ifile'])
-        except ValueError as e:
-            return jsonify({f"msg : error ({e})"}), 500
+        return jsonify(
+            {
+                "eventId": event_id,
+                "counts": {
+                    "validSubmissions": len(submissions),
+                    "judges": len(judges),
+                    "rooms": len(rooms),
+                    "judgesPerTeam": judges_per_team,
+                    "tracks": len(csv_meta.get("tracksFound") or []),
+                },
+                "csvMeta": csv_meta,
+                "warnings": warnings,
+                "tableAssignments": table_assignments,
+                "roomAssignments": room_assignments,
+                "judgeAssignments": judge_assignments,
+            }
+        ), 200
 
-        if not (sub_file and allowed_file(sub_file.filename)) \
-           or not (judge_file and allowed_file(judge_file.filename)) \
-           or not (room_file and allowed_file(room_file.filename)):
-            return jsonify({"msg : error (files not allowed)"}), 500
-
-        sub_string = sub_file.read().decode('utf-8-sig').splitlines()
-
-        sub_dicts = [{k: v for k, v in row.items()} for row \
-                     in csv.DictReader(sub_string)]
-        submissions = []
-
-        for x in sub_dicts:
-            if x['Project Title'] != "Untitled" and x['Project Title'] != "SAMPLE" and x['Submission Url']:
-                url_project_name = x['Submission Url'].rstrip("/").split("/")[-1]
-                submissions.append(url_project_name)
-        random.Random(0).shuffle(submissions)
-
-        assign_tables(submissions)
-        assign_rooms(room_file)
-
-        judge_string = judge_file.read().decode('utf-8')
-        judges = list(judge_string.split("\n"))
-
-        result = algorithm.assign_judges(judges, submissions, per_team)
-        time_constraints(result, submissions)
-        db.judge.replace_one({}, result, upsert=True)
-
-        return get_assignments()
-
-    if request.method == 'GET':
-        return get_assignments()
+    except ValidationError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {e}"}), 500
 
 
-@assign_api.route('/sponsor-prizes', methods=["GET", "POST"])
+@assign_api.route("/assignments", methods=["GET"])
+@jwt_required
+@check_admin
+def get_assignments():
+    try:
+        event_id = _event_id_from_request()
+
+        judge_doc = getattr(db, JUDGE_COLLECTION).find_one({"eventId": event_id})
+        table_doc = getattr(db, TABLE_COLLECTION).find_one({"eventId": event_id})
+        room_doc = getattr(db, ROOM_COLLECTION).find_one({"eventId": event_id})
+
+        # Fall back to legacy flat docs if event-scoped docs missing
+        if not judge_doc:
+            legacy = db.judge.find_one({}, {"_id": 0})
+            if not legacy:
+                return jsonify(
+                    {"error": f'No assignments found for eventId "{event_id}"'}
+                ), 400
+            judge_assignments = legacy
+        else:
+            judge_assignments = judge_doc.get("assignments", {})
+
+        if not table_doc:
+            table_assignments = db.table.find_one({}, {"_id": 0}) or {}
+        else:
+            table_assignments = table_doc.get("assignments", {})
+
+        if not room_doc:
+            room_assignments = db.room.find_one({}, {"_id": 0}) or {}
+        else:
+            room_assignments = room_doc.get("assignments", {})
+
+        submission_doc = getattr(db, SUBMISSION_COLLECTION).find_one(
+            {"eventId": event_id}
+        )
+        submission_lookup = {}
+        if submission_doc and submission_doc.get("submissions"):
+            submission_lookup = {
+                s["slug"]: s for s in submission_doc["submissions"] if s.get("slug")
+            }
+
+        return jsonify(
+            build_enriched_assignments(
+                event_id,
+                judge_assignments,
+                table_assignments,
+                room_assignments,
+                DEVPOST_BASE_URL,
+                submission_lookup,
+            )
+        ), 200
+
+    except ValidationError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {e}"}), 500
+
+
+@assign_api.route("/submissions", methods=["GET"])
+@jwt_required
+@check_admin
+def get_submissions():
+    """All submissions with table/room/track info for track-specific judging."""
+    try:
+        event_id = _event_id_from_request()
+        doc = getattr(db, SUBMISSION_COLLECTION).find_one({"eventId": event_id})
+        if not doc or not doc.get("submissions"):
+            return jsonify(
+                {"error": f'No submissions found for eventId "{event_id}"'}
+            ), 400
+
+        submissions = doc["submissions"]
+        csv_meta = doc.get("csvMeta") or {}
+        tracks = sorted(
+            {
+                track
+                for sub in submissions
+                for track in (sub.get("tracks") or [])
+            }
+        )
+        prizes = sorted(
+            {
+                prize
+                for sub in submissions
+                for prize in (sub.get("prizes") or [])
+            }
+        )
+
+        return jsonify(
+            {
+                "eventId": event_id,
+                "submissions": submissions,
+                "tracks": tracks,
+                "prizes": prizes,
+                "csvMeta": csv_meta,
+            }
+        ), 200
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {e}"}), 500
+
+
+@assign_api.route("/sponsor-prizes", methods=["GET", "POST"])
+@jwt_required
+@check_admin
 def sponsor_prizes():
-    if request.method == 'POST':
-        if 'sponsors_file' not in request.files:
-            return jsonify({"msg : error"}), 500
+    if request.method == "POST":
+        if "sponsors_file" not in request.files:
+            return jsonify({"error": "Missing sponsors_file"}), 400
 
-        sponsors_file = request.files['sponsors_file']
-
+        sponsors_file = request.files["sponsors_file"]
         if not (sponsors_file and allowed_file(sponsors_file.filename)):
-            return jsonify({"msg : error"}), 500
+            return jsonify({"error": "sponsors_file must be a CSV"}), 400
 
-        file_string = sponsors_file.read().decode('utf-8').splitlines()
-        dicts = [{k: v for k, v in row.items()} for row \
-                     in csv.DictReader(file_string)]
+        file_string = sponsors_file.read().decode("utf-8").splitlines()
+        dicts = [{k: v for k, v in row.items()} for row in csv.DictReader(file_string)]
         prizes = {}
-        print("dicts")
-        print(dicts[1])
         for i in dicts:
-            print(i)
-            if i['Project Title'] == "Untitled" or i['Project Title'] == "SAMPLE":
+            if i.get("Project Title") in ("Untitled", "SAMPLE"):
                 continue
-            for j in i['Opt-In Prizes'].split(", "):
+            for j in (i.get("Opt-In Prizes") or "").split(", "):
                 if j == "":
                     continue
-                if j not in prizes:
-                    prizes[j] = []                
-                prizes[j].append(i['Project Title'])
-            
-            for j in i['Which Track Are You Submitting To?'].split(", "):
-                if j not in prizes:
-                    prizes[j] = []
-                prizes[j].append(i['Project Title'])
-            
+                prizes.setdefault(j, []).append(i["Project Title"])
+
+            for j in (i.get("Which Track Are You Submitting To?") or "").split(", "):
+                if not j:
+                    continue
+                prizes.setdefault(j, []).append(i["Project Title"])
+
         db.sponsor.replace_one({}, prizes, upsert=True)
-
         return get_sponsor_prizes()
 
-    if request.method == 'GET':
-        return get_sponsor_prizes()
+    return get_sponsor_prizes()
 
 
-@assign_api.route('/table-assignments', methods=["GET"])
+@assign_api.route("/table-assignments", methods=["GET"])
+@jwt_required
+@check_admin
 def table_assignments():
     return get_tables()
 
 
-@assign_api.route('/room-assignments', methods=["GET", "POST"])
+@assign_api.route("/room-assignments", methods=["GET"])
+@jwt_required
+@check_admin
 def room_assignments():
     return get_rooms()
