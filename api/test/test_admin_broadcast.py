@@ -51,7 +51,7 @@ def test_broadcast_sends_and_records_the_audit(client, test_db, test_mail):
     assert res.json['skipped'] == []
 
     assert len(outbox) == 2
-    assert {m.subject for m in outbox} == {SUBJECT + " - HopHacks.com"}
+    assert {m.subject for m in outbox} == {SUBJECT + " - HopHacks"}
     assert sorted(r for m in outbox for r in m.recipients) == ['a@test.com',
                                                                'b@test.com']
 
@@ -152,7 +152,7 @@ def test_test_send_goes_only_to_the_admin_and_writes_no_audit(
     assert res.json['email_failures'] == 0
     assert len(outbox) == 1
     assert outbox[0].recipients == ['admin']
-    assert outbox[0].subject == SUBJECT + " - HopHacks.com"
+    assert outbox[0].subject == SUBJECT + " - HopHacks"
     # A proof copy is not a broadcast; nothing to audit or retry.
     assert test_db.broadcasts.find_one({}) is None
 
@@ -221,7 +221,7 @@ def test_retry_never_double_sends(client, test_db, test_mail):
     assert res.json['failed_ids'] == []
     assert len(outbox) == 1
     assert outbox[0].recipients == ['b@test.com']
-    assert outbox[0].subject == SUBJECT + " - HopHacks.com"
+    assert outbox[0].subject == SUBJECT + " - HopHacks"
 
     doc = test_db.broadcasts.find_one({'broadcast_id': 'bcast-1'})
     assert set(doc['sent_ids']) == {a, b}

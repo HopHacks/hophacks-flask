@@ -256,7 +256,7 @@ export default function Email() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm text-slate-900"
           />
           <p className="mt-1 text-xs text-slate-500">
-            {'" - HopHacks.com" is appended automatically.'}
+            {'" - HopHacks" is appended automatically.'}
           </p>
         </div>
 
