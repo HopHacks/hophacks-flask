@@ -40,8 +40,15 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "6:00–8:00 PM",
         title: "Check-in",
-        location: "TBD",
+        location: "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
         type: "main",
+      },
+      {
+        time: "6:30–8:00 PM",
+        title: "Dinner",
+        location:
+          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        type: "food",
       },
       {
         time: "8:00 PM",
@@ -59,8 +66,14 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "9:00 PM",
         title: "Sponsor Hall Opens",
-        location: "TBD",
+        location: "3400 N Charles St, Levering Hall Great Hall, Baltimore, MD 21218",
         type: "announcement",
+      },
+      {
+        time: "9:30 PM",
+        title: "Memetic Data Crash Course",
+        location: "TBD",
+        type: "workshop",
       },
     ],
   },
@@ -71,10 +84,37 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     isoDate: "2026-09-19",
     events: [
       {
+        time: "9:00–10:00 AM",
+        title: "Breakfast",
+        location:
+          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        type: "food",
+      },
+      {
+        time: "10:00 AM",
+        title: "Hack the Agent Stack: MCP, LLMs & Agentic AI",
+        location: "TBD",
+        type: "workshop",
+      },
+      {
         time: "All Day",
         title: "Hacking Continues — more events TBA",
         location: "TBD",
         type: "workshop",
+      },
+      {
+        time: "1:00–2:30 PM",
+        title: "Lunch",
+        location:
+          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        type: "food",
+      },
+      {
+        time: "8:00–10:00 PM",
+        title: "Dinner",
+        location:
+          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        type: "food",
       },
     ],
   },
@@ -85,10 +125,24 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     isoDate: "2026-09-20",
     events: [
       {
+        time: "9:00–10:00 AM",
+        title: "Breakfast",
+        location:
+          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        type: "food",
+      },
+      {
         time: "9:00 AM",
         title: "Submissions Due",
         location: "TBD",
         type: "announcement",
+      },
+      {
+        time: "12:00–1:00 PM",
+        title: "Lunch",
+        location:
+          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        type: "food",
       },
       {
         time: "1:00 PM",
