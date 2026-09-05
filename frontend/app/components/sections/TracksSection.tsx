@@ -1,13 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  FaChevronLeft,
-  FaChevronRight,
-  FaPause,
-  FaPlay,
-} from "react-icons/fa6";
 
 import TrackCard from "../tracks/TrackCard";
 import { TRACK_ENTRIES } from "../tracks/tracksData";
@@ -27,10 +22,13 @@ const MAX_DT = 0.1; // s — tab-restore clamp so backgrounding never teleports
 const DWELL_MS = 3000; // hold at front after user nav (touch has no hover-pause)
 
 // Ellipse radii as CSS lengths resolved against the [container-type:size]
-// stage: a = min(38cqw, 380px), b = max(0.38·a, 48px). Container-query units
+// stage: a = min(33cqw, 380px), b = max(0.38·a, 48px). Container-query units
 // keep the geometry SSR-deterministic and resize-reactive with no measuring.
-const RADIUS_X = "min(38cqw,380px)";
-const RADIUS_Y = "max(min(14.44cqw,144.4px),48px)";
+// With the item width capped at 44cqw (side islands scale to 0.775), the side
+// edge lands at ≤ 33cqw + 0.775·22cqw ≈ 50cqw — flush with the stage, so the
+// ring never spills past the viewport and causes horizontal page scroll.
+const RADIUS_X = "min(33cqw,380px)";
+const RADIUS_Y = "max(min(12.54cqw,144.4px),48px)";
 
 // Pure turntable placement: front (cos = 1) sits lower, larger, fully opaque;
 // rear sits higher, smaller, faded. Billboarded — no rotateY.
@@ -39,10 +37,14 @@ function placement(index: number, rotation: number) {
   const sin = Math.sin(ang);
   const cos = Math.cos(ang);
   const t = (cos + 1) / 2; // 1 = front, 0 = back
+  // Depth-of-field: only the rear arc blurs (t < 0.3) so the side islands stay
+  // crisp — ramps continuously to 3px at the very back to avoid a pop.
+  const blur = Math.max(0, (0.3 - t) / 0.3) * 3;
   return {
     transform: `translate(-50%, -50%) translate(calc(${RADIUS_X} * ${sin.toFixed(4)}), calc(${RADIUS_Y} * ${cos.toFixed(4)})) scale(${(0.55 + 0.45 * t).toFixed(4)})`,
     opacity: (0.45 + 0.55 * t).toFixed(3),
     zIndex: 10 + Math.round(t * 100),
+    filter: blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : "none",
   };
 }
 
@@ -55,7 +57,6 @@ const INITIAL_STYLES: CSSProperties[] = TRACK_ENTRIES.map((_, i) =>
 
 export default function TracksSection() {
   const [frontIndex, setFrontIndex] = useState(0);
-  const [userPaused, setUserPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [liveMessage, setLiveMessage] = useState("");
 
@@ -67,7 +68,6 @@ export default function TracksSection() {
   const rampRef = useRef(1);
   const hoverRef = useRef(false);
   const focusRef = useRef(false);
-  const pausedRef = useRef(false);
   const resumeAtRef = useRef(0);
   const frontIndexMirrorRef = useRef(0);
 
@@ -78,6 +78,7 @@ export default function TracksSection() {
       el.style.transform = p.transform;
       el.style.opacity = p.opacity;
       el.style.zIndex = String(p.zIndex);
+      el.style.filter = p.filter;
     });
   }, []);
 
@@ -136,10 +137,6 @@ export default function TracksSection() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  useEffect(() => {
-    pausedRef.current = userPaused;
-  }, [userPaused]);
-
   // Static mode: position the oval imperatively from frontIndex; nav is an
   // instant snap (an animated arc sweep is the vestibular trigger).
   useEffect(() => {
@@ -166,10 +163,7 @@ export default function TracksSection() {
       lastTs = now;
 
       const held =
-        hoverRef.current ||
-        focusRef.current ||
-        pausedRef.current ||
-        now < resumeAtRef.current;
+        hoverRef.current || focusRef.current || now < resumeAtRef.current;
       rampRef.current +=
         ((held ? 0 : 1) - rampRef.current) * (1 - Math.exp(-RAMP_K * dt));
       // The exponential never reaches zero — clamp so a hold truly freezes
@@ -259,12 +253,42 @@ export default function TracksSection() {
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 py-20 sm:px-8">
-      <h2 className="mb-4 text-center font-display text-[clamp(2.5rem,7vw,4rem)] font-normal leading-none tracking-wide text-white/95 text-shadow-hero-title sm:mb-8">
-        Tracks
-      </h2>
+      {/* Heading flanked by rock clusters cropped from the hero's floating-rocks layer */}
+      <div className="mb-4 flex items-center justify-center gap-4 sm:mb-8 sm:gap-8">
+        <Image
+          src="/tracks/rocks-left.webp"
+          alt=""
+          width={270}
+          height={270}
+          className="h-auto w-[clamp(3.5rem,9vw,5.5rem)] min-w-0 animate-island-float motion-reduce:animate-none"
+        />
+        <h2 className="text-center font-display text-[clamp(3rem,9vw,5.5rem)] font-normal leading-none tracking-wide text-white/95 text-shadow-hero-title">
+          Tracks
+        </h2>
+        <Image
+          src="/tracks/rocks-right.webp"
+          alt=""
+          width={265}
+          height={358}
+          className="h-auto w-[clamp(3.5rem,9vw,5.5rem)] min-w-0 animate-island-float motion-reduce:animate-none"
+          style={{ animationDelay: "-2.4s" }}
+        />
+      </div>
+
+      {/* Narrow screens: the orbit has no room, so the islands stack vertically
+          instead (pure CSS toggle — the hidden stage never intersects, so the
+          orbit engine's rAF loop stays off while stacked). */}
+      <div className="flex flex-col items-center gap-10 sm:hidden">
+        {TRACK_ENTRIES.map((entry, i) => (
+          <div key={entry.title} className="w-[min(18rem,80vw)]">
+            <TrackCard entry={entry} index={i} isActive={false} />
+          </div>
+        ))}
+      </div>
 
       {/* Hover/focus anywhere in stage + controls holds the spin */}
       <div
+        className="hidden sm:block"
         onPointerEnter={(e) => {
           if (e.pointerType === "mouse") hoverRef.current = true;
         }}
@@ -297,12 +321,12 @@ export default function TracksSection() {
           data-testid="tracks-stage"
           data-front-index={frontIndex}
           data-state={reducedMotion ? "static" : undefined}
-          className="relative isolate mx-auto h-[clamp(24rem,60vh,30rem)] w-full rounded-3xl [container-type:size] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
+          className="relative isolate mx-auto h-[clamp(24rem,60vh,32rem)] w-full rounded-3xl [container-type:size] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
         >
           {/* Air pocket — the one piece of atmosphere behind the orbit */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-[44%] -z-10 h-[calc(max(min(14.44cqw,144.4px),48px)*2_+_9rem)] w-[min(calc(min(38cqw,380px)*2_+_14rem),100cqw)] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(255_255_255/0.14),rgb(255_255_255/0.05)_58%,transparent_80%)]"
+            className="pointer-events-none absolute left-1/2 top-[44%] -z-10 h-[calc(max(min(12.54cqw,144.4px),48px)*2_+_9rem)] w-[min(calc(min(33cqw,380px)*2_+_14rem),100cqw)] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(255_255_255/0.14),rgb(255_255_255/0.05)_58%,transparent_80%)]"
           />
 
           {TRACK_ENTRIES.map((entry, i) => (
@@ -318,40 +342,15 @@ export default function TracksSection() {
               aria-current={i === frontIndex ? true : undefined}
               onClick={() => goToIsland(i)}
               style={INITIAL_STYLES[i]}
-              className="absolute left-1/2 top-[44%] w-[clamp(7rem,20vw,11rem)] cursor-pointer will-change-transform"
+              className="absolute left-1/2 top-[44%] w-[min(clamp(16rem,48vw,28rem),44cqw)] cursor-pointer will-change-transform"
             >
               <TrackCard entry={entry} index={i} isActive={i === frontIndex} />
             </button>
           ))}
         </div>
 
-        {/* Controls */}
+        {/* Controls — dots only; arrow keys still step, hover/focus still holds */}
         <div className="mt-2 flex items-center justify-center gap-4 sm:mt-4">
-          {!reducedMotion && (
-            <button
-              type="button"
-              onClick={() => setUserPaused((p) => !p)}
-              aria-pressed={userPaused}
-              aria-label="Pause rotation"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
-            >
-              {userPaused ? (
-                <FaPlay aria-hidden="true" className="h-3.5 w-3.5" />
-              ) : (
-                <FaPause aria-hidden="true" className="h-3.5 w-3.5" />
-              )}
-            </button>
-          )}
-
-          <button
-            type="button"
-            onClick={() => stepBy(-1)}
-            aria-label="Previous track"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
-          >
-            <FaChevronLeft aria-hidden="true" className="h-4 w-4" />
-          </button>
-
           <div className="flex items-center gap-1">
             {TRACK_ENTRIES.map((entry, i) => (
               <button
@@ -363,24 +362,15 @@ export default function TracksSection() {
                 className="group flex h-6 min-w-6 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
               >
                 <span
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                  className={`rotate-45 rounded-[2px] transition-all duration-300 ${
                     i === frontIndex
-                      ? "w-7 bg-white/90"
-                      : "w-2.5 bg-white/40 group-hover:bg-white/60"
+                      ? "h-3.5 w-3.5 bg-white/90"
+                      : "h-2.5 w-2.5 bg-white/40 group-hover:bg-white/60"
                   }`}
                 />
               </button>
             ))}
           </div>
-
-          <button
-            type="button"
-            onClick={() => stepBy(1)}
-            aria-label="Next track"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
-          >
-            <FaChevronRight aria-hidden="true" className="h-4 w-4" />
-          </button>
         </div>
 
         {/* Announces user-initiated navigation only — ambient spin stays silent */}
