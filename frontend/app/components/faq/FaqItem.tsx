@@ -16,7 +16,7 @@ export default function FaqItem({ entry, index }: FaqItemProps) {
   const buttonId = `faq-button-${index}`;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-white/25 bg-white/10 transition-colors hover:bg-white/15">
+    <div className="overflow-hidden rounded-xl border border-white/25 bg-white/10 transition-all duration-200 hover:border-white/60 hover:bg-white/15 hover:shadow-[0_4px_20px_rgba(255,255,255,0.25)]">
       <h3>
         <button
           id={buttonId}
@@ -24,7 +24,7 @@ export default function FaqItem({ entry, index }: FaqItemProps) {
           aria-expanded={open}
           aria-controls={panelId}
           onClick={() => setOpen((value) => !value)}
-          className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-lg font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 sm:text-xl"
+          className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left text-lg font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 sm:text-xl"
         >
           <span>{entry.question}</span>
           <FaChevronDown

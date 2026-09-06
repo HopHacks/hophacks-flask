@@ -1,7 +1,7 @@
 import Section from "./components/Section";
 import HeroSection from "./components/sections/HeroSection";
 import AboutSection from "./components/sections/AboutSection";
-// import TracksSection from "./components/sections/TracksSection";
+import TracksSection from "./components/sections/TracksSection";
 import ScheduleSection from "./components/sections/ScheduleSection";
 import FaqSection from "./components/sections/FaqSection";
 import Footer from "./components/Footer";
@@ -12,18 +12,14 @@ export default function Home() {
       <Section id="hero" borderless className="overflow-hidden p-0">
         <HeroSection />
       </Section>
-      {/* About and Tracks sections temporarily hidden pending content; re-enable before next milestone */}
-      {/* <Section id="about">
-        <AboutSection />
-      </Section>
-      <Section id="tracks">
-        <TracksSection />
-      </Section> */}
       <Section borderless id="schedule">
         <ScheduleSection />
       </Section>
       <Section borderless id="about">
         <AboutSection />
+      </Section>
+      <Section borderless id="tracks">
+        <TracksSection />
       </Section>
       <Section borderless id="faq">
         <FaqSection />

@@ -72,10 +72,10 @@ export default function ScheduleSection() {
               aria-selected={selected}
               aria-controls={`schedule-panel-${day.id}`}
               onClick={() => setActiveDayId(day.id)}
-              className={`flex-1 cursor-pointer rounded-xl border px-5 py-3 text-center font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 sm:flex-none ${
+              className={`flex-1 cursor-pointer rounded-xl border px-5 py-3 text-center font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(255,255,255,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 active:translate-y-0 sm:flex-none ${
                 selected
                   ? "border-white bg-white text-blue-900 shadow-lg"
-                  : "border-white/20 bg-white/[0.06] text-white/70 hover:bg-white/15 hover:text-white/90"
+                  : "border-white/20 bg-white/[0.06] text-white/70 hover:border-white/70 hover:bg-white/15 hover:text-white/90"
               }`}
             >
               <span className="block text-lg leading-tight">{day.label}</span>
@@ -103,7 +103,7 @@ export default function ScheduleSection() {
           return (
             <div
               key={`${activeDay.id}-${index}`}
-              className="flex items-start gap-3.5 rounded-xl border border-white/20 bg-white/10 px-5 py-4 transition-colors hover:bg-white/15"
+              className="flex items-start gap-3.5 rounded-xl border border-white/20 bg-white/10 px-5 py-4 transition-all duration-200 hover:bg-white/15 hover:shadow-[0_4px_20px_rgba(255,255,255,0.25)]"
             >
               <span
                 aria-hidden="true"
