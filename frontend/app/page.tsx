@@ -8,18 +8,18 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <main>
+    <main className="h-dvh snap-y snap-mandatory overflow-y-auto overscroll-y-contain scroll-smooth motion-reduce:snap-none">
       <Section id="hero" borderless className="overflow-hidden p-0">
         <HeroSection />
-      </Section>
-      <Section borderless id="schedule">
-        <ScheduleSection />
       </Section>
       <Section borderless id="about">
         <AboutSection />
       </Section>
       <Section borderless id="tracks">
         <TracksSection />
+      </Section>
+      <Section borderless id="schedule">
+        <ScheduleSection />
       </Section>
       <Section borderless id="faq">
         <FaqSection />

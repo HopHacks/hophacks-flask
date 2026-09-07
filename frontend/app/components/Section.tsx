@@ -17,7 +17,7 @@ export default function Section({
   return (
     <section
       id={id}
-      className={`w-full min-h-screen bg-bg ${DEBUG_SECTIONS && !borderless ? "border border-black" : ""} ${className}`}
+      className={`w-full min-h-screen snap-start snap-always bg-bg ${DEBUG_SECTIONS && !borderless ? "border border-black" : ""} ${className}`}
     >
       {children}
     </section>
