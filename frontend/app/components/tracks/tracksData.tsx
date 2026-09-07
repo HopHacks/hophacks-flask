@@ -22,4 +22,8 @@ export const TRACK_ENTRIES: TrackEntry[] = [
     title: "Data",
     blurb: "Track details coming soon.",
   },
+  {
+    title: "Healthcare",
+    blurb: "Track details coming soon.",
+  },
 ];

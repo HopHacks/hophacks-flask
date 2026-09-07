@@ -7,7 +7,7 @@ const linkClass =
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-white/20 bg-bg-light text-text-primary">
+    <footer className="w-full snap-start border-t border-white/20 bg-bg-light text-text-primary">
       <div className="mx-auto grid w-full max-w-5xl gap-10 px-6 py-12 text-center sm:grid-cols-3 sm:text-left">
         <div className="flex flex-col items-center gap-4 sm:items-start">
           <span className="font-display text-3xl font-normal tracking-wide text-white">
