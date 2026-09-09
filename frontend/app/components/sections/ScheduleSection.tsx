@@ -118,10 +118,14 @@ export default function ScheduleSection() {
                     {event.time}
                   </span>
                 </div>
-                <p className="mt-1 text-sm leading-relaxed text-white/75">
-                  <span className="sr-only">{meta.label} — </span>
-                  {event.location}
-                </p>
+                {event.location ? (
+                  <p className="mt-1 text-sm leading-relaxed text-white/75">
+                    <span className="sr-only">{meta.label} — </span>
+                    {event.location}
+                  </p>
+                ) : (
+                  <span className="sr-only">{meta.label}</span>
+                )}
               </div>
             </div>
           );
