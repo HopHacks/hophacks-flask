@@ -6,7 +6,7 @@ export type ScheduleEventType = "main" | "food" | "workshop" | "announcement";
 export interface ScheduleEvent {
   time: string;
   title: string;
-  location: string;
+  location?: string;
   type: ScheduleEventType;
 }
 
@@ -61,7 +61,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "9:00 PM",
         title: "Hacking Begins!",
-        location: "TBD",
+        location: "Hodson Hall",
         type: "announcement",
       },
       {
@@ -74,7 +74,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "9:30 PM",
         title: "Memetic Data Crash Course",
-        location: "TBD",
+        location: "Hodson 210",
         type: "workshop",
       },
     ],
@@ -95,14 +95,14 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "10:00 AM",
         title: "Hack the Agent Stack: MCP, LLMs & Agentic AI",
-        location: "TBD",
+        location: "Hodson 210",
         type: "workshop",
       },
       {
         time: "All Day",
         title: "Hacking Continues — more events TBA",
-        location: "TBD",
-        type: "workshop",
+        location: "Hodson Hall",
+        type: "announcement",
       },
       {
         time: "1:00–2:30 PM",
@@ -127,17 +127,27 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     isoDate: "2026-09-20",
     events: [
       {
-        time: "9:00–10:00 AM",
+        time: "8:30 AM",
+        title: "Soft Submission Deadline",
+        type: "announcement",
+      },
+      {
+        time: "9:00 AM",
+        title: "Hard Submission Deadline",
+        type: "announcement",
+      },
+      {
+        time: "9:00–9:45 AM",
         title: "Breakfast",
         location:
           "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
         type: "food",
       },
       {
-        time: "9:00 AM",
-        title: "Submissions Due",
-        location: "TBD",
-        type: "announcement",
+        time: "10:00 AM–12:00 PM",
+        title: "Science Fair and Judging",
+        location: "Hodson Hall rooms (TBA)",
+        type: "main",
       },
       {
         time: "12:00–1:00 PM",
@@ -148,8 +158,8 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       },
       {
         time: "1:00 PM",
-        title: "Top 10 Demos",
-        location: "TBD",
+        title: "Top 10 Demos and Judging",
+        location: "Hodson 110",
         type: "main",
       },
       {
