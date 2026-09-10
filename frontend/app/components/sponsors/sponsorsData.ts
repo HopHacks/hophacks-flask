@@ -1,9 +1,10 @@
 export interface Sponsor {
   name: string;
-  logo: string;
+  logo?: string;
   href?: string;
 }
 
+// Ranked left-to-right, top-to-bottom in a 3-column grid.
 export const SPONSORS: Sponsor[] = [
   {
     name: "Bloomberg",
@@ -11,24 +12,14 @@ export const SPONSORS: Sponsor[] = [
     href: "https://www.bloomberg.com/",
   },
   {
-    name: "T-Mobile",
-    logo: "/images/sponsors/t-mobile.svg",
-    href: "https://www.t-mobile.com/",
+    name: "Calcifer Computing",
+    logo: "/images/sponsors/calcifer-computing.png",
+    href: "https://www.calcifercomputing.com/",
   },
   {
-    name: "Strategy",
-    logo: "/images/sponsors/strategy.svg",
-    href: "https://www.strategy.com/",
-  },
-  {
-    name: "SpaceX",
-    logo: "/images/sponsors/spacexai.svg",
-    href: "https://www.spacex.com/",
-  },
-  {
-    name: "ElevenLabs",
-    logo: "/images/sponsors/elevenlabs.svg",
-    href: "https://elevenlabs.io/",
+    name: "Forge",
+    logo: "/images/sponsors/forge.png",
+    href: "https://joinforge.tech/",
   },
   {
     name: "SpacetimeDB",
@@ -36,54 +27,9 @@ export const SPONSORS: Sponsor[] = [
     href: "https://spacetimedb.com/",
   },
   {
-    name: "Marimo",
-    logo: "/images/sponsors/marimo.png",
-    href: "https://marimo.io/",
-  },
-  {
-    name: "Foundr",
-    logo: "/images/sponsors/foundr.png",
-    href: "https://foundr.com/",
-  },
-  {
-    name: "Saily",
-    logo: "/images/sponsors/saily.png",
-    href: "https://saily.com/",
-  },
-  {
-    name: "Calcifer Computing",
-    logo: "/images/sponsors/calcifer-computing.png",
-    href: "https://www.calcifercomputing.com/",
-  },
-  {
-    name: "SCM",
-    logo: "/images/sponsors/scm.png",
-    href: "https://www.scm-lp.com/",
-  },
-  {
-    name: "Pava Center",
-    logo: "/images/sponsors/pava.png",
-    href: "https://pavacenter.jhu.edu/",
-  },
-  {
-    name: "JHU APL",
-    logo: "/images/sponsors/jhu-apl.svg",
-    href: "https://www.jhuapl.edu/",
-  },
-  {
-    name: "JHU Computer Science",
-    logo: "/images/sponsors/jhu-cs.png",
-    href: "https://www.cs.jhu.edu/",
-  },
-  {
     name: "JHU Data Science and AI Institute",
-    logo: "/images/sponsors/dsai.webp",
+    logo: "/images/sponsors/dsai.png",
     href: "https://ai.jhu.edu/",
-  },
-  {
-    name: "MLH",
-    logo: "/images/sponsors/mlh.png",
-    href: "https://mlh.io/",
   },
   {
     name: "Auctor",
@@ -91,8 +37,78 @@ export const SPONSORS: Sponsor[] = [
     href: "https://www.getauctor.com/",
   },
   {
-    name: "Forge",
-    logo: "/images/sponsors/forge.png",
-    href: "https://joinforge.tech/",
+    name: "Marimo",
+    logo: "/images/sponsors/marimo.png",
+    href: "https://marimo.io/",
+  },
+  {
+    name: "SpaceXAI",
+    logo: "/images/sponsors/spacexai.svg",
+    href: "https://www.spacex.com/",
+  },
+  {
+    name: "Strategy",
+    logo: "/images/sponsors/strategy.svg",
+    href: "https://www.strategy.com/",
+  },
+  {
+    name: "ElevenLabs",
+    logo: "/images/sponsors/elevenlabs.svg",
+    href: "https://elevenlabs.io/",
+  },
+  {
+    name: "Stevens Capital Management",
+    logo: "/images/sponsors/scm.png",
+    href: "https://www.scm-lp.com/",
+  },
+  {
+    name: "JHU Applied Physics Laboratory",
+    logo: "/images/sponsors/jhu-apl.png",
+    href: "https://www.jhuapl.edu/",
+  },
+  {
+    name: "T-Mobile",
+    logo: "/images/sponsors/t-mobile.svg",
+    href: "https://www.t-mobile.com/",
+  },
+  {
+    name: "JHU Mechanical Engineering",
+    logo: "/images/sponsors/jhu-meche.png",
+    href: "https://me.jhu.edu/",
+  },
+  {
+    name: "Pava Center",
+    logo: "/images/sponsors/pava.png",
+    href: "https://pavacenter.jhu.edu/",
+  },
+  {
+    name: "Saily",
+    logo: "/images/sponsors/saily.png",
+    href: "https://saily.com/",
+  },
+  {
+    name: "NordVPN",
+    logo: "/images/sponsors/nordvpn.png",
+    href: "https://nordvpn.com/",
+  },
+  {
+    name: "NordPass",
+    logo: "/images/sponsors/nordpass.png",
+    href: "https://nordpass.com/",
+  },
+  {
+    name: "Coveron",
+    logo: "/images/sponsors/coveron.png",
+    href: "https://coveron.com/",
+  },
+  {
+    name: "Incogni",
+    logo: "/images/sponsors/incogni.png",
+    href: "https://incogni.com/",
+  },
+  {
+    name: "JHU Computer Science",
+    logo: "/images/sponsors/jhu-cs.png",
+    href: "https://www.cs.jhu.edu/",
   },
 ];

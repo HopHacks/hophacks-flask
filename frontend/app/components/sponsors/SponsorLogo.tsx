@@ -12,15 +12,17 @@ export default function SponsorLogo({
   href,
 }: {
   name: string;
-  logo: string;
+  logo?: string;
   href?: string;
 }) {
   const [errored, setErrored] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
+  const showFallback = !logo || errored;
 
   useEffect(() => {
     // Same race as PersonAvatar: a same-origin 404 can resolve before
     // hydration attaches onError below, silently dropping the fallback.
+    setErrored(false);
     const img = imgRef.current;
     if (img && img.complete && img.naturalWidth === 0) {
       setErrored(true);
@@ -29,7 +31,7 @@ export default function SponsorLogo({
 
   const box = (
     <div className="flex h-28 w-full items-center justify-center rounded-2xl border border-white/40 bg-white/90 p-5 shadow-[0_4px_20px_rgba(6,26,64,0.12)] backdrop-blur-sm transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-white/70 group-hover:bg-white group-hover:shadow-[0_8px_28px_rgba(6,26,64,0.2)]">
-      {errored ? (
+      {showFallback ? (
         <span className="text-center text-sm font-semibold text-bg">
           {name}
         </span>
