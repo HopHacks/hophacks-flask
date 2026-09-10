@@ -1,0 +1,331 @@
+export interface AlumnusEntry {
+  name: string;
+  role?: string;
+  image?: string;
+  github?: string | null;
+  linkedin?: string | null;
+  year: number;
+}
+
+// Ported from frontend-old/public/data/alumni.json, plus 2025-26 organizers
+// who have since graduated/stepped down (moved from teams.ts).
+export const ALUMNI: AlumnusEntry[] = [
+  {
+    name: "Lucy Wu",
+    role: "",
+    image: "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Lucy+Wu.jpg",
+    github: "https://github.com/lucywu12",
+    linkedin: "https://www.linkedin.com/in/lucy-wu-012/",
+    year: 2026,
+  },
+  {
+    name: "Jennifer Li",
+    role: "",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jennifer+Li.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/jenniferli7437/",
+    year: 2026,
+  },
+  {
+    name: "Leon Xu",
+    role: "",
+    image: "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Leon+Xu.jpg",
+    github: "https://github.com/Hanliang-Xu",
+    linkedin: "https://www.linkedin.com/in/hanliang-xu-b79062239/",
+    year: 2026,
+  },
+  {
+    name: "Jacob Gutsin",
+    role: "",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jacob+Gutsin.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/jacob-gutsin/",
+    year: 2027,
+  },
+  {
+    name: "Yeo Eun Yoon (Jasmine)",
+    role: "",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Yeo+Eun+Yoon+(Jasmine).jpg",
+    github: "https://github.com/cherringly",
+    linkedin: "https://www.linkedin.com/in/jasmineyoon04",
+    year: 2027,
+  },
+  {
+    name: "Jin Hong Moon",
+    role: "",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Jin+Hong+Moon.jpg",
+    github: "https://github.com/jmo-on",
+    linkedin: "https://www.linkedin.com/in/jayden-moonjh/",
+    year: 2027,
+  },
+  {
+    name: "Lijia Lin",
+    role: "",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Lijia+Lin.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/lijia-lin/",
+    year: 2028,
+  },
+  {
+    name: "Mary Zhang",
+    role: "",
+    image:
+      "https://hophacks-organizers.s3.us-east-1.amazonaws.com/Mary+Zhang.jpg",
+    github: "https://github.com/cherringly",
+    linkedin: "https://www.linkedin.com/in/mary-zhang-student/",
+    year: 2028,
+  },
+  {
+    name: "Akhil Deo",
+    role: "JHU",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/Akhil.jpg",
+    github: null,
+    linkedin: null,
+    year: 2025,
+  },
+  {
+    name: "Julia Bian",
+    role: "Meta",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/Julia.jpg",
+    github: null,
+    linkedin: null,
+    year: 2024,
+  },
+  {
+    name: "Shaopeng Zeng",
+    role: "Amazon",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/Shaopeng.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/shaopeng-zeng-862154149/",
+    year: 2024,
+  },
+  {
+    name: "Jacky Wang",
+    role: "",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/Jacky.jpg",
+    github: "https://github.com/JiaqiWang18",
+    linkedin: "https://www.linkedin.com/in/jiaqi-jacky-wang/",
+    year: 2025,
+  },
+  {
+    name: "Ruoyan Shang",
+    role: "DataBricks",
+    image: "https://hophacks-website.s3.amazonaws.com/images/team/img/Elva.jpg",
+    github: "https://github.com/Elvaaaaaa",
+    linkedin: "https://www.linkedin.com/in/ruoyan-shang/",
+    year: 0,
+  },
+  {
+    name: "Sejal Srivastava",
+    role: "Accenture",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/Sejal.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/sejal-srivastava0123",
+    year: 2024,
+  },
+  {
+    name: "Jam Navarro",
+    role: "JHU",
+    image: "https://hophacks-website.s3.amazonaws.com/images/team/img/Jam.jpg",
+    github: "https://github.com/jamnavarro",
+    linkedin: "https://www.linkedin.com/in/jam-navarro",
+    year: 2024,
+  },
+  {
+    name: "Elizabeth Hsieh",
+    role: "",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/Elizabeth.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/elizabeth-hsieh/",
+    year: 2024,
+  },
+  {
+    name: "Curtis Ahn",
+    role: "Amazon",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/curtis_headshot.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/ctsahn/",
+    year: 2024,
+  },
+  {
+    name: "Kelly Culotta",
+    role: "Admin Coordinator",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/kelly.jpg",
+    github: null,
+    linkedin: null,
+    year: 0,
+  },
+  {
+    name: "Elizabeth Cho",
+    role: "Capital One",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/ElizabethCho.jpg",
+    github: "https://github.com/Elizabeth-Cho",
+    linkedin: "https://www.linkedin.com/in/elizabeth-c-cho/",
+    year: 2023,
+  },
+  {
+    name: "Lauren Back",
+    role: "",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/LaurenBack.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/backs/",
+    year: 2023,
+  },
+  {
+    name: "Elaine He",
+    role: "",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/ElaineHe.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/jiayi-elaine-he/",
+    year: 2023,
+  },
+  {
+    name: "Trần Thế Anh",
+    role: "Mission Data",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/AnhTran.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/anh-the-tran/",
+    year: 2023,
+  },
+  {
+    name: "Zoe Kim",
+    role: "Masters at UMichigan",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/ZoeKim.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/kimminjeong/",
+    year: 2023,
+  },
+  {
+    name: "Laine Wang",
+    role: "",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/LaineWang.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/yuelian-wang-9a48b71a4/",
+    year: 2023,
+  },
+  {
+    name: "Stella Li",
+    role: "",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/StellaLi.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/stella-li-1106/",
+    year: 2023,
+  },
+  {
+    name: "Alan Li",
+    role: "",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/AlanLi.jpg",
+    github: null,
+    linkedin: null,
+    year: 2023,
+  },
+  {
+    name: "Nicolas Bowen",
+    role: "Palantir",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/NicholasBowen.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/nicholas-bowen24/",
+    year: 2023,
+  },
+  {
+    name: "Brandon Wong",
+    role: "Nuro",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/brandon_headshot.jpg",
+    github: "https://github.com/bwong19",
+    linkedin: "https://linkedin.com/in/brandonynwong",
+    year: 2022,
+  },
+  {
+    name: "Elaine Wong",
+    role: "Meta",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/elaine.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/ewong127/",
+    year: 2019,
+  },
+  {
+    name: "Alison Lee",
+    role: "Meta",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/alison_headshot.jpg",
+    github: null,
+    linkedin: null,
+    year: 0,
+  },
+  {
+    name: "Andrew Zhang",
+    role: "Datadog",
+    image: "https://hophacks-website.s3.amazonaws.com/images/team/img/az.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/yzhan289/",
+    year: 2021,
+  },
+  {
+    name: "Jimmy Shi",
+    role: "",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/jimmy_headshot.jpg",
+    github: null,
+    linkedin: null,
+    year: 0,
+  },
+  {
+    name: "Kavan Bansal",
+    role: "Amazon",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/kavan_headshot.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/kavanbansal/",
+    year: 2022,
+  },
+  {
+    name: "Charissa Zou",
+    role: "Meta",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/charissa_headshot.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/charissa-zou/",
+    year: 2022,
+  },
+  {
+    name: "Daniel Qian",
+    role: "Bloomberg",
+    image: "https://hophacks-website.s3.amazonaws.com/images/team/img/dan.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/daniel-qian/",
+    year: 2021,
+  },
+  {
+    name: "Brice Halder",
+    role: "Meta",
+    image:
+      "https://hophacks-website.s3.amazonaws.com/images/team/img/brice.jpg",
+    github: null,
+    linkedin: "https://www.linkedin.com/in/brice-halder/",
+    year: 2021,
+  },
+];
