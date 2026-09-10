@@ -47,15 +47,13 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "6:30–8:00 PM",
         title: "Dinner",
-        location:
-          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        location: "Levering Hall Glass Pavilion",
         type: "food",
       },
       {
         time: "8:00 PM",
         title: "Opening Ceremony",
-        location:
-          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        location: "Levering Hall Glass Pavilion",
         type: "main",
       },
       {
@@ -67,8 +65,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "9:00 PM",
         title: "Sponsor Hall Opens",
-        location:
-          "3400 N Charles St, Levering Hall Great Hall, Baltimore, MD 21218",
+        location: "Levering Hall Great Hall",
         type: "announcement",
       },
       {
@@ -88,8 +85,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "9:00–10:00 AM",
         title: "Breakfast",
-        location:
-          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        location: "Levering Hall Glass Pavilion",
         type: "food",
       },
       {
@@ -113,8 +109,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "1:00–2:30 PM",
         title: "Lunch",
-        location:
-          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        location: "Levering Hall Glass Pavilion",
         type: "food",
       },
       {
@@ -126,8 +121,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "8:00–10:00 PM",
         title: "Dinner",
-        location:
-          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        location: "Levering Hall Glass Pavilion",
         type: "food",
       },
     ],
@@ -151,8 +145,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "9:00–9:45 AM",
         title: "Breakfast",
-        location:
-          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        location: "Levering Hall Glass Pavilion",
         type: "food",
       },
       {
@@ -164,8 +157,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "12:00–1:00 PM",
         title: "Lunch",
-        location:
-          "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
+        location: "Levering Hall Glass Pavilion",
         type: "food",
       },
       {
@@ -177,8 +169,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "2:30 PM",
         title: "Closing Ceremony",
-        location:
-          "3400 N Charles St, Hodson Hall Room 110, Baltimore, MD 21218",
+        location: "Hodson Hall Room 110",
         type: "main",
       },
     ],
