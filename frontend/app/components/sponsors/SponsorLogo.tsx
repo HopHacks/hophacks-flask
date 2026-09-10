@@ -28,7 +28,7 @@ export default function SponsorLogo({
   }, [logo]);
 
   const box = (
-    <div className="flex h-28 w-full items-center justify-center rounded-2xl bg-white p-5 shadow-sm transition-transform duration-200 group-hover:scale-105">
+    <div className="flex h-28 w-full items-center justify-center rounded-2xl border border-white/40 bg-white/90 p-5 shadow-[0_4px_20px_rgba(6,26,64,0.12)] backdrop-blur-sm transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-white/70 group-hover:bg-white group-hover:shadow-[0_8px_28px_rgba(6,26,64,0.2)]">
       {errored ? (
         <span className="text-center text-sm font-semibold text-bg">
           {name}
