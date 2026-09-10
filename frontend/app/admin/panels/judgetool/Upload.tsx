@@ -88,7 +88,8 @@ export default function JudgeUpload({ onGenerated }: Props) {
         </h1>
         <p className="mt-1 text-sm text-slate-500">
           Upload a Devpost submissions CSV (tracks are read from that file),
-          judges TXT, and rooms CSV.
+          judges TXT, and rooms CSV (Room, Teams — how many teams fit in each
+          room).
         </p>
       </div>
 
@@ -158,7 +159,7 @@ export default function JudgeUpload({ onGenerated }: Props) {
                 onChange={(e) => setRoomsFile(e.target.files?.[0] ?? null)}
               />
               <span className="mt-1 block text-xs text-slate-400">
-                {fileLabel(roomsFile, "Columns: Room, Capacity")}
+                {fileLabel(roomsFile, "Columns: Room, Teams")}
               </span>
             </label>
 

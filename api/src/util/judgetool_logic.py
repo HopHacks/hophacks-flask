@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import csv
 import io
-import math
 import random
 import re
 from typing import Dict, List, Optional, Tuple
@@ -257,29 +256,42 @@ def build_submission_directory(
 
 
 def parse_rooms_csv(csv_content: str) -> Dict[str, int]:
+    """Parse rooms CSV. Values are teams per room, not people capacity."""
     reader = csv.DictReader(io.StringIO(csv_content))
     if reader.fieldnames is None:
         raise ValidationError("No valid rooms found")
 
-    fields = set(reader.fieldnames)
-    if "Room" not in fields or "Capacity" not in fields:
+    header_map = _build_header_map(list(reader.fieldnames))
+    room_header = header_map.get("room")
+    teams_header = (
+        header_map.get("teams")
+        or header_map.get("teams per room")
+        or header_map.get("teamsperroom")
+        or header_map.get("team count")
+    )
+    if not room_header or not teams_header:
         raise ValidationError(
-            "Rooms CSV missing required columns: Room, Capacity"
+            "Rooms CSV missing required columns: Room, Teams "
+            "(number of teams per room, not people capacity)"
         )
 
     rooms: Dict[str, int] = {}
     for row in reader:
-        room_name = (row.get("Room") or "").strip()
-        capacity_raw = (row.get("Capacity") or "").strip()
+        room_name = (row.get(room_header) or "").strip()
+        teams_raw = (row.get(teams_header) or "").strip()
         if not room_name:
             continue
         try:
-            capacity = int(capacity_raw)
+            teams = int(teams_raw)
         except ValueError:
-            raise ValidationError(f'Invalid capacity for room "{room_name}"')
-        if capacity <= 0:
-            raise ValidationError(f'Invalid capacity for room "{room_name}"')
-        rooms[room_name] = capacity
+            raise ValidationError(
+                f'Invalid teams-per-room value for "{room_name}"'
+            )
+        if teams <= 0:
+            raise ValidationError(
+                f'Invalid teams-per-room value for "{room_name}"'
+            )
+        rooms[room_name] = teams
 
     if not rooms:
         raise ValidationError("No valid rooms found")
@@ -329,13 +341,10 @@ def assign_tables(submissions: List[dict]) -> Dict[str, int]:
     return {sub["slug"]: index + 1 for index, sub in enumerate(submissions)}
 
 
-def teams_per_room(capacity: int) -> int:
-    return math.floor((capacity * 0.8) / 4)
-
-
 def assign_rooms(
     table_assignments: Dict[str, int], rooms: Dict[str, int]
 ) -> Tuple[Dict[str, List[str]], List[str]]:
+    """Fill rooms in order, using each room's teams-per-room limit."""
     inverted = {table: slug for slug, table in table_assignments.items()}
     table_numbers = sorted(inverted.keys())
 
@@ -346,16 +355,16 @@ def assign_rooms(
     if not room_names:
         raise ValidationError("No valid rooms found")
 
-    total_capacity = sum(teams_per_room(rooms[name]) for name in room_names)
-    if len(table_numbers) > total_capacity:
+    total_slots = sum(rooms[name] for name in room_names)
+    if len(table_numbers) > total_slots:
         warnings.append(
-            f"More teams ({len(table_numbers)}) than total room capacity "
-            f"({total_capacity}). Overflow teams will be assigned to the last room."
+            f"More teams ({len(table_numbers)}) than total team slots "
+            f"({total_slots}). Overflow teams will be assigned to the last room."
         )
 
     room_index = 0
     teams_in_current = 0
-    current_limit = teams_per_room(rooms[room_names[0]])
+    current_limit = rooms[room_names[0]]
 
     for table_number in table_numbers:
         slug = inverted[table_number]
@@ -368,7 +377,7 @@ def assign_rooms(
         if teams_in_current >= current_limit and room_index < len(room_names) - 1:
             room_index += 1
             teams_in_current = 0
-            current_limit = teams_per_room(rooms[room_names[room_index]])
+            current_limit = rooms[room_names[room_index]]
 
     return assignments, warnings
 
