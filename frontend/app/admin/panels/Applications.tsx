@@ -26,6 +26,13 @@ import { ESSAY_QUESTIONS } from "@/app/util/essays";
 
 const PAGE_SIZE = 25;
 
+/** Age answers that need a closer look (minors, or age left undisclosed). */
+const FLAGGED_AGES = new Set(["Under 18", "Prefer not to answer"]);
+
+function isFlaggedAge(user: AdminUser): boolean {
+  return FLAGGED_AGES.has(field(user, "age"));
+}
+
 const STATUS_FILTERS = [
   ["all", "All statuses"],
   ["applied", "Applied"],
@@ -232,7 +239,8 @@ export default function ApplicationsPage() {
           Registrants
         </h1>
         <p className="mt-1 text-sm text-slate-500">
-          Review, accept, waitlist, and check in HopHacks applicants.
+          Review, accept, waitlist, and check in HopHacks applicants. A star
+          marks age Under 18 or Prefer not to answer.
         </p>
       </div>
 
@@ -383,18 +391,30 @@ export default function ApplicationsPage() {
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <button
-                        type="button"
-                        className="text-left hover:underline"
-                        aria-expanded={isExpanded}
-                        onClick={() => toggleExpanded(u.id)}
-                        title="Show application responses"
-                      >
-                        <span className="mr-1.5 inline-block text-slate-400">
-                          {isExpanded ? "▾" : "▸"}
-                        </span>
-                        {field(u, "first_name")} {field(u, "last_name")}
-                      </button>
+                      <span className="inline-flex items-center">
+                        <button
+                          type="button"
+                          className="text-left hover:underline"
+                          aria-expanded={isExpanded}
+                          onClick={() => toggleExpanded(u.id)}
+                          title="Show application responses"
+                        >
+                          <span className="mr-1.5 inline-block text-slate-400">
+                            {isExpanded ? "▾" : "▸"}
+                          </span>
+                          {field(u, "first_name")} {field(u, "last_name")}
+                        </button>
+                        {isFlaggedAge(u) && (
+                          <span
+                            role="img"
+                            className="ml-1.5 text-xs text-amber-500"
+                            title={`Age: ${field(u, "age")}`}
+                            aria-label={`Age: ${field(u, "age")}`}
+                          >
+                            ★
+                          </span>
+                        )}
+                      </span>
                     </td>
                     <td className="px-4 py-3 text-slate-500">{u.username}</td>
                     <td className="px-4 py-3">{field(u, "school") || "—"}</td>
@@ -502,6 +522,7 @@ export default function ApplicationsPage() {
                             />
                           ))}
                           <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-500">
+                            <span>Age: {field(u, "age") || "—"}</span>
                             <span>
                               Level: {field(u, "level_of_study") || "—"}
                             </span>
