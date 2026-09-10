@@ -358,7 +358,7 @@ def export_csv():
     # and swag need.
     writer.writerow([
         'email', 'first_name', 'last_name', 'school', 'other_school',
-        'level_of_study', 'country', 'age', 'status', 'apply_at', 'rsvp',
+        'level_of_study', 'country', 'age', 'gender', 'status', 'apply_at', 'rsvp',
         'checked_in', 'dietary_restrictions', 'dietary_restrictions_other',
         'tshirt_size', 'essay_project', 'essay_team'
     ])
@@ -377,6 +377,7 @@ def export_csv():
             profile.get('level_of_study', ''),
             profile.get('country', ''),
             profile.get('age', ''),
+            profile.get('gender', ''),
             reg.get('status', ''),
             reg.get('apply_at', ''),
             reg.get('rsvp', False),
