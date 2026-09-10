@@ -4,6 +4,96 @@ export interface Sponsor {
   href?: string;
 }
 
-// TODO: 2026 sponsor logos + links pending — see Drive "Sponsors" assets
-// (or wherever the current logo pack lands) once available.
-export const SPONSORS: Sponsor[] = [];
+export const SPONSORS: Sponsor[] = [
+  {
+    name: "Bloomberg",
+    logo: "/images/sponsors/bloomberg.svg",
+    href: "https://www.bloomberg.com/",
+  },
+  {
+    name: "T-Mobile",
+    logo: "/images/sponsors/t-mobile.svg",
+    href: "https://www.t-mobile.com/",
+  },
+  {
+    name: "Strategy",
+    logo: "/images/sponsors/strategy.svg",
+    href: "https://www.strategy.com/",
+  },
+  {
+    name: "SpaceX",
+    logo: "/images/sponsors/spacexai.svg",
+    href: "https://www.spacex.com/",
+  },
+  {
+    name: "ElevenLabs",
+    logo: "/images/sponsors/elevenlabs.svg",
+    href: "https://elevenlabs.io/",
+  },
+  {
+    name: "SpacetimeDB",
+    logo: "/images/sponsors/spacetimedb.svg",
+    href: "https://spacetimedb.com/",
+  },
+  {
+    name: "Marimo",
+    logo: "/images/sponsors/marimo.png",
+    href: "https://marimo.io/",
+  },
+  {
+    name: "Foundr",
+    logo: "/images/sponsors/foundr.png",
+    href: "https://foundr.com/",
+  },
+  {
+    name: "Saily",
+    logo: "/images/sponsors/saily.png",
+    href: "https://saily.com/",
+  },
+  {
+    name: "Calcifer Computing",
+    logo: "/images/sponsors/calcifer-computing.png",
+    href: "https://www.calcifercomputing.com/",
+  },
+  {
+    name: "SCM",
+    logo: "/images/sponsors/scm.png",
+    href: "https://www.scm-lp.com/",
+  },
+  {
+    name: "Pava Center",
+    logo: "/images/sponsors/pava.png",
+    href: "https://pavacenter.jhu.edu/",
+  },
+  {
+    name: "JHU APL",
+    logo: "/images/sponsors/jhu-apl.svg",
+    href: "https://www.jhuapl.edu/",
+  },
+  {
+    name: "JHU Computer Science",
+    logo: "/images/sponsors/jhu-cs.png",
+    href: "https://www.cs.jhu.edu/",
+  },
+  {
+    name: "JHU Data Science and AI Institute",
+    logo: "/images/sponsors/dsai.webp",
+    href: "https://ai.jhu.edu/",
+  },
+  {
+    name: "MLH",
+    logo: "/images/sponsors/mlh.png",
+    href: "https://mlh.io/",
+  },
+  // Link pending — multiple real companies share this name; confirm which
+  // one is sponsoring before adding a href.
+  {
+    name: "Auctor",
+    logo: "/images/sponsors/auctor.svg",
+  },
+  // Link pending — couldn't confidently identify which "Forge" this is.
+  {
+    name: "Forge",
+    logo: "/images/sponsors/forge.png",
+  },
+];
