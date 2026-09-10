@@ -124,6 +124,24 @@ def test_export_other_columns_blank_when_unused(client, test_db, test_mail):
     assert rows[0]['dietary_restrictions_other'] == ''
 
 
+def test_export_includes_gender(client, test_db, test_mail):
+    """Sponsor decks report gender alongside the other demographics, and
+    the stats endpoint already counts it; the export has to carry it too.
+    Optional at signup, so a legacy row without it is blank, not broken."""
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+
+    res = client.get('/api/admin/export', headers=bearer(admin))
+    rows = list(csv.DictReader(io.StringIO(res.data.decode())))
+    assert rows[0]['gender'] == create_json['profile']['gender']
+
+    test_db.users.update_one({'username': 'a@test.com'},
+                             {'$unset': {'profile.gender': ''}})
+    res = client.get('/api/admin/export', headers=bearer(admin))
+    rows = list(csv.DictReader(io.StringIO(res.data.decode())))
+    assert rows[0]['gender'] == ''
+
+
 def test_export_header_and_row_widths_match(client, test_db, test_mail):
     """A column added to one list and not the other silently shifts every
     field after it, which is worse than a missing column."""
