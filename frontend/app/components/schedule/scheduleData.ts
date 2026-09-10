@@ -118,7 +118,8 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       },
       {
         time: "3:30–4:00 PM",
-        title: "Build Your Entire Internship Application Stack in 30 Minutes by SpaceXAI",
+        title:
+          "Build Your Entire Internship Application Stack in 30 Minutes by SpaceXAI",
         location: "Hodson 210",
         type: "workshop",
       },
