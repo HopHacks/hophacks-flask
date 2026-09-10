@@ -70,7 +70,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       },
       {
         time: "9:30 PM",
-        title: "Memetic Data Crash Course",
+        title: "Memetic Data Crash Course by Calcifer Computing",
         location: "Hodson 210",
         type: "workshop",
       },
@@ -90,20 +90,24 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       },
       {
         time: "10:00 AM",
-        title: "Hack the Agent Stack: MCP, LLMs & Agentic AI",
+        title: "Hack the Agent Stack: MCP, LLMs & Agentic AI by Strategy",
         location: "Hodson 210",
         type: "workshop",
       },
       {
         time: "10:30–11:00 AM",
-        title: "Designing Agentic Experiences for Teams",
+        title: "Designing Agentic Experiences for Teams by Auctor",
         location: "Hodson 210",
         type: "workshop",
       },
       {
-        time: "All Day",
-        title: "Hacking Continues — more events TBA",
-        location: "Hodson Hall",
+        time: "11:00 AM–2:00 PM",
+        title: "Grok Bot Coffee Cart by SpaceXAI",
+        type: "announcement",
+      },
+      {
+        time: "11:00 AM–3:00 PM",
+        title: "Grok Bot Photo Booth by SpaceXAI",
         type: "announcement",
       },
       {
@@ -114,7 +118,8 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       },
       {
         time: "3:30–4:00 PM",
-        title: "Build Your Entire Internship Application Stack in 30 Minutes",
+        title:
+          "Build Your Entire Internship Application Stack in 30 Minutes by SpaceXAI",
         location: "Hodson 210",
         type: "workshop",
       },
