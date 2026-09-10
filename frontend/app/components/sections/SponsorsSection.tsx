@@ -15,7 +15,7 @@ export default function SponsorsSection() {
       <p className="mt-10 text-center text-sm text-white/90">
         Interested in sponsoring HopHacks?{" "}
         <a
-          className="underline transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
+          className="cursor-pointer underline transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
           href="mailto:hophacks.sponsors@gmail.com"
         >
           hophacks.sponsors@gmail.com

@@ -30,7 +30,7 @@ export default function SponsorLogo({
   }, [logo]);
 
   const box = (
-    <div className="flex h-28 w-full items-center justify-center rounded-2xl border border-white/40 bg-white/90 p-5 shadow-[0_4px_20px_rgba(6,26,64,0.12)] backdrop-blur-sm transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-white/70 group-hover:bg-white group-hover:shadow-[0_8px_28px_rgba(6,26,64,0.2)]">
+    <div className="flex h-28 w-full cursor-pointer items-center justify-center rounded-2xl border border-white/40 bg-white/90 p-5 shadow-[0_4px_20px_rgba(6,26,64,0.12)] backdrop-blur-sm transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-white/70 group-hover:bg-white group-hover:shadow-[0_8px_28px_rgba(6,26,64,0.2)]">
       {showFallback ? (
         <span className="text-center text-sm font-semibold text-bg">
           {name}
@@ -45,7 +45,7 @@ export default function SponsorLogo({
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
           onError={() => setErrored(true)}
-          className="h-full max-h-16 w-full object-contain"
+          className="h-full max-h-16 w-full cursor-pointer object-contain"
         />
       )}
     </div>
@@ -59,7 +59,7 @@ export default function SponsorLogo({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={name}
-      className="group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
+      className="group cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
     >
       {box}
     </a>
