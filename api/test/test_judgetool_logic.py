@@ -15,7 +15,6 @@ from util.judgetool_logic import (
     parse_rooms_csv,
     parse_submissions_csv,
     shuffle_submissions,
-    teams_per_room,
 )
 
 
@@ -71,16 +70,21 @@ def test_table_assignment():
     assert max(tables.values()) == len(submissions)
 
 
-def test_room_capacity_rule():
-    assert teams_per_room(160) == 32
-    assert teams_per_room(96) == 19
+def test_room_assignment_respects_teams_per_room():
+    tables = {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5}
+    rooms = {"Hodson 210": 2, "Hodson 110": 3}
+    assignments, warnings = assign_rooms(tables, rooms)
+    assert assignments["Hodson 210"] == ["a", "b"]
+    assert assignments["Hodson 110"] == ["c", "d", "e"]
+    assert warnings == []
 
 
 def test_room_assignment_overflow_warning():
     tables = {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5}
-    rooms = {"Tiny": 8}
-    _, warnings = assign_rooms(tables, rooms)
+    rooms = {"Tiny": 2}
+    assignments, warnings = assign_rooms(tables, rooms)
     assert len(warnings) > 0
+    assert len(assignments["Tiny"]) == 5
 
 
 def test_judge_assignment_even_load():
@@ -150,5 +154,14 @@ def test_parse_judges_and_rooms():
         "Bob",
         "Charlie",
     ]
-    rooms = parse_rooms_csv("Room,Capacity\nBSC 210,160\nBSC 204,96\n")
-    assert rooms == {"BSC 210": 160, "BSC 204": 96}
+    rooms = parse_rooms_csv("Room,Teams\nBSC 210,32\nBSC 204,19\n")
+    assert rooms == {"BSC 210": 32, "BSC 204": 19}
+    rooms_alt = parse_rooms_csv(
+        "Room,Teams Per Room\nHodson 210,8\nHodson 110,6\n"
+    )
+    assert rooms_alt == {"Hodson 210": 8, "Hodson 110": 6}
+    try:
+        parse_rooms_csv("Room,Capacity\nBSC 210,160\n")
+        assert False
+    except ValidationError as e:
+        assert "Teams" in str(e)
