@@ -99,6 +99,12 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         type: "workshop",
       },
       {
+        time: "10:30–11:00 AM",
+        title: "Designing Agentic Experiences for Teams",
+        location: "Hodson 210",
+        type: "workshop",
+      },
+      {
         time: "All Day",
         title: "Hacking Continues — more events TBA",
         location: "Hodson Hall",
@@ -110,6 +116,12 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         location:
           "3400 N Charles St, Levering Hall Glass Pavilion, Baltimore, MD 21218",
         type: "food",
+      },
+      {
+        time: "3:30–4:00 PM",
+        title: "Build Your Entire Internship Application Stack in 30 Minutes",
+        location: "Hodson 210",
+        type: "workshop",
       },
       {
         time: "8:00–10:00 PM",
