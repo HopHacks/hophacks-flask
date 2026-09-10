@@ -52,7 +52,7 @@ export default function ScheduleSection() {
         Schedule
       </h2>
       <p className="mb-10 text-center text-base text-text-primary/80">
-        Full schedule coming soon — dates and times are TBD.
+        Schedule subject to change.
       </p>
 
       {/* Day tabs */}
