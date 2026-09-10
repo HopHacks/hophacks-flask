@@ -15,7 +15,13 @@ const EMPTY_STATS = {
   by_race_ethnicity: {},
 };
 
-function makeUser(id: string, first: string, last: string, status: string) {
+function makeUser(
+  id: string,
+  first: string,
+  last: string,
+  status: string,
+  profileExtra: Record<string, string> = {},
+) {
   return {
     id,
     username: `${first.toLowerCase()}@e2e.com`,
@@ -27,6 +33,7 @@ function makeUser(id: string, first: string, last: string, status: string) {
       essay_team: `${first} worked on a team.`,
       major: "Computer science",
       linkedin_url: "https://linkedin.com/in/e2e",
+      ...profileExtra,
     },
     email_confirmed: true,
     registrations: [{ event: "Fall 2026", status }],
@@ -81,6 +88,36 @@ async function openApplications(page: Page) {
   await page.goto("/admin");
   await page.getByRole("button", { name: "Applications" }).click();
 }
+
+test("stars applicants whose age is Under 18 or Prefer not to answer", async ({
+  page,
+}) => {
+  await stubAdminConsole(page, new Map());
+  await page.route("**/api/admin/users*", (r) =>
+    r.fulfill({
+      json: {
+        users: [
+          makeUser("id-adult", "Adult", "Tester", "applied", { age: "20" }),
+          makeUser("id-minor", "Minor", "Tester", "applied", {
+            age: "Under 18",
+          }),
+          makeUser("id-pna", "Private", "Tester", "applied", {
+            age: "Prefer not to answer",
+          }),
+        ],
+      },
+    }),
+  );
+
+  await openApplications(page);
+
+  await expect(page.getByLabel("Age: Under 18")).toBeVisible();
+  await expect(page.getByLabel("Age: Prefer not to answer")).toBeVisible();
+  await expect(page.getByLabel(/^Age:/)).toHaveCount(2);
+
+  await page.getByRole("button", { name: /Minor Tester/ }).click();
+  await expect(page.getByText("Age: Under 18")).toBeVisible();
+});
 
 test("expanding a row shows both application responses", async ({ page }) => {
   const statuses = new Map<string, string>([["id-ada", "applied"]]);
