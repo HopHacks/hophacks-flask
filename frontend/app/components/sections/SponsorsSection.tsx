@@ -7,7 +7,7 @@ export default function SponsorsSection() {
       <h2 className="mb-10 text-center font-display text-[clamp(2.5rem,7vw,4rem)] font-normal leading-none tracking-wide text-white/95 text-shadow-hero-title">
         Sponsors
       </h2>
-      <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
+      <div className="grid grid-cols-3 gap-5">
         {SPONSORS.map((sponsor) => (
           <SponsorLogo key={sponsor.name} {...sponsor} />
         ))}
