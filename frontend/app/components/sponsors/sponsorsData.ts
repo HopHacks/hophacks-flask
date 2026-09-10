@@ -85,15 +85,14 @@ export const SPONSORS: Sponsor[] = [
     logo: "/images/sponsors/mlh.png",
     href: "https://mlh.io/",
   },
-  // Link pending — multiple real companies share this name; confirm which
-  // one is sponsoring before adding a href.
   {
     name: "Auctor",
     logo: "/images/sponsors/auctor.svg",
+    href: "https://www.getauctor.com/",
   },
-  // Link pending — couldn't confidently identify which "Forge" this is.
   {
     name: "Forge",
     logo: "/images/sponsors/forge.png",
+    href: "https://joinforge.tech/",
   },
 ];
