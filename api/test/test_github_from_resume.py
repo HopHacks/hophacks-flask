@@ -22,6 +22,44 @@ def test_github_url_from_profile_text():
 def test_github_url_skips_reserved_paths():
     assert github_url_from_text("https://github.com/login") is None
     assert github_url_from_text("https://github.com/features") is None
+    assert github_url_from_text("https://github.com/googlefonts") is None
+    assert github_url_from_text("https://github.com/...") is None
+
+
+def test_github_url_from_pages_and_ssh():
+    assert (
+        github_url_from_text("http://dakg17.github.io")
+        == "https://github.com/dakg17"
+    )
+    assert (
+        github_url_from_text("git@github.com:octocat/hello.git")
+        == "https://github.com/octocat"
+    )
+    assert (
+        github_url_from_text("github . com / octocat")
+        == "https://github.com/octocat"
+    )
+
+
+def test_github_url_strips_glued_https_and_kerning_split():
+    assert (
+        github_url_from_text(
+            "https://github.com/amiezenghttps://github.com/amiezeng"
+        )
+        == "https://github.com/amiezeng"
+    )
+    # Kerning splits the username across two PDF literal strings.
+    assert (
+        github_url_from_resume_bytes(
+            b"%PDF-1.4\n[-260(github.com/r)20(edbbean)]TJ\n%%EOF",
+            "resume.pdf",
+        )
+        == "https://github.com/redbbean"
+    )
+    assert (
+        github_url_from_text("https://github.com/t1\x0bnyw")
+        == "https://github.com/t1nyw"
+    )
 
 
 def test_github_url_from_pdf_bytes():
