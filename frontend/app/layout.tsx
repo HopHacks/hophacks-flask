@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import { Fraunces } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./util/auth";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "HopHacks 2026",
@@ -14,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
+      <body className={`${fraunces.variable} font-sans antialiased`}>
         {/* Kept small and tucked to the edge on narrow viewports so the
             ribbon never overlaps page headers. */}
         <a
