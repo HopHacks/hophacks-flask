@@ -6,6 +6,7 @@ import io
 
 from utils import create_json, create_json2, create_json3, login_json
 from flow import register_confirmed, register_applied, login_token, admin_token, bearer
+from config.event import EVENT_NAME
 
 
 def test_stats_requires_admin(client, test_db, test_mail):
@@ -337,3 +338,99 @@ def test_export_sponsor_info_rejects_unknown_field(client, test_db, test_mail):
         headers=bearer(admin),
     )
     assert res.status_code == 400
+
+
+def test_export_sponsor_info_get_and_status_filter(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json2)
+    test_db.users.update_one(
+        {'username': 'a@test.com', 'registrations.event': EVENT_NAME},
+        {'$set': {'registrations.$.status': 'accepted'}},
+    )
+    admin = admin_token(client, test_db)
+
+    accepted = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={'fields': 'name,email', 'status': 'accepted'},
+        headers=bearer(admin),
+    )
+    assert accepted.status_code == 200
+    accepted_rows = list(csv.DictReader(io.StringIO(accepted.get_data(as_text=True))))
+    assert [row['email'] for row in accepted_rows] == ['a@test.com']
+
+    applied = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={'fields': 'email', 'status': 'applied'},
+        headers=bearer(admin),
+    )
+    applied_rows = list(csv.DictReader(io.StringIO(applied.get_data(as_text=True))))
+    assert [row['email'] for row in applied_rows] == ['b@test.com']
+
+    everyone = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={'fields': 'email', 'status': 'all'},
+        headers=bearer(admin),
+    )
+    everyone_rows = list(csv.DictReader(io.StringIO(everyone.get_data(as_text=True))))
+    assert sorted(row['email'] for row in everyone_rows) == ['a@test.com', 'b@test.com']
+
+
+def test_export_sponsor_info_rejects_unknown_status(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    res = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={'fields': 'email', 'status': 'maybe'},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 400
+
+
+def test_export_sponsor_info_bad_resume_is_na(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+
+    class FakeBody:
+        def read(self):
+            return b"%PDF-1.4 junk"
+
+    class FakeS3:
+        def get_object(self, Bucket, Key):
+            return {'Body': FakeBody()}
+
+    def boom(*a, **k):
+        raise RuntimeError('unreadable resume')
+
+    monkeypatch.setattr('admin.boto3.client', lambda *a, **k: FakeS3())
+    monkeypatch.setattr('admin.github_url_from_resume_bytes', boom)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] == 'N/A'
+
+
+def test_export_sponsor_info_skips_s3_past_deadline(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+    monkeypatch.setattr('admin.S3_EXPORT_DEADLINE_S', 0)
+
+    def fail_s3(*a, **k):
+        raise AssertionError('should not fetch resumes after the deadline')
+
+    monkeypatch.setattr('admin.boto3.client', fail_s3)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] == 'N/A'

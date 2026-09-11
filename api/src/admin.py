@@ -10,10 +10,13 @@ from bson.errors import InvalidId
 
 import boto3
 import botocore.exceptions
+from botocore.config import Config as BotoConfig
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import csv
 import datetime
 import io
 import pytz
+import time
 from werkzeug.utils import secure_filename
 
 from config.event import EVENT_NAME, EVENT_SLUG, EVENT_CYCLE_START
@@ -449,30 +452,6 @@ def _csv_cell(value):
     return text if text else 'N/A'
 
 
-def _github_for_user(user, s3_client):
-    """Profile GitHub URL, else one scraped from the resume, else N/A."""
-    profile = user.get('profile') or {}
-    for key in ('github_url', 'github'):
-        from_profile = github_url_from_text(profile.get(key) or '')
-        if from_profile:
-            return from_profile
-        raw = (profile.get(key) or '').strip()
-        if raw:
-            return raw
-
-    filename = user.get('resume')
-    if not filename or s3_client is None:
-        return 'N/A'
-
-    object_name = '{}/{}-{}'.format(EVENT_SLUG, user['_id'], filename)
-    try:
-        body = s3_client.get_object(Bucket=RESUME_BUCKET, Key=object_name)['Body'].read()
-    except Exception:
-        return 'N/A'
-
-    return github_url_from_resume_bytes(body, filename) or 'N/A'
-
-
 # Keys the sponsor-info extractor may request, in CSV header form.
 SPONSOR_INFO_FIELDS = {
     'name': 'name',
@@ -487,8 +466,115 @@ SPONSOR_INFO_FIELDS = {
     'last_name': 'last name',
 }
 
+# Same ladder as the Applications status filter. "all" is every current-event
+# registrant; the rest match that event's registrations[].status.
+SPONSOR_INFO_STATUSES = (
+    'all',
+    'applied',
+    'accepted',
+    'waitlisted',
+    'rsvped',
+    'checked_in',
+    'rejected',
+)
 
-def _sponsor_field_value(user, key, s3_client):
+# API Gateway cuts the request at 29s. Resume scraping must finish (or give
+# up) before that, or the whole CSV 504s. Misses become N/A.
+S3_EXPORT_DEADLINE_S = 20.0
+S3_EXPORT_WORKERS = 8
+
+
+def _github_from_profile(user):
+    """GitHub URL stored on the account, or None if we have to look at the resume."""
+    profile = user.get('profile') or {}
+    for key in ('github_url', 'github'):
+        from_profile = github_url_from_text(profile.get(key) or '')
+        if from_profile:
+            return from_profile
+        raw = (profile.get(key) or '').strip()
+        if raw:
+            return raw
+    return None
+
+
+def _github_from_resume(user, s3_client):
+    """Scrape github.com/<user> from the resume object; N/A on any failure."""
+    filename = user.get('resume')
+    if not filename or s3_client is None:
+        return 'N/A'
+
+    object_name = '{}/{}-{}'.format(EVENT_SLUG, user['_id'], filename)
+    try:
+        body = s3_client.get_object(Bucket=RESUME_BUCKET, Key=object_name)['Body'].read()
+        return github_url_from_resume_bytes(body, filename) or 'N/A'
+    except Exception:
+        return 'N/A'
+
+
+def _s3_client_or_none():
+    try:
+        return boto3.client('s3', config=BotoConfig(
+            connect_timeout=2,
+            read_timeout=3,
+            retries={'max_attempts': 1},
+        ))
+    except Exception:
+        return None
+
+
+def _github_column(users):
+    """Map user _id -> GitHub URL, scraping resumes until the Gateway deadline."""
+    github_by_id = {}
+    need_resume = []
+    for user in users:
+        from_profile = _github_from_profile(user)
+        if from_profile:
+            github_by_id[user['_id']] = from_profile
+        elif user.get('resume'):
+            need_resume.append(user)
+        else:
+            github_by_id[user['_id']] = 'N/A'
+
+    if not need_resume:
+        return github_by_id
+
+    deadline = time.monotonic() + S3_EXPORT_DEADLINE_S
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        for user in need_resume:
+            github_by_id[user['_id']] = 'N/A'
+        return github_by_id
+
+    s3_client = _s3_client_or_none()
+    if s3_client is None:
+        for user in need_resume:
+            github_by_id[user['_id']] = 'N/A'
+        return github_by_id
+
+    pool = ThreadPoolExecutor(max_workers=S3_EXPORT_WORKERS)
+    try:
+        future_to_id = {
+            pool.submit(_github_from_resume, user, s3_client): user['_id']
+            for user in need_resume
+        }
+        try:
+            for fut in as_completed(future_to_id, timeout=remaining):
+                uid = future_to_id[fut]
+                try:
+                    github_by_id[uid] = fut.result() or 'N/A'
+                except Exception:
+                    github_by_id[uid] = 'N/A'
+        except TimeoutError:
+            pass
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
+
+    for user in need_resume:
+        github_by_id.setdefault(user['_id'], 'N/A')
+    return github_by_id
+
+
+def _sponsor_field_value(user, key, github_by_id):
     profile = user.get('profile') or {}
     if key == 'name':
         return _csv_cell('{} {}'.format(
@@ -504,7 +590,7 @@ def _sponsor_field_value(user, key, s3_client):
     if key == 'linkedin_url':
         return _csv_cell(profile.get('linkedin_url'))
     if key == 'github_url':
-        return _github_for_user(user, s3_client)
+        return github_by_id.get(user['_id'], 'N/A')
     if key == 'school':
         return _csv_cell(profile.get('otherSchool') or profile.get('school'))
     if key == 'major':
@@ -516,40 +602,70 @@ def _sponsor_field_value(user, key, s3_client):
     return 'N/A'
 
 
-@admin_api.route('/export_sponsor_info', methods=['POST'])
+def _parse_sponsor_info_request():
+    """(fields, status) or a (response, code) error tuple in the third slot."""
+    if request.method == 'GET':
+        raw = request.args.get('fields') or ''
+        raw_fields = [part.strip() for part in raw.split(',') if part.strip()]
+        status = (request.args.get('status') or 'all').strip().lower()
+    else:
+        body = request.get_json(silent=True) or {}
+        raw_fields = body.get('fields')
+        status = str(body.get('status') or 'all').strip().lower()
+
+    if not isinstance(raw_fields, list) or not raw_fields:
+        return None, None, (jsonify({'error': 'Select at least one field'}), 400)
+
+    fields = []
+    for item in raw_fields:
+        if not isinstance(item, str) or item not in SPONSOR_INFO_FIELDS:
+            return None, None, (
+                jsonify({'error': 'Unknown field: {}'.format(item)}), 400)
+        if item not in fields:
+            fields.append(item)
+
+    if status not in SPONSOR_INFO_STATUSES:
+        return None, None, (
+            jsonify({'error': 'Unknown status: {}'.format(status)}), 400)
+
+    return fields, status, None
+
+
+@admin_api.route('/export_sponsor_info', methods=['GET', 'POST'])
 @jwt_required
 @check_admin
 def export_sponsor_info_csv():
     """CSV of current-event applicants for the requested account fields.
 
     GitHub is not a signup field: when ``github_url`` is requested it is
-    scraped from the resume and filled with N/A if nothing is found.
+    scraped from the resume and filled with N/A if nothing is found. Resume
+    fetches stop after ``S3_EXPORT_DEADLINE_S`` so API Gateway does not 504
+    the whole export.
+
+    Filter with ``status`` (applied / accepted / waitlisted / rsvped /
+    checked_in / rejected, or all). GET query params match the other admin
+    CSV downloads; POST JSON is still accepted.
     """
-    body = request.get_json(silent=True) or {}
-    raw_fields = body.get('fields')
-    if not isinstance(raw_fields, list) or not raw_fields:
-        return jsonify({'error': 'Select at least one field'}), 400
+    fields, status, err = _parse_sponsor_info_request()
+    if err is not None:
+        return err
 
-    fields = []
-    for item in raw_fields:
-        if not isinstance(item, str) or item not in SPONSOR_INFO_FIELDS:
-            return jsonify({'error': 'Unknown field: {}'.format(item)}), 400
-        if item not in fields:
-            fields.append(item)
-
-    users = db.users.find({
+    elem = {'event': EVENT_NAME}
+    if status != 'all':
+        elem['status'] = status
+    users = list(db.users.find({
         'is_admin': {'$ne': True},
-        'registrations.event': EVENT_NAME
-    })
+        'registrations': {'$elemMatch': elem},
+    }))
 
-    s3_client = boto3.client('s3') if 'github_url' in fields else None
+    github_by_id = _github_column(users) if 'github_url' in fields else {}
     output = io.StringIO()
     writer = csv.writer(output)
     writer.writerow([SPONSOR_INFO_FIELDS[key] for key in fields])
 
     for user in users:
         writer.writerow([
-            _sponsor_field_value(user, key, s3_client) for key in fields
+            _sponsor_field_value(user, key, github_by_id) for key in fields
         ])
 
     return Response(

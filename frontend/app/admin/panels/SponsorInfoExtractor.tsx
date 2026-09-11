@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Panel from "@/components/analytics/Panel";
-import { downloadSponsorInfoCsv } from "@/app/util/adminApi";
+import { BROADCAST_STAGES, downloadSponsorInfoCsv } from "@/app/util/adminApi";
 
 export const SPONSOR_INFO_FIELDS = [
   { key: "name", label: "Name" },
@@ -32,12 +32,15 @@ const DEFAULT_FIELDS: SponsorInfoFieldKey[] = [
   "github_url",
 ];
 
+const STATUS_OPTIONS = [["all", "All statuses"], ...BROADCAST_STAGES] as const;
+
 const FIELD_BY_KEY = Object.fromEntries(
   SPONSOR_INFO_FIELDS.map((f) => [f.key, f]),
 ) as Record<SponsorInfoFieldKey, (typeof SPONSOR_INFO_FIELDS)[number]>;
 
 export default function SponsorInfoExtractor() {
   const [fields, setFields] = useState<SponsorInfoFieldKey[]>(DEFAULT_FIELDS);
+  const [status, setStatus] = useState("all");
   const [toAdd, setToAdd] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -78,10 +81,12 @@ export default function SponsorInfoExtractor() {
     setError("");
     setMessage("");
     try {
-      await downloadSponsorInfoCsv(fields);
+      await downloadSponsorInfoCsv(fields, status);
       setMessage("CSV downloaded.");
-    } catch {
-      setError("Export failed. Please try again.");
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Export failed. Please try again.",
+      );
     } finally {
       setBusy(false);
     }
@@ -93,9 +98,12 @@ export default function SponsorInfoExtractor() {
         Sponsor Info Extractor
       </h1>
       <p className="mt-1 text-sm text-slate-500">
-        Build a CSV of current-event applicants for sponsors. Pick the account
-        fields you want. GitHub is not collected at signup, so it is read from
-        the resume when possible and filled with N/A otherwise.
+        Build a CSV of current-event applicants for sponsors. Filter by
+        application status, then pick the account fields you want. GitHub is not
+        collected at signup, so it is read from the resume when possible and
+        filled with N/A otherwise. Narrow the status filter if GitHub export
+        times out — resume downloads stop early rather than failing the whole
+        file.
       </p>
 
       <div className="mt-6">
@@ -149,6 +157,7 @@ export default function SponsorInfoExtractor() {
 
           <div className="mt-4 flex gap-2">
             <select
+              aria-label="Add a field"
               className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
               value={toAdd}
               onChange={(e) => setToAdd(e.target.value)}
@@ -175,7 +184,19 @@ export default function SponsorInfoExtractor() {
         </Panel>
       </div>
 
-      <div className="mt-4 flex items-center gap-3">
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <select
+          aria-label="Application status"
+          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          {STATUS_OPTIONS.map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
         <button
           type="button"
           disabled={busy || fields.length === 0}
