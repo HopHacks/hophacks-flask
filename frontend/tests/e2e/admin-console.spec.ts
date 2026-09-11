@@ -560,9 +560,12 @@ test("the sponsor info extractor downloads the chosen fields", async ({
 }) => {
   const statuses = new Map<string, string>([["id-ada", "applied"]]);
   await stubAdminConsole(page, statuses);
-  let body: { fields?: string[] } = {};
-  await page.route("**/api/admin/export_sponsor_info", async (r) => {
-    body = r.request().postDataJSON();
+  let fields: string[] = [];
+  let status = "";
+  await page.route("**/api/admin/export_sponsor_info**", async (r) => {
+    const url = new URL(r.request().url());
+    fields = (url.searchParams.get("fields") ?? "").split(",").filter(Boolean);
+    status = url.searchParams.get("status") ?? "";
     await r.fulfill({
       contentType: "text/csv",
       body: "name,email\nAda Lovelace,ada@test.com\n",
@@ -574,19 +577,20 @@ test("the sponsor info extractor downloads the chosen fields", async ({
 
   await page.goto("/admin");
   await page.getByRole("button", { name: "Sponsor Info Extractor" }).click();
-  await page.getByRole("combobox").selectOption("school");
+  await page.getByLabel("Add a field").selectOption("school");
   await page.getByRole("button", { name: "Add" }).click();
   await page
     .getByRole("listitem")
     .filter({ hasText: "GitHub profile URL" })
     .getByRole("button", { name: "Remove" })
     .click();
+  await page.getByLabel("Application status").selectOption("accepted");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download CSV" }).click();
   expect((await download).suggestedFilename()).toBe(
     "hophacks_sponsor_info.csv",
   );
-  expect(body.fields).toEqual([
+  expect(fields).toEqual([
     "name",
     "email",
     "phone",
@@ -594,6 +598,7 @@ test("the sponsor info extractor downloads the chosen fields", async ({
     "linkedin_url",
     "school",
   ]);
+  expect(status).toBe("accepted");
 });
 
 // --- Stage broadcast email ---
