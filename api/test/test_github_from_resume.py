@@ -88,3 +88,50 @@ def test_github_url_from_docx_hyperlink_rel():
         github_url_from_resume_bytes(buf.getvalue(), "resume.docx")
         == "https://github.com/reluser"
     )
+
+
+def _flate_pdf(*stream_payloads):
+    parts = [b"%PDF-1.4\n"]
+    for i, payload in enumerate(stream_payloads, 1):
+        compressed = zlib.compress(payload)
+        header = "<< /Filter /FlateDecode /Length {} >>\nstream\n".format(
+            len(compressed)
+        ).encode("ascii")
+        parts.append(
+            "{} 0 obj\n".format(i).encode("ascii")
+            + header
+            + compressed
+            + b"\nendstream\nendobj\n"
+        )
+    parts.append(b"%%EOF")
+    return b"".join(parts)
+
+
+def test_github_url_from_pdf_tounicode_cids():
+    cmap = """
+begincmap
+15 beginbfchar
+<0001> <0067>
+<0002> <0069>
+<0003> <0074>
+<0004> <0068>
+<0005> <0075>
+<0006> <0062>
+<0007> <002E>
+<0008> <0063>
+<0009> <006F>
+<000A> <006D>
+<000B> <002F>
+<000C> <0075>
+<000D> <0073>
+<000E> <0065>
+<000F> <0072>
+endbfchar
+endcmap
+""".encode("ascii")
+    # CID font draws "github.com/user" as 2-byte glyph ids, not ASCII.
+    content = b" ".join(
+        "<{:04X}> Tj".format(cid).encode("ascii") for cid in range(1, 16)
+    )
+    blob = _flate_pdf(cmap, content)
+    assert github_url_from_resume_bytes(blob, "resume.pdf") == "https://github.com/user"

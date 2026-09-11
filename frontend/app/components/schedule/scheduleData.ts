@@ -75,7 +75,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         type: "workshop",
       },
       {
-        time: "9:30 PM",
+        time: "9:30–10:00 PM",
         title: "Memetic Data Crash Course by Calcifer Computing",
         location: "Hodson 210",
         type: "workshop",
@@ -101,7 +101,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         type: "food",
       },
       {
-        time: "10:00 AM",
+        time: "10:00–10:30 AM",
         title: "Hack the Agent Stack: MCP, LLMs & Agentic AI by Strategy",
         location: "Hodson 210",
         type: "workshop",
