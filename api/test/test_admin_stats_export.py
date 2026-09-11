@@ -289,7 +289,7 @@ def test_export_sponsor_info_github_from_resume(client, test_db, test_mail, monk
         {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
 
     class FakeBody:
-        def read(self):
+        def read(self, amt=None):
             return b"%PDF-1.4 /URI (https://github.com/resume-user) %%EOF"
 
     class FakeS3:
@@ -392,7 +392,7 @@ def test_export_sponsor_info_bad_resume_is_na(client, test_db, test_mail, monkey
         {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
 
     class FakeBody:
-        def read(self):
+        def read(self, amt=None):
             return b"%PDF-1.4 junk"
 
     class FakeS3:
@@ -434,3 +434,105 @@ def test_export_sponsor_info_skips_s3_past_deadline(client, test_db, test_mail, 
     assert res.status_code == 200
     rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
     assert rows[0]['GitHub profile URL'] == 'N/A'
+
+
+def test_export_sponsor_info_crash_returns_json(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    monkeypatch.setattr(
+        'admin._current_event_users',
+        lambda status: (_ for _ in ()).throw(RuntimeError('mongo down')),
+    )
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': ['name', 'email']},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 500
+    assert res.json['error'].startswith('Export failed:')
+
+
+def test_export_sponsor_info_weird_github_field(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'},
+        {'$set': {'profile.github_url': ['not', 'a', 'string']}},
+    )
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] != ''
+
+
+def test_export_resumes_lists_files_for_status(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json2)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+    test_db.users.update_one(
+        {'username': 'a@test.com', 'registrations.event': EVENT_NAME},
+        {'$set': {'registrations.$.status': 'accepted'}},
+    )
+    admin = admin_token(client, test_db)
+
+    accepted = client.get(
+        '/api/admin/export_resumes',
+        query_string={'status': 'accepted'},
+        headers=bearer(admin),
+    )
+    assert accepted.status_code == 200
+    data = accepted.json
+    assert data['missing'] == 0
+    assert len(data['resumes']) == 1
+    row = data['resumes'][0]
+    assert row['email'] == 'a@test.com'
+    assert row['filename'] == 'Andrew.pdf'
+    assert row['zip_name'].endswith('.pdf')
+
+    applied = client.get(
+        '/api/admin/export_resumes',
+        query_string={'status': 'applied'},
+        headers=bearer(admin),
+    )
+    assert applied.json['resumes'] == []
+    assert applied.json['missing'] == 1
+
+
+def test_resume_file_returns_bytes(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+    user_id = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
+
+    class FakeBody:
+        def read(self, amt=None):
+            return b'%PDF-1.4 fake'
+
+    class FakeS3:
+        def get_object(self, Bucket, Key):
+            assert 'Andrew.pdf' in Key
+            return {'Body': FakeBody()}
+
+    monkeypatch.setattr('admin.boto3.client', lambda *a, **k: FakeS3())
+    admin = admin_token(client, test_db)
+    res = client.get(
+        '/api/admin/resume_file',
+        query_string={'id': user_id},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    assert res.get_data() == b'%PDF-1.4 fake'
+
+
+def test_export_resumes_requires_admin(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    token = login_token(client, login_json)
+    assert client.get(
+        '/api/admin/export_resumes',
+        headers=bearer(token),
+    ).status_code == 401

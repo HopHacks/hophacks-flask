@@ -2,7 +2,11 @@
 
 import { useMemo, useState } from "react";
 import Panel from "@/components/analytics/Panel";
-import { BROADCAST_STAGES, downloadSponsorInfoCsv } from "@/app/util/adminApi";
+import {
+  BROADCAST_STAGES,
+  downloadSponsorInfoCsv,
+  downloadSponsorResumesZip,
+} from "@/app/util/adminApi";
 
 export const SPONSOR_INFO_FIELDS = [
   { key: "name", label: "Name" },
@@ -13,7 +17,7 @@ export const SPONSOR_INFO_FIELDS = [
   {
     key: "github_url",
     label: "GitHub profile URL",
-    hint: "Scraped from the resume when it is not on the account",
+    hint: "Optional. Read from the resume when it is not on the account",
   },
   { key: "school", label: "School" },
   { key: "major", label: "Major" },
@@ -29,7 +33,6 @@ const DEFAULT_FIELDS: SponsorInfoFieldKey[] = [
   "phone",
   "grad_year",
   "linkedin_url",
-  "github_url",
 ];
 
 const STATUS_OPTIONS = [["all", "All statuses"], ...BROADCAST_STAGES] as const;
@@ -42,9 +45,13 @@ export default function SponsorInfoExtractor() {
   const [fields, setFields] = useState<SponsorInfoFieldKey[]>(DEFAULT_FIELDS);
   const [status, setStatus] = useState("all");
   const [toAdd, setToAdd] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  const [csvBusy, setCsvBusy] = useState(false);
+  const [resumeBusy, setResumeBusy] = useState(false);
+  const [csvError, setCsvError] = useState("");
+  const [resumeError, setResumeError] = useState("");
+  const [csvMessage, setCsvMessage] = useState("");
+  const [resumeMessage, setResumeMessage] = useState("");
+  const [resumeProgress, setResumeProgress] = useState("");
 
   const unused = useMemo(
     () => SPONSOR_INFO_FIELDS.filter((f) => !fields.includes(f.key)),
@@ -72,23 +79,46 @@ export default function SponsorInfoExtractor() {
     });
   }
 
-  async function onDownload() {
+  async function onDownloadCsv() {
     if (fields.length === 0) {
-      setError("Add at least one field.");
+      setCsvError("Add at least one field.");
       return;
     }
-    setBusy(true);
-    setError("");
-    setMessage("");
+    setCsvBusy(true);
+    setCsvError("");
+    setCsvMessage("");
     try {
       await downloadSponsorInfoCsv(fields, status);
-      setMessage("CSV downloaded.");
+      setCsvMessage("CSV downloaded.");
     } catch (err) {
-      setError(
+      setCsvError(
         err instanceof Error ? err.message : "Export failed. Please try again.",
       );
     } finally {
-      setBusy(false);
+      setCsvBusy(false);
+    }
+  }
+
+  async function onDownloadResumes() {
+    setResumeBusy(true);
+    setResumeError("");
+    setResumeMessage("");
+    setResumeProgress("");
+    try {
+      const result = await downloadSponsorResumesZip(status, (done, total) => {
+        setResumeProgress(`Downloading ${done} / ${total}`);
+      });
+      const extra = result.skipped
+        ? ` (${result.skipped} could not be read)`
+        : "";
+      setResumeMessage(`Zip downloaded: ${result.downloaded} resumes${extra}.`);
+    } catch (err) {
+      setResumeError(
+        err instanceof Error ? err.message : "Export failed. Please try again.",
+      );
+    } finally {
+      setResumeBusy(false);
+      setResumeProgress("");
     }
   }
 
@@ -98,16 +128,29 @@ export default function SponsorInfoExtractor() {
         Sponsor Info Extractor
       </h1>
       <p className="mt-1 text-sm text-slate-500">
-        Build a CSV of current-event applicants for sponsors. Filter by
-        application status, then pick the account fields you want. GitHub is not
-        collected at signup, so it is read from the resume when possible and
-        filled with N/A otherwise. Narrow the status filter if GitHub export
-        times out — resume downloads stop early rather than failing the whole
-        file.
+        Filter by application status, then download a CSV of account fields
+        and/or a zip of resumes. GitHub is not collected at signup — add it to
+        the CSV only if you need it; it reads resumes and used to crash the
+        whole export.
       </p>
 
+      <div className="mt-4">
+        <select
+          aria-label="Application status"
+          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          {STATUS_OPTIONS.map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="mt-6">
-        <Panel title="Columns">
+        <Panel title="Info extractor">
           <ol className="space-y-2">
             {fields.map((key, index) => {
               const field = FIELD_BY_KEY[key];
@@ -181,32 +224,54 @@ export default function SponsorInfoExtractor() {
               Add
             </button>
           </div>
+
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              disabled={csvBusy || fields.length === 0}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 disabled:opacity-50"
+              onClick={onDownloadCsv}
+            >
+              {csvBusy ? "Working…" : "Download CSV"}
+            </button>
+            {csvMessage && (
+              <p className="text-sm text-green-700">{csvMessage}</p>
+            )}
+            {csvError && <p className="text-sm text-red-600">{csvError}</p>}
+          </div>
         </Panel>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        <select
-          aria-label="Application status"
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-        >
-          {STATUS_OPTIONS.map(([value, label]) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-        <button
-          type="button"
-          disabled={busy || fields.length === 0}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 disabled:opacity-50"
-          onClick={onDownload}
-        >
-          {busy ? "Working…" : "Download CSV"}
-        </button>
-        {message && <p className="text-sm text-green-700">{message}</p>}
-        {error && <p className="text-sm text-red-600">{error}</p>}
+      <div className="mt-6">
+        <Panel title="Resume extractor">
+          <p className="text-sm text-slate-500">
+            Download a zip of resumes for the selected status. Applicants
+            without a file are skipped. Files are named{" "}
+            <span className="font-medium text-slate-700">
+              Last_First_email.pdf
+            </span>
+            .
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              disabled={resumeBusy}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 disabled:opacity-50"
+              onClick={onDownloadResumes}
+            >
+              {resumeBusy ? "Working…" : "Download resumes"}
+            </button>
+            {resumeProgress && (
+              <p className="text-sm text-slate-600">{resumeProgress}</p>
+            )}
+            {resumeMessage && (
+              <p className="text-sm text-green-700">{resumeMessage}</p>
+            )}
+            {resumeError && (
+              <p className="text-sm text-red-600">{resumeError}</p>
+            )}
+          </div>
+        </Panel>
       </div>
     </div>
   );

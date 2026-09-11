@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CURRENT_EVENT } from "./event";
+import { zipStore } from "./zip";
 
 export type Registration = {
   event: string;
@@ -207,6 +208,90 @@ export async function downloadSponsorInfoCsv(
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
+  } catch (err) {
+    throw new Error(await axiosBlobError(err));
+  }
+}
+
+export type ResumeExportRow = {
+  id: string;
+  filename: string;
+  zip_name: string;
+  name: string;
+  email: string;
+};
+
+function triggerDownload(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/** Zip of resumes for the chosen status. Files are fetched one-by-one so
+ *  API Gateway's 6MB cap is not hit. */
+export async function downloadSponsorResumesZip(
+  status: string,
+  onProgress?: (done: number, total: number) => void,
+): Promise<{ downloaded: number; skipped: number; missing: number }> {
+  try {
+    const manifest = await axios.get("/api/admin/export_resumes", {
+      params: { status },
+    });
+    const rows: ResumeExportRow[] = manifest.data.resumes ?? [];
+    const missing: number = manifest.data.missing ?? 0;
+    if (rows.length === 0) {
+      throw new Error(
+        missing
+          ? "No resumes uploaded for this status."
+          : "No applicants for this status.",
+      );
+    }
+
+    const files: { name: string; data: Uint8Array }[] = [];
+    const queue = [...rows];
+    let downloaded = 0;
+    let skipped = 0;
+    let done = 0;
+
+    const worker = async () => {
+      while (queue.length) {
+        const row = queue.shift();
+        if (!row) break;
+        try {
+          const file = await axios.get("/api/admin/resume_file", {
+            params: { id: row.id },
+            responseType: "blob",
+          });
+          const blob = file.data as Blob;
+          const type = blob.type || "";
+          if (type.includes("application/json")) {
+            skipped += 1;
+          } else {
+            files.push({
+              name: row.zip_name,
+              data: new Uint8Array(await blob.arrayBuffer()),
+            });
+            downloaded += 1;
+          }
+        } catch {
+          skipped += 1;
+        }
+        done += 1;
+        onProgress?.(done, rows.length);
+      }
+    };
+
+    await Promise.all([worker(), worker(), worker()]);
+    if (downloaded === 0) {
+      throw new Error("Could not download any resumes. Try again.");
+    }
+    triggerDownload(zipStore(files), "hophacks_resumes.zip");
+    return { downloaded, skipped, missing };
   } catch (err) {
     throw new Error(await axiosBlobError(err));
   }
