@@ -151,6 +151,23 @@ export const downloadCsv = () =>
 export const downloadUnsubmittedCsv = () =>
   downloadBlob("/api/admin/export_unsubmitted", "hophacks_not_submitted.csv");
 
+/** Sponsor-info CSV for the chosen account fields (GitHub from resume). */
+export async function downloadSponsorInfoCsv(fields: string[]): Promise<void> {
+  const r = await axios.post(
+    "/api/admin/export_sponsor_info",
+    { fields },
+    { responseType: "blob" },
+  );
+  const url = URL.createObjectURL(r.data);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "hophacks_sponsor_info.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 /* The six real registration statuses. deriveStatus() can also return the
    pseudo-stages "email_not_confirmed" and "not_submitted"; both are
    deliberately absent here because neither is a group we email. */

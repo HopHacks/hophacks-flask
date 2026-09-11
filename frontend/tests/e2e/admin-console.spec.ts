@@ -555,6 +555,47 @@ test("the not-submitted export downloads through the API", async ({ page }) => {
   expect(hits).toBe(1);
 });
 
+test("the sponsor info extractor downloads the chosen fields", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  let body: { fields?: string[] } = {};
+  await page.route("**/api/admin/export_sponsor_info", async (r) => {
+    body = r.request().postDataJSON();
+    await r.fulfill({
+      contentType: "text/csv",
+      body: "name,email\nAda Lovelace,ada@test.com\n",
+      headers: {
+        "Content-Disposition": "attachment; filename=hophacks_sponsor_info.csv",
+      },
+    });
+  });
+
+  await page.goto("/admin");
+  await page.getByRole("button", { name: "Sponsor Info Extractor" }).click();
+  await page.getByRole("combobox").selectOption("school");
+  await page.getByRole("button", { name: "Add" }).click();
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "GitHub profile URL" })
+    .getByRole("button", { name: "Remove" })
+    .click();
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Download CSV" }).click();
+  expect((await download).suggestedFilename()).toBe(
+    "hophacks_sponsor_info.csv",
+  );
+  expect(body.fields).toEqual([
+    "name",
+    "email",
+    "phone",
+    "grad_year",
+    "linkedin_url",
+    "school",
+  ]);
+});
+
 // --- Stage broadcast email ---
 
 type BroadcastHistoryRow = {
