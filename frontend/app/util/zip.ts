@@ -102,7 +102,8 @@ export function zipStore(files: { name: string; data: Uint8Array }[]): Blob {
     u32(offset),
     u16(0),
   ]);
-  return new Blob([concat([...locals, centralDir, eocd])], {
+  const packed = concat([...locals, centralDir, eocd]);
+  return new Blob([packed.buffer as ArrayBuffer], {
     type: "application/zip",
   });
 }
