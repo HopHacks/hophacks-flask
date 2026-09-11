@@ -7,6 +7,7 @@ import Email from "./panels/Email";
 import Stats from "./panels/Stats";
 import Admins from "./panels/Admins";
 import JudgeTool from "./panels/JudgeTool";
+import SponsorInfoExtractor from "./panels/SponsorInfoExtractor";
 
 const TABS = [
   { key: "overview", label: "Overview", panel: <Overview /> },
@@ -14,6 +15,11 @@ const TABS = [
   { key: "email", label: "Email", panel: <Email /> },
   { key: "stats", label: "Stats", panel: <Stats /> },
   { key: "judgetool", label: "Judge Tool", panel: <JudgeTool /> },
+  {
+    key: "sponsorinfo",
+    label: "Sponsor Info Extractor",
+    panel: <SponsorInfoExtractor />,
+  },
   { key: "admins", label: "Admins", panel: <Admins /> },
 ] as const;
 

@@ -221,3 +221,119 @@ def test_export_unsubmitted_requires_admin(client, test_db, test_mail):
     token = login_token(client, login_json)
     assert client.get('/api/admin/export_unsubmitted',
                       headers=bearer(token)).status_code == 401
+
+
+DEFAULT_SPONSOR_FIELDS = [
+    'name', 'email', 'phone', 'grad_year', 'linkedin_url', 'github_url',
+]
+
+
+def test_export_sponsor_info_requires_admin(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    token = login_token(client, login_json)
+    assert client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(token),
+    ).status_code == 401
+
+
+def test_export_sponsor_info_from_profile(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one({'username': 'a@test.com'}, {'$set': {
+        'profile.grad_year': '2027',
+        'profile.linkedin_url': 'https://linkedin.com/in/andrew',
+        'profile.github_url': 'https://github.com/andrew',
+        'profile.phone_number': '8888888888',
+    }})
+    admin = admin_token(client, test_db)
+
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    assert res.mimetype == 'text/csv'
+    assert 'hophacks_sponsor_info.csv' in res.headers.get('Content-Disposition', '')
+
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert len(rows) == 1
+    row = rows[0]
+    assert row['name'] == 'Andrew Wong'
+    assert row['email'] == 'a@test.com'
+    assert row['phone number'] == '8888888888'
+    assert row['graduation year'] == '2027'
+    assert row['LinkedIn profile URL'] == 'https://linkedin.com/in/andrew'
+    assert row['GitHub profile URL'] == 'https://github.com/andrew'
+
+
+def test_export_sponsor_info_github_na_without_resume(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] == 'N/A'
+    assert rows[0]['graduation year'] == 'N/A'
+    assert rows[0]['LinkedIn profile URL'] == 'N/A'
+
+
+def test_export_sponsor_info_github_from_resume(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+
+    class FakeBody:
+        def read(self):
+            return b"%PDF-1.4 /URI (https://github.com/resume-user) %%EOF"
+
+    class FakeS3:
+        def get_object(self, Bucket, Key):
+            assert 'Andrew.pdf' in Key
+            return {'Body': FakeBody()}
+
+    monkeypatch.setattr('admin.boto3.client', lambda *a, **k: FakeS3())
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] == 'https://github.com/resume-user'
+
+
+def test_export_sponsor_info_subset_skips_resume(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+
+    def fail_s3(*a, **k):
+        raise AssertionError('should not fetch resumes unless GitHub is requested')
+
+    monkeypatch.setattr('admin.boto3.client', fail_s3)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': ['name', 'email']},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert list(rows[0].keys()) == ['name', 'email']
+    assert 'GitHub profile URL' not in rows[0]
+
+
+def test_export_sponsor_info_rejects_unknown_field(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': ['name', 'ssn']},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 400

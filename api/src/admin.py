@@ -17,6 +17,8 @@ import pytz
 from werkzeug.utils import secure_filename
 
 from config.event import EVENT_NAME, EVENT_SLUG, EVENT_CYCLE_START
+from resumes import BUCKET as RESUME_BUCKET
+from util.github_from_resume import github_url_from_resume_bytes, github_url_from_text
 
 admin_api = Blueprint('admin', __name__)
 
@@ -439,6 +441,121 @@ def export_unsubmitted_csv():
         output.getvalue(),
         mimetype='text/csv',
         headers={'Content-Disposition': 'attachment; filename=hophacks_not_submitted.csv'}
+    )
+
+
+def _csv_cell(value):
+    text = '' if value is None else str(value).strip()
+    return text if text else 'N/A'
+
+
+def _github_for_user(user, s3_client):
+    """Profile GitHub URL, else one scraped from the resume, else N/A."""
+    profile = user.get('profile') or {}
+    for key in ('github_url', 'github'):
+        from_profile = github_url_from_text(profile.get(key) or '')
+        if from_profile:
+            return from_profile
+        raw = (profile.get(key) or '').strip()
+        if raw:
+            return raw
+
+    filename = user.get('resume')
+    if not filename or s3_client is None:
+        return 'N/A'
+
+    object_name = '{}/{}-{}'.format(EVENT_SLUG, user['_id'], filename)
+    try:
+        body = s3_client.get_object(Bucket=RESUME_BUCKET, Key=object_name)['Body'].read()
+    except Exception:
+        return 'N/A'
+
+    return github_url_from_resume_bytes(body, filename) or 'N/A'
+
+
+# Keys the sponsor-info extractor may request, in CSV header form.
+SPONSOR_INFO_FIELDS = {
+    'name': 'name',
+    'email': 'email',
+    'phone': 'phone number',
+    'grad_year': 'graduation year',
+    'linkedin_url': 'LinkedIn profile URL',
+    'github_url': 'GitHub profile URL',
+    'school': 'school',
+    'major': 'major',
+    'first_name': 'first name',
+    'last_name': 'last name',
+}
+
+
+def _sponsor_field_value(user, key, s3_client):
+    profile = user.get('profile') or {}
+    if key == 'name':
+        return _csv_cell('{} {}'.format(
+            profile.get('first_name') or '',
+            profile.get('last_name') or '',
+        ).strip())
+    if key == 'email':
+        return _csv_cell(user.get('username'))
+    if key == 'phone':
+        return _csv_cell(profile.get('phone_number'))
+    if key == 'grad_year':
+        return _csv_cell(profile.get('grad_year'))
+    if key == 'linkedin_url':
+        return _csv_cell(profile.get('linkedin_url'))
+    if key == 'github_url':
+        return _github_for_user(user, s3_client)
+    if key == 'school':
+        return _csv_cell(profile.get('otherSchool') or profile.get('school'))
+    if key == 'major':
+        return _csv_cell(profile.get('major'))
+    if key == 'first_name':
+        return _csv_cell(profile.get('first_name'))
+    if key == 'last_name':
+        return _csv_cell(profile.get('last_name'))
+    return 'N/A'
+
+
+@admin_api.route('/export_sponsor_info', methods=['POST'])
+@jwt_required
+@check_admin
+def export_sponsor_info_csv():
+    """CSV of current-event applicants for the requested account fields.
+
+    GitHub is not a signup field: when ``github_url`` is requested it is
+    scraped from the resume and filled with N/A if nothing is found.
+    """
+    body = request.get_json(silent=True) or {}
+    raw_fields = body.get('fields')
+    if not isinstance(raw_fields, list) or not raw_fields:
+        return jsonify({'error': 'Select at least one field'}), 400
+
+    fields = []
+    for item in raw_fields:
+        if not isinstance(item, str) or item not in SPONSOR_INFO_FIELDS:
+            return jsonify({'error': 'Unknown field: {}'.format(item)}), 400
+        if item not in fields:
+            fields.append(item)
+
+    users = db.users.find({
+        'is_admin': {'$ne': True},
+        'registrations.event': EVENT_NAME
+    })
+
+    s3_client = boto3.client('s3') if 'github_url' in fields else None
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow([SPONSOR_INFO_FIELDS[key] for key in fields])
+
+    for user in users:
+        writer.writerow([
+            _sponsor_field_value(user, key, s3_client) for key in fields
+        ])
+
+    return Response(
+        output.getvalue(),
+        mimetype='text/csv',
+        headers={'Content-Disposition': 'attachment; filename=hophacks_sponsor_info.csv'}
     )
 
 
