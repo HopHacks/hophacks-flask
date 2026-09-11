@@ -37,13 +37,39 @@ const DEFAULT_FIELDS: SponsorInfoFieldKey[] = [
 
 const STATUS_OPTIONS = [["all", "All statuses"], ...BROADCAST_STAGES] as const;
 
+function StatusFilter({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <select
+      aria-label={label}
+      className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    >
+      {STATUS_OPTIONS.map(([option, optionLabel]) => (
+        <option key={option} value={option}>
+          {optionLabel}
+        </option>
+      ))}
+    </select>
+  );
+}
+
 const FIELD_BY_KEY = Object.fromEntries(
   SPONSOR_INFO_FIELDS.map((f) => [f.key, f]),
 ) as Record<SponsorInfoFieldKey, (typeof SPONSOR_INFO_FIELDS)[number]>;
 
 export default function SponsorInfoExtractor() {
   const [fields, setFields] = useState<SponsorInfoFieldKey[]>(DEFAULT_FIELDS);
-  const [status, setStatus] = useState("all");
+  const [csvStatus, setCsvStatus] = useState("all");
+  const [resumeStatus, setResumeStatus] = useState("all");
   const [toAdd, setToAdd] = useState("");
   const [csvBusy, setCsvBusy] = useState(false);
   const [resumeBusy, setResumeBusy] = useState(false);
@@ -88,7 +114,7 @@ export default function SponsorInfoExtractor() {
     setCsvError("");
     setCsvMessage("");
     try {
-      await downloadSponsorInfoCsv(fields, status);
+      await downloadSponsorInfoCsv(fields, csvStatus);
       setCsvMessage("CSV downloaded.");
     } catch (err) {
       setCsvError(
@@ -105,9 +131,12 @@ export default function SponsorInfoExtractor() {
     setResumeMessage("");
     setResumeProgress("");
     try {
-      const result = await downloadSponsorResumesZip(status, (done, total) => {
-        setResumeProgress(`Downloading ${done} / ${total}`);
-      });
+      const result = await downloadSponsorResumesZip(
+        resumeStatus,
+        (done, total) => {
+          setResumeProgress(`Downloading ${done} / ${total}`);
+        },
+      );
       const extra = result.skipped
         ? ` (${result.skipped} could not be read)`
         : "";
@@ -128,26 +157,11 @@ export default function SponsorInfoExtractor() {
         Sponsor Info Extractor
       </h1>
       <p className="mt-1 text-sm text-slate-500">
-        Filter by application status, then download a CSV of account fields
-        and/or a zip of resumes. GitHub is not collected at signup — add it to
-        the CSV only if you need it; it reads resumes and used to crash the
-        whole export.
+        Download a CSV of account fields and/or a zip of resumes. Each section
+        has its own application-status filter. GitHub is not collected at signup
+        — add it to the CSV only if you need it; it reads resumes and used to
+        crash the whole export.
       </p>
-
-      <div className="mt-4">
-        <select
-          aria-label="Application status"
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-        >
-          {STATUS_OPTIONS.map(([value, label]) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-      </div>
 
       <div className="mt-6">
         <Panel title="Info extractor">
@@ -226,6 +240,11 @@ export default function SponsorInfoExtractor() {
           </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
+            <StatusFilter
+              label="CSV application status"
+              value={csvStatus}
+              onChange={setCsvStatus}
+            />
             <button
               type="button"
               disabled={csvBusy || fields.length === 0}
@@ -245,7 +264,7 @@ export default function SponsorInfoExtractor() {
       <div className="mt-6">
         <Panel title="Resume extractor">
           <p className="text-sm text-slate-500">
-            Download a zip of resumes for the selected status. Applicants
+            Download a zip of resumes for the status chosen below. Applicants
             without a file are skipped. Files are named{" "}
             <span className="font-medium text-slate-700">
               Last_First_email.pdf
@@ -253,6 +272,11 @@ export default function SponsorInfoExtractor() {
             .
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
+            <StatusFilter
+              label="Resume application status"
+              value={resumeStatus}
+              onChange={setResumeStatus}
+            />
             <button
               type="button"
               disabled={resumeBusy}

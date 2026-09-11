@@ -579,7 +579,7 @@ test("the sponsor info extractor downloads the chosen fields", async ({
   await page.getByRole("button", { name: "Sponsor Info Extractor" }).click();
   await page.getByLabel("Add a field").selectOption("school");
   await page.getByRole("button", { name: "Add" }).click();
-  await page.getByLabel("Application status").selectOption("accepted");
+  await page.getByLabel("CSV application status").selectOption("accepted");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download CSV" }).click();
   expect((await download).suggestedFilename()).toBe(
@@ -632,7 +632,7 @@ test("the resume extractor zips files for the chosen status", async ({
 
   await page.goto("/admin");
   await page.getByRole("button", { name: "Sponsor Info Extractor" }).click();
-  await page.getByLabel("Application status").selectOption("accepted");
+  await page.getByLabel("Resume application status").selectOption("accepted");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download resumes" }).click();
   expect((await download).suggestedFilename()).toBe("hophacks_resumes.zip");
