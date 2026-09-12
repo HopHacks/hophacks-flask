@@ -69,9 +69,21 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         type: "announcement",
       },
       {
-        time: "9:30 PM",
+        time: "9:00–9:30 PM",
+        title: "Fellows X Forge Kickoff",
+        location: "Levering Hall Glass Pavilion",
+        type: "workshop",
+      },
+      {
+        time: "9:30–10:00 PM",
         title: "Memetic Data Crash Course by Calcifer Computing",
         location: "Hodson 210",
+        type: "workshop",
+      },
+      {
+        time: "10:00–10:30 PM",
+        title: "Building Web Apps with Marimo",
+        location: "Hodson 210 (virtual)",
         type: "workshop",
       },
     ],
@@ -89,7 +101,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
         type: "food",
       },
       {
-        time: "10:00 AM",
+        time: "10:00–10:30 AM",
         title: "Hack the Agent Stack: MCP, LLMs & Agentic AI by Strategy",
         location: "Hodson 210",
         type: "workshop",
@@ -97,6 +109,12 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       {
         time: "10:30–11:00 AM",
         title: "Designing Agentic Experiences for Teams by Auctor",
+        location: "Hodson 210",
+        type: "workshop",
+      },
+      {
+        time: "11:00–11:30 AM",
+        title: "Hacking with GitHub Copilot by MLH",
         location: "Hodson 210",
         type: "workshop",
       },
@@ -118,8 +136,20 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       },
       {
         time: "3:30–4:00 PM",
+        title: "TechTogether MeetUp by MLH",
+        location: "Levering Hall Glass Pavilion",
+        type: "workshop",
+      },
+      {
+        time: "4:00–4:30 PM",
         title:
           "Build Your Entire Internship Application Stack in 30 Minutes by SpaceXAI",
+        location: "Hodson 210",
+        type: "workshop",
+      },
+      {
+        time: "4:30–5:00 PM",
+        title: "Intro to Google Studio AI by MLH",
         location: "Hodson 210",
         type: "workshop",
       },

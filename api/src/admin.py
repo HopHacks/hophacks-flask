@@ -10,13 +10,18 @@ from bson.errors import InvalidId
 
 import boto3
 import botocore.exceptions
+from botocore.config import Config as BotoConfig
 import csv
 import datetime
 import io
 import pytz
+import time
+import traceback
 from werkzeug.utils import secure_filename
 
 from config.event import EVENT_NAME, EVENT_SLUG, EVENT_CYCLE_START
+from resumes import BUCKET as RESUME_BUCKET
+from util.github_from_resume import github_url_from_resume_bytes, github_url_from_text
 
 admin_api = Blueprint('admin', __name__)
 
@@ -439,6 +444,328 @@ def export_unsubmitted_csv():
         output.getvalue(),
         mimetype='text/csv',
         headers={'Content-Disposition': 'attachment; filename=hophacks_not_submitted.csv'}
+    )
+
+
+def _csv_cell(value):
+    if value is None:
+        return 'N/A'
+    text = str(value).replace('\x00', '').strip()
+    return text if text else 'N/A'
+
+
+# Keys the sponsor-info extractor may request, in CSV header form.
+SPONSOR_INFO_FIELDS = {
+    'name': 'name',
+    'email': 'email',
+    'phone': 'phone number',
+    'grad_year': 'graduation year',
+    'linkedin_url': 'LinkedIn profile URL',
+    'github_url': 'GitHub profile URL',
+    'school': 'school',
+    'major': 'major',
+    'first_name': 'first name',
+    'last_name': 'last name',
+}
+
+# Same ladder as the Applications status filter. "all" is every current-event
+# registrant; the rest match that event's registrations[].status.
+SPONSOR_INFO_STATUSES = (
+    'all',
+    'applied',
+    'accepted',
+    'waitlisted',
+    'rsvped',
+    'checked_in',
+    'rejected',
+)
+
+# API Gateway cuts the request at 29s. Resume scraping must finish (or give
+# up) before that, or the whole CSV 504s. Misses become N/A. Sequential on
+# purpose: a thread pool on Lambda was 500ing the GitHub column in prod.
+S3_EXPORT_DEADLINE_S = 20.0
+MAX_RESUME_SCAN_BYTES = 2 * 1024 * 1024
+
+
+def _github_from_profile(user):
+    """GitHub URL stored on the account, or None if we have to look at the resume."""
+    profile = user.get('profile')
+    if not isinstance(profile, dict):
+        return None
+    for key in ('github_url', 'github'):
+        val = profile.get(key)
+        if val is None:
+            continue
+        from_profile = github_url_from_text(val)
+        if from_profile:
+            return from_profile
+        raw = str(val).strip()
+        if raw:
+            return raw
+    return None
+
+
+def _github_from_resume(user, s3_client):
+    """Scrape github.com/<user> from the resume object; N/A on any failure."""
+    filename = user.get('resume')
+    if not filename or s3_client is None:
+        return 'N/A'
+
+    object_name = '{}/{}-{}'.format(EVENT_SLUG, user['_id'], filename)
+    try:
+        body = s3_client.get_object(
+            Bucket=RESUME_BUCKET, Key=object_name
+        )['Body'].read(MAX_RESUME_SCAN_BYTES)
+        return github_url_from_resume_bytes(body, filename) or 'N/A'
+    except Exception:
+        return 'N/A'
+
+
+def _s3_client_or_none():
+    try:
+        return boto3.client('s3', config=BotoConfig(
+            connect_timeout=2,
+            read_timeout=3,
+            retries={'max_attempts': 1},
+        ))
+    except Exception:
+        return None
+
+
+def _github_column(users):
+    """Map user _id -> GitHub URL, scraping resumes until the Gateway deadline."""
+    github_by_id = {}
+    need_resume = []
+    for user in users:
+        from_profile = _github_from_profile(user)
+        if from_profile:
+            github_by_id[user['_id']] = from_profile
+        elif user.get('resume'):
+            need_resume.append(user)
+        else:
+            github_by_id[user['_id']] = 'N/A'
+
+    if not need_resume:
+        return github_by_id
+
+    deadline = time.monotonic() + S3_EXPORT_DEADLINE_S
+    if time.monotonic() >= deadline:
+        for user in need_resume:
+            github_by_id[user['_id']] = 'N/A'
+        return github_by_id
+
+    s3_client = _s3_client_or_none()
+    for user in need_resume:
+        if time.monotonic() >= deadline:
+            github_by_id[user['_id']] = 'N/A'
+            continue
+        github_by_id[user['_id']] = _github_from_resume(user, s3_client)
+    return github_by_id
+
+
+def _current_event_users(status):
+    elem = {'event': EVENT_NAME}
+    if status != 'all':
+        elem['status'] = status
+    return list(db.users.find({
+        'is_admin': {'$ne': True},
+        'registrations': {'$elemMatch': elem},
+    }))
+
+
+def _display_name(user):
+    profile = user.get('profile') if isinstance(user.get('profile'), dict) else {}
+    return '{} {}'.format(
+        profile.get('first_name') or '',
+        profile.get('last_name') or '',
+    ).strip()
+
+
+def _resume_zip_name(user, used):
+    """Unique zip entry like Last_First_email.pdf."""
+    profile = user.get('profile') if isinstance(user.get('profile'), dict) else {}
+    first = secure_filename(str(profile.get('first_name') or 'unknown')) or 'unknown'
+    last = secure_filename(str(profile.get('last_name') or 'unknown')) or 'unknown'
+    email = secure_filename(str(user.get('username') or user['_id'])) or 'user'
+    original = str(user.get('resume') or 'resume.pdf')
+    ext = original.rsplit('.', 1)[-1].lower() if '.' in original else 'pdf'
+    if ext not in ('pdf', 'doc', 'docx'):
+        ext = 'pdf'
+    base = '{}_{}_{}'.format(last, first, email)
+    name = '{}.{}'.format(base, ext)
+    n = 2
+    while name in used:
+        name = '{}_{}.{}'.format(base, n, ext)
+        n += 1
+    used.add(name)
+    return name
+
+
+def _sponsor_field_value(user, key, github_by_id):
+    profile = user.get('profile') if isinstance(user.get('profile'), dict) else {}
+    if key == 'name':
+        return _csv_cell(_display_name(user))
+    if key == 'email':
+        return _csv_cell(user.get('username'))
+    if key == 'phone':
+        return _csv_cell(profile.get('phone_number'))
+    if key == 'grad_year':
+        return _csv_cell(profile.get('grad_year'))
+    if key == 'linkedin_url':
+        return _csv_cell(profile.get('linkedin_url'))
+    if key == 'github_url':
+        return github_by_id.get(user['_id'], 'N/A')
+    if key == 'school':
+        return _csv_cell(profile.get('otherSchool') or profile.get('school'))
+    if key == 'major':
+        return _csv_cell(profile.get('major'))
+    if key == 'first_name':
+        return _csv_cell(profile.get('first_name'))
+    if key == 'last_name':
+        return _csv_cell(profile.get('last_name'))
+    return 'N/A'
+
+
+def _parse_sponsor_info_request():
+    """(fields, status) or a (response, code) error tuple in the third slot."""
+    if request.method == 'GET':
+        raw = request.args.get('fields') or ''
+        raw_fields = [part.strip() for part in raw.split(',') if part.strip()]
+        status = (request.args.get('status') or 'all').strip().lower()
+    else:
+        body = request.get_json(silent=True) or {}
+        raw_fields = body.get('fields')
+        status = str(body.get('status') or 'all').strip().lower()
+
+    if not isinstance(raw_fields, list) or not raw_fields:
+        return None, None, (jsonify({'error': 'Select at least one field'}), 400)
+
+    fields = []
+    for item in raw_fields:
+        if not isinstance(item, str) or item not in SPONSOR_INFO_FIELDS:
+            return None, None, (
+                jsonify({'error': 'Unknown field: {}'.format(item)}), 400)
+        if item not in fields:
+            fields.append(item)
+
+    if status not in SPONSOR_INFO_STATUSES:
+        return None, None, (
+            jsonify({'error': 'Unknown status: {}'.format(status)}), 400)
+
+    return fields, status, None
+
+
+@admin_api.route('/export_sponsor_info', methods=['GET', 'POST'])
+@jwt_required
+@check_admin
+def export_sponsor_info_csv():
+    """CSV of current-event applicants for the requested account fields.
+
+    GitHub is not a signup field: when ``github_url`` is requested it is
+    scraped from the resume and filled with N/A if nothing is found. Resume
+    fetches are sequential and stop after ``S3_EXPORT_DEADLINE_S`` so a bad
+    PDF or Lambda thread pool cannot 500 the whole export.
+
+    Filter with ``status`` (applied / accepted / waitlisted / rsvped /
+    checked_in / rejected, or all). GET query params match the other admin
+    CSV downloads; POST JSON is still accepted.
+    """
+    try:
+        fields, status, err = _parse_sponsor_info_request()
+        if err is not None:
+            return err
+
+        users = _current_event_users(status)
+        github_by_id = {}
+        if 'github_url' in fields:
+            try:
+                github_by_id = _github_column(users)
+            except Exception:
+                github_by_id = {user['_id']: 'N/A' for user in users}
+
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow([SPONSOR_INFO_FIELDS[key] for key in fields])
+
+        for user in users:
+            writer.writerow([
+                _sponsor_field_value(user, key, github_by_id) for key in fields
+            ])
+
+        return Response(
+            output.getvalue(),
+            mimetype='text/csv',
+            headers={'Content-Disposition': 'attachment; filename=hophacks_sponsor_info.csv'}
+        )
+    except Exception as exc:
+        return jsonify({
+            'error': 'Export failed: {}'.format(exc),
+            'traceback': traceback.format_exc().splitlines()[-25:],
+        }), 500
+
+
+@admin_api.route('/export_resumes', methods=['GET'])
+@jwt_required
+@check_admin
+def export_resumes_manifest():
+    """JSON list of current-event applicants who have a resume on file.
+
+    The zip is built in the browser (API Gateway cannot return a multi-resume
+    zip under its 6MB cap). Each row is fetched one-at-a-time via
+    ``/resume_file``.
+    """
+    status = (request.args.get('status') or 'all').strip().lower()
+    if status not in SPONSOR_INFO_STATUSES:
+        return jsonify({'error': 'Unknown status: {}'.format(status)}), 400
+
+    users = _current_event_users(status)
+    used_names = set()
+    resumes = []
+    missing = 0
+    for user in users:
+        if not user.get('resume'):
+            missing += 1
+            continue
+        resumes.append({
+            'id': str(user['_id']),
+            'filename': user.get('resume'),
+            'zip_name': _resume_zip_name(user, used_names),
+            'name': _display_name(user),
+            'email': user.get('username') or '',
+        })
+    return jsonify({'resumes': resumes, 'missing': missing})
+
+
+@admin_api.route('/resume_file', methods=['GET'])
+@jwt_required
+@check_admin
+def resume_file():
+    """Raw resume bytes for one applicant (the zip builder's per-file fetch)."""
+    raw_id = request.args.get('id')
+    try:
+        oid = ObjectId(raw_id)
+    except (InvalidId, TypeError):
+        return jsonify({'error': 'Invalid id'}), 400
+
+    user = db.users.find_one({'_id': oid})
+    if not user or not user.get('resume'):
+        return jsonify({'error': 'No resume uploaded'}), 404
+
+    object_name = '{}/{}-{}'.format(EVENT_SLUG, user['_id'], user['resume'])
+    try:
+        body = boto3.client('s3').get_object(
+            Bucket=RESUME_BUCKET, Key=object_name
+        )['Body'].read()
+    except Exception:
+        return jsonify({'error': 'Resume could not be read from storage'}), 404
+
+    filename = secure_filename(str(user.get('resume'))) or 'resume.pdf'
+    return Response(
+        body,
+        mimetype='application/octet-stream',
+        headers={
+            'Content-Disposition': 'attachment; filename={}'.format(filename)
+        },
     )
 
 

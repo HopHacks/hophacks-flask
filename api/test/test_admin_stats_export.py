@@ -6,6 +6,7 @@ import io
 
 from utils import create_json, create_json2, create_json3, login_json
 from flow import register_confirmed, register_applied, login_token, admin_token, bearer
+from config.event import EVENT_NAME
 
 
 def test_stats_requires_admin(client, test_db, test_mail):
@@ -221,3 +222,317 @@ def test_export_unsubmitted_requires_admin(client, test_db, test_mail):
     token = login_token(client, login_json)
     assert client.get('/api/admin/export_unsubmitted',
                       headers=bearer(token)).status_code == 401
+
+
+DEFAULT_SPONSOR_FIELDS = [
+    'name', 'email', 'phone', 'grad_year', 'linkedin_url', 'github_url',
+]
+
+
+def test_export_sponsor_info_requires_admin(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    token = login_token(client, login_json)
+    assert client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(token),
+    ).status_code == 401
+
+
+def test_export_sponsor_info_from_profile(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one({'username': 'a@test.com'}, {'$set': {
+        'profile.grad_year': '2027',
+        'profile.linkedin_url': 'https://linkedin.com/in/andrew',
+        'profile.github_url': 'https://github.com/andrew',
+        'profile.phone_number': '8888888888',
+    }})
+    admin = admin_token(client, test_db)
+
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    assert res.mimetype == 'text/csv'
+    assert 'hophacks_sponsor_info.csv' in res.headers.get('Content-Disposition', '')
+
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert len(rows) == 1
+    row = rows[0]
+    assert row['name'] == 'Andrew Wong'
+    assert row['email'] == 'a@test.com'
+    assert row['phone number'] == '8888888888'
+    assert row['graduation year'] == '2027'
+    assert row['LinkedIn profile URL'] == 'https://linkedin.com/in/andrew'
+    assert row['GitHub profile URL'] == 'https://github.com/andrew'
+
+
+def test_export_sponsor_info_github_na_without_resume(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] == 'N/A'
+    assert rows[0]['graduation year'] == 'N/A'
+    assert rows[0]['LinkedIn profile URL'] == 'N/A'
+
+
+def test_export_sponsor_info_github_from_resume(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+
+    class FakeBody:
+        def read(self, amt=None):
+            return b"%PDF-1.4 /URI (https://github.com/resume-user) %%EOF"
+
+    class FakeS3:
+        def get_object(self, Bucket, Key):
+            assert 'Andrew.pdf' in Key
+            return {'Body': FakeBody()}
+
+    monkeypatch.setattr('admin.boto3.client', lambda *a, **k: FakeS3())
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] == 'https://github.com/resume-user'
+
+
+def test_export_sponsor_info_subset_skips_resume(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+
+    def fail_s3(*a, **k):
+        raise AssertionError('should not fetch resumes unless GitHub is requested')
+
+    monkeypatch.setattr('admin.boto3.client', fail_s3)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': ['name', 'email']},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert list(rows[0].keys()) == ['name', 'email']
+    assert 'GitHub profile URL' not in rows[0]
+
+
+def test_export_sponsor_info_rejects_unknown_field(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': ['name', 'ssn']},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 400
+
+
+def test_export_sponsor_info_get_and_status_filter(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json2)
+    test_db.users.update_one(
+        {'username': 'a@test.com', 'registrations.event': EVENT_NAME},
+        {'$set': {'registrations.$.status': 'accepted'}},
+    )
+    admin = admin_token(client, test_db)
+
+    accepted = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={'fields': 'name,email', 'status': 'accepted'},
+        headers=bearer(admin),
+    )
+    assert accepted.status_code == 200
+    accepted_rows = list(csv.DictReader(io.StringIO(accepted.get_data(as_text=True))))
+    assert [row['email'] for row in accepted_rows] == ['a@test.com']
+
+    applied = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={'fields': 'email', 'status': 'applied'},
+        headers=bearer(admin),
+    )
+    applied_rows = list(csv.DictReader(io.StringIO(applied.get_data(as_text=True))))
+    assert [row['email'] for row in applied_rows] == ['b@test.com']
+
+    everyone = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={'fields': 'email', 'status': 'all'},
+        headers=bearer(admin),
+    )
+    everyone_rows = list(csv.DictReader(io.StringIO(everyone.get_data(as_text=True))))
+    assert sorted(row['email'] for row in everyone_rows) == ['a@test.com', 'b@test.com']
+
+
+def test_export_sponsor_info_rejects_unknown_status(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    res = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={'fields': 'email', 'status': 'maybe'},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 400
+
+
+def test_export_sponsor_info_bad_resume_is_na(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+
+    class FakeBody:
+        def read(self, amt=None):
+            return b"%PDF-1.4 junk"
+
+    class FakeS3:
+        def get_object(self, Bucket, Key):
+            return {'Body': FakeBody()}
+
+    def boom(*a, **k):
+        raise RuntimeError('unreadable resume')
+
+    monkeypatch.setattr('admin.boto3.client', lambda *a, **k: FakeS3())
+    monkeypatch.setattr('admin.github_url_from_resume_bytes', boom)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] == 'N/A'
+
+
+def test_export_sponsor_info_skips_s3_past_deadline(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+    monkeypatch.setattr('admin.S3_EXPORT_DEADLINE_S', 0)
+
+    def fail_s3(*a, **k):
+        raise AssertionError('should not fetch resumes after the deadline')
+
+    monkeypatch.setattr('admin.boto3.client', fail_s3)
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] == 'N/A'
+
+
+def test_export_sponsor_info_crash_returns_json(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    monkeypatch.setattr(
+        'admin._current_event_users',
+        lambda status: (_ for _ in ()).throw(RuntimeError('mongo down')),
+    )
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': ['name', 'email']},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 500
+    assert res.json['error'].startswith('Export failed:')
+
+
+def test_export_sponsor_info_weird_github_field(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'},
+        {'$set': {'profile.github_url': ['not', 'a', 'string']}},
+    )
+    admin = admin_token(client, test_db)
+    res = client.post(
+        '/api/admin/export_sponsor_info',
+        json={'fields': DEFAULT_SPONSOR_FIELDS},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['GitHub profile URL'] != ''
+
+
+def test_export_resumes_lists_files_for_status(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    register_applied(client, test_mail, create_json2)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+    test_db.users.update_one(
+        {'username': 'a@test.com', 'registrations.event': EVENT_NAME},
+        {'$set': {'registrations.$.status': 'accepted'}},
+    )
+    admin = admin_token(client, test_db)
+
+    accepted = client.get(
+        '/api/admin/export_resumes',
+        query_string={'status': 'accepted'},
+        headers=bearer(admin),
+    )
+    assert accepted.status_code == 200
+    data = accepted.json
+    assert data['missing'] == 0
+    assert len(data['resumes']) == 1
+    row = data['resumes'][0]
+    assert row['email'] == 'a@test.com'
+    assert row['filename'] == 'Andrew.pdf'
+    assert row['zip_name'].endswith('.pdf')
+
+    applied = client.get(
+        '/api/admin/export_resumes',
+        query_string={'status': 'applied'},
+        headers=bearer(admin),
+    )
+    assert applied.json['resumes'] == []
+    assert applied.json['missing'] == 1
+
+
+def test_resume_file_returns_bytes(client, test_db, test_mail, monkeypatch):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'}, {'$set': {'resume': 'Andrew.pdf'}})
+    user_id = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
+
+    class FakeBody:
+        def read(self, amt=None):
+            return b'%PDF-1.4 fake'
+
+    class FakeS3:
+        def get_object(self, Bucket, Key):
+            assert 'Andrew.pdf' in Key
+            return {'Body': FakeBody()}
+
+    monkeypatch.setattr('admin.boto3.client', lambda *a, **k: FakeS3())
+    admin = admin_token(client, test_db)
+    res = client.get(
+        '/api/admin/resume_file',
+        query_string={'id': user_id},
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    assert res.get_data() == b'%PDF-1.4 fake'
+
+
+def test_export_resumes_requires_admin(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    token = login_token(client, login_json)
+    assert client.get(
+        '/api/admin/export_resumes',
+        headers=bearer(token),
+    ).status_code == 401

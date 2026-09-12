@@ -555,6 +555,90 @@ test("the not-submitted export downloads through the API", async ({ page }) => {
   expect(hits).toBe(1);
 });
 
+test("the sponsor info extractor downloads the chosen fields", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  let fields: string[] = [];
+  let status = "";
+  await page.route("**/api/admin/export_sponsor_info**", async (r) => {
+    const url = new URL(r.request().url());
+    fields = (url.searchParams.get("fields") ?? "").split(",").filter(Boolean);
+    status = url.searchParams.get("status") ?? "";
+    await r.fulfill({
+      contentType: "text/csv",
+      body: "name,email\nAda Lovelace,ada@test.com\n",
+      headers: {
+        "Content-Disposition": "attachment; filename=hophacks_sponsor_info.csv",
+      },
+    });
+  });
+
+  await page.goto("/admin");
+  await page.getByRole("button", { name: "Sponsor Info Extractor" }).click();
+  await page.getByLabel("Add a field").selectOption("school");
+  await page.getByRole("button", { name: "Add" }).click();
+  await page.getByLabel("Application status").selectOption("accepted");
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Download CSV" }).click();
+  expect((await download).suggestedFilename()).toBe(
+    "hophacks_sponsor_info.csv",
+  );
+  expect(fields).toEqual([
+    "name",
+    "email",
+    "phone",
+    "grad_year",
+    "linkedin_url",
+    "school",
+  ]);
+  expect(status).toBe("accepted");
+});
+
+test("the resume extractor zips files for the chosen status", async ({
+  page,
+}) => {
+  const statuses = new Map<string, string>([["id-ada", "applied"]]);
+  await stubAdminConsole(page, statuses);
+  let resumeStatus = "";
+  await page.route("**/api/admin/export_resumes**", async (r) => {
+    const url = new URL(r.request().url());
+    resumeStatus = url.searchParams.get("status") ?? "";
+    await r.fulfill({
+      json: {
+        resumes: [
+          {
+            id: "id-ada",
+            filename: "Ada.pdf",
+            zip_name: "Lovelace_Ada_ada@test.com.pdf",
+            name: "Ada Lovelace",
+            email: "ada@test.com",
+          },
+        ],
+        missing: 0,
+      },
+    });
+  });
+  await page.route("**/api/admin/resume_file**", async (r) => {
+    await r.fulfill({
+      contentType: "application/pdf",
+      body: "%PDF-1.4 fake",
+      headers: {
+        "Content-Disposition": "attachment; filename=Ada.pdf",
+      },
+    });
+  });
+
+  await page.goto("/admin");
+  await page.getByRole("button", { name: "Sponsor Info Extractor" }).click();
+  await page.getByLabel("Application status").selectOption("accepted");
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Download resumes" }).click();
+  expect((await download).suggestedFilename()).toBe("hophacks_resumes.zip");
+  expect(resumeStatus).toBe("accepted");
+});
+
 // --- Stage broadcast email ---
 
 type BroadcastHistoryRow = {

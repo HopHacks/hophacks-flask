@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CURRENT_EVENT } from "./event";
+import { zipStore } from "./zip";
 
 export type Registration = {
   event: string;
@@ -143,6 +144,35 @@ async function downloadBlob(path: string, filename: string): Promise<void> {
   URL.revokeObjectURL(url);
 }
 
+/** Axios + responseType: "blob" hides JSON/HTML error bodies. */
+async function axiosBlobError(err: unknown): Promise<string> {
+  const ax = err as {
+    message?: string;
+    code?: string;
+    response?: { status?: number; data?: Blob };
+  };
+  const status = ax.response?.status;
+  if (status === 502 || status === 503 || status === 504) {
+    return "Export timed out. Narrow the status filter or remove GitHub (it reads every resume).";
+  }
+  if (ax.code === "ECONNABORTED") {
+    return "Export timed out. Narrow the status filter or remove GitHub (it reads every resume).";
+  }
+  const data = ax.response?.data;
+  if (data instanceof Blob) {
+    const text = await data.text();
+    try {
+      const parsed = JSON.parse(text) as { error?: string; msg?: string };
+      if (parsed.error) return parsed.error;
+      if (parsed.msg) return parsed.msg;
+    } catch {
+      /* not JSON */
+    }
+    if (text.trim()) return text.slice(0, 240);
+  }
+  return ax.message || "Export failed. Please try again.";
+}
+
 /** All current-event submissions (the review/catering export). */
 export const downloadCsv = () =>
   downloadBlob("/api/admin/export", "hophacks_registrants.csv");
@@ -150,6 +180,122 @@ export const downloadCsv = () =>
 /** This cycle's profile-only accounts: the "nudge before the deadline" list. */
 export const downloadUnsubmittedCsv = () =>
   downloadBlob("/api/admin/export_unsubmitted", "hophacks_not_submitted.csv");
+
+/** Sponsor-info CSV for the chosen account fields (GitHub from resume). */
+export async function downloadSponsorInfoCsv(
+  fields: string[],
+  status = "all",
+): Promise<void> {
+  try {
+    const r = await axios.get("/api/admin/export_sponsor_info", {
+      params: { fields: fields.join(","), status },
+      responseType: "blob",
+    });
+    const blob = r.data as Blob;
+    const type = blob.type || String(r.headers["content-type"] || "");
+    if (type.includes("application/json")) {
+      const parsed = JSON.parse(await blob.text()) as {
+        error?: string;
+        msg?: string;
+      };
+      throw new Error(parsed.error || parsed.msg || "Export failed.");
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "hophacks_sponsor_info.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    throw new Error(await axiosBlobError(err));
+  }
+}
+
+export type ResumeExportRow = {
+  id: string;
+  filename: string;
+  zip_name: string;
+  name: string;
+  email: string;
+};
+
+function triggerDownload(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/** Zip of resumes for the chosen status. Files are fetched one-by-one so
+ *  API Gateway's 6MB cap is not hit. */
+export async function downloadSponsorResumesZip(
+  status: string,
+  onProgress?: (done: number, total: number) => void,
+): Promise<{ downloaded: number; skipped: number; missing: number }> {
+  try {
+    const manifest = await axios.get("/api/admin/export_resumes", {
+      params: { status },
+    });
+    const rows: ResumeExportRow[] = manifest.data.resumes ?? [];
+    const missing: number = manifest.data.missing ?? 0;
+    if (rows.length === 0) {
+      throw new Error(
+        missing
+          ? "No resumes uploaded for this status."
+          : "No applicants for this status.",
+      );
+    }
+
+    const files: { name: string; data: Uint8Array }[] = [];
+    const queue = [...rows];
+    let downloaded = 0;
+    let skipped = 0;
+    let done = 0;
+
+    const worker = async () => {
+      while (queue.length) {
+        const row = queue.shift();
+        if (!row) break;
+        try {
+          const file = await axios.get("/api/admin/resume_file", {
+            params: { id: row.id },
+            responseType: "blob",
+          });
+          const blob = file.data as Blob;
+          const type = blob.type || "";
+          if (type.includes("application/json")) {
+            skipped += 1;
+          } else {
+            files.push({
+              name: row.zip_name,
+              data: new Uint8Array(await blob.arrayBuffer()),
+            });
+            downloaded += 1;
+          }
+        } catch {
+          skipped += 1;
+        }
+        done += 1;
+        onProgress?.(done, rows.length);
+      }
+    };
+
+    await Promise.all([worker(), worker(), worker()]);
+    if (downloaded === 0) {
+      throw new Error("Could not download any resumes. Try again.");
+    }
+    triggerDownload(zipStore(files), "hophacks_resumes.zip");
+    return { downloaded, skipped, missing };
+  } catch (err) {
+    throw new Error(await axiosBlobError(err));
+  }
+}
 
 /* The six real registration statuses. deriveStatus() can also return the
    pseudo-stages "email_not_confirmed" and "not_submitted"; both are
