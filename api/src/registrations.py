@@ -86,7 +86,12 @@ def send_rsvp_info(users):
             msg = Message(recipients=[email],
                           subject=subject)
 
-            msg.body = 'Thank you for confirming your spot to attend Hophacks in-person!'
+            # Plain-text alternative: the forms must survive here too.
+            msg.body = ('Thank you for confirming your spot to attend HopHacks '
+                        'in-person!\n\n'
+                        'Busing RSVP form (select DMV-area schools): '
+                        + BUSING_FORM_URL + '\n'
+                        'Parking pass request form: ' + PARKING_FORM_URL)
             msg.html = render_template('rsvpinfo.html', first_name=user['profile']['first_name'])
             conn.send(msg)
 
@@ -129,9 +134,11 @@ def _send_decision_emails(users, subject, body, template, **template_kwargs):
 
     return [u for u in users if str(u['_id']) not in sent]
 
-# Gauges per-school demand so we know where to send buses. Interest only, no
-# commitment. Mirrored in email_acceptance.html; keep the two in sync.
-BUSING_FORM_URL = "https://forms.gle/HiTgXEvLA9BG8T5t6"
+# Reserves a seat on a chartered bus from select DMV-area schools, and
+# requests a campus parking pass for drivers. Both are mirrored in
+# email_acceptance.html and rsvpinfo.html; keep all three in sync.
+BUSING_FORM_URL = "https://forms.gle/MX3EuWBdkbyqdhNy7"
+PARKING_FORM_URL = "https://forms.gle/7K5wPURLZJoa1cK58"
 
 def mark_acceptance_email(users, unsent_ids, event):
     """Record, per user, whether their acceptance email actually went out.
@@ -160,11 +167,13 @@ def send_acceptances(users):
         # so every link in the HTML needs to survive here too.
         "Congrats on being accepted to HopHacks! RSVP at "
         "https://hophacks.com/profile to confirm your spot.\n\n"
-        "We're gauging interest in chartered buses to campus. Filling out the "
-        "busing interest form has no commitment attached, and the more "
-        "students from your school who respond, the more likely we are to add "
-        "a stop there. Pick-up times, locations, and ticketing details will "
-        "follow later.\n\n" + BUSING_FORM_URL,
+        "Coming by bus? Chartered buses are running to campus from select "
+        "schools in the DMV area. Reserve your seat with the busing RSVP "
+        "form:\n" + BUSING_FORM_URL + "\n\n"
+        "Driving? Parking passes are limited, so request one with the parking "
+        "pass request form:\n" + PARKING_FORM_URL + "\n\n"
+        "Once you RSVP, we'll send you an event info email with check-in "
+        "details and everything you need to know for the weekend.",
         'email_acceptance.html')
 
 def send_rejections(users):
