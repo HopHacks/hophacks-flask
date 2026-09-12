@@ -79,3 +79,7 @@ def test_rsvp_info_email_carries_the_busing_and_parking_forms(client, test_db, t
         assert url in msg.html
         assert url in msg.body
     assert 'HiTgXEvLA9BG8T5t6' not in msg.html + msg.body
+    # Stale promises that predate the tooling: dietary restrictions live on
+    # the profile, and check-in info is no longer "still being finalized".
+    assert 'indicate any dietary restrictions' not in msg.html
+    assert 'still being finalized' not in msg.html
