@@ -44,7 +44,7 @@ export const SPONSORS: Sponsor[] = [
   {
     name: "SpaceXAI",
     logo: "/images/sponsors/spacexai.svg",
-    href: "https://www.spacex.com/",
+    href: "https://x.ai/",
   },
   {
     name: "Strategy",
