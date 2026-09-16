@@ -364,7 +364,7 @@ def export_csv():
     writer.writerow([
         'email', 'first_name', 'last_name', 'school', 'other_school',
         'level_of_study', 'country', 'age', 'gender', 'status', 'apply_at', 'rsvp',
-        'checked_in', 'dietary_restrictions', 'dietary_restrictions_other',
+        'rsvp_time', 'checked_in', 'dietary_restrictions', 'dietary_restrictions_other',
         'tshirt_size', 'essay_project', 'essay_team'
     ])
 
@@ -386,6 +386,7 @@ def export_csv():
             reg.get('status', ''),
             reg.get('apply_at', ''),
             reg.get('rsvp', False),
+            reg.get('rsvp_time', ''),
             reg.get('checkin', False),
             profile.get('dietary_restrictions', ''),
             profile.get('dietary_restrictions_other', ''),
