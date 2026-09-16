@@ -7,6 +7,14 @@
 }
 
 @font-face {
+  font-family: Recoleta;
+  src: url("/fonts/Recoleta-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: Balabeloo;
   src: url("/fonts/Balabeloo Pro Regular Font.ttf") format("truetype");
   font-weight: 400;
