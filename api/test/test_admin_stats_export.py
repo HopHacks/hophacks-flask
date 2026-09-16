@@ -143,6 +143,29 @@ def test_export_includes_gender(client, test_db, test_mail):
     assert rows[0]['gender'] == ''
 
 
+def test_export_includes_rsvp_time(client, test_db, test_mail):
+    """Organizers read RSVP timing off the export; blank until the user RSVPs."""
+    register_applied(client, test_mail, create_json)
+    admin = admin_token(client, test_db)
+    uid = str(test_db.users.find_one({'username': 'a@test.com'})['_id'])
+
+    res = client.get('/api/admin/export', headers=bearer(admin))
+    row = next(csv.DictReader(io.StringIO(res.data.decode())))
+    assert row['rsvp'] == 'False'
+    assert row['rsvp_time'] == ''
+
+    client.post('/api/registrations/accept', json={'users': [uid]}, headers=bearer(admin))
+    user = login_token(client, login_json)
+    assert client.post('/api/registrations/rsvp/rsvp', json={'event': EVENT_NAME},
+                       headers=bearer(user)).status_code == 200
+
+    res = client.get('/api/admin/export', headers=bearer(admin))
+    row = next(csv.DictReader(io.StringIO(res.data.decode())))
+    assert row['rsvp'] == 'True'
+    stored = test_db.users.find_one({'username': 'a@test.com'})['registrations'][0]['rsvp_time']
+    assert row['rsvp_time'] == str(stored)
+
+
 def test_export_header_and_row_widths_match(client, test_db, test_mail):
     """A column added to one list and not the other silently shifts every
     field after it, which is worse than a missing column."""
