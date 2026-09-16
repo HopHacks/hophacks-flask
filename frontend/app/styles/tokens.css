@@ -7,6 +7,14 @@
 }
 
 @font-face {
+  font-family: Recoleta;
+  src: url("/fonts/Recoleta-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: Balabeloo;
   src: url("/fonts/Balabeloo Pro Regular Font.ttf") format("truetype");
   font-weight: 400;
@@ -45,7 +53,7 @@
 
   /* Hero motion */
   --ease-hero-cloud: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --duration-hero-cloud: 8s;
+  --duration-hero-cloud: 4s;
   --animate-hero-float: hero-float 5.5s ease-in-out infinite;
 
   @keyframes hero-float {

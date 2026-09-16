@@ -72,7 +72,7 @@ export default function HeroSection() {
   useEffect(() => {
     if (!pageLoaded) return;
 
-    const timer = window.setTimeout(() => setCloudsParted(true), 1200);
+    const timer = window.setTimeout(() => setCloudsParted(true), 400);
     return () => window.clearTimeout(timer);
   }, [pageLoaded]);
 
