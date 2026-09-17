@@ -292,6 +292,32 @@ def test_export_sponsor_info_from_profile(client, test_db, test_mail):
     assert row['GitHub profile URL'] == 'https://github.com/andrew'
 
 
+def test_export_sponsor_info_mlh_checkboxes(client, test_db, test_mail):
+    register_applied(client, test_mail, create_json)
+    test_db.users.update_one(
+        {'username': 'a@test.com'},
+        {'$set': {'profile.resume_photo_release': True}},
+    )
+    admin = admin_token(client, test_db)
+    res = client.get(
+        '/api/admin/export_sponsor_info',
+        query_string={
+            'fields': (
+                'email,mlh_code_of_conduct,mlh_data_sharing,'
+                'mlh_marketing_emails,resume_photo_release'
+            ),
+        },
+        headers=bearer(admin),
+    )
+    assert res.status_code == 200
+    rows = list(csv.DictReader(io.StringIO(res.get_data(as_text=True))))
+    assert rows[0]['email'] == 'a@test.com'
+    assert rows[0]['MLH Code of Conduct'] == 'Yes'
+    assert rows[0]['MLH data sharing'] == 'Yes'
+    assert rows[0]['MLH marketing emails'] == 'No'
+    assert rows[0]['Resume / photo release'] == 'Yes'
+
+
 def test_export_sponsor_info_github_na_without_resume(client, test_db, test_mail):
     register_applied(client, test_mail, create_json)
     admin = admin_token(client, test_db)
