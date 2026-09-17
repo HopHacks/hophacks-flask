@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import HeroEventInfo from "../hero/HeroEventInfo";
 import { useAuth } from "@/app/util/auth";
+import { getIsAdmin } from "@/app/util/adminApi";
 import HeroTitle from "../hero/HeroTitle";
 import SocialLinks from "../hero/SocialLinks";
 import GetInvolved from "../hero/GetInvolved";
@@ -54,6 +55,22 @@ export default function HeroSection() {
   const { isLoggedIn } = useAuth();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [cloudsParted, setCloudsParted] = useState(false);
+  // null until /api/admin/ resolves so admins never flash "My Profile".
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (isLoggedIn !== true) {
+      setIsAdmin(null);
+      return;
+    }
+    let cancelled = false;
+    getIsAdmin().then((ok) => {
+      if (!cancelled) setIsAdmin(ok);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoggedIn]);
 
   useEffect(() => {
     function handleLoad() {
@@ -100,7 +117,11 @@ export default function HeroSection() {
           <div className="absolute inset-x-0 bottom-[clamp(9rem,26vh,17rem)] z-10 flex flex-col items-center gap-3 px-6 text-center font-sans">
             <HeroTitle />
             <HeroEventInfo />
-            {isLoggedIn ? (
+            {isLoggedIn && isAdmin === true ? (
+              <Link href="/admin" className={CTA_CLS}>
+                Admin Panel
+              </Link>
+            ) : isLoggedIn && isAdmin === false ? (
               <>
                 <p className="text-base font-normal text-white/90 sm:text-lg">
                   Your application is in! You&apos;ll hear back from us shortly.
