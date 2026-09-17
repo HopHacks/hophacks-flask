@@ -215,3 +215,30 @@ test("hero CTA points at login", async ({ page }) => {
   await expect(cta).toBeVisible();
   await expect(cta).toHaveAttribute("href", "/register/login");
 });
+
+test("logged-in applicant hero CTA goes to profile", async ({ page }) => {
+  await page.route("**/api/auth/session/refresh", (r) =>
+    r.fulfill({ json: { access_token: "stub-token" } }),
+  );
+  await page.route("**/api/admin/", (r) =>
+    r.fulfill({ json: { is_admin: false } }),
+  );
+  await page.goto("/");
+  const cta = page.getByRole("link", { name: "My Profile" });
+  await expect(cta).toBeVisible();
+  await expect(cta).toHaveAttribute("href", "/profile");
+});
+
+test("logged-in admin hero CTA goes to the admin panel", async ({ page }) => {
+  await page.route("**/api/auth/session/refresh", (r) =>
+    r.fulfill({ json: { access_token: "stub-token" } }),
+  );
+  await page.route("**/api/admin/", (r) =>
+    r.fulfill({ json: { is_admin: true } }),
+  );
+  await page.goto("/");
+  const cta = page.getByRole("link", { name: "Admin Panel" });
+  await expect(cta).toBeVisible();
+  await expect(cta).toHaveAttribute("href", "/admin");
+  await expect(page.getByRole("link", { name: "My Profile" })).toHaveCount(0);
+});
