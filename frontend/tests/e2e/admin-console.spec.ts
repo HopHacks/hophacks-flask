@@ -579,6 +579,8 @@ test("the sponsor info extractor downloads the chosen fields", async ({
   await page.getByRole("button", { name: "Sponsor Info Extractor" }).click();
   await page.getByLabel("Add a field").selectOption("school");
   await page.getByRole("button", { name: "Add" }).click();
+  await page.getByLabel("Add a field").selectOption("mlh_marketing_emails");
+  await page.getByRole("button", { name: "Add" }).click();
   await page.getByLabel("Application status").selectOption("accepted");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download CSV" }).click();
@@ -592,6 +594,7 @@ test("the sponsor info extractor downloads the chosen fields", async ({
     "grad_year",
     "linkedin_url",
     "school",
+    "mlh_marketing_emails",
   ]);
   expect(status).toBe("accepted");
 });

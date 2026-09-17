@@ -23,6 +23,26 @@ export const SPONSOR_INFO_FIELDS = [
   { key: "major", label: "Major" },
   { key: "first_name", label: "First name" },
   { key: "last_name", label: "Last name" },
+  {
+    key: "mlh_code_of_conduct",
+    label: "MLH Code of Conduct",
+    hint: "Required at signup",
+  },
+  {
+    key: "mlh_data_sharing",
+    label: "MLH data sharing",
+    hint: "Required at signup — share registration with MLH",
+  },
+  {
+    key: "mlh_marketing_emails",
+    label: "MLH marketing emails",
+    hint: "Optional MLH emails about events and career opportunities",
+  },
+  {
+    key: "resume_photo_release",
+    label: "Resume / photo release",
+    hint: "Authorize sending the resume to sponsors and the photo release",
+  },
 ] as const;
 
 export type SponsorInfoFieldKey = (typeof SPONSOR_INFO_FIELDS)[number]["key"];

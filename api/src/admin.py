@@ -455,6 +455,22 @@ def _csv_cell(value):
     return text if text else 'N/A'
 
 
+def _csv_bool(value):
+    """Yes/No for signup checkboxes; N/A if the account never stored one."""
+    if isinstance(value, str):
+        lowered = value.strip().lower()
+        if lowered in ('true', 'yes', '1'):
+            return 'Yes'
+        if lowered in ('false', 'no', '0'):
+            return 'No'
+        return 'N/A'
+    if value is True:
+        return 'Yes'
+    if value is False:
+        return 'No'
+    return 'N/A'
+
+
 # Keys the sponsor-info extractor may request, in CSV header form.
 SPONSOR_INFO_FIELDS = {
     'name': 'name',
@@ -467,6 +483,18 @@ SPONSOR_INFO_FIELDS = {
     'major': 'major',
     'first_name': 'first name',
     'last_name': 'last name',
+    'mlh_code_of_conduct': 'MLH Code of Conduct',
+    'mlh_data_sharing': 'MLH data sharing',
+    'mlh_marketing_emails': 'MLH marketing emails',
+    'resume_photo_release': 'Resume / photo release',
+}
+
+# Signup agreement checkboxes stored as booleans on profile.
+SPONSOR_BOOL_FIELDS = {
+    'mlh_code_of_conduct',
+    'mlh_data_sharing',
+    'mlh_marketing_emails',
+    'resume_photo_release',
 }
 
 # Same ladder as the Applications status filter. "all" is every current-event
@@ -624,6 +652,8 @@ def _sponsor_field_value(user, key, github_by_id):
         return _csv_cell(profile.get('first_name'))
     if key == 'last_name':
         return _csv_cell(profile.get('last_name'))
+    if key in SPONSOR_BOOL_FIELDS:
+        return _csv_bool(profile.get(key))
     return 'N/A'
 
 
