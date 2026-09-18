@@ -65,6 +65,12 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
       },
       {
         time: "9:00 PM",
+        title: "Team Matching",
+        location: "Hodson 210",
+        type: "main",
+      },
+      {
+        time: "9:00 PM",
         title: "Sponsor Hall Opens",
         location: "Levering Hall Great Hall",
         type: "announcement",
