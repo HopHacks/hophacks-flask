@@ -126,6 +126,11 @@ export default function ScheduleSection() {
                 ) : (
                   <span className="sr-only">{meta.label}</span>
                 )}
+                {event.description ? (
+                  <p className="mt-2 text-sm leading-relaxed text-white/65">
+                    {event.description}
+                  </p>
+                ) : null}
               </div>
             </div>
           );
