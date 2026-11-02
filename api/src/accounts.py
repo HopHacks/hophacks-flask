@@ -39,6 +39,10 @@ profile_keys = ["first_name", "last_name", "age", "phone_number",
 # MLH consent checkboxes that MUST be affirmatively accepted to register.
 mlh_required_consents = ["mlh_code_of_conduct", "mlh_data_sharing"]
 
+# HopHacks consent to share the application with select sponsors. Required,
+# same as the MLH data-sharing checkbox it sits under.
+sponsor_data_sharing_consent = "sponsor_data_sharing"
+
 # Server-side account constraints. bcrypt only uses the first 72 bytes of a
 # password, so longer inputs are rejected instead of silently truncated.
 email_re = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
@@ -210,6 +214,9 @@ def create():
     for consent in mlh_required_consents:
         if (profile.get(consent) is not True):
             return Response('Required MLH agreement not accepted', status=400)
+
+    if (profile.get(sponsor_data_sharing_consent) is not True):
+        return Response('Required sponsor data-sharing agreement not accepted', status=400)
 
     # The application essays are NOT required here: creating an account only
     # makes a profile. They are submitted separately, and irreversibly, via

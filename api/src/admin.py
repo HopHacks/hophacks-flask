@@ -486,6 +486,7 @@ SPONSOR_INFO_FIELDS = {
     'mlh_code_of_conduct': 'MLH Code of Conduct',
     'mlh_data_sharing': 'MLH data sharing',
     'mlh_marketing_emails': 'MLH marketing emails',
+    'sponsor_data_sharing': 'Sponsor data sharing',
     'resume_photo_release': 'Resume / photo release',
 }
 
@@ -494,6 +495,7 @@ SPONSOR_BOOL_FIELDS = {
     'mlh_code_of_conduct',
     'mlh_data_sharing',
     'mlh_marketing_emails',
+    'sponsor_data_sharing',
     'resume_photo_release',
 }
 

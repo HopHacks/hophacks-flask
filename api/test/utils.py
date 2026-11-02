@@ -44,6 +44,7 @@ def _profile(first_name, last_name, school, **overrides):
         "mlh_code_of_conduct": True,
         "mlh_data_sharing": True,
         "mlh_marketing_emails": False,
+        "sponsor_data_sharing": True,
     }
     profile.update(overrides)
     return profile
@@ -98,4 +99,11 @@ create_json_no_data = {
     "password": "password-e",
     "confirm_url": "http://localhost:3000/confirm",
     "profile": _profile("Evan", "Diaz", "Cornell University", mlh_data_sharing=False),
+}
+
+create_json_no_sponsor = {
+    "username": "f@test.com",
+    "password": "password-f",
+    "confirm_url": "http://localhost:3000/confirm",
+    "profile": _profile("Fran", "Nguyen", "Cornell University", sponsor_data_sharing=False),
 }
