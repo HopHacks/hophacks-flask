@@ -470,6 +470,8 @@ type StepChecksProps = {
   setEventLogisticsChecked: (v: boolean) => void;
   communicationChecked: boolean;
   setCommunicationChecked: (v: boolean) => void;
+  sponsorSharingChecked: boolean;
+  setSponsorSharingChecked: (v: boolean) => void;
   errorMsg: string;
   onNext: () => void;
   onBack: () => void;
@@ -526,6 +528,8 @@ function StepChecks({
   setEventLogisticsChecked,
   communicationChecked,
   setCommunicationChecked,
+  sponsorSharingChecked,
+  setSponsorSharingChecked,
   errorMsg,
   onNext,
   onBack,
@@ -699,6 +703,13 @@ function StepChecks({
         >
           (Optional) I authorize MLH to send me occasional emails about relevant
           events, career opportunities, and community announcements.
+        </Check>
+        <Check
+          checked={sponsorSharingChecked}
+          onChange={setSponsorSharingChecked}
+        >
+          I authorize you to share my application/registration information with
+          select sponsors for event administration, ranking, and administration.
         </Check>
       </div>
 
@@ -1006,6 +1017,7 @@ export default function SignUpPage() {
   const [conductCodeChecked, setConductCodeChecked] = useState(false);
   const [eventLogisticsChecked, setEventLogisticsChecked] = useState(false);
   const [communicationChecked, setCommunicationChecked] = useState(false);
+  const [sponsorSharingChecked, setSponsorSharingChecked] = useState(false);
 
   // Image (avatar)
   const [stage, setStage] = useState(0);
@@ -1167,6 +1179,12 @@ export default function SignUpPage() {
       );
       return;
     }
+    if (!sponsorSharingChecked) {
+      setErrorMsg(
+        "* Please authorize sharing your application with select sponsors.",
+      );
+      return;
+    }
     setErrorMsg("");
     setActivePage(IMAGE);
   }
@@ -1200,6 +1218,7 @@ export default function SignUpPage() {
       mlh_code_of_conduct: conductCodeChecked,
       mlh_data_sharing: eventLogisticsChecked,
       mlh_marketing_emails: communicationChecked,
+      sponsor_data_sharing: sponsorSharingChecked,
       resume_photo_release: resumeChecked,
     };
 
@@ -1372,6 +1391,8 @@ export default function SignUpPage() {
               setEventLogisticsChecked={setEventLogisticsChecked}
               communicationChecked={communicationChecked}
               setCommunicationChecked={setCommunicationChecked}
+              sponsorSharingChecked={sponsorSharingChecked}
+              setSponsorSharingChecked={setSponsorSharingChecked}
               errorMsg={errorMsg}
               onNext={handleChecksNext}
               onBack={() => {

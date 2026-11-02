@@ -39,6 +39,11 @@ export const SPONSOR_INFO_FIELDS = [
     hint: "Optional MLH emails about events and career opportunities",
   },
   {
+    key: "sponsor_data_sharing",
+    label: "Sponsor data sharing",
+    hint: "Required at signup — share registration with select sponsors",
+  },
+  {
     key: "resume_photo_release",
     label: "Resume / photo release",
     hint: "Authorize sending the resume to sponsors and the photo release",

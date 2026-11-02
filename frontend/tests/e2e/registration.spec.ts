@@ -75,7 +75,7 @@ async function fillAboutYou(page: Page) {
   await page.locator('input[type="file"]').setInputFiles(RESUME_FIXTURE);
 }
 
-// The two required MLH consents + HopHacks resume release.
+// Required agreements: resume release, both MLH consents, and sponsor sharing.
 async function checkAllConsents(page: Page) {
   await page
     .getByText("I authorize HopHacks to send my resume")
@@ -88,7 +88,12 @@ async function checkAllConsents(page: Page) {
     .locator('input[type="checkbox"]')
     .check();
   await page
-    .getByText("I authorize you to share my application")
+    .getByText("Major League Hacking for event administration")
+    .locator("xpath=ancestor::label")
+    .locator('input[type="checkbox"]')
+    .check();
+  await page
+    .getByText("select sponsors for event administration")
     .locator("xpath=ancestor::label")
     .locator('input[type="checkbox"]')
     .check();
@@ -128,6 +133,7 @@ test("happy path submits canonical MLH payload", async ({ page }) => {
   expect(payload.profile.mlh_code_of_conduct).toBe(true);
   expect(payload.profile.mlh_data_sharing).toBe(true);
   expect(payload.profile.mlh_marketing_emails).toBe(false);
+  expect(payload.profile.sponsor_data_sharing).toBe(true);
   expect(payload.profile.is_jhu).toBe(true);
   expect(payload.profile.dietary_restrictions).toBe("None");
   expect(payload.profile.tshirt_size).toBe("M");

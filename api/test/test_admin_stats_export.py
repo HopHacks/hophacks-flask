@@ -304,7 +304,7 @@ def test_export_sponsor_info_mlh_checkboxes(client, test_db, test_mail):
         query_string={
             'fields': (
                 'email,mlh_code_of_conduct,mlh_data_sharing,'
-                'mlh_marketing_emails,resume_photo_release'
+                'mlh_marketing_emails,sponsor_data_sharing,resume_photo_release'
             ),
         },
         headers=bearer(admin),
@@ -315,6 +315,7 @@ def test_export_sponsor_info_mlh_checkboxes(client, test_db, test_mail):
     assert rows[0]['MLH Code of Conduct'] == 'Yes'
     assert rows[0]['MLH data sharing'] == 'Yes'
     assert rows[0]['MLH marketing emails'] == 'No'
+    assert rows[0]['Sponsor data sharing'] == 'Yes'
     assert rows[0]['Resume / photo release'] == 'Yes'
 
 

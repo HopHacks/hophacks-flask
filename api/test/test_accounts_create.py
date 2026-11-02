@@ -3,7 +3,12 @@ sys.path.append('../src')
 
 import copy
 
-from utils import create_json, create_json_no_coc, create_json_no_data
+from utils import (
+    create_json,
+    create_json_no_coc,
+    create_json_no_data,
+    create_json_no_sponsor,
+)
 
 
 def test_create_success_stores_full_profile(client, test_db, test_mail):
@@ -74,6 +79,12 @@ def test_create_requires_data_sharing_true(client, test_db):
     res = client.post("/api/accounts/create", json=create_json_no_data)
     assert res.status_code == 400
     assert test_db.users.find_one({'username': "e@test.com"}) is None
+
+
+def test_create_requires_sponsor_data_sharing_true(client, test_db):
+    res = client.post("/api/accounts/create", json=create_json_no_sponsor)
+    assert res.status_code == 400
+    assert test_db.users.find_one({'username': "f@test.com"}) is None
 
 
 def test_create_marketing_email_optional(client, test_db):
